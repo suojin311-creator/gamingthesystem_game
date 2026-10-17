@@ -33,8 +33,9 @@ finished videos have not been merged.
 - Reset sits below the allocation bar, above the action row. Teacher/Alex bubbles have a separate bottom region, matching the earlier levels. Repeated instructions and the illustrative-behaviour note are removed. Shared metric name typography and aligned Score weight/Alex’s response columns apply to all layouts.
 - Publishing ticks the three weights in sequence and stays on screen with Management and Students perspectives. The player clicks Observe the class to open the three-shot classroom slot. Students remains Awaiting observation until the current round’s classroom responses are available. Returning reveals three qualitative responses, then the teacher/Alex exchange; the next action appears with Alex’s last message.
 
-Near-even means highest minus lowest is at most five percentage points. All
-three story shots are medium in that case, including 34/33/33. Otherwise,
+Near-even means highest minus lowest is at most ten percentage points. All
+three story shots are medium in that case, including 34/33/33, 38/33/29 and
+40/30/30. The 10-point boundary is inclusive; 40/31/29 is outside it. Otherwise,
 0–33% produces low, 34–66% medium and 67–100% high effort in this editor.
 These are deterministic narrative categories, not measured learning outcomes.
 The prototype’s invented numerical effort transform is not presented as data.
@@ -139,4 +140,4 @@ node tests/dialogue_emojis.mjs
 The offline checks serve exact production HTML through an in-memory HTTPS
 origin; managed Chromium blocks local file navigation. They are functional
 checks, not a classroom load test. Results and artifact hashes are recorded in
-`docs/LEVEL3_VALIDATION-v2.json`.
+`docs/LEVEL3_VALIDATION-v3.json`.

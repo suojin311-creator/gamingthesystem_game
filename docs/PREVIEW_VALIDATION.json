@@ -1,7 +1,7 @@
 {
-  "validatedAtUtc": "2026-10-17T21:42:27.612962+00:00",
-  "version": "Level 3 refinement v2",
-  "passed": 74,
+  "validatedAtUtc": "2026-10-17T21:46:09.023416+00:00",
+  "version": "Level 3 refinement v3: inclusive 10-point near-even range",
+  "passed": 79,
   "builds": [
     "npm run build: passed",
     "npm run build:level1: passed",
@@ -50,7 +50,7 @@
       "runtimeErrors": []
     },
     "level3-feedback-results.json": {
-      "passed": 13,
+      "passed": 18,
       "checks": [
         "Metric names match Levels 1/2; Reset stays above the action row and the player uses the shared bottom dialogue region and bubble size",
         "80/15/5 keeps both remainders editable and confirms the final pair: first prep, then part",
@@ -64,6 +64,11 @@
         "768px results and comparisons keep the same metric size, aligned labelled columns and no horizontal overflow",
         "390px results and comparisons keep the same metric size, aligned labelled columns and no horizontal overflow",
         "320px results and comparisons keep the same metric size, aligned labelled columns and no horizontal overflow",
+        "First test [40, 30, 30]: the inclusive 10-point boundary selects the correct next task",
+        "First test [40, 31, 29]: the inclusive 10-point boundary selects the correct next task",
+        "Second test [38, 33, 29]: compares the player’s actual near-even run without a third test",
+        "Second test [40, 30, 30]: compares the player’s actual near-even run without a third test",
+        "Second test [40, 31, 29]: offers the explained optional balance check beyond 10 points",
         "No runtime errors in the feedback regressions"
       ],
       "runtimeErrors": []
@@ -90,7 +95,7 @@
         "Either remaining card confirms the pair after any first-card choice",
         "Both equal remaining sliders can move in either direction before confirmation",
         "Available bounds clamp safely, including zero, without changing locked weights or snapshots",
-        "Near-even boundary is inclusive; 34/33/33 and equal-looking thresholds produce three medium shots",
+        "Near-even accepts gaps through 10 points inclusively, rejects 11, and produces three medium shots",
         "Run requires all three confirmed weights (including the linked pair) and a valid complete allocation",
         "An already balanced first run must create a clear contrast of at least 20 points",
         "Rebalance must improve the spread; a partial improvement still permits the later balance check"
@@ -222,7 +227,7 @@
     }
   },
   "manifest": {
-    "sourceSha256": "843f188dca117a4dc738ee0c7e8a169633face4bba0539f885b153ebcf008c5f",
+    "sourceSha256": "6f1aca854bf8289677c047d8324bc51d8d035d4f77223f832756a4fc178cc9e6",
     "entries": [
       {
         "archive": "Level1-play.zip",
@@ -242,19 +247,20 @@
         "archive": "Level3-play.zip",
         "html": "Level3.html",
         "build": "dist-level3/index.html",
-        "htmlSha256": "9b6c95f5385e4c9a3a76dc8561d90d5d8b531489e1fdd764a89c35c0d33d3386",
-        "zipSha256": "363237926dfc07dd98358013a5241825396ff8d85e1a83d3174dc1dacd7ed72f"
+        "htmlSha256": "6caed344d7f6515a3553e8c19c2d73fa1d793236476c798e78c7bcc0778c07f6",
+        "zipSha256": "1f402aa9f44a49e87e67da8276f102e798241b69c18361e78344e516c118beee"
       },
       {
         "archive": "Full-game-play.zip",
         "html": "Gaming-the-System.html",
         "build": "dist/index.html",
-        "htmlSha256": "5b7b2cb8a4f88f81e1a48cf11459d7fb259527e5d733ab8a62af12611287e8d1",
-        "zipSha256": "edcd9833626c964f5f0bd50836e79c0d66c79d83680cc71d52571c7467c1cd14"
+        "htmlSha256": "1e4bd26266fde700f1f2278e08f7a65ea70d2a8d448033b6831ef06184883931",
+        "zipSha256": "c4da1a2291bd8d7fdcb58b4c8fc8858189d88d686a1b600ae37630b58b7d35e0"
       }
     ]
   },
   "notes": [
+    "Near-even now means highest minus lowest at most 10 percentage points, including 10. The prior 5-point boundary was widened with user authorization. Exhaustive integer rules and permutations, first-run routing at gaps 10/11, second-run routing at gaps 9/10/11, three medium shots and actual near-even comparison values all passed. A qualifying second run goes directly to comparison without a third 34/33/33 balance test.",
     "Both remaining sliders stay editable after the first confirmation, including 80/10/10 to 80/15/5. Confirming either final card locks the pair and gray-labels the other Auto-confirmed. Rules cover all integer 0–100 splits and all confirmation orders.",
     "Gameplay inherits the actual Level 2 trio in memory, preselects it for Level 3 and permits swapping. Restart restores that starting trio. Direct standalone Level 3 starts empty. Name and sound preference carry across the handoff.",
     "Weights publish sequentially and remain on screen with both perspective cards until Observe the class is clicked. Students waits for the current observation. Reset, bottom dialogue region, shared metric size and aligned divided response columns are covered by production-build browser checks.",

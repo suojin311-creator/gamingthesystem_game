@@ -4,9 +4,10 @@ export type WeightGoal = 'first' | 'rebalance' | 'contrast';
 export type Effort = 'low' | 'medium' | 'high';
 export const EVEN_WEIGHTS: Weights = [34, 33, 33];
 export const MIN_WEIGHT = 0;
+export const NEAR_EVEN_SPREAD = 10;
 
 export const spread = (weights: Weights) => Math.max(...weights) - Math.min(...weights);
-export const isNearEven = (weights: Weights) => spread(weights) <= 5;
+export const isNearEven = (weights: Weights) => spread(weights) <= NEAR_EVEN_SPREAD;
 export const validWeights = (weights: Weights) => weights.length === 3 && weights.every(value => Number.isInteger(value) && value >= MIN_WEIGHT && value <= 100) && weights.reduce((sum, value) => sum + value, 0) === 100;
 
 /** Integer percentages keep the total exact; a one-point remainder goes in card order. */

@@ -142,6 +142,31 @@ with sync_playwright() as p:
         if width==390:page.screenshot(path=str(OUT/'level3-feedback-mobile.png'),full_page=True,animations='disabled')
         record(f'{width}px results and comparisons keep the same metric size, aligned labelled columns and no horizontal overflow')
         context.close()
+    for values,near_even in [([40,30,30],True),([40,31,29],False)]:
+        context,page=open_level(browser)
+        split(page,values);run(page)
+        button='Create a contrast' if near_even else 'Try a better balance'
+        expect(page.get_by_role('button',name=button,exact=True)).to_be_visible()
+        if near_even:expect(page.locator('.l3-run-rows [data-effort=medium]')).to_have_count(3)
+        record(f'First test {values}: the inclusive 10-point boundary selects the correct next task')
+        context.close()
+
+    for values,near_even in [([38,33,29],True),([40,30,30],True),([40,31,29],False)]:
+        context,page=open_level(browser)
+        split(page,[70,20,10]);run(page)
+        page.get_by_role('button',name='Try a better balance',exact=True).click()
+        split(page,values);run(page)
+        if near_even:
+            expect(page.get_by_role('button',name='Test 34 / 33 / 33',exact=True)).to_have_count(0)
+            expect(page.locator('.l3-run-rows [data-effort=medium]')).to_have_count(3)
+            page.get_by_role('button',name='Compare the patterns',exact=True).click()
+            expect(page.locator('.near-even .l3-row-weight')).to_have_text([str(value)+'%' for value in values])
+            expect(page.locator('.near-even .eyebrow')).to_have_text('YOUR TEST · ROUND 2')
+        else:
+            expect(page.get_by_role('button',name='Test 34 / 33 / 33',exact=True)).to_be_visible()
+            expect(page.locator('.maya-bubble p')).to_have_text('It’s still uneven. I’ll test a nearly equal split.')
+        record(f'Second test {values}: '+('compares the player’s actual near-even run without a third test' if near_even else 'offers the explained optional balance check beyond 10 points'))
+        context.close()
     browser.close()
 assert not errors,errors
 record('No runtime errors in the feedback regressions')

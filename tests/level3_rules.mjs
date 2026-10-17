@@ -8,6 +8,7 @@ check('Every possible integer split preserves total 100, range 0–100 and deter
   for (let a = 0; a <= 100; a++) for (let b = 0; b <= 100 - a; b++) {
     const weights = [a, b, 100 - a - b];
     assert.ok(validWeights(weights));
+    assert.equal(isNearEven(weights),Math.max(...weights)-Math.min(...weights)<=10);
     assert.ok(!isNearEven(weights) || weights.every((_, i) => effortAt(weights, i) === 'medium'));
     for (let index = 0; index < 3; index++) for (const requested of [0, 10, 33, 34, 50, 67, 80, 100]) {
       const next = allocateWeight(weights, [false, false, false], index, requested);
@@ -51,9 +52,16 @@ check('Available bounds clamp safely, including zero, without changing locked we
   assert.deepEqual(allocateWeight(old,[false,false,false],0,NaN),old);
   assert.deepEqual(allocateWeight([100,0,0],[true,false,false],1,20),[100,0,0]);
 });
-check('Near-even boundary is inclusive; 34/33/33 and equal-looking thresholds produce three medium shots', () => {
-  assert.ok(isNearEven([36,33,31]));
-  assert.ok(!isNearEven([37,33,30]));
+check('Near-even accepts gaps through 10 points inclusively, rejects 11, and produces three medium shots', () => {
+  for (const weights of [[36,33,31],[37,33,30],[38,33,29],[40,30,30]]) {
+    for (const order of [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]]) {
+      const permuted=order.map(index=>weights[index]);
+      assert.ok(isNearEven(permuted));
+      assert.deepEqual([0,1,2].map(i=>effortAt(permuted,i)),['medium','medium','medium']);
+    }
+  }
+  assert.ok(!isNearEven([40,31,29]));
+  assert.ok(!isNearEven([29,40,31]));
   assert.deepEqual([0,1,2].map(i=>effortAt([34,33,33],i)), ['medium','medium','medium']);
   for (const [weights, expected] of [[[33,57,10],'low'], [[34,56,10],'medium'], [[66,24,10],'medium'], [[67,23,10],'high']]) assert.equal(effortAt(weights,0), expected);
 });
