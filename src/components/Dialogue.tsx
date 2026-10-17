@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Phase } from '../state';
 import type { Cue } from '../useFeedback';
+import { readingTime } from '../readingTime';
 
 type Line = { speaker: 'Maya' | 'Alex'; text: string };
 
@@ -43,16 +44,14 @@ export default function Dialogue({ phase, playerName, studentQuote, enabled, pau
   useEffect(() => {
     if (!enabled || paused || !inView || !pageVisible) return;
     if (beat % 2 === 1 && lastSound.current !== beat) { play('message'); lastSound.current = beat; }
-    if (beat === lastBeat) {
-      if (!settled.current) { settled.current = true; callback.current(); }
-      return;
-    }
+    if (settled.current) return;
     const delay = remaining.current;
     const start = performance.now();
     let fired = false;
     const timer = window.setTimeout(() => {
       fired = true;
-      remaining.current = beat % 2 === 0 ? 1400 : 650;
+      if (beat === lastBeat) { settled.current = true; callback.current(); return; }
+      remaining.current = beat % 2 === 0 ? readingTime(lines[Math.floor(beat / 2)].text) : 650;
       setBeat(value => value + 1);
     }, delay);
     return () => { window.clearTimeout(timer); if (!fired) remaining.current = Math.max(0, delay - (performance.now() - start)); };

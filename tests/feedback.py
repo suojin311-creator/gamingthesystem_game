@@ -1,4 +1,4 @@
-"""Real browser checks for automatic recaps, fresh pages, chat timing and audio."""
+"""Real browser checks for one recap focus, reading time, chat order and audio."""
 import argparse
 import json
 from pathlib import Path
@@ -55,7 +55,24 @@ def finish_scene(page):
     page.get_by_role('button', name='Return to dashboard').click()
 
 def settle(page):
-    expect(page.get_by_role('button', name='Try more metrics')).to_be_enabled(timeout=16000)
+    expect(page.get_by_role('button', name='Try more metrics')).to_be_enabled(timeout=22000)
+
+timeline_probe = '''
+window.reviewTimeline = {};
+new MutationObserver(() => {
+  if (!document.querySelector('.phase-review')) return;
+  const mark = (name, selector) => {
+    if (document.querySelector(selector) && window.reviewTimeline[name] === undefined) window.reviewTimeline[name] = performance.now();
+  };
+  mark('finding', '.observation-recap');
+  mark('student', '.student.has-evidence');
+  mark('mayaTyping', '.maya-bubble.is-typing');
+  mark('maya', '.maya-bubble p');
+  mark('alexTyping', '.alex-bubble.is-typing');
+  mark('alex', '.alex-bubble p');
+  if ([...document.querySelectorAll('.phase-review button')].some(b => b.textContent.startsWith('Try more metrics')) && window.reviewTimeline.next === undefined) window.reviewTimeline.next = performance.now();
+}).observe(document.body, {childList:true, subtree:true, attributes:true});
+'''
 
 with sync_playwright() as p:
     browser = p.chromium.launch(executable_path='/usr/bin/chromium', headless=True, args=['--no-sandbox'])
@@ -87,32 +104,54 @@ with sync_playwright() as p:
     page.screenshot(path=str(out / 'feedback-report.png'), full_page=True)
     record('Actual Web Audio plays count and success cues at the increased master gain')
 
-    scene_to_review(page)
+    expect(page.locator('.university')).to_have_attribute('data-updated', 'false', timeout=5000)
+    expect(page.locator('.new-badge')).to_have_count(0)
+    record('Management emphasis ends after one cue and the score remains available')
+
+    page.get_by_role('button', name='Observe the class').click()
+    page.evaluate(timeline_probe)
+    before_group = page.evaluate('window.audioStarts.length')
+    finish_scene(page)
     expect(page.locator('.observation-recap')).to_have_count(0)
     expect(page.locator('.student')).to_contain_text('Not observed yet')
-    expect(page.locator('.observation-recap')).to_contain_text('The checklist is complete.', timeout=5000)
-    expect(page.locator('.student')).to_contain_text('Not observed yet')
-    expect(page.locator('.uncertainty')).to_have_text('Unclear', timeout=5000)
-    expect(page.locator('.student')).to_have_attribute('data-updated', 'true')
+    expect(page.locator('.observation-recap > p')).to_have_text('Students complete the preparation, but some skim just enough to meet the requirement.', timeout=5000)
+    expect(page.locator('.uncertainty')).to_have_text('Unclear')
+    expect(page.locator('.observation-recap p')).to_have_count(1)
+    expect(page.locator('.observation-recap details')).to_have_count(0)
+    expect(page.locator('.student .new-badge')).to_have_count(0)
+    assert 'just-updated' not in page.locator('.student').get_attribute('class')
+    assert page.get_by_text('More context', exact=True).count() == 0
+    assert page.get_by_text('Close details', exact=True).count() == 0
     assert page.get_by_role('button', name='Reveal observation').count() == 0
     assert page.get_by_role('button', name='See student response').count() == 0
-    assert page.evaluate('window.audioStarts.some(n => n.frequency === 360) && window.audioStarts.some(n => n.frequency === 392)')
-    record('Scene completion automatically recalls the finding, then student status, with distinct cues')
+    assert page.evaluate('window.audioStarts.slice(' + str(before_group) + ').map(n => n.frequency)') == [360]
+    stamps = page.evaluate('window.reviewTimeline')
+    assert abs(stamps['student'] - stamps['finding']) < 100, stamps
+    assert page.locator('.phase-review .dialogue-character').count() == 0
+    record('One evidence paragraph and student summary arrive together with one cue and no duplicate text or controls')
 
-    expect(page.get_by_role('status', name='Maya is typing')).to_be_visible(timeout=5000)
+    expect(page.get_by_role('status', name='Maya is typing')).to_be_visible(timeout=10000)
+    stamps = page.evaluate('window.reviewTimeline')
+    assert stamps['mayaTyping'] - stamps['finding'] >= 5900, stamps
+    record('Classroom evidence receives at least six seconds of visible reading time before conversation')
     expect(page.locator('.alex-character')).to_have_count(0)
     expect(page.locator('.maya-bubble p')).to_have_text('The score is up. What about learning?')
-    expect(page.get_by_role('status', name='Alex is typing')).to_be_visible(timeout=4000)
+    expect(page.get_by_role('status', name='Alex is typing')).to_be_visible(timeout=6000)
     expect(page.locator('.maya-bubble p')).to_be_visible()
     page.screenshot(path=str(out / 'feedback-typing.png'), full_page=True)
     settle(page)
     maya = page.locator('.maya-character').bounding_box()
     alex = page.locator('.alex-character').bounding_box()
+    decision = page.locator('.decision-area').bounding_box()
+    assert maya['x'] >= decision['x'] and alex['x'] + alex['width'] <= decision['x'] + decision['width']
     assert maya['y'] + maya['height'] <= alex['y']
     assert maya['x'] < alex['x']
     assert page.locator('body').bounding_box()['height'] <= 768
+    stamps = page.evaluate('window.reviewTimeline')
+    assert stamps['alexTyping'] - stamps['maya'] >= 3000, stamps
+    assert stamps['next'] - stamps['alex'] >= 2900, stamps
     page.screenshot(path=str(out / 'feedback-review.png'), full_page=True)
-    record('Typing and replies follow the recap automatically; Maya stays above Alex on a laptop')
+    record('Replies stay in the main column; both speakers receive reading time before the next message or Continue')
 
     page.get_by_role('button', name='Sound on', exact=True).click()
     before = page.evaluate('window.audioStarts.length')
@@ -128,13 +167,13 @@ with sync_playwright() as p:
     expect(page.locator('.observation-recap')).to_be_visible(timeout=5000)
     assert page.evaluate('window.audioStarts.some(n => n.frequency === 360 && n.state === "running")')
     record('Unmuting restores actual Web Audio feedback')
-    page.get_by_text('More context', exact=True).click()
-    expect(page.get_by_text('Close details', exact=True)).to_be_visible()
+    page.get_by_role('button', name='Guide', exact=True).click()
     page.wait_for_timeout(2000)
-    expect(page.locator('.student')).to_contain_text('Not observed yet')
-    page.get_by_text('Close details', exact=True).click()
-    expect(page.locator('.uncertainty')).to_have_text('Unclear', timeout=5000)
-    record('Optional detail reading holds the next beat; closing details resumes it automatically')
+    expect(page.locator('.phase-review .dialogue-character')).to_have_count(0)
+    page.get_by_role('button', name='Skip guide').click()
+    settle(page)
+    expect(page.locator('.observation-recap > p')).to_contain_text('Students complete the preparation')
+    record('Guide temporarily holds the reading sequence and closing it resumes automatically')
 
     small = make_context(browser, viewport={'width': 390, 'height': 300}, reduced_motion='reduce')
     tab = small.new_page()
@@ -151,7 +190,7 @@ with sync_playwright() as p:
     assert tab.locator('.observation-recap').count() == 0
     tab.locator('.prediction-recap').scroll_into_view_if_needed()
     settle(tab)
-    record('Off-screen recap waits, then resumes and brings student status and replies into view')
+    record('Off-screen recap waits, then resumes reading and brings replies into view without visiting the sidebar')
     small.close()
 
     silent = make_context(browser, reduced_motion='reduce')

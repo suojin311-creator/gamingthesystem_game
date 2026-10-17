@@ -2,7 +2,7 @@
 
 A standalone, English-language Level 1 workbench. The supplied cinematic opening has **not** been merged or modified. Its office and classroom backgrounds are reused as visual references/assets from the supplied project.
 
-**Just want to play? [Download the playable ZIP (v4)](play/Level1-play-v4.zip?raw=true), extract it, and open `Level1.html` in Chrome or Edge. No developer tools are needed. Sign in to a GitHub account with access to this repository before downloading.**
+**Just want to play? [Download the playable ZIP (v5)](play/Level1-play-v5.zip?raw=true), extract it, and open `Level1.html` in Chrome or Edge. No developer tools are needed. Sign in to a GitHub account with access to this repository before downloading.**
 
 ## Play without installing anything
 
@@ -10,17 +10,19 @@ Open `dist/index.html` in a current desktop browser. The production file contain
 
 Select one of six metrics, write a prediction of up to 100 characters, run the evaluation, observe the selected story placeholder, then compare the result with the prediction. `Try more metrics` finishes Level 1 at a Level 2 handoff placeholder. Level 2 is not implemented.
 
-Version 4 labels the reported-score card and its guide **Management’s view**, removes the Pause / Resume controls, and starts a fresh game whenever the page is opened or refreshed. A short, skippable four-step guide appears at the start of each run. Use **Guide** to reopen it. The guide highlights decisions, the reported score, student response and conversation, without revealing the lesson's conclusion. It pauses the underlying presentation.
+Version 5 simplifies the post-scene page. The prediction is a quiet reference line. A single classroom observation paragraph (the former details text) appears automatically together with the Students summary, sharing one sound cue. There is no duplicate headline, details toggle, student badge or separate student animation. Management’s view retains its existing score without renewed emphasis.
 
-The evaluation and post-scene recap now advance automatically. After the score rises, Management’s view updates. After the cinematic ends, the original prediction returns, the classroom finding appears, the student card updates, and Maya/Alex reply in order. No extra reveal buttons are required. Each update has an entrance animation and a distinct cue, remains on screen, and waits if its information is off screen or the tab is hidden. On small screens the presentation brings the next region into view. Opening More context holds the sequence for reading; Close details continues automatically. There is no pause button. Players still choose the metric, write the prediction, run the evaluation, enter the classroom and choose when to proceed to Level 2.
+The classroom observation has 6–8 seconds of visible reading time, based on its English length, before conversation begins. Maya appears above-left, then Alex below-right within the main content column. Each message starts with 650 ms of typing dots and gets 3–5 seconds of visible reading time. The next-step button appears only after the last reply’s reading interval. All revealed information stays available. Hidden tabs, off-screen text, Guide and restart dialogs hold the pending beat; sequences resume automatically when visible again. There are no pause or reveal buttons.
 
-The score's Target 70 label sits directly below the 70-point marker at every screen size. Card entrances, selection confirmation, the growing result bar, revealed observations and the student signal use restrained animations. Reduced-motion preferences remove movement while retaining the order.
+The score's Target 70 label sits directly below the 70-point marker at every screen size. The finding fades in once; the student card changes quietly as its summary. The evaluation’s management highlight ends after 1.6 visible seconds. Reduced-motion preferences remove movement while retaining the reading intervals and sequence.
 
-More audible Web Audio tones mark the rising score, target achievement, observation, student update and arriving replies. Data cues use a higher output level than v2, with reply pips kept softer. The header’s **Sound on / Sound off** control changes sound only for the current run; a new run starts with sound on. Audio starts after a user gesture; a refreshed page waits for another gesture. Unsupported audio falls back to the visual feedback. Reduced-motion mode preserves the order with static dots and immediate score changes.
+Web Audio tones mark the rising score, target achievement, the combined classroom finding/student update, and arriving replies. Data cues remain more audible than v2, with reply pips softer. The header’s **Sound on / Sound off** control changes sound only for the current run; a new run starts with sound on. Audio starts after a user gesture. Unsupported audio falls back to visual feedback.
+
+A short, skippable four-step guide appears at the start of every run. Use **Guide** to reopen it. It highlights decisions, the reported score, student response and conversation without revealing the lesson’s conclusion.
 
 Scores are illustrative 0–100 indices. Each metric has a stable before/after pair and an illustrative target of 70. Predictions are never graded or sent to a service. Moodle references are fictional game content; no Moodle or AI connection is required.
 
-Game state lives only in the current page’s React memory. No game progress, guide marker, or sound preference is written to localStorage, sessionStorage or cookies. Old v1–v3 saves are ignored. Refreshing, closing and reopening, opening another tab, or returning through the browser back-forward cache starts a new run with no selected metric or prediction. Restart also starts a fresh run and shows the guide again. Moving between the workbench and its cinematic within the open page preserves the current run.
+Game state lives only in the current page’s React memory. No game progress, guide marker, or sound preference is written to localStorage, sessionStorage or cookies. Old saved data is ignored. Refreshing, closing and reopening, opening another tab, or returning through the browser back-forward cache starts a new run with no selected metric or prediction. Restart also starts a fresh run and shows the guide again. Moving between the workbench and its cinematic within the open page preserves the current run.
 
 The integrated full game must use the same lifetime rule: initialise the opening and player identity on a new page, and keep data only while that page is open. Mount the Level 1 component once during its workbench/cinematic sequence; pass the current player name and completion callback in memory.
 
@@ -50,6 +52,7 @@ The build checks TypeScript and creates a self-contained `dist/index.html`. `vit
 - `src/components/Dialogue.tsx`: visible-time chat sequence and typing indicators.
 - `src/components/WorkbenchGuide.tsx`: new-run, replayable guide with actual-region spotlights.
 - `src/useVisibleDelay.ts`: pausable, visible-time presentation beats.
+- `src/readingTime.ts`: text-length-based reading intervals for observations and replies.
 - `src/useFeedback.ts`: self-contained, gesture-unlocked sound cues and mute preference.
 - `src/state.ts`: in-memory run types and initial state; no save/load API.
 - `src/styles.css`: warm paper/office styling, responsive layouts and reduced-motion support.

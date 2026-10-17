@@ -1,0 +1,84 @@
+{
+  "version": "Level 1 v5",
+  "build_sha256": "0e5c0f29e70c89319360702c06c9acb81e0bbf53af599c4dc75fba5048f56985",
+  "checks": {
+    "offline_flow": {
+      "passed": 22,
+      "checks": [
+        "Empty selection is blocked; player interface is English without author notes",
+        "prep: correct score, story, in-page prediction, evidence, and completion",
+        "part: correct score, story, in-page prediction, evidence, and completion",
+        "focus: correct score, story, in-page prediction, evidence, and completion",
+        "discuss: correct score, story, in-page prediction, evidence, and completion",
+        "reflect: correct score, story, in-page prediction, evidence, and completion",
+        "peer: correct score, story, in-page prediction, evidence, and completion",
+        "Prediction validation: whitespace, 100-character limit, literal rendering",
+        "Restart cancellation preserves progress; confirmed restart clears only this game",
+        "Keyboard selection and focus; changing metric resets the previous prediction",
+        "Refresh starts fresh and ignores legacy progress, guide and sound preferences",
+        "Refresh during a scene returns to a new game, not the interlude",
+        "New and reopened tabs start fresh while the existing open page keeps its own run",
+        "Returning from the browser back-forward cache also starts fresh",
+        "Layout and functional flow at 1366 \u00d7 768, including touch and reduced motion",
+        "Layout and functional flow at 1024 \u00d7 768, including touch and reduced motion",
+        "Layout and functional flow at 768 \u00d7 1024, including touch and reduced motion",
+        "Layout and functional flow at 390 \u00d7 844, including touch and reduced motion",
+        "Layout and functional flow at 375 \u00d7 667, including touch and reduced motion",
+        "Layout and functional flow at 320 \u00d7 640, including touch and reduced motion",
+        "Full game works with localStorage and sessionStorage completely unavailable",
+        "No uncaught browser errors"
+      ],
+      "runtime_errors": []
+    },
+    "automatic_feedback": {
+      "passed": 11,
+      "checks": [
+        "Score and management feedback advance automatically without pause controls",
+        "Actual Web Audio plays count and success cues at the increased master gain",
+        "Management emphasis ends after one cue and the score remains available",
+        "One evidence paragraph and student summary arrive together with one cue and no duplicate text or controls",
+        "Classroom evidence receives at least six seconds of visible reading time before conversation",
+        "Replies stay in the main column; both speakers receive reading time before the next message or Continue",
+        "Mute suppresses all subsequent cues within the current game",
+        "Unmuting restores actual Web Audio feedback",
+        "Guide temporarily holds the reading sequence and closing it resumes automatically",
+        "Off-screen recap waits, then resumes reading and brings replies into view without visiting the sidebar",
+        "Browsers without Web Audio retain the complete visual sequence"
+      ],
+      "runtime_errors": []
+    },
+    "guide_and_alignment": {
+      "passed": 12,
+      "checks": [
+        "1366px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
+        "1366px: guide returns for every new page and preserves in-page choices when reopened",
+        "1366px: Target 70 sits under its real marker; reopening guide retains the evaluation",
+        "960px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
+        "960px: guide returns for every new page and preserves in-page choices when reopened",
+        "960px: Target 70 sits under its real marker; reopening guide retains the evaluation",
+        "390px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
+        "390px: guide returns for every new page and preserves in-page choices when reopened",
+        "390px: Target 70 sits under its real marker; reopening guide retains the evaluation",
+        "320px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
+        "320px: guide returns for every new page and preserves in-page choices when reopened",
+        "320px: Target 70 sits under its real marker; reopening guide retains the evaluation"
+      ],
+      "runtime_errors": []
+    },
+    "partner_handoff": {
+      "passed": 1,
+      "checks": [
+        "Host-provided cinematic returns to the simplified recap; in-page prediction and final score reach the host callback after dialogue reading; host can disable intro."
+      ],
+      "runtime_errors": []
+    }
+  },
+  "notes": [
+    "Exact production bytes tested offline through an in-memory origin; managed Chromium blocks direct file URLs.",
+    "The ZIP HTML matches the tested production bytes exactly, with embedded assets.",
+    "Reading intervals and the final next-step delay were verified from browser DOM event timestamps; evidence and student summary appeared in the same update with one real Web Audio cue.",
+    "Six branches and six viewport sizes checked, including 320px width and reduced motion.",
+    "Partner component handoff checked through the development server.",
+    "Cinematics and Level 2 remain placeholders."
+  ]
+}

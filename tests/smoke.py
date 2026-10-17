@@ -68,7 +68,7 @@ def reveal_review(page, settle=True):
     expect(page.locator('.observation-recap')).to_be_visible(timeout=10000)
     expect(page.locator('.student')).to_contain_text('Unclear', timeout=10000)
     if settle:
-        expect(page.get_by_role('button', name='Try more metrics')).to_be_enabled(timeout=15000)
+        expect(page.get_by_role('button', name='Try more metrics')).to_be_enabled(timeout=22000)
 
 
 def story_to_review(page):
@@ -95,6 +95,14 @@ with sync_playwright() as p:
     record('Empty selection is blocked; player interface is English without author notes')
     page.screenshot(path=str(output / 'desktop-choose.png'), full_page=True)
 
+    evidence = {
+        'prep': 'Students complete the preparation, but some skim just enough to meet the requirement.',
+        'part': 'Students speak more often, but some contributions are brief or repetitive.',
+        'focus': 'Students stay visibly on task, but some focus on looking busy rather than thinking deeply.',
+        'discuss': 'Students use the discussion behaviours that earn credit, but some contributions become formulaic.',
+        'reflect': 'Reflections match the expected structure, but some students repeat the same safe patterns.',
+        'peer': 'Online replies become more specific, but some students learn a repeatable response formula.',
+    }
     for metric_id, before, after, first_line, uncertainty in metrics:
         fresh(page)
         prediction = 'Students will explore ideas instead of only ticking boxes.'
@@ -115,6 +123,10 @@ with sync_playwright() as p:
         page.get_by_role('button', name='Return to dashboard').click()
         expect(page.locator('.prediction-recap')).to_contain_text(prediction)
         reveal_review(page)
+        expect(page.locator('.observation-recap > p')).to_have_text(evidence[metric_id])
+        expect(page.locator('.observation-recap p')).to_have_count(1)
+        expect(page.locator('.observation-recap details')).to_have_count(0)
+        expect(page.locator('.student .new-badge')).to_have_count(0)
         expect(page.locator('.student .sr-only')).to_have_text(uncertainty)
         expect(page.locator('.university-value')).to_contain_text(str(after))
         no_overflow(page)

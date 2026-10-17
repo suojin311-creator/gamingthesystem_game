@@ -10,7 +10,7 @@ body { margin: 0; }
 button, input, textarea { font: inherit; }
 button { color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 button:disabled { cursor: not-allowed; opacity: .45; }
-button:focus-visible, a:focus-visible, textarea:focus-visible, summary:focus-visible {
+button:focus-visible, a:focus-visible, textarea:focus-visible {
   outline: 3px solid #376961; outline-offset: 4px;
 }
 h1, h2, h3, p { margin: 0; }
@@ -105,9 +105,7 @@ a { color: inherit; }
 .uncertainty { font: 24px/1.2 var(--serif); color: #9f6d35; margin-top: 4px; }
 .has-evidence { background: #f7e9cf; border-color: #ceb183; }
 .new-badge { position: absolute; top: 6px; right: 7px; font-size: 7px; letter-spacing: .08em; color: #fffaf0; background: #6f8a59; padding: 3px 4px; border-radius: 2px; }
-.student .new-badge { background: #ad7c40; }
-.just-updated { animation: status-arrival .8s ease-out 2; outline: 2px solid #8fa878; outline-offset: 2px; }
-.student.just-updated { outline-color: #c59b5d; }
+.just-updated { animation: status-arrival .65s ease-out; outline: 2px solid #8fa878; outline-offset: 2px; }
 /* Chronological chat: the first message stays above the next one. */
 .dialogue-strip { min-height: 90px; padding: 14px 30px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; border-top: 1px solid #d8d2c2; background: #f0ebdf; }
 .dialogue-strip.two-voices { min-height: 154px; }
@@ -161,15 +159,18 @@ a { color: inherit; }
 .score-track-labels > .target-label { transform: translateX(-50%); white-space: nowrap; }
 .data-note { font-size: 8px; color: #a3a18b; text-align: right; margin-top: 16px; }
 .comparison-stack { display: grid; gap: 15px; margin-bottom: 20px; }
-.prediction-recap { background: #fffdf6; border: 1px solid #ded5c0; padding: 15px 19px; }
-.prediction-recap blockquote { font: italic 21px/1.5 var(--serif); margin: 7px 0 0; color: #62563f; overflow-wrap: anywhere; }
-.observation-recap { border-left: 3px solid #b7925e; background: #f2e9d7; padding: 15px 19px; animation: message-in .3s ease-out; }
+.prediction-recap { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; padding: 0; }
+.prediction-recap .eyebrow { flex-shrink: 0; font-size: 8px; }
+.prediction-recap blockquote { font: italic 15px/1.5 var(--serif); margin: 0; color: #827a66; overflow-wrap: anywhere; min-width: 0; }
+.observation-recap { border-left: 3px solid #b7925e; background: #f2e9d7; padding: 22px 24px; min-height: 138px; }
 .observation-recap .eyebrow { color: #9f7443; }
-.observation-recap > p { font: 23px/1.4 var(--serif); color: #705e40; margin: 8px 0 0; }
-.observation-recap details { font-size: 11px; color: #937a56; margin-top: 10px; }
-.observation-recap summary { cursor: pointer; width: fit-content; }
-.observation-recap details p { font-size: 12px; line-height: 1.6; margin-top: 8px; }
-.observation-waiting { border: 1px dashed #ddd3be; color: #aca18a; padding: 22px; display: flex; align-items: center; justify-content: center; gap: 10px; font: italic 17px var(--serif); }
+.observation-recap > p { font: 22px/1.55 var(--serif); color: #705e40; margin: 10px 0 0; max-width: 48ch; }
+.observation-waiting { border: 1px dashed #ddd3be; color: #aca18a; padding: 22px; min-height: 138px; display: flex; align-items: center; justify-content: center; font: italic 17px var(--serif); }
+.phase-review .comparison-stack { gap: 18px; }
+.phase-review .perspective { transition: none; }
+.phase-review .dialogue-strip.two-voices { border: 0; background: transparent; padding: 0; margin: 0 0 16px; min-height: 140px; }
+.phase-review .dialogue-character { max-width: 90%; }
+.next-action-space { min-height: 42px; }
 .completion-seal { display: flex; gap: 8px; align-items: center; color: #647852; font-size: 10px; letter-spacing: .1em; margin-bottom: 28px; }
 .completion-seal .icon { width: 18px; height: 18px; border: 1px solid #9fac89; border-radius: 50%; padding: 2px; }
 .completion-intro h2 { font-size: 38px; line-height: 1.2; }
@@ -220,11 +221,6 @@ a { color: inherit; }
 .guide-dots i { width: 5px; height: 5px; border-radius: 50%; background: #d7ceba; }
 .guide-dots .active { background: var(--coral); }
 .guide-actions .button { min-height: 38px; font-size: 11px; padding: 9px 12px; }
-.sequence-status { display: flex; gap: 10px; align-items: center; font: italic 14px var(--serif); color: #9c8766; padding: 11px 0; }
-.sequence-dots, .review-loading { display: inline-flex; align-items: center; gap: 4px; }
-.sequence-dots > i, .review-loading > i { width: 4px; height: 4px; border-radius: 50%; background: currentColor; animation: typing 1.2s infinite; }
-.sequence-dots > i:nth-child(2), .review-loading > i:nth-child(2) { animation-delay: .15s; }
-.sequence-dots > i:nth-child(3), .review-loading > i:nth-child(3) { animation-delay: .3s; }
 .metric-card { animation: card-deal .4s ease-out both; }
 .metric-card:nth-child(2) { animation-delay: .045s; }
 .metric-card:nth-child(3) { animation-delay: .09s; }
@@ -234,18 +230,13 @@ a { color: inherit; }
 .metric-card:active { transform: translateY(1px) scale(.985); }
 .metric-card.selected .selection-circle { animation: choice-mark .3s ease-out; }
 .selected-focus, .score-paper, .next-chapter { animation: panel-arrive .4s ease-out both; }
-.prediction-recap { animation: paper-settle .55s ease-out both; transform-origin: 15% 50%; }
-.observation-recap { animation: evidence-reveal .55s ease-out both; }
+.observation-recap { animation: panel-arrive .4s ease-out both; }
 .university.just-updated .mini-bar > span { transform-origin: left; animation: bar-arrive .65s ease-out both; }
 .university.just-updated .university-value { animation: panel-arrive .4s ease-out both; }
-.student.just-updated .student-signal { animation: signal-arrive .6s ease-out both; }
 @keyframes card-deal { from { opacity: 0; translate: 0 9px; } to { opacity: 1; translate: 0 0; } }
 @keyframes choice-mark { from { scale: .5; opacity: 0; } 70% { scale: 1.12; } to { scale: 1; opacity: 1; } }
 @keyframes panel-arrive { from { opacity: 0; translate: 0 8px; } to { opacity: 1; translate: 0 0; } }
-@keyframes paper-settle { from { opacity: 0; rotate: -.8deg; translate: -8px 4px; } to { opacity: 1; rotate: 0deg; translate: 0 0; } }
-@keyframes evidence-reveal { from { opacity: 0; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0 0 0 0); } }
 @keyframes bar-arrive { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@keyframes signal-arrive { from { opacity: 0; scale: .75; } 70% { opacity: 1; scale: 1.04; } to { opacity: 1; scale: 1; } }
 @keyframes typing { 0%,60%,100% { opacity: .4; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
 @keyframes message-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes status-arrival { 0% { box-shadow: 0 0 0 0 #a1ae7570; } 100% { box-shadow: 0 0 0 10px #a1ae7500; } }
@@ -268,7 +259,6 @@ a { color: inherit; }
   .dialogue-character { min-height: 53px; }
   .score-numbers { margin: 22px 0; }
   .comparison-stack { gap: 12px; }
-  .prediction-recap blockquote { font-size: 19px; }
   .observation-recap > p { font-size: 21px; }
 }
 @media (max-width: 1000px) {
@@ -344,6 +334,7 @@ a { color: inherit; }
   .selection-note { font-size: 10px; }
   .button { font-size: 11px; padding: 11px 12px; }
   .dialogue-strip, .dialogue-strip.two-voices { padding: 14px 18px; }
+  .phase-review .dialogue-strip.two-voices { min-height: 190px; }
   .speech-bubble p { font-size: 15px; }
   .dialogue-character { gap: 10px; }
   .avatar { width: 28px; height: 28px; font-size: 19px; }
@@ -357,10 +348,10 @@ a { color: inherit; }
   .score-numbers { gap: 22px; margin: 27px 0; }
   .score-numbers > span { font-size: 56px; }
   .score-numbers .score-arrow { width: 28px; height: 28px; }
-  .prediction-recap { padding: 15px 16px; }
-  .prediction-recap blockquote { font-size: 19px; }
+  .prediction-recap { gap: 4px 8px; }
+  .prediction-recap blockquote { font-size: 14px; }
   .observation-recap { padding: 15px 16px; }
-  .observation-recap > p { font-size: 22px; }
+  .observation-recap > p { font-size: 20px; }
   .observation-waiting { font-size: 15px; padding: 20px 12px; }
   .completion-intro h2 { font-size: 32px; }
   .next-chapter { gap: 12px; padding: 18px 12px; }

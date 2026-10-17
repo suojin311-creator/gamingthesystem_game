@@ -7,6 +7,7 @@ import CinematicPlaceholder, { type CinematicRequest } from './components/Cinema
 import { useFeedback } from './useFeedback';
 import WorkbenchGuide from './components/WorkbenchGuide';
 import { useVisibleDelay } from './useVisibleDelay';
+import { readingTime } from './readingTime';
 
 export type LevelOneResult = {
   metricId: MetricId; prediction: string;
@@ -38,7 +39,7 @@ function ResultChart({ metric, ready, score }: { metric: Metric; ready: boolean;
 }
 
 function PerspectivePanel({ metric, evaluated, observed, highlight }: {
-  metric?: Metric; evaluated: boolean; observed: boolean; highlight: 'university' | 'student' | null;
+  metric?: Metric; evaluated: boolean; observed: boolean; highlight: 'university' | null;
 }) {
   return <aside className="perspectives" aria-label="Two perspectives">
     <section className={`perspective university ${evaluated ? 'has-result' : ''} ${highlight === 'university' ? 'just-updated' : ''}`} aria-labelledby="university-title" data-updated={highlight === 'university'} tabIndex={-1}>
@@ -46,8 +47,8 @@ function PerspectivePanel({ metric, evaluated, observed, highlight }: {
       <span className="perspective-label">Reported score</span>
       {evaluated && metric ? <><div className="university-value"><span>{metric.after}</span><span className="gain">+{metric.after - metric.before}<Icon name="arrow" /></span></div><div className="mini-bar" aria-hidden="true"><span style={{ width: `${metric.after}%` }} /></div><p className="perspective-status"><Icon name="check" />Target met</p></> : <><div className="pending-symbol" aria-hidden="true">—</div><p className="pending-title">Run an evaluation</p></>}
     </section>
-    <section className={`perspective student ${observed ? 'has-evidence' : ''} ${highlight === 'student' ? 'just-updated' : ''}`} aria-labelledby="student-title" data-updated={highlight === 'student'} tabIndex={-1}>
-      <div className="perspective-heading"><Icon name="student" /><h3 id="student-title">Students</h3>{highlight === 'student' && <span className="new-badge">NEW</span>}</div>
+    <section className={`perspective student ${observed ? 'has-evidence' : ''}`} aria-labelledby="student-title" tabIndex={-1}>
+      <div className="perspective-heading"><Icon name="student" /><h3 id="student-title">Students</h3></div>
       <span className="perspective-label">{observed && metric ? metric.learningLabel : 'Classroom response'}</span>
       {observed && metric ? <><div className="student-signal"><Icon name="question" /></div><p className="uncertainty">Unclear</p><span className="sr-only">{metric.uncertainty}</span></> : <><div className="student-signal waiting-signal"><Icon name="eye" /></div><p className="pending-title">Not observed yet</p></>}
     </section>
@@ -62,8 +63,7 @@ export default function LevelOne({ playerName = 'Maya', renderCinematic, onCompl
   const [resultReady, setResultReady] = useState(false);
   const [animatedScore, setAnimatedScore] = useState(0);
   const [dialogueSettled, setDialogueSettled] = useState(false);
-  const [highlight, setHighlight] = useState<'university' | 'student' | null>(null);
-  const [readingContext, setReadingContext] = useState(false);
+  const [highlight, setHighlight] = useState<'university' | null>(null);
   const [reviewTalkReady, setReviewTalkReady] = useState(false);
   const title = useRef<HTMLHeadingElement>(null);
   const cancelRestart = useRef<HTMLButtonElement>(null);
@@ -73,23 +73,23 @@ export default function LevelOne({ playerName = 'Maya', renderCinematic, onCompl
   const dialog = useRef<HTMLDialogElement>(null);
   const predictionField = useRef<HTMLTextAreaElement>(null);
   const feedback = useFeedback();
-  const paused = guideOpen || restartOpen || readingContext;
+  const paused = guideOpen || restartOpen;
   const pausedRef = useRef(paused);
   pausedRef.current = paused;
   const { phase, prediction, metricId, resultReported, reviewStep } = session;
   const metric = getMetric(metricId);
-  const observed = (phase === 'review' && reviewStep === 2) || phase === 'complete';
+  const observed = (phase === 'review' && reviewStep === 1) || phase === 'complete';
   const evaluated = (phase === 'result' && resultReported) || ['cinematic', 'review', 'complete'].includes(phase);
-  const dialogueEnabled = phase === 'result' ? resultReported : phase === 'review' ? reviewStep === 2 && reviewTalkReady : true;
+  const dialogueEnabled = phase === 'result' ? resultReported : phase === 'review' ? reviewTalkReady : true;
 
   useVisibleDelay(`report:${runId}:${phase}:${metricId}:${resultReported}`, '.score-paper', 900,
     phase === 'result' && resultReady && !resultReported && !paused, showReport);
+  useVisibleDelay(`report-emphasis:${runId}:${phase}:${metricId}:${resultReported}`, '.perspective.university', 1600,
+    phase === 'result' && highlight === 'university' && !paused, () => setHighlight(null));
   useVisibleDelay(`evidence:${runId}:${phase}:${metricId}:${reviewStep}`, '.prediction-recap', 1000,
     phase === 'review' && reviewStep === 0 && !paused, showObservation);
-  useVisibleDelay(`student:${runId}:${phase}:${metricId}:${reviewStep}`, '.observation-recap', 1700,
-    phase === 'review' && reviewStep === 1 && !paused, showStudents);
-  useVisibleDelay(`conversation:${runId}:${phase}:${metricId}:${reviewStep}`, '.perspective.student', 1600,
-    phase === 'review' && reviewStep === 2 && !paused && !reviewTalkReady, () => {
+  useVisibleDelay(`conversation:${runId}:${phase}:${metricId}:${reviewStep}`, '.observation-recap', readingTime(metric?.evidence || '', 6000, 8000),
+    phase === 'review' && reviewStep === 1 && !paused && !reviewTalkReady, () => {
       setReviewTalkReady(true);
       bringIntoView('.dialogue-strip');
     });
@@ -97,13 +97,11 @@ export default function LevelOne({ playerName = 'Maya', renderCinematic, onCompl
   useEffect(() => {
     setDialogueSettled(false);
     setHighlight(null);
-    setReadingContext(false);
     setReviewTalkReady(false);
     if (phase === 'predict') predictionField.current?.focus({ preventScroll: true });
     else if (phase !== 'cinematic') title.current?.focus({ preventScroll: true });
     const target = title.current;
     if (phase !== 'cinematic' && target && (target.getBoundingClientRect().top < 0 || target.getBoundingClientRect().top > window.innerHeight * 0.7)) target.scrollIntoView({ block: 'start', behavior: 'instant' });
-    if (phase === 'review' && reviewStep === 2) bringIntoView('.perspective.student');
   }, [phase, runId]);
   useEffect(() => {
     const onReturn = (event: PageTransitionEvent) => { if (event.persisted) restartExperiment(); };
@@ -147,10 +145,6 @@ export default function LevelOne({ playerName = 'Maya', renderCinematic, onCompl
   function choose(id: MetricId) {
     setSession(value => ({ ...value, metricId: id, prediction: value.metricId === id ? value.prediction : '', resultReported: false, reviewStep: 0 }));
   }
-  function spotlight(which: 'university' | 'student') {
-    setHighlight(which);
-    bringIntoView(`.perspective.${which}`);
-  }
   function bringIntoView(selector: string) {
     window.requestAnimationFrame(() => {
       const panel = document.querySelector<HTMLElement>(selector);
@@ -161,17 +155,13 @@ export default function LevelOne({ playerName = 'Maya', renderCinematic, onCompl
   function showReport() {
     setSession(value => ({ ...value, resultReported: true }));
     feedback.play('report');
-    spotlight('university');
+    setHighlight('university');
+    bringIntoView('.perspective.university');
   }
   function showObservation() {
     setSession(value => ({ ...value, reviewStep: 1 }));
     feedback.play('evidence');
     bringIntoView('.observation-recap');
-  }
-  function showStudents() {
-    setSession(value => ({ ...value, reviewStep: 2 }));
-    feedback.play('student');
-    spotlight('student');
   }
   function finish() {
     if (!metric) return;
@@ -184,7 +174,6 @@ export default function LevelOne({ playerName = 'Maya', renderCinematic, onCompl
     setSession({ ...INITIAL_SESSION });
     setRunId(value => value + 1);
     setRestartOpen(false);
-    setReadingContext(false);
     guideWasAutomatic.current = showIntro;
     setGuideOpen(showIntro);
   }
@@ -199,6 +188,8 @@ export default function LevelOne({ playerName = 'Maya', renderCinematic, onCompl
       guideWasAutomatic.current = false;
     });
   }
+
+  const dialogue = <Dialogue key={`${runId}:${phase}`} phase={phase} playerName={playerName} studentQuote={metric?.studentQuote} enabled={dialogueEnabled} paused={paused} play={feedback.play} onSettled={() => setDialogueSettled(true)} />;
 
   return <div className="game-page" onPointerDownCapture={feedback.unlock} onKeyDownCapture={feedback.unlock}>
     <header className="masthead"><a className="wordmark" href="#main-content" aria-label="Gaming the System, skip to game"><span className="brand-emblem" aria-hidden="true">g<span>s</span><i /></span><span>GAMING<br /><b>THE SYSTEM</b></span></a><div className="header-controls">{phase !== 'cinematic' && <button ref={guideButton} className="guide-button" aria-label="Guide" onClick={openGuide}><Icon name="question" /><span>Guide</span></button>}<button className="sound-button" aria-pressed={!feedback.muted} disabled={!feedback.available} onClick={feedback.toggle} title={feedback.available ? 'Toggle feedback sounds' : 'Audio is unavailable in this browser'}><Icon name={feedback.muted || !feedback.available ? 'muted' : 'sound'} /><span>{!feedback.available ? 'No audio' : feedback.muted ? 'Sound off' : 'Sound on'}</span></button><button ref={restartButton} className="restart-button" onClick={() => setRestartOpen(true)}><Icon name="restart" /><span>Restart</span></button></div></header>
@@ -235,9 +226,10 @@ export default function LevelOne({ playerName = 'Maya', renderCinematic, onCompl
             {phase === 'review' && metric && <>
               <div className="section-intro"><h2 ref={title} tabIndex={-1}>Look a little closer.</h2></div>
               <div className="comparison-stack"><article className="prediction-recap"><span className="eyebrow">YOU EXPECTED</span><blockquote>“{prediction}”</blockquote></article>
-                {reviewStep >= 1 ? <article className="observation-recap" key="evidence"><span className="eyebrow">IN THE CLASSROOM</span><p>{metric.takeaway}</p><details onToggle={event => { setReadingContext(event.currentTarget.open); if (event.currentTarget.open) feedback.stop(); }}><summary>{readingContext ? 'Close details' : 'More context'}</summary><p>{metric.evidence}</p></details></article> : <div className="observation-waiting"><span className="review-loading" aria-hidden="true"><i /><i /><i /></span><span>Recalling the classroom…</span></div>}
+                {observed ? <article className="observation-recap" key="evidence"><span className="eyebrow">IN THE CLASSROOM</span><p>{metric.evidence}</p></article> : <div className="observation-waiting"><span>Recalling the classroom…</span></div>}
               </div>
-              <div className="action-row"><button className="text-button" onClick={() => go('cinematic')}>Replay scene</button>{dialogueSettled ? <button className="button primary-button" onClick={finish}>Try more metrics<Icon name="arrow" /></button> : <span className="sequence-status" role="status">{readingContext ? 'Reading…' : reviewStep === 0 ? 'Recalling…' : reviewStep === 1 ? 'Classroom response' : 'Listening…'}<span className="sequence-dots" aria-hidden="true"><i /><i /><i /></span></span>}</div>
+              {dialogue}
+              <div className="action-row"><button className="text-button" onClick={() => go('cinematic')}>Replay scene</button>{dialogueSettled ? <button className="button primary-button" onClick={finish}>Try more metrics<Icon name="arrow" /></button> : <span className="next-action-space" aria-hidden="true" />}</div>
             </>}
 
             {phase === 'complete' && metric && <>
@@ -249,7 +241,7 @@ export default function LevelOne({ playerName = 'Maya', renderCinematic, onCompl
           </section>
           <PerspectivePanel metric={metric} evaluated={evaluated} observed={observed} highlight={highlight} />
         </div>
-        <Dialogue key={`${runId}:${phase}`} phase={phase} playerName={playerName} studentQuote={metric?.studentQuote} enabled={dialogueEnabled} paused={paused} play={feedback.play} onSettled={() => setDialogueSettled(true)} />
+        {phase !== 'review' && dialogue}
       </>}
     </main>
     <footer className="page-footer">GAMING THE SYSTEM · LEVEL 01</footer>

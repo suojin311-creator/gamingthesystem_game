@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-export type Cue = 'tick' | 'report' | 'evidence' | 'student' | 'message';
+export type Cue = 'tick' | 'report' | 'evidence' | 'message';
 
 export function useFeedback() {
   const [muted, setMuted] = useState(false);
@@ -33,7 +33,7 @@ export function useFeedback() {
     if (mutedRef.current || !audio || audio.state !== 'running' || !master.current || document.hidden) return;
     const notes: Record<Cue, number[]> = {
       tick: [420], report: [523.25, 659.25, 783.99],
-      evidence: [360], student: [440, 392], message: [600],
+      evidence: [360], message: [600],
     };
     notes[cue].forEach((frequency, index) => {
       const oscillator = audio.createOscillator();
