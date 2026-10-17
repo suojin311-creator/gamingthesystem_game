@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { allocateWeight, canRun, effortAt, goalMet, isNearEven, maximumWeight, spread, validWeights } from '../src/levels/level3/weights.ts';
+import { allocateWeight, canRun, confirmWeight, effortAt, goalMet, isNearEven, maximumWeight, spread, validWeights } from '../src/levels/level3/weights.ts';
 
 const checks = [];
 const check = (name, run) => { run(); checks.push(name); console.log('PASS', name); };
-check('Every possible integer split preserves total 100, minimum 10 and deterministic effort', () => {
-  for (let a = 10; a <= 80; a++) for (let b = 10; b <= 90 - a; b++) {
+check('Every possible integer split preserves total 100, range 0–100 and deterministic effort', () => {
+  for (let a = 0; a <= 100; a++) for (let b = 0; b <= 100 - a; b++) {
     const weights = [a, b, 100 - a - b];
     assert.ok(validWeights(weights));
     assert.ok(!isNearEven(weights) || weights.every((_, i) => effortAt(weights, i) === 'medium'));
@@ -18,27 +18,38 @@ check('Every possible integer split preserves total 100, minimum 10 and determin
     }
   }
 });
-check('Confirmed weights stay locked in every confirmation order; only remaining weight cannot move', () => {
-  for (const order of [[0,1,2], [0,2,1], [1,0,2], [1,2,0], [2,0,1], [2,1,0]]) {
-    let weights = [34,33,33], locked = [false,false,false];
-    for (const [position,index] of order.entries()) {
-      const next = allocateWeight(weights, locked, index, 70 - position * 20);
-      assert.ok(validWeights(next));
-      for (let i = 0; i < 3; i++) if (locked[i] || position === 2) assert.equal(next[i], weights[i]);
-      weights = next; locked[index] = true;
-      assert.deepEqual(allocateWeight(weights, locked, index, 10), weights);
-    }
-    assert.ok(canRun(weights, locked, [34,33,33], 'first'));
+check('Either remaining card confirms the pair after any first-card choice', () => {
+  for (let first = 0; first < 3; first++) for (const second of [0,1,2].filter(i=>i!==first)) {
+    const weights = allocateWeight([34,33,33], [false,false,false], first, 80);
+    const locked = confirmWeight([false,false,false], first);
+    assert.equal(locked.filter(Boolean).length,1);
+    const remaining = [0,1,2].find(i=>i!==first&&i!==second);
+    const next = allocateWeight(weights,locked,second,15);
+    assert.equal(next[first],80);assert.equal(next[second],15);assert.equal(next[remaining],5);
+    assert.ok(validWeights(next));
+    const finished=confirmWeight(locked,second);
+    assert.deepEqual(finished,[true,true,true]);
+    assert.ok(canRun(next,finished,[34,33,33],'first'));
+    for (let i=0;i<3;i++) assert.deepEqual(allocateWeight(next,finished,i,50),next);
   }
 });
-check('Minimum and maximum clamp safely without changing the input snapshot', () => {
-  const old = [70,20,10];
-  assert.deepEqual(allocateWeight(old, [true,false,false], 1, 80), [70,20,10]);
-  assert.equal(maximumWeight(old, [true,false,false], 1), 20);
-  assert.deepEqual(allocateWeight([34,33,33], [false,false,false], 0, -100), [10,45,45]);
-  assert.deepEqual(allocateWeight([34,33,33], [false,false,false], 0, 100), [80,10,10]);
-  assert.deepEqual(old, [70,20,10]);
-  assert.deepEqual(allocateWeight(old, [false,false,false], 0, NaN), old);
+check('Both equal remaining sliders can move in either direction before confirmation', () => {
+  const weights=[80,10,10],locked=[true,false,false];
+  assert.deepEqual(allocateWeight(weights,locked,1,15),[80,15,5]);
+  assert.deepEqual(allocateWeight(weights,locked,2,15),[80,5,15]);
+  assert.deepEqual(allocateWeight(weights,locked,1,0),[80,0,20]);
+  assert.deepEqual(allocateWeight(weights,locked,2,20),[80,0,20]);
+  assert.deepEqual(weights,[80,10,10]);
+});
+check('Available bounds clamp safely, including zero, without changing locked weights or snapshots', () => {
+  const old=[70,20,10];
+  assert.deepEqual(allocateWeight(old,[true,false,false],1,80),[70,30,0]);
+  assert.equal(maximumWeight(old,[true,false,false],1),30);
+  assert.deepEqual(allocateWeight([34,33,33],[false,false,false],0,-100),[0,50,50]);
+  assert.deepEqual(allocateWeight([34,33,33],[false,false,false],0,100),[100,0,0]);
+  assert.deepEqual(old,[70,20,10]);
+  assert.deepEqual(allocateWeight(old,[false,false,false],0,NaN),old);
+  assert.deepEqual(allocateWeight([100,0,0],[true,false,false],1,20),[100,0,0]);
 });
 check('Near-even boundary is inclusive; 34/33/33 and equal-looking thresholds produce three medium shots', () => {
   assert.ok(isNearEven([36,33,31]));
@@ -46,10 +57,12 @@ check('Near-even boundary is inclusive; 34/33/33 and equal-looking thresholds pr
   assert.deepEqual([0,1,2].map(i=>effortAt([34,33,33],i)), ['medium','medium','medium']);
   for (const [weights, expected] of [[[33,57,10],'low'], [[34,56,10],'medium'], [[66,24,10],'medium'], [[67,23,10],'high']]) assert.equal(effortAt(weights,0), expected);
 });
-check('Run requires three individual confirmations and a valid complete allocation', () => {
+check('Run requires all three confirmed weights (including the linked pair) and a valid complete allocation', () => {
   for (const confirmed of [[false,false,false], [true,true,false], [true,false,true], [false,true,true]]) assert.ok(!canRun([34,33,33], confirmed, [34,33,33], 'first'));
   assert.ok(canRun([70,20,10], [true,true,true], [34,33,33], 'first'));
-  for (const weights of [[30,30,30], [90,5,5], [33.5,33.5,33]]) assert.ok(!validWeights(weights));
+  assert.ok(canRun([100,0,0], [true,true,true], [34,33,33], 'first'));
+  assert.ok(canRun([90,5,5], [true,true,true], [34,33,33], 'first'));
+  for (const weights of [[30,30,30], [-1,51,50], [101,0,-1], [33.5,33.5,33]]) assert.ok(!validWeights(weights));
 });
 check('An already balanced first run must create a clear contrast of at least 20 points', () => {
   assert.ok(!goalMet([34,33,33], [34,33,33], 'contrast'));

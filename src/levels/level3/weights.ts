@@ -3,11 +3,11 @@ export type Confirmed = readonly [boolean, boolean, boolean];
 export type WeightGoal = 'first' | 'rebalance' | 'contrast';
 export type Effort = 'low' | 'medium' | 'high';
 export const EVEN_WEIGHTS: Weights = [34, 33, 33];
-export const MIN_WEIGHT = 10;
+export const MIN_WEIGHT = 0;
 
 export const spread = (weights: Weights) => Math.max(...weights) - Math.min(...weights);
 export const isNearEven = (weights: Weights) => spread(weights) <= 5;
-export const validWeights = (weights: Weights) => weights.length === 3 && weights.every(value => Number.isInteger(value) && value >= MIN_WEIGHT && value <= 80) && weights.reduce((sum, value) => sum + value, 0) === 100;
+export const validWeights = (weights: Weights) => weights.length === 3 && weights.every(value => Number.isInteger(value) && value >= MIN_WEIGHT && value <= 100) && weights.reduce((sum, value) => sum + value, 0) === 100;
 
 /** Integer percentages keep the total exact; a one-point remainder goes in card order. */
 export function allocateWeight(weights: Weights, confirmed: Confirmed, index: number, requested: number): Weights {
@@ -24,8 +24,19 @@ export function allocateWeight(weights: Weights, confirmed: Confirmed, index: nu
 }
 
 export function maximumWeight(weights: Weights, confirmed: Confirmed, index: number) {
+  if (confirmed[index]) return weights[index];
   return 100 - weights.reduce((sum, value, i) => sum + (confirmed[i] ? value : 0), 0)
     - MIN_WEIGHT * confirmed.filter((locked, i) => !locked && i !== index).length;
+}
+
+/** Either of the final two cards confirms their complete remaining split. */
+export function confirmWeight(confirmed: Confirmed, index: number): Confirmed {
+  if (!Number.isInteger(index) || index < 0 || index > 2 || confirmed[index]) return confirmed;
+  const unlocked = confirmed.filter(locked => !locked).length;
+  if (unlocked <= 2) return [true, true, true];
+  const next: [boolean, boolean, boolean] = [...confirmed];
+  next[index] = true;
+  return next;
 }
 
 export function goalMet(weights: Weights, baseline: Weights, goal: WeightGoal) {

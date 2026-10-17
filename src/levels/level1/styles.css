@@ -40,7 +40,7 @@
 :where(.level-one) .card-index { font: italic 10px var(--serif); color: #aaa794; }
 :where(.level-one) .selected .selection-circle { background: #ae6049; color: #fff7e8; }
 :where(.level-one) .selection-circle .icon { width: 13px; height: 13px; }
-:where(.level-one) .metric-card h3 { font-size: 13px; line-height: 1.35; margin-bottom: 6px; }
+:where(.level-one) .metric-card h3 { font-size: var(--metric-name-size); line-height: 1.35; margin-bottom: 6px; }
 :where(.level-one) .metric-card p { font-size: 11px; line-height: 1.45; color: #7a7b6c; }
 :where(.level-one) .prediction-actions { justify-content: flex-end; }
 :where(.level-one) .selection-note { font-size: 11px; color: #818271; display: flex; align-items: center; gap: 6px; line-height: 1.5; }
@@ -201,7 +201,7 @@
   :where(.level-one) .metric-card-top { margin-bottom: 5px; }
   :where(.level-one) .metric-illustration { width: 27px; height: 27px; }
   :where(.level-one) .metric-illustration > .icon { width: 19px; height: 19px; }
-  :where(.level-one) .metric-card h3 { font-size: 12px; margin-bottom: 4px; }
+  :where(.level-one) .metric-card h3 { font-size: var(--metric-name-size); margin-bottom: 4px; }
   :where(.level-one) .metric-grid { margin-bottom: 14px; }
   :where(.level-one) .dialogue-strip { padding: 10px 30px; min-height: 77px; }
   :where(.level-one) .dialogue-strip.two-voices { min-height: 137px; gap: 7px; }
@@ -216,7 +216,7 @@
   :where(.level-one) .perspectives { padding: 20px 14px; }
   :where(.level-one) .perspective { padding: 14px 12px; }
   :where(.level-one) .selection-note { font-size: 10px; }
-  :where(.level-one) .metric-card h3 { font-size: 12px; }
+  :where(.level-one) .metric-card h3 { font-size: var(--metric-name-size); }
 }
 @media (max-width: 760px) {
   :where(.level-one).game-page { padding: 0 14px 14px; }
@@ -270,7 +270,7 @@
   :where(.level-one) .decision-area { padding: 20px 18px 0; }
   :where(.level-one) .metric-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
   :where(.level-one) .metric-card { min-height: 135px; padding: 12px; }
-  :where(.level-one) .metric-card h3 { font-size: 12px; }
+  :where(.level-one) .metric-card h3 { font-size: var(--metric-name-size); }
   :where(.level-one) .metric-card p { font-size: 11px; }
   :where(.level-one) .selection-note { font-size: 10px; }
   :where(.level-one) .dialogue-strip, :where(.level-one) .dialogue-strip.two-voices { padding: 14px 18px; }

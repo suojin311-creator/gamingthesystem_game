@@ -132,3 +132,11 @@ separate Netlify opening has already been connected.
 → Level 3, weighted shot requests, comparison/theory renderers and the optional
 Design Lab callback. The combined preview connects all three gameplay levels;
 individual App modes mount only their selected level.
+
+Level 2 → Level 3 also carries the three chosen metric IDs in page memory. The
+Level 3 selector starts with those cards checked and allows replacement; direct
+standalone Level 3 has no inherited choices. Custom hosts can pass
+`initialMetricIds` directly to `LevelThree`. The final scene chain is
+`level3.compare` → `theory.reveal` → `onDesignLab()` automatically. Supply the
+final callback to route to the real Design Lab; no extra completion button is
+required after the theory animation. Previews show a minimal reserved destination.

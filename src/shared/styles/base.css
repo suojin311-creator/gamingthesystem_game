@@ -5,6 +5,7 @@
   --ink: #34382e; --muted: #77796b; --line: #dbd7c9;
   --paper: #fcf9f1; --coral: #ad5840; --sage: #52664f;
   --serif: Georgia, 'Times New Roman', serif;
+  --metric-name-size: 13px;
 }
 * { box-sizing: border-box; }
 body { margin: 0; }

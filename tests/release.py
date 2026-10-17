@@ -2,6 +2,7 @@
 Reading intervals use the browser clock; level2.py checks them at real speed.
 """
 import json
+import re
 import hashlib
 import zipfile
 from pathlib import Path
@@ -66,8 +67,10 @@ def finish_two(page):
 
 def choose_three(page):
     advance(page,8)
-    page.get_by_role('button',name='Choose priorities',exact=True).click()
-    for id in ['prep','part','focus']:page.get_by_test_id('level3-metric-'+id).click()
+    page.get_by_role('button',name=re.compile(r'^(Choose|Review) priorities$')).click()
+    for id in ['prep','part','focus']:
+        card=page.get_by_test_id('level3-metric-'+id)
+        if card.get_attribute('aria-pressed')!='true':card.click()
     page.get_by_role('button',name='Set the weights',exact=True).click()
 
 
@@ -75,12 +78,13 @@ def weights_three(page, values):
     for index,id in enumerate(['prep','part','focus']):
         slider=page.get_by_test_id('weight-card-'+id).locator('input')
         if not slider.is_disabled():slider.evaluate('''(input,value)=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(input,value);input.dispatchEvent(new Event('input',{bubbles:true}));}''', values[index])
-        page.get_by_test_id('confirm-'+id).click()
+        if page.get_by_test_id('confirm-'+id).is_enabled(): page.get_by_test_id('confirm-'+id).click()
     page.get_by_role('button',name='Run evaluation',exact=True).click()
     page.locator('.l3-publish').scroll_into_view_if_needed();advance(page,5)
+    page.get_by_role('button',name='Observe the class',exact=True).click()
     for _ in range(2):page.get_by_role('button',name='Continue scene',exact=True).click()
     page.get_by_role('button',name='Return to dashboard',exact=True).click()
-    page.locator('.l3-results').scroll_into_view_if_needed();advance(page,5)
+    page.locator('.l3-results').scroll_into_view_if_needed();advance(page,12)
 
 
 with sync_playwright() as playwright:

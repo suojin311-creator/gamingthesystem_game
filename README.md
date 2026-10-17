@@ -21,11 +21,11 @@ Current development is on **level3-dev**. The existing level1-preview, level2-pr
 
 **Level 2 — More metrics.** A separate chapter conversation introduces choosing three of the same six metrics. The vertical Alex’s Checklist records those choices. Three/six-metric evaluations avoid duplicate checklists. All 20 trios route to descriptive branches; missing areas receive a continuous amber warning. Expanding from 6 to 10, 25 and 100 requirements reveals how students move from completing requirements to managing and optimizing a checklist. The standalone entry ends here; the combined game enables Continue to Level 3.
 
-**Level 3 — The weighting trap.** Choose any three priorities, allocate exactly 100% and confirm each weight. Confirmed values lock; other unlocked sliders automatically share the remainder. Each metric has a 10% minimum from the supplied prototype. Sliders share the same visual 0–100 scale, display their actual available maximum, and use whole percentage points to keep the total exact. Publishing automatically opens the selected three-shot classroom placeholder, then reveals the three qualitative responses one at a time.
+**Level 3 — The weighting trap.** The combined game preselects Level 2’s three metrics; players may swap them before weighting. Standalone Level 3 starts with an empty selection. Allocate exactly 100% across three priorities using 0–100% sliders. Confirm one card, then adjust either remaining slider; confirming either final card locks the pair and marks the other Auto-confirmed. Reset weights sits above the action row. Player/Alex conversations use a separate bottom region. Publication stays visible with both perspective cards until the player clicks Observe the class. Results reveal three qualitative responses with aligned, divided columns and the same metric font size used in Levels 1–2.
 
-An uneven first run leads to Rebalance; a near-even first run leads to Create a contrast. If the second test is still uneven, an explicit 34/33/33 balance check completes the comparison. Near-even means a spread of at most five points, with all three story shots medium. The side-by-side comparison uses actual tested snapshots. Balancing improves effort distribution while the percentages still guide Alex’s choices. Comparison and theory cinematics remain placeholders. Design Lab is reserved.
+An uneven first run leads to Rebalance; a near-even first run leads to Create a contrast. If the second test is still uneven, the player explains the missing balanced comparison before an explicit Test 34 / 33 / 33 button appears. Near-even means a spread of at most five points, with all three story shots medium. The side-by-side comparison uses actual tested snapshots. Balancing improves effort distribution while the percentages still guide Alex’s choices. Alex’s response and Goodhart’s theory reveal remain replaceable cinematics. The theory’s completion goes directly to the host’s Design Lab callback, without an intermediate completion page. The standalone preview enters a minimal reserved Design Lab destination.
 
-The opening owns name entry. `Gameplay` accepts its confirmed `playerName`, forwards it through all three levels and scene requests, and preserves it through in-page transitions. Standalone previews use Maya because they omit the opening. All player decisions use I. The 17 authored dialogue emoji are distinct.
+The opening owns name entry. `Gameplay` accepts its confirmed `playerName`, forwards it through all three levels and scene requests, and preserves it through in-page transitions. Standalone previews use Maya because they omit the opening. All player decisions use I. The 25 authored dialogue emoji are distinct.
 
 Information arrives in visible-time beats with local Web Audio cues. Hidden tabs, off-screen timed information and restart dialogs hold pending beats; reduced motion removes animation. No Pause or extra Reveal button is used. All text remains available. Student cards show the specific behaviour prominently, with a small Learning at risk label. Weight percentages describe scoring, and qualitative effort categories follow the narrative; no numerical learning loss or learning gain is invented.
 
@@ -83,6 +83,7 @@ Each level owns its rules and text. Shared modules never import level internals.
 npm run package:previews
 node tests/level3_rules.mjs
 python tests/level3.py
+python tests/level3_feedback.py
 # With npm run dev running:
 python tests/level3_integration.py
 python tests/level2_integration.py
@@ -91,6 +92,6 @@ python tests/release.py
 node tests/dialogue_emojis.mjs
 ```
 
-The new Level 3 checks cover allocation invariants, all 20 trios, three adaptive routes, actual cinematic shot selection, compared snapshots, name/completion contracts, chapter handoff, real-time audio and sequential updates, restart and 320–1366px layouts. The release test reads the real four ZIPs and plays across all three chapters. [LEVEL3_VALIDATION-v1.json](docs/LEVEL3_VALIDATION-v1.json) records this release. Earlier validation reports and versioned ZIPs are historical records.
+The new Level 3 checks cover allocation invariants, all 20 trios, three adaptive routes, actual cinematic shot selection, compared snapshots, name/completion contracts, chapter handoff, real-time audio and sequential updates, restart and 320–1366px layouts. The release test reads the real four ZIPs and plays across all three chapters. [LEVEL3_VALIDATION-v2.json](docs/LEVEL3_VALIDATION-v2.json) records this release. Earlier validation reports and versioned ZIPs are historical records.
 
 Offline browser tests serve exact production HTML through an in-memory HTTPS origin because managed Chromium blocks local file navigation. Opening the downloaded file in the user’s particular browser remains a separate check. Test outputs/screenshots go to ignored test-results/. These are functional checks, not a classroom load test.

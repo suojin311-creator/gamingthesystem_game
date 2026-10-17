@@ -57,7 +57,7 @@
 .level-two .l2-selection { width: 21px; height: 21px; display: grid; place-items: center; border-radius: 50%; font: italic 10px var(--serif); color: #aaa794; }
 .level-two .selected .l2-selection { background: #ad6048; color: #fff7e8; }
 .level-two .l2-selection .icon { width: 13px; height: 13px; }
-.level-two .l2-metric-card h3 { font-size: 13px; line-height: 1.35; margin-bottom: 6px; }
+.level-two .l2-metric-card h3 { font-size: var(--metric-name-size); line-height: 1.35; margin-bottom: 6px; }
 .level-two .l2-metric-card p { font-size: 11px; line-height: 1.45; color: #7a7b6c; }
 .level-two .l2-perspectives { border-left: 1px solid var(--line); background: #f4f1e7; padding: 22px 19px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .level-two .l2-perspective { border: 1px solid #ddd8c8; border-radius: 5px; padding: 16px; background: #faf7ed; min-height: 168px; transition: background .25s, border-color .25s; }
@@ -79,7 +79,7 @@
 .level-two .l2-evaluation-list { list-style: none; margin: 0; padding: 0; }
 .level-two .l2-evaluation-list li { display: flex; gap: 15px; justify-content: space-between; align-items: center; min-height: 48px; border-bottom: 1px solid #ebe6d8; transition: color .25s; }
 .level-two .l2-evaluation-list li:last-child { border-bottom: 0; }
-.level-two .l2-eval-name { display: flex; gap: 12px; align-items: center; font-size: 12px; line-height: 1.4; }
+.level-two .l2-eval-name { display: flex; gap: 12px; align-items: center; font-size: var(--metric-name-size); line-height: 1.4; }
 .level-two .l2-eval-name .icon { width: 20px; height: 20px; color: #8f886d; }
 .level-two .l2-eval-result { display: flex; gap: 5px; align-items: center; font-size: 11px; color: #a5a18f; white-space: nowrap; }
 .level-two [data-checked=true] .l2-eval-result { color: #587448; animation: l2-tick-arrive .25s ease-out; }
@@ -210,7 +210,7 @@
   .level-two .l2-decision { padding: 23px 17px 0; }
   .level-two .l2-metric-grid { gap: 8px; }
   .level-two .l2-metric-card { padding: 11px; min-height: 153px; }
-  .level-two .l2-metric-card h3 { font-size: 12px; }
+  .level-two .l2-metric-card h3 { font-size: var(--metric-name-size); }
   .level-two .l2-metric-card p { font-size: 10px; }
   .level-two .l2-perspectives { padding: 17px; gap: 10px; }
   .level-two .l2-perspective { padding: 11px; }
@@ -223,7 +223,7 @@
   .level-two .l2-awaiting-observation { font-size: 18px; }
   .level-two .l2-evaluation { padding: 9px 12px; }
   .level-two .l2-evaluation-list li { gap: 8px; min-height: 60px; }
-  .level-two .l2-eval-name { font-size: 11px; gap: 8px; }
+  .level-two .l2-eval-name { font-size: var(--metric-name-size); gap: 8px; }
   .level-two .l2-eval-result { font-size: 10px; }
   .level-two .l2-choice-actions .primary-button { align-self: flex-end; }
   .level-two .l2-gap-grid { grid-template-columns: 1fr; gap: 10px; }

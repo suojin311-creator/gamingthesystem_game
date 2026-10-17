@@ -11,7 +11,7 @@ import '/src/shared/styles/base.css';import Gameplay from '/src/Gameplay.tsx';
 window.requests=[];window.results=[];window.designLabCount=0;
 const query=new URLSearchParams(location.search);
 const renderScene=(request,complete)=>{
-  window.requests.push(request);
+  window.requests.push(request);window.finishCurrent=complete;
   return React.createElement('section',{className:'partner-scene'},
     React.createElement('h2',null,request.sceneId),
     React.createElement('p',{className:'partner-name'},request.playerName),
@@ -56,15 +56,16 @@ def weights(page,values):
         if not card.locator('input').is_disabled():
             card.locator('input').evaluate('''(input,value)=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(input,value);input.dispatchEvent(new Event('input',{bubbles:true}));}''',values[index])
         expect(card.locator('output')).to_have_text(str(values[index])+'%')
-        page.get_by_test_id('confirm-'+id).click()
+        if page.get_by_test_id('confirm-'+id).is_enabled(): page.get_by_test_id('confirm-'+id).click()
 
 
 def publish(page):
     page.get_by_role('button',name='Run evaluation',exact=True).click()
     page.locator('.l3-publish').scroll_into_view_if_needed();advance(page,4)
+    page.get_by_role('button',name='Observe the class',exact=True).click()
     expect(page.locator('.partner-name')).to_have_text('Riley')
     page.get_by_role('button',name='Finish partner scene',exact=True).click()
-    advance(page,5)
+    advance(page,12)
 
 
 with sync_playwright() as p:
@@ -91,18 +92,19 @@ with sync_playwright() as p:
     assert page.evaluate('window.requests.at(-1).sceneId')=='level3.compare'
     page.get_by_role('button',name='Finish partner scene',exact=True).click()
     assert page.evaluate('window.requests.at(-1).sceneId')=='theory.reveal'
-    page.get_by_role('button',name='Finish partner scene',exact=True).click()
-    page.get_by_role('button',name='Go to Design Lab',exact=True).click()
+    assert page.evaluate('window.designLabCount')==0
+    page.evaluate('window.finishCurrent();window.finishCurrent()')
+    expect(page.get_by_test_id('design-lab-entry')).to_be_visible()
     assert page.evaluate('window.designLabCount')==1
-    page.get_by_role('button',name='Review the comparison',exact=True).click();advance(page,3)
     assert page.evaluate('window.results.length')==1
-    record('Comparison and theory renderers return correctly; replay does not duplicate completion and the optional Design Lab callback works')
+    assert 'The experiment is complete' not in page.locator('body').inner_text()
+    record('Alex’s response and theory renderers chain directly into Design Lab; duplicate scene completion triggers the handoff only once')
     context.close()
 
     context,page=start(browser,level=2);advance(page,10)
     page.get_by_role('button',name='Sound on',exact=True).click()
     page.get_by_role('button',name='Choose three metrics',exact=True).click()
-    for id in ['prep','part','focus']:page.get_by_test_id('level2-metric-'+id).click()
+    for id in ['part','reflect','peer']:page.get_by_test_id('level2-metric-'+id).click()
     page.get_by_role('button',name='Run evaluation',exact=True).click();advance(page,6)
     def scene_two():
         page.get_by_role('button',name='Observe the class',exact=True).click()
@@ -119,6 +121,17 @@ with sync_playwright() as p:
     expect(page.get_by_role('button',name='Sound off',exact=True)).to_be_visible()
     assert len([item for item in page.evaluate('window.results') if item['level']==2])==1
     record('Real Gameplay host carries the opening name and sound preference from Level 2 into the new Level 3 chapter')
+    page.get_by_role('button',name='Review priorities',exact=True).click()
+    assert [card.get_attribute('data-testid') for card in page.locator('.l3-metric-card[aria-pressed=true]').all()]==['level3-metric-part','level3-metric-reflect','level3-metric-peer']
+    expect(page.get_by_role('button',name='Set the weights',exact=True)).to_be_enabled()
+    page.get_by_test_id('level3-metric-reflect').click();page.get_by_test_id('level3-metric-prep').click()
+    assert [card.get_attribute('data-testid') for card in page.locator('.l3-metric-card[aria-pressed=true]').all()]==['level3-metric-prep','level3-metric-part','level3-metric-peer']
+    page.get_by_role('button',name='Set the weights',exact=True).click()
+    expect(page.locator('.l3-weight-card')).to_have_count(3)
+    page.get_by_role('button',name='Restart',exact=True).click();page.get_by_role('button',name='Restart Level 3',exact=True).click();advance(page,8)
+    page.get_by_role('button',name='Review priorities',exact=True).click()
+    expect(page.get_by_test_id('level3-metric-reflect')).to_have_attribute('aria-pressed','true')
+    record('Level 3 preselects the actual Level 2 trio, permits swapping, and retains that starting selection on restart')
     page.reload(wait_until='networkidle')
     expect(page.locator('.level-two')).to_have_attribute('data-phase','intro')
     record('Reloading the connected host starts fresh from its configured entry level')
@@ -130,6 +143,8 @@ with sync_playwright() as p:
     shown=page.locator('.l3-publish [data-published=true]').count();advance(page,8)
     assert page.locator('.l3-publish [data-published=true]').count()==shown
     page.evaluate("delete document.hidden;document.dispatchEvent(new Event('visibilitychange'))");advance(page,4)
+    expect(page.locator('.level-three')).to_have_attribute('data-phase','publish')
+    page.get_by_role('button',name='Observe the class',exact=True).click()
     expect(page.locator('.partner-name')).to_have_text('Riley')
     record('Hidden-page publication holds its visible-time sequence and resumes without skipping the three weights')
     context.close()
@@ -146,10 +161,14 @@ with sync_playwright() as p:
     }}).observe(document.body,{subtree:true,attributes:true,attributeFilter:['data-published','data-shown']});
     window.runStarted=performance.now();''')
     page.get_by_role('button',name='Run evaluation',exact=True).click()
-    expect(page.get_by_role('button',name='Finish partner scene',exact=True)).to_be_visible(timeout=8000)
+    expect(page.get_by_role('button',name='Observe the class',exact=True)).to_be_enabled(timeout=8000)
+    page.wait_for_timeout(800)
+    expect(page.locator('.level-three')).to_have_attribute('data-phase','publish')
+    expect(page.get_by_role('button',name='Finish partner scene',exact=True)).to_have_count(0)
     times=page.evaluate('window.publicationTimes.map(time=>time-window.runStarted)')
     assert len(times)==3 and times[0]>=450 and all(400<=times[i+1]-times[i]<=1600 for i in range(2)),times
     assert page.evaluate('window.oscillatorStarts')>0
+    page.get_by_role('button',name='Observe the class',exact=True).click()
     page.get_by_role('button',name='Sound on',exact=True).click();muted=page.evaluate('window.oscillatorStarts')
     page.get_by_role('button',name='Finish partner scene',exact=True).click()
     expect(page.locator('.l3-run-rows [data-shown=true]')).to_have_count(3,timeout=6500)
