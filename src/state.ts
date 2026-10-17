@@ -1,6 +1,6 @@
 import type { MetricId } from './metrics';
 
-export type Phase = 'choose' | 'predict' | 'result' | 'cinematic' | 'review' | 'complete';
+export type Phase = 'choose' | 'predict' | 'result' | 'cinematic' | 'review';
 export type Session = {
   phase: Phase; metricId: MetricId | null; prediction: string;
   resultReported: boolean; reviewStep: 0 | 1;

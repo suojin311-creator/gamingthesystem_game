@@ -68,7 +68,7 @@ def reveal_review(page, settle=True):
     expect(page.locator('.observation-recap')).to_be_visible(timeout=10000)
     expect(page.locator('.student')).to_contain_text('Unclear', timeout=10000)
     if settle:
-        expect(page.get_by_role('button', name='Try more metrics')).to_be_enabled(timeout=22000)
+        expect(page.locator('.level-finished')).to_have_text('LEVEL 1 COMPLETE', timeout=22000)
 
 
 def story_to_review(page):
@@ -133,11 +133,11 @@ with sync_playwright() as p:
         reveal_review(page)
         if metric_id == 'part':
             page.screenshot(path=str(output / 'desktop-review.png'), full_page=True)
-        page.get_by_role('button', name='Try more metrics').click()
-        expect(page.get_by_role('heading', name='What if we measured more than one?')).to_be_visible()
-        page.get_by_role('button', name='Review this experiment').click()
         expect(page.get_by_role('heading', name='Look a little closer.')).to_be_visible()
-        record(f'{metric_id}: correct score, story, in-page prediction, evidence, and completion')
+        expect(page.locator('.stepper .done')).to_have_count(4)
+        expect(page.get_by_role('button', name='Try more metrics')).to_have_count(0)
+        expect(page.get_by_role('heading', name='What if we measured more than one?')).to_have_count(0)
+        record(f'{metric_id}: correct score, story and evidence; completion stays on the observation page without Level 2')
 
     fresh(page)
     select(page, 'prep', '   ')
@@ -175,14 +175,16 @@ with sync_playwright() as p:
     page.keyboard.press('Enter')
     expect(field).to_be_focused()
     field.fill('Students will think carefully.')
-    page.get_by_role('button', name='Back to metrics').click()
+    expect(page.get_by_role('button', name='Back to metrics')).to_have_count(0)
+    expect(page.get_by_role('button', name='Change', exact=True)).to_have_count(1)
+    page.get_by_role('button', name='Change', exact=True).click()
     page.get_by_role('button', name='Make a prediction').click()
     expect(field).to_have_value('Students will think carefully.')
-    page.get_by_role('button', name='Back to metrics').click()
+    page.get_by_role('button', name='Change', exact=True).click()
     page.get_by_test_id('metric-peer').click()
     page.get_by_role('button', name='Make a prediction').click()
     expect(field).to_have_value('')
-    record('Keyboard selection and focus; changing metric resets the previous prediction')
+    record('One Change control replaces duplicate Back; same metric keeps prediction and a new metric clears it')
 
     page.evaluate("""localStorage.setItem('gaming-the-system:level-one:v1', JSON.stringify({version:1,phase:'review',metricId:'prep',prediction:'A legacy prediction.',resultReported:true,reviewStep:2}));localStorage.setItem('gaming-the-system:workbench-guide:v1','seen');localStorage.setItem('gaming-the-system:sound:v1','off');""")
     page.reload(wait_until='networkidle')
@@ -265,7 +267,7 @@ root.render(React.createElement(LevelOne, {
   },
   onComplete: result => {
     window.levelResult = result;
-    root.render(React.createElement('h1', null, 'Host received Level 1'));
+    window.completionCount = (window.completionCount || 0) + 1;
   }
 }));
 </script></body></html>''')
@@ -282,13 +284,17 @@ root.render(React.createElement(LevelOne, {
         host.get_by_role('button', name='Finish partner scene').click()
         expect(host.locator('.prediction-recap')).to_contain_text('Students will concentrate on the task.')
         reveal_review(host)
-        host.get_by_role('button', name='Try more metrics').click()
-        expect(host.get_by_role('heading', name='Host received Level 1')).to_be_visible()
+        expect(host.get_by_role('heading', name='Look a little closer.')).to_be_visible()
+        assert host.evaluate('window.completionCount') == 1
         assert host.evaluate('window.levelResult') == {
             'metricId': 'focus', 'prediction': 'Students will concentrate on the task.',
             'reportedScore': {'before': 41, 'after': 91, 'target': 70}}
+        host.get_by_role('button', name='Replay scene').click()
+        host.get_by_role('button', name='Finish partner scene').click()
+        reveal_review(host)
+        assert host.evaluate('window.completionCount') == 1
         host.close()
-        record('Partner cinematic renderer and host completion callback work with the selected branch')
+        record('Partner cinematic returns to the final page; automatic completion reports once per run, including replay')
 
     assert not runtime_errors, runtime_errors
     record('No uncaught browser errors')

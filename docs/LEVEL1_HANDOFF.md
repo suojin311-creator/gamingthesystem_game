@@ -2,7 +2,7 @@
 
 ## Selected workflow
 
-Opening returns to office → mount Level 1 → select one metric → predict → run evaluation → see dashboard success → explicitly observe classroom → play exactly one selected cinematic → return to the same in-memory workbench → compare prediction with observed behaviour → finish Level 1.
+Opening returns to office → mount Level 1 → select one metric → predict → run evaluation → see dashboard success → explicitly observe classroom → play exactly one selected cinematic → return to the same in-memory workbench → compare prediction with observed behaviour → finish Level 1 on the same observation page.
 
 The opening remains a separate project in the supplied ZIP. No opening scenes have been spliced into this implementation. Each cloud task is already isolated; use the existing checkout and do not create another Git worktree unless explicitly requested.
 
@@ -28,7 +28,7 @@ import LevelOne from './LevelOne';
       onComplete={complete}
     />
   )}
-  onComplete={(result) => enterLevelTwo(result)}
+  onComplete={(result) => setLevelOneResult(result)}
 />
 ```
 
@@ -45,7 +45,7 @@ The renderer receives `{ sceneId, metricId }`, then calls `complete()` when the 
 
 If no renderer is supplied, a clearly labelled classroom placeholder plays three manually advanced lines from the corresponding Narrative V2 branch. Refreshing during an interlude starts a new game at metric selection, with the guide shown again. `Replay scene` replays the same selected branch within the open game.
 
-After `Try more metrics`, `onComplete` receives:
+After the final Alex reply has received its reading interval, `onComplete` automatically receives:
 
 ```ts
 {
@@ -55,7 +55,7 @@ After `Try more metrics`, `onComplete` receives:
 }
 ```
 
-The standalone view shows a Level 1 completion / Level 2 placeholder. The host should navigate to its next scene in `onComplete`. The callback fires on explicit completion; reloading the standalone completed view does not automatically fire a navigation callback again.
+The standalone view stays on the observation page and shows LEVEL 1 COMPLETE; all four progress steps are done. There is no Try more metrics button or separate completion/Level 2 page. The callback fires once per run after the final dialogue reading interval. Replaying the cinematic does not fire it again; Restart, reload or remount starts a new run. The current host should retain the result in memory without navigating. Later Level 2 integration can choose how and when to use it.
 
 ## Narrative adjustments for the highlighted operations
 
@@ -66,8 +66,9 @@ The standalone view shows a Level 1 completion / Level 2 placeholder. The host s
 5. Maya: “Looking good. Let’s check the classroom.” Player chooses `Observe the class`.
 6. The selected branch cinematic plays. The existing placeholder is replaced here.
 7. Completing the cinematic returns to a compact, static prediction reference. After 1000 ms of visible time, the classroom observation and student uncertainty appear together, with one shared observation cue. Show only `metric.evidence` under IN THE CLASSROOM: the former details paragraph. Do not add the old takeaway headline or details toggle. Students is a quiet summary: no NEW badge, separate sound, pulse or forced sidebar scroll. Management’s view retains the already reported score.
-8. Give the observation 6–8 seconds of visible reading time before Maya: “The score is up. What about learning?” Alex then replies with the selected branch quote. Both bubbles sit within the main content column, Maya above-left and Alex below-right. Each starts with 650 ms of typing dots, followed by 3–5 seconds to read. Keep all messages visible. Wait for the final reply’s reading interval before revealing Try more metrics. Replies wait until the chat is on screen. Guide and restart dialogs suspend reading and typing; closing them resumes automatically. There is no Pause / Resume control.
-9. The standalone completion bridge uses “Maybe one metric is too narrow.” The final management-email scene can be inserted by the narrative host around this bridge. It is not recreated as a second finished cinematic here.
+8. Give the observation 6–8 seconds of visible reading time before Maya: “The score is up. What about learning?” Alex then replies with the selected branch quote. Both bubbles sit within the main content column, Maya above-left and Alex below-right. Each starts with 650 ms of typing dots, followed by 3–5 seconds to read. Keep all messages visible. Wait for the final reply’s reading interval before showing LEVEL 1 COMPLETE on this page and reporting completion once. Replies wait until the chat is on screen. Guide and restart dialogs suspend reading and typing; closing them resumes automatically. There is no Pause / Resume control.
+9. The former “What if we measured more than one?” screen, More metrics card and “Maybe one metric is too narrow” bridge are reserved in `src/components/LevelTwoEntryPlaceholder.tsx` for the future Level 2 host. LevelOne never imports or renders this component. Any future management-email scene remains the narrative host’s responsibility.
+10. The prediction page has one Change button beside the selected metric; the duplicate Back to metrics link is removed. Run evaluation remains right-aligned.
 
 Do not display Goodhart's Law in Level 1. All six choices are plausible educational indicators. Behaviour improves in the measured respect, while deeper engagement remains uncertain. There is no fixed student-health penalty, no right/wrong grading of predictions, and no conversion of qualitative evidence into an unsupported learning percentage.
 
@@ -80,11 +81,11 @@ Do not display Goodhart's Law in Level 1. All six choices are plausible educatio
 - There are no live processes, credentials or external services required by the finished HTML. For source development, restart Vite with `npm run dev` in the project directory.
 - Each browser is one independent game. Two students may share that game; no room server or multiplayer connection is implied.
 
-## Interface feedback and orientation (v5)
+## Interface feedback and orientation (v6)
 
 The dashboard owns locally synthesized Web Audio cues: count ticks, an ascending success chime, one shared classroom-observation/student-summary cue, and softer message pips. No audio files, network calls, or credentials are needed. Sound is unlocked by pointer/keyboard interaction, can be muted immediately for the current run, and resets to sound on for a new run. Hidden tabs stop pending sounds. Voice acting, ambience and cinematic audio remain with the cinematic creator.
 
-The host can preserve these interface cues or coordinate them with its eventual audio system. Neither qualitative student uncertainty nor sound is a numerical learning penalty. The in-memory run contains `resultReported` and `reviewStep` so scene transitions retain completed presentation beats. Reloads reset both, and older saved data is ignored. The cinematic renderer and completion callback contracts are unchanged.
+The host can preserve these interface cues or coordinate them with its eventual audio system. Neither qualitative student uncertainty nor sound is a numerical learning penalty. The in-memory run contains `resultReported` and `reviewStep` so scene transitions retain completed presentation beats. Reloads reset both, and older saved data is ignored. The cinematic renderer contract is unchanged. The completion payload is unchanged, but its trigger is now automatic after the final reply’s reading interval, once per run.
 
 The guide appears for every new run, with no persistent completion marker. Completing or skipping it hides it for this run; Guide reopens it without changing current choices. Pass `showIntro={false}` if the integrated host provides the introduction. Guide and restart dialogs hold the presentation. The guide follows actual region positions and supports keyboard navigation, Escape, touch layouts and reduced motion.
 

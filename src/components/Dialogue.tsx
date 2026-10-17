@@ -17,7 +17,7 @@ export default function Dialogue({ phase, playerName, studentQuote, enabled, pau
   const single: Record<Phase, string> = {
     choose: 'Where should I start?', predict: 'What do I expect students to do?',
     result: 'Looking good. Let’s check the classroom.', cinematic: '',
-    review: 'The score is up. What about learning?', complete: 'Maybe one metric is too narrow.',
+    review: 'The score is up. What about learning?',
   };
   const lines: Line[] = [{ speaker: 'Maya', text: single[phase] }];
   if (phase === 'review') lines.push({ speaker: 'Alex', text: studentQuote || 'I met the criteria.' });

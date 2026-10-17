@@ -55,7 +55,7 @@ def finish_scene(page):
     page.get_by_role('button', name='Return to dashboard').click()
 
 def settle(page):
-    expect(page.get_by_role('button', name='Try more metrics')).to_be_enabled(timeout=22000)
+    expect(page.locator('.level-finished')).to_have_text('LEVEL 1 COMPLETE', timeout=22000)
 
 timeline_probe = '''
 window.reviewTimeline = {};
@@ -70,7 +70,7 @@ new MutationObserver(() => {
   mark('maya', '.maya-bubble p');
   mark('alexTyping', '.alex-bubble.is-typing');
   mark('alex', '.alex-bubble p');
-  if ([...document.querySelectorAll('.phase-review button')].some(b => b.textContent.startsWith('Try more metrics')) && window.reviewTimeline.next === undefined) window.reviewTimeline.next = performance.now();
+  mark('completed', '.level-finished');
 }).observe(document.body, {childList:true, subtree:true, attributes:true});
 '''
 
@@ -149,9 +149,9 @@ with sync_playwright() as p:
     assert page.locator('body').bounding_box()['height'] <= 768
     stamps = page.evaluate('window.reviewTimeline')
     assert stamps['alexTyping'] - stamps['maya'] >= 3000, stamps
-    assert stamps['next'] - stamps['alex'] >= 2900, stamps
+    assert stamps['completed'] - stamps['alex'] >= 2900, stamps
     page.screenshot(path=str(out / 'feedback-review.png'), full_page=True)
-    record('Replies stay in the main column; both speakers receive reading time before the next message or Continue')
+    record('Replies stay in the main column; both speakers receive reading time before the next message or completion')
 
     page.get_by_role('button', name='Sound on', exact=True).click()
     before = page.evaluate('window.audioStarts.length')

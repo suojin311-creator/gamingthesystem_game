@@ -2,17 +2,19 @@
 
 A standalone, English-language Level 1 workbench. The supplied cinematic opening has **not** been merged or modified. Its office and classroom backgrounds are reused as visual references/assets from the supplied project.
 
-**Just want to play? [Download the playable ZIP (v5)](play/Level1-play-v5.zip?raw=true), extract it, and open `Level1.html` in Chrome or Edge. No developer tools are needed. Sign in to a GitHub account with access to this repository before downloading.**
+**Just want to play? [Download the playable ZIP (v6)](play/Level1-play-v6.zip?raw=true), extract it, and open `Level1.html` in Chrome or Edge. No developer tools are needed. Sign in to a GitHub account with access to this repository before downloading.**
 
 ## Play without installing anything
 
 Open `dist/index.html` in a current desktop browser. The production file contains its own JavaScript, styles, and images, and needs no server or Internet connection. The separately delivered `Gaming-the-System-Level1.html` is the same file with a descriptive name.
 
-Select one of six metrics, write a prediction of up to 100 characters, run the evaluation, observe the selected story placeholder, then compare the result with the prediction. `Try more metrics` finishes Level 1 at a Level 2 handoff placeholder. Level 2 is not implemented.
+Select one of six metrics, write a prediction of up to 100 characters, run the evaluation, observe the selected story placeholder, then compare the result with the prediction. Level 1 ends on that observation page. After the final reply’s reading interval, LEVEL 1 COMPLETE appears there and all four progress steps are marked done. No additional click or Level 2 page appears. Replay scene and the header Restart remain available.
 
-Version 5 simplifies the post-scene page. The prediction is a quiet reference line. A single classroom observation paragraph (the former details text) appears automatically together with the Students summary, sharing one sound cue. There is no duplicate headline, details toggle, student badge or separate student animation. Management’s view retains its existing score without renewed emphasis.
+Version 6 removes the duplicate Back to metrics control: use Change beside the selected metric. The Run evaluation button stays on the right. The former next-level screen is reserved separately in `src/components/LevelTwoEntryPlaceholder.tsx` and is not mounted or included in this playable flow.
 
-The classroom observation has 6–8 seconds of visible reading time, based on its English length, before conversation begins. Maya appears above-left, then Alex below-right within the main content column. Each message starts with 650 ms of typing dots and gets 3–5 seconds of visible reading time. The next-step button appears only after the last reply’s reading interval. All revealed information stays available. Hidden tabs, off-screen text, Guide and restart dialogs hold the pending beat; sequences resume automatically when visible again. There are no pause or reveal buttons.
+The post-scene page stays simple. The prediction is a quiet reference line. A single classroom observation paragraph (the former details text) appears automatically together with the Students summary, sharing one sound cue. There is no duplicate headline, details toggle, student badge or separate student animation. Management’s view retains its existing score without renewed emphasis.
+
+The classroom observation has 6–8 seconds of visible reading time, based on its English length, before conversation begins. Maya appears above-left, then Alex below-right within the main content column. Each message starts with 650 ms of typing dots and gets 3–5 seconds of visible reading time. The completion status appears only after the last reply’s reading interval. All revealed information stays available. Hidden tabs, off-screen text, Guide and restart dialogs hold the pending beat; sequences resume automatically when visible again. There are no pause or reveal buttons.
 
 The score's Target 70 label sits directly below the 70-point marker at every screen size. The finding fades in once; the student card changes quietly as its summary. The evaluation’s management highlight ends after 1.6 visible seconds. Reduced-motion preferences remove movement while retaining the reading intervals and sequence.
 
@@ -50,6 +52,7 @@ The build checks TypeScript and creates a self-contained `dist/index.html`. `vit
 - `src/metrics.ts`: six metrics, illustrative scores, behavioural evidence and temporary scene dialogue.
 - `src/components/CinematicPlaceholder.tsx`: replaceable three-line interlude for each branch.
 - `src/components/Dialogue.tsx`: visible-time chat sequence and typing indicators.
+- `src/components/LevelTwoEntryPlaceholder.tsx`: reserved next-level introduction; never mounted by Level 1.
 - `src/components/WorkbenchGuide.tsx`: new-run, replayable guide with actual-region spotlights.
 - `src/useVisibleDelay.ts`: pausable, visible-time presentation beats.
 - `src/readingTime.ts`: text-length-based reading intervals for observations and replies.
@@ -81,4 +84,4 @@ Checks cover all six branches, matching story content and scores, prediction val
 
 The reported score and the student's qualitative evidence remain visible together after observation. Student learning is not represented by an invented declining numerical score. Purple author/narration notes are absent from the player interface; an amber observation card provides the intended point of tension after the story.
 
-All six cinematics and the Level 2 entry are explicitly marked placeholders. The story placeholder uses text from Narrative V2 with an existing classroom background. It does not claim to be a finished character animation or video. Interface feedback tones are generated locally; voice acting and cinematic audio remain outside this prototype.
+All six cinematics are explicitly marked placeholders. The future Level 2 entry is retained only as source for later integration; it is absent from the current player flow. The story placeholder uses text from Narrative V2 with an existing classroom background. It does not claim to be a finished character animation or video. Interface feedback tones are generated locally; voice acting and cinematic audio remain outside this prototype.
