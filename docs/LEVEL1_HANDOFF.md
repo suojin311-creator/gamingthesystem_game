@@ -59,7 +59,7 @@ After the final Alex reply has received its reading interval, `onComplete` autom
 }
 ```
 
-The view stays on the observation page; all four progress steps are done. After the reading interval, Continue to Level 2 appears. It calls the optional `onContinue` prop and is disabled when no continuation is supplied. The current App supplies it, keeps the result in memory and mounts LevelTwo only on this explicit click. There is no extra Level 1 completion page. `onComplete` fires automatically once per run; replay does not fire it again. Restart, reload or remount starts a new run.
+The view stays on the observation page; all four progress steps are done. After the reading interval, Continue to Level 2 appears. It calls the optional `onContinue` prop and is disabled when no continuation is supplied. The combined App supplies it, keeps the result in memory and mounts LevelTwo only on this explicit click. The `level1` build mode mounts this same component without continuation, so the standalone preview ends here. There is no extra Level 1 completion page. `onComplete` fires automatically once per run; replay does not fire it again. Restart, reload or remount starts a new run.
 
 ## Narrative adjustments for the highlighted operations
 
@@ -94,7 +94,7 @@ loss. The supporting label is Learning at risk in every branch.
 ## Deployment and integration notes
 
 - React 19, TypeScript 5.9 and Vite 7 match the opening's toolchain family. Framer Motion is not needed for these operations.
-- The independent build is portable. The later combined app can use ordinary asset chunks instead of single-file bundling.
+- `npm run build:level1` produces the current standalone build in `dist-level1/index.html`. `npm run package:previews` rebuilds all three latest single-file previews from the shared source. The later combined app can use ordinary asset chunks instead of single-file bundling.
 - Shared base styles live in `src/shared/styles/base.css`; Level 1 layout is scoped to `.level-one` in its own folder. Reconcile the shared global resets/tokens with the opening's base styles when merging, then load the shared base once. Level 1 component styles are imported by the component.
 - Keep keyboard focus, reduced-motion handling and the in-page state lifetime when replacing the placeholder.
 - There are no live processes, credentials or external services required by the finished HTML. For source development, restart Vite with `npm run dev` in the project directory.

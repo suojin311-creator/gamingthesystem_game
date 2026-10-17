@@ -14,11 +14,13 @@ visible-time delays and reading-time utilities from `../../shared/`.
 The cinematic and completion contracts are documented in
 [LEVEL1_HANDOFF.md](../../../docs/LEVEL1_HANDOFF.md).
 
-The existing [v7 playable ZIP](../../../play/Level1-play-v7.zip?raw=true) remains
-the saved Level 1 preview. The current App opens this level directly.
+The [latest standalone ZIP](../../../play/Level1-play.zip?raw=true) is built
+from this component using `npm run build:level1`. Its continuation is disabled;
+the combined game uses the same component with an enabled Level 2 continuation.
+Use `npm run dev -- --mode level1` to develop the standalone entry.
 
-This folder in `level3-dev` contains the later Level 1 updates included in the
-accepted Level 1 + Level 2 v6 release. The older `level1-preview` branch retains
-the standalone v7 version and was not separately updated during Level 2 work.
-See the [repository guide](../../../docs/REPOSITORY_GUIDE.md) for the current
-source and saved preview locations.
+The latest download includes the Level 1 improvements made during Level 2 work.
+The older `level1-preview` branch has been synchronized for this release.
+`npm run package:previews` rebuilds all latest individual/combined downloads
+together. Version-numbered ZIPs preserve historical releases. See the
+[repository guide](../../../docs/REPOSITORY_GUIDE.md).

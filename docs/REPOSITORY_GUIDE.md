@@ -1,55 +1,63 @@
 # GitHub 使用说明
 
-后续 Level 3 的开发都在 **level3-dev** 分支进行。分支里保留完整项目，
-每一关分别放在自己的文件夹中，共用部分放在 shared。
+统一在 **level3-dev** 分支中保留完整项目，以及各关独立试玩和多关连玩
+的最新版。每关有自己的源码文件夹；不同试玩入口复用同一套源码。
 
-前面制作 Level 2 时，对 Level 1 的后续修改放在 level2-dev 的
-`src/levels/level1/` 中，也打包进了 v6 两关试玩包。旧的 level1-preview
-没有单独同步，仍保存早期 v7 独立版。分支之间不会自动同步；后续以
-level3-dev 下的各关文件夹作为当前整合版本。
+## 最新试玩入口
 
-## 直接入口
+| 要找的内容 | 下载 | 解压后打开 |
+| --- | --- | --- |
+| Level 1＋Level 2 连玩 | [Full-game-play.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Full-game-play.zip?raw=true) | Gaming-the-System.html |
+| Level 1 单独试玩 | [Level1-play.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Level1-play.zip?raw=true) | Level1.html |
+| Level 2 单独试玩 | [Level2-play.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Level2-play.zip?raw=true) | Level2.html |
 
-| 要找的内容 | 入口 |
+以后更新时替换这三个固定文件名的包，分享入口保持不变。旧版带版本号的
+ZIP 留作历史记录，不再当作最新版入口。仓库为私有；试玩者没有 GitHub
+访问权限时，可以直接把下载后的 ZIP 发给他们。
+
+Level 1 单独包已补齐后来制作 Level 2 时对 Level 1 的改进：学生行为警示、
+更早出现的对白、Alex 的双气泡和不同 emoji、精简后的预测页面等。连玩版
+与 Level 2 单独版的游戏内容沿用已认可的 v6；正式开场与成片尚未合并。
+
+## 源码位置
+
+| 内容 | 入口 |
 | --- | --- |
 | 当前开发项目 | [level3-dev](https://github.com/suojin311-creator/gamingthesystem_game/tree/level3-dev) |
-| Level 3 文件夹 | [src/levels/level3](https://github.com/suojin311-creator/gamingthesystem_game/tree/level3-dev/src/levels/level3) |
-| 当前分支里的 Level 1 源码 | [src/levels/level1](https://github.com/suojin311-creator/gamingthesystem_game/tree/level3-dev/src/levels/level1) |
-| 当前分支里的 Level 2 源码 | [src/levels/level2](https://github.com/suojin311-creator/gamingthesystem_game/tree/level3-dev/src/levels/level2) |
-| 当前分支里的共用模块 | [src/shared](https://github.com/suojin311-creator/gamingthesystem_game/tree/level3-dev/src/shared) |
-| 已认可的前两关版本 | [level2-preview](https://github.com/suojin311-creator/gamingthesystem_game/tree/level2-preview) |
-| 前两关 v6 试玩包 | [下载 Level2-play-v6.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level2-preview/play/Level2-play-v6.zip?raw=true) |
-| 较早的 Level 1 独立预览 | [level1-preview](https://github.com/suojin311-creator/gamingthesystem_game/tree/level1-preview) |
-
-下载试玩包后，先解压。打开 **Levels1-and-2.html** 可以从 Level 1 玩到
-Level 2；打开 **Level2.html** 可以直接进入第二关。Level 3 目前只有开发
-位置，尚未加入试玩。
-
-## 分支各自做什么
-
-- **level1-preview**：保存较早的 Level 1 单关版本。
-- **level2-preview**：保存这次认可的前两关 v6，对应提交 `336c59f`。
-- **level2-dev**：保留之前制作 Level 2 的开发记录。
-- **level3-dev**：从 v6 接着开发，包含前两关和 Level 3 的文件夹。
-
-在 GitHub 仓库页面，点击左上方的分支名称，下拉选择 **level3-dev**，
-就能看到当前开发内容。也可以直接使用上表里的链接。
-
-## 文件放在哪里
+| Level 1 源码 | [src/levels/level1](https://github.com/suojin311-creator/gamingthesystem_game/tree/level3-dev/src/levels/level1) |
+| Level 2 源码 | [src/levels/level2](https://github.com/suojin311-creator/gamingthesystem_game/tree/level3-dev/src/levels/level2) |
+| Level 3 预留文件夹 | [src/levels/level3](https://github.com/suojin311-creator/gamingthesystem_game/tree/level3-dev/src/levels/level3) |
+| 共用模块 | [src/shared](https://github.com/suojin311-creator/gamingthesystem_game/tree/level3-dev/src/shared) |
+| 全部试玩包及说明 | [play](https://github.com/suojin311-creator/gamingthesystem_game/tree/level3-dev/play) |
 
 ```text
 src/
-  Gameplay.tsx       负责各关之间的衔接和姓名传递
+  Gameplay.tsx       各关之间的衔接和姓名传递
   levels/
     level1/          第一关
     level2/          第二关
     level3/          第三关，当前已预留
   shared/            各关共用的对话、图标、声音等
   assets/            图片素材
-docs/                游戏衔接与开发说明
-play/                可下载的试玩包
+docs/                衔接、开发和验证说明
+play/                各关独立与多关连玩的最新包，以及历史存档
+scripts/             统一打包命令
 ```
 
-制作第三关时，在 level3-dev 中继续使用现有的前两关和共用模块。第三关
-完成后，再接通 Level 2 结尾的按钮，并加入第三关试玩入口。旧试玩包的
-文件名和位置继续保留，因此之前聊天里的下载链接仍然有效。
+## 分支与更新方式
+
+- **level3-dev**：当前统一开发入口，后续第三关在这里制作。
+- **level1-preview**：已同步到这次发布，旧分支里的单关 Level 1 也能下载最新版。
+- **level2-preview**：已同步到这次发布，提供同样的最新单关和连玩包。
+- **level2-dev**：保留此前开发历史，本次也同步；后续开发使用 level3-dev。
+
+本次四个分支指向同一次发布。分支本身不会自动同步；每次发布已认可的
+修改时，要一起重新打包并更新预览分支。历史版本通过带版本号的 ZIP 或
+Git 提交记录查找，v6 原始提交仍是 `336c59f`。
+
+开发时使用 `npm run package:previews` 一次重建连玩、Level 1 独立和
+Level 2 独立三个包，避免只更新其中一个。`play/LATEST.json` 记录源码及
+文件校验值。发布前用 `python tests/release.py` 验证实际包的内容与衔接。
+
+Level 3 完成后，再接通 Level 2 结尾的按钮，并加入第三关独立和多关连玩
+入口。目前没有第三关可玩内容。

@@ -1,0 +1,165 @@
+{
+  "validatedAtUtc": "2026-10-17T18:55:09.997884+00:00",
+  "release": "Synchronized individual and combined previews",
+  "passed": 30,
+  "builds": [
+    "npm run build: passed",
+    "npm run build:level1: passed",
+    "npm run build:level2: passed"
+  ],
+  "suites": {
+    "standalone-level1-results.json": {
+      "passed": 22,
+      "checks": [
+        "Empty selection is blocked; player interface is English without author notes",
+        "prep: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "part: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "focus: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "discuss: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "reflect: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "peer: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "Prediction validation: whitespace, 100-character limit, literal rendering",
+        "Restart cancellation preserves progress; confirmed restart clears only this game",
+        "One Change control replaces duplicate Back; same metric keeps prediction and a new metric clears it",
+        "Refresh starts fresh and ignores legacy progress, guide and sound preferences",
+        "Refresh during a scene returns to a new game, not the interlude",
+        "New and reopened tabs start fresh while the existing open page keeps its own run",
+        "Returning from the browser back-forward cache also starts fresh",
+        "Layout and functional flow at 1366 × 768, including touch and reduced motion",
+        "Layout and functional flow at 1024 × 768, including touch and reduced motion",
+        "Layout and functional flow at 768 × 1024, including touch and reduced motion",
+        "Layout and functional flow at 390 × 844, including touch and reduced motion",
+        "Layout and functional flow at 375 × 667, including touch and reduced motion",
+        "Layout and functional flow at 320 × 640, including touch and reduced motion",
+        "Full game works with localStorage and sessionStorage completely unavailable",
+        "No uncaught browser errors"
+      ],
+      "runtime_errors": []
+    },
+    "release-results.json": {
+      "passed": 7,
+      "checks": [
+        "All three latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
+        "Packaged Level2.html completes 3 → 6 → 10 → 25 → 100 offline with normal motion",
+        "Packaged Level1.html includes the latest behaviour and two replies, stops after Level 1 and permits replay",
+        "Standalone Level 1 reload starts a fresh Level 1 run",
+        "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
+        "Combined preview reload starts from Level 1 rather than restoring Level 2",
+        "Packaged entries have no browser runtime errors"
+      ],
+      "runtimeErrors": []
+    },
+    "dialogue-emoji-results.json": {
+      "passed": 1,
+      "checks": [
+        "All gameplay emoji are distinct across both levels"
+      ],
+      "emojiCount": 16,
+      "inventory": [
+        {
+          "emoji": "📋",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "😬",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "🙋",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "🤷",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "💻",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "👀",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "💬",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "🤔",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "📝",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "🔁",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "🎯",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "🤭",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "🧐",
+          "file": "src/levels/level2/LevelTwo.tsx"
+        },
+        {
+          "emoji": "😇",
+          "file": "src/levels/level2/LevelTwo.tsx"
+        },
+        {
+          "emoji": "😅",
+          "file": "src/levels/level2/LevelTwo.tsx"
+        },
+        {
+          "emoji": "😎",
+          "file": "src/levels/level2/LevelTwo.tsx"
+        }
+      ]
+    }
+  },
+  "manifest": {
+    "sourceSha256": "46dd1257133d27f32edefebb17f72db7b40096a4b6dc2973c336221fc458ca98",
+    "entries": [
+      {
+        "archive": "Level1-play.zip",
+        "html": "Level1.html",
+        "build": "dist-level1/index.html",
+        "htmlSha256": "bdbb4161d2da4f6c81a9f4dda30f6cac93b179f55a866f4bc4996d3a47ca2996",
+        "zipSha256": "b61a60b5cef7a755fe119076383922678606d6d585ea64451c071bdbd112dcab"
+      },
+      {
+        "archive": "Level2-play.zip",
+        "html": "Level2.html",
+        "build": "dist-level2/index.html",
+        "htmlSha256": "8cf4d4d25bd37850a76b35d808efa0445039126ed0d1ae69245dc663a8232952",
+        "zipSha256": "7378c1fce51d861957ec751048580da4aa8e340952a31a689485d5e5af60f30f"
+      },
+      {
+        "archive": "Full-game-play.zip",
+        "html": "Gaming-the-System.html",
+        "build": "dist/index.html",
+        "htmlSha256": "8f4a32adf11729d6147cd2d4afa1e626513f85c5e05edf868ec3d2ea07558aa8",
+        "zipSha256": "102cb81c43fdad1442c06fae68285a54c3f4d89dd8c1b7eb86041027a71c9d45"
+      }
+    ]
+  },
+  "byteIdenticalToAcceptedV6": [
+    "dist/index.html",
+    "dist-level2/index.html",
+    "play/Level2-play-v6.zip"
+  ],
+  "notes": [
+    "Standalone Level 1 uses the current LevelOne component without onContinue; all six branches, updated replies and student behaviour, restart, storage independence and six viewport sizes passed at real presentation speed.",
+    "Release checks exercise the actual three latest ZIPs offline. Packaged Level 1 stops after Level 1; the combined entry continues into Level 2 and retains sound preference; the Level 2-only entry completes 3, 6, 10, 25 and 100 metrics.",
+    "Combined and Level 2 production HTML bytes match the accepted v6 builds. Broader unchanged gameplay and partner-name integration checks are preserved in docs/LEVEL2_VALIDATION-v6.json and were not rerun for this packaging change.",
+    "All latest packages are built together with npm run package:previews. Version-numbered historical ZIPs remain unchanged.",
+    "Managed Chromium blocks file navigation. Exact production HTML bytes were served through an in-memory HTTPS test origin with network access disabled; direct local-file opening in the user browser was not observed.",
+    "Opening and finished cinematics remain separate. Level 3 is still reserved."
+  ]
+}

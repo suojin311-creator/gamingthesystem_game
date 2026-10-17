@@ -12,6 +12,7 @@ from playwright.sync_api import sync_playwright, expect
 parser = argparse.ArgumentParser()
 parser.add_argument('--url', default='http://127.0.0.1:5173/')
 parser.add_argument('--file')
+parser.add_argument('--standalone', action='store_true', help='Level 1 only: continuation stays reserved')
 parser.add_argument('--chromium', default='/usr/bin/chromium')
 args = parser.parse_args()
 # This managed cloud browser blocks file:// navigation. Serve the exact production
@@ -76,7 +77,9 @@ def report_if_needed(page):
     expect(page.get_by_role('button', name='Observe the class')).to_be_enabled(timeout=12000)
 
 
-def reveal_review(page, settle=True, connected=True):
+def reveal_review(page, settle=True, connected=None):
+    if connected is None:
+        connected = not args.standalone
     expect(page.locator('.observation-recap')).to_be_visible(timeout=10000)
     expect(page.locator('.student')).to_contain_text('Learning at risk', timeout=10000)
     if settle:
@@ -318,5 +321,5 @@ root.render(React.createElement(LevelOne, {
     context.close()
     browser.close()
 
-(output / ('offline-results.json' if args.file else 'smoke-results.json')).write_text(json.dumps({'passed': len(cases), 'checks': cases, 'runtime_errors': runtime_errors}, indent=2))
+(output / ('standalone-level1-results.json' if args.standalone else 'offline-results.json' if args.file else 'smoke-results.json')).write_text(json.dumps({'passed': len(cases), 'checks': cases, 'runtime_errors': runtime_errors}, indent=2))
 print(f'{len(cases)} checks passed.')

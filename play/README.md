@@ -1,29 +1,32 @@
-# Play Gaming the System
+# 最新试玩下载 / Latest previews
 
-For the accepted Level 1 + Level 2 v6 preview, [download Level2-play-v6.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level2-preview/play/Level2-play-v6.zip?raw=true),
-extract it and open `Level2.html`. Open `Levels1-and-2.html` in the same ZIP to
-start at Level 1 and continue to Level 2. Both run offline after download.
+三个最新版放在同一个分支 **level3-dev** 的这个文件夹中：
 
-This version is saved on `level2-preview`. Current development continues on
-[`level3-dev`](https://github.com/suojin311-creator/gamingthesystem_game/tree/level3-dev),
-with Level 3's folder at `src/levels/level3/`. There is no playable Level 3 entry yet.
-See the [repository guide / GitHub 使用说明](../docs/REPOSITORY_GUIDE.md).
+| 想怎么玩 | 下载 | 解压后打开 |
+| --- | --- | --- |
+| 从 Level 1 接着玩 Level 2 | [两关连玩最新版](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Full-game-play.zip?raw=true) | **Gaming-the-System.html** |
+| 只试玩 Level 1 | [Level 1 独立最新版](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Level1-play.zip?raw=true) | **Level1.html** |
+| 直接试玩 Level 2 | [Level 2 独立最新版](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Level2-play.zip?raw=true) | **Level2.html** |
 
-## Saved Level 1 preview
+1. 登录有此仓库访问权限的 GitHub 账号。
+2. 点击对应下载链接，下载 ZIP。
+3. 解压，再用 Chrome 或 Edge 打开表格中的 HTML 文件。
 
-1. Sign in to GitHub with an account that can access this repository.
-2. [Download Level1-play-v7.zip](Level1-play-v7.zip?raw=true).
-3. Extract the ZIP into a folder.
-4. Open `Level1.html` using Google Chrome or Microsoft Edge.
+不需要安装软件或输入命令；下载后可以离线运行。每个 ZIP 里也有英文的
+START-HERE.txt 操作说明。仓库是私有的，可以把下载后的 ZIP 直接发给试玩者。
 
-No Node.js, package installation, terminal commands, or development tools are required.
+这三个固定文件名都表示当前最新版，后续更新继续使用这些入口。各入口复用
+同一套关卡源码。Level 1 单独版停在第一关结尾；连玩版同一位置可以继续到
+Level 2。Level 2 直接进入第二关的开场对话。Level 3 目前尚未加入试玩。
 
-This is the standalone Level 1 prototype. Cinematics remain explicitly marked placeholders. Level 2 is reserved for later and does not appear in this build. Use Restart before another player/group begins on the same browser.
+关闭或刷新会重新开始；电影片段仍用 placeholder。姓名衔接接口已保留，
+独立试玩暂用 Maya，正式开场尚未合并。
 
-Version 7 changes the final label to Continue to Level 2 →. This button is reserved and disabled while Level 2 is not yet available. It appears after the final reply’s reading interval. Level 1 stays on the observation page; you can replay the scene or use the header Restart. Use Change beside the selected metric to change your choice before evaluation.
+旧的 level1-preview 分支已同步，里面的 [Level1-play.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level1-preview/play/Level1-play.zip?raw=true)
+也更新为这次的单关最新版。以后优先使用上表统一入口。
 
-The recap shows only one classroom observation paragraph, with a quiet simultaneous student summary and one sound cue. It gives you 6–8 seconds to read before Maya and Alex reply in the main content column. Replies arrive one at a time with typing dots and 3–5 seconds of reading time each. The reserved next-level button appears afterward. Information stays available for rereading.
+文件名含版本号的 ZIP（例如 Level1-play-v7.zip、Level2-play-v6.zip）是历史
+存档，保留当时内容；请用上表的固定入口分享最新版。
 
-Management’s view, automatic playback and fresh-page restarts remain. The guide appears for every new run and can also be reopened with Guide. Sound on / Sound off affects the current run only.
-
-Closing the page ends that game. Reopening it starts again; no saved progress is restored.
+开发时运行 `npm run package:previews` 会一起生成三个最新包与 `LATEST.json`。
+发布前运行 `python tests/release.py` 检查真实 ZIP 的内容和关卡衔接。

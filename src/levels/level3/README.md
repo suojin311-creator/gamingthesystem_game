@@ -1,17 +1,18 @@
 # Level 3 — Gameplay workspace
 
-This is the Level 3 development folder on `level3-dev`. The branch starts from
-the accepted Level 1 + Level 2 v6 version (`336c59f`), also saved unchanged on
-`level2-preview`. Both earlier levels, shared modules, artwork and playable ZIPs
-are included in this branch.
+This is the Level 3 development folder on `level3-dev`. Development starts from
+the accepted Level 1 + Level 2 v6 version (`336c59f`). Both earlier levels,
+shared modules, artwork and the latest individual/combined playable ZIPs are
+included in this branch. Preview branches are synchronized when publishing;
+versioned ZIPs and Git history preserve earlier releases.
 
 ## Current state
 
 Only the folder and integration notes are prepared. There is no Level 3 gameplay
 component or playable Level 3 preview yet. `Gameplay.tsx` still connects Level 1
 and Level 2, and Level 2's final Continue to Level 3 action remains reserved.
-No earlier gameplay, scene, dialogue, dependency or build configuration changed
-as part of this repository organization.
+The preview refresh adds a Level 1-only build and packages all three current
+entries together without changing the accepted gameplay or adding Level 3.
 
 ## Implementation location
 

@@ -1,0 +1,26 @@
+{
+  "sourceSha256": "46dd1257133d27f32edefebb17f72db7b40096a4b6dc2973c336221fc458ca98",
+  "entries": [
+    {
+      "archive": "Level1-play.zip",
+      "html": "Level1.html",
+      "build": "dist-level1/index.html",
+      "htmlSha256": "bdbb4161d2da4f6c81a9f4dda30f6cac93b179f55a866f4bc4996d3a47ca2996",
+      "zipSha256": "b61a60b5cef7a755fe119076383922678606d6d585ea64451c071bdbd112dcab"
+    },
+    {
+      "archive": "Level2-play.zip",
+      "html": "Level2.html",
+      "build": "dist-level2/index.html",
+      "htmlSha256": "8cf4d4d25bd37850a76b35d808efa0445039126ed0d1ae69245dc663a8232952",
+      "zipSha256": "7378c1fce51d861957ec751048580da4aa8e340952a31a689485d5e5af60f30f"
+    },
+    {
+      "archive": "Full-game-play.zip",
+      "html": "Gaming-the-System.html",
+      "build": "dist/index.html",
+      "htmlSha256": "8f4a32adf11729d6147cd2d4afa1e626513f85c5e05edf868ec3d2ea07558aa8",
+      "zipSha256": "102cb81c43fdad1442c06fae68285a54c3f4d89dd8c1b7eb86041027a71c9d45"
+    }
+  ]
+}
