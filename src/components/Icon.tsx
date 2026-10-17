@@ -1,6 +1,6 @@
 import type { MetricId } from '../metrics';
 
-type Name = MetricId | 'arrow' | 'check' | 'school' | 'student' | 'restart' | 'play' | 'spark';
+type Name = MetricId | 'arrow' | 'check' | 'school' | 'student' | 'restart' | 'play' | 'spark' | 'sound' | 'muted' | 'eye' | 'question';
 const shapes: Record<Name, React.ReactNode> = {
   prep: <><path d="M4 5.5c3-1.1 5.6-.8 8 1.2 2.4-2 5-2.3 8-1.2V19c-3-1.1-5.6-.8-8 1.2-2.4-2-5-2.3-8-1.2Z"/><path d="M12 7v13M7 9l2 .3M15 9.3l2-.3M7 12l2 .3M15 12.3l2-.3"/></>,
   part: <><path d="M7 13V5a1.5 1.5 0 0 1 3 0v6-8a1.5 1.5 0 0 1 3 0v8-6a1.5 1.5 0 0 1 3 0v7-4a1.5 1.5 0 0 1 3 0v7c0 4-2.2 7-6 7-2.8 0-4.1-1.8-5.5-3.6L4 14.2a1.7 1.7 0 0 1 2.4-2.4L9 14"/></>,
@@ -15,6 +15,10 @@ const shapes: Record<Name, React.ReactNode> = {
   restart: <><path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/></>,
   play: <path d="m8 5 11 7-11 7Z"/>,
   spark: <><path d="m12 2 2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4Z"/></>,
+  sound: <><path d="M4 9h4l5-4v14l-5-4H4Z M17 8c3 2 3 6 0 8M19 4c6 4 6 12 0 16"/></>,
+  muted: <><path d="M4 9h4l5-4v14l-5-4H4Z M17 9l5 6m0-6-5 6"/></>,
+  eye: <><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></>,
+  question: <><circle cx="12" cy="12" r="9"/><path d="M9 8a3 3 0 1 1 4 3c-1 .4-1 1-1 2M12 17h.01"/></>,
 };
 
 export default function Icon({ name, className = '' }: { name: Name; className?: string }) {

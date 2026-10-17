@@ -54,7 +54,30 @@ def select(page, metric='prep', prediction='Students will explain their ideas mo
     page.get_by_role('button', name='Make a prediction').click()
     page.get_by_label('What do you expect students to do?').fill(prediction)
 
+def report_if_needed(page):
+    button = page.get_by_role('button', name='See university response')
+    if button.count():
+        expect(button).to_be_enabled()
+        expect(page.locator('.university-value')).to_have_count(0)
+        button.click()
+        expect(page.locator('.university-value')).to_be_visible()
+
+
+def reveal_review(page, settle=True):
+    if page.get_by_role('button', name='Reveal observation').count():
+        expect(page.locator('.student')).to_contain_text('Not observed yet')
+        page.get_by_role('button', name='Reveal observation').click()
+        expect(page.locator('.observation-recap')).to_be_visible()
+        expect(page.locator('.student')).to_contain_text('Not observed yet')
+        page.get_by_role('button', name='See student response').click()
+    expect(page.locator('.student')).to_contain_text('Unclear')
+    if settle:
+        page.locator('.dialogue-strip').scroll_into_view_if_needed()
+        expect(page.get_by_role('button', name='Try more metrics')).to_be_enabled(timeout=8000)
+
+
 def story_to_review(page):
+    report_if_needed(page)
     page.get_by_role('button', name='Observe the class').click()
     expect(page.get_by_test_id('cinematic-placeholder')).to_be_visible()
     page.get_by_role('button', name='Continue scene').click()
@@ -83,10 +106,11 @@ with sync_playwright() as p:
         select(page, metric_id, prediction)
         expect(page.get_by_label('What do you expect students to do?')).to_be_focused()
         page.get_by_role('button', name='Run evaluation').click()
-        expect(page.get_by_role('button', name='Observe the class')).to_be_enabled()
+        expect(page.get_by_role('button', name='See university response')).to_be_enabled()
         expect(page.locator('.after-score')).to_contain_text(str(after))
         expect(page.locator('.before-score')).to_contain_text(str(before))
         expect(page.locator('.student')).to_contain_text('Not observed yet')
+        report_if_needed(page)
         page.get_by_role('button', name='Observe the class').click()
         expect(page.locator('.scene-caption')).to_contain_text(first_line)
         assert prediction not in page.locator('.interlude').inner_text()
@@ -95,12 +119,14 @@ with sync_playwright() as p:
         page.get_by_role('button', name='Continue scene').click()
         page.get_by_role('button', name='Return to dashboard').click()
         expect(page.locator('.prediction-recap')).to_contain_text(prediction)
-        expect(page.locator('.uncertainty')).to_have_text(uncertainty)
+        reveal_review(page)
+        expect(page.locator('.student .sr-only')).to_have_text(uncertainty)
         expect(page.locator('.university-value')).to_contain_text(str(after))
         page.reload(wait_until='networkidle')
         expect(page.get_by_role('heading', name='Look a little closer.')).to_be_visible()
         expect(page.locator('.prediction-recap')).to_contain_text(prediction)
         no_overflow(page)
+        reveal_review(page)
         if metric_id == 'part':
             page.screenshot(path=str(output / 'desktop-review.png'), full_page=True)
         page.get_by_role('button', name='Try more metrics').click()
@@ -162,6 +188,7 @@ with sync_playwright() as p:
     fresh(page)
     select(page, 'discuss')
     page.get_by_role('button', name='Run evaluation').click()
+    report_if_needed(page)
     page.get_by_role('button', name='Observe the class').click()
     page.get_by_role('button', name='Continue scene').click()
     page.reload(wait_until='networkidle')
@@ -178,6 +205,7 @@ with sync_playwright() as p:
         tab.get_by_role('button', name='Run evaluation').click()
         no_overflow(tab)
         story_to_review(tab)
+        reveal_review(tab)
         no_overflow(tab)
         if width == 390:
             tab.screenshot(path=str(output / 'mobile-review.png'), full_page=True)
@@ -222,12 +250,14 @@ root.render(React.createElement(LevelOne, {
         expect(host.locator('.speaker-name')).to_have_text('Jordan')
         select(host, 'focus', 'Students will concentrate on the task.')
         host.get_by_role('button', name='Run evaluation').click()
+        report_if_needed(host)
         host.get_by_role('button', name='Observe the class').click()
         expect(host.get_by_role('heading', name='Partner cinematic')).to_be_visible()
         assert host.evaluate('window.storyRequest') == {'sceneId': 'level1.focus', 'metricId': 'focus'}
         assert host.get_by_test_id('cinematic-placeholder').count() == 0
         host.get_by_role('button', name='Finish partner scene').click()
         expect(host.locator('.prediction-recap')).to_contain_text('Students will concentrate on the task.')
+        reveal_review(host)
         host.get_by_role('button', name='Try more metrics').click()
         expect(host.get_by_role('heading', name='Host received Level 1')).to_be_visible()
         assert host.evaluate('window.levelResult') == {

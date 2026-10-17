@@ -1,8 +1,11 @@
 import { getMetric, type MetricId } from './metrics';
 
 export type Phase = 'choose' | 'predict' | 'result' | 'cinematic' | 'review' | 'complete';
-export type Session = { phase: Phase; metricId: MetricId | null; prediction: string };
-export const INITIAL_SESSION: Session = { phase: 'choose', metricId: null, prediction: '' };
+export type Session = {
+  phase: Phase; metricId: MetricId | null; prediction: string;
+  resultReported: boolean; reviewStep: 0 | 1 | 2;
+};
+export const INITIAL_SESSION: Session = { phase: 'choose', metricId: null, prediction: '', resultReported: false, reviewStep: 0 };
 const STORAGE_KEY = 'gaming-the-system:level-one:v1';
 
 export function loadSession(): Session {
@@ -14,7 +17,11 @@ export function loadSession(): Session {
     if (saved.phase !== 'choose' && !getMetric(saved.metricId)) return INITIAL_SESSION;
     if (['result', 'cinematic', 'review', 'complete'].includes(saved.phase) && !saved.prediction.trim()) return INITIAL_SESSION;
     // A restored interlude restarts its placeholder from the beginning.
-    return { phase: saved.phase, metricId: saved.metricId, prediction: saved.prediction };
+    return {
+      phase: saved.phase, metricId: saved.metricId, prediction: saved.prediction,
+      resultReported: saved.resultReported === true,
+      reviewStep: saved.reviewStep === 1 || saved.reviewStep === 2 ? saved.reviewStep : 0,
+    };
   } catch { return INITIAL_SESSION; }
 }
 

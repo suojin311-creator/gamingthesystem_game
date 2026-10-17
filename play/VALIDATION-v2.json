@@ -1,0 +1,49 @@
+{
+  "version": "Level 1 interface v2",
+  "build": "TypeScript and Vite passed",
+  "offline_flow": {
+    "passed": 20,
+    "checks": [
+      "Empty selection is blocked; player interface is English without author notes",
+      "prep: correct score, story, evidence, saved prediction, reload, and completion",
+      "part: correct score, story, evidence, saved prediction, reload, and completion",
+      "focus: correct score, story, evidence, saved prediction, reload, and completion",
+      "discuss: correct score, story, evidence, saved prediction, reload, and completion",
+      "reflect: correct score, story, evidence, saved prediction, reload, and completion",
+      "peer: correct score, story, evidence, saved prediction, reload, and completion",
+      "Prediction validation: whitespace, 100-character limit, reload, literal rendering",
+      "Restart cancellation preserves progress; confirmed restart clears only this game",
+      "Keyboard selection and focus; changing metric resets the previous prediction",
+      "Corrupt or incompatible saves recover to a playable start",
+      "Refreshing a story restarts the selected interlude without losing the prediction",
+      "Layout and functional flow at 1366 \u00d7 768, including touch and reduced motion",
+      "Layout and functional flow at 1024 \u00d7 768, including touch and reduced motion",
+      "Layout and functional flow at 768 \u00d7 1024, including touch and reduced motion",
+      "Layout and functional flow at 390 \u00d7 844, including touch and reduced motion",
+      "Layout and functional flow at 375 \u00d7 667, including touch and reduced motion",
+      "Layout and functional flow at 320 \u00d7 640, including touch and reduced motion",
+      "Unavailable browser storage is reported and does not block gameplay",
+      "No uncaught browser errors"
+    ],
+    "runtime_errors": []
+  },
+  "offline_feedback": {
+    "passed": 8,
+    "checks": [
+      "Score animates first; university response waits for a deliberate click",
+      "Live Web Audio plays count ticks and a distinct success chime after user input",
+      "Observation and student status reveal separately with different update sounds",
+      "Typing precedes each message; Maya stays above Alex, with both readable on a laptop",
+      "Mute suppresses every subsequent cue and survives reload",
+      "Unmuting restores actual Web Audio feedback",
+      "Off-screen dialogue waits; Read replies brings it into view and resumes the sequence",
+      "Browsers without Web Audio still have the complete visual flow"
+    ],
+    "runtime_errors": []
+  },
+  "notes": [
+    "Web Audio tested using actual running contexts and scheduled oscillator frequencies.",
+    "Direct local file navigation is blocked in the managed cloud browser; exact built bytes were tested at an offline in-memory origin.",
+    "No finished partner cinematics or Level 2 gameplay is included."
+  ]
+}

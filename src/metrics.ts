@@ -12,6 +12,8 @@ export type Metric = {
   uncertainty: string;
   evidence: string;
   studentQuote: string;
+  learningLabel: string;
+  takeaway: string;
   scene: SceneLine[];
 };
 
@@ -19,11 +21,12 @@ export type Metric = {
 export const METRICS: Metric[] = [
   {
     id: 'prep', name: 'Pre-class Preparation', shortName: 'Preparation',
-    description: 'Complete the required preparation before class.',
+    description: 'Finish the preparation.',
     example: 'Students will arrive ready to discuss the reading.', before: 34, after: 88,
     improvement: 'More preparation tasks completed', uncertainty: 'Understanding still unclear',
     evidence: 'Students complete the preparation, but some skim just enough to meet the requirement.',
     studentQuote: 'Uh... I finished the checklist.',
+    learningLabel: 'Understanding', takeaway: 'The checklist is complete. The ideas are unclear.',
     scene: [
       { speaker: 'Alex', text: 'I finished everything on the list!' },
       { speaker: 'Maya', text: 'What was the main idea in the reading?' },
@@ -32,11 +35,12 @@ export const METRICS: Metric[] = [
   },
   {
     id: 'part', name: 'In-class Participation', shortName: 'Participation',
-    description: 'Contribute during classroom activities.',
+    description: 'Speak up in class.',
     example: 'Students will contribute more thoughtful ideas.', before: 29, after: 85,
     improvement: 'More visible contributions', uncertainty: 'Depth still unclear',
     evidence: 'Students speak more often, but some contributions are brief or repetitive.',
     studentQuote: 'I just wanted to participate.',
+    learningLabel: 'Depth', takeaway: 'More contributions. Little explanation.',
     scene: [
       { speaker: 'Alex', text: 'I agree! Same here!' },
       { speaker: 'Maya', text: 'Can you explain why?' },
@@ -45,11 +49,12 @@ export const METRICS: Metric[] = [
   },
   {
     id: 'focus', name: 'On-task Focus', shortName: 'Focus',
-    description: 'Stay on the assigned task during class.',
+    description: 'Stay on the task.',
     example: 'Students will think more deeply about the task.', before: 41, after: 91,
     improvement: 'More visible time on task', uncertainty: 'Thinking still unclear',
     evidence: 'Students stay visibly on task, but some focus on looking busy rather than thinking deeply.',
     studentQuote: 'I... kept the page open.',
+    learningLabel: 'Thinking', takeaway: 'The page stayed open. The thinking is unclear.',
     scene: [
       { speaker: 'Alex', text: 'Look, I stayed on task the whole time!' },
       { speaker: 'Maya', text: 'What did you discover?' },
@@ -58,11 +63,12 @@ export const METRICS: Metric[] = [
   },
   {
     id: 'discuss', name: 'In-class Discussion Quality', shortName: 'Discussion',
-    description: 'Explain, question, or build on ideas in discussion.',
+    description: 'Develop ideas together.',
     example: 'Students will explore and develop ideas together.', before: 32, after: 84,
     improvement: 'More discussion criteria met', uncertainty: 'New ideas still unclear',
     evidence: 'Students use the discussion behaviours that earn credit, but some contributions become formulaic.',
     studentQuote: 'I followed the discussion checklist.',
+    learningLabel: 'New ideas', takeaway: 'The right phrases. Few new ideas.',
     scene: [
       { speaker: 'Alex', text: "Could you elaborate? I’d like to build on that." },
       { speaker: 'Maya', text: 'What new idea came out of the discussion?' },
@@ -71,11 +77,12 @@ export const METRICS: Metric[] = [
   },
   {
     id: 'reflect', name: 'Learning Reflection Quality', shortName: 'Reflection',
-    description: 'Explain learning and changes in thinking in a Moodle reflection.',
+    description: 'Reflect on learning.',
     example: 'Students will reflect on what changed their thinking.', before: 38, after: 89,
     improvement: 'More structured reflections', uncertainty: 'Changed thinking still unclear',
     evidence: 'Reflections match the expected structure, but some students repeat the same safe patterns.',
     studentQuote: "That’s the format on the rubric.",
+    learningLabel: 'Changed thinking', takeaway: 'A polished reflection. Changed thinking is unclear.',
     scene: [
       { speaker: 'Alex', text: 'Before, I thought... Now, I think...' },
       { speaker: 'Maya', text: 'What actually changed your mind?' },
@@ -84,11 +91,12 @@ export const METRICS: Metric[] = [
   },
   {
     id: 'peer', name: 'Online Peer Response Quality', shortName: 'Peer response',
-    description: 'Give a specific, useful response to a classmate on Moodle.',
+    description: 'Respond to classmates.',
     example: 'Students will engage with their classmates’ ideas.', before: 27, after: 86,
     improvement: 'More response criteria met', uncertainty: 'Exchange of ideas still unclear',
     evidence: 'Online replies become more specific, but some students learn a repeatable response formula.',
     studentQuote: 'I met every response criterion.',
+    learningLabel: 'Real exchange', takeaway: 'The criteria are met. The exchange is unclear.',
     scene: [
       { speaker: 'Alex', text: 'Specific suggestion? Check. Follow-up question? Check!' },
       { speaker: 'Maya', text: 'Did you really discuss their ideas?' },

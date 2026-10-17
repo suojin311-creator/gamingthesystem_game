@@ -2,7 +2,9 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { METRICS, getMetric, type Metric, type MetricId } from './metrics';
 import { INITIAL_SESSION, loadSession, saveSession, type Phase } from './state';
 import Icon from './components/Icon';
+import Dialogue from './components/Dialogue';
 import CinematicPlaceholder, { type CinematicRequest } from './components/CinematicPlaceholder';
+import { useFeedback } from './useFeedback';
 
 export type LevelOneResult = {
   metricId: MetricId; prediction: string;
@@ -10,56 +12,44 @@ export type LevelOneResult = {
 };
 export type LevelOneProps = {
   playerName?: string;
-  /** The host supplies only the selected story branch. Keep numbers and predictions in this dashboard. */
   renderCinematic?: (request: CinematicRequest, onComplete: () => void) => ReactNode;
   onComplete?: (result: LevelOneResult) => void;
-  /** Give each in-memory player/session a separate mount; disable persistence for a host-owned save system. */
   persist?: boolean;
 };
 
-const steps = ['Choose a focus', 'Make a prediction', 'See the result', 'Observe & reflect'];
+const steps = ['Choose', 'Predict', 'Evaluate', 'Observe'];
 const phaseStep: Record<Phase, number> = { choose: 0, predict: 1, result: 2, cinematic: 3, review: 3, complete: 4 };
 const TARGET = 70;
 
 function ResultChart({ metric, ready, score }: { metric: Metric; ready: boolean; score: number }) {
-  return <div className="score-paper">
-    <div className="score-paper-top"><span className="eyebrow">{metric.shortName} · REPORTED SCORE</span><span className={`achievement ${ready ? 'achieved' : ''}`}><Icon name={ready ? 'check' : 'spark'} />{ready ? 'Target achieved' : 'Evaluating'}</span></div>
-    <div className="score-numbers" aria-label={`Reported score: ${metric.before} before, ${metric.after} after`}><span className="before-score">{metric.before}<small>BEFORE</small></span><span className="score-arrow">⟶</span><span className="after-score">{score}<small>AFTER</small></span></div>
-    <div className="score-plot" aria-hidden="true"><div className="chart-guide" /><div className="chart-guide" /><div className="plot-bar before-bar" style={{ height: `${metric.before}%` }}><span>{metric.before}</span></div><div className="plot-bar after-bar" style={{ height: `${score}%` }}><span>{score}</span></div><div className="target-line" style={{ bottom: `${TARGET}%` }}><span>Target {TARGET}</span></div></div>
-    <div className="chart-axis" aria-hidden="true"><span>Before</span><span>After</span></div>
-    <p className="data-note">Illustrative score · 0–100 index</p>
+  return <div className="score-paper" data-ready={ready}>
+    <div className="score-paper-top"><span className="eyebrow">{metric.shortName}</span><span className="score-state">{ready ? 'Evaluation complete' : 'Evaluating…'}</span></div>
+    <div className="score-numbers" aria-label={`Reported score: ${metric.before} before, ${metric.after} after`}>
+      <span className="before-score">{metric.before}<small>BEFORE</small></span>
+      <Icon name="arrow" className="score-arrow" />
+      <span className="after-score">{score}<small>AFTER</small></span>
+    </div>
+    <div className="score-track" aria-hidden="true"><span className="score-track-before" style={{ width: `${metric.before}%` }} /><span className="score-track-after" style={{ width: `${score}%` }} /><i style={{ left: `${TARGET}%` }} /></div>
+    <div className="score-track-labels"><span>0</span><span>Target {TARGET}</span><span>100</span></div>
+    <p className="data-note">Illustrative score</p>
   </div>;
 }
 
-function PerspectivePanel({ metric, evaluated, observed }: { metric?: Metric; evaluated: boolean; observed: boolean }) {
+function PerspectivePanel({ metric, evaluated, observed, highlight }: {
+  metric?: Metric; evaluated: boolean; observed: boolean; highlight: 'university' | 'student' | null;
+}) {
   return <aside className="perspectives" aria-label="Two perspectives">
-    <div className="perspective-intro"><span className="eyebrow">TWO PERSPECTIVES</span><span className="tiny-rule" /></div>
-    <section className={`perspective university ${evaluated ? 'has-result' : ''}`} aria-labelledby="university-title">
-      <div className="perspective-heading"><span className="perspective-icon"><Icon name="school" /></span><span><span className="eyebrow">UNIVERSITY VIEW</span><h3 id="university-title">The reported result</h3></span></div>
-      {evaluated && metric ? <><div className="university-value"><span>{metric.after}<small>/100</small></span><span className="gain">+{metric.after - metric.before}<span className="sr-only">points</span><Icon name="arrow" /></span></div><div className="mini-bar" aria-hidden="true"><span style={{ width: `${metric.after}%` }} /></div><p className="perspective-status"><Icon name="check" />Target achieved</p><p className="perspective-description">{metric.name}</p></> : <><div className="waiting-chart" aria-hidden="true"><span /><span /><span /><span /><span /></div><p className="pending-title">Awaiting an evaluation</p><p className="perspective-description">Choose a metric to give the university a measurable result.</p></>}
+    <section className={`perspective university ${evaluated ? 'has-result' : ''} ${highlight === 'university' ? 'just-updated' : ''}`} aria-labelledby="university-title" data-updated={highlight === 'university'} tabIndex={-1}>
+      <div className="perspective-heading"><Icon name="school" /><h3 id="university-title">University</h3>{highlight === 'university' && <span className="new-badge">NEW</span>}</div>
+      <span className="perspective-label">Reported score</span>
+      {evaluated && metric ? <><div className="university-value"><span>{metric.after}</span><span className="gain">+{metric.after - metric.before}<Icon name="arrow" /></span></div><div className="mini-bar" aria-hidden="true"><span style={{ width: `${metric.after}%` }} /></div><p className="perspective-status"><Icon name="check" />Target met</p></> : <><div className="pending-symbol" aria-hidden="true">—</div><p className="pending-title">Run an evaluation</p></>}
     </section>
-    <div className="perspective-connector" aria-hidden="true"><span /><i>&</i><span /></div>
-    <section className={`perspective student ${observed ? 'has-evidence' : ''}`} aria-labelledby="student-title">
-      <div className="perspective-heading"><span className="perspective-icon"><Icon name="student" /></span><span><span className="eyebrow">STUDENT VIEW</span><h3 id="student-title">The classroom response</h3></span></div>
-      {observed && metric ? <><p className="student-improvement"><Icon name="check" />{metric.improvement}</p><blockquote>“{metric.studentQuote}”<cite>— Alex</cite></blockquote><p className="uncertainty"><span />{metric.uncertainty}</p></> : <><div className="waiting-quote" aria-hidden="true">“</div><p className="pending-title">Not observed yet</p><p className="perspective-description">Visit the classroom after the evaluation to hear from students.</p></>}
+    <section className={`perspective student ${observed ? 'has-evidence' : ''} ${highlight === 'student' ? 'just-updated' : ''}`} aria-labelledby="student-title" data-updated={highlight === 'student'} tabIndex={-1}>
+      <div className="perspective-heading"><Icon name="student" /><h3 id="student-title">Students</h3>{highlight === 'student' && <span className="new-badge">NEW</span>}</div>
+      <span className="perspective-label">{observed && metric ? metric.learningLabel : 'Classroom response'}</span>
+      {observed && metric ? <><div className="student-signal"><Icon name="question" /></div><p className="uncertainty">Unclear</p><span className="sr-only">{metric.uncertainty}</span></> : <><div className="student-signal waiting-signal"><Icon name="eye" /></div><p className="pending-title">Not observed yet</p></>}
     </section>
-    <p className="perspective-footnote">One classroom.<br />Two ways of seeing it.</p>
   </aside>;
-}
-
-function Dialogue({ phase, playerName }: { phase: Phase; playerName: string }) {
-  const maya: Record<Phase, string> = {
-    choose: 'I need a way to track engagement. Which metric should I start with?',
-    predict: 'Before I try it, what do I expect students to do?',
-    result: 'That looks promising. Let’s see what changed in class.',
-    cinematic: '',
-    review: 'The numbers look great... but something still feels wrong.',
-    complete: 'Maybe one metric is too narrow.',
-  };
-  return <section className={`dialogue-strip ${phase === 'review' ? 'two-voices' : ''}`} aria-label="Character dialogue">
-    <div className="dialogue-character"><span className="avatar maya-avatar" aria-hidden="true">{playerName.charAt(0).toUpperCase()}</span><div className="speech-bubble maya-bubble"><span className="speaker-name">{playerName}</span><p>{maya[phase]}</p></div></div>
-    {phase === 'review' ? <div className="dialogue-character alex-character"><div className="speech-bubble alex-bubble"><span className="speaker-name">Alex</span><p>Professor! I figured out exactly what you were looking for!</p></div><span className="avatar alex-avatar" aria-hidden="true">A</span></div> : <span className="dialogue-mark" aria-hidden="true">a classroom experiment</span>}
-  </section>;
 }
 
 export default function LevelOne({ playerName = 'Maya', renderCinematic, onComplete, persist = true }: LevelOneProps) {
@@ -68,50 +58,90 @@ export default function LevelOne({ playerName = 'Maya', renderCinematic, onCompl
   const [restartOpen, setRestartOpen] = useState(false);
   const [resultReady, setResultReady] = useState(false);
   const [animatedScore, setAnimatedScore] = useState(0);
+  const [dialogueSettled, setDialogueSettled] = useState(false);
+  const [highlight, setHighlight] = useState<'university' | 'student' | null>(null);
   const title = useRef<HTMLHeadingElement>(null);
   const cancelRestart = useRef<HTMLButtonElement>(null);
   const restartButton = useRef<HTMLButtonElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const predictionField = useRef<HTMLTextAreaElement>(null);
-  const { phase, prediction, metricId } = session;
+  const feedback = useFeedback();
+  const { phase, prediction, metricId, resultReported, reviewStep } = session;
   const metric = getMetric(metricId);
-  const observed = phase === 'review' || phase === 'complete';
-  const evaluated = observed || phase === 'cinematic' || (phase === 'result' && resultReady);
+  const observed = (phase === 'review' && reviewStep === 2) || phase === 'complete';
+  const evaluated = (phase === 'result' && resultReported) || ['cinematic', 'review', 'complete'].includes(phase);
+  const dialogueEnabled = phase === 'result' ? resultReported : phase === 'review' ? reviewStep === 2 : true;
 
   useEffect(() => { if (persist) setStorageAvailable(saveSession(session)); }, [session, persist]);
   useEffect(() => {
+    setDialogueSettled(false);
+    setHighlight(null);
     if (phase === 'predict') predictionField.current?.focus({ preventScroll: true });
     else if (phase !== 'cinematic') title.current?.focus({ preventScroll: true });
     const target = title.current;
-    if (phase !== 'cinematic' && target && (target.getBoundingClientRect().top < 0 || target.getBoundingClientRect().top > window.innerHeight * 0.7)) {
-      target.scrollIntoView({ block: 'start', behavior: 'instant' });
-    }
+    if (phase !== 'cinematic' && target && (target.getBoundingClientRect().top < 0 || target.getBoundingClientRect().top > window.innerHeight * 0.7)) target.scrollIntoView({ block: 'start', behavior: 'instant' });
   }, [phase]);
   useEffect(() => {
-    if (phase !== 'result' || !metric) { setResultReady(false); return; }
+    if (phase !== 'result' || !metric || restartOpen) { setResultReady(false); return; }
+    if (resultReported) { setAnimatedScore(metric.after); setResultReady(true); return; }
     setResultReady(false);
     setAnimatedScore(metric.before);
-    const duration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1400;
+    const duration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1500;
     let frame = 0;
-    const start = performance.now();
+    let elapsed = 0;
+    let last = performance.now();
+    let lastTick = 0;
     const tick = (now: number) => {
-      const progress = duration === 0 ? 1 : Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setAnimatedScore(Math.round(metric.before + (metric.after - metric.before) * eased));
+      // Accumulate visible time so returning to a hidden tab cannot skip the result.
+      if (!document.hidden) elapsed += Math.min(now - last, 64);
+      last = now;
+      const progress = duration === 0 ? 1 : Math.min(elapsed / duration, 1);
+      const score = Math.round(metric.before + (metric.after - metric.before) * (1 - Math.pow(1 - progress, 3)));
+      setAnimatedScore(score);
+      const segment = Math.floor(progress * 5);
+      if (segment > lastTick && segment < 5) { feedback.play('tick'); lastTick = segment; }
       if (progress < 1) frame = requestAnimationFrame(tick);
       else setResultReady(true);
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [phase, metric]);
+  }, [phase, metric, resultReported, restartOpen, feedback.play]);
   useEffect(() => {
-    if (restartOpen) { dialog.current?.showModal(); cancelRestart.current?.focus(); }
+    if (restartOpen) { feedback.stop(); dialog.current?.showModal(); cancelRestart.current?.focus(); }
     else if (dialog.current?.open) dialog.current.close();
-  }, [restartOpen]);
+  }, [restartOpen, feedback.stop]);
 
-  function go(next: Phase) { setSession(value => ({ ...value, phase: next })); }
+  function go(next: Phase) {
+    feedback.stop();
+    setSession(value => ({ ...value, phase: next, reviewStep: next === 'review' || next === 'cinematic' ? 0 : value.reviewStep }));
+  }
   function choose(id: MetricId) {
-    setSession(value => ({ ...value, metricId: id, prediction: value.metricId === id ? value.prediction : '' }));
+    setSession(value => ({ ...value, metricId: id, prediction: value.metricId === id ? value.prediction : '', resultReported: false, reviewStep: 0 }));
+  }
+  function spotlight(which: 'university' | 'student') {
+    setHighlight(which);
+    // Bring the actual change into view instead of relying on an off-screen flash.
+    window.requestAnimationFrame(() => {
+      document.querySelector<HTMLButtonElement>('.action-row .primary-button')?.focus({ preventScroll: true });
+      const panel = document.querySelector<HTMLElement>(`.perspective.${which}`);
+      if (!panel) return;
+      if (panel.getBoundingClientRect().top < 0 || panel.getBoundingClientRect().bottom > window.innerHeight) panel.scrollIntoView({ block: 'center', behavior: 'instant' });
+    });
+  }
+  function showReport() {
+    setSession(value => ({ ...value, resultReported: true }));
+    feedback.play('report');
+    spotlight('university');
+  }
+  function showObservation() {
+    setSession(value => ({ ...value, reviewStep: 1 }));
+    feedback.play('evidence');
+    window.requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('.action-row .primary-button')?.focus({ preventScroll: true }));
+  }
+  function showStudents() {
+    setSession(value => ({ ...value, reviewStep: 2 }));
+    feedback.play('student');
+    spotlight('student');
   }
   function finish() {
     if (!metric) return;
@@ -120,61 +150,60 @@ export default function LevelOne({ playerName = 'Maya', renderCinematic, onCompl
   }
   function dismissRestart() { setRestartOpen(false); restartButton.current?.focus(); }
 
-  return <div className="game-page">
-    <header className="masthead"><a className="wordmark" href="#main-content" aria-label="Gaming the System, skip to game"><span className="brand-emblem" aria-hidden="true">g<span>s</span><i /></span><span>GAMING<br /><b>THE SYSTEM</b></span></a><div className="masthead-caption"><span className="mini-cross" aria-hidden="true"><Icon name="spark" /></span> What gets measured<br /><em>changes what we do.</em></div><button ref={restartButton} className="restart-button" onClick={() => setRestartOpen(true)}><Icon name="restart" /><span>Restart</span></button></header>
+  return <div className="game-page" onPointerDownCapture={feedback.unlock} onKeyDownCapture={feedback.unlock}>
+    <header className="masthead"><a className="wordmark" href="#main-content" aria-label="Gaming the System, skip to game"><span className="brand-emblem" aria-hidden="true">g<span>s</span><i /></span><span>GAMING<br /><b>THE SYSTEM</b></span></a><div className="header-controls"><button className="sound-button" aria-pressed={!feedback.muted} disabled={!feedback.available} onClick={feedback.toggle} title={feedback.available ? 'Toggle feedback sounds' : 'Audio is unavailable in this browser'}><Icon name={feedback.muted || !feedback.available ? 'muted' : 'sound'} /><span>{!feedback.available ? 'No audio' : feedback.muted ? 'Sound off' : 'Sound on'}</span></button><button ref={restartButton} className="restart-button" onClick={() => setRestartOpen(true)}><Icon name="restart" /><span>Restart</span></button></div></header>
 
     <main className="workbench" id="main-content">
-      <div className="workbench-heading"><div className="chapter-heading"><span className="chapter-number">01</span><div><p className="eyebrow">YOUR FIRST EXPERIMENT</p><h1>One metric.</h1></div></div><span className="office-location"><span /> THE OFFICE<span className="location-separator">/</span>MONDAY</span></div>
+      <div className="workbench-heading"><div className="chapter-heading"><span className="chapter-number">01</span><h1>One metric.</h1></div><span className="office-location"><span /> THE OFFICE</span></div>
       <nav className="stepper" aria-label="Level 1 progress"><ol>{steps.map((step, index) => <li key={step} className={`${phaseStep[phase] === index ? 'current' : ''} ${phaseStep[phase] > index ? 'done' : ''}`} aria-current={phaseStep[phase] === index ? 'step' : undefined}><span className="step-number">{phaseStep[phase] > index ? <Icon name="check" /> : `0${index + 1}`}</span><span>{step}</span></li>)}</ol></nav>
 
       {phase === 'cinematic' && metric ? (renderCinematic ? renderCinematic({ sceneId: `level1.${metric.id}`, metricId: metric.id }, () => go('review')) : <CinematicPlaceholder request={{ sceneId: `level1.${metric.id}`, metricId: metric.id }} playerName={playerName} onComplete={() => go('review')} />) : <>
         <div className={`workbench-body phase-${phase}`}>
           <section className="decision-area" aria-label="Current decision">
             {phase === 'choose' && <>
-              <div className="section-intro"><p className="eyebrow">START WITH ONE THING</p><h2 ref={title} tabIndex={-1}>What will you measure?</h2><p>Choose one indicator to track student engagement.</p></div>
+              <div className="section-intro"><h2 ref={title} tabIndex={-1}>What will you measure?</h2><p>Choose one metric.</p></div>
               <div className="metric-grid" role="group" aria-label="Choose one metric">{METRICS.map((item, index) => <button key={item.id} type="button" data-testid={`metric-${item.id}`} className={`metric-card ${metricId === item.id ? 'selected' : ''}`} aria-pressed={metricId === item.id} onClick={() => choose(item.id)}><div className="metric-card-top"><span className="metric-illustration"><Icon name={item.id} /></span><span className="selection-circle">{metricId === item.id ? <Icon name="check" /> : <span className="card-index">0{index + 1}</span>}</span></div><h3>{item.name}</h3><p>{item.description}</p></button>)}</div>
-              <div className="action-row"><span className="selection-note" role="status">{metric ? <><span className="status-dot" />One metric selected</> : 'Select one of the six indicators.'}</span><button className="button primary-button" disabled={!metric} onClick={() => go('predict')}>Make a prediction<Icon name="arrow" /></button></div>
+              <div className="action-row"><span className="selection-note" role="status">{metric ? <><Icon name="check" />{metric.shortName}</> : 'Choose 1 of 6'}</span><button className="button primary-button" disabled={!metric} onClick={() => go('predict')}>Make a prediction<Icon name="arrow" /></button></div>
             </>}
 
             {phase === 'predict' && metric && <>
-              <div className="section-intro"><p className="eyebrow">BEFORE YOU TRY IT</p><h2 ref={title} tabIndex={-1}>What do you expect?</h2><p>Imagine this metric becomes the main target for students.</p></div>
-              <div className="selected-focus"><span className="metric-illustration"><Icon name={metric.id} /></span><div><span className="eyebrow">YOUR CHOSEN METRIC</span><h3>{metric.name}</h3></div><button className="text-button" onClick={() => go('choose')}>Change</button></div>
-              <form className="prediction-form" onSubmit={event => { event.preventDefault(); if (prediction.trim()) { setSession(value => ({ ...value, prediction: value.prediction.trim(), phase: 'result' })); } }}>
-                <label htmlFor="prediction">What do you expect students to do?</label><p id="prediction-help" className="field-help">Write one short sentence. You’ll return to it after observing the class.</p>
+              <div className="section-intro"><h2 ref={title} tabIndex={-1}>What do you expect?</h2></div>
+              <div className="selected-focus"><span className="metric-illustration"><Icon name={metric.id} /></span><h3>{metric.name}</h3><button className="text-button" onClick={() => go('choose')}>Change</button></div>
+              <form className="prediction-form" onSubmit={event => { event.preventDefault(); if (prediction.trim()) setSession(value => ({ ...value, prediction: value.prediction.trim(), phase: 'result', resultReported: false })); }}>
+                <label htmlFor="prediction">What do you expect students to do?</label><p id="prediction-help" className="field-help">One sentence, before this becomes the target.</p>
                 <div className="prediction-paper"><span className="paper-corner" aria-hidden="true" /><textarea ref={predictionField} id="prediction" maxLength={100} value={prediction} placeholder={`e.g. ${metric.example}`} aria-describedby="prediction-help prediction-count" onChange={event => setSession(value => ({ ...value, prediction: event.target.value }))} /><div id="prediction-count" className="character-counter">{prediction.length}<span> / 100</span></div></div>
                 <div className="action-row"><button type="button" className="back-button" onClick={() => go('choose')}>← Back to metrics</button><button type="submit" className="button primary-button" disabled={!prediction.trim()}>Run evaluation<Icon name="arrow" /></button></div>
               </form>
             </>}
 
             {phase === 'result' && metric && <>
-              <div className="section-intro"><p className="eyebrow">AFTER USING THIS METRIC</p><h2 ref={title} tabIndex={-1}>The number went up.</h2><p>{metric.name}</p></div>
+              <div className="section-intro"><h2 ref={title} tabIndex={-1}>{resultReported ? 'Target achieved.' : 'Watch the score.'}</h2></div>
               <ResultChart metric={metric} ready={resultReady} score={animatedScore} />
-              <p className="result-prompt">A promising result. What changed in the classroom?</p>
-              <div className="action-row"><span className="selection-note" aria-live="polite">{resultReady ? 'The evaluation is complete.' : 'Evaluating the selected metric…'}</span><button className="button primary-button" disabled={!resultReady} onClick={() => go('cinematic')}><Icon name="play" />Observe the class</button></div>
+              <div className="action-row"><span className="selection-note">{!resultReady ? 'Evaluating…' : !resultReported ? 'Next: the university' : 'Next: the classroom'}</span>{!resultReported ? <button className="button primary-button" disabled={!resultReady} onClick={showReport}>See university response<Icon name="arrow" /></button> : <button className="button primary-button" onClick={() => go('cinematic')}><Icon name="play" />Observe the class</button>}</div>
             </>}
 
             {phase === 'review' && metric && <>
-              <div className="section-intro"><p className="eyebrow">BACK AT YOUR DESK</p><h2 ref={title} tabIndex={-1}>Look a little closer.</h2><p>The same experiment, seen from two perspectives.</p></div>
-              <div className="review-metric"><Icon name={metric.id} /><span>{metric.name}</span><span className="review-score">{metric.before} → {metric.after}</span></div>
-              <div className="comparison-stack"><article className="prediction-recap"><span className="eyebrow">YOUR PREDICTION</span><blockquote>“{prediction}”</blockquote><span className="handwritten-note">Before the evaluation</span></article><article className="observation-recap"><span className="eyebrow">WHAT YOU OBSERVED</span><p>{metric.evidence}</p><span className="evidence-stamp">Classroom observation</span></article></div>
-              <p className="reflection-question">Did the result capture the engagement you hoped for?</p>
-              <div className="action-row"><button className="text-button" onClick={() => go('cinematic')}>Revisit the classroom</button><button className="button primary-button" onClick={finish}>Try more metrics<Icon name="arrow" /></button></div>
+              <div className="section-intro"><h2 ref={title} tabIndex={-1}>Look a little closer.</h2></div>
+              <div className="comparison-stack"><article className="prediction-recap"><span className="eyebrow">YOU EXPECTED</span><blockquote>“{prediction}”</blockquote></article>
+                {reviewStep >= 1 ? <article className="observation-recap" key="evidence"><span className="eyebrow">IN THE CLASSROOM</span><p>{metric.takeaway}</p><details><summary>More context</summary><p>{metric.evidence}</p></details></article> : <div className="observation-waiting"><Icon name="eye" /><span>What actually happened?</span></div>}
+              </div>
+              <div className="action-row"><button className="text-button" onClick={() => go('cinematic')}>Replay scene</button>{reviewStep === 0 ? <button className="button primary-button" onClick={showObservation}>Reveal observation<Icon name="arrow" /></button> : reviewStep === 1 ? <button className="button primary-button" onClick={showStudents}>See student response<Icon name="arrow" /></button> : !dialogueSettled ? <button className="button primary-button read-replies" onClick={() => document.querySelector('.dialogue-strip')?.scrollIntoView({ block: 'center', behavior: 'instant' })}>Read replies ↓</button> : <button className="button primary-button" onClick={finish}>Try more metrics<Icon name="arrow" /></button>}</div>
             </>}
 
             {phase === 'complete' && metric && <>
-              <div className="completion-seal"><Icon name="check" /><span>EXPERIMENT 01 COMPLETE</span></div>
-              <div className="section-intro completion-intro"><p className="eyebrow">A NEW QUESTION</p><h2 ref={title} tabIndex={-1}>What if we measured<br /><em>more than one?</em></h2><p>You have a result. You have a classroom response.<br />Now you’re ready to broaden the picture.</p></div>
-              <div className="next-chapter"><span className="chapter-number">02</span><div><span className="eyebrow">NEXT CHAPTER</span><h3>More metrics.</h3><p>The next level will continue from here.</p></div><span className="coming-label">Coming next</span></div>
-              <div className="action-row completion-actions"><button className="back-button" onClick={() => go('review')}>← Review this experiment</button><button className="button secondary-button" onClick={() => setRestartOpen(true)}>Try another metric<Icon name="restart" /></button></div>
+              <div className="completion-seal"><Icon name="check" /><span>LEVEL 1 COMPLETE</span></div>
+              <div className="section-intro completion-intro"><h2 ref={title} tabIndex={-1}>What if we measured<br /><em>more than one?</em></h2></div>
+              <div className="next-chapter"><span className="chapter-number">02</span><div><span className="eyebrow">NEXT</span><h3>More metrics.</h3></div><span className="coming-label">Coming next</span></div>
+              <div className="action-row"><button className="back-button" onClick={() => go('review')}>← Review this experiment</button><button className="button secondary-button" onClick={() => setRestartOpen(true)}>Try another metric<Icon name="restart" /></button></div>
             </>}
           </section>
-          <PerspectivePanel metric={metric} evaluated={evaluated} observed={observed} />
+          <PerspectivePanel metric={metric} evaluated={evaluated} observed={observed} highlight={highlight} />
         </div>
-        <Dialogue phase={phase} playerName={playerName} />
+        <Dialogue key={phase} phase={phase} playerName={playerName} studentQuote={metric?.studentQuote} enabled={dialogueEnabled && !restartOpen} play={feedback.play} onSettled={() => setDialogueSettled(true)} />
       </>}
     </main>
-    <footer className="page-footer"><span>GAMING THE SYSTEM<span className="footer-dot">·</span>LEVEL 01</span><span>A small experiment. A bigger question.</span></footer>
-    {!storageAvailable && <p className="storage-notice" role="status">Progress can’t be saved in this browser. Keep this tab open to continue your experiment.</p>}
-    <dialog ref={dialog} className="restart-dialog" onCancel={event => { event.preventDefault(); dismissRestart(); }} onClose={() => { if (restartOpen) dismissRestart(); }} aria-labelledby="restart-title"><span className="eyebrow">A FRESH START</span><h2 id="restart-title">Restart this experiment?</h2><p>Your current choice and prediction will be cleared.</p><div className="dialog-actions"><button ref={cancelRestart} className="button secondary-button" onClick={dismissRestart}>Keep playing</button><button className="button primary-button" onClick={() => { setSession({ ...INITIAL_SESSION }); dismissRestart(); }}>Restart level 1</button></div></dialog>
+    <footer className="page-footer">GAMING THE SYSTEM · LEVEL 01</footer>
+    {!storageAvailable && <p className="storage-notice" role="status">Progress can’t be saved in this browser. Keep this tab open to continue.</p>}
+    <dialog ref={dialog} className="restart-dialog" onCancel={event => { event.preventDefault(); dismissRestart(); }} onClose={() => { if (restartOpen) dismissRestart(); }} aria-labelledby="restart-title"><h2 id="restart-title">Restart this experiment?</h2><p>Your choice and prediction will be cleared.</p><div className="dialog-actions"><button ref={cancelRestart} className="button secondary-button" onClick={dismissRestart}>Keep playing</button><button className="button primary-button" onClick={() => { setSession({ ...INITIAL_SESSION }); dismissRestart(); }}>Restart level 1</button></div></dialog>
   </div>;
 }
