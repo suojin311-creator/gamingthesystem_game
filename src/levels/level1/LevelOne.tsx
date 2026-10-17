@@ -63,22 +63,18 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
   const [session, setSession] = useState(() => ({ ...INITIAL_SESSION }));
   const [guideOpen, setGuideOpen] = useState(showIntro);
   const [runId, setRunId] = useState(0);
-  const [restartOpen, setRestartOpen] = useState(false);
   const [resultReady, setResultReady] = useState(false);
   const [animatedScore, setAnimatedScore] = useState(0);
   const [dialogueSettled, setDialogueSettled] = useState(false);
   const [highlight, setHighlight] = useState<'university' | null>(null);
   const [reviewTalkReady, setReviewTalkReady] = useState(false);
   const title = useRef<HTMLHeadingElement>(null);
-  const cancelRestart = useRef<HTMLButtonElement>(null);
-  const restartButton = useRef<HTMLButtonElement>(null);
   const guideButton = useRef<HTMLButtonElement>(null);
   const guideWasAutomatic = useRef(guideOpen);
-  const dialog = useRef<HTMLDialogElement>(null);
   const predictionField = useRef<HTMLTextAreaElement>(null);
   const completionReported = useRef(false);
   const feedback = useFeedback();
-  const paused = guideOpen || restartOpen;
+  const paused = guideOpen;
   const pausedRef = useRef(paused);
   pausedRef.current = paused;
   const { phase, prediction, metricId, resultReported, reviewStep } = session;
@@ -111,7 +107,7 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
     if (phase !== 'cinematic' && target && (target.getBoundingClientRect().top < 0 || target.getBoundingClientRect().top > window.innerHeight * 0.7)) target.scrollIntoView({ block: 'start', behavior: 'instant' });
   }, [phase, runId]);
   useEffect(() => {
-    const onReturn = (event: PageTransitionEvent) => { if (event.persisted) restartExperiment(); };
+    const onReturn = (event: PageTransitionEvent) => { if (event.persisted) resetForNewVisit(); };
     window.addEventListener('pageshow', onReturn);
     return () => window.removeEventListener('pageshow', onReturn);
   }, [showIntro, feedback.reset]);
@@ -140,10 +136,6 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
   }, [phase, metric, resultReported, feedback.play]);
-  useEffect(() => {
-    if (restartOpen) { feedback.stop(); dialog.current?.showModal(); cancelRestart.current?.focus(); }
-    else if (dialog.current?.open) dialog.current.close();
-  }, [restartOpen, feedback.stop]);
 
   function go(next: Phase) {
     feedback.stop();
@@ -176,13 +168,12 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
     completionReported.current = true;
     onComplete?.({ metricId: metric.id, prediction: prediction.trim(), reportedScore: { before: metric.before, after: metric.after, target: TARGET } });
   }
-  function dismissRestart() { setRestartOpen(false); restartButton.current?.focus(); }
-  function restartExperiment() {
+  function resetForNewVisit() {
     feedback.reset();
     completionReported.current = false;
     setSession({ ...INITIAL_SESSION });
     setRunId(value => value + 1);
-    setRestartOpen(false);
+
     guideWasAutomatic.current = showIntro;
     setGuideOpen(showIntro);
   }
@@ -202,7 +193,7 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
   const request: CinematicRequest | null = phase === 'cinematic' && metric ? { sceneId: `level1.${metric.id}`, metricId: metric.id, playerName } : null;
 
   return <div className="game-page level-one" onPointerDownCapture={feedback.unlock} onKeyDownCapture={feedback.unlock}>
-    <header className="masthead"><a className="wordmark" href="#main-content" aria-label="Gaming the System, skip to game"><span className="brand-emblem" aria-hidden="true">g<span>s</span><i /></span><span>GAMING<br /><b>THE SYSTEM</b></span></a><div className="header-controls">{phase !== 'cinematic' && <button ref={guideButton} className="guide-button" aria-label="Guide" onClick={openGuide}><Icon name="question" /><span>Guide</span></button>}<button className="sound-button" aria-pressed={!feedback.muted} disabled={!feedback.available} onClick={feedback.toggle} title={feedback.available ? 'Toggle feedback sounds' : 'Audio is unavailable in this browser'}><Icon name={feedback.muted || !feedback.available ? 'muted' : 'sound'} /><span>{!feedback.available ? 'No audio' : feedback.muted ? 'Sound off' : 'Sound on'}</span></button><button ref={restartButton} className="restart-button" onClick={() => setRestartOpen(true)}><Icon name="restart" /><span>Restart</span></button></div></header>
+    <header className="masthead"><a className="wordmark" href="#main-content" aria-label="Gaming the System, skip to game"><span className="brand-emblem" aria-hidden="true">g<span>s</span><i /></span><span>GAMING<br /><b>THE SYSTEM</b></span></a><div className="header-controls">{phase !== 'cinematic' && <button ref={guideButton} className="guide-button" aria-label="Guide" onClick={openGuide}><Icon name="question" /><span>Guide</span></button>}<button className="sound-button" aria-pressed={!feedback.muted} disabled={!feedback.available} onClick={feedback.toggle} title={feedback.available ? 'Toggle feedback sounds' : 'Audio is unavailable in this browser'}><Icon name={feedback.muted || !feedback.available ? 'muted' : 'sound'} /><span>{!feedback.available ? 'No audio' : feedback.muted ? 'Sound off' : 'Sound on'}</span></button></div></header>
 
     <main className="workbench" id="main-content">
       <div className="workbench-heading"><div className="chapter-heading"><span className="chapter-number">01</span><h1>One metric.</h1></div><span className="office-location"><span /> THE OFFICE</span></div>
@@ -249,6 +240,6 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
     </main>
     <footer className="page-footer">GAMING THE SYSTEM · LEVEL 01</footer>
     {guideOpen && <WorkbenchGuide key={runId} onClose={closeGuide} />}
-    <dialog ref={dialog} className="restart-dialog" onCancel={event => { event.preventDefault(); dismissRestart(); }} onClose={() => { if (restartOpen) dismissRestart(); }} aria-labelledby="restart-title"><h2 id="restart-title">Restart this experiment?</h2><p>Your choice and prediction will be cleared.</p><div className="dialog-actions"><button ref={cancelRestart} className="button secondary-button" onClick={dismissRestart}>Keep playing</button><button className="button primary-button" onClick={restartExperiment}>Restart level 1</button></div></dialog>
+
   </div>;
 }

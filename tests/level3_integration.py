@@ -79,7 +79,7 @@ with sync_playwright() as p:
     assert [shot['sceneId'] for shot in request['shots']]==['level3.prep.high','level3.part.low','level3.focus.low']
     assert request['runs'][0]['weights']==[70,20,10]
     record('Opening-supplied player name reaches Level 3 labels, avatar and the three weighted partner shots')
-    page.get_by_role('button',name='Try a better balance',exact=True).click()
+    page.get_by_role('button',name='Try another split',exact=True).click()
     weights(page,[34,33,33]);publish(page)
     page.get_by_role('button',name='Compare the patterns',exact=True).click();advance(page,3)
     results=page.evaluate('window.results')
@@ -94,11 +94,11 @@ with sync_playwright() as p:
     assert page.evaluate('window.requests.at(-1).sceneId')=='theory.reveal'
     assert page.evaluate('window.designLabCount')==0
     page.evaluate('window.finishCurrent();window.finishCurrent()')
-    expect(page.get_by_test_id('design-lab-entry')).to_be_visible()
-    assert page.evaluate('window.designLabCount')==1
+    expect(page.locator('.level-three')).to_have_attribute('data-phase','theory')
+    expect(page.locator('.partner-scene h2')).to_have_text('theory.reveal')
+    assert page.evaluate('window.designLabCount')==0
     assert page.evaluate('window.results.length')==1
-    assert 'The experiment is complete' not in page.locator('body').inner_text()
-    record('Alex’s response and theory renderers chain directly into Design Lab; duplicate scene completion triggers the handoff only once')
+    record('Comparison leads to theory; even duplicate final callbacks stay in the placeholder and never invoke Design Lab')
     context.close()
 
     context,page=start(browser,level=2);advance(page,10)
@@ -128,10 +128,8 @@ with sync_playwright() as p:
     assert [card.get_attribute('data-testid') for card in page.locator('.l3-metric-card[aria-pressed=true]').all()]==['level3-metric-prep','level3-metric-part','level3-metric-peer']
     page.get_by_role('button',name='Set the weights',exact=True).click()
     expect(page.locator('.l3-weight-card')).to_have_count(3)
-    page.get_by_role('button',name='Restart',exact=True).click();page.get_by_role('button',name='Restart Level 3',exact=True).click();advance(page,8)
-    page.get_by_role('button',name='Review priorities',exact=True).click()
-    expect(page.get_by_test_id('level3-metric-reflect')).to_have_attribute('aria-pressed','true')
-    record('Level 3 preselects the actual Level 2 trio, permits swapping, and retains that starting selection on restart')
+    expect(page.get_by_role('button',name='Restart',exact=True)).to_have_count(0)
+    record('Level 3 preselects the actual Level 2 trio, permits swapping, and has no player Restart control')
     page.reload(wait_until='networkidle')
     expect(page.locator('.level-two')).to_have_attribute('data-phase','intro')
     record('Reloading the connected host starts fresh from its configured entry level')

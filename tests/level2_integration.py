@@ -110,12 +110,9 @@ OscillatorNode.prototype.start=function(...args){window.notes.push(values.get(th
     assert page.evaluate('window.results.length') == 1
     assert page.evaluate('window.notes.length') == note_count
     record('Final replay retains completion count and mute suppresses new cues')
-    page.get_by_role('button', name='Restart', exact=True).click()
-    page.get_by_role('button', name='Restart Level 2', exact=True).click()
-    play_level(page, ['prep', 'part', 'focus'])
-    assert page.evaluate('window.results.length') == 2
-    assert page.evaluate('window.results[1].branch') == 'visible'
-    record('Restart clears the original trio and permits a new completion')
+    expect(page.get_by_role('button', name='Restart', exact=True)).to_have_count(0)
+    assert page.evaluate('window.results.length') == 1
+    record('Player view has no restart control and keeps its single completion result')
     context.close()
 
     # Hold a core update when hidden and hold the growth counter under a modal.
@@ -129,15 +126,11 @@ OscillatorNode.prototype.start=function(...args){window.notes.push(values.get(th
     advance(page, 8)
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
     page.evaluate("Object.defineProperty(document,'hidden',{configurable:true,value:false});document.dispatchEvent(new Event('visibilitychange'))")
-    page.get_by_role('button', name='Restart', exact=True).click()
-    advance(page, 8)
-    expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
-    page.keyboard.press('Escape')
     advance(page, 8)
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
     page.get_by_role('button', name='Choose three metrics', exact=True).click()
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'choose')
-    record('Chapter dialogue waits while hidden or under a dialog; its next button appears on return and waits for a click')
+    record('Chapter dialogue waits while hidden; its next button appears on return and waits for a click')
     for id in ['prep', 'part', 'focus']: page.get_by_test_id('level2-metric-' + id).click()
     page.get_by_role('button', name='Run evaluation', exact=True).click()
     page.evaluate("Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'))")
@@ -153,15 +146,14 @@ OscillatorNode.prototype.start=function(...args){window.notes.push(values.get(th
     advance(page, 6)
     finish_scene(page)
     page.get_by_role('button', name='Add more metrics', exact=True).click()
-    page.get_by_role('button', name='Restart', exact=True).click()
+    page.evaluate("Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'))")
     frozen = page.locator('.l2-counter-value strong').inner_text()
     advance(page, 5)
     assert page.locator('.l2-counter-value strong').inner_text() == frozen
-    expect(page.locator('.level-two')).to_have_attribute('data-phase', 'evaluate')
-    page.keyboard.press('Escape')
+    page.evaluate("Object.defineProperty(document,'hidden',{configurable:true,value:false});document.dispatchEvent(new Event('visibilitychange'))")
     advance(page)
     expect(page.locator('.l2-checklist')).to_contain_text('Completing requirements')
-    record('Growth counter and automatic observation wait while restart confirmation is open')
+    record('Growth counter and automatic observation wait while the page is hidden')
     page.get_by_role('button', name='Add more metrics', exact=True).click()
     for _ in range(80):
         page.clock.run_for(100)
@@ -169,13 +161,13 @@ OscillatorNode.prototype.start=function(...args){window.notes.push(values.get(th
         if page.locator('.l2-checklist li[data-shown=true]').count() == 3: break
     expect(page.locator('.l2-checklist li[data-shown=true]')).to_have_count(3)
     expect(page.get_by_role('button', name='Add more metrics', exact=True)).to_have_count(0)
-    page.get_by_role('button', name='Restart', exact=True).click()
+    page.evaluate("Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'))")
     advance(page, 5)
     expect(page.get_by_role('button', name='Add more metrics', exact=True)).to_have_count(0)
-    page.keyboard.press('Escape')
+    page.evaluate("Object.defineProperty(document,'hidden',{configurable:true,value:false});document.dispatchEvent(new Event('visibilitychange'))")
     advance(page, 2)
     expect(page.get_by_role('button', name='Add more metrics', exact=True)).to_be_enabled()
-    record('The shortened next-button wait pauses under restart confirmation and resumes after closing it')
+    record('The shortened next-button wait pauses while hidden and resumes on return')
     context.close()
 
     context = browser.new_context(viewport={'width': 320, 'height': 740}, reduced_motion='reduce')

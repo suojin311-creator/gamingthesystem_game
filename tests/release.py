@@ -23,6 +23,15 @@ for entry in manifest['entries']:
     assert hashlib.sha256(artifacts[entry['html']]).hexdigest() == entry['htmlSha256']
     assert hashlib.sha256(archive.read_bytes()).hexdigest() == entry['zipSha256']
 checks.append('All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest')
+review = manifest['reviewBundle']
+with zipfile.ZipFile(Path('play') / review['archive']) as bundle:
+    assert bundle.testzip() is None
+    assert set(bundle.namelist()) == {'Level3/Level3.html', 'Full-game/Gaming-the-System.html', 'START-HERE.txt'}
+    for name, html in [('Level3/Level3.html', 'Level3.html'), ('Full-game/Gaming-the-System.html', 'Gaming-the-System.html')]:
+        assert bundle.read(name) == artifacts[html]
+        assert hashlib.sha256(bundle.read(name)).hexdigest() == review['htmlSha256'][name]
+assert hashlib.sha256((Path('play') / review['archive']).read_bytes()).hexdigest() == review['zipSha256']
+checks.append('The review ZIP contains separate Level 3 and connected Levels 1–3 HTMLs, identical to their tested latest packages')
 
 
 def advance(page, seconds=24):
@@ -96,6 +105,7 @@ with sync_playwright() as playwright:
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.clock.install()
     page.goto('https://release.test/', wait_until='networkidle')
+    expect(page.get_by_role('button',name='Restart',exact=True)).to_have_count(0)
     expect(page).to_have_title('Gaming the System')
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
     advance(page, 8)
@@ -130,7 +140,7 @@ with sync_playwright() as playwright:
     page.clock.install()
     page.goto('https://release.test/', wait_until='networkidle')
     choose_three(page);weights_three(page,[34,33,33])
-    page.get_by_role('button',name='Create a contrast',exact=True).click()
+    page.get_by_role('button',name='Try another split',exact=True).click()
     weights_three(page,[70,20,10])
     page.get_by_role('button',name='Compare the patterns',exact=True).click()
     expect(page.locator('.near-even .l3-row-weight')).to_have_text(['34%','33%','33%'])
@@ -179,7 +189,7 @@ with sync_playwright() as playwright:
     expect(page.locator('.level-three')).to_have_attribute('data-phase','intro')
     expect(page.get_by_role('button',name='Sound off',exact=True)).to_be_visible()
     choose_three(page);weights_three(page,[70,20,10])
-    expect(page.get_by_role('button',name='Try a better balance',exact=True)).to_be_visible()
+    expect(page.get_by_role('button',name='Try another split',exact=True)).to_be_visible()
     checks.append('Packaged combined game connects Level 1 → Level 2 → playable Level 3 in one open run')
     page.reload(wait_until='networkidle')
     expect(page.get_by_role('dialog', name='Workbench guide')).to_be_visible()

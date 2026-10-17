@@ -1,79 +1,74 @@
 # Level 3 — The Weighting Trap
 
-## Gameplay and narrative ownership
+The highlighted priority selector and weight editor use the opening-confirmed
+player name. The connected host preselects Level 2’s original three choices;
+players may swap them before weighting. A standalone Level 3 starts empty.
 
-The highlighted Screens 1–2 are implemented as the playable priority selector
-and weighting dashboard. Both use the current opening-supplied player name and
-first-person player decisions. The revised game-side lines are:
+## Tests and observations
 
-- Chapter introduction: “I’ll choose three priorities and decide how much each one counts.”
-- Weight dashboard: “I’ll test whether these weights change how Alex spends his effort.”
+- Three integer weights total exactly 100%, each allowed from 0–100%.
+- Moving an unlocked slider divides the remainder among other unlocked sliders.
+  Confirmed values stay locked, and a one-point remainder follows card order.
+- Confirm any first card, then adjust either remaining card. Confirming either
+  final card locks both; the other button turns gray and reads Auto-confirmed.
+  The 80/10/10 → 80/15/5 case works in every confirmation order.
+- Reset weights resets only the current allocation. It sits below the allocation
+  bar, above the action row; there is no player Restart-level control or dialog.
+- Publication ticks the three weights and waits for Observe the class. Both
+  perspective cards describe the current round. Students remains Awaiting
+  observation until its current classroom response has been observed.
+- The scene has exactly three selected metric/intensity shots, using the 18
+  Narrative V2 behaviours. Returning reveals qualitative effort rows, then the
+  teacher/Alex conversation; the next action appears with Alex’s second message.
+- Findings group every selected metric by its actual effort category. For
+  76/6/18, Preparation gets intense effort; Participation and Focus are both
+  named as minimum effort. We do not infer exact measured effort from a category.
+- Score weights are visually smaller and muted. Alex’s effort and its bars are
+  prominent. Metric typography is shared with Levels 1–2; see TYPOGRAPHY.md.
 
-The first makes the choice and meaning of a weight explicit. The second asks
-about observable effort, rather than claiming a measured change in learning.
-Alex’s introduction uses two short messages, typing dots and one new distinct
-emoji. The chapter waits for its lower-right Choose priorities button (Review priorities when the Level 2 trio is inherited). Separate bottom conversations explain weight tests, Alex’s choices and the optional nearly-equal balance check.
+Near-even means highest minus lowest at most **10 percentage points**, including
+10. Thus 38/33/29 and 40/30/30 qualify; 40/31/29 does not. Near-even produces three
+medium story shots. Otherwise 0–33% is low, 34–66% medium and 67–100% high effort.
+These categories are narrative choices, not measured learning gains or losses.
 
-The teammate’s Screens 3–5 and final reveal remain replaceable story readings.
-The weight scene plays exactly three selected metric shots, using Narrative V2’s
-18 low/medium/high actions and lines. The comparison reading retains the
-document’s exchange about following percentages. Goodhart’s Law appears only in
-the final story slot, after the player has tested both patterns. The opening and
-finished videos have not been merged.
+## Free second attempt and a missing reference
 
-## Weight rules
+After the first observation, Try another split opens the editor. The only extra
+requirement is to change the allocation. Neither the title, teacher thought nor
+Run gate requires the player to make it more even or reach a specific spread.
 
-- Choose any three different metrics from the shared six. Selected cards enter
-  the dashboard in catalog order; later tests keep those same three metrics.
-- The connected game preselects the actual Level 2 trio. Players can deselect and swap before entering the editor. The standalone entry starts empty. Restart restores the inherited starting trio and clears the Level 3 tests.
-- Every selected metric starts at 34/33/33 and can receive 0–100%. The former prototype’s 10% minimum was removed to support splits such as 80/15/5.
-- Sliders use whole percentage points. Moving an unlocked slider divides the remainder among other unlocked sliders; a one-point remainder goes in card order. Totals always equal 100%, with confirmed values untouched.
-- Each slider shares a visual 0–100 scale. After the first confirmation, the actual remaining maximum appears on unlocked cards and in accessibility attributes. Both unlocked sliders remain editable, including when their current values match.
-- The first confirmation locks one card. Confirming either remaining card locks both; the other button is gray and reads Auto-confirmed. Both buttons remain available before that choice so confirmation order is free. Reset weights restores the current round’s baseline and clears confirmations. Run requires a valid, fully confirmed allocation and the current round’s goal.
-- Reset sits below the allocation bar, above the action row. Teacher/Alex bubbles have a separate bottom region, matching the earlier levels. Repeated instructions and the illustrative-behaviour note are removed. Shared metric name typography and aligned Score weight/Alex’s response columns apply to all layouts.
-- Publishing ticks the three weights in sequence and stays on screen with Management and Students perspectives. The player clicks Observe the class to open the three-shot classroom slot. Students remains Awaiting observation until the current round’s classroom responses are available. Returning reveals three qualitative responses, then the teacher/Alex exchange; the next action appears with Alex’s last message.
+| Two player tests | Next |
+| --- | --- |
+| One near-even, one uneven | Compare the two actual player tests |
+| Both uneven | What if they counted equally? offers a 34/33/33 system reference |
+| Both near-even | What if one counted more? offers a 70/20/10 system reference |
 
-Near-even means highest minus lowest is at most ten percentage points. All
-three story shots are medium in that case, including 34/33/33, 38/33/29 and
-40/30/30. The 10-point boundary is inclusive; 40/31/29 is outside it. Otherwise,
-0–33% produces low, 34–66% medium and 67–100% high effort in this editor.
-These are deterministic narrative categories, not measured learning outcomes.
-The prototype’s invented numerical effort transform is not presented as data.
+The reference is explicitly identified, requires a click, and uses the same
+publication → Observe → classroom → results flow. The comparison displays all
+actual runs in order: Your first test, Your second test, and System reference
+when present. No second player test is omitted. On narrow layouts cards wrap or
+stack; typography is retained. The concern remains that scoring rules guide
+Alex’s choices even when effort is distributed more evenly.
 
-## Adaptive paths
+## Conversations and final placeholder
 
-| First run | Second task | Then |
-| --- | --- | --- |
-| Near-even | Create a contrast, spread at least 20 points | Compare the two actual runs |
-| Uneven | Rebalance, with a smaller spread than the first run | Compare if near-even |
-| Uneven, then improved but still uneven | Explicit Test 34 / 33 / 33 action publishes a third balance check | Compare the original uneven run with that tested balance check |
+Teacher observations and plans have `delivery: 'thought'`: a cloud outline,
+small circular tail and Thinking label. Spoken lines keep ordinary speech
+bubbles. Alex’s statements stand alone or respond to spoken questions, rather
+than answering an unspoken thought. Each Level 3 workbench beat has two short
+Alex messages. All authored emoji are distinct across the source tree.
 
-The 34/33/33 check is not an automatic reset after two attempts: it appears only if both tested splits are still uneven. The player first says “It’s still uneven. I’ll test a nearly equal split.” A click publishes a third run, followed by the same manual Observe flow. If both patterns have already been tested, the game goes straight to comparison.
+The replaceable scene chain is `level3.weights` for each test, then
+`level3.compare` for Alex’s response, then `theory.reveal`. The final theory
+placeholder stays on its last frame. There is no completion page or Design Lab
+transition. The existing `onDesignLab` prop is reserved and never invoked in
+this revision, including after duplicate theory callbacks.
 
-The compare view identifies each run and distinguishes the system’s balance
-check from a player-selected test. Run snapshots are copied before sharing.
-Near-even visibly improves effort distribution; the remaining concern is that
-the scoring rules still direct Alex’s choices. No declining student health or
-unsupported learning percentage is shown.
+## Partner contracts
 
-## Integration
-
-`Gameplay` connects Level 1 → Level 2 → Level 3 in page memory. Its required
-`playerName` comes from the opening once; there is no second name form. The host
-accepts `renderLevelThreeCinematic`, `onLevelThreeComplete` and `onDesignLab`:
-
-```tsx
-<Gameplay
-  playerName={playerName}
-  renderLevelThreeCinematic={(request, complete) => (
-    <PartnerScene request={request} onComplete={complete} />
-  )}
-  onLevelThreeComplete={result => setWeightingResult(result)}
-  onDesignLab={() => setCurrentScene('design-lab')}
-/>
-```
-
-The replaceable renderer receives:
+`Gameplay` passes `playerName`, Level 2’s original `selectedMetricIds`, sound
+preference and any `renderLevelThreeCinematic` to Level 3. Direct hosts can pass
+`initialMetricIds`. A custom scene renderer receives this shape:
 
 ```ts
 {
@@ -82,7 +77,7 @@ The replaceable renderer receives:
   playerName: string,
   runs: Array<{
     round: number,
-    kind: 'player' | 'balance-check',
+    kind: 'player' | 'balance-check' | 'contrast-check',
     metricIds: MetricId[],
     weights: [number, number, number]
   }>,
@@ -95,49 +90,29 @@ The replaceable renderer receives:
 }
 ```
 
-`shots` contains three entries for a weight scene and is empty for comparison
-and theory. Call `complete()` at the end of the full scene, keeping LevelThree
-mounted. A weight scene returns to its observation; comparison leads to theory;
-theory goes directly to Design Lab. There is no experiment-complete page.
+`shots` has three entries for weight scenes and is empty for comparison/theory.
+Keep LevelThree mounted during a scene. Its completion callback returns weight
+scenes to results and advances comparison to theory; a theory callback does not
+advance to another screen. The finished opening/cinematics remain separate.
 
-`onComplete` / `onLevelThreeComplete` reports the completed experiment once after
-both patterns have been compared. The payload contains `selectedMetricIds`, all
-`runs`, and `compared: { nearEven, uneven }`. Clicking the comparison’s next
-button also settles the callback before leaving if its reading delay has not
-finished. Replay never reports it twice. The optional `onDesignLab` callback runs once automatically when `theory.reveal` calls `complete()`, including when a renderer accidentally calls twice. The host should route straight to its Design Lab. Without that host route, previews show a minimal Design Lab destination; the lab’s interactions are still reserved.
+`onComplete` / `onLevelThreeComplete` fires once when the comparison is read or
+its next action is clicked. It returns `selectedMetricIds`, every copied `run`
+and `compared: { nearEven, uneven }`. The compared pair remains compatible while
+the UI and all-runs payload also retain the second test and any reference.
 
-LevelTwo now has an optional `onContinue(result)` callback. The combined host
-supplies it, retains `result.selectedMetricIds` in page memory and enables Continue to Level 3. The standalone Level 2 entry leaves
-it absent, so that download still ends at Level 2. Level 1 standalone behaviour
-is unchanged. Audio preference carries across all three levels during one run.
+## Lifetime and validation
 
-## Lifetime and accessibility
+All state stays in page memory. Reload, reopen and restored pages start fresh;
+there is no persistence or administrator/login implementation. Hidden tabs and
+off-screen timed information hold their remaining delay. The Level 1 guide also
+holds that level’s pending information. Player Restart controls are removed
+across all three chapters; Reset weights is retained.
 
-All state lives in memory. Reload, reopen and restored pages restart. Restart
-clears Level 3 tests and restores the inherited starting choices while keeping the opening-supplied name. Hidden
-tabs, off-screen timed information and restart dialogs hold pending beats.
-Keyboard-operated cards/sliders/buttons, focus return, reduced motion, no-audio
-fallback and 320px layouts are covered by browser checks.
-
-## Build and checks
-
-`npm run build:level3` creates the self-contained Level 3 entry. Run
-`npm run package:previews` to rebuild all three standalone ZIPs and the combined
-three-level game together. Latest artifact hashes are in `play/LATEST.json`.
-
-```sh
-node tests/level3_rules.mjs
-python tests/level3.py
-python tests/level3_feedback.py
-# With npm run dev running:
-python tests/level3_integration.py
-python tests/level2_integration.py
-python tests/player_identity.py
-python tests/release.py
-node tests/dialogue_emojis.mjs
-```
-
-The offline checks serve exact production HTML through an in-memory HTTPS
-origin; managed Chromium blocks local file navigation. They are functional
-checks, not a classroom load test. Results and artifact hashes are recorded in
-`docs/LEVEL3_VALIDATION-v3.json`.
+`npm run package:previews` builds all four entries plus
+`play/Level3-and-Full-game-play.zip`, containing standalone Level 3 and connected
+Levels 1–3. `play/LATEST.json` records source, build, ZIP and bundle hashes.
+`tests/release.py` verifies the actual downloads and their complete flows.
+Current checks are recorded in `LEVEL3_VALIDATION-v4.json`; older reports and
+versioned ZIPs are historical. Managed Chromium tests exact offline HTML bytes
+through an in-memory HTTPS origin; direct file opening in the user browser and
+classroom load capacity are not claimed as tested.

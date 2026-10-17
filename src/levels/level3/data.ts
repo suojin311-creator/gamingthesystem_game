@@ -1,7 +1,7 @@
 import { metricDefinition, type MetricId } from '../../shared/data/metrics';
-import { effortAt, isNearEven, type Effort, type Weights } from './weights';
+import { CONTRAST_WEIGHTS, EVEN_WEIGHTS, effortAt, isNearEven, type Effort, type Weights } from './weights';
 
-export type WeightRun = { round: number; kind: 'player' | 'balance-check'; metricIds: MetricId[]; weights: Weights };
+export type WeightRun = { round: number; kind: 'player' | 'balance-check' | 'contrast-check'; metricIds: MetricId[]; weights: Weights };
 export type LevelThreeCinematicRequest = {
   sceneId: 'level3.weights' | 'level3.compare' | 'theory.reveal';
   kind: 'weights' | 'comparison' | 'theory'; playerName: string;
@@ -54,11 +54,29 @@ export function compareRuns(runs: WeightRun[]) {
   return nearEven && uneven ? { nearEven: copyRun(nearEven), uneven: copyRun(uneven) } : null;
 }
 
+export function joinNames(names: string[]) {
+  return new Intl.ListFormat('en', { style: 'long', type: 'conjunction' }).format(names);
+}
+
+export function effortGroups(run: WeightRun) {
+  return (['high', 'medium', 'low'] as const).map(effort => ({
+    effort,
+    metricIds: run.metricIds.filter((_, index) => effortAt(run.weights, index) === effort),
+  })).filter(group => group.metricIds.length).map(group => ({ ...group,
+    names: joinNames(group.metricIds.map(id => metricDefinition(id).shortName)),
+  }));
+}
+
 export function finding(run: WeightRun) {
-  if (isNearEven(run.weights)) return 'Alex spreads his effort more evenly, but still follows the scoring percentages.';
-  const highest = run.weights.indexOf(Math.max(...run.weights));
-  const lowest = run.weights.indexOf(Math.min(...run.weights));
-  return `${metricDefinition(run.metricIds[highest]).shortName} counts for ${run.weights[highest]}%. It gets more attention; ${metricDefinition(run.metricIds[lowest]).shortName.toLowerCase()} gets less.`;
+  return effortGroups(run).map(group => `${group.names}: ${EFFORT_LABELS[group.effort].toLowerCase()}.`).join(' ');
+}
+
+/** Supply the missing pattern only after two freely chosen player tests. */
+export function referenceTest(runs: WeightRun[]): { weights: Weights; kind: WeightRun['kind'] } | null {
+  if (runs.filter(run => run.kind === 'player').length < 2 || compareRuns(runs)) return null;
+  return isNearEven(runs[0].weights)
+    ? { weights: CONTRAST_WEIGHTS, kind: 'contrast-check' }
+    : { weights: EVEN_WEIGHTS, kind: 'balance-check' };
 }
 
 export function cinematicRequest(kind: LevelThreeCinematicRequest['kind'], playerName: string, runs: WeightRun[]): LevelThreeCinematicRequest {

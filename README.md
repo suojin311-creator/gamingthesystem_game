@@ -2,6 +2,8 @@
 
 An English-language game about measuring engagement. Levels 1, 2 and 3 are playable. The partner’s opening and finished cinematics remain separate; story slots use replaceable placeholders.
 
+Download the [Level 3 + full-game review ZIP](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Level3-and-Full-game-play.zip?raw=true) for both requested versions in one archive: `Level3/Level3.html` and `Full-game/Gaming-the-System.html`.
+
 The latest combined and individual previews live together on **level3-dev**:
 
 | Latest preview | Download | Open after extracting |
@@ -23,13 +25,13 @@ Current development is on **level3-dev**. The existing level1-preview, level2-pr
 
 **Level 3 — The weighting trap.** The combined game preselects Level 2’s three metrics; players may swap them before weighting. Standalone Level 3 starts with an empty selection. Allocate exactly 100% across three priorities using 0–100% sliders. Confirm one card, then adjust either remaining slider; confirming either final card locks the pair and marks the other Auto-confirmed. Reset weights sits above the action row. Player/Alex conversations use a separate bottom region. Publication stays visible with both perspective cards until the player clicks Observe the class. Results reveal three qualitative responses with aligned, divided columns and the same metric font size used in Levels 1–2.
 
-An uneven first run leads to Rebalance; a near-even first run leads to Create a contrast. If the second test is still uneven, the player explains the missing balanced comparison before an explicit Test 34 / 33 / 33 button appears. Near-even means a spread of at most ten percentage points, with all three story shots medium. The side-by-side comparison uses actual tested snapshots. Balancing improves effort distribution while the percentages still guide Alex’s choices. Alex’s response and Goodhart’s theory reveal remain replaceable cinematics. The theory’s completion goes directly to the host’s Design Lab callback, without an intermediate completion page. The standalone preview enters a minimal reserved Design Lab destination.
+The second test freely changes the split; it is not required to become more even. Near-even means a highest-to-lowest spread of at most ten percentage points. If the two player tests contain only one pattern, a clearly identified system reference supplies the missing pattern: What if they counted equally? or What if one counted more? The comparison keeps every tested run, including both player attempts and any reference. Findings group all metrics by their actual effort category, and effort is visually more prominent than the repeated weight percentages. Teacher thoughts use cloud bubbles; spoken lines retain normal bubbles. Alex has two short messages at each workbench beat. Alex’s response and Goodhart’s theory reveal remain replaceable cinematics; this preview stops at the final theory frame without a Design Lab transition.
 
 The opening owns name entry. `Gameplay` accepts its confirmed `playerName`, forwards it through all three levels and scene requests, and preserves it through in-page transitions. Standalone previews use Maya because they omit the opening. All player decisions use I. The 25 authored dialogue emoji are distinct.
 
-Information arrives in visible-time beats with local Web Audio cues. Hidden tabs, off-screen timed information and restart dialogs hold pending beats; reduced motion removes animation. No Pause or extra Reveal button is used. All text remains available. Student cards show the specific behaviour prominently, with a small Learning at risk label. Weight percentages describe scoring, and qualitative effort categories follow the narrative; no numerical learning loss or learning gain is invented.
+Information arrives in visible-time beats with local Web Audio cues. Hidden tabs, off-screen timed information and the Level 1 guide hold pending beats; reduced motion removes animation. No Pause or extra Reveal button is used. All text remains available. Student cards show the specific behaviour prominently, with a small Learning at risk label. Weight percentages describe scoring, and qualitative effort categories follow the narrative; no numerical learning loss or learning gain is invented.
 
-Each page is one independent game. Closing, reopening, reloading or restoring from the back-forward cache starts fresh. Choices, names and sound preferences are not saved in browser storage or sent to a service. Two students can share one open game; there is no multiplayer server.
+The Restart control and its dialogs are removed in all three levels. Administrator access is deferred. Reset weights only resets the current allocation. Each page is one independent game. Closing, reopening, reloading or restoring from the back-forward cache starts fresh. Choices, names and sound preferences are not saved in browser storage or sent to a service. Two students can share one open game; there is no multiplayer server.
 
 ## Develop and package
 
@@ -52,7 +54,7 @@ npm run build:level3             # dist-level3/index.html: Level 3 only
 npm run package:previews         # Rebuild and package all four latest entries
 ```
 
-After an approved change, rebuild all previews together, validate the packages and synchronize the preview branches. `play/LATEST.json` records source and artifact hashes. Keep version-numbered historical ZIPs unchanged.
+After an approved change, rebuild all previews and the two-version review ZIP together, validate the packages and synchronize the preview branches. `play/LATEST.json` records source and artifact hashes. Keep version-numbered historical ZIPs unchanged.
 
 ## Source layout and partner integration
 
@@ -75,7 +77,7 @@ scripts/package_previews.py
 play/                     Latest downloads and historical archives
 ```
 
-Each level owns its rules and text. Shared modules never import level internals. Partner contracts are documented in [Opening handoff](docs/OPENING_HANDOFF.md), [Level 1](docs/LEVEL1_HANDOFF.md), [Level 2](docs/LEVEL2_HANDOFF.md) and [Level 3](docs/LEVEL3_HANDOFF.md).
+Each level owns its rules and text. Shared modules never import level internals. [Typography](docs/TYPOGRAPHY.md) documents shared sizes for equivalent content across the three levels. Partner contracts are documented in [Opening handoff](docs/OPENING_HANDOFF.md), [Level 1](docs/LEVEL1_HANDOFF.md), [Level 2](docs/LEVEL2_HANDOFF.md) and [Level 3](docs/LEVEL3_HANDOFF.md).
 
 ## Validate
 
@@ -84,6 +86,7 @@ npm run package:previews
 node tests/level3_rules.mjs
 python tests/level3.py
 python tests/level3_feedback.py
+python tests/typography.py
 # With npm run dev running:
 python tests/level3_integration.py
 python tests/level2_integration.py
@@ -92,6 +95,6 @@ python tests/release.py
 node tests/dialogue_emojis.mjs
 ```
 
-The new Level 3 checks cover allocation invariants, all 20 trios, three adaptive routes, actual cinematic shot selection, compared snapshots, name/completion contracts, chapter handoff, real-time audio and sequential updates, restart and 320–1366px layouts. The release test reads the real four ZIPs and plays across all three chapters. [LEVEL3_VALIDATION-v3.json](docs/LEVEL3_VALIDATION-v3.json) records this release. Earlier validation reports and versioned ZIPs are historical records.
+The new Level 3 checks cover allocation invariants, all 20 trios, three adaptive routes, actual cinematic shot selection, compared snapshots, name/completion contracts, chapter handoff, real-time audio and sequential updates, no player Restart controls and 320–1366px layouts. The release test reads all four individual/combined ZIPs, verifies the two-version review ZIP against those exact builds, and plays across all three chapters. [LEVEL3_VALIDATION-v4.json](docs/LEVEL3_VALIDATION-v4.json) records this release. Earlier validation reports and versioned ZIPs are historical records.
 
 Offline browser tests serve exact production HTML through an in-memory HTTPS origin because managed Chromium blocks local file navigation. Opening the downloaded file in the user’s particular browser remains a separate check. Test outputs/screenshots go to ignored test-results/. These are functional checks, not a classroom load test.

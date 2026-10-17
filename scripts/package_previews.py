@@ -57,4 +57,32 @@ for archive, html, build, description in ENTRIES:
         'zipSha256': digest((PLAY / archive).read_bytes()),
     })
     print(f'Packaged {archive}: {html}')
+
+# One review download contains both requested entry points from the same builds.
+review_archive = 'Level3-and-Full-game-play.zip'
+review_files = {
+    'Level3/Level3.html': builds['dist-level3/index.html'],
+    'Full-game/Gaming-the-System.html': builds['dist/index.html'],
+}
+review_instruction = (
+    'Gaming the System — latest review package\n\n'
+    '1. Level 3 only: open Level3/Level3.html\n'
+    '2. Levels 1 -> 2 -> 3: open Full-game/Gaming-the-System.html\n\n'
+    'Extract the entire ZIP first, then open either HTML in Chrome or Edge.\n'
+    'Both entries use the same latest gameplay. No installation or internet is needed.\n'
+    'The combined game carries your Level 2 choices into Level 3; you can change them.\n'
+    'Previews stop at the final theory placeholder. Restart is not available.\n'
+)
+with zipfile.ZipFile(PLAY / review_archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:
+    for name, data in [*review_files.items(), ('START-HERE.txt', review_instruction.encode())]:
+        info = zipfile.ZipInfo(name)
+        info.compress_type = zipfile.ZIP_DEFLATED
+        info.external_attr = 0o644 << 16
+        bundle.writestr(info, data, compresslevel=9)
+manifest['reviewBundle'] = {
+    'archive': review_archive,
+    'zipSha256': digest((PLAY / review_archive).read_bytes()),
+    'htmlSha256': {name: digest(data) for name, data in review_files.items()},
+}
+print(f'Packaged {review_archive}: standalone Level 3 and connected Levels 1–3')
 (PLAY / 'LATEST.json').write_text(json.dumps(manifest, indent=2) + '\n')

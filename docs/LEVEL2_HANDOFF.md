@@ -11,7 +11,7 @@ label and the player/Alex conversation. Typing and reading intervals run in
 sequence. The lower-right Choose three metrics button appears with Alex's final
 message, and the introduction stays on screen until the player clicks it. The
 same level instance then opens the six working metric cards. It replays on a level restart or a fresh page.
-Hidden tabs, off-screen dialogue and restart dialogs suspend this sequence.
+Hidden tabs and off-screen dialogue suspend this sequence.
 
 On the selection page, the vertical **Alex’s Checklist** records exactly the
 current choices using the later checklists' paper, heading and checkbox styles.
@@ -102,7 +102,7 @@ After the last finding and Maya reply have received visible reading time,
 }
 ```
 
-Replay does not repeat completion. Restart permits a new completion. Every fresh
+Replay does not repeat completion. Player Restart controls are removed. Every fresh
 page starts a new run. The callback does not automatically navigate to Level 3.
 The explicit Continue to Level 3 action settles completion once before calling
 onContinue(result), including when clicked before the final reading delay ends.
@@ -121,7 +121,7 @@ when the current observation arrives. Behaviour is the main type; risk is second
 Do not retain an observed-at count from an earlier round. The risk is a
 qualitative interpretation of the story; actual learning gains remain unverified.
 No sidebar badges, extra student sound or independently pulsing update competes
-with the central content. The Level 2 header has Sound and Restart controls;
+with the central content. The Level 2 header has a Sound control;
 there is no Guide button or guide dialog.
 
 | Metric count | Main student behaviour description |
@@ -148,7 +148,7 @@ The 10/25/100 checklist uses action items, rather than questions. Each item
 appears 550 ms after the previous one and its checkbox ticks. The ticks represent
 Alex completing checklist actions, not demonstrating learning. The next button
 opens after 1000 ms of visible time following the final item. All items remain
-visible and the player decides when to continue. Restart dialogs, hidden
+visible and the player decides when to continue. Hidden
 tabs and off-screen text hold these sequences. Reduced motion removes movement
 but keeps the sequence and waits. Sound preference carries between levels in page
 memory.
@@ -158,3 +158,5 @@ Two students at one computer share one run. Classroom network capacity and
 finished-video delivery should be checked separately when hosting is chosen.
 
 The player and Alex dialogue uses the approved [Dialogue review](DIALOGUE_REVIEW.md). Alex sends two consecutive short messages at the chapter introduction and three/six-metric observations; the next action appears with the second reply. The shared conversation groups consecutive messages under one visible name/avatar and brings new replies into view when needed.
+
+Equivalent typography now shares responsive tokens with Levels 1 and 3, including 16px ordinary metric names. There is no player Restart button or dialog; administrator functionality is deferred. See [Typography](TYPOGRAPHY.md).

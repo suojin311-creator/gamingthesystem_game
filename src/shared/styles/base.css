@@ -5,7 +5,17 @@
   --ink: #34382e; --muted: #77796b; --line: #dbd7c9;
   --paper: #fcf9f1; --coral: #ad5840; --sage: #52664f;
   --serif: Georgia, 'Times New Roman', serif;
-  --metric-name-size: 13px;
+  --metric-name-size: 16px;
+  --metric-description-size: 11px;
+  --chapter-title-size: 31px;
+  --step-label-size: 12px;
+  --dialogue-size: 15px;
+  --chapter-dialogue-size: 22px;
+  --perspective-heading-size: 12px;
+  --perspective-label-size: 11px;
+  --student-behaviour-size: 25px;
+  --evidence-size: 22px;
+  --scene-dialogue-size: 26px;
 }
 * { box-sizing: border-box; }
 body { margin: 0; }
@@ -57,3 +67,7 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+@media (max-width: 760px) { :root { --step-label-size: 9px; } }
+@media (max-width: 520px) { :root { --chapter-title-size: 29px; --chapter-dialogue-size: 20px; --perspective-heading-size: 11px; --perspective-label-size: 10px; --student-behaviour-size: 21px; --evidence-size: 20px; --scene-dialogue-size: 23px; } }
+@media (max-width: 350px) { :root { --chapter-title-size: 25px; } }

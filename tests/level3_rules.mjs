@@ -72,18 +72,12 @@ check('Run requires all three confirmed weights (including the linked pair) and 
   assert.ok(canRun([90,5,5], [true,true,true], [34,33,33], 'first'));
   for (const weights of [[30,30,30], [-1,51,50], [101,0,-1], [33.5,33.5,33]]) assert.ok(!validWeights(weights));
 });
-check('An already balanced first run must create a clear contrast of at least 20 points', () => {
-  assert.ok(!goalMet([34,33,33], [34,33,33], 'contrast'));
-  assert.ok(!goalMet([45,29,26], [34,33,33], 'contrast'));
-  assert.ok(goalMet([46,28,26], [34,33,33], 'contrast'));
-});
-check('Rebalance must improve the spread; a partial improvement still permits the later balance check', () => {
-  assert.ok(!goalMet([70,20,10], [70,20,10], 'rebalance'));
-  assert.ok(!goalMet([80,10,10], [70,20,10], 'rebalance'));
-  assert.ok(goalMet([50,30,20], [70,20,10], 'rebalance'));
-  assert.ok(!isNearEven([50,30,20]));
-  assert.ok(goalMet([34,33,33], [70,20,10], 'rebalance'));
-  assert.equal(spread([34,33,33]),1);
+check('The second experiment requires a changed split and never forces a direction or degree of balance', () => {
+  assert.ok(!goalMet([34,33,33], [34,33,33], 'different'));
+  for (const weights of [[40,30,30],[33,34,33],[70,20,10]]) assert.ok(goalMet(weights,[34,33,33],'different'));
+  assert.ok(!goalMet([70,20,10], [70,20,10], 'different'));
+  for (const weights of [[80,10,10],[50,30,20],[34,33,33]]) assert.ok(goalMet(weights,[70,20,10],'different'));
+  assert.ok(canRun([80,10,10],[true,true,true],[70,20,10],'different'));
 });
 mkdirSync('test-results', {recursive:true});
 writeFileSync('test-results/level3-rules-results.json', JSON.stringify({passed:checks.length, checks},null,2)+'\n');

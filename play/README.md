@@ -1,3 +1,11 @@
+# Latest review package
+
+[Download Level 3 + full game in one ZIP](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Level3-and-Full-game-play.zip?raw=true).
+
+Extract first. Open `Level3/Level3.html` for standalone Level 3, or
+`Full-game/Gaming-the-System.html` for connected Levels 1 → 2 → 3.
+The two HTMLs are identical to the current individual downloads below.
+
 # 最新试玩下载 / Latest previews
 
 四个最新版放在同一个分支 **level3-dev** 的这个文件夹中：

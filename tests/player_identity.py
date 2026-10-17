@@ -127,22 +127,18 @@ with sync_playwright() as playwright:
     expect(guide).to_contain_text('Your conversation with Alex appears here.')
     assert 'Maya' not in guide.inner_text()
     guide.get_by_role('button', name='Start Level 1', exact=True).click()
-    expect(page.get_by_role('status', name=name+' is typing')).to_be_visible()
+    expect(page.get_by_role('status', name=name+' is thinking')).to_be_visible()
     name_visible(page, name)
     record('Confirmed opening name reaches Level 1 labels, avatar and typing accessibility; guide has no fixed Maya name')
 
-    page.get_by_role('button', name='Restart', exact=True).click()
-    page.get_by_role('button', name='Restart level 1', exact=True).click()
-    # A level restart reopens its guide but retains the host-owned identity.
-    if page.get_by_role('button', name='Skip guide', exact=True).count():
-        page.get_by_role('button', name='Skip guide', exact=True).click()
+    expect(page.get_by_role('button', name='Restart', exact=True)).to_have_count(0)
     name_visible(page, name)
     begin_one(page)
     partner_scene(page, name)
     expect(page.locator('.alex-bubble .speaker-name').first).to_have_text('Alex')
     expect(page.locator('.alex-bubble p')).to_have_count(2)
     assert page.evaluate('window.results[0].result.metricId') == 'focus'
-    record('Level 1 restart retains identity and its custom cinematic receives playerName; Alex stays Alex')
+    record('Level 1 has no player restart; its custom cinematic retains playerName and Alex stays Alex')
 
     page.get_by_role('button', name='Continue to Level 2', exact=True).click()
     name_visible(page, name)
@@ -176,14 +172,12 @@ with sync_playwright() as playwright:
     assert [item['level'] for item in page.evaluate('window.results')] == [1,2]
     record('Both levels and every custom cinematic slot share one name; six-metric decision uses I; result callbacks still fire')
 
-    page.get_by_role('button', name='Restart', exact=True).click()
-    page.get_by_role('button', name='Restart Level 2', exact=True).click()
+    expect(page.get_by_role('button', name='Restart', exact=True)).to_have_count(0)
     name_visible(page, name)
-    advance(page, 8)
     page.reload(wait_until='networkidle')
     expect(page.get_by_label('Name on the desk')).to_have_value('')
     expect(page.locator('.game-page')).to_have_count(0)
-    record('Level 2 restart retains identity; reloading the full host returns to a fresh opening/name entry with storage blocked')
+    record('Level 2 has no player restart; reloading the full host returns to a fresh opening/name entry with storage blocked')
 
     start(page, 'Avery', mode='placeholder', level=2)
     page.evaluate("window.dispatchEvent(new PageTransitionEvent('pageshow', {persisted:true}))")

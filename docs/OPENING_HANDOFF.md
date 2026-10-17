@@ -73,8 +73,7 @@ useEffect(() => {
 and 3 across their in-page transitions. Each level trims outer whitespace and
 uses the name for the player speaker label, avatar initial, typing label and
 temporary cinematic captions. React renders names as text. Names are not
-translated or inserted as HTML. Alex remains Alex. An individual level's Restart
-retains the current player's identity; a new page runs the host opening again.
+translated or inserted as HTML. Alex remains Alex. Player-facing Restart controls have been removed from all levels; a new page runs the host opening again.
 
 The source role ID `Maya` identifies the player character internally, including
 left-side styling. It is never a fixed display name when a custom name is
@@ -130,13 +129,13 @@ separate Netlify opening has already been connected.
 
 `tests/level3_integration.py` additionally checks the same name through Level 2
 → Level 3, weighted shot requests, comparison/theory renderers and the optional
-Design Lab callback. The combined preview connects all three gameplay levels;
+reserved, unused Design Lab callback. The combined preview connects all three gameplay levels;
 individual App modes mount only their selected level.
 
 Level 2 → Level 3 also carries the three chosen metric IDs in page memory. The
 Level 3 selector starts with those cards checked and allows replacement; direct
 standalone Level 3 has no inherited choices. Custom hosts can pass
 `initialMetricIds` directly to `LevelThree`. The final scene chain is
-`level3.compare` → `theory.reveal` → `onDesignLab()` automatically. Supply the
-final callback to route to the real Design Lab; no extra completion button is
-required after the theory animation. Previews show a minimal reserved destination.
+`level3.compare` → `theory.reveal`. This preview stops in the theory placeholder.
+The reserved `onDesignLab` prop is not invoked; even a duplicate final cinematic
+callback cannot advance into Design Lab. Administrator access is deferred.

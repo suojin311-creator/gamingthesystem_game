@@ -1,8 +1,9 @@
 export type Weights = readonly [number, number, number];
 export type Confirmed = readonly [boolean, boolean, boolean];
-export type WeightGoal = 'first' | 'rebalance' | 'contrast';
+export type WeightGoal = 'first' | 'different';
 export type Effort = 'low' | 'medium' | 'high';
 export const EVEN_WEIGHTS: Weights = [34, 33, 33];
+export const CONTRAST_WEIGHTS: Weights = [70, 20, 10];
 export const MIN_WEIGHT = 0;
 export const NEAR_EVEN_SPREAD = 10;
 
@@ -41,7 +42,7 @@ export function confirmWeight(confirmed: Confirmed, index: number): Confirmed {
 }
 
 export function goalMet(weights: Weights, baseline: Weights, goal: WeightGoal) {
-  return goal === 'first' || (goal === 'contrast' ? spread(weights) >= 20 : spread(weights) < spread(baseline));
+  return goal === 'first' || weights.some((weight, index) => weight !== baseline[index]);
 }
 
 export function canRun(weights: Weights, confirmed: Confirmed, baseline: Weights, goal: WeightGoal) {

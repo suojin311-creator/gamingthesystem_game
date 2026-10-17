@@ -12,12 +12,12 @@
 .level-three .l3-workbench { max-width: 1160px; margin: auto; background: var(--paper); border: 1px solid #d0cbbd; box-shadow: 0 12px 42px #55432f0b, 0 2px 3px #55432f09; border-radius: 4px; overflow: clip; }
 .level-three .l3-heading { padding: 17px 30px; display: flex; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, #fcf9f1 45%, #fcf9f1d9 75%, #fcf9f160), url('../../assets/office.png') center 54% / cover; }
 .level-three .l3-heading > div { display: flex; gap: 17px; align-items: center; min-width: 0; }
-.level-three .l3-heading h1 { font: 31px/1.12 var(--serif); letter-spacing: -.04em; }
+.level-three .l3-heading h1 { font: var(--chapter-title-size)/1.12 var(--serif); letter-spacing: -.04em; }
 .level-three .l3-location { display: flex; align-items: center; gap: 8px; align-self: center; font-size: 9px; letter-spacing: .12em; color: #626a58; background: #fbf9f0e8; padding: 8px 11px; white-space: nowrap; }
 .level-three .l3-location i { width: 5px; height: 5px; border-radius: 50%; background: #6e8361; }
 .level-three .l3-stepper { padding: 0 30px; background: #f7f3e9; border-bottom: 1px solid var(--line); }
 .level-three .l3-stepper ol { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.level-three .l3-stepper li { display: flex; gap: 9px; align-items: center; position: relative; min-height: 45px; font-size: 11px; color: #8d8d7d; padding: 0 5px; }
+.level-three .l3-stepper li { display: flex; gap: 9px; align-items: center; position: relative; min-height: 45px; font-size: var(--step-label-size); color: #8d8d7d; padding: 0 5px; }
 .level-three .l3-stepper li > span { border: 1px solid #d3d0c1; border-radius: 50%; width: 22px; height: 22px; flex-shrink: 0; display: grid; place-items: center; font-size: 8px; }
 .level-three .l3-stepper .icon { width: 12px; height: 12px; }
 .level-three .l3-stepper .current { color: #88432f; font-weight: 700; }
@@ -30,7 +30,7 @@
 .level-three .l3-intro > .conversation { padding: 30px 0; min-height: 235px; gap: 24px; }
 .level-three .l3-intro .dialogue-character { max-width: 92%; }
 .level-three .l3-intro .speech-bubble { max-width: 660px; padding: 13px 18px; }
-.level-three .l3-intro .speech-bubble p { font-size: 22px; }
+.level-three .l3-intro .speech-bubble p { font-size: var(--chapter-dialogue-size); }
 .level-three .l3-intro .speaker-name { font-size: 11px; }
 .level-three .l3-intro .avatar { width: 38px; height: 38px; font-size: 26px; }
 .level-three .l3-intro-actions { display: flex; justify-content: flex-end; min-height: 42px; margin-top: 12px; }
@@ -48,7 +48,7 @@
 .level-three .selected .l3-card-top > span { border-radius: 50%; background: #ad6048; color: #fffaf0; }
 .level-three .l3-card-top > span .icon { width: 14px; height: 14px; }
 .level-three .l3-metric-card h3 { font-size: var(--metric-name-size); line-height: 1.4; margin-bottom: 7px; }
-.level-three .l3-metric-card p { font-size: 11px; color: #7c7a6c; line-height: 1.5; }
+.level-three .l3-metric-card p { font-size: var(--metric-description-size); color: #7c7a6c; line-height: 1.5; }
 .level-three .l3-priorities { background: #f2eddf; border: 1px solid #ded5c0; padding: 20px; border-radius: 3px; }
 .level-three .l3-priorities ol { padding: 0; list-style: none; margin: 10px 0 20px; }
 .level-three .l3-priorities li { display: flex; align-items: center; gap: 11px; min-height: 56px; font: 17px/1.3 var(--serif); color: #9c957f; }
@@ -99,14 +99,14 @@
 .level-three .l3-effort-bars [data-active=true] { background: #8b9b73; }
 .level-three [data-effort=low] .l3-effort-bars [data-active=true] { background: #bd9559; }
 .level-three [data-effort=high] .l3-effort-bars [data-active=true] { background: #b37153; }
-.level-three .l3-finding { font: 20px/1.45 var(--serif); color: #86653e; border-left: 3px solid #bb9665; padding: 12px 15px; margin: 20px 0 10px; background: #f2ead7; animation: panel-arrive .2s ease-out; }
+.level-three .l3-finding { font: var(--evidence-size)/1.45 var(--serif); color: #86653e; border-left: 3px solid #bb9665; padding: 12px 15px; margin: 20px 0 10px; background: #f2ead7; animation: panel-arrive .2s ease-out; }
 .level-three .l3-watching { color: #9b927d; font: italic 18px/1.5 var(--serif); min-height: 65px; padding-top: 24px; }
 .level-three .l3-perspectives { background: #f4f1e7; border-left: 1px solid var(--line); padding: 25px 19px; display: flex; flex-direction: column; gap: 17px; min-width: 0; }
 .level-three .l3-perspective { border: 1px solid #ddd8c8; border-radius: 5px; padding: 16px; min-height: 182px; background: #faf7ed; }
-.level-three .l3-perspective h3 { display: flex; align-items: center; gap: 9px; font-size: 12px; margin-bottom: 18px; }
+.level-three .l3-perspective h3 { display: flex; align-items: center; gap: 9px; font-size: var(--perspective-heading-size); margin-bottom: 18px; }
 .level-three .l3-perspective h3 .icon { width: 23px; height: 23px; color: #7b8268; }
 .level-three .l3-management { background: #edf2e3; border-color: #c0cfae; }
-.level-three .l3-perspective-label { font-size: 11px; color: #898575; }
+.level-three .l3-perspective-label { font-size: var(--perspective-label-size); color: #898575; }
 .level-three .l3-total { font: 46px/1.3 var(--serif); color: #55724a; display: block; margin: 8px 0 14px; }
 .level-three .l3-total small { font-size: 21px; }
 .level-three .l3-management p { font-size: 10px; color: #7b866b; margin-top: 10px; line-height: 1.5; }
@@ -118,7 +118,7 @@
 .level-three .l3-comparison-card.near-even { border-color: #bbc9ad; background: #f0f3e7; }
 .level-three .l3-comparison-card h3 { font: 23px/1.25 var(--serif); margin: 7px 0 12px; }
 .level-three .l3-comparison-card > p { font: italic 14px/1.5 var(--serif); color: #8d7856; margin-top: 14px; }
-.level-three .l3-comparison + .l3-finding { font-size: 19px; margin-bottom: 24px; }
+.level-three .l3-comparison + .l3-finding { font-size: var(--evidence-size); margin-bottom: 24px; }
 .level-three .l3-cinematic { position: relative; isolation: isolate; min-height: 540px; background: #2e3a32; color: #fff6e6; padding: 24px 34px; display: flex; flex-direction: column; }
 .level-three .l3-scene-background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: .23; }
 .level-three .l3-cinematic::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, #243029c4, #24302980); z-index: -1; }
@@ -133,18 +133,13 @@
 .level-three .l3-scene-copy small { display: block; font-size: 10px; color: #afb8a1; margin-top: 18px; }
 .level-three .l3-scene-caption { border-left: 3px solid #bca47b; padding: 12px 20px; background: #1f2b24b3; margin-top: auto; max-width: 800px; animation: panel-arrive .2s ease-out; }
 .level-three .l3-scene-caption > span { color: #d9c39a; font-size: 11px; overflow-wrap: anywhere; }
-.level-three .l3-scene-caption p { font: 25px/1.4 var(--serif); margin-top: 7px; }
+.level-three .l3-scene-caption p { font: var(--scene-dialogue-size)/1.4 var(--serif); margin-top: 7px; }
 .level-three .l3-scene-actions { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-top: 25px; }
 .level-three .l3-scene-actions .button { background: #f4eedb; color: #465341; }
 .level-three .l3-scene-dots { display: flex; gap: 7px; }
 .level-three .l3-scene-dots i { width: 5px; height: 5px; border-radius: 50%; background: #8c967e; }
 .level-three .l3-scene-dots [data-active=true] { background: #eee1bd; }
 .level-three .l3-footer { max-width: 1160px; margin: 10px auto 0; display: flex; justify-content: space-between; font-size: 8px; letter-spacing: .1em; color: #9b9787; }
-.level-three .l3-dialog { width: min(440px, calc(100vw - 36px)); border: 1px solid #cbbda4; border-radius: 5px; background: #fffaf0; color: var(--ink); padding: 28px; box-shadow: 0 15px 70px #242d2b50; }
-.level-three .l3-dialog::backdrop { background: #29322bd9; }
-.level-three .l3-dialog h2 { font: 30px/1.2 var(--serif); margin: 12px 0; }
-.level-three .l3-dialog p { color: #80745c; font-size: 13px; line-height: 1.6; margin-bottom: 25px; }
-.level-three .l3-dialog > div { display: flex; gap: 12px; justify-content: flex-end; }
 
 .level-three .l3-weight-card[data-auto-confirmed=true] { background: #eeeee6; border-color: #cccdbf; }
 .level-three .l3-weight-card[data-auto-confirmed=true] .button { background: #e4e5dc; border-color: #cbccbd; color: #737866; }
@@ -187,7 +182,7 @@
   .level-three.game-page { padding: 0 16px 12px; }
   .level-three .l3-heading { padding: 17px 22px; }
   .level-three .l3-stepper { padding: 0 18px; }
-  .level-three .l3-stepper li { gap: 6px; font-size: 9px; min-height: 52px; }
+  .level-three .l3-stepper li { gap: 6px; font-size: var(--step-label-size); min-height: 52px; }
   .level-three .l3-stepper li > span { width: 19px; height: 19px; }
   .level-three .l3-with-perspectives { display: block; }
   .level-three .l3-perspectives { display: grid; grid-template-columns: 1fr 1fr; border-left: 0; border-top: 1px solid var(--line); padding: 18px 23px; }
@@ -205,7 +200,7 @@
   .level-three .l3-weight-value { font-size: 46px; }
   .level-three .l3-cinematic { padding: 22px; }
   .level-three .l3-scene-copy h2 { font-size: 30px; }
-  .level-three .l3-scene-caption p { font-size: 23px; }
+  .level-three .l3-scene-caption p { font-size: var(--scene-dialogue-size); }
 }
 @media (max-width: 520px) {
   .level-three.game-page { padding: 0 10px 10px; }
@@ -216,21 +211,21 @@
   .level-three .l3-wordmark b { font-size: 10px; }
   .level-three .l3-heading { padding: 16px; }
   .level-three .l3-heading > div { gap: 12px; }
-  .level-three .l3-heading h1 { font-size: 27px; }
+  .level-three .l3-heading h1 { font-size: var(--chapter-title-size); }
   .level-three .l3-location { display: none; }
   .level-three .l3-stepper { padding: 0 10px; }
-  .level-three .l3-stepper li { flex-direction: column; justify-content: center; gap: 5px; text-align: center; font-size: 8px; }
+  .level-three .l3-stepper li { flex-direction: column; justify-content: center; gap: 5px; text-align: center; font-size: var(--step-label-size); }
   .level-three .l3-stepper .current::after { right: 0; }
   .level-three .l3-intro { padding: 28px 17px 22px; min-height: 430px; }
   .level-three .l3-intro .dialogue-character { max-width: 100%; gap: 9px; }
   .level-three .l3-intro .avatar { width: 30px; height: 30px; font-size: 22px; }
   .level-three .l3-intro .speech-bubble { padding: 11px 13px; }
-  .level-three .l3-intro .speech-bubble p { font-size: 20px; }
+  .level-three .l3-intro .speech-bubble p { font-size: var(--chapter-dialogue-size); }
   .level-three .l3-decision { padding: 22px 16px 0; }
   .level-three .l3-metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .level-three .l3-metric-card { padding: 12px; min-height: 151px; }
   .level-three .l3-metric-card h3 { font-size: var(--metric-name-size); }
-  .level-three .l3-metric-card p { font-size: 10px; }
+  .level-three .l3-metric-card p { font-size: var(--metric-description-size); }
   .level-three .l3-priorities li { gap: 5px; font-size: 12px; overflow-wrap: anywhere; }
   .level-three .l3-priorities .icon { width: 15px; height: 15px; }
   .level-three .l3-weight-grid { grid-template-columns: 1fr; }
@@ -252,23 +247,23 @@
   .level-three .l3-publish strong { font-size: 25px; }
   .level-three .l3-publish li > span:last-child .icon { width: 16px; height: 16px; }
   .level-three .l3-results { padding: 12px; }
-  .level-three .l3-finding { font-size: 18px; padding: 12px; }
+  .level-three .l3-finding { font-size: var(--evidence-size); padding: 12px; }
   .level-three .l3-perspectives { padding: 18px 16px; gap: 12px; }
   .level-three .l3-perspective { padding: 12px; }
-  .level-three .l3-perspective h3 { font-size: 11px; gap: 7px; }
+  .level-three .l3-perspective h3 { font-size: var(--perspective-heading-size); gap: 7px; }
   .level-three .l3-total { font-size: 39px; }
-  .level-three .student-behaviour { font-size: 22px; }
+  .level-three .student-behaviour { font-size: var(--student-behaviour-size); }
   .level-three .l3-comparison { grid-template-columns: 1fr; }
   .level-three .l3-cinematic { min-height: 610px; padding: 20px 16px; }
   .level-three .l3-scene-copy { margin-top: 35px; }
   .level-three .l3-scene-copy h2 { font-size: 29px; }
   .level-three .l3-scene-copy > p { font-size: 19px; }
   .level-three .l3-scene-caption { padding: 12px; }
-  .level-three .l3-scene-caption p { font-size: 22px; }
+  .level-three .l3-scene-caption p { font-size: var(--scene-dialogue-size); }
 }
 @media (max-width: 350px) {
   .level-three .l3-perspectives { grid-template-columns: 1fr; }
-  .level-three .l3-heading h1 { font-size: 25px; }
+  .level-three .l3-heading h1 { font-size: var(--chapter-title-size); }
   .level-three .l3-decision { padding-left: 13px; padding-right: 13px; }
   .level-three .l3-status { max-width: 100%; }
   .level-three .l3-priorities { padding-left: 12px; padding-right: 12px; }
@@ -287,6 +282,25 @@
 }
 
 .level-three .l3-action-space { min-height: 42px; }
-.l3-design-lab-entry { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 40px max(24px, calc((100vw - 1000px) / 2)); background: var(--paper); }
-.l3-design-lab-entry > .eyebrow { color: #a67c53; }
-.l3-design-lab-entry h1 { font: clamp(32px, 4.5vw, 52px)/1.2 var(--serif); max-width: 800px; margin-top: 22px; }
+
+.level-three .l3-run-table { --l3-result-columns: minmax(0, 1fr) 72px 190px; }
+.level-three .l3-row-weight { font-size: 18px; color: #9b9381; }
+.level-three .l3-row-weight small { font-size: 11px; }
+.level-three .l3-effort-label { font-size: 20px; line-height: 1.25; font-weight: 700; }
+.level-three .l3-effort-bars { width: min(140px, 100%); height: 9px; gap: 4px; }
+.level-three .l3-effort-bars i { min-width: 0; }
+.level-three .l3-finding-group { display: inline; }
+.level-three .l3-three-runs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.level-three .l3-compact-table { --l3-result-columns: 64px minmax(0, 1fr); }
+.level-three .l3-compact-table .l3-row-weight { font-size: 18px; }
+.level-three .l3-result-legend { font-size: 10px; }
+.level-three .l3-result-legend > span:nth-child(2) { padding-inline: 4px; }
+.level-three .l3-preview-end { color: #d4d5bf; font-size: 12px; }
+.level-three .l3-bottom-dialogue .conversation { min-height: 60px; }
+@media (max-width: 1100px) and (min-width: 761px) { .level-three .l3-three-runs { grid-template-columns: repeat(2, minmax(0, 1fr)); } .level-three .l3-three-runs > :last-child { grid-column: 1 / -1; } }
+@media (max-width: 760px) { .level-three .l3-three-runs { grid-template-columns: 1fr; } }
+@media (max-width: 520px) {
+  .level-three .l3-run-table { --l3-result-columns: 64px minmax(0, 1fr); }
+  .level-three .l3-effort-label { font-size: 20px; }
+  .level-three .l3-action-space { min-height: 44px; }
+}

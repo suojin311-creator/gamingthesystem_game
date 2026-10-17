@@ -1,0 +1,437 @@
+{
+  "validatedAtUtc": "2026-10-17T22:24:00.479173+00:00",
+  "version": "Level 3 refinement v4: free exploration, complete history, shared typography and two-version review ZIP",
+  "passed": 105,
+  "builds": [
+    "npm run build: passed",
+    "npm run build:level1: passed",
+    "npm run build:level2: passed",
+    "npm run build:level3: passed"
+  ],
+  "suites": {
+    "level3-results.json": {
+      "passed": 34,
+      "checks": [
+        "Dedicated Level 3 chapter dialogue waits for its button; selection enforces exactly three and allows swaps",
+        "80/10/10 allows either remaining slider to move to 15/5; confirming the rightmost card auto-confirms the middle card",
+        "70/20/10 waits for Observe the class, plays exactly three matching intensity shots and reveals classroom responses sequentially",
+        "The second test requires a different split and compares the actual two tested results",
+        "Alex’s response leads to the final theory placeholder and stops there without any Design Lab transition",
+        "Near-even-first path permits a different player split and compares both runs when both patterns are present",
+        "A partial rebalance leads to an explicit 34/33/33 balance check, with the original uneven run retained for comparison",
+        "Priority trio prep+part+focus uses the selected metrics and the near-even intensity override",
+        "Priority trio prep+part+discuss uses the selected metrics and the near-even intensity override",
+        "Priority trio prep+part+reflect uses the selected metrics and the near-even intensity override",
+        "Priority trio prep+part+peer uses the selected metrics and the near-even intensity override",
+        "Priority trio prep+focus+discuss uses the selected metrics and the near-even intensity override",
+        "Priority trio prep+focus+reflect uses the selected metrics and the near-even intensity override",
+        "Priority trio prep+focus+peer uses the selected metrics and the near-even intensity override",
+        "Priority trio prep+discuss+reflect uses the selected metrics and the near-even intensity override",
+        "Priority trio prep+discuss+peer uses the selected metrics and the near-even intensity override",
+        "Priority trio prep+reflect+peer uses the selected metrics and the near-even intensity override",
+        "Priority trio part+focus+discuss uses the selected metrics and the near-even intensity override",
+        "Priority trio part+focus+reflect uses the selected metrics and the near-even intensity override",
+        "Priority trio part+focus+peer uses the selected metrics and the near-even intensity override",
+        "Priority trio part+discuss+reflect uses the selected metrics and the near-even intensity override",
+        "Priority trio part+discuss+peer uses the selected metrics and the near-even intensity override",
+        "Priority trio part+reflect+peer uses the selected metrics and the near-even intensity override",
+        "Priority trio focus+discuss+reflect uses the selected metrics and the near-even intensity override",
+        "Priority trio focus+discuss+peer uses the selected metrics and the near-even intensity override",
+        "Priority trio focus+reflect+peer uses the selected metrics and the near-even intensity override",
+        "Priority trio discuss+reflect+peer uses the selected metrics and the near-even intensity override",
+        "1366px normal-motion playthrough and comparison have no overflow; reload and restored pages restart",
+        "768px normal-motion playthrough and comparison have no overflow; reload and restored pages restart",
+        "390px normal-motion playthrough and comparison have no overflow; reload and restored pages restart",
+        "320px normal-motion playthrough and comparison have no overflow; reload and restored pages restart",
+        "Players have no Restart control or restart dialog; resetting the current weight allocation remains available",
+        "All-English Level 3 remains playable without browser storage or Web Audio",
+        "No browser runtime errors across all offline Level 3 paths"
+      ],
+      "runtimeErrors": []
+    },
+    "level3-feedback-results.json": {
+      "passed": 21,
+      "checks": [
+        "Metric names match Levels 1/2; Reset stays above the action row and the player uses the shared bottom dialogue region and bubble size",
+        "80/15/5 keeps both remainders editable and confirms the final pair: first prep, then part",
+        "80/15/5 keeps both remainders editable and confirms the final pair: first prep, then focus",
+        "80/15/5 keeps both remainders editable and confirms the final pair: first part, then prep",
+        "80/15/5 keeps both remainders editable and confirms the final pair: first part, then focus",
+        "80/15/5 keeps both remainders editable and confirms the final pair: first focus, then prep",
+        "80/15/5 keeps both remainders editable and confirms the final pair: first focus, then part",
+        "Published weights remain until an explicit Observe click, with Management and Students cards showing the same current round",
+        "Results remove the requested note and align weights/responses with their headings and a visible vertical divider",
+        "768px results and comparisons keep the same metric size, aligned labelled columns and no horizontal overflow",
+        "390px results and comparisons keep the same metric size, aligned labelled columns and no horizontal overflow",
+        "320px results and comparisons keep the same metric size, aligned labelled columns and no horizontal overflow",
+        "First test [40, 30, 30]: the inclusive 10-point boundary selects the correct next task",
+        "First test [40, 31, 29]: the inclusive 10-point boundary selects the correct next task",
+        "Second test [38, 33, 29]: compares the player’s actual near-even run without a third test",
+        "Second test [40, 30, 30]: compares the player’s actual near-even run without a third test",
+        "Second test [40, 31, 29]: offers the explained optional balance check beyond 10 points",
+        "The 76/6/18 finding names both low-effort areas; thought clouds, two Alex bubbles and effort emphasis are visible",
+        "A more uneven second attempt is allowed; all two player tests plus the reference stay visible on desktop and 320px",
+        "Two near-even player tests offer an explicitly labelled uneven reference and retain all three actual splits",
+        "No runtime errors in the feedback regressions"
+      ],
+      "runtimeErrors": []
+    },
+    "level3-integration-results.json": {
+      "passed": 9,
+      "checks": [
+        "Opening-supplied player name reaches Level 3 labels, avatar and the three weighted partner shots",
+        "Level 3 completes once with immutable tested runs and an explicit near-even/uneven comparison payload",
+        "Comparison leads to theory; even duplicate final callbacks stay in the placeholder and never invoke Design Lab",
+        "Real Gameplay host carries the opening name and sound preference from Level 2 into the new Level 3 chapter",
+        "Level 3 preselects the actual Level 2 trio, permits swapping, and has no player Restart control",
+        "Reloading the connected host starts fresh from its configured entry level",
+        "Hidden-page publication holds its visible-time sequence and resumes without skipping the three weights",
+        "Real-time publication and evidence arrive one at a time; Web Audio cues play and Sound off silences later updates",
+        "No browser errors in partner, chapter handoff or real-time audio checks"
+      ],
+      "runtimeErrors": []
+    },
+    "level3-rules-results.json": {
+      "passed": 7,
+      "checks": [
+        "Every possible integer split preserves total 100, range 0–100 and deterministic effort",
+        "Either remaining card confirms the pair after any first-card choice",
+        "Both equal remaining sliders can move in either direction before confirmation",
+        "Available bounds clamp safely, including zero, without changing locked weights or snapshots",
+        "Near-even accepts gaps through 10 points inclusively, rejects 11, and produces three medium shots",
+        "Run requires all three confirmed weights (including the linked pair) and a valid complete allocation",
+        "The second experiment requires a changed split and never forces a direction or degree of balance"
+      ]
+    },
+    "level2-integration-results.json": {
+      "passed": 10,
+      "checks": [
+        "Partner replaces all three scene slots; original trio, branch and custom name retained",
+        "Completion reports exact result once after final reading",
+        "Level 2 emits actual count, success, evidence and softer message cues",
+        "Final replay retains completion count and mute suppresses new cues",
+        "Player view has no restart control and keeps its single completion result",
+        "Chapter dialogue waits while hidden; its next button appears on return and waits for a click",
+        "Hidden tab holds metric updates and resumes them on return",
+        "Growth counter and automatic observation wait while the page is hidden",
+        "The shortened next-button wait pauses while hidden and resumes on return",
+        "Complete expansion and partner-scene flow works at 320px"
+      ],
+      "runtimeErrors": []
+    },
+    "player-identity-results.json": {
+      "passed": 10,
+      "checks": [
+        "Confirmed opening name reaches Level 1 labels, avatar and typing accessibility; guide has no fixed Maya name",
+        "Level 1 has no player restart; its custom cinematic retains playerName and Alex stays Alex",
+        "Level 1 → Level 2 retains the same opening name and prior metric; choice/gap thoughts use I",
+        "Both levels and every custom cinematic slot share one name; six-metric decision uses I; result callbacks still fire",
+        "Level 2 has no player restart; reloading the full host returns to a fresh opening/name entry with storage blocked",
+        "Full-host restored-page reset returns to the opening and clears the previous identity",
+        "Built-in Level 1 and Level 2 three/six-metric placeholders display the opening name and keep Alex unchanged",
+        "Final Level 2 placeholder and closing player thought retain the same opening name",
+        "Names including Alex, HTML-like text and 40 unbroken characters render literally without horizontal overflow at 320px",
+        "No runtime errors during opening-name integration checks"
+      ],
+      "runtimeErrors": []
+    },
+    "release-results.json": {
+      "passed": 10,
+      "checks": [
+        "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
+        "The review ZIP contains separate Level 3 and connected Levels 1–3 HTMLs, identical to their tested latest packages",
+        "Packaged Level2.html completes 3 → 6 → 10 → 25 → 100 offline with normal motion",
+        "Packaged standalone Level3.html completes both weight tests and compares the actual results offline",
+        "Packaged Level1.html includes the latest behaviour and two replies, stops after Level 1 and permits replay",
+        "Standalone Level 1 reload starts a fresh Level 1 run",
+        "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
+        "Packaged combined game connects Level 1 → Level 2 → playable Level 3 in one open run",
+        "Combined preview reload starts from Level 1 rather than restoring Level 2",
+        "Packaged entries have no browser runtime errors"
+      ],
+      "runtimeErrors": []
+    },
+    "dialogue-emoji-results.json": {
+      "passed": 1,
+      "checks": [
+        "All gameplay emoji are distinct across all levels"
+      ],
+      "emojiCount": 25,
+      "inventory": [
+        {
+          "emoji": "📋",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "😬",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "🙋",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "🤷",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "💻",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "👀",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "💬",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "🤔",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "📝",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "🔁",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "🎯",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "🤭",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "🧐",
+          "file": "src/levels/level2/LevelTwo.tsx"
+        },
+        {
+          "emoji": "😇",
+          "file": "src/levels/level2/LevelTwo.tsx"
+        },
+        {
+          "emoji": "😅",
+          "file": "src/levels/level2/LevelTwo.tsx"
+        },
+        {
+          "emoji": "😎",
+          "file": "src/levels/level2/LevelTwo.tsx"
+        },
+        {
+          "emoji": "🫡",
+          "file": "src/levels/level3/LevelThree.tsx"
+        },
+        {
+          "emoji": "🙃",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "🔎",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "🔀",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "🤑",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "🥇",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "🧮",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "🧩",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "🗺",
+          "file": "src/levels/level3/dialogue.ts"
+        }
+      ]
+    },
+    "typography-results.json": {
+      "passed": 3,
+      "checks": [
+        "1366px: equivalent chapter/step/metric/description/heading/button sizes match across all three levels, metric names are 16px, no Restart controls or overflow",
+        "390px: equivalent chapter/step/metric/description/heading/button sizes match across all three levels, metric names are 16px, no Restart controls or overflow",
+        "320px: equivalent chapter/step/metric/description/heading/button sizes match across all three levels, metric names are 16px, no Restart controls or overflow"
+      ],
+      "measurements": [
+        {
+          "viewport": 1366,
+          "level": 1,
+          "sizes": {
+            "chapter": "31px",
+            "step": "12px",
+            "metric": "16px",
+            "description": "11px",
+            "heading": "29px",
+            "button": "12px"
+          }
+        },
+        {
+          "viewport": 1366,
+          "level": 2,
+          "sizes": {
+            "chapter": "31px",
+            "step": "12px",
+            "metric": "16px",
+            "description": "11px",
+            "heading": "29px",
+            "button": "12px"
+          }
+        },
+        {
+          "viewport": 1366,
+          "level": 3,
+          "sizes": {
+            "chapter": "31px",
+            "step": "12px",
+            "metric": "16px",
+            "description": "11px",
+            "heading": "29px",
+            "button": "12px"
+          }
+        },
+        {
+          "viewport": 390,
+          "level": 1,
+          "sizes": {
+            "chapter": "29px",
+            "step": "9px",
+            "metric": "16px",
+            "description": "11px",
+            "heading": "28px",
+            "button": "11px"
+          }
+        },
+        {
+          "viewport": 390,
+          "level": 2,
+          "sizes": {
+            "chapter": "29px",
+            "step": "9px",
+            "metric": "16px",
+            "description": "11px",
+            "heading": "28px",
+            "button": "11px"
+          }
+        },
+        {
+          "viewport": 390,
+          "level": 3,
+          "sizes": {
+            "chapter": "29px",
+            "step": "9px",
+            "metric": "16px",
+            "description": "11px",
+            "heading": "28px",
+            "button": "11px"
+          }
+        },
+        {
+          "viewport": 320,
+          "level": 1,
+          "sizes": {
+            "chapter": "25px",
+            "step": "9px",
+            "metric": "16px",
+            "description": "11px",
+            "heading": "28px",
+            "button": "11px"
+          }
+        },
+        {
+          "viewport": 320,
+          "level": 2,
+          "sizes": {
+            "chapter": "25px",
+            "step": "9px",
+            "metric": "16px",
+            "description": "11px",
+            "heading": "28px",
+            "button": "11px"
+          }
+        },
+        {
+          "viewport": 320,
+          "level": 3,
+          "sizes": {
+            "chapter": "25px",
+            "step": "9px",
+            "metric": "16px",
+            "description": "11px",
+            "heading": "28px",
+            "button": "11px"
+          }
+        }
+      ]
+    }
+  },
+  "manifest": {
+    "sourceSha256": "f6ffed3604175e7d5c8372558e6fdb770758ea10e3b3fe2f1779c68f2477428d",
+    "entries": [
+      {
+        "archive": "Level1-play.zip",
+        "html": "Level1.html",
+        "build": "dist-level1/index.html",
+        "htmlSha256": "2fb57a21982cf197d42ea4791f0ef00b23d3e0399e6b10187e6ab420e6c6db8f",
+        "zipSha256": "dc266a8c8f714a327aa47bab205e6dffff368cd1c837dc318ba01a1afb56008c"
+      },
+      {
+        "archive": "Level2-play.zip",
+        "html": "Level2.html",
+        "build": "dist-level2/index.html",
+        "htmlSha256": "06958264ea0c344152c05a40682cb4c6e7102c979bc6715a6afadf7213792bbb",
+        "zipSha256": "533fbf35ccef5cb53b843118cf85c0c19a6f37999d02c273fec8519d63c35cc7"
+      },
+      {
+        "archive": "Level3-play.zip",
+        "html": "Level3.html",
+        "build": "dist-level3/index.html",
+        "htmlSha256": "b412474c1e4ccd0ce27528adae8cbcead87a76a0ecf8a7eb528a012e136b884c",
+        "zipSha256": "a3925f788df8ecf7357b52b7f719623459a5d3b0c2568506baf4be1b31935bb0"
+      },
+      {
+        "archive": "Full-game-play.zip",
+        "html": "Gaming-the-System.html",
+        "build": "dist/index.html",
+        "htmlSha256": "0b2dd889aaf5bdacbc3c83b9cf97ac26a77c1b9b4740ea1948096b5541edfe2b",
+        "zipSha256": "1d1de2c84c3f16161d1c0399342321d4d24f8e6a76d743b688fda638f7c05b44"
+      }
+    ],
+    "reviewBundle": {
+      "archive": "Level3-and-Full-game-play.zip",
+      "zipSha256": "0a8a611b3b6fa068024f1d4bc7b283c480a473e15bd100b9c4dc44cdfea8b449",
+      "htmlSha256": {
+        "Level3/Level3.html": "b412474c1e4ccd0ce27528adae8cbcead87a76a0ecf8a7eb528a012e136b884c",
+        "Full-game/Gaming-the-System.html": "0b2dd889aaf5bdacbc3c83b9cf97ac26a77c1b9b4740ea1948096b5541edfe2b"
+      }
+    }
+  },
+  "notes": [
+    "The second player attempt can use any changed valid allocation, even a more uneven one. No title, player thought or Run condition forces a more balanced split. The inclusive near-even spread remains 10 percentage points.",
+    "After two attempts, mixed patterns compare directly; two uneven attempts offer What if they counted equally?, and two near-even attempts offer What if one counted more?. System references require a click and the same manual Observe flow.",
+    "Comparison displays every actual run in order, including both player attempts and a system reference. Browser checks cover all three cards on desktop and 320px with exact tested snapshots, including the 76/6/18 to 80/10/10 case.",
+    "Findings group all selected metrics by actual qualitative effort category. Both Participation and Focus are named as minimum effort for 76/6/18. Score weights are smaller and muted; effort labels and bars are prominent. No exact numerical effort or learning result is inferred.",
+    "Teacher observations/plans have cloud thought bubbles and Thinking accessibility. Spoken questions keep ordinary bubbles. Each Level 3 workbench beat has two short independent Alex messages; source emoji remain distinct.",
+    "The preview ends on the final Goodhart theory placeholder. There is no Design Lab destination, completion screen or final navigation button. Reserved onDesignLab is never called, including by duplicate cinematic completion callbacks.",
+    "Restart controls and dialogs are removed from all three player entries; administrator functionality is deferred by user instruction. Reset weights only resets the current allocation. Fresh/reloaded/restored-page behavior remains unchanged.",
+    "Ordinary metric names are 16px throughout. Shared tokens align equivalent chapter, step, description, dialogue, perspective, student-behaviour, evidence and scene-caption roles. Actual production selection pages match across all three chapters at 1366, 390 and 320px and do not overflow. Narrative intro text and warning emphasis retain their intended distinct roles.",
+    "The real Gameplay host retains opening identity, original Level 2 choices and sound preference into Level 3; players can swap preselected metrics. Level 1/2 name, custom-scene, no-restart, storage-blocked, hidden-page and 320px integration checks passed.",
+    "All four current entries were rebuilt together. The added Level3-and-Full-game-play.zip contains Level3/Level3.html and Full-game/Gaming-the-System.html, byte-identical to the individual latest tested downloads. The manifest records all source/build/archive/review hashes.",
+    "Managed Chromium tests exact offline production bytes through an in-memory HTTPS origin because local file navigation is blocked. Direct file opening in the user browser, a classroom load test, finished partner videos and an administrator login are not claimed.",
+    "Historical validation reports and version-numbered ZIPs remain unchanged. The broad historical Level 2 presentation suite was updated for removal of the retired Restart UI; its broad timing run is not counted here. Current Level 2 integration, identity, package and typography suites were executed."
+  ]
+}

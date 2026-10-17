@@ -40,14 +40,11 @@ export default function LevelTwo({ playerName: suppliedName, previousMetricId, r
   const [talkReady, setTalkReady] = useState(false);
   const [roundReady, setRoundReady] = useState(false);
   const [hint, setHint] = useState('');
-  const [restartOpen, setRestartOpen] = useState(false);
   const [runId, setRunId] = useState(0);
   const title = useRef<HTMLHeadingElement>(null);
-  const restart = useRef<HTMLDialogElement>(null);
-  const restartButton = useRef<HTMLButtonElement>(null);
   const completionReported = useRef(false);
   const feedback = useFeedback();
-  const paused = restartOpen;
+  const paused = false;
   const pausedRef = useRef(paused);
   pausedRef.current = paused;
   const branch = selected.length === 3 ? classifyTrio(selected) : null;
@@ -93,13 +90,12 @@ export default function LevelTwo({ playerName: suppliedName, previousMetricId, r
       onComplete?.({ selectedMetricIds: [...selected], branch, metricsTracked: 100 });
     }
   }
-  function restartLevel() {
+  function resetForNewVisit() {
     completionReported.current = false;
     setSelected([]); setCount(3); setReportedCount(0); setObservedCount(null); setChecked([]);
     setShownCount(0); setFromCount(0); setCounterDone(false); setEvaluationReady(false);
-    setRunId(value => value + 1); setRestartOpen(false); feedback.reset(); movePhase('intro');
+    setRunId(value => value + 1); feedback.reset(); movePhase('intro');
   }
-  function closeRestart() { setRestartOpen(false); requestAnimationFrame(() => restartButton.current?.focus()); }
 
   useVisibleDelay(`${beatKey}:${checked.length}`, '.l2-evaluation', 480, phase === 'evaluate' && !growth && !!pendingId && !paused, () => {
     if (pendingId) setChecked(value => [...value, pendingId]);
@@ -127,7 +123,7 @@ export default function LevelTwo({ playerName: suppliedName, previousMetricId, r
     if (rect && (rect.top < 0 || rect.bottom > innerHeight)) target?.scrollIntoView({ block: 'start' });
   }, [phase, count, runId]);
   useEffect(() => {
-    const restore = (event: PageTransitionEvent) => { if (event.persisted) restartLevel(); };
+    const restore = (event: PageTransitionEvent) => { if (event.persisted) resetForNewVisit(); };
     window.addEventListener('pageshow', restore);
     return () => window.removeEventListener('pageshow', restore);
   });
@@ -154,7 +150,6 @@ export default function LevelTwo({ playerName: suppliedName, previousMetricId, r
     frame = requestAnimationFrame(advance);
     return () => cancelAnimationFrame(frame);
   }, [phase, count, growth, fromCount, runId, feedback.play]);
-  useEffect(() => { if (restartOpen) { feedback.stop(); restart.current?.showModal(); } else restart.current?.close(); }, [restartOpen, feedback.stop]);
 
   const lines: ConversationLine[] = phase === 'complete'
     ? [{ speaker: 'Maya', name: playerName, text: 'What if some metrics mattered more than others?' }]
@@ -165,7 +160,7 @@ export default function LevelTwo({ playerName: suppliedName, previousMetricId, r
   const counter = <div className="l2-counter" aria-label={`${shownCount} metrics tracked`}><div className="l2-counter-value"><span className="eyebrow">METRICS TRACKED</span><strong>{shownCount}</strong><span className="l2-count-change">{fromCount}<Icon name="arrow" />{count}</span></div><div className="l2-matrix" aria-hidden="true">{Array.from({ length: 100 }, (_, index) => <i key={index} data-active={index < shownCount} />)}</div></div>;
 
   return <div className="game-page level-two" data-phase={phase} data-round={count} data-branch={branch || ''} onPointerDown={feedback.unlock} onKeyDown={feedback.unlock}>
-    <header className="l2-masthead"><a className="l2-wordmark" href="#level-two-main" aria-label="Gaming the System, skip to game"><span className="l2-emblem" aria-hidden="true">g<span>s</span><i /></span><span>GAMING<br /><b>THE SYSTEM</b></span></a><div className="l2-header-controls"><button aria-pressed={!feedback.muted} disabled={!feedback.available} onClick={feedback.toggle}><Icon name={feedback.muted || !feedback.available ? 'muted' : 'sound'} /><span>{!feedback.available ? 'No audio' : feedback.muted ? 'Sound off' : 'Sound on'}</span></button><button ref={restartButton} onClick={() => setRestartOpen(true)}><Icon name="restart" /><span>Restart</span></button></div></header>
+    <header className="l2-masthead"><a className="l2-wordmark" href="#level-two-main" aria-label="Gaming the System, skip to game"><span className="l2-emblem" aria-hidden="true">g<span>s</span><i /></span><span>GAMING<br /><b>THE SYSTEM</b></span></a><div className="l2-header-controls"><button aria-pressed={!feedback.muted} disabled={!feedback.available} onClick={feedback.toggle}><Icon name={feedback.muted || !feedback.available ? 'muted' : 'sound'} /><span>{!feedback.available ? 'No audio' : feedback.muted ? 'Sound off' : 'Sound on'}</span></button></div></header>
     <main id="level-two-main" className="l2-workbench">
       <div className="l2-heading"><div><span className="chapter-number">02</span><h1>More metrics.</h1></div><span className="l2-location"><i />THE OFFICE</span></div>
       <nav className="l2-stepper" aria-label="Level 2 progress"><ol>{STAGES.map((label, index) => <li key={label} className={stage === index ? 'current' : stage > index ? 'done' : ''} aria-current={stage === index ? 'step' : undefined}><span>{stage > index ? <Icon name="check" /> : `0${index + 1}`}</span>{label}</li>)}</ol></nav>
@@ -191,6 +186,6 @@ export default function LevelTwo({ playerName: suppliedName, previousMetricId, r
         </section>{phase !== 'choose' && <Perspectives count={count} reportedCount={reportedCount} observedCount={observedCount} selected={selected} evaluating={phase === 'evaluate'} />}</div>}
     </main>
     <footer className="l2-footer"><span>GAMING THE SYSTEM</span><span>LEVEL 02</span></footer>
-    <dialog ref={restart} className="l2-dialog" aria-labelledby="l2-restart-title" onCancel={event => { event.preventDefault(); closeRestart(); }}><span className="eyebrow">START FRESH</span><h2 id="l2-restart-title">Restart Level 2?</h2><p>Your choices in this level will be cleared.</p><div className="l2-dialog-actions"><button className="button secondary-button" autoFocus onClick={closeRestart}>Keep playing</button><button className="button primary-button" onClick={restartLevel}>Restart Level 2</button></div></dialog>
+
   </div>;
 }
