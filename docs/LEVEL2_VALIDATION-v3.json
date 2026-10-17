@@ -1,0 +1,136 @@
+{
+  "validated_at_utc": "2026-10-17T17:08:42.109507+00:00",
+  "branch": "level2-dev",
+  "version": "Level 2 preview v3",
+  "passed": 76,
+  "builds": [
+    "npm run build: passed",
+    "npm run build:level2: passed"
+  ],
+  "suites": {
+    "level2-results.json": {
+      "passed": 52,
+      "cases": [
+        "Level 2 opens with six interactive cards and both highlighted opening lines, without a transition page",
+        "Running the chosen three metrics also checks Alex\u2019s three-entry notebook",
+        "Offline Level 2 entry without Guide and mixed evaluation",
+        "Student behaviour is the main text, with Learning at risk as a smaller supporting label",
+        "Finding precedes dialogue and next action",
+        "Restart confirmation freezes the reading sequence and restores keyboard focus",
+        "Cover the gaps appears with Alex\u2019s reply, with a shorter delay between speakers",
+        "Gap view shows exactly the three unselected areas",
+        "Untracked areas have a larger type size and a prominent warning",
+        "Adding remaining metrics unfolds the notebook to six entries and six checks",
+        "Six-metric report and pending student card share the current round without stale observations",
+        "Six-metric evaluation retains first three and adds the missing three",
+        "The six-metric observation also shows its next button with the faster Alex reply",
+        "10 metrics automatically reveal the matching student checklist",
+        "10 metrics: action items tick in sequence and next button opens about one second after the last",
+        "25 metrics automatically reveal the matching student checklist",
+        "25 metrics: action items tick in sequence and next button opens about one second after the last",
+        "100 metrics automatically reveal the matching student checklist",
+        "100 metrics: action items tick in sequence and next button opens about one second after the last",
+        "Level 2 ends at weighting question with Level 3 reserved and all-English UI",
+        "Restart cancels safely or clears progress without persistent saves",
+        "Exactly-three limit, selection hint and deselect-to-swap",
+        "Trio prep+part+focus routes to visible outcome",
+        "Trio prep+part+discuss routes to mixed outcome",
+        "Trio prep+part+reflect routes to mixed outcome",
+        "Trio prep+part+peer routes to mixed outcome",
+        "Trio prep+focus+discuss routes to mixed outcome",
+        "Trio prep+focus+reflect routes to mixed outcome",
+        "Trio prep+focus+peer routes to mixed outcome",
+        "Trio prep+discuss+reflect routes to mixed outcome",
+        "Trio prep+discuss+peer routes to mixed outcome",
+        "Trio prep+reflect+peer routes to mixed outcome",
+        "Trio part+focus+discuss routes to mixed outcome",
+        "Trio part+focus+reflect routes to mixed outcome",
+        "Trio part+focus+peer routes to mixed outcome",
+        "Trio part+discuss+reflect routes to mixed outcome",
+        "Trio part+discuss+peer routes to mixed outcome",
+        "Trio part+reflect+peer routes to mixed outcome",
+        "Trio focus+discuss+reflect routes to mixed outcome",
+        "Trio focus+discuss+peer routes to mixed outcome",
+        "Trio focus+reflect+peer routes to mixed outcome",
+        "Trio discuss+reflect+peer routes to quality outcome",
+        "1366px layout, normal motion and automatic dialogue",
+        "1366px reload and restored tab start fresh",
+        "768px layout, normal motion and automatic dialogue",
+        "768px reload and restored tab start fresh",
+        "390px layout, normal motion and automatic dialogue",
+        "390px reload and restored tab start fresh",
+        "320px layout, normal motion and automatic dialogue",
+        "320px reload and restored tab start fresh",
+        "Full game carries Level 1 context and sound preference to Level 2; refresh restarts full game",
+        "No browser runtime errors across all offline playthroughs"
+      ],
+      "runtimeErrors": []
+    },
+    "level2-integration-results.json": {
+      "passed": 9,
+      "checks": [
+        "Partner replaces all three scene slots; original trio, branch and custom name retained",
+        "Completion reports exact result once after final reading",
+        "Level 2 emits actual count, success, evidence and softer message cues",
+        "Final replay retains completion count and mute suppresses new cues",
+        "Restart clears the original trio and permits a new completion",
+        "Hidden tab holds metric updates and resumes them on return",
+        "Growth counter and automatic observation wait while restart confirmation is open",
+        "The shortened next-button wait pauses under restart confirmation and resumes after closing it",
+        "Complete expansion and partner-scene flow works at 320px"
+      ],
+      "runtimeErrors": []
+    },
+    "feedback-offline-results.json": {
+      "passed": 11,
+      "checks": [
+        "Score and management feedback advance automatically without pause controls",
+        "Actual Web Audio plays count and success cues at the increased master gain",
+        "Management emphasis ends after one cue and the score remains available",
+        "One evidence paragraph and student summary arrive together with one cue and no duplicate text or controls",
+        "Classroom evidence receives at least six seconds of visible reading time before conversation",
+        "Replies stay in the main column; both speakers receive reading time before the next message or completion",
+        "Mute suppresses all subsequent cues within the current game",
+        "Unmuting restores actual Web Audio feedback",
+        "Guide temporarily holds the reading sequence and closing it resumes automatically",
+        "Off-screen recap waits, then resumes reading and brings replies into view without visiting the sidebar",
+        "Browsers without Web Audio retain the complete visual sequence"
+      ],
+      "runtime_errors": []
+    },
+    "release-results.json": {
+      "passed": 4,
+      "checks": [
+        "ZIP integrity and byte identity with both production builds",
+        "Packaged Level2.html completes 3 \u2192 6 \u2192 10 \u2192 25 \u2192 100 offline with normal motion",
+        "Packaged Levels1-and-2.html starts at Level 1 with its guide",
+        "Packaged entries have no browser runtime errors"
+      ],
+      "runtimeErrors": []
+    }
+  },
+  "artifacts": {
+    "dist/index.html": {
+      "sha256": "53fffa212a7eaf786252fb8a2c58cab8eb1e82b8caca754858c99edd238cf9c5",
+      "bytes": 9800933
+    },
+    "dist-level2/index.html": {
+      "sha256": "eba42027a77bee787b16e960f80c70d50621c8dd8e63315f66812e8082ed500b",
+      "bytes": 9800933
+    },
+    "play/Level2-play-v3.zip": {
+      "sha256": "87e7e0d227e604782454971df67829565345d8ff889657e90a61031473611d0b",
+      "bytes": 14578902
+    }
+  },
+  "notes": [
+    "Level 2 starts directly on real metric cards; its highlighted opening lines and three/six-entry notebook requirements are exercised by the offline suite.",
+    "Real-time mutation timestamps verify that three- and six-metric next actions appear with Alex\u2019s final text, and that the inter-speaker interval is shorter.",
+    "Student behaviour typography is larger than the supporting risk label.",
+    "The shared Conversation gained optional pace and last-message callbacks. All 11 existing Level 1 feedback, reading-time and audio checks passed with default behaviour retained.",
+    "The 52-check Level 2 suite and Level 1 feedback checks use real intervals. Partner integration and exact-package release checks use the browser clock.",
+    "Offline checks use exact HTML bytes through an in-memory HTTPS origin because managed Chromium blocks file://. Opening a local file in a particular user browser was not directly observed.",
+    "Narrative ownership is mapped in LEVEL2_NARRATIVE_AUDIT.md. Finished partner cinematics and Level 3 priorities remain outside this build.",
+    "The first partner integration attempt found the prior development server had stopped. Restarting the repository\u2019s Vite command resolved the connection refusal; the full integration suite then passed."
+  ]
+}

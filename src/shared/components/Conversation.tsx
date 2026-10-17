@@ -5,19 +5,23 @@ import '../styles/conversation.css';
 
 export type ConversationLine = { speaker: 'Maya' | 'Alex'; name: string; text: string };
 
-export default function Conversation({ lines, enabled = true, paused = false, play, onSettled }: {
+export default function Conversation({ lines, enabled = true, paused = false, play, onSettled, onLastMessage, typingDelay = 650, readDelay = readingTime }: {
   lines: ConversationLine[]; enabled?: boolean; paused?: boolean;
   play: (cue: Cue) => void; onSettled: () => void;
+  onLastMessage?: () => void; typingDelay?: number; readDelay?: (text: string) => number;
 }) {
   const [beat, setBeat] = useState(0);
   const [inView, setInView] = useState(false);
   const [pageVisible, setPageVisible] = useState(!document.hidden);
   const container = useRef<HTMLElement>(null);
-  const remaining = useRef(650);
+  const remaining = useRef(typingDelay);
   const lastSound = useRef(-1);
   const settled = useRef(false);
+  const lastMessageReported = useRef(false);
   const callback = useRef(onSettled);
   callback.current = onSettled;
+  const lastMessageCallback = useRef(onLastMessage);
+  lastMessageCallback.current = onLastMessage;
   const lastBeat = lines.length * 2 - 1;
 
   useEffect(() => {
@@ -31,6 +35,10 @@ export default function Conversation({ lines, enabled = true, paused = false, pl
   useEffect(() => {
     if (!enabled || paused || !inView || !pageVisible || !lines.length) return;
     if (beat % 2 === 1 && lastSound.current !== beat) { play('message'); lastSound.current = beat; }
+    if (beat === lastBeat && !lastMessageReported.current) {
+      lastMessageReported.current = true;
+      lastMessageCallback.current?.();
+    }
     if (settled.current) return;
     const delay = remaining.current;
     const start = performance.now();
@@ -38,11 +46,11 @@ export default function Conversation({ lines, enabled = true, paused = false, pl
     const timer = window.setTimeout(() => {
       fired = true;
       if (beat === lastBeat) { settled.current = true; callback.current(); return; }
-      remaining.current = beat % 2 === 0 ? readingTime(lines[Math.floor(beat / 2)].text) : 650;
+      remaining.current = beat % 2 === 0 ? readDelay(lines[Math.floor(beat / 2)].text) : typingDelay;
       setBeat(value => value + 1);
     }, delay);
     return () => { window.clearTimeout(timer); if (!fired) remaining.current = Math.max(0, delay - (performance.now() - start)); };
-  }, [beat, enabled, paused, inView, pageVisible, lastBeat, play, lines]);
+  }, [beat, enabled, paused, inView, pageVisible, lastBeat, play, lines, typingDelay, readDelay]);
 
   return <section ref={container} className={`dialogue-strip conversation ${lines.length > 1 ? 'two-voices' : ''}`} aria-label="Character dialogue">
     {enabled && lines.map((line, index) => {

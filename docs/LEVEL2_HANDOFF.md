@@ -6,6 +6,13 @@ The game owns choosing exactly three metrics, evaluating, identifying the missin
 three, expanding the system and displaying classroom evidence/checklist changes.
 The partner owns finished cinematics. The opening remains separate.
 
+Level 2 starts directly on the six clickable metric cards, with the two
+highlighted opening lines on that same page. Alex's passive notebook records the
+three choices. Run evaluation checks its three entries alongside the metrics;
+Add remaining metrics expands it to six entries and six checks. There is no
+separate introduction or Choose three metrics navigation button. The optional
+previousMetricId appears as a quiet reference on the actual choice page.
+
 The first six metrics retain the Level 1 IDs and names. Expansion past six counts
 additional requirements; these are not 94 invented named educational indicators.
 The matrix is a visual count, not a learning score. No student health percentage,
@@ -87,14 +94,15 @@ page starts a new run. The callback does not automatically navigate to Level 3.
 The central content is the reading focus. The right-hand cards summarize the
 same current round. Starting a round hides the previous report until the new
 evaluation finishes and resets students to **Awaiting observation**. The student
-card changes to **Learning at risk** only when the current observation arrives.
+card shows the current behaviour with a small **Learning at risk** label only
+when the current observation arrives. Behaviour is the main type; risk is secondary.
 Do not retain an observed-at count from an earlier round. The risk is a
 qualitative interpretation of the story; actual learning gains remain unverified.
 No sidebar badges, extra student sound or independently pulsing update competes
 with the central content. The Level 2 header has Sound and Restart controls;
 there is no Guide button or guide dialog.
 
-| Metric count | Description below Learning at risk |
+| Metric count | Main student behaviour description |
 | --- | --- |
 | 3 | Untracked areas get overlooked. |
 | 6 | Meeting criteria becomes the goal. |
@@ -108,8 +116,12 @@ Untracked areas are blind spots; no declining learning score is inferred.
 
 Core metrics turn green one at a time, followed by the report cue. After each
 scene, the observation and student summary appear together with one evidence
-cue, followed by 6–8 seconds to read. Dialogue uses 650 ms typing dots and
-3–5 seconds per message; the next action follows the final reading interval.
+cue. Level 2 waits 1.6–2.8 visible seconds before dialogue, uses 300 ms typing dots,
+and 1.1–2.2 second message intervals. The next action appears with the final
+message, including Alex's last reply on the three- and six-metric pages. The
+shared Conversation's optional onLastMessage callback releases the action;
+onSettled still waits for the final reading interval before reporting completion.
+Level 1 retains its original defaults. All revealed text remains available.
 The 10/25/100 checklist uses action items, rather than questions. Each item
 appears 550 ms after the previous one and its checkbox ticks. The ticks represent
 Alex completing checklist actions, not demonstrating learning. The next button

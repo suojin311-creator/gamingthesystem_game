@@ -37,7 +37,6 @@ def load(browser, file=args.file, width=1440, height=1000, motion='reduce'):
 
 
 def choose(page, ids):
-    page.get_by_role('button', name='Choose three metrics', exact=True).click()
     for id in ids: page.get_by_test_id('level2-metric-' + id).click()
     page.get_by_role('button', name='Run evaluation', exact=True).click()
 
@@ -52,7 +51,7 @@ def scene(page, lines=3):
 def core_ready(page, action):
     expect(page.locator('.l2-observation')).to_be_visible(timeout=8000)
     page.locator('.conversation').scroll_into_view_if_needed()
-    expect(page.get_by_role('button', name=action, exact=True)).to_be_visible(timeout=25000)
+    expect(page.get_by_role('button', name=action, exact=True)).to_be_visible(timeout=8000)
 
 
 def layout(page):
@@ -63,34 +62,59 @@ def layout(page):
 with sync_playwright() as playwright:
     browser = playwright.chromium.launch(executable_path='/usr/bin/chromium', headless=True, args=['--no-sandbox'])
     context, page = load(browser)
-    expect(page.get_by_role('heading', name='What if we measured more than one?')).to_be_visible()
+    expect(page.get_by_role('heading', name='Which three will you track?')).to_be_visible()
+    expect(page.locator('.l2-metric-card')).to_have_count(6)
+    expect(page.get_by_role('button', name='Choose three metrics', exact=True)).to_have_count(0)
+    page.get_by_test_id('level2-metric-prep').click()
+    expect(page.get_by_test_id('level2-metric-prep')).to_have_attribute('aria-pressed', 'true')
+    expect(page.get_by_test_id('level2-notebook')).to_contain_text('Preparation')
+    page.get_by_test_id('level2-metric-prep').click()
+    expect(page.locator('.maya-bubble p')).to_have_text('One metric wasn’t enough. What if we tracked three? Which ones would you choose?')
+    expect(page.locator('.alex-bubble p')).to_have_text('Three metrics now? Okay, I can handle that!', timeout=4000)
+    record('Level 2 opens with six interactive cards and both highlighted opening lines, without a transition page')
     expect(page.get_by_role('button', name='Guide', exact=True)).to_have_count(0)
     page.screenshot(path=str(output / 'level2-intro.png'), full_page=True)
     choose(page, IDS[:2] + ['discuss'])
     expect(page.locator('.level-two')).to_have_attribute('data-branch', 'mixed')
     expect(page.get_by_role('button', name='Observe the class', exact=True)).to_be_enabled(timeout=7000)
+    expect(page.locator('.l2-notebook li[data-checked=true]')).to_have_count(3)
+    record('Running the chosen three metrics also checks Alex’s three-entry notebook')
     record('Offline Level 2 entry without Guide and mixed evaluation')
+    page.evaluate('''window.observationTimeline = {};
+new MutationObserver(() => {
+  const root = document.querySelector('.level-two[data-phase="observe"], .level-two[data-phase="complete"]');
+  if (!root || root.querySelector('.l2-checklist')) return;
+  const key = `${root.dataset.phase}:${root.dataset.round}`;
+  const timeline = window.observationTimeline[key] ||= {};
+  for (const [name, selector] of Object.entries({finding:'.l2-observation', maya:'.maya-bubble p', alex:'.alex-bubble p', button:'.l2-decision .action-row .button'})) {
+    if (root.querySelector(selector)) timeline[name] ??= performance.now();
+  }
+}).observe(document, {childList:true, subtree:true, attributes:true});''')
     scene(page)
     expect(page.locator('.l2-observation')).to_be_visible(timeout=8000)
     expect(page.locator('.l2-learning-risk strong')).to_have_text('Learning at risk')
     expect(page.locator('.l2-student-observation')).to_have_text('Untracked areas get overlooked.')
     assert page.locator('.l2-observed-round').count() == 0
-    assert page.locator('.l2-learning-risk strong').evaluate('e => parseFloat(getComputedStyle(e).fontSize)') > page.locator('.l2-student-observation').evaluate('e => parseFloat(getComputedStyle(e).fontSize)') * 1.8
-    record('Learning risk is the primary student state, with the approved three-metric description')
+    assert page.locator('.l2-student-observation').evaluate('e => parseFloat(getComputedStyle(e).fontSize)') > page.locator('.l2-learning-risk strong').evaluate('e => parseFloat(getComputedStyle(e).fontSize)') * 1.8
+    record('Student behaviour is the main text, with Learning at risk as a smaller supporting label')
     # The finding is readable before either character starts typing.
     expect(page.locator('.conversation .dialogue-character')).to_have_count(0)
     assert not page.get_by_role('button', name='Cover the gaps', exact=True).count()
-    page.wait_for_timeout(2200)
+    page.wait_for_timeout(600)
     expect(page.locator('.conversation .dialogue-character')).to_have_count(0)
     record('Finding precedes dialogue and next action')
     page.get_by_role('button', name='Restart', exact=True).click()
-    page.wait_for_timeout(5500)
+    page.wait_for_timeout(1500)
     expect(page.locator('.conversation .dialogue-character')).to_have_count(0)
     page.keyboard.press('Escape')
     expect(page.get_by_role('dialog')).not_to_be_visible()
     expect(page.get_by_role('button', name='Restart', exact=True)).to_be_focused()
     record('Restart confirmation freezes the reading sequence and restores keyboard focus')
     core_ready(page, 'Cover the gaps')
+    stamps = page.evaluate('window.observationTimeline["observe:3"]')
+    assert 900 <= stamps['alex'] - stamps['maya'] < 2500, stamps
+    assert 0 <= stamps['button'] - stamps['alex'] < 180, stamps
+    record('Cover the gaps appears with Alex’s reply, with a shorter delay between speakers')
     page.screenshot(path=str(output / 'level2-three-observation.png'), full_page=True)
     page.get_by_role('button', name='Cover the gaps', exact=True).click()
     expect(page.locator('.l2-covered li')).to_have_count(3)
@@ -102,15 +126,18 @@ with sync_playwright() as playwright:
     page.screenshot(path=str(output / 'level2-gap-warning.png'), full_page=True)
     record('Gap view shows exactly the three unselected areas')
     record('Untracked areas have a larger type size and a prominent warning')
-    page.get_by_role('button', name='Add the other three', exact=True).click()
+    page.get_by_role('button', name='Add remaining metrics', exact=True).click()
     expect(page.locator('.l2-students')).to_contain_text('Awaiting observation')
     expect(page.locator('.l2-students')).to_have_attribute('data-round', '6')
     expect(page.locator('.l2-management')).to_have_attribute('data-round', '6')
     expect(page.locator('.l2-learning-risk')).to_have_count(0)
     expect(page.locator('.l2-evaluation-list li')).to_have_count(6)
+    expect(page.locator('.l2-notebook li')).to_have_count(6)
     expect(page.locator('.l2-evaluation-list [data-checked=true]')).to_have_count(6, timeout=6000)
     expect(page.get_by_role('button', name='Observe the class', exact=True)).to_be_enabled(timeout=6000)
     expect(page.locator('.l2-reported-count')).to_have_text('6')
+    expect(page.locator('.l2-notebook li[data-checked=true]')).to_have_count(6)
+    record('Adding remaining metrics unfolds the notebook to six entries and six checks')
     expect(page.locator('.l2-students')).to_contain_text('Awaiting observation')
     page.screenshot(path=str(output / 'level2-six-pending.png'), full_page=True)
     record('Six-metric report and pending student card share the current round without stale observations')
@@ -119,6 +146,10 @@ with sync_playwright() as playwright:
     expect(page.locator('.l2-observation')).to_contain_text('system is becoming part of the task', timeout=8000)
     expect(page.locator('.l2-student-observation')).to_have_text('Meeting criteria becomes the goal.')
     core_ready(page, 'Add more metrics')
+    stamps = page.evaluate('window.observationTimeline["observe:6"]')
+    assert stamps['alex'] - stamps['finding'] < 5500, stamps
+    assert 0 <= stamps['button'] - stamps['alex'] < 180, stamps
+    record('The six-metric observation also shows its next button with the faster Alex reply')
     page.get_by_role('button', name='Sound on', exact=True).click()
     expect(page.get_by_role('button', name='Sound off', exact=True)).to_be_visible()
     page.evaluate('''window.checklistTimeline = {};
@@ -170,14 +201,13 @@ new MutationObserver(() => {
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'complete')
     page.get_by_role('button', name='Restart', exact=True).click()
     page.get_by_role('button', name='Restart Level 2', exact=True).click()
-    expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
+    expect(page.locator('.level-two')).to_have_attribute('data-phase', 'choose')
     expect(page.get_by_role('button', name='Sound on', exact=True)).to_be_visible()
     assert page.evaluate('localStorage.length === 0 && sessionStorage.length === 0')
     record('Restart cancels safely or clears progress without persistent saves')
     context.close()
 
     context, page = load(browser)
-    page.get_by_role('button', name='Choose three metrics', exact=True).click()
     run = page.get_by_role('button', name='Run evaluation', exact=True)
     expect(run).to_be_disabled()
     for id in IDS[:3]: page.get_by_test_id('level2-metric-' + id).click()
@@ -224,10 +254,10 @@ new MutationObserver(() => {
         page.screenshot(path=str(output / f'level2-gaps-{width}.png'), full_page=True)
         record(f'{width}px layout, normal motion and automatic dialogue')
         page.reload(wait_until='networkidle')
-        expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
+        expect(page.locator('.level-two')).to_have_attribute('data-phase', 'choose')
         choose(page, IDS[:3])
         page.evaluate("window.dispatchEvent(new PageTransitionEvent('pageshow', {persisted: true}))")
-        expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
+        expect(page.locator('.level-two')).to_have_attribute('data-phase', 'choose')
         record(f'{width}px reload and restored tab start fresh')
         context.close()
 
@@ -244,7 +274,7 @@ new MutationObserver(() => {
     expect(page.get_by_role('button', name='Continue to Level 2', exact=True)).to_be_enabled(timeout=30000)
     page.get_by_role('button', name='Sound on', exact=True).click()
     page.get_by_role('button', name='Continue to Level 2', exact=True).click()
-    expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
+    expect(page.locator('.level-two')).to_have_attribute('data-phase', 'choose')
     expect(page.locator('.l2-previous')).to_contain_text('Preparation')
     expect(page.get_by_role('button', name='Sound off', exact=True)).to_be_visible()
     page.reload(wait_until='networkidle')

@@ -1,9 +1,10 @@
 # Level 2 — More metrics
 
 - `LevelTwo.tsx`: complete 3 → 6 → 10 → 25 → 100 flow, in-memory state and paced presentation.
-- `LevelTwoIntro.tsx`: introductory bridge, optionally showing the Level 1 selected metric.
+- `Conversation.tsx`: faster Level 2 dialogue and finding pace; the last message releases the next action immediately.
+- `Notebook.tsx`: passive choice record and three/six requirement checks. Selection starts directly on the metric cards.
 - `data.ts`: three combination branches, evidence, checklists and integration types.
-- `Perspectives.tsx`: same-round management report, awaiting-observation state and prominent student learning-risk summary.
+- `Perspectives.tsx`: same-round report, awaiting-observation state, prominent student behaviour and a smaller learning-risk label.
 - `CinematicPlaceholder.tsx`: replaceable three-metric, six-metric and final story slots.
 - `styles.css`: layout scoped to `.level-two`.
 

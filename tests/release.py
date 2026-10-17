@@ -6,7 +6,7 @@ import zipfile
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 
-archive = Path('play/Level2-play-v2.zip')
+archive = Path('play/Level2-play-v3.zip')
 checks, errors = [], []
 with zipfile.ZipFile(archive) as bundle:
     assert bundle.testzip() is None
@@ -40,13 +40,12 @@ with sync_playwright() as playwright:
     page.goto('https://release.test/', wait_until='networkidle')
     expect(page).to_have_title('Gaming the System')
     expect(page.get_by_role('button', name='Guide', exact=True)).to_have_count(0)
-    page.get_by_role('button', name='Choose three metrics', exact=True).click()
     for id in ['prep', 'part', 'focus']: page.get_by_test_id('level2-metric-' + id).click()
     page.get_by_role('button', name='Run evaluation', exact=True).click()
     advance(page, 6)
     scene(page)
     page.get_by_role('button', name='Cover the gaps', exact=True).click()
-    page.get_by_role('button', name='Add the other three', exact=True).click()
+    page.get_by_role('button', name='Add remaining metrics', exact=True).click()
     advance(page, 6)
     scene(page)
     for count in [10, 25, 100]:

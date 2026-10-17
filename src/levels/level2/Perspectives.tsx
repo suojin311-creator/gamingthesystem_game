@@ -23,8 +23,8 @@ export default function Perspectives({ count, reportedCount, observedCount, sele
     <section className={`l2-perspective l2-students ${observed ? 'l2-has-observation' : ''}`} data-round={count} data-observed={observed}>
       <div className="l2-perspective-heading"><Icon name="student" /><h3>Students</h3></div>
       {observed ? <>
-        <div className="l2-learning-risk"><Icon name="warning" /><strong>Learning at risk</strong></div>
         <p className="l2-student-observation">{STUDENT_OBSERVATIONS[count]}</p>
+        <div className="l2-learning-risk"><Icon name="warning" /><strong>Learning at risk</strong></div>
       </> : <>
         <div className="l2-pending-eye"><Icon name="eye" /></div>
         <p className="l2-awaiting-observation">Awaiting observation</p>

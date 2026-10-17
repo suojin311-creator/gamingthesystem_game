@@ -12,3 +12,8 @@ Shared modules do not import from `levels/`. Keep a feature in its level folder
 until there is a real reason for multiple levels to share it. In particular,
 Level 1 dialogue text and guide remain local because their content and selectors
 belong to that level. Mute preference is shared in page memory across level mounts.
+
+Conversation keeps the original Level 1 defaults. Levels may supply typingDelay
+and readDelay for a different pace. onLastMessage fires when the last text
+appears; onSettled follows its reading interval. The Level 2 adapter uses the
+first callback for next-action visibility and retains the second for completion.

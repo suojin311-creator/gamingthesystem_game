@@ -1,6 +1,6 @@
 # Play Gaming the System
 
-For the current Level 2 preview, [download Level2-play-v2.zip](Level2-play-v2.zip?raw=true),
+For the current Level 2 preview, [download Level2-play-v3.zip](Level2-play-v3.zip?raw=true),
 extract it and open `Level2.html`. Open `Levels1-and-2.html` in the same ZIP to
 start at Level 1 and continue to Level 2. Both run offline after download.
 

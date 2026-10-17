@@ -49,13 +49,12 @@ def finish_scene(page):
 
 
 def play_level(page, ids):
-    page.get_by_role('button', name='Choose three metrics', exact=True).click()
     for id in ids: page.get_by_test_id('level2-metric-' + id).click()
     page.get_by_role('button', name='Run evaluation', exact=True).click()
     advance(page, 6)
     finish_scene(page)
     page.get_by_role('button', name='Cover the gaps', exact=True).click()
-    page.get_by_role('button', name='Add the other three', exact=True).click()
+    page.get_by_role('button', name='Add remaining metrics', exact=True).click()
     advance(page, 6)
     finish_scene(page)
     for count in [10, 25, 100]:
@@ -117,7 +116,6 @@ OscillatorNode.prototype.start=function(...args){window.notes.push(values.get(th
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.clock.install()
     page.goto('http://127.0.0.1:5173/test-results/level2-host.html', wait_until='networkidle')
-    page.get_by_role('button', name='Choose three metrics', exact=True).click()
     for id in ['prep', 'part', 'focus']: page.get_by_test_id('level2-metric-' + id).click()
     page.get_by_role('button', name='Run evaluation', exact=True).click()
     page.evaluate("Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'))")
@@ -129,7 +127,7 @@ OscillatorNode.prototype.start=function(...args){window.notes.push(values.get(th
     record('Hidden tab holds metric updates and resumes them on return')
     finish_scene(page)
     page.get_by_role('button', name='Cover the gaps', exact=True).click()
-    page.get_by_role('button', name='Add the other three', exact=True).click()
+    page.get_by_role('button', name='Add remaining metrics', exact=True).click()
     advance(page, 6)
     finish_scene(page)
     page.get_by_role('button', name='Add more metrics', exact=True).click()
