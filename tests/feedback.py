@@ -116,7 +116,9 @@ with sync_playwright() as p:
     expect(page.locator('.observation-recap')).to_have_count(0)
     expect(page.locator('.student')).to_contain_text('Not observed yet')
     expect(page.locator('.observation-recap > p')).to_have_text('Students complete the preparation, but some skim just enough to meet the requirement.', timeout=5000)
-    expect(page.locator('.uncertainty')).to_have_text('Unclear')
+    expect(page.locator('.student-behaviour')).to_have_text('Skimming just to finish.')
+    expect(page.locator('.learning-risk strong')).to_have_text('Learning at risk')
+    assert page.locator('.student-behaviour').evaluate('e=>parseFloat(getComputedStyle(e).fontSize)') > page.locator('.learning-risk strong').evaluate('e=>parseFloat(getComputedStyle(e).fontSize)') * 1.8
     expect(page.locator('.observation-recap p')).to_have_count(1)
     expect(page.locator('.observation-recap details')).to_have_count(0)
     expect(page.locator('.student .new-badge')).to_have_count(0)

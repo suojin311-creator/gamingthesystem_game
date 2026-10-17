@@ -69,12 +69,27 @@ The view stays on the observation page; all four progress steps are done. After 
 4. `Run evaluation` shows the illustrative score rising. Management’s view and Target met status then update automatically with a success chime. The Target 70 label is aligned to the real threshold marker.
 5. Player: “Looking good. I’ll check the classroom.” Player chooses `Observe the class`.
 6. The selected branch cinematic plays. The existing placeholder is replaced here.
-7. Completing the cinematic returns to a compact, static prediction reference. After 1000 ms of visible time, the classroom observation and student uncertainty appear together, with one shared observation cue. Show only `metric.evidence` under IN THE CLASSROOM: the former details paragraph. Do not add the old takeaway headline or details toggle. Students is a quiet summary: no NEW badge, separate sound, pulse or forced sidebar scroll. Management’s view retains the already reported score.
+7. Completing the cinematic returns to a compact, static prediction reference. After 1000 ms of visible time, the classroom observation and specific student behaviour appear together, with one shared observation cue. Show only `metric.evidence` under IN THE CLASSROOM: the former details paragraph. Do not add the old takeaway headline or details toggle. Students uses the shared LearningRisk presentation: a large observed behaviour and a small warning icon with Learning at risk, matching Level 2. It has no NEW badge, separate sound, pulse or forced sidebar scroll. Management’s view retains the already reported score.
 8. Give the observation 6–8 seconds of visible reading time before Maya: “The score is up. What about learning?” Alex then replies with the selected branch quote. Both bubbles sit within the main content column, Maya above-left and Alex below-right. Each starts with 650 ms of typing dots, followed by 3–5 seconds to read. Keep all messages visible. Wait for the final reply’s reading interval before showing Continue to Level 2 on this page and reporting completion once. Replies wait until the chat is on screen. Guide and restart dialogs suspend reading and typing; closing them resumes automatically. There is no Pause / Resume control.
-9. App navigates to LevelTwo on explicit continuation. Level 2 now starts directly on its working metric selection page, with the highlighted opening dialogue inside that operation and no separate introduction page. See [Level 2 handoff](LEVEL2_HANDOFF.md). Any future management-email scene remains the narrative host’s responsibility.
+9. Gameplay navigates to LevelTwo on explicit continuation. Its dedicated Level 2 introduction shows the player/Alex dialogue, then automatically opens metric selection after the last reply has received reading time. No extra navigation click is required. See [Level 2 handoff](LEVEL2_HANDOFF.md). Any future management-email scene remains the narrative host’s responsibility.
 10. The prediction page has one Change button beside the selected metric; the duplicate Back to metrics link is removed. Run evaluation remains right-aligned.
 
 Do not display Goodhart's Law in Level 1. All six choices are plausible educational indicators. Behaviour improves in the measured respect, while deeper engagement remains uncertain. There is no fixed student-health penalty, no right/wrong grading of predictions, and no conversion of qualitative evidence into an unsupported learning percentage.
+
+## Student behaviour summaries
+
+The post-scene student card uses these branch-specific observations. They make
+potential displacement of learning visible without claiming a measured learning
+loss. The supporting label is Learning at risk in every branch.
+
+| Metric | Main student behaviour |
+| --- | --- |
+| Preparation | Skimming just to finish. |
+| Participation | More talk. Little explanation. |
+| Focus | Looking busy takes priority. |
+| Discussion | Discussion turns formulaic. |
+| Reflection | Repeating safe reflection patterns. |
+| Peer response | Replying to tick boxes. |
 
 ## Deployment and integration notes
 

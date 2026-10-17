@@ -1,4 +1,5 @@
 import Icon from '../../shared/components/Icon';
+import LearningRisk from '../../shared/components/LearningRisk';
 import { METRIC_CATALOG, type MetricId } from '../../shared/data/metrics';
 import { STUDENT_OBSERVATIONS, type RoundCount } from './data';
 
@@ -22,10 +23,7 @@ export default function Perspectives({ count, reportedCount, observedCount, sele
     </section>
     <section className={`l2-perspective l2-students ${observed ? 'l2-has-observation' : ''}`} data-round={count} data-observed={observed}>
       <div className="l2-perspective-heading"><Icon name="student" /><h3>Students</h3></div>
-      {observed ? <>
-        <p className="l2-student-observation">{STUDENT_OBSERVATIONS[count]}</p>
-        <div className="l2-learning-risk"><Icon name="warning" /><strong>Learning at risk</strong></div>
-      </> : <>
+      {observed ? <LearningRisk behaviour={STUDENT_OBSERVATIONS[count]} /> : <>
         <div className="l2-pending-eye"><Icon name="eye" /></div>
         <p className="l2-awaiting-observation">Awaiting observation</p>
       </>}

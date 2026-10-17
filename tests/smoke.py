@@ -24,12 +24,12 @@ cases = []
 runtime_errors = []
 KEY = 'gaming-the-system:level-one:v1'
 metrics = [
-    ('prep', 34, 88, 'I finished everything on the list!', 'Understanding still unclear'),
-    ('part', 29, 85, 'I agree! Same here!', 'Depth still unclear'),
-    ('focus', 41, 91, 'Look, I stayed on task the whole time!', 'Thinking still unclear'),
-    ('discuss', 32, 84, 'Could you elaborate?', 'New ideas still unclear'),
-    ('reflect', 38, 89, 'Before, I thought...', 'Changed thinking still unclear'),
-    ('peer', 27, 86, 'Specific suggestion?', 'Exchange of ideas still unclear'),
+    ('prep', 34, 88, 'I finished everything on the list!', 'Skimming just to finish.'),
+    ('part', 29, 85, 'I agree! Same here!', 'More talk. Little explanation.'),
+    ('focus', 41, 91, 'Look, I stayed on task the whole time!', 'Looking busy takes priority.'),
+    ('discuss', 32, 84, 'Could you elaborate?', 'Discussion turns formulaic.'),
+    ('reflect', 38, 89, 'Before, I thought...', 'Repeating safe reflection patterns.'),
+    ('peer', 27, 86, 'Specific suggestion?', 'Replying to tick boxes.'),
 ]
 
 def record(name):
@@ -70,7 +70,7 @@ def report_if_needed(page):
 
 def reveal_review(page, settle=True, connected=True):
     expect(page.locator('.observation-recap')).to_be_visible(timeout=10000)
-    expect(page.locator('.student')).to_contain_text('Unclear', timeout=10000)
+    expect(page.locator('.student')).to_contain_text('Learning at risk', timeout=10000)
     if settle:
         expect(page.get_by_role('button', name='Continue to Level 2')).to_be_visible(timeout=22000)
         if connected: expect(page.get_by_role('button', name='Continue to Level 2')).to_be_enabled()
@@ -133,7 +133,8 @@ with sync_playwright() as p:
         expect(page.locator('.observation-recap p')).to_have_count(1)
         expect(page.locator('.observation-recap details')).to_have_count(0)
         expect(page.locator('.student .new-badge')).to_have_count(0)
-        expect(page.locator('.student .sr-only')).to_have_text(uncertainty)
+        expect(page.locator('.student .student-behaviour')).to_have_text(uncertainty)
+        expect(page.locator('.student .learning-risk strong')).to_have_text('Learning at risk')
         expect(page.locator('.university-value')).to_contain_text(str(after))
         no_overflow(page)
         reveal_review(page)

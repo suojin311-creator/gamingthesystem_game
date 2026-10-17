@@ -63,12 +63,8 @@
 :where(.level-one) .perspective-status { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #597449; margin-top: 10px; }
 :where(.level-one) .perspective-status .icon { width: 14px; height: 14px; }
 :where(.level-one) .has-result { background: #edf2e3; border-color: #c0cfae; }
-:where(.level-one) .student .perspective-heading > .icon { color: #9d7e54; }
-:where(.level-one) .student-signal { margin: 10px 0 6px; color: #ac7b3e; }
-:where(.level-one) .student-signal > .icon { width: 42px; height: 42px; }
 :where(.level-one) .waiting-signal { color: #b8b29c; }
 :where(.level-one) .waiting-signal > .icon { width: 35px; height: 35px; }
-:where(.level-one) .uncertainty { font: 24px/1.2 var(--serif); color: #9f6d35; margin-top: 4px; }
 :where(.level-one) .has-evidence { background: #f7e9cf; border-color: #ceb183; }
 :where(.level-one) .new-badge { position: absolute; top: 6px; right: 7px; font-size: 7px; letter-spacing: .08em; color: #fffaf0; background: #6f8a59; padding: 3px 4px; border-radius: 2px; }
 :where(.level-one) .just-updated { animation: status-arrival .65s ease-out; outline: 2px solid #8fa878; outline-offset: 2px; }
@@ -240,9 +236,6 @@
   :where(.level-one) .university-value > span:first-child { font-size: 33px; }
   :where(.level-one) .mini-bar { margin-top: 6px; height: 4px; }
   :where(.level-one) .perspective-status { font-size: 10px; margin-top: 6px; }
-  :where(.level-one) .student-signal { margin: 5px 0 0; }
-  :where(.level-one) .student-signal > .icon { width: 30px; height: 30px; }
-  :where(.level-one) .uncertainty { font-size: 19px; }
   :where(.level-one) .new-badge { font-size: 6px; }
   :where(.level-one) .decision-area { padding: 20px 23px 0; }
   :where(.level-one) .metric-card { min-height: 135px; }

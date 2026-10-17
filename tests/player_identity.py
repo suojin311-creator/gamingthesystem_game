@@ -144,10 +144,12 @@ with sync_playwright() as playwright:
     record('Level 1 restart retains identity and its custom cinematic receives playerName; Alex stays Alex')
 
     page.get_by_role('button', name='Continue to Level 2', exact=True).click()
-    advance(page, 8)
     name_visible(page, name)
-    expect(page.locator('.l2-previous')).to_contain_text('Focus')
+    advance(page, 1)
     expect(page.locator('.maya-bubble p')).to_have_text('One metric wasn’t enough. What if I tracked three? Which ones should I choose?')
+    advance(page, 8)
+    expect(page.locator('.l2-previous')).to_contain_text('Focus')
+    expect(page.locator('.conversation')).to_have_count(0)
     for id in ['prep','part','discuss']: page.get_by_test_id('level2-metric-'+id).click()
     page.get_by_role('button', name='Run evaluation', exact=True).click()
     advance(page, 6)
@@ -173,8 +175,8 @@ with sync_playwright() as playwright:
 
     page.get_by_role('button', name='Restart', exact=True).click()
     page.get_by_role('button', name='Restart Level 2', exact=True).click()
-    advance(page, 8)
     name_visible(page, name)
+    advance(page, 8)
     page.reload(wait_until='networkidle')
     expect(page.get_by_label('Name on the desk')).to_have_value('')
     expect(page.locator('.game-page')).to_have_count(0)
@@ -191,6 +193,7 @@ with sync_playwright() as playwright:
     begin_one(page)
     placeholder_scene(page, name, 1)
     page.get_by_role('button', name='Continue to Level 2', exact=True).click()
+    advance(page, 8)
     for id in ['discuss','reflect','peer']: page.get_by_test_id('level2-metric-'+id).click()
     page.get_by_role('button', name='Run evaluation', exact=True).click()
     advance(page, 6)
@@ -217,7 +220,7 @@ with sync_playwright() as playwright:
     page.set_viewport_size({'width':320,'height':740})
     for sample in ['Alex', '<img src=x onerror=alert(1)>', 'W'*40]:
         start(page, sample, mode='placeholder', level=2)
-        advance(page, 8)
+        advance(page, 1)
         page.locator('.conversation').scroll_into_view_if_needed()
         name_visible(page, sample)
         assert page.locator('.speaker-name img').count() == 0

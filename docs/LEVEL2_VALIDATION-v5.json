@@ -1,0 +1,185 @@
+{
+  "validated_at_utc": "2026-10-17T18:01:43.226266+00:00",
+  "branch": "level2-dev",
+  "version": "Level 2 preview v5",
+  "passed": 111,
+  "builds": [
+    "npm run build: passed",
+    "npm run build:level2: passed"
+  ],
+  "suites": {
+    "level2-results.json": {
+      "passed": 54,
+      "cases": [
+        "Dedicated Level 2 dialogue introduces the chapter, gives Alex reading time and automatically opens the six metric cards",
+        "Alex’s Checklist uses the later vertical format and ticks exactly the current metric choices",
+        "Three-metric evaluation shows its changing metrics without a duplicate checklist",
+        "Offline Level 2 entry without Guide and mixed evaluation",
+        "Student behaviour is the main text, with Learning at risk as a smaller supporting label",
+        "Finding precedes dialogue and next action",
+        "Restart confirmation freezes the reading sequence and restores keyboard focus",
+        "Cover the gaps appears with Alex’s reply, with a shorter delay between speakers",
+        "Gap view shows exactly the three unselected areas",
+        "Untracked areas have a larger type size and a prominent warning",
+        "Six-metric evaluation also omits the duplicate checklist and retains all six green results",
+        "Six-metric report and pending student card share the current round without stale observations",
+        "Six-metric evaluation retains first three and adds the missing three",
+        "The six-metric observation also shows its next button with the faster Alex reply",
+        "10 metrics automatically reveal the matching student checklist",
+        "10 metrics: action items tick in sequence and next button opens about one second after the last",
+        "25 metrics automatically reveal the matching student checklist",
+        "25 metrics: action items tick in sequence and next button opens about one second after the last",
+        "100 metrics automatically reveal the matching student checklist",
+        "100 metrics: action items tick in sequence and next button opens about one second after the last",
+        "Level 2 ends at weighting question with Level 3 reserved and all-English UI",
+        "Restart cancels safely or clears progress without persistent saves",
+        "Exactly-three limit, selection hint and deselect-to-swap",
+        "Trio prep+part+focus routes to visible outcome",
+        "Trio prep+part+discuss routes to mixed outcome",
+        "Trio prep+part+reflect routes to mixed outcome",
+        "Trio prep+part+peer routes to mixed outcome",
+        "Trio prep+focus+discuss routes to mixed outcome",
+        "Trio prep+focus+reflect routes to mixed outcome",
+        "Trio prep+focus+peer routes to mixed outcome",
+        "Trio prep+discuss+reflect routes to mixed outcome",
+        "Trio prep+discuss+peer routes to mixed outcome",
+        "Trio prep+reflect+peer routes to mixed outcome",
+        "Trio part+focus+discuss routes to mixed outcome",
+        "Trio part+focus+reflect routes to mixed outcome",
+        "Trio part+focus+peer routes to mixed outcome",
+        "Trio part+discuss+reflect routes to mixed outcome",
+        "Trio part+discuss+peer routes to mixed outcome",
+        "Trio part+reflect+peer routes to mixed outcome",
+        "Trio focus+discuss+reflect routes to mixed outcome",
+        "Trio focus+discuss+peer routes to mixed outcome",
+        "Trio focus+reflect+peer routes to mixed outcome",
+        "Trio discuss+reflect+peer routes to quality outcome",
+        "Untracked-area border keeps breathing after its first cycle, changing border colour without moving text",
+        "1366px layout, normal motion and automatic dialogue",
+        "1366px reload and restored tab start fresh",
+        "768px layout, normal motion and automatic dialogue",
+        "768px reload and restored tab start fresh",
+        "390px layout, normal motion and automatic dialogue",
+        "390px reload and restored tab start fresh",
+        "320px layout, normal motion and automatic dialogue",
+        "320px reload and restored tab start fresh",
+        "Full game carries Level 1 context and sound preference to Level 2; refresh restarts full game",
+        "No browser runtime errors across all offline playthroughs"
+      ],
+      "runtimeErrors": []
+    },
+    "offline-results.json": {
+      "passed": 22,
+      "checks": [
+        "Empty selection is blocked; player interface is English without author notes",
+        "prep: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "part: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "focus: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "discuss: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "reflect: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "peer: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "Prediction validation: whitespace, 100-character limit, literal rendering",
+        "Restart cancellation preserves progress; confirmed restart clears only this game",
+        "One Change control replaces duplicate Back; same metric keeps prediction and a new metric clears it",
+        "Refresh starts fresh and ignores legacy progress, guide and sound preferences",
+        "Refresh during a scene returns to a new game, not the interlude",
+        "New and reopened tabs start fresh while the existing open page keeps its own run",
+        "Returning from the browser back-forward cache also starts fresh",
+        "Layout and functional flow at 1366 × 768, including touch and reduced motion",
+        "Layout and functional flow at 1024 × 768, including touch and reduced motion",
+        "Layout and functional flow at 768 × 1024, including touch and reduced motion",
+        "Layout and functional flow at 390 × 844, including touch and reduced motion",
+        "Layout and functional flow at 375 × 667, including touch and reduced motion",
+        "Layout and functional flow at 320 × 640, including touch and reduced motion",
+        "Full game works with localStorage and sessionStorage completely unavailable",
+        "No uncaught browser errors"
+      ],
+      "runtime_errors": []
+    },
+    "level2-integration-results.json": {
+      "passed": 10,
+      "checks": [
+        "Partner replaces all three scene slots; original trio, branch and custom name retained",
+        "Completion reports exact result once after final reading",
+        "Level 2 emits actual count, success, evidence and softer message cues",
+        "Final replay retains completion count and mute suppresses new cues",
+        "Restart clears the original trio and permits a new completion",
+        "Chapter dialogue waits while the tab is hidden or restart dialog is open, then automatically opens metric selection",
+        "Hidden tab holds metric updates and resumes them on return",
+        "Growth counter and automatic observation wait while restart confirmation is open",
+        "The shortened next-button wait pauses under restart confirmation and resumes after closing it",
+        "Complete expansion and partner-scene flow works at 320px"
+      ],
+      "runtimeErrors": []
+    },
+    "player-identity-results.json": {
+      "passed": 10,
+      "checks": [
+        "Confirmed opening name reaches Level 1 labels, avatar and typing accessibility; guide has no fixed Maya name",
+        "Level 1 restart retains identity and its custom cinematic receives playerName; Alex stays Alex",
+        "Level 1 → Level 2 retains the same opening name and prior metric; choice/gap thoughts use I",
+        "Both levels and every custom cinematic slot share one name; six-metric decision uses I; result callbacks still fire",
+        "Level 2 restart retains identity; reloading the full host returns to a fresh opening/name entry with storage blocked",
+        "Full-host restored-page reset returns to the opening and clears the previous identity",
+        "Built-in Level 1 and Level 2 three/six-metric placeholders display the opening name and keep Alex unchanged",
+        "Final Level 2 placeholder and closing player thought retain the same opening name",
+        "Names including Alex, HTML-like text and 40 unbroken characters render literally without horizontal overflow at 320px",
+        "No runtime errors during opening-name integration checks"
+      ],
+      "runtimeErrors": []
+    },
+    "feedback-offline-results.json": {
+      "passed": 11,
+      "checks": [
+        "Score and management feedback advance automatically without pause controls",
+        "Actual Web Audio plays count and success cues at the increased master gain",
+        "Management emphasis ends after one cue and the score remains available",
+        "One evidence paragraph and student summary arrive together with one cue and no duplicate text or controls",
+        "Classroom evidence receives at least six seconds of visible reading time before conversation",
+        "Replies stay in the main column; both speakers receive reading time before the next message or completion",
+        "Mute suppresses all subsequent cues within the current game",
+        "Unmuting restores actual Web Audio feedback",
+        "Guide temporarily holds the reading sequence and closing it resumes automatically",
+        "Off-screen recap waits, then resumes reading and brings replies into view without visiting the sidebar",
+        "Browsers without Web Audio retain the complete visual sequence"
+      ],
+      "runtime_errors": []
+    },
+    "release-results.json": {
+      "passed": 4,
+      "checks": [
+        "ZIP integrity and byte identity with both production builds",
+        "Packaged Level2.html completes 3 → 6 → 10 → 25 → 100 offline with normal motion",
+        "Packaged Levels1-and-2.html starts at Level 1 with its guide",
+        "Packaged entries have no browser runtime errors"
+      ],
+      "runtimeErrors": []
+    }
+  },
+  "artifacts": {
+    "dist/index.html": {
+      "sha256": "65e7d1343e890be1b13eabbfe5049091ed9435da5d67f4086a3c5e3edf1c848c",
+      "bytes": 9800805
+    },
+    "dist-level2/index.html": {
+      "sha256": "b4234beb2dd5c382c72dc9742ba42442f11848e189cfa30653dd620df52b46b7",
+      "bytes": 9800805
+    },
+    "play/Level2-play-v5.zip": {
+      "sha256": "7c5dc953ef62fad0af8cd1bb70c074035ccd216ffcdaeb118bc5be1caf8659b9",
+      "bytes": 14580269
+    }
+  },
+  "notes": [
+    "Level 1 explicit continuation opens a dedicated LEVEL 2 player/Alex conversation. Its final reading interval completes before the game automatically opens metric selection; no additional navigation action is introduced.",
+    "The introduction holds while hidden or under the restart modal, restarts with a new level run and retains the host-provided name. Name handoff remains compatible with both placeholder and partner scene renderers.",
+    "Alex’s Checklist consistently names the vertical selection summary and later 10/25/100 action lists. Selection marks mean chosen metrics. Neither the three- nor six-metric evaluation duplicates that checklist.",
+    "Both levels render one shared LearningRisk component and stylesheet, with an observed behaviour as the main text and a small Learning at risk label. All six Level 1 branch descriptions are checked against the corresponding classroom evidence.",
+    "A normal-motion browser check confirms that the untracked-area border keeps animating beyond two seconds, repeats indefinitely and changes border colour while leaving text in place. The 1.8-second animation ends when the missing metrics are added. Reduced motion uses the existing static-animation override.",
+    "The Level 2 regression, Level 1 smoke and feedback checks use real presentation intervals. Partner-host, name-integration and packaged-release checks advance reading waits with the browser clock.",
+    "Both entries in the downloadable ZIP match the production build bytes and pass an offline browser flow. Managed Chromium blocks file navigation, so direct local-file opening in the user browser was not observed.",
+    "All 20 three-metric combinations, six Level 1 branches, responsive layouts, keyboard controls, sound, restart, hidden-tab holds and fresh-page lifetime passed their functional checks.",
+    "Student warnings interpret the demonstrated story behaviour, without inventing measured learning loss or a declining student score.",
+    "The teammate’s opening and finished classroom cinematics are still separate. Three/six-item physical checklist actions remain represented by cinematic placeholders; completed partner scenes and Level 3 are outside this build."
+  ]
+}

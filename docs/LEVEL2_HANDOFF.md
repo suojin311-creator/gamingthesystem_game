@@ -6,12 +6,25 @@ The game owns choosing exactly three metrics, evaluating, identifying the missin
 three, expanding the system and displaying classroom evidence/checklist changes.
 The partner owns finished cinematics. The opening remains separate.
 
-Level 2 starts directly on the six clickable metric cards, with the two
-highlighted opening lines on that same page. Alex's passive notebook records the
-three choices. Run evaluation checks its three entries alongside the metrics;
-Add remaining metrics expands it to six entries and six checks. There is no
-separate introduction or Choose three metrics navigation button. The optional
-previousMetricId appears as a quiet reference on the actual choice page.
+Level 2 begins with a dedicated introduction carrying the visible LEVEL 2
+label and the player/Alex conversation. Typing and reading intervals run in
+sequence; after Alex's final reply has received reading time, the same level
+instance automatically opens the six working metric cards. The introduction has
+no extra navigation action. It replays on a level restart or a fresh page.
+Hidden tabs, off-screen dialogue and restart dialogs suspend this sequence.
+
+On the selection page, the vertical **Alex’s Checklist** records exactly the
+current choices using the later checklists' paper, heading and checkbox styles.
+Its checks mean selected, not completed or learned; its counter says N / 3
+selected. Only the six metric cards are selection controls. On narrow screens
+the checklist follows the cards and precedes Run evaluation. The optional
+previousMetricId appears as a quiet reference on the choice page.
+
+Three- and six-metric evaluation screens display their sequential metric results
+and current-round perspectives without a second checklist. Alex's physical
+three/six-item checklist actions remain part of the partner's classroom scenes;
+the temporary scene describes the six-item action. The game uses the same
+Alex’s Checklist heading for the selection summary and 10/25/100 action lists.
 
 The first six metrics retain the Level 1 IDs and names. Expansion past six counts
 additional requirements; these are not 94 invented named educational indicators.
@@ -100,7 +113,7 @@ The central content is the reading focus. The right-hand cards summarize the
 same current round. Starting a round hides the previous report until the new
 evaluation finishes and resets students to **Awaiting observation**. The student
 card shows the current behaviour with a small **Learning at risk** label only
-when the current observation arrives. Behaviour is the main type; risk is secondary.
+when the current observation arrives. Behaviour is the main type; risk is secondary. Both levels render the shared LearningRisk component and stylesheet to keep this hierarchy identical.
 Do not retain an observed-at count from an earlier round. The risk is a
 qualitative interpretation of the story; actual learning gains remain unverified.
 No sidebar badges, extra student sound or independently pulsing update competes
@@ -116,7 +129,7 @@ there is no Guide button or guide dialog.
 | 100 | Doing the minimum becomes the strategy. |
 
 The gap view keeps tracked areas quiet and emphasizes the other three with
-larger names, an amber border, **3 areas untracked**, and a single arrival pulse.
+larger names, an amber border, **3 areas untracked**, and a continuous 1.8-second border-colour/glow pulse. Text and panel layout stay stationary; adding the remaining metrics removes the gap panel and ends the pulse. Reduced motion retains a static amber border.
 Untracked areas are blind spots; no declining learning score is inferred.
 
 Core metrics turn green one at a time, followed by the report cue. After each

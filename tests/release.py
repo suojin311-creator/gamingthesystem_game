@@ -6,7 +6,7 @@ import zipfile
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 
-archive = Path('play/Level2-play-v4.zip')
+archive = Path('play/Level2-play-v5.zip')
 checks, errors = [], []
 with zipfile.ZipFile(archive) as bundle:
     assert bundle.testzip() is None
@@ -39,6 +39,9 @@ with sync_playwright() as playwright:
     page.clock.install()
     page.goto('https://release.test/', wait_until='networkidle')
     expect(page).to_have_title('Gaming the System')
+    expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
+    advance(page, 8)
+    expect(page.locator('.level-two')).to_have_attribute('data-phase', 'choose')
     expect(page.get_by_role('button', name='Guide', exact=True)).to_have_count(0)
     for id in ['prep', 'part', 'focus']: page.get_by_test_id('level2-metric-' + id).click()
     page.get_by_role('button', name='Run evaluation', exact=True).click()

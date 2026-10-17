@@ -1,42 +1,30 @@
-# Level 2 highlighted narrative audit
+# Level 2 narrative and presentation ownership
 
-The user's latest highlighted screenshot defines gameplay ownership. Narrative
-screens are story beats; they do not require separate full-page click-throughs.
-All player-facing content stays in English. The opening remains separate and
-finished partner cinematics still use replaceable scene renderers.
+The user's latest presentation instructions determine where the highlighted
+gameplay beats appear. All player-facing text stays in English. The first-person
+player role displays the opening's confirmed name; internal Maya role IDs do
+not set the display name. See [Opening handoff](OPENING_HANDOFF.md).
 
-The latest identity revision adapts the original collective player line to
-“One metric wasn’t enough. What if I tracked three? Which ones should I choose?”
-Other player decisions also use “I”. Maya is an internal role; the opening's
-confirmed playerName replaces its displayed name in both levels and scene
-requests. See [Opening handoff](OPENING_HANDOFF.md). Original source quotes below
-are retained to identify the highlighted requirements, not current display text.
-
-| Highlighted requirement | v2 gap | v3 implementation |
+| Story beat | Current gameplay | Partner cinematic |
 | --- | --- | --- |
-| Choose three of the same six metrics | Implemented after an unnecessary introduction page | Level 2 immediately opens the six working metric cards; no extra entry click |
-| Maya: “One metric wasn’t enough. What if we tracked three? Which ones would you choose?” | Last question missing | Complete line appears on the actual selection page |
-| Alex: “Three metrics now? Okay, I can handle that!” | Missing | Alex replies in the same selection conversation |
-| Alex opens a new notebook | No dedicated game-side representation | Passive three-entry notebook records the current choices; it is not a selection control |
-| Run; three metrics turn green sequentially | Implemented | Retained, with three corresponding notebook checks |
-| Add Remaining Metrics; all six metrics turn green | Implemented under a different button label | Add remaining metrics adds exactly the missing three; all six become green |
-| Alex unfolds a longer checklist and checks six items | Only descriptive text in a placeholder | The game-side notebook expands to six entries and ends with six visible checks; the original three remain completed while the added three tick |
+| One metric was not enough; try three | Dedicated LEVEL 2 conversation automatically precedes metric selection | No additional opening scene required for this dialogue |
+| Player: “One metric wasn’t enough. What if I tracked three? Which ones should I choose?” | First dialogue bubble on the chapter introduction | — |
+| Alex: “Three metrics now? Okay, I can handle that!” | Second bubble; the game waits for its reading interval, then opens selection automatically | — |
+| Choose three of the same six metrics | Six real clickable cards; a vertical Alex’s Checklist records the current three choices | Alex's physical notebook/character acting remains cinematic work |
+| Run; three metrics turn green in sequence | Evaluation rows turn green one by one; the selection checklist is absent here | Three Metrics, Three Patterns uses the selected trio's branch scene |
+| Add Remaining Metrics; six metrics turn green | Adds the exact missing three and retains the original three green results; no repeated checklist below the report | Alex's longer checklist and six ticks belong in the shared six-metric scene; its placeholder describes this action |
+| Continue adding requirements | 6 → 10 → 25 → 100, with sequential action-item checks under the same Alex’s Checklist heading | Final Perfect Checklist remains a replaceable scene slot |
 
-The notebook is an interface representation of Alex's actions. Finished shots of
-Alex at the desk, character performance, voiced lines and camera work remain
-with the cinematics creator.
+The selection checklist's marks mean selected metrics. Evaluation-row marks
+mean reported improvement. The later action-list marks represent Alex completing
+checklist actions. None is a numerical claim about learning gains.
 
-The unhighlighted Three Metrics, Three Patterns scene remains the partner's
-three branch slots. Its existing reading placeholder is still temporary. The
-unhighlighted six-metric scene and Perfect Checklist scene remain partner slots
-as documented in LEVEL2_HANDOFF.md. Their renderers do not need to explain
-reported dashboard values.
+The three Priority Slots and Set Priorities action introduce the next weighting
+stage and remain reserved for Level 3. Finished shots, character performance,
+voiced lines and camera work remain with the cinematics creator. Reported values
+and post-scene evidence remain with gameplay.
 
-The three Priority Slots and Set Priorities action are not highlighted in the
-supplied screenshot and introduce the next weighting stage. They remain reserved
-for Level 3. This revision does not implement weighting choices or add a dead
-priority-selection page to Level 2.
-
-The existing 10 → 25 → 100 expansion stages remain gameplay. Each checklist item
-continues to tick in sequence. Post-scene next actions now appear with the final
-reply; completion callbacks still wait for that reply's short reading interval.
+The chapter introduction adds no manual Continue action. Later observation
+actions still appear with the final reply; completion callbacks wait for the
+final reading interval. Restarts repeat the chapter introduction while keeping
+the current host-provided name.

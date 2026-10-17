@@ -13,6 +13,7 @@ export type Metric = {
   uncertainty: string;
   evidence: string;
   studentQuote: string;
+  studentBehaviour: string;
   learningLabel: string;
   takeaway: string;
   scene: SceneLine[];
@@ -26,6 +27,7 @@ export const METRICS: Metric[] = [
     improvement: 'More preparation tasks completed', uncertainty: 'Understanding still unclear',
     evidence: 'Students complete the preparation, but some skim just enough to meet the requirement.',
     studentQuote: 'Uh... I finished the checklist.',
+    studentBehaviour: 'Skimming just to finish.',
     learningLabel: 'Understanding', takeaway: 'The checklist is complete. The ideas are unclear.',
     scene: [
       { speaker: 'Alex', text: 'I finished everything on the list!' },
@@ -39,6 +41,7 @@ export const METRICS: Metric[] = [
     improvement: 'More visible contributions', uncertainty: 'Depth still unclear',
     evidence: 'Students speak more often, but some contributions are brief or repetitive.',
     studentQuote: 'I just wanted to participate.',
+    studentBehaviour: 'More talk. Little explanation.',
     learningLabel: 'Depth', takeaway: 'More contributions. Little explanation.',
     scene: [
       { speaker: 'Alex', text: 'I agree! Same here!' },
@@ -52,6 +55,7 @@ export const METRICS: Metric[] = [
     improvement: 'More visible time on task', uncertainty: 'Thinking still unclear',
     evidence: 'Students stay visibly on task, but some focus on looking busy rather than thinking deeply.',
     studentQuote: 'I... kept the page open.',
+    studentBehaviour: 'Looking busy takes priority.',
     learningLabel: 'Thinking', takeaway: 'The page stayed open. The thinking is unclear.',
     scene: [
       { speaker: 'Alex', text: 'Look, I stayed on task the whole time!' },
@@ -65,6 +69,7 @@ export const METRICS: Metric[] = [
     improvement: 'More discussion criteria met', uncertainty: 'New ideas still unclear',
     evidence: 'Students use the discussion behaviours that earn credit, but some contributions become formulaic.',
     studentQuote: 'I followed the discussion checklist.',
+    studentBehaviour: 'Discussion turns formulaic.',
     learningLabel: 'New ideas', takeaway: 'The right phrases. Few new ideas.',
     scene: [
       { speaker: 'Alex', text: "Could you elaborate? I’d like to build on that." },
@@ -78,6 +83,7 @@ export const METRICS: Metric[] = [
     improvement: 'More structured reflections', uncertainty: 'Changed thinking still unclear',
     evidence: 'Reflections match the expected structure, but some students repeat the same safe patterns.',
     studentQuote: "That’s the format on the rubric.",
+    studentBehaviour: 'Repeating safe reflection patterns.',
     learningLabel: 'Changed thinking', takeaway: 'A polished reflection. Changed thinking is unclear.',
     scene: [
       { speaker: 'Alex', text: 'Before, I thought... Now, I think...' },
@@ -91,6 +97,7 @@ export const METRICS: Metric[] = [
     improvement: 'More response criteria met', uncertainty: 'Exchange of ideas still unclear',
     evidence: 'Online replies become more specific, but some students learn a repeatable response formula.',
     studentQuote: 'I met every response criterion.',
+    studentBehaviour: 'Replying to tick boxes.',
     learningLabel: 'Real exchange', takeaway: 'The criteria are met. The exchange is unclear.',
     scene: [
       { speaker: 'Alex', text: 'Specific suggestion? Check. Follow-up question? Check!' },

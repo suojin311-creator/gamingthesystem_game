@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { METRICS, getMetric, type Metric, type MetricId } from './metrics';
 import { INITIAL_SESSION, type Phase } from './state';
 import Icon from '../../shared/components/Icon';
+import LearningRisk from '../../shared/components/LearningRisk';
 import Dialogue from './components/Dialogue';
 import CinematicPlaceholder, { type CinematicRequest } from './components/CinematicPlaceholder';
 import { useFeedback } from '../../shared/hooks/useFeedback';
@@ -52,8 +53,7 @@ function PerspectivePanel({ metric, evaluated, observed, highlight }: {
     </section>
     <section className={`perspective student ${observed ? 'has-evidence' : ''}`} aria-labelledby="student-title" tabIndex={-1}>
       <div className="perspective-heading"><Icon name="student" /><h3 id="student-title">Students</h3></div>
-      <span className="perspective-label">{observed && metric ? metric.learningLabel : 'Classroom response'}</span>
-      {observed && metric ? <><div className="student-signal"><Icon name="question" /></div><p className="uncertainty">Unclear</p><span className="sr-only">{metric.uncertainty}</span></> : <><div className="student-signal waiting-signal"><Icon name="eye" /></div><p className="pending-title">Not observed yet</p></>}
+      {observed && metric ? <LearningRisk behaviour={metric.studentBehaviour} /> : <><span className="perspective-label">Classroom response</span><div className="student-signal waiting-signal"><Icon name="eye" /></div><p className="pending-title">Not observed yet</p></>}
     </section>
   </aside>;
 }
