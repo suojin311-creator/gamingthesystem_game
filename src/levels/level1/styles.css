@@ -92,8 +92,6 @@
 :where(.level-one) .selected-focus .metric-illustration { flex-shrink: 0; }
 :where(.level-one) .selected-focus .text-button { margin-left: auto; }
 :where(.level-one) .prediction-form { display: flex; flex-direction: column; flex: 1; }
-:where(.level-one) .prediction-form label { font-size: 13px; font-weight: 700; }
-:where(.level-one) .field-help { font-size: 11px; line-height: 1.5; color: #868471; margin: 7px 0 12px; }
 :where(.level-one) .prediction-paper { position: relative; border: 1px solid #d8cfb9; background: #fffdf5; margin-bottom: 20px; }
 :where(.level-one) .prediction-paper textarea { display: block; resize: vertical; width: 100%; min-height: 100px; max-height: 200px; background: transparent; border: 0; padding: 18px 20px 8px; font: italic 21px/1.5 var(--serif); color: #514c3c; overflow-wrap: anywhere; }
 :where(.level-one) .prediction-paper textarea::placeholder { color: #b0a78e; }

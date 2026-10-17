@@ -71,6 +71,7 @@ new MutationObserver(() => {
   mark('maya', '.maya-bubble p');
   mark('alexTyping', '.alex-bubble.is-typing');
   mark('alex', '.alex-bubble p');
+  mark('alexSecond', '.alex-character[data-order="2"] .alex-bubble p');
   mark('completed', '.level-finished');
 }).observe(document.body, {childList:true, subtree:true, attributes:true});
 '''
@@ -86,6 +87,10 @@ with sync_playwright() as p:
     page.get_by_test_id('metric-prep').click()
     page.get_by_role('button', name='Make a prediction').click()
     expect(page.get_by_role('status', name='Maya is typing')).to_be_visible()
+    expect(page.locator('label[for=prediction]')).to_have_class('sr-only')
+    expect(page.get_by_text('One sentence, before this becomes the target.', exact=True)).to_have_count(0)
+    expect(page.locator('#prediction')).to_have_attribute('aria-describedby', 'prediction-count')
+    record('Prediction page removes the repeated visible prompt and helper while retaining its accessible input label')
     page.get_by_label('What do you expect students to do?').fill('Students will understand the reading.')
     page.get_by_role('button', name='Run evaluation').click()
     expect(page.get_by_role('button', name='Observe the class')).to_be_disabled()
@@ -135,16 +140,16 @@ with sync_playwright() as p:
 
     expect(page.get_by_role('status', name='Maya is typing')).to_be_visible(timeout=10000)
     stamps = page.evaluate('window.reviewTimeline')
-    assert stamps['mayaTyping'] - stamps['finding'] >= 5900, stamps
-    record('Classroom evidence receives at least six seconds of visible reading time before conversation')
+    assert 2400 <= stamps['mayaTyping'] - stamps['finding'] < 3300, stamps
+    record('Level 1 starts its conversation after about 2.5 visible seconds for this finding, 3.5 seconds earlier')
     expect(page.locator('.alex-character')).to_have_count(0)
-    expect(page.locator('.maya-bubble p')).to_have_text('The score is up. What about learning?')
+    expect(page.locator('.maya-bubble p')).to_have_text('The score went up. What did you learn?')
     expect(page.get_by_role('status', name='Alex is typing')).to_be_visible(timeout=6000)
     expect(page.locator('.maya-bubble p')).to_be_visible()
     page.screenshot(path=str(out / 'feedback-typing.png'), full_page=True)
     settle(page)
     maya = page.locator('.maya-character').bounding_box()
-    alex = page.locator('.alex-character').bounding_box()
+    alex = page.locator('.alex-character').first.bounding_box()
     decision = page.locator('.decision-area').bounding_box()
     assert maya['x'] >= decision['x'] and alex['x'] + alex['width'] <= decision['x'] + decision['width']
     assert maya['y'] + maya['height'] <= alex['y']
@@ -152,7 +157,10 @@ with sync_playwright() as p:
     assert page.locator('body').bounding_box()['height'] <= 768
     stamps = page.evaluate('window.reviewTimeline')
     assert stamps['alexTyping'] - stamps['maya'] >= 3000, stamps
-    assert stamps['completed'] - stamps['alex'] >= 2900, stamps
+    assert stamps['completed'] - stamps['alexSecond'] >= 2900, stamps
+    expect(page.locator('.alex-bubble p')).to_have_text(['I finished the whole list! 📋', 'The reading? I mostly skimmed it 😬'])
+    expect(page.locator('.message-continuation .avatar')).to_have_css('visibility', 'hidden')
+    expect(page.locator('.message-continuation .speaker-name')).to_have_class('speaker-name sr-only')
     page.screenshot(path=str(out / 'feedback-review.png'), full_page=True)
     record('Replies stay in the main column; both speakers receive reading time before the next message or completion')
 

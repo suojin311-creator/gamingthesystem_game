@@ -23,6 +23,14 @@ output.mkdir(exist_ok=True)
 cases = []
 runtime_errors = []
 KEY = 'gaming-the-system:level-one:v1'
+REPLIES = {
+    'prep': ['I finished the whole list! 📋', 'The reading? I mostly skimmed it 😬'],
+    'part': ['I put my hand up! 🙋', 'I… didn’t really have an explanation 🤷'],
+    'focus': ['I kept the page open! 💻', 'That counts as staying focused… right? 👀'],
+    'discuss': ['I used all the right phrases! 💬', 'A new idea? Umm… 🤔'],
+    'reflect': ['I followed the example! 📝', 'I just used the same pattern again 🔁'],
+    'peer': ['A suggestion and a question! 🎯', 'I use that pattern every time 🤭'],
+}
 metrics = [
     ('prep', 34, 88, 'I finished everything on the list!', 'Skimming just to finish.'),
     ('part', 29, 85, 'I agree! Same here!', 'More talk. Little explanation.'),
@@ -135,6 +143,8 @@ with sync_playwright() as p:
         expect(page.locator('.student .new-badge')).to_have_count(0)
         expect(page.locator('.student .student-behaviour')).to_have_text(uncertainty)
         expect(page.locator('.student .learning-risk strong')).to_have_text('Learning at risk')
+        expect(page.locator('.alex-bubble p')).to_have_text(REPLIES[metric_id])
+        expect(page.locator('.message-continuation .avatar')).to_have_css('visibility', 'hidden')
         expect(page.locator('.university-value')).to_contain_text(str(after))
         no_overflow(page)
         reveal_review(page)

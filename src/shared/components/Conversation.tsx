@@ -52,15 +52,27 @@ export default function Conversation({ lines, enabled = true, paused = false, pl
     return () => { window.clearTimeout(timer); if (!fired) remaining.current = Math.max(0, delay - (performance.now() - start)); };
   }, [beat, enabled, paused, inView, pageVisible, lastBeat, play, lines, typingDelay, readDelay]);
 
+  useEffect(() => {
+    if (!enabled || paused || !inView || !pageVisible || beat % 2 === 0) return;
+    // Keep a newly arrived reply visible when a conversation grows on a small screen.
+    const frame = requestAnimationFrame(() => {
+      const message = container.current?.querySelector<HTMLElement>(`[data-order="${Math.floor(beat / 2)}"]`);
+      const rect = message?.getBoundingClientRect();
+      if (rect && rect.bottom > innerHeight - 18) message?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [beat, enabled, paused, inView, pageVisible]);
+
   return <section ref={container} className={`dialogue-strip conversation ${lines.length > 1 ? 'two-voices' : ''}`} aria-label="Character dialogue">
     {enabled && lines.map((line, index) => {
       if (beat < index * 2) return null;
       const typing = beat === index * 2;
       const alex = line.speaker === 'Alex';
-      return <div key={index} className={`dialogue-character ${alex ? 'alex-character' : 'maya-character'}`} data-speaker={line.speaker} data-order={index}>
+      const continuation = index > 0 && lines[index - 1].speaker === line.speaker && lines[index - 1].name === line.name;
+      return <div key={index} className={`dialogue-character ${alex ? 'alex-character' : 'maya-character'} ${continuation ? 'message-continuation' : ''}`} data-speaker={line.speaker} data-order={index}>
         <span className={`avatar ${alex ? 'alex-avatar' : 'maya-avatar'}`} aria-hidden="true">{line.name.charAt(0).toUpperCase()}</span>
         <div className={`speech-bubble ${alex ? 'alex-bubble' : 'maya-bubble'} ${typing ? 'is-typing' : 'message-arrived'}`}>
-          <span className="speaker-name">{line.name}</span>
+          <span className={`speaker-name ${continuation ? 'sr-only' : ''}`}>{line.name}</span>
           {typing ? <span className="typing-indicator" role="status" aria-label={`${line.name} is typing`}><i /><i /><i /></span> : <p aria-live="polite">{line.text}</p>}
         </div>
       </div>;

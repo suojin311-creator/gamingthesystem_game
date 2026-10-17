@@ -35,7 +35,7 @@
 .level-two .l2-intro .speech-bubble p { font-size: 22px; }
 .level-two .l2-intro .speaker-name { font-size: 11px; }
 .level-two .l2-intro .avatar { width: 38px; height: 38px; font-size: 26px; }
-.level-two .l2-intro-next { font-size: 11px; color: #908b78; text-align: right; margin-top: 12px; }
+.level-two .l2-intro-actions { display: flex; justify-content: flex-end; min-height: 42px; margin-top: 12px; }
 .level-two .l2-choosing { display: block; }
 .level-two .l2-choice-layout { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 22px; align-items: start; margin-bottom: 22px; }
 .level-two .l2-choice-layout .l2-metric-grid { margin-bottom: 0; }
@@ -88,9 +88,9 @@
 .level-two .l2-data-note { font-size: 9px; color: #a19a86; text-align: right; margin-top: 13px; }
 .level-two .l2-gap-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 14px; margin: 10px 0 15px; }
 .level-two .l2-gap-grid > section { border: 1px solid #d7dcc7; background: #eff2e5; padding: 18px; border-radius: 3px; }
-.level-two .l2-gap-grid .l2-missing { border: 2px solid #bf8a45; border-left-width: 5px; background: #f8e9cc; animation: l2-gap-alert 1.8s ease-in-out infinite; }
+.level-two .l2-gap-grid .l2-missing { border: 3px solid #bf8a45; border-left-width: 6px; background: #f8e9cc; animation: l2-gap-alert 1.25s ease-in-out infinite; }
 .level-two .l2-gap-warning { display: flex; align-items: center; gap: 9px; font: 22px/1.25 var(--serif); color: #915b27; }
-.level-two .l2-gap-grid .l2-gap-warning > .icon { width: 23px; height: 23px; color: #a97537; }
+.level-two .l2-gap-grid .l2-gap-warning > .icon { width: 23px; height: 23px; color: #a97537; animation: l2-warning-beacon 1.25s ease-in-out infinite; }
 .level-two .l2-gap-grid ul { list-style: none; padding: 0; margin: 12px 0 0; }
 .level-two .l2-gap-grid li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 1.5; min-height: 49px; padding-top: 7px; }
 .level-two .l2-missing li { font-size: 16.5px; font-weight: 700; line-height: 1.45; color: #76502c; min-height: 58px; }
@@ -148,7 +148,8 @@
 .level-two .l2-dialog-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 25px; }
 @keyframes l2-tick-arrive { from { opacity: .4; translate: -4px 0; } to { opacity: 1; translate: 0 0; } }
 @keyframes l2-breathe { 50% { opacity: .25; } }
-@keyframes l2-gap-alert { 0%,100% { border-color: #bf8a45; box-shadow: 0 0 0 0 #bd854300; } 50% { border-color: #8f551f; box-shadow: 0 0 0 3px #bd854334; } }
+@keyframes l2-gap-alert { 0%,100% { border-color: #d6b57e; box-shadow: 0 0 0 0 #b85d2700, 0 0 0 #b85d2700; } 45%,60% { border-color: #a94426; box-shadow: 0 0 0 5px #b85d273d, 0 0 18px #b85d2766; } }
+@keyframes l2-warning-beacon { 0%,100% { color: #b88649; opacity: .55; } 45%,60% { color: #a23a1e; opacity: 1; } }
 @keyframes l2-check-mark { from { opacity: 0; transform: scale(.65); } to { opacity: 1; transform: scale(1); } }
 @media (min-width: 900px) and (max-height: 820px) {
   .level-two .l2-masthead { min-height: 61px; }

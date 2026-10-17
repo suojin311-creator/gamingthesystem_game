@@ -8,9 +8,9 @@ The partner owns finished cinematics. The opening remains separate.
 
 Level 2 begins with a dedicated introduction carrying the visible LEVEL 2
 label and the player/Alex conversation. Typing and reading intervals run in
-sequence; after Alex's final reply has received reading time, the same level
-instance automatically opens the six working metric cards. The introduction has
-no extra navigation action. It replays on a level restart or a fresh page.
+sequence. The lower-right Choose three metrics button appears with Alex's final
+message, and the introduction stays on screen until the player clicks it. The
+same level instance then opens the six working metric cards. It replays on a level restart or a fresh page.
 Hidden tabs, off-screen dialogue and restart dialogs suspend this sequence.
 
 On the selection page, the vertical **Alex’s Checklist** records exactly the
@@ -129,7 +129,7 @@ there is no Guide button or guide dialog.
 | 100 | Doing the minimum becomes the strategy. |
 
 The gap view keeps tracked areas quiet and emphasizes the other three with
-larger names, an amber border, **3 areas untracked**, and a continuous 1.8-second border-colour/glow pulse. Text and panel layout stay stationary; adding the remaining metrics removes the gap panel and ends the pulse. Reduced motion retains a static amber border.
+larger names, an amber border, **3 areas untracked**, and a stronger continuous 1.25-second border-colour pulse, 5px outer ring, 18px soft glow and synchronized warning-icon pulse. Text and panel layout stay stationary; adding the remaining metrics removes the gap panel and ends the pulse. Reduced motion retains a static amber border.
 Untracked areas are blind spots; no declining learning score is inferred.
 
 Core metrics turn green one at a time, followed by the report cue. After each
@@ -139,7 +139,7 @@ and 1.1–2.2 second message intervals. The next action appears with the final
 message, including Alex's last reply on the three- and six-metric pages. The
 shared Conversation's optional onLastMessage callback releases the action;
 onSettled still waits for the final reading interval before reporting completion.
-Level 1 retains its original defaults. All revealed text remains available.
+Level 1 retains its 650ms typing and 3–5 second reply intervals; its finding interval is now 3.5 seconds shorter (2.5–4.5 seconds). All revealed text remains available.
 The 10/25/100 checklist uses action items, rather than questions. Each item
 appears 550 ms after the previous one and its checkbox ticks. The ticks represent
 Alex completing checklist actions, not demonstrating learning. The next button
@@ -152,3 +152,5 @@ memory.
 No game storage, runtime server, API key or multiplayer service is used.
 Two students at one computer share one run. Classroom network capacity and
 finished-video delivery should be checked separately when hosting is chosen.
+
+The player and Alex dialogue uses the approved [Dialogue review](DIALOGUE_REVIEW.md). Alex sends two consecutive short messages at the chapter introduction and three/six-metric observations; the next action appears with the second reply. The shared conversation groups consecutive messages under one visible name/avatar and brings new replies into view when needed.

@@ -21,3 +21,9 @@ first callback for next-action visibility and retains the second for completion.
 `components/LearningRisk.tsx` and `styles/learning-risk.css` render the same large
 student-behaviour description and small Learning at risk label in both levels.
 Neither component infers or displays a numerical learning loss.
+
+Consecutive messages from one speaker form a visual group: the first message
+shows the name/avatar, later bubbles retain an accessible speaker label and hide
+the repeated avatar. Each bubble gets its own typing/reading interval. A newly
+arrived reply scrolls into view if it extends below the viewport. The optional
+onLastMessage callback still fires only on the final message.

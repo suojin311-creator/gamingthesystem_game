@@ -7,9 +7,9 @@ not set the display name. See [Opening handoff](OPENING_HANDOFF.md).
 
 | Story beat | Current gameplay | Partner cinematic |
 | --- | --- | --- |
-| One metric was not enough; try three | Dedicated LEVEL 2 conversation automatically precedes metric selection | No additional opening scene required for this dialogue |
-| Player: “One metric wasn’t enough. What if I tracked three? Which ones should I choose?” | First dialogue bubble on the chapter introduction | — |
-| Alex: “Three metrics now? Okay, I can handle that!” | Second bubble; the game waits for its reading interval, then opens selection automatically | — |
+| One metric was not enough; try three | Dedicated LEVEL 2 conversation with a player-controlled next button precedes metric selection | No additional opening scene required for this dialogue |
+| Player: “One metric wasn’t enough. What if I tracked three?” | First dialogue bubble on the chapter introduction | — |
+| Alex: “Three? Easy 😎” / “Just tell me what gets the points.” | Two grouped replies; the final message releases Choose three metrics | — |
 | Choose three of the same six metrics | Six real clickable cards; a vertical Alex’s Checklist records the current three choices | Alex's physical notebook/character acting remains cinematic work |
 | Run; three metrics turn green in sequence | Evaluation rows turn green one by one; the selection checklist is absent here | Three Metrics, Three Patterns uses the selected trio's branch scene |
 | Add Remaining Metrics; six metrics turn green | Adds the exact missing three and retains the original three green results; no repeated checklist below the report | Alex's longer checklist and six ticks belong in the shared six-metric scene; its placeholder describes this action |
@@ -24,7 +24,9 @@ stage and remain reserved for Level 3. Finished shots, character performance,
 voiced lines and camera work remain with the cinematics creator. Reported values
 and post-scene evidence remain with gameplay.
 
-The chapter introduction adds no manual Continue action. Later observation
+The chapter introduction waits for its lower-right Choose three metrics action. Later observation
 actions still appear with the final reply; completion callbacks wait for the
 final reading interval. Restarts repeat the chapter introduction while keeping
 the current host-provided name.
+
+The clearer game-side exchanges, two-message Alex groups and unique emoji inventory are recorded in [Dialogue review](DIALOGUE_REVIEW.md).

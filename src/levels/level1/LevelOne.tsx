@@ -94,7 +94,8 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
     phase === 'result' && highlight === 'university' && !paused, () => setHighlight(null));
   useVisibleDelay(`evidence:${runId}:${phase}:${metricId}:${reviewStep}`, '.prediction-recap', 1000,
     phase === 'review' && reviewStep === 0 && !paused, showObservation);
-  useVisibleDelay(`conversation:${runId}:${phase}:${metricId}:${reviewStep}`, '.observation-recap', readingTime(metric?.evidence || '', 6000, 8000),
+  // Bring the conversation forward by 3.5 seconds while preserving reading order.
+  useVisibleDelay(`conversation:${runId}:${phase}:${metricId}:${reviewStep}`, '.observation-recap', readingTime(metric?.evidence || '', 6000, 8000) - 3500,
     phase === 'review' && reviewStep === 1 && !paused && !reviewTalkReady, () => {
       setReviewTalkReady(true);
       bringIntoView('.dialogue-strip');
@@ -197,7 +198,7 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
     });
   }
 
-  const dialogue = <Dialogue key={`${runId}:${phase}`} phase={phase} playerName={playerName} studentQuote={metric?.studentQuote} enabled={dialogueEnabled} paused={paused} play={feedback.play} onSettled={settleDialogue} />;
+  const dialogue = <Dialogue key={`${runId}:${phase}`} phase={phase} playerName={playerName} studentReplies={metric?.studentReplies} enabled={dialogueEnabled} paused={paused} play={feedback.play} onSettled={settleDialogue} />;
   const request: CinematicRequest | null = phase === 'cinematic' && metric ? { sceneId: `level1.${metric.id}`, metricId: metric.id, playerName } : null;
 
   return <div className="game-page level-one" onPointerDownCapture={feedback.unlock} onKeyDownCapture={feedback.unlock}>
@@ -220,8 +221,8 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
               <div className="section-intro"><h2 ref={title} tabIndex={-1}>What do you expect?</h2></div>
               <div className="selected-focus"><span className="metric-illustration"><Icon name={metric.id} /></span><h3>{metric.name}</h3><button className="text-button" onClick={() => go('choose')}>Change</button></div>
               <form className="prediction-form" onSubmit={event => { event.preventDefault(); if (prediction.trim()) setSession(value => ({ ...value, prediction: value.prediction.trim(), phase: 'result', resultReported: false })); }}>
-                <label htmlFor="prediction">What do you expect students to do?</label><p id="prediction-help" className="field-help">One sentence, before this becomes the target.</p>
-                <div className="prediction-paper"><span className="paper-corner" aria-hidden="true" /><textarea ref={predictionField} id="prediction" maxLength={100} value={prediction} placeholder={`e.g. ${metric.example}`} aria-describedby="prediction-help prediction-count" onChange={event => setSession(value => ({ ...value, prediction: event.target.value }))} /><div id="prediction-count" className="character-counter">{prediction.length}<span> / 100</span></div></div>
+                <label htmlFor="prediction" className="sr-only">What do you expect students to do?</label>
+                <div className="prediction-paper"><span className="paper-corner" aria-hidden="true" /><textarea ref={predictionField} id="prediction" maxLength={100} value={prediction} placeholder={`e.g. ${metric.example}`} aria-describedby="prediction-count" onChange={event => setSession(value => ({ ...value, prediction: event.target.value }))} /><div id="prediction-count" className="character-counter">{prediction.length}<span> / 100</span></div></div>
                 <div className="action-row prediction-actions"><button type="submit" className="button primary-button" disabled={!prediction.trim()}>Run evaluation<Icon name="arrow" /></button></div>
               </form>
             </>}

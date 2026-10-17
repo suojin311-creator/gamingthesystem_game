@@ -49,7 +49,9 @@ def finish_scene(page):
 
 
 def play_level(page, ids):
-    advance(page, 8)
+    if page.locator('.level-two').get_attribute('data-phase') == 'intro':
+        advance(page, 8)
+        page.get_by_role('button', name='Choose three metrics', exact=True).click()
     for id in ids: page.get_by_test_id('level2-metric-' + id).click()
     page.get_by_role('button', name='Run evaluation', exact=True).click()
     advance(page, 6)
@@ -82,6 +84,8 @@ OscillatorNode.prototype.start=function(...args){window.notes.push(values.get(th
     page.goto('http://127.0.0.1:5173/test-results/level2-host.html', wait_until='networkidle')
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
     advance(page, 8)
+    expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
+    page.get_by_role('button', name='Choose three metrics', exact=True).click()
     expect(page.locator('.l2-previous')).to_contain_text('Peer response')
     play_level(page, ['discuss', 'reflect', 'peer'])
     results = page.evaluate('window.results')
@@ -130,8 +134,10 @@ OscillatorNode.prototype.start=function(...args){window.notes.push(values.get(th
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
     page.keyboard.press('Escape')
     advance(page, 8)
+    expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
+    page.get_by_role('button', name='Choose three metrics', exact=True).click()
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'choose')
-    record('Chapter dialogue waits while the tab is hidden or restart dialog is open, then automatically opens metric selection')
+    record('Chapter dialogue waits while hidden or under a dialog; its next button appears on return and waits for a click')
     for id in ['prep', 'part', 'focus']: page.get_by_test_id('level2-metric-' + id).click()
     page.get_by_role('button', name='Run evaluation', exact=True).click()
     page.evaluate("Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'))")

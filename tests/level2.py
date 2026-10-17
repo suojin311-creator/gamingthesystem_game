@@ -34,7 +34,8 @@ def load(browser, file=args.file, width=1440, height=1000, motion='reduce', obse
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.goto('https://game.test/', wait_until='networkidle')
     if file == args.file and not observe_intro:
-        expect(page.locator('.level-two')).to_have_attribute('data-phase', 'choose', timeout=8000)
+        page.get_by_role('button', name='Choose three metrics', exact=True).click()
+        expect(page.locator('.level-two')).to_have_attribute('data-phase', 'choose')
     return context, page
 
 
@@ -68,18 +69,23 @@ with sync_playwright() as playwright:
     expect(page.locator('.l2-intro h2')).to_have_text('LEVEL 2')
     expect(page.locator('.l2-metric-card')).to_have_count(0)
     expect(page.get_by_test_id('level2-choice-checklist')).to_have_count(0)
-    expect(page.locator('.maya-bubble p')).to_have_text('One metric wasn’t enough. What if I tracked three? Which ones should I choose?', timeout=4000)
-    expect(page.locator('.alex-bubble p')).to_have_text('Three metrics now? Okay, I can handle that!', timeout=4000)
+    expect(page.locator('.maya-bubble p')).to_have_text('One metric wasn’t enough. What if I tracked three?', timeout=4000)
+    expect(page.locator('.alex-bubble p')).to_have_text(['Three? Easy 😎', 'Just tell me what gets the points.'], timeout=6000)
+    expect(page.locator('.alex-character.message-continuation')).to_have_count(1)
+    expect(page.locator('.alex-character.message-continuation .avatar')).to_have_css('visibility', 'hidden')
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
-    page.wait_for_timeout(600)
+    expect(page.get_by_role('button', name='Choose three metrics', exact=True)).to_be_visible()
+    page.wait_for_timeout(5000)
+    expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
     expect(page.locator('.l2-metric-card')).to_have_count(0)
     page.screenshot(path=str(output / 'level2-dialogue-transition.png'), full_page=True)
-    expect(page.get_by_role('heading', name='Which three will you track?')).to_be_visible(timeout=6000)
+    page.get_by_role('button', name='Choose three metrics', exact=True).click()
+    expect(page.get_by_role('heading', name='Which three will you track?')).to_be_visible()
     expect(page.locator('.l2-intro')).to_have_count(0)
     expect(page.locator('.conversation')).to_have_count(0)
     expect(page.locator('.l2-metric-card')).to_have_count(6)
     expect(page.get_by_role('button', name='Choose three metrics', exact=True)).to_have_count(0)
-    record('Dedicated Level 2 dialogue introduces the chapter, gives Alex reading time and automatically opens the six metric cards')
+    record('Level 2 introduction shows a lower-right next button with Alex’s reply and remains until the player clicks it')
     page.get_by_test_id('level2-metric-prep').click()
     expect(page.get_by_test_id('level2-metric-prep')).to_have_attribute('aria-pressed', 'true')
     checklist = page.get_by_test_id('level2-choice-checklist')
@@ -109,7 +115,7 @@ new MutationObserver(() => {
   if (!root || root.querySelector('.l2-checklist')) return;
   const key = `${root.dataset.phase}:${root.dataset.round}`;
   const timeline = window.observationTimeline[key] ||= {};
-  for (const [name, selector] of Object.entries({finding:'.l2-observation', maya:'.maya-bubble p', alex:'.alex-bubble p', button:'.l2-decision .action-row .button'})) {
+  for (const [name, selector] of Object.entries({finding:'.l2-observation', maya:'.maya-bubble p', alex:'.alex-bubble p', alexFinal:'.alex-character[data-order="2"] .alex-bubble p', button:'.l2-decision .action-row .button'})) {
     if (root.querySelector(selector)) timeline[name] ??= performance.now();
   }
 }).observe(document, {childList:true, subtree:true, attributes:true});''')
@@ -136,8 +142,10 @@ new MutationObserver(() => {
     core_ready(page, 'Cover the gaps')
     stamps = page.evaluate('window.observationTimeline["observe:3"]')
     assert 900 <= stamps['alex'] - stamps['maya'] < 2500, stamps
-    assert 0 <= stamps['button'] - stamps['alex'] < 180, stamps
-    record('Cover the gaps appears with Alex’s reply, with a shorter delay between speakers')
+    assert 0 <= stamps['button'] - stamps['alexFinal'] < 180, stamps
+    expect(page.locator('.maya-bubble p')).to_have_text('These three look better. What about the other three?')
+    expect(page.locator('.alex-bubble p')).to_have_text(['Are those worth any points? 🧐', 'I only worked on the three you picked 😇'])
+    record('Cover the gaps appears with Alex’s second reply; the dialogue explicitly identifies the other three areas')
     page.screenshot(path=str(output / 'level2-three-observation.png'), full_page=True)
     page.get_by_role('button', name='Cover the gaps', exact=True).click()
     expect(page.locator('.l2-covered li')).to_have_count(3)
@@ -171,8 +179,9 @@ new MutationObserver(() => {
     core_ready(page, 'Add more metrics')
     stamps = page.evaluate('window.observationTimeline["observe:6"]')
     assert stamps['alex'] - stamps['finding'] < 5500, stamps
-    assert 0 <= stamps['button'] - stamps['alex'] < 180, stamps
-    record('The six-metric observation also shows its next button with the faster Alex reply')
+    assert 0 <= stamps['button'] - stamps['alexFinal'] < 180, stamps
+    expect(page.locator('.alex-bubble p')).to_have_text(['Even more? 😅', 'Okay… just tell me what gets the points.'])
+    record('Six-metric dialogue answers the proposal to add metrics, and releases the next action with its second Alex message')
     page.get_by_role('button', name='Sound on', exact=True).click()
     expect(page.get_by_role('button', name='Sound off', exact=True)).to_be_visible()
     page.evaluate('''window.checklistTimeline = {};
@@ -224,6 +233,7 @@ new MutationObserver(() => {
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'complete')
     page.get_by_role('button', name='Restart', exact=True).click()
     page.get_by_role('button', name='Restart Level 2', exact=True).click()
+    page.get_by_role('button', name='Choose three metrics', exact=True).click()
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'choose')
     expect(page.get_by_role('button', name='Sound on', exact=True)).to_be_visible()
     assert page.evaluate('localStorage.length === 0 && sessionStorage.length === 0')
@@ -279,15 +289,19 @@ new MutationObserver(() => {
             page.wait_for_timeout(2200)
             animations = page.locator('.l2-missing').evaluate('(node)=>node.getAnimations().map(a=>({time:a.currentTime,iterations:a.effect.getTiming().iterations===Infinity}))')
             assert any(animation['iterations'] and animation['time'] > 2000 for animation in animations), animations
+            assert page.locator('.l2-missing').evaluate('node=>getComputedStyle(node).animationDuration') == '1.25s'
+            assert page.locator('.l2-missing').evaluate('node=>parseFloat(getComputedStyle(node).borderTopWidth)') >= 3
+            assert page.locator('.l2-gap-warning > .icon').evaluate('node=>getComputedStyle(node).animationIterationCount') == 'infinite'
             first_border = page.locator('.l2-missing').evaluate('node=>getComputedStyle(node).borderTopColor')
-            page.wait_for_timeout(550)
+            page.wait_for_timeout(400)
             second_border = page.locator('.l2-missing').evaluate('node=>getComputedStyle(node).borderTopColor')
             assert first_border != second_border, [first_border, second_border]
             record('Untracked-area border keeps breathing after its first cycle, changing border colour without moving text')
         record(f'{width}px layout, normal motion and automatic dialogue')
         page.reload(wait_until='networkidle')
         expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
-        expect(page.locator('.level-two')).to_have_attribute('data-phase', 'choose', timeout=8000)
+        page.get_by_role('button', name='Choose three metrics', exact=True).click()
+        expect(page.locator('.level-two')).to_have_attribute('data-phase', 'choose')
         choose(page, IDS[:3])
         page.evaluate("window.dispatchEvent(new PageTransitionEvent('pageshow', {persisted: true}))")
         expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
@@ -308,7 +322,8 @@ new MutationObserver(() => {
     page.get_by_role('button', name='Sound on', exact=True).click()
     page.get_by_role('button', name='Continue to Level 2', exact=True).click()
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
-    expect(page.locator('.level-two')).to_have_attribute('data-phase', 'choose', timeout=8000)
+    page.get_by_role('button', name='Choose three metrics', exact=True).click()
+    expect(page.locator('.level-two')).to_have_attribute('data-phase', 'choose')
     expect(page.locator('.l2-previous')).to_contain_text('Preparation')
     expect(page.get_by_role('button', name='Sound off', exact=True)).to_be_visible()
     page.reload(wait_until='networkidle')

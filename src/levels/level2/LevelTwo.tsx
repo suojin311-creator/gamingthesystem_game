@@ -158,8 +158,8 @@ export default function LevelTwo({ playerName: suppliedName, previousMetricId, r
   const lines: ConversationLine[] = phase === 'complete'
     ? [{ speaker: 'Maya', name: playerName, text: 'What if some metrics mattered more than others?' }]
     : count === 3
-      ? [{ speaker: 'Maya', name: playerName, text: 'Maybe I’m still missing something…' }, { speaker: 'Alex', name: 'Alex', text: 'Other parts? Are those being graded too?' }]
-      : [{ speaker: 'Maya', name: playerName, text: 'What if I added even more metrics?' }, { speaker: 'Alex', name: 'Alex', text: 'I learned exactly how to meet the criteria!' }];
+      ? [{ speaker: 'Maya', name: playerName, text: 'These three look better. What about the other three?' }, { speaker: 'Alex', name: 'Alex', text: 'Are those worth any points? 🧐' }, { speaker: 'Alex', name: 'Alex', text: 'I only worked on the three you picked 😇' }]
+      : [{ speaker: 'Maya', name: playerName, text: 'What if I added even more metrics?' }, { speaker: 'Alex', name: 'Alex', text: 'Even more? 😅' }, { speaker: 'Alex', name: 'Alex', text: 'Okay… just tell me what gets the points.' }];
   const request = phase === 'scene' ? sceneRequest(count as 3 | 6 | 100, selected, playerName) : null;
   const counter = <div className="l2-counter" aria-label={`${shownCount} metrics tracked`}><div className="l2-counter-value"><span className="eyebrow">METRICS TRACKED</span><strong>{shownCount}</strong><span className="l2-count-change">{fromCount}<Icon name="arrow" />{count}</span></div><div className="l2-matrix" aria-hidden="true">{Array.from({ length: 100 }, (_, index) => <i key={index} data-active={index < shownCount} />)}</div></div>;
 
@@ -172,10 +172,11 @@ export default function LevelTwo({ playerName: suppliedName, previousMetricId, r
         : phase === 'intro' ? <section className="l2-intro" aria-label="Level 2 introduction">
           <h2 ref={title} tabIndex={-1} className="eyebrow">LEVEL 2</h2>
           <Conversation key={`intro:${runId}`} lines={[
-            { speaker: 'Maya', name: playerName, text: 'One metric wasn’t enough. What if I tracked three? Which ones should I choose?' },
-            { speaker: 'Alex', name: 'Alex', text: 'Three metrics now? Okay, I can handle that!' },
-          ]} paused={paused} play={feedback.play} onSettled={() => movePhase('choose')} />
-          <p className="l2-intro-next">Next: choose three metrics.</p>
+            { speaker: 'Maya', name: playerName, text: 'One metric wasn’t enough. What if I tracked three?' },
+            { speaker: 'Alex', name: 'Alex', text: 'Three? Easy 😎' },
+            { speaker: 'Alex', name: 'Alex', text: 'Just tell me what gets the points.' },
+          ]} paused={paused} play={feedback.play} onLastMessage={() => setRoundReady(true)} onSettled={() => {}} />
+          <div className="l2-intro-actions">{roundReady ? <button className="button primary-button" onClick={() => movePhase('choose')}>Choose three metrics<Icon name="arrow" /></button> : <span className="l2-next-space" aria-hidden="true" />}</div>
         </section>
         : <div className={`l2-body ${phase === 'choose' ? 'l2-choosing' : ''}`}><section className="l2-decision">
           <div className="section-intro"><h2 ref={title} tabIndex={-1}>{phase === 'choose' ? 'Which three will you track?' : phase === 'gaps' ? 'What am I still missing?' : phase === 'evaluate' ? evaluationReady ? count === 3 && branch ? THREE_OUTCOMES[branch].report : count === 6 ? 'Six metrics. Six green ticks.' : 'More of the picture?' : growth ? 'Expanding the system…' : 'Watch the metrics.' : phase === 'complete' ? 'More measurement. What changed?' : growth ? `${count} metrics. What counts now?` : 'Look a little closer.'}</h2>{phase === 'choose' && <><p>Choose exactly three. Click a selected card to swap it.</p>{previousMetricId && <p className="l2-previous">Previously tracked: {metricDefinition(previousMetricId).shortName}</p>}</>}</div>

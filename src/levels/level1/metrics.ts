@@ -12,7 +12,7 @@ export type Metric = {
   improvement: string;
   uncertainty: string;
   evidence: string;
-  studentQuote: string;
+  studentReplies: readonly string[];
   studentBehaviour: string;
   learningLabel: string;
   takeaway: string;
@@ -26,7 +26,7 @@ export const METRICS: Metric[] = [
     example: 'Students will arrive ready to discuss the reading.', before: 34, after: 88,
     improvement: 'More preparation tasks completed', uncertainty: 'Understanding still unclear',
     evidence: 'Students complete the preparation, but some skim just enough to meet the requirement.',
-    studentQuote: 'Uh... I finished the checklist.',
+    studentReplies: ['I finished the whole list! 📋', 'The reading? I mostly skimmed it 😬'],
     studentBehaviour: 'Skimming just to finish.',
     learningLabel: 'Understanding', takeaway: 'The checklist is complete. The ideas are unclear.',
     scene: [
@@ -40,7 +40,7 @@ export const METRICS: Metric[] = [
     example: 'Students will contribute more thoughtful ideas.', before: 29, after: 85,
     improvement: 'More visible contributions', uncertainty: 'Depth still unclear',
     evidence: 'Students speak more often, but some contributions are brief or repetitive.',
-    studentQuote: 'I just wanted to participate.',
+    studentReplies: ['I put my hand up! 🙋', 'I… didn’t really have an explanation 🤷'],
     studentBehaviour: 'More talk. Little explanation.',
     learningLabel: 'Depth', takeaway: 'More contributions. Little explanation.',
     scene: [
@@ -54,7 +54,7 @@ export const METRICS: Metric[] = [
     example: 'Students will think more deeply about the task.', before: 41, after: 91,
     improvement: 'More visible time on task', uncertainty: 'Thinking still unclear',
     evidence: 'Students stay visibly on task, but some focus on looking busy rather than thinking deeply.',
-    studentQuote: 'I... kept the page open.',
+    studentReplies: ['I kept the page open! 💻', 'That counts as staying focused… right? 👀'],
     studentBehaviour: 'Looking busy takes priority.',
     learningLabel: 'Thinking', takeaway: 'The page stayed open. The thinking is unclear.',
     scene: [
@@ -68,7 +68,7 @@ export const METRICS: Metric[] = [
     example: 'Students will explore and develop ideas together.', before: 32, after: 84,
     improvement: 'More discussion criteria met', uncertainty: 'New ideas still unclear',
     evidence: 'Students use the discussion behaviours that earn credit, but some contributions become formulaic.',
-    studentQuote: 'I followed the discussion checklist.',
+    studentReplies: ['I used all the right phrases! 💬', 'A new idea? Umm… 🤔'],
     studentBehaviour: 'Discussion turns formulaic.',
     learningLabel: 'New ideas', takeaway: 'The right phrases. Few new ideas.',
     scene: [
@@ -82,7 +82,7 @@ export const METRICS: Metric[] = [
     example: 'Students will reflect on what changed their thinking.', before: 38, after: 89,
     improvement: 'More structured reflections', uncertainty: 'Changed thinking still unclear',
     evidence: 'Reflections match the expected structure, but some students repeat the same safe patterns.',
-    studentQuote: "That’s the format on the rubric.",
+    studentReplies: ['I followed the example! 📝', 'I just used the same pattern again 🔁'],
     studentBehaviour: 'Repeating safe reflection patterns.',
     learningLabel: 'Changed thinking', takeaway: 'A polished reflection. Changed thinking is unclear.',
     scene: [
@@ -96,7 +96,7 @@ export const METRICS: Metric[] = [
     example: 'Students will engage with their classmates’ ideas.', before: 27, after: 86,
     improvement: 'More response criteria met', uncertainty: 'Exchange of ideas still unclear',
     evidence: 'Online replies become more specific, but some students learn a repeatable response formula.',
-    studentQuote: 'I met every response criterion.',
+    studentReplies: ['A suggestion and a question! 🎯', 'I use that pattern every time 🤭'],
     studentBehaviour: 'Replying to tick boxes.',
     learningLabel: 'Real exchange', takeaway: 'The criteria are met. The exchange is unclear.',
     scene: [

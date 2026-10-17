@@ -2,7 +2,7 @@
 
 An English-language game about measuring engagement. Level 1 and Level 2 gameplay are implemented. The opening and finished cinematics remain the partner's separate work; classroom scenes are clearly labelled, replaceable placeholders.
 
-**[Download the Level 2 preview (v5)](play/Level2-play-v5.zip?raw=true).** Sign in to GitHub with access to this private repository, download and extract the ZIP, then open **Level2.html** in Chrome or Edge. No installation is needed. **Levels1-and-2.html** in the same ZIP starts at Level 1 and continues to Level 2.
+**[Download the Level 2 preview (v6)](play/Level2-play-v6.zip?raw=true).** Sign in to GitHub with access to this private repository, download and extract the ZIP, then open **Level2.html** in Chrome or Edge. No installation is needed. **Levels1-and-2.html** in the same ZIP starts at Level 1 and continues to Level 2.
 
 Player decisions now use **I**. The reusable `Gameplay` host accepts the name already collected in the opening and carries it through both levels, dialogue labels, avatars and cinematic requests. These standalone previews still use Maya because they omit the opening. See [Opening/name handoff](docs/OPENING_HANDOFF.md) for the integration point in the partner's supplied source.
 
@@ -12,15 +12,17 @@ The saved [Level 1 v7 preview](play/Level1-play-v7.zip?raw=true) is preserved un
 
 **Level 1 — One metric.** Select one of six metrics, write a prediction, watch the illustrative reported score rise, visit the classroom and compare the outcome. The final observation page now has an enabled **Continue to Level 2** button. Completion still reports automatically; navigation waits for that button.
 
-**Level 2 — More metrics.** A dedicated chapter introduction presents the player/Alex conversation, then automatically opens the six working metric cards after the final reply's reading interval. Choose exactly three; the vertical **Alex’s Checklist** records the current selection using the same visual format as the later checklists. Three- and six-metric evaluations show the changing metrics and perspective cards without a duplicate checklist. All 20 trios route to three descriptive outcome groups. Continue from 6 to 10, 25 and 100 requirements, with students moving from completing requirements to managing criteria and optimizing the checklist. Level 3 is reserved.
+**Level 2 — More metrics.** A dedicated chapter introduction presents the player/Alex conversation, then shows a lower-right **Choose three metrics** button with Alex's final message. The introduction stays until the player chooses to continue. Choose exactly three; the vertical **Alex’s Checklist** records the current selection using the same visual format as the later checklists. Three- and six-metric evaluations show the changing metrics and perspective cards without a duplicate checklist. All 20 trios route to three descriptive outcome groups. Continue from 6 to 10, 25 and 100 requirements, with students moving from completing requirements to managing criteria and optimizing the checklist. Level 3 is reserved.
 
 Level 2 counts requirements; it does not invent numerical learning results or a declining student health score. Level 1's 0–100 reported scores remain illustrative. Neither predictions nor choices are graded or sent to a service.
 
-The gap view emphasizes **3 areas untracked** with larger metric names and a continuous, slow amber border pulse until the missing metrics are added. Reduced motion keeps a static prominent border. Both levels use the same student card content: the observed behaviour has the largest text, with **Learning at risk** as a small supporting label. Level 1 describes skimming, shallow contributions, looking busy, formulaic discussion, safe reflection patterns and box-ticking replies. Each new round clears both cards' old presentation: management awaits its report and students show **Awaiting observation** until current classroom evidence arrives. There is no stale observed-at count or numerical learning penalty.
+The gap view emphasizes **3 areas untracked** with larger metric names and a stronger continuous 1.25-second border pulse, wider outer glow and synchronized warning icon until the missing metrics are added. Reduced motion keeps a static prominent border. Both levels use the same student card content: the observed behaviour has the largest text, with **Learning at risk** as a small supporting label. Level 1 describes skimming, shallow contributions, looking busy, formulaic discussion, safe reflection patterns and box-ticking replies. Each new round clears both cards' old presentation: management awaits its report and students show **Awaiting observation** until current classroom evidence arrives. There is no stale observed-at count or numerical learning penalty.
 
-Results arrive before observations. Level 2 dialogue starts after 1.6–2.8 seconds of visible finding time, with 300 ms typing dots and 1.1–2.2 seconds between messages. Its next button appears with the final reply; all text remains available and the player decides when to continue. At 10, 25 and 100 metrics checklist actions tick sequentially, with the next button about one second after the final item. Level 1 keeps its original 6–8 second finding time, 650 ms typing dots and 3–5 second message intervals. Hidden tabs, off-screen information and restart dialogs hold pending beats. Reduced motion removes movement. Level 2 has no Guide, Pause or Reveal control.
+Results arrive before observations. Level 2 dialogue starts after 1.6–2.8 seconds of visible finding time, with 300 ms typing dots and 1.1–2.2 seconds between messages. Its next button appears with the final reply; all text remains available and the player decides when to continue. At 10, 25 and 100 metrics checklist actions tick sequentially, with the next button about one second after the final item. Level 1 starts dialogue 3.5 seconds earlier: its finding interval is now 2.5–4.5 visible seconds, followed by the same 650 ms typing dots and 3–5 second message intervals. Its prediction page keeps the example and input without a repeated visible prompt/helper; the input retains an accessible label. Hidden tabs, off-screen information and restart dialogs hold pending beats. Reduced motion removes movement. Level 2 has no Guide, Pause or Reveal control.
 
 State and sound preference live only in the current page's memory. Moving between levels and scenes retains the open run. Reloading, reopening or restoring the page from the browser back-forward cache starts fresh. No progress or preferences are written to localStorage, sessionStorage or cookies. Each computer runs independently; two students can share one open game. This is not networked multiplayer.
+
+Alex now replies in two consecutive short messages. The three-metric conversation explicitly refers to the other three areas; the six-metric reply answers the proposal to add metrics. All 16 dialogue emoji are distinct. Consecutive messages from one character share a visible name/avatar, and a newly arrived reply scrolls into view when needed. The approved text is recorded in [Dialogue review](docs/DIALOGUE_REVIEW.md).
 
 ## Develop
 
@@ -87,15 +89,16 @@ python tests/guide.py --file dist/index.html
 # With npm run dev running, also check the partner scene contracts:
 python tests/level2_integration.py
 python tests/player_identity.py
+node tests/dialogue_emojis.mjs
 # After packaging the playable ZIP:
 python tests/release.py
 ```
 
 The browser tests serve the exact production HTML bytes through an in-memory test origin with networking disabled. This cloud machine blocks `file://` navigation, so opening the downloaded file in the user's particular browser remains a separate check. Screenshots/results go to ignored `test-results/`.
 
-Checks cover the automatic chapter-dialogue handoff, vertical selection checklist, absence of duplicate evaluation checklists, continuous gap pulse, the 20 trios, complete expansion flow, both levels' handoff, outcome text, timing, selection limits, sound, keyboard controls, restart, fresh-page lifetime and responsive layouts. They are browser functional checks, not a classroom concurrency/load test.
+Checks cover the player-controlled chapter-dialogue handoff, vertical selection checklist, absence of duplicate evaluation checklists, continuous gap pulse, the 20 trios, complete expansion flow, both levels' handoff, outcome text, timing, selection limits, sound, keyboard controls, restart, fresh-page lifetime and responsive layouts. They are browser functional checks, not a classroom concurrency/load test.
 
 The current results and artifact hashes are recorded in
-[LEVEL2_VALIDATION-v5.json](docs/LEVEL2_VALIDATION-v5.json). Earlier previews and
+[LEVEL2_VALIDATION-v6.json](docs/LEVEL2_VALIDATION-v6.json). Earlier previews and
 their validation records are preserved. The highlighted narrative ownership
 check is in [LEVEL2_NARRATIVE_AUDIT.md](docs/LEVEL2_NARRATIVE_AUDIT.md).
