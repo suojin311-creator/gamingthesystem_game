@@ -34,7 +34,7 @@ with sync_playwright() as p:
         for _ in range(4):
             page.keyboard.press('Tab')
             assert page.evaluate('document.activeElement.closest(".workbench-guide") !== null')
-        for index, title in enumerate(['Your decisions', 'The university’s view', 'The students’ view', 'The conversation']):
+        for index, title in enumerate(['Your decisions', 'Management’s view', 'The students’ view', 'The conversation']):
             expect(guide.get_by_role('heading', name=title, exact=True)).to_be_visible()
             card = page.locator('.guide-card').bounding_box()
             spot = page.locator('.guide-spotlight').bounding_box()
@@ -56,7 +56,8 @@ with sync_playwright() as p:
         record(f'{width}px: four anchored guide steps fit, trap keyboard focus, and pause dialogue')
 
         page.reload(wait_until='networkidle')
-        expect(guide).to_have_count(0)
+        expect(guide).to_be_visible()
+        page.get_by_role('button', name='Skip guide').click()
         page.get_by_test_id('metric-part').click()
         page.get_by_role('button', name='Guide', exact=True).click()
         expect(guide).to_be_visible()
@@ -64,7 +65,7 @@ with sync_playwright() as p:
         expect(guide).to_have_count(0)
         expect(page.get_by_role('button', name='Guide', exact=True)).to_be_focused()
         expect(page.get_by_test_id('metric-part')).to_have_attribute('aria-pressed', 'true')
-        record(f'{width}px: guide runs once, reopens on demand, and preserves the selected metric')
+        record(f'{width}px: guide returns for every new page and preserves in-page choices when reopened')
 
         page.get_by_role('button', name='Make a prediction').click()
         page.get_by_label('What do you expect students to do?').fill('Students will develop ideas.')

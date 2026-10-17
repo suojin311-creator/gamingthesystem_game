@@ -1,10 +1,9 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Icon from './Icon';
 
-export const GUIDE_KEY = 'gaming-the-system:workbench-guide:v1';
 const steps = [
   { selector: '.metric-grid, .decision-area', title: 'Your decisions', text: 'Choose a metric, predict what will happen, then run your experiment.' },
-  { selector: '.university', title: 'The university’s view', text: 'This card shows the score reported to the university.' },
+  { selector: '.university', title: 'Management’s view', text: 'This card shows the score reported to management.' },
   { selector: '.student', title: 'The students’ view', text: 'Observe the classroom to discover how students respond.' },
   { selector: '.dialogue-strip', title: 'The conversation', text: 'Maya and Alex speak here. New replies appear one at a time.' },
 ];

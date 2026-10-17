@@ -1,12 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 export type Cue = 'tick' | 'report' | 'evidence' | 'student' | 'message';
-const SETTINGS_KEY = 'gaming-the-system:sound:v1';
 
 export function useFeedback() {
-  const [muted, setMuted] = useState(() => {
-    try { return localStorage.getItem(SETTINGS_KEY) === 'off'; } catch { return false; }
-  });
+  const [muted, setMuted] = useState(false);
   const [available, setAvailable] = useState(typeof window.AudioContext === 'function');
   const mutedRef = useRef(muted);
   const context = useRef<AudioContext | null>(null);
@@ -62,9 +59,14 @@ export function useFeedback() {
     mutedRef.current = next;
     setMuted(next);
     if (next) stop();
-    try { localStorage.setItem(SETTINGS_KEY, next ? 'off' : 'on'); } catch { /* Sound still works without storage. */ }
     if (!next) unlock();
   }, [stop, unlock]);
+
+  const reset = useCallback(() => {
+    stop();
+    mutedRef.current = false;
+    setMuted(false);
+  }, [stop]);
 
   useEffect(() => {
     const onVisibility = () => { if (document.hidden) stop(); };
@@ -79,5 +81,5 @@ export function useFeedback() {
     };
   }, [stop]);
 
-  return { muted, available, unlock, play, toggle, stop };
+  return { muted, available, unlock, play, toggle, stop, reset };
 }

@@ -52,7 +52,6 @@ def begin(context):
     return page
 
 def fresh(page):
-    page.evaluate('localStorage.clear()')
     page.reload(wait_until='networkidle')
     skip_guide(page)
 
@@ -118,9 +117,6 @@ with sync_playwright() as p:
         reveal_review(page)
         expect(page.locator('.student .sr-only')).to_have_text(uncertainty)
         expect(page.locator('.university-value')).to_contain_text(str(after))
-        page.reload(wait_until='networkidle')
-        expect(page.get_by_role('heading', name='Look a little closer.')).to_be_visible()
-        expect(page.locator('.prediction-recap')).to_contain_text(prediction)
         no_overflow(page)
         reveal_review(page)
         if metric_id == 'part':
@@ -129,7 +125,7 @@ with sync_playwright() as p:
         expect(page.get_by_role('heading', name='What if we measured more than one?')).to_be_visible()
         page.get_by_role('button', name='Review this experiment').click()
         expect(page.get_by_role('heading', name='Look a little closer.')).to_be_visible()
-        record(f'{metric_id}: correct score, story, evidence, saved prediction, reload, and completion')
+        record(f'{metric_id}: correct score, story, in-page prediction, evidence, and completion')
 
     fresh(page)
     select(page, 'prep', '   ')
@@ -139,13 +135,12 @@ with sync_playwright() as p:
     assert len(field.input_value()) == 100
     expect(page.locator('#prediction-count')).to_contain_text('100')
     field.fill('<img src=x onerror=alert(1)> & "ideas"')
-    page.reload(wait_until='networkidle')
     expect(field).to_have_value('<img src=x onerror=alert(1)> & "ideas"')
     page.get_by_role('button', name='Run evaluation').click()
     story_to_review(page)
     assert page.locator('.prediction-recap img').count() == 0
     expect(page.locator('.prediction-recap')).to_contain_text('<img src=x onerror=alert(1)>')
-    record('Prediction validation: whitespace, 100-character limit, reload, literal rendering')
+    record('Prediction validation: whitespace, 100-character limit, literal rendering')
 
     page.get_by_role('button', name='Restart', exact=True).click()
     expect(page.get_by_role('dialog')).to_be_visible()
@@ -155,6 +150,8 @@ with sync_playwright() as p:
     expect(page.get_by_role('heading', name='Look a little closer.')).to_be_visible()
     page.get_by_role('button', name='Restart', exact=True).click()
     page.get_by_role('button', name='Restart level 1').click()
+    expect(page.get_by_role('dialog', name='Workbench guide')).to_be_visible()
+    skip_guide(page)
     expect(page.get_by_role('button', name='Make a prediction')).to_be_disabled()
     assert page.locator('.metric-card[aria-pressed=true]').count() == 0
     record('Restart cancellation preserves progress; confirmed restart clears only this game')
@@ -175,21 +172,40 @@ with sync_playwright() as p:
     expect(field).to_have_value('')
     record('Keyboard selection and focus; changing metric resets the previous prediction')
 
-    for bad in ['{broken', json.dumps({'version': 1, 'phase': 'review', 'metricId': 'unknown', 'prediction': 'abc'}), json.dumps({'version': 1, 'phase': 'review', 'metricId': 'prep', 'prediction': '  '})]:
-        page.evaluate('(args) => localStorage.setItem(args[0], args[1])', [KEY, bad])
-        page.reload(wait_until='networkidle')
-        expect(page.get_by_role('heading', name='What will you measure?')).to_be_visible()
-    record('Corrupt or incompatible saves recover to a playable start')
+    page.evaluate("""localStorage.setItem('gaming-the-system:level-one:v1', JSON.stringify({version:1,phase:'review',metricId:'prep',prediction:'A legacy prediction.',resultReported:true,reviewStep:2}));localStorage.setItem('gaming-the-system:workbench-guide:v1','seen');localStorage.setItem('gaming-the-system:sound:v1','off');""")
+    page.reload(wait_until='networkidle')
+    expect(page.get_by_role('dialog', name='Workbench guide')).to_be_visible()
+    skip_guide(page)
+    expect(page.get_by_role('button', name='Make a prediction')).to_be_disabled()
+    expect(page.get_by_role('button', name='Sound on', exact=True)).to_be_visible()
+    record('Refresh starts fresh and ignores legacy progress, guide and sound preferences')
 
-    fresh(page)
     select(page, 'discuss')
     page.get_by_role('button', name='Run evaluation').click()
     report_if_needed(page)
     page.get_by_role('button', name='Observe the class').click()
     page.get_by_role('button', name='Continue scene').click()
     page.reload(wait_until='networkidle')
-    expect(page.locator('.scene-caption')).to_contain_text('Could you elaborate?')
-    record('Refreshing a story restarts the selected interlude without losing the prediction')
+    expect(page.get_by_role('dialog', name='Workbench guide')).to_be_visible()
+    skip_guide(page)
+    expect(page.get_by_role('button', name='Make a prediction')).to_be_disabled()
+    expect(page.get_by_test_id('cinematic-placeholder')).to_have_count(0)
+    record('Refresh during a scene returns to a new game, not the interlude')
+
+    select(page, 'focus', 'This belongs to one open page.')
+    other = begin(context)
+    expect(other.get_by_role('button', name='Make a prediction')).to_be_disabled()
+    other.close()
+    reopened = begin(context)
+    expect(reopened.get_by_role('button', name='Make a prediction')).to_be_disabled()
+    expect(page.get_by_label('What do you expect students to do?')).to_have_value('This belongs to one open page.')
+    reopened.close()
+    record('New and reopened tabs start fresh while the existing open page keeps its own run')
+    page.evaluate("window.dispatchEvent(new PageTransitionEvent('pageshow', {persisted:true}))")
+    expect(page.get_by_role('dialog', name='Workbench guide')).to_be_visible()
+    skip_guide(page)
+    expect(page.get_by_role('button', name='Make a prediction')).to_be_disabled()
+    record('Returning from the browser back-forward cache also starts fresh')
 
     for width, height in [(1366, 768), (1024, 768), (768, 1024), (390, 844), (375, 667), (320, 640)]:
         mobile = browser.new_context(viewport={'width': width, 'height': height}, reduced_motion='reduce', has_touch=width < 800)
@@ -209,14 +225,14 @@ with sync_playwright() as p:
         record(f'Layout and functional flow at {width} × {height}, including touch and reduced motion')
 
     blocked = browser.new_context(reduced_motion='reduce')
-    blocked.add_init_script("Object.defineProperty(Storage.prototype, 'setItem', {value() { throw new Error('storage blocked'); }});")
+    blocked.add_init_script("for (const name of ['localStorage','sessionStorage']) Object.defineProperty(window,name,{get(){throw new Error('storage blocked');}});")
     blocked_page = begin(blocked)
-    expect(blocked_page.locator('.storage-notice')).to_contain_text('Progress can’t be saved', timeout=5000)
+    expect(blocked_page.locator('.storage-notice')).to_have_count(0)
     select(blocked_page, 'part')
     blocked_page.get_by_role('button', name='Run evaluation').click()
     story_to_review(blocked_page)
     blocked.close()
-    record('Unavailable browser storage is reported and does not block gameplay')
+    record('Full game works with localStorage and sessionStorage completely unavailable')
 
     if not args.file:
         harness = output / 'integration.html'
@@ -228,7 +244,7 @@ import LevelOne from '/src/LevelOne.tsx';
 import '/src/styles.css';
 const root = createRoot(document.getElementById('root'));
 root.render(React.createElement(LevelOne, {
-  playerName: 'Jordan', persist: false, showIntro: false,
+  playerName: 'Jordan', showIntro: false,
   renderCinematic: (request, complete) => {
     window.storyRequest = request;
     return React.createElement('section', null,

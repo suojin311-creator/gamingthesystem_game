@@ -104,7 +104,7 @@ a { color: inherit; }
 .waiting-signal > .icon { width: 35px; height: 35px; }
 .uncertainty { font: 24px/1.2 var(--serif); color: #9f6d35; margin-top: 4px; }
 .has-evidence { background: #f7e9cf; border-color: #ceb183; }
-.new-badge { margin-left: auto; font-size: 7px; letter-spacing: .08em; color: #fffaf0; background: #6f8a59; padding: 3px 4px; border-radius: 2px; }
+.new-badge { position: absolute; top: 6px; right: 7px; font-size: 7px; letter-spacing: .08em; color: #fffaf0; background: #6f8a59; padding: 3px 4px; border-radius: 2px; }
 .student .new-badge { background: #ad7c40; }
 .just-updated { animation: status-arrival .8s ease-out 2; outline: 2px solid #8fa878; outline-offset: 2px; }
 .student.just-updated { outline-color: #c59b5d; }
@@ -203,7 +203,6 @@ a { color: inherit; }
 .restart-dialog h2 { font: 27px var(--serif); margin-bottom: 12px; }
 .restart-dialog p { font-size: 12px; color: #7f7c69; line-height: 1.6; }
 .dialog-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
-.storage-notice { max-width: 1160px; margin: 12px auto 0; font-size: 11px; color: #8e5d3c; line-height: 1.6; }
 .guide-button { border: 0; background: transparent; padding: 10px 0; display: flex; align-items: center; gap: 7px; color: #656c58; font-size: 11px; }
 .guide-button > .icon { width: 17px; height: 17px; }
 .guide-button:hover { color: var(--coral); }
@@ -221,10 +220,6 @@ a { color: inherit; }
 .guide-dots i { width: 5px; height: 5px; border-radius: 50%; background: #d7ceba; }
 .guide-dots .active { background: var(--coral); }
 .guide-actions .button { min-height: 38px; font-size: 11px; padding: 9px 12px; }
-.with-playback { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.playback-control { display: inline-flex; align-items: center; gap: 5px; padding: 7px 0 7px 8px; border: 0; background: transparent; color: #89816c; font-size: 10px; flex-shrink: 0; }
-.playback-control > .icon { width: 13px; height: 13px; }
-.playback-control:hover { color: var(--coral); }
 .sequence-status { display: flex; gap: 10px; align-items: center; font: italic 14px var(--serif); color: #9c8766; padding: 11px 0; }
 .sequence-dots, .review-loading { display: inline-flex; align-items: center; gap: 4px; }
 .sequence-dots > i, .review-loading > i { width: 4px; height: 4px; border-radius: 50%; background: currentColor; animation: typing 1.2s infinite; }

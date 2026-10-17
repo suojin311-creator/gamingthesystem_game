@@ -1,4 +1,4 @@
-"""Real browser checks for automatic recaps, pause/resume, chat timing and audio."""
+"""Real browser checks for automatic recaps, fresh pages, chat timing and audio."""
 import argparse
 import json
 from pathlib import Path
@@ -72,13 +72,12 @@ with sync_playwright() as p:
     page.get_by_role('button', name='Run evaluation').click()
     expect(page.get_by_role('button', name='Observe the class')).to_be_disabled()
     expect(page.locator('.after-score')).to_contain_text('88')
-    page.get_by_role('button', name='Pause updates').click()
     expect(page.locator('.university-value')).to_have_count(0)
-    page.wait_for_timeout(1200)
-    expect(page.locator('.university-value')).to_have_count(0)
-    page.get_by_role('button', name='Resume updates').click()
     expect(page.get_by_role('button', name='Observe the class')).to_be_enabled(timeout=5000)
-    record('Score animates, then university updates automatically; Pause holds the next beat')
+    assert page.get_by_role('button', name='Pause updates').count() == 0
+    assert page.get_by_role('button', name='Resume updates').count() == 0
+    expect(page.get_by_role('heading', name='Management’s view', exact=True)).to_be_visible()
+    record('Score and management feedback advance automatically without pause controls')
 
     expect(page.locator('.university')).to_have_attribute('data-updated', 'true')
     expect(page.locator('.university-value')).to_contain_text('88')
@@ -121,9 +120,7 @@ with sync_playwright() as p:
     finish_scene(page)
     settle(page)
     assert page.evaluate('window.audioStarts.length') == before
-    page.reload(wait_until='networkidle')
-    expect(page.get_by_role('button', name='Sound off', exact=True)).to_be_visible()
-    record('Mute suppresses automatic update cues and survives reload')
+    record('Mute suppresses all subsequent cues within the current game')
 
     page.get_by_role('button', name='Sound off', exact=True).click()
     page.get_by_role('button', name='Replay scene').click()
@@ -132,19 +129,22 @@ with sync_playwright() as p:
     assert page.evaluate('window.audioStarts.some(n => n.frequency === 360 && n.state === "running")')
     record('Unmuting restores actual Web Audio feedback')
     page.get_by_text('More context', exact=True).click()
-    expect(page.get_by_role('button', name='Resume updates')).to_be_visible()
+    expect(page.get_by_text('Close details', exact=True)).to_be_visible()
     page.wait_for_timeout(2000)
     expect(page.locator('.student')).to_contain_text('Not observed yet')
-    page.get_by_role('button', name='Resume updates').click()
+    page.get_by_text('Close details', exact=True).click()
     expect(page.locator('.uncertainty')).to_have_text('Unclear', timeout=5000)
-    record('Reading optional context pauses the presentation until Resume')
+    record('Optional detail reading holds the next beat; closing details resumes it automatically')
 
     small = make_context(browser, viewport={'width': 390, 'height': 300}, reduced_motion='reduce')
     tab = small.new_page()
     tab.goto(url, wait_until='networkidle')
     tab.get_by_role('button', name='Skip guide').click()
-    tab.evaluate('''localStorage.setItem('gaming-the-system:level-one:v1', JSON.stringify({version:1, phase:'review',metricId:'prep',prediction:'Students will understand.',resultReported:true,reviewStep:0}))''')
-    tab.reload(wait_until='networkidle')
+    tab.get_by_test_id('metric-prep').click()
+    tab.get_by_role('button', name='Make a prediction').click()
+    tab.get_by_label('What do you expect students to do?').fill('Students will understand.')
+    tab.get_by_role('button', name='Run evaluation').click()
+    scene_to_review(tab)
     tab.evaluate('window.scrollTo(0, document.body.scrollHeight)')
     assert tab.evaluate('document.querySelector(".prediction-recap").getBoundingClientRect().bottom <= 0')
     tab.wait_for_timeout(1300)
