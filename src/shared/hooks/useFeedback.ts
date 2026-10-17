@@ -2,8 +2,16 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 export type Cue = 'tick' | 'report' | 'evidence' | 'message';
 
+// One in-memory preference per open game, shared across level mounts.
+let pageMuted = false;
+const muteSubscribers = new Set<(muted: boolean) => void>();
+function setPageMuted(value: boolean) {
+  pageMuted = value;
+  muteSubscribers.forEach(subscriber => subscriber(value));
+}
+
 export function useFeedback() {
-  const [muted, setMuted] = useState(false);
+  const [muted, setMuted] = useState(pageMuted);
   const [available, setAvailable] = useState(typeof window.AudioContext === 'function');
   const mutedRef = useRef(muted);
   const context = useRef<AudioContext | null>(null);
@@ -54,10 +62,21 @@ export function useFeedback() {
     });
   }, []);
 
+  useEffect(() => {
+    const sync = (value: boolean) => {
+      mutedRef.current = value;
+      setMuted(value);
+      if (value) stop();
+    };
+    muteSubscribers.add(sync);
+    return () => { muteSubscribers.delete(sync); };
+  }, [stop]);
+
   const toggle = useCallback(() => {
     const next = !mutedRef.current;
     mutedRef.current = next;
     setMuted(next);
+    setPageMuted(next);
     if (next) stop();
     if (!next) unlock();
   }, [stop, unlock]);
@@ -66,6 +85,7 @@ export function useFeedback() {
     stop();
     mutedRef.current = false;
     setMuted(false);
+    setPageMuted(false);
   }, [stop]);
 
   useEffect(() => {

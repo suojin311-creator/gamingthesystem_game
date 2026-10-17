@@ -1,114 +1,91 @@
 # Gaming the System
 
-One English-language game project, organised by level. Level 1 is implemented; Level 2 has a reserved source folder. The supplied cinematic opening has **not** been merged or modified. Its office and classroom backgrounds are reused as visual references/assets from the supplied project.
+An English-language game about measuring engagement. Level 1 and Level 2 gameplay are implemented. The opening and finished cinematics remain the partner's separate work; classroom scenes are clearly labelled, replaceable placeholders.
 
-**Just want to play? [Download the playable ZIP (v7)](play/Level1-play-v7.zip?raw=true), extract it, and open `Level1.html` in Chrome or Edge. No developer tools are needed. Sign in to a GitHub account with access to this repository before downloading.**
+**[Download the Level 2 preview](play/Level2-play-v1.zip?raw=true).** Sign in to GitHub with access to this private repository, download and extract the ZIP, then open **Level2.html** in Chrome or Edge. No installation is needed. **Levels1-and-2.html** in the same ZIP starts at Level 1 and continues to Level 2.
 
-## Play without installing anything
+The saved [Level 1 v7 preview](play/Level1-play-v7.zip?raw=true) is preserved unchanged on `level1-preview` and in `play/`. New development is on `level2-dev`.
 
-Open `dist/index.html` in a current desktop browser. The production file contains its own JavaScript, styles, and images, and needs no server or Internet connection. The separately delivered `Gaming-the-System-Level1.html` is the same file with a descriptive name.
+## What is playable
 
-Select one of six metrics, write a prediction of up to 100 characters, run the evaluation, observe the selected story placeholder, then compare the result with the prediction. Level 1 ends on that observation page. After the final reply’s reading interval, a disabled Continue to Level 2 button appears there and all four progress steps are marked done. No click is required to finish Level 1, and the current build stays on this page. Replay scene and the header Restart remain available.
+**Level 1 — One metric.** Select one of six metrics, write a prediction, watch the illustrative reported score rise, visit the classroom and compare the outcome. The final observation page now has an enabled **Continue to Level 2** button. Completion still reports automatically; navigation waits for that button.
 
-Version 7 replaces the final completion label with **Continue to Level 2 →**, reserved as a disabled button until the next level is ready.
+**Level 2 — More metrics.** Choose exactly three of the same six metrics. All 20 combinations route to three descriptive outcome groups. Observe the class, identify the other three areas, then add them. Continue expanding the measurement system from 6 to 10, 25 and 100 requirements. The central checklist shows students moving from completing requirements to managing criteria and optimizing the checklist. The final scene asks whether some metrics should matter more than others. Level 3 is reserved, with no weighting gameplay implemented yet.
 
-The prediction page removes the duplicate Back to metrics control: use Change beside the selected metric. The Run evaluation button stays on the right. The former next-level screen is reserved separately in `src/levels/level2/LevelTwoEntryPlaceholder.tsx` and is not mounted or included in this playable flow.
+Level 2 counts requirements; it does not invent numerical learning results or a declining student health score. Level 1's 0–100 reported scores remain illustrative. Neither predictions nor choices are graded or sent to a service.
 
-The post-scene page stays simple. The prediction is a quiet reference line. A single classroom observation paragraph (the former details text) appears automatically together with the Students summary, sharing one sound cue. There is no duplicate headline, details toggle, student badge or separate student animation. Management’s view retains its existing score without renewed emphasis.
+Results arrive before observations. Each classroom finding has 6–8 seconds of visible reading time before dialogue. Maya/Alex messages arrive chronologically with 650 ms of typing dots and 3–5 seconds to read. At 10, 25 and 100 metrics the checklist appears automatically, followed by time to read. Data cues are stronger than message pips. Revealed information remains on screen. Hidden tabs, off-screen information and open guide/restart dialogs hold the pending beat; reduced motion preserves reading time. There is no Pause or Reveal button.
 
-The classroom observation has 6–8 seconds of visible reading time, based on its English length, before conversation begins. Maya appears above-left, then Alex below-right within the main content column. Each message starts with 650 ms of typing dots and gets 3–5 seconds of visible reading time. The reserved next-level button appears only after the last reply’s reading interval. All revealed information stays available. Hidden tabs, off-screen text, Guide and restart dialogs hold the pending beat; sequences resume automatically when visible again. There are no pause or reveal buttons.
-
-The score's Target 70 label sits directly below the 70-point marker at every screen size. The finding fades in once; the student card changes quietly as its summary. The evaluation’s management highlight ends after 1.6 visible seconds. Reduced-motion preferences remove movement while retaining the reading intervals and sequence.
-
-Web Audio tones mark the rising score, target achievement, the combined classroom finding/student update, and arriving replies. Data cues remain more audible than v2, with reply pips softer. The header’s **Sound on / Sound off** control changes sound only for the current run; a new run starts with sound on. Audio starts after a user gesture. Unsupported audio falls back to visual feedback.
-
-A short, skippable four-step guide appears at the start of every run. Use **Guide** to reopen it. It highlights decisions, the reported score, student response and conversation without revealing the lesson’s conclusion.
-
-Scores are illustrative 0–100 indices. Each metric has a stable before/after pair and an illustrative target of 70. Predictions are never graded or sent to a service. Moodle references are fictional game content; no Moodle or AI connection is required.
-
-Game state lives only in the current page’s React memory. No game progress, guide marker, or sound preference is written to localStorage, sessionStorage or cookies. Old saved data is ignored. Refreshing, closing and reopening, opening another tab, or returning through the browser back-forward cache starts a new run with no selected metric or prediction. Restart also starts a fresh run and shows the guide again. Moving between the workbench and its cinematic within the open page preserves the current run.
-
-The integrated full game must use the same lifetime rule: initialise the opening and player identity on a new page, and keep data only while that page is open. Mount the Level 1 component once during its workbench/cinematic sequence; pass the current player name and completion callback in memory.
+State and sound preference live only in the current page's memory. Moving between levels and scenes retains the open run. Reloading, reopening or restoring the page from the browser back-forward cache starts fresh. No progress or preferences are written to localStorage, sessionStorage or cookies. Each computer runs independently; two students can share one open game. This is not networked multiplayer.
 
 ## Develop
 
-Use Node.js 20.19+, 22.12+, or a newer compatible version (validated here on Node.js 24).
+Use Node.js 20.19+, 22.12+, or newer (validated with Node 24):
 
 ```sh
 cd /workspace/gamingthesystem_game
-npm ci
+npm ci --cache /tmp/gaming-the-system-npm-cache
 npm run dev
 ```
 
-Use the address printed by Vite. For a production build:
+The default development entry starts at Level 1. To work directly on Level 2:
 
 ```sh
-npm run build
+npm run dev -- --mode level2
 ```
 
-The build checks TypeScript and creates a self-contained `dist/index.html`. `vite-plugin-singlefile` embeds the assets so this first prototype can be shared as one HTML file. No external fonts, runtime network calls, or secret variables are needed.
+Production builds check TypeScript and embed JavaScript, styles and images in one HTML file, with no external fonts, services or runtime network requests:
+
+```sh
+npm run build         # dist/index.html: Level 1 → Level 2
+npm run build:level2  # dist-level2/index.html: start directly at Level 2
+```
 
 ## Source layout
 
 ```text
 src/
-  main.tsx                 Browser bootstrap; loads shared base styles
-  App.tsx                  Game entry; currently opens Level 1
+  App.tsx                 In-memory Level 1 → Level 2 navigation
+  main.tsx                Bootstrap and shared base stylesheet
   levels/
-    level1/
-      LevelOne.tsx         Implemented Level 1 flow
-      metrics.ts           Choices, scores and narrative observations
-      state.ts             Level 1 in-memory state
-      components/          Level 1 dialogue, guide and cinematic placeholder
-      styles.css           Scoped Level 1 layouts
+    level1/               One-metric choices, scores, guide and observations
     level2/
-      LevelTwoEntryPlaceholder.tsx
-      styles.css           Reserved Level 2 entry styles
-      README.md            Development boundary for the next level
+      LevelTwo.tsx        Level 2 gameplay and presentation sequence
+      LevelTwoIntro.tsx   The “more than one?” bridge
+      data.ts             Trio branches, expansion stages and scene contract
+      CinematicPlaceholder.tsx
+      styles.css          Level 2 layouts scoped to .level-two
   shared/
-    components/            Common icons, independent of level data
-    hooks/                 Audio and visible-time delays
-    utils/                 Reading-time calculation
-    styles/base.css        Design tokens, resets and common controls
-  assets/                  Office and classroom artwork
+    components/           Icons and timed conversation bubbles
+    data/metrics.ts       Six metric names, IDs and descriptions
+    hooks/                Audio and visible-time delays
+    utils/                Reading-time calculation
+    styles/               Common design tokens, controls and conversation defaults
+  assets/                 Office and classroom artwork
 ```
 
-Open [Level 1](src/levels/level1/), [Level 2](src/levels/level2/), or
-[shared code](src/shared/) to work on that area. Each has a short README.
-
-Keep each level's rules, text and state in its own folder. Shared modules do not
-import level internals. `App.tsx` owns the application entry and is where future
-level navigation will be connected. Level 2 is not mounted yet, and the next-level
-button remains reserved. The cinematic opening has not been merged.
-
-`main.tsx` imports the shared base stylesheet once before App. Each level imports
-its own stylesheet. Level 1 selectors are scoped to `.level-one`, and the reserved
-Level 2 entry selectors to `.level-two-entry`, so level layouts can evolve separately.
-
-[LEVEL1_HANDOFF.md](docs/LEVEL1_HANDOFF.md) documents scene integration and result
-callbacks. Existing playable ZIPs in `play/` remain saved previews; the current
-source still builds into one self-contained HTML file with `npm run build`.
+Each level owns its rules and text. Shared modules do not import level internals. `App.tsx` connects levels without storage or full-page navigation. The cinematic opening has not been merged. See [Level 1 handoff](docs/LEVEL1_HANDOFF.md) and [Level 2 handoff](docs/LEVEL2_HANDOFF.md) for the partner integration contracts.
 
 ## Validate
 
-With the Vite development server running and Python Playwright available:
+With Python Playwright and system Chromium available:
 
 ```sh
-python tests/smoke.py
+npm run build
+npm run build:level2
+python tests/level2.py
 python tests/smoke.py --file dist/index.html
-python tests/feedback.py
 python tests/feedback.py --file dist/index.html
 python tests/guide.py --file dist/index.html
+# With npm run dev running, also check the partner scene contracts:
+python tests/level2_integration.py
+# After packaging the playable ZIP:
+python tests/release.py
 ```
 
-Pass `--chromium /path/to/chromium` if needed. Test results and screenshots are written to ignored `test-results/`.
+The browser tests serve the exact production HTML bytes through an in-memory test origin with networking disabled. This cloud machine blocks `file://` navigation, so opening the downloaded file in the user's particular browser remains a separate check. Screenshots/results go to ignored `test-results/`.
 
-The `--file` check runs the exact built HTML with networking disabled through an in-memory test origin, because this cloud machine's managed Chromium blocks `file://` navigation. It validates the single-file artifact and embedded assets offline; opening a downloaded file in a specific user's browser remains a separate check.
+Checks cover the 20 trios, complete expansion flow, both levels' handoff, outcome text, timing, selection limits, sound, keyboard controls, restart, fresh-page lifetime and responsive layouts. They are browser functional checks, not a classroom concurrency/load test.
 
-Checks cover all six branches, matching story content and scores, prediction validation, fresh-page and tab lifecycle behaviour, keyboard interactions, restart confirmation, reduced motion, unavailable storage and desktop/touch layouts. This is browser functional validation, not a classroom concurrency or network-capacity test.
-
-## Current scope
-
-The reported score and the student's qualitative evidence remain visible together after observation. Student learning is not represented by an invented declining numerical score. Purple author/narration notes are absent from the player interface; an amber observation card provides the intended point of tension after the story.
-
-All six cinematics are explicitly marked placeholders. The future Level 2 entry is retained only as source for later integration; it is absent from the current player flow. The story placeholder uses text from Narrative V2 with an existing classroom background. It does not claim to be a finished character animation or video. Interface feedback tones are generated locally; voice acting and cinematic audio remain outside this prototype.
+The current preview passed 98 browser/artifact checks. The recorded results and
+artifact hashes are in [LEVEL2_VALIDATION.json](docs/LEVEL2_VALIDATION.json).

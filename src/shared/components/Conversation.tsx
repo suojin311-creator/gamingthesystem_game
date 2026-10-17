@@ -1,0 +1,61 @@
+import { useEffect, useRef, useState } from 'react';
+import type { Cue } from '../hooks/useFeedback';
+import { readingTime } from '../utils/readingTime';
+import '../styles/conversation.css';
+
+export type ConversationLine = { speaker: 'Maya' | 'Alex'; name: string; text: string };
+
+export default function Conversation({ lines, enabled = true, paused = false, play, onSettled }: {
+  lines: ConversationLine[]; enabled?: boolean; paused?: boolean;
+  play: (cue: Cue) => void; onSettled: () => void;
+}) {
+  const [beat, setBeat] = useState(0);
+  const [inView, setInView] = useState(false);
+  const [pageVisible, setPageVisible] = useState(!document.hidden);
+  const container = useRef<HTMLElement>(null);
+  const remaining = useRef(650);
+  const lastSound = useRef(-1);
+  const settled = useRef(false);
+  const callback = useRef(onSettled);
+  callback.current = onSettled;
+  const lastBeat = lines.length * 2 - 1;
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => setInView(entries[0].isIntersecting), { threshold: 0.1 });
+    if (container.current) observer.observe(container.current);
+    const visibility = () => setPageVisible(!document.hidden);
+    document.addEventListener('visibilitychange', visibility);
+    return () => { observer.disconnect(); document.removeEventListener('visibilitychange', visibility); };
+  }, []);
+
+  useEffect(() => {
+    if (!enabled || paused || !inView || !pageVisible || !lines.length) return;
+    if (beat % 2 === 1 && lastSound.current !== beat) { play('message'); lastSound.current = beat; }
+    if (settled.current) return;
+    const delay = remaining.current;
+    const start = performance.now();
+    let fired = false;
+    const timer = window.setTimeout(() => {
+      fired = true;
+      if (beat === lastBeat) { settled.current = true; callback.current(); return; }
+      remaining.current = beat % 2 === 0 ? readingTime(lines[Math.floor(beat / 2)].text) : 650;
+      setBeat(value => value + 1);
+    }, delay);
+    return () => { window.clearTimeout(timer); if (!fired) remaining.current = Math.max(0, delay - (performance.now() - start)); };
+  }, [beat, enabled, paused, inView, pageVisible, lastBeat, play, lines]);
+
+  return <section ref={container} className={`dialogue-strip conversation ${lines.length > 1 ? 'two-voices' : ''}`} aria-label="Character dialogue">
+    {enabled && lines.map((line, index) => {
+      if (beat < index * 2) return null;
+      const typing = beat === index * 2;
+      const alex = line.speaker === 'Alex';
+      return <div key={index} className={`dialogue-character ${alex ? 'alex-character' : 'maya-character'}`} data-speaker={line.speaker} data-order={index}>
+        <span className={`avatar ${alex ? 'alex-avatar' : 'maya-avatar'}`} aria-hidden="true">{line.name.charAt(0).toUpperCase()}</span>
+        <div className={`speech-bubble ${alex ? 'alex-bubble' : 'maya-bubble'} ${typing ? 'is-typing' : 'message-arrived'}`}>
+          <span className="speaker-name">{line.name}</span>
+          {typing ? <span className="typing-indicator" role="status" aria-label={`${line.name} is typing`}><i /><i /><i /></span> : <p aria-live="polite">{line.text}</p>}
+        </div>
+      </div>;
+    })}
+  </section>;
+}

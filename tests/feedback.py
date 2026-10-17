@@ -56,7 +56,7 @@ def finish_scene(page):
 
 def settle(page):
     expect(page.get_by_role('button', name='Continue to Level 2')).to_be_visible(timeout=22000)
-    expect(page.get_by_role('button', name='Continue to Level 2')).to_be_disabled()
+    expect(page.get_by_role('button', name='Continue to Level 2')).to_be_enabled()
 
 timeline_probe = '''
 window.reviewTimeline = {};

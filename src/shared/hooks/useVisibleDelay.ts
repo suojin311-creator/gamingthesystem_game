@@ -17,7 +17,7 @@ export function useVisibleDelay(key: string, selector: string, delay: number, ac
     const visibility = () => setPageVisible(!document.hidden);
     document.addEventListener('visibilitychange', visibility);
     return () => { observer.disconnect(); document.removeEventListener('visibilitychange', visibility); };
-  }, [selector, key]);
+  }, [selector, key, active]);
 
   useEffect(() => {
     const state = timer.current;

@@ -1,4 +1,5 @@
-export type MetricId = 'prep' | 'part' | 'focus' | 'discuss' | 'reflect' | 'peer';
+import { metricDefinition, type MetricId } from '../../shared/data/metrics';
+export type { MetricId } from '../../shared/data/metrics';
 export type SceneLine = { speaker: 'Alex' | 'Maya'; text: string };
 export type Metric = {
   id: MetricId;
@@ -20,8 +21,7 @@ export type Metric = {
 // Illustrative scores, not measurements of real students. Stable across replays.
 export const METRICS: Metric[] = [
   {
-    id: 'prep', name: 'Pre-class Preparation', shortName: 'Preparation',
-    description: 'Finish the preparation.',
+    ...metricDefinition('prep'),
     example: 'Students will arrive ready to discuss the reading.', before: 34, after: 88,
     improvement: 'More preparation tasks completed', uncertainty: 'Understanding still unclear',
     evidence: 'Students complete the preparation, but some skim just enough to meet the requirement.',
@@ -34,8 +34,7 @@ export const METRICS: Metric[] = [
     ],
   },
   {
-    id: 'part', name: 'In-class Participation', shortName: 'Participation',
-    description: 'Speak up in class.',
+    ...metricDefinition('part'),
     example: 'Students will contribute more thoughtful ideas.', before: 29, after: 85,
     improvement: 'More visible contributions', uncertainty: 'Depth still unclear',
     evidence: 'Students speak more often, but some contributions are brief or repetitive.',
@@ -48,8 +47,7 @@ export const METRICS: Metric[] = [
     ],
   },
   {
-    id: 'focus', name: 'On-task Focus', shortName: 'Focus',
-    description: 'Stay on the task.',
+    ...metricDefinition('focus'),
     example: 'Students will think more deeply about the task.', before: 41, after: 91,
     improvement: 'More visible time on task', uncertainty: 'Thinking still unclear',
     evidence: 'Students stay visibly on task, but some focus on looking busy rather than thinking deeply.',
@@ -62,8 +60,7 @@ export const METRICS: Metric[] = [
     ],
   },
   {
-    id: 'discuss', name: 'In-class Discussion Quality', shortName: 'Discussion',
-    description: 'Develop ideas together.',
+    ...metricDefinition('discuss'),
     example: 'Students will explore and develop ideas together.', before: 32, after: 84,
     improvement: 'More discussion criteria met', uncertainty: 'New ideas still unclear',
     evidence: 'Students use the discussion behaviours that earn credit, but some contributions become formulaic.',
@@ -76,8 +73,7 @@ export const METRICS: Metric[] = [
     ],
   },
   {
-    id: 'reflect', name: 'Learning Reflection Quality', shortName: 'Reflection',
-    description: 'Reflect on learning.',
+    ...metricDefinition('reflect'),
     example: 'Students will reflect on what changed their thinking.', before: 38, after: 89,
     improvement: 'More structured reflections', uncertainty: 'Changed thinking still unclear',
     evidence: 'Reflections match the expected structure, but some students repeat the same safe patterns.',
@@ -90,8 +86,7 @@ export const METRICS: Metric[] = [
     ],
   },
   {
-    id: 'peer', name: 'Online Peer Response Quality', shortName: 'Peer response',
-    description: 'Respond to classmates.',
+    ...metricDefinition('peer'),
     example: 'Students will engage with their classmates’ ideas.', before: 27, after: 86,
     improvement: 'More response criteria met', uncertainty: 'Exchange of ideas still unclear',
     evidence: 'Online replies become more specific, but some students learn a repeatable response formula.',

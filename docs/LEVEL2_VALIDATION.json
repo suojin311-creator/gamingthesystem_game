@@ -1,0 +1,163 @@
+{
+  "validated_at_utc": "2026-10-17T15:56:48.914465+00:00",
+  "branch": "level2-dev",
+  "passed": 98,
+  "suites": {
+    "level2-results.json": {
+      "passed": 41,
+      "cases": [
+        "Offline direct entry and mixed evaluation",
+        "Finding precedes dialogue and next action",
+        "Guide freezes the reading sequence and restores keyboard focus",
+        "Gap view shows exactly the three unselected areas",
+        "Six-metric evaluation retains first three and adds the missing three",
+        "10 metrics automatically reveal the matching student checklist",
+        "25 metrics automatically reveal the matching student checklist",
+        "100 metrics automatically reveal the matching student checklist",
+        "Level 2 ends at weighting question with Level 3 reserved and all-English UI",
+        "Restart cancels safely or clears progress without persistent saves",
+        "Exactly-three limit, selection hint and deselect-to-swap",
+        "Trio prep+part+focus routes to visible outcome",
+        "Trio prep+part+discuss routes to mixed outcome",
+        "Trio prep+part+reflect routes to mixed outcome",
+        "Trio prep+part+peer routes to mixed outcome",
+        "Trio prep+focus+discuss routes to mixed outcome",
+        "Trio prep+focus+reflect routes to mixed outcome",
+        "Trio prep+focus+peer routes to mixed outcome",
+        "Trio prep+discuss+reflect routes to mixed outcome",
+        "Trio prep+discuss+peer routes to mixed outcome",
+        "Trio prep+reflect+peer routes to mixed outcome",
+        "Trio part+focus+discuss routes to mixed outcome",
+        "Trio part+focus+reflect routes to mixed outcome",
+        "Trio part+focus+peer routes to mixed outcome",
+        "Trio part+discuss+reflect routes to mixed outcome",
+        "Trio part+discuss+peer routes to mixed outcome",
+        "Trio part+reflect+peer routes to mixed outcome",
+        "Trio focus+discuss+reflect routes to mixed outcome",
+        "Trio focus+discuss+peer routes to mixed outcome",
+        "Trio focus+reflect+peer routes to mixed outcome",
+        "Trio discuss+reflect+peer routes to quality outcome",
+        "1366px layout, normal motion and automatic dialogue",
+        "1366px reload and restored tab start fresh",
+        "768px layout, normal motion and automatic dialogue",
+        "768px reload and restored tab start fresh",
+        "390px layout, normal motion and automatic dialogue",
+        "390px reload and restored tab start fresh",
+        "320px layout, normal motion and automatic dialogue",
+        "320px reload and restored tab start fresh",
+        "Full game carries Level 1 context and sound preference to Level 2; refresh restarts full game",
+        "No browser runtime errors across all offline playthroughs"
+      ],
+      "runtimeErrors": []
+    },
+    "level2-integration-results.json": {
+      "passed": 8,
+      "checks": [
+        "Partner replaces all three scene slots; original trio, branch and custom name retained",
+        "Completion reports exact result once after final reading",
+        "Level 2 emits actual count, success, evidence and softer message cues",
+        "Final replay retains completion count and mute suppresses new cues",
+        "Restart clears the original trio and permits a new completion",
+        "Hidden tab holds metric updates and resumes them on return",
+        "Growth counter and automatic observation wait while guide is open",
+        "Complete expansion and partner-scene flow works at 320px"
+      ],
+      "runtimeErrors": []
+    },
+    "offline-results.json": {
+      "passed": 22,
+      "checks": [
+        "Empty selection is blocked; player interface is English without author notes",
+        "prep: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "part: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "focus: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "discuss: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "reflect: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "peer: correct score, story and evidence; waits for explicit continuation to Level 2",
+        "Prediction validation: whitespace, 100-character limit, literal rendering",
+        "Restart cancellation preserves progress; confirmed restart clears only this game",
+        "One Change control replaces duplicate Back; same metric keeps prediction and a new metric clears it",
+        "Refresh starts fresh and ignores legacy progress, guide and sound preferences",
+        "Refresh during a scene returns to a new game, not the interlude",
+        "New and reopened tabs start fresh while the existing open page keeps its own run",
+        "Returning from the browser back-forward cache also starts fresh",
+        "Layout and functional flow at 1366 \u00d7 768, including touch and reduced motion",
+        "Layout and functional flow at 1024 \u00d7 768, including touch and reduced motion",
+        "Layout and functional flow at 768 \u00d7 1024, including touch and reduced motion",
+        "Layout and functional flow at 390 \u00d7 844, including touch and reduced motion",
+        "Layout and functional flow at 375 \u00d7 667, including touch and reduced motion",
+        "Layout and functional flow at 320 \u00d7 640, including touch and reduced motion",
+        "Full game works with localStorage and sessionStorage completely unavailable",
+        "No uncaught browser errors"
+      ],
+      "runtime_errors": []
+    },
+    "feedback-offline-results.json": {
+      "passed": 11,
+      "checks": [
+        "Score and management feedback advance automatically without pause controls",
+        "Actual Web Audio plays count and success cues at the increased master gain",
+        "Management emphasis ends after one cue and the score remains available",
+        "One evidence paragraph and student summary arrive together with one cue and no duplicate text or controls",
+        "Classroom evidence receives at least six seconds of visible reading time before conversation",
+        "Replies stay in the main column; both speakers receive reading time before the next message or completion",
+        "Mute suppresses all subsequent cues within the current game",
+        "Unmuting restores actual Web Audio feedback",
+        "Guide temporarily holds the reading sequence and closing it resumes automatically",
+        "Off-screen recap waits, then resumes reading and brings replies into view without visiting the sidebar",
+        "Browsers without Web Audio retain the complete visual sequence"
+      ],
+      "runtime_errors": []
+    },
+    "guide-offline-results.json": {
+      "passed": 12,
+      "checks": [
+        "1366px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
+        "1366px: guide returns for every new page and preserves in-page choices when reopened",
+        "1366px: Target 70 sits under its real marker; reopening guide retains the evaluation",
+        "960px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
+        "960px: guide returns for every new page and preserves in-page choices when reopened",
+        "960px: Target 70 sits under its real marker; reopening guide retains the evaluation",
+        "390px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
+        "390px: guide returns for every new page and preserves in-page choices when reopened",
+        "390px: Target 70 sits under its real marker; reopening guide retains the evaluation",
+        "320px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
+        "320px: guide returns for every new page and preserves in-page choices when reopened",
+        "320px: Target 70 sits under its real marker; reopening guide retains the evaluation"
+      ],
+      "runtime_errors": []
+    },
+    "release-results.json": {
+      "passed": 4,
+      "checks": [
+        "ZIP integrity and byte identity with both production builds",
+        "Packaged Level2.html completes 3 \u2192 6 \u2192 10 \u2192 25 \u2192 100 offline with normal motion",
+        "Packaged Levels1-and-2.html starts at Level 1 with its guide",
+        "Packaged entries have no browser runtime errors"
+      ],
+      "runtimeErrors": []
+    }
+  },
+  "artifacts": {
+    "dist/index.html": {
+      "sha256": "a406f9dbb48a4e27d1e0f7ff34fb305fd5c281267cdc9d209ff898259917fb21",
+      "bytes": 9799745
+    },
+    "dist-level2/index.html": {
+      "sha256": "bc6d14d3db72a51ac646ec7c48f5c4addefb9e043783981c4d8e0ad29a2842c6",
+      "bytes": 9799745
+    },
+    "play/Level2-play-v1.zip": {
+      "sha256": "6d784acbb14dc3f896e0de9d23dc10d22d66ecd8caae71560c44ef64729aaf62",
+      "bytes": 14577699
+    }
+  },
+  "notes": [
+    "The first Level 1 regression run exposed a test focus race after closing its automatic guide. The helper now waits for the documented next-frame focus restoration before sending a keyboard action; the complete suite then passed.",
+    "The first clean dependency install could not write to the managed home npm cache. A writable /tmp cache resolved it; lockfile integrity and TLS checks stayed enabled. Both builds passed after the clean install.",
+    "The 41 real-time Level 2 offline checks and Level 1 regressions precede the final metadata correction and background-counter elapsed-time clamp. The final source passed the 8 partner integration checks; the exact packaged HTML passed the offline release flow with normal motion.",
+    "Browser-clock integration/release tests exercise contracts and the final package. The main Level 2, Level 1, feedback and guide suites use real reading intervals.",
+    "Offline tests use the exact HTML through an in-memory HTTPS route because this managed browser blocks file:// navigation. A particular user browser opening a local download was not directly tested.",
+    "Partner cinematics and opening remain placeholders or separate source. Level 3 gameplay and classroom network-load testing are outside this build."
+  ]
+}

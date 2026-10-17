@@ -38,7 +38,11 @@ def record(name):
 
 def skip_guide(page):
     button = page.get_by_role('button', name='Skip guide')
-    if button.count(): button.click()
+    if button.count():
+        button.click()
+        # The automatic guide restores focus on its next animation frame.
+        # Wait for that contract before issuing a competing keyboard action.
+        expect(page.get_by_role('heading', name='What will you measure?', exact=True)).to_be_focused()
 
 
 def begin(context):
@@ -64,12 +68,13 @@ def report_if_needed(page):
     expect(page.get_by_role('button', name='Observe the class')).to_be_enabled(timeout=12000)
 
 
-def reveal_review(page, settle=True):
+def reveal_review(page, settle=True, connected=True):
     expect(page.locator('.observation-recap')).to_be_visible(timeout=10000)
     expect(page.locator('.student')).to_contain_text('Unclear', timeout=10000)
     if settle:
         expect(page.get_by_role('button', name='Continue to Level 2')).to_be_visible(timeout=22000)
-        expect(page.get_by_role('button', name='Continue to Level 2')).to_be_disabled()
+        if connected: expect(page.get_by_role('button', name='Continue to Level 2')).to_be_enabled()
+        else: expect(page.get_by_role('button', name='Continue to Level 2')).to_be_disabled()
 
 
 def story_to_review(page):
@@ -138,7 +143,7 @@ with sync_playwright() as p:
         expect(page.locator('.stepper .done')).to_have_count(4)
         expect(page.get_by_role('button', name='Try more metrics')).to_have_count(0)
         expect(page.get_by_role('heading', name='What if we measured more than one?')).to_have_count(0)
-        record(f'{metric_id}: correct score, story and evidence; completion stays on the observation page without Level 2')
+        record(f'{metric_id}: correct score, story and evidence; waits for explicit continuation to Level 2')
 
     fresh(page)
     select(page, 'prep', '   ')
@@ -284,7 +289,7 @@ root.render(React.createElement(LevelOne, {
         assert host.get_by_test_id('cinematic-placeholder').count() == 0
         host.get_by_role('button', name='Finish partner scene').click()
         expect(host.locator('.prediction-recap')).to_contain_text('Students will concentrate on the task.')
-        reveal_review(host)
+        reveal_review(host, connected=False)
         expect(host.get_by_role('heading', name='Look a little closer.')).to_be_visible()
         assert host.evaluate('window.completionCount') == 1
         assert host.evaluate('window.levelResult') == {
@@ -292,7 +297,7 @@ root.render(React.createElement(LevelOne, {
             'reportedScore': {'before': 41, 'after': 91, 'target': 70}}
         host.get_by_role('button', name='Replay scene').click()
         host.get_by_role('button', name='Finish partner scene').click()
-        reveal_review(host)
+        reveal_review(host, connected=False)
         assert host.evaluate('window.completionCount') == 1
         host.close()
         record('Partner cinematic returns to the final page; automatic completion reports once per run, including replay')

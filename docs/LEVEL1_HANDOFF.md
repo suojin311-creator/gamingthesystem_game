@@ -31,6 +31,7 @@ import LevelOne from './levels/level1/LevelOne';
     />
   )}
   onComplete={(result) => setLevelOneResult(result)}
+  onContinue={() => setCurrentLevel(2)}
 />
 ```
 
@@ -57,7 +58,7 @@ After the final Alex reply has received its reading interval, `onComplete` autom
 }
 ```
 
-The standalone view stays on the observation page and shows a disabled Continue to Level 2 button with a right arrow; all four progress steps are done. The button is a reserved entrance; Level 2 is not mounted. There is no separate completion/Level 2 page. The callback fires once per run after the final dialogue reading interval. Replaying the cinematic does not fire it again; Restart, reload or remount starts a new run. The current host should retain the result in memory without navigating. Later Level 2 integration can choose how and when to use it.
+The view stays on the observation page; all four progress steps are done. After the reading interval, Continue to Level 2 appears. It calls the optional `onContinue` prop and is disabled when no continuation is supplied. The current App supplies it, keeps the result in memory and mounts LevelTwo only on this explicit click. There is no extra Level 1 completion page. `onComplete` fires automatically once per run; replay does not fire it again. Restart, reload or remount starts a new run.
 
 ## Narrative adjustments for the highlighted operations
 
@@ -68,8 +69,8 @@ The standalone view stays on the observation page and shows a disabled Continue 
 5. Maya: “Looking good. Let’s check the classroom.” Player chooses `Observe the class`.
 6. The selected branch cinematic plays. The existing placeholder is replaced here.
 7. Completing the cinematic returns to a compact, static prediction reference. After 1000 ms of visible time, the classroom observation and student uncertainty appear together, with one shared observation cue. Show only `metric.evidence` under IN THE CLASSROOM: the former details paragraph. Do not add the old takeaway headline or details toggle. Students is a quiet summary: no NEW badge, separate sound, pulse or forced sidebar scroll. Management’s view retains the already reported score.
-8. Give the observation 6–8 seconds of visible reading time before Maya: “The score is up. What about learning?” Alex then replies with the selected branch quote. Both bubbles sit within the main content column, Maya above-left and Alex below-right. Each starts with 650 ms of typing dots, followed by 3–5 seconds to read. Keep all messages visible. Wait for the final reply’s reading interval before showing the reserved Continue to Level 2 button on this page and reporting completion once. Replies wait until the chat is on screen. Guide and restart dialogs suspend reading and typing; closing them resumes automatically. There is no Pause / Resume control.
-9. The former “What if we measured more than one?” screen, More metrics card and “Maybe one metric is too narrow” bridge are reserved in `src/levels/level2/LevelTwoEntryPlaceholder.tsx` for the future Level 2 host. LevelOne never imports or renders this component. Any future management-email scene remains the narrative host’s responsibility.
+8. Give the observation 6–8 seconds of visible reading time before Maya: “The score is up. What about learning?” Alex then replies with the selected branch quote. Both bubbles sit within the main content column, Maya above-left and Alex below-right. Each starts with 650 ms of typing dots, followed by 3–5 seconds to read. Keep all messages visible. Wait for the final reply’s reading interval before showing Continue to Level 2 on this page and reporting completion once. Replies wait until the chat is on screen. Guide and restart dialogs suspend reading and typing; closing them resumes automatically. There is no Pause / Resume control.
+9. The “What if we measured more than one?” bridge now belongs to `src/levels/level2/LevelTwoIntro.tsx`. LevelOne never imports it; App navigates to LevelTwo on explicit continuation. See [Level 2 handoff](LEVEL2_HANDOFF.md). Any future management-email scene remains the narrative host’s responsibility.
 10. The prediction page has one Change button beside the selected metric; the duplicate Back to metrics link is removed. Run evaluation remains right-aligned.
 
 Do not display Goodhart's Law in Level 1. All six choices are plausible educational indicators. Behaviour improves in the measured respect, while deeper engagement remains uncertain. There is no fixed student-health penalty, no right/wrong grading of predictions, and no conversion of qualitative evidence into an unsupported learning percentage.

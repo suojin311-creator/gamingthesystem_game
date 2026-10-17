@@ -18,6 +18,7 @@ export type LevelOneProps = {
   playerName?: string;
   renderCinematic?: (request: CinematicRequest, onComplete: () => void) => ReactNode;
   onComplete?: (result: LevelOneResult) => void;
+  onContinue?: () => void;
   showIntro?: boolean;
 };
 
@@ -56,7 +57,7 @@ function PerspectivePanel({ metric, evaluated, observed, highlight }: {
   </aside>;
 }
 
-export default function LevelOne({ playerName = 'Maya', renderCinematic, onComplete, showIntro = true }: LevelOneProps) {
+export default function LevelOne({ playerName = 'Maya', renderCinematic, onComplete, onContinue, showIntro = true }: LevelOneProps) {
   const [session, setSession] = useState(() => ({ ...INITIAL_SESSION }));
   const [guideOpen, setGuideOpen] = useState(showIntro);
   const [runId, setRunId] = useState(0);
@@ -234,7 +235,7 @@ export default function LevelOne({ playerName = 'Maya', renderCinematic, onCompl
                 {observed ? <article className="observation-recap" key="evidence"><span className="eyebrow">IN THE CLASSROOM</span><p>{metric.evidence}</p></article> : <div className="observation-waiting"><span>Recalling the classroom…</span></div>}
               </div>
               {dialogue}
-              <div className="action-row"><button className="text-button" onClick={() => go('cinematic')}>Replay scene</button>{dialogueSettled ? <button className="button primary-button level-finished" disabled>Continue to Level 2<Icon name="arrow" /></button> : <span className="next-action-space" aria-hidden="true" />}</div>
+              <div className="action-row"><button className="text-button" onClick={() => go('cinematic')}>Replay scene</button>{dialogueSettled ? <button className="button primary-button level-finished" disabled={!onContinue} onClick={onContinue}>Continue to Level 2<Icon name="arrow" /></button> : <span className="next-action-space" aria-hidden="true" />}</div>
             </>}
           </section>
           <PerspectivePanel metric={metric} evaluated={evaluated} observed={observed} highlight={highlight} />
