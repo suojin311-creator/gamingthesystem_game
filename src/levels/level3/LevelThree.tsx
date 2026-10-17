@@ -4,6 +4,7 @@ import { METRIC_CATALOG, metricDefinition, type MetricId } from '../../shared/da
 import Icon from '../../shared/components/Icon';
 import Conversation from '../../shared/components/Conversation';
 import LearningRisk from '../../shared/components/LearningRisk';
+import ManagementSatisfaction, { MANAGEMENT_PROGRESS } from '../../shared/components/ManagementSatisfaction';
 import { useFeedback } from '../../shared/hooks/useFeedback';
 import { useVisibleDelay } from '../../shared/hooks/useVisibleDelay';
 import { resolvePlayerName } from '../../shared/utils/playerName';
@@ -65,6 +66,8 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
   const confirmedCount = confirmed.filter(Boolean).length;
   const showPerspectives = phase === 'publish' || phase === 'result' || phase === 'compare';
   const hasReport = phase !== 'publish' || reportReady;
+  const completedReports = runs.length - (hasReport ? 0 : 1);
+  const satisfaction = MANAGEMENT_PROGRESS.weightTests[Math.min(completedReports, 3)];
   const hasObservation = phase === 'compare' || phase === 'result' && resultRows === 3;
   const reference = referenceTest(runs);
   const stage = phase === 'intro' || phase === 'choose' ? 0 : ['compare', 'comparison-scene', 'theory'].includes(phase) ? 3 : runs.length > (phase === 'weights' ? 0 : 1) ? 2 : 1;
@@ -174,7 +177,7 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
           {phase === 'result' && current && <><div className="l3-results"><RunRows run={current} shown={resultRows} />{resultRows < 3 && <p className="l3-watching" role="status">Watching Alex adapt…</p>}</div><div className="action-row"><button className="text-button" onClick={() => move('scene')}>Replay scene</button>{resultRows === 3 && dialogueReady ? action : <span className="l3-action-space" aria-hidden="true" />}</div></>}
           {phase === 'compare' && compared && <><div className={`l3-comparison ${runs.length === 3 ? 'l3-three-runs' : ''}`}>{runs.map(run => <article className={`l3-comparison-card ${isNearEven(run.weights) ? 'near-even' : 'uneven'}`} data-run={run.round} data-kind={run.kind} key={run.round}><span className="eyebrow">{run.kind !== 'player' ? 'SYSTEM REFERENCE' : run.round === 1 ? 'YOUR FIRST TEST' : 'YOUR SECOND TEST'}</span><h3>{isNearEven(run.weights) ? 'Near-even weights' : 'Uneven weights'}</h3><RunRows run={run} compact /></article>)}</div><div className="action-row l3-only-action"><button className="button primary-button" onClick={() => { completeLevel(); move('comparison-scene'); }}>Watch Alex’s response<Icon name="play" /></button></div></>}
 
-        </section>{showPerspectives && current && <aside className="l3-perspectives"><section className="l3-perspective l3-management" data-reported={hasReport}><h3><Icon name="school" />Management’s view</h3><span className="l3-perspective-label">Score weights</span><strong className="l3-total">{hasReport ? <>100<small>%</small></> : '—'}</strong><div className="l3-allocation-bar" aria-hidden="true">{(phase === 'compare' ? compared!.nearEven.weights : current.weights).map((weight, index) => <i key={index} style={{ width: `${hasReport ? weight : 0}%` }} />)}</div><p>{hasReport ? 'Three priorities · total allocated' : 'Publishing weights…'}</p></section><section className={`l3-perspective student ${hasObservation ? 'l3-observed' : ''}`}><h3><Icon name="student" />Students</h3>{hasObservation ? <LearningRisk behaviour={phase === 'compare' || isNearEven(current.weights) ? 'Points still guide Alex’s choices.' : 'Low-weight areas get less attention.'} /> : <><Icon name="eye" /><p className="l3-awaiting">Awaiting observation</p></>}</section></aside>}</div>}
+        </section>{showPerspectives && current && <aside className="l3-perspectives"><section className="l3-perspective l3-management" data-reported={hasReport}><h3><Icon name="school" />Management’s view</h3><ManagementSatisfaction value={satisfaction}>{hasReport ? '3 priorities · 100% allocated' : 'Publishing weights…'}</ManagementSatisfaction></section><section className={`l3-perspective student ${hasObservation ? 'l3-observed' : ''}`}><h3><Icon name="student" />Students</h3>{hasObservation ? <LearningRisk behaviour={phase === 'compare' || isNearEven(current.weights) ? 'Points still guide Alex’s choices.' : 'Low-weight areas get less attention.'} /> : <><Icon name="eye" /><p className="l3-awaiting">Awaiting observation</p></>}</section></aside>}</div>}
       {lines.length > 0 && <div className="l3-bottom-dialogue" aria-label="Player dialogue"><Conversation key={`workbench:${key}:${goal}`} lines={lines} enabled={(phase !== 'result' || resultTalkReady) && (phase !== 'publish' || reportReady)} typingDelay={300} readDelay={dialogueTime} play={feedback.play} onLastMessage={() => setDialogueReady(true)} onSettled={() => {}} /></div>}
     </main><footer className="l3-footer"><span>GAMING THE SYSTEM</span><span>LEVEL 03</span></footer>
 

@@ -52,16 +52,7 @@
 :where(.level-one) .perspective-heading > .icon { width: 23px; height: 23px; color: #6c7559; }
 :where(.level-one) .perspective-heading h3 { font-size: var(--perspective-heading-size); font-weight: 700; }
 :where(.level-one) .perspective-label { display: block; font-size: var(--perspective-label-size); color: #898575; }
-:where(.level-one) .pending-symbol { font: 40px/1.2 var(--serif); color: #c2bda8; margin: 5px 0; }
 :where(.level-one) .pending-title { font-size: 10px; color: #a09a85; margin-top: 7px; }
-:where(.level-one) .university-value { display: flex; align-items: center; justify-content: space-between; gap: 5px; margin: 8px 0; }
-:where(.level-one) .university-value > span:first-child { font: 46px/1 var(--serif); color: #4f6d45; letter-spacing: -.04em; }
-:where(.level-one) .gain { display: flex; align-items: center; gap: 2px; font-size: 12px; color: #4f6d45; }
-:where(.level-one) .gain .icon { width: 15px; height: 15px; transform: rotate(-45deg); }
-:where(.level-one) .mini-bar { height: 5px; background: #e0e5d2; border-radius: 4px; margin-top: 10px; }
-:where(.level-one) .mini-bar > span { display: block; height: 100%; background: #789164; border-radius: inherit; }
-:where(.level-one) .perspective-status { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #597449; margin-top: 10px; }
-:where(.level-one) .perspective-status .icon { width: 14px; height: 14px; }
 :where(.level-one) .has-result { background: #edf2e3; border-color: #c0cfae; }
 :where(.level-one) .waiting-signal { color: #b8b29c; }
 :where(.level-one) .waiting-signal > .icon { width: 35px; height: 35px; }
@@ -180,8 +171,6 @@
 :where(.level-one) .metric-card.selected .selection-circle { animation: choice-mark .3s ease-out; }
 :where(.level-one) .selected-focus, :where(.level-one) .score-paper { animation: panel-arrive .4s ease-out both; }
 :where(.level-one) .observation-recap { animation: panel-arrive .4s ease-out both; }
-:where(.level-one) .university.just-updated .mini-bar > span { transform-origin: left; animation: bar-arrive .65s ease-out both; }
-:where(.level-one) .university.just-updated .university-value { animation: panel-arrive .4s ease-out both; }
 @keyframes card-deal { from { opacity: 0; translate: 0 9px; } to { opacity: 1; translate: 0 0; } }
 @keyframes choice-mark { from { scale: .5; opacity: 0; } 70% { scale: 1.12; } to { scale: 1; opacity: 1; } }
 @keyframes bar-arrive { from { transform: scaleX(0); } to { transform: scaleX(1); } }
@@ -224,12 +213,7 @@
   :where(.level-one) .perspective-heading h3 { font-size: var(--perspective-heading-size); }
   :where(.level-one) .perspective-heading > .icon { width: 20px; height: 20px; }
   :where(.level-one) .perspective-label { font-size: var(--perspective-label-size); }
-  :where(.level-one) .pending-symbol { font-size: 29px; line-height: 1.2; margin: 2px 0; }
   :where(.level-one) .pending-title { font-size: 9px; margin-top: 5px; }
-  :where(.level-one) .university-value { margin: 5px 0; }
-  :where(.level-one) .university-value > span:first-child { font-size: 33px; }
-  :where(.level-one) .mini-bar { margin-top: 6px; height: 4px; }
-  :where(.level-one) .perspective-status { font-size: 10px; margin-top: 6px; }
   :where(.level-one) .new-badge { font-size: 6px; }
   :where(.level-one) .decision-area { padding: 20px 23px 0; }
   :where(.level-one) .metric-card { min-height: 135px; }
@@ -262,7 +246,6 @@
   :where(.level-one) .perspective-heading h3 { font-size: var(--perspective-heading-size); }
   :where(.level-one) .perspective-heading > .icon { width: 18px; height: 18px; }
   :where(.level-one) .perspective-label { font-size: var(--perspective-label-size); }
-  :where(.level-one) .gain { font-size: 11px; }
   :where(.level-one) .decision-area { padding: 20px 18px 0; }
   :where(.level-one) .metric-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
   :where(.level-one) .metric-card { min-height: 135px; padding: 12px; }

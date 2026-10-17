@@ -113,9 +113,13 @@ scene requests. See [Opening handoff](OPENING_HANDOFF.md). Player decisions use
 
 ## Presentation and lifetime
 
-The central content is the reading focus. The right-hand cards summarize the
-same current round. Starting a round hides the previous report until the new
-evaluation finishes and resets students to **Awaiting observation**. The student
+The central content is the reading focus. Management’s view shows cumulative
+satisfaction, retaining the previous value while a new evaluation is pending.
+Each completed 3/6/10/25/100-metric report raises it once and shows its tracked
+count as small evidence. It starts at Level 1’s final satisfaction and ends at
+Level 3’s initial value, including standalone previews. See the shared
+[satisfaction checkpoints](MANAGEMENT_SATISFACTION.md).
+Starting a round resets students to **Awaiting observation**. The student
 card shows the current behaviour with a small **Learning at risk** label only
 when the current observation arrives. Behaviour is the main type; risk is secondary. Both levels render the shared LearningRisk component and stylesheet to keep this hierarchy identical.
 Do not retain an observed-at count from an earlier round. The risk is a

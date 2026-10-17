@@ -86,6 +86,7 @@ npm run package:previews
 node tests/level3_rules.mjs
 python tests/level3.py
 python tests/level3_feedback.py
+python tests/management_satisfaction.py
 python tests/typography.py
 # With npm run dev running:
 python tests/level3_integration.py
@@ -95,6 +96,6 @@ python tests/release.py
 node tests/dialogue_emojis.mjs
 ```
 
-The new Level 3 checks cover allocation invariants, all 20 trios, three adaptive routes, actual cinematic shot selection, compared snapshots, name/completion contracts, chapter handoff, real-time audio and sequential updates, no player Restart controls and 320–1366px layouts. The release test reads all four individual/combined ZIPs, verifies the two-version review ZIP against those exact builds, and plays across all three chapters. [LEVEL3_VALIDATION-v5.json](docs/LEVEL3_VALIDATION-v5.json) records this release. Earlier validation reports and versioned ZIPs are historical records.
+The Level 3 checks cover allocation invariants, all 20 trios, three adaptive routes, actual cinematic shot selection, compared snapshots, name/completion contracts, chapter handoff, real-time audio and sequential updates, no player Restart controls and 320–1366px layouts. The shared [management satisfaction](docs/MANAGEMENT_SATISFACTION.md) checks cover report-triggered increases, chapter baselines, replay stability, standalone previews and the one-second fill animation. The release test reads all four individual/combined ZIPs, verifies the two-version review ZIP against those exact builds, and plays across all three chapters. [LEVEL3_VALIDATION-v6.json](docs/LEVEL3_VALIDATION-v6.json) records this release. Earlier validation reports and versioned ZIPs are historical records.
 
 Offline browser tests serve exact production HTML through an in-memory HTTPS origin because managed Chromium blocks local file navigation. Opening the downloaded file in the user’s particular browser remains a separate check. Test outputs/screenshots go to ignored test-results/. These are functional checks, not a classroom load test.

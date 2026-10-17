@@ -10,6 +10,11 @@ The opening remains a separate project in the supplied ZIP. No opening scenes ha
 
 The workbench owns the six cards, prediction input, illustrative numerical result and animation, `Target achieved`, both perspective panels, and the post-observation comparison. It retains the original prediction and displays it after observation without evaluating it for correctness.
 
+Management’s view now leads with satisfaction and a rising green bar. The
+reported score and target-met evidence remain a small line below. Satisfaction
+changes only when the result is reported; replay does not add to it. The shared
+[satisfaction checkpoints](MANAGEMENT_SATISFACTION.md) match the Level 2 entry.
+
 The cinematic owns Maya/Alex's descriptive actions and dialogue for the selected metric. It does not need to display or interpret a score or receive the prediction. The workbench's bottom dialogue supplies short transitions without repeatedly opening a separate cinematic. Formal audio and new character actions remain the cinematic creator's responsibility.
 
 ## Component contract

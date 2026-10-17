@@ -16,6 +16,8 @@ untracked metrics are 18px, bold, with the amber warning treatment.
 | Level 2/3 chapter introduction conversation | 22px | 20px |
 | Perspective heading | 12px | 11px |
 | Perspective label | 11px | 10px |
+| Management satisfaction state | 30px | 25px |
+| Management report evidence | 11px | 10px |
 | Student behaviour | 25px | 21px |
 | Evidence paragraph | 22px | 20px |
 | Cinematic spoken caption | 26px | 23px |
@@ -36,3 +38,7 @@ columns and row spacing align across all displayed attempts.
 16px metric names, and checks that selection layouts do not overflow. Current
 measurements are included in the release validation report. Narrative intro
 text is intentionally larger than ordinary workbench dialogue.
+
+Management satisfaction uses the same component and stylesheet in all three
+chapters. Its initial Awaiting results state uses 25px desktop / 22px phone.
+Report numbers are supporting evidence, not the main display.

@@ -102,10 +102,6 @@
 .level-three .l3-perspective h3 { display: flex; align-items: center; gap: 9px; font-size: var(--perspective-heading-size); margin-bottom: 18px; }
 .level-three .l3-perspective h3 .icon { width: 23px; height: 23px; color: #7b8268; }
 .level-three .l3-management { background: #edf2e3; border-color: #c0cfae; }
-.level-three .l3-perspective-label { font-size: var(--perspective-label-size); color: #898575; }
-.level-three .l3-total { font: 46px/1.3 var(--serif); color: #55724a; display: block; margin: 8px 0 14px; }
-.level-three .l3-total small { font-size: 21px; }
-.level-three .l3-management p { font-size: 10px; color: #7b866b; margin-top: 10px; line-height: 1.5; }
 .level-three .l3-observed { background: #f7e9cf; border-color: #ceb183; animation: panel-arrive .3s ease-out; }
 .level-three .student > .icon { color: #b8b29c; width: 32px; height: 32px; margin: 5px 0 12px; }
 .level-three .l3-awaiting { color: #a79c84; font: 20px/1.3 var(--serif); }
@@ -142,9 +138,6 @@
 .level-three .l3-editor-tools .icon { width: 15px; height: 15px; }
 .level-three .l3-bottom-dialogue { padding: 14px 30px; border-top: 1px solid #d8d2c2; background: #f0ebdf; }
 .level-three .l3-bottom-dialogue .conversation { min-height: 60px; }
-.level-three .l3-management[data-reported=false] { background: #faf7ed; border-color: #ddd8c8; }
-.level-three .l3-management[data-reported=false] .l3-total { color: #aaa48c; }
-.level-three .l3-management .l3-allocation-bar { background: #e2e5d5; }
 .level-three .l3-run-table { --l3-result-columns: minmax(0, 1fr) 78px 174px; }
 .level-three .l3-result-legend, .level-three .l3-run-rows li { display: grid; grid-template-columns: var(--l3-result-columns); column-gap: 0; }
 .level-three .l3-result-legend { font-size: 11px; letter-spacing: .04em; line-height: 1.4; color: #8d836c; min-height: 40px; border-bottom: 1px solid #ddd5c2; }
@@ -243,7 +236,6 @@
   .level-three .l3-perspectives { padding: 18px 16px; gap: 12px; }
   .level-three .l3-perspective { padding: 12px; }
   .level-three .l3-perspective h3 { font-size: var(--perspective-heading-size); gap: 7px; }
-  .level-three .l3-total { font-size: 39px; }
   .level-three .student-behaviour { font-size: var(--student-behaviour-size); }
   .level-three .l3-comparison { grid-template-columns: 1fr; }
   .level-three .l3-cinematic { min-height: 610px; padding: 20px 16px; }

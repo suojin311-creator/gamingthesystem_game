@@ -3,7 +3,7 @@ import Icon from '../../../shared/components/Icon';
 
 const steps = [
   { selector: '.metric-grid, .decision-area', title: 'Your decisions', text: 'Choose a metric, predict what will happen, then run your experiment.' },
-  { selector: '.university', title: 'Management’s view', text: 'This card shows the score reported to management.' },
+  { selector: '.university', title: 'Management’s view', text: 'This card shows how satisfied management is with the reported results.' },
   { selector: '.student', title: 'The students’ view', text: 'Observe the classroom to discover how students respond.' },
   { selector: '.dialogue-strip', title: 'The conversation', text: 'Your conversation with Alex appears here. New replies appear one at a time.' },
 ];

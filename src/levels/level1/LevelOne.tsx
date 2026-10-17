@@ -4,6 +4,7 @@ import { METRICS, getMetric, type Metric, type MetricId } from './metrics';
 import { INITIAL_SESSION, type Phase } from './state';
 import Icon from '../../shared/components/Icon';
 import LearningRisk from '../../shared/components/LearningRisk';
+import ManagementSatisfaction, { MANAGEMENT_PROGRESS } from '../../shared/components/ManagementSatisfaction';
 import Dialogue from './components/Dialogue';
 import CinematicPlaceholder, { type CinematicRequest } from './components/CinematicPlaceholder';
 import { useFeedback } from '../../shared/hooks/useFeedback';
@@ -48,8 +49,9 @@ function PerspectivePanel({ metric, evaluated, observed, highlight }: {
   return <aside className="perspectives" aria-label="Two perspectives">
     <section className={`perspective university ${evaluated ? 'has-result' : ''} ${highlight === 'university' ? 'just-updated' : ''}`} aria-labelledby="university-title" data-updated={highlight === 'university'} tabIndex={-1}>
       <div className="perspective-heading"><Icon name="school" /><h3 id="university-title">Management’s view</h3>{highlight === 'university' && <span className="new-badge">NEW</span>}</div>
-      <span className="perspective-label">Reported score</span>
-      {evaluated && metric ? <><div className="university-value"><span>{metric.after}</span><span className="gain">+{metric.after - metric.before}<Icon name="arrow" /></span></div><div className="mini-bar" aria-hidden="true"><span style={{ width: `${metric.after}%` }} /></div><p className="perspective-status"><Icon name="check" />Target met</p></> : <><div className="pending-symbol" aria-hidden="true">—</div><p className="pending-title">Run an evaluation</p></>}
+      <ManagementSatisfaction value={evaluated ? MANAGEMENT_PROGRESS.targetMet : MANAGEMENT_PROGRESS.awaiting}>
+        {evaluated && metric ? <><span className="university-value">Reported score {metric.after}</span> · target met</> : 'Run an evaluation'}
+      </ManagementSatisfaction>
     </section>
     <section className={`perspective student ${observed ? 'has-evidence' : ''}`} aria-labelledby="student-title" tabIndex={-1}>
       <div className="perspective-heading"><Icon name="student" /><h3 id="student-title">Students</h3></div>

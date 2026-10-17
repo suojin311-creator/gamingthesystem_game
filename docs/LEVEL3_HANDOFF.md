@@ -14,8 +14,13 @@ players may swap them before weighting. A standalone Level 3 starts empty.
   The 80/10/10 → 80/15/5 case works in every confirmation order.
 - Reset weights resets only the current allocation. It sits below the allocation
   bar, above the action row; there is no player Restart-level control or dialog.
-- Publication ticks the three weights and waits for Observe the class. Both
-  perspective cards describe the current round. Students remains Awaiting
+- Publication ticks the three weights and waits for Observe the class.
+  Management satisfaction starts at Level 2’s final value and rises a little
+  after each completed publication, irrespective of the chosen split. The small
+  evidence line retains the three priorities and 100% allocation. Replaying or
+  comparing adds nothing; near-even weights earn no bonus. See the shared
+  [satisfaction checkpoints](MANAGEMENT_SATISFACTION.md).
+  Students remains Awaiting
   observation until its current classroom response has been observed.
 - The scene has exactly three selected metric/intensity shots, using the 18
   Narrative V2 behaviours. Returning reveals qualitative effort rows, then the
@@ -120,7 +125,7 @@ across all three chapters; Reset weights is retained.
 `play/Level3-and-Full-game-play.zip`, containing standalone Level 3 and connected
 Levels 1–3. `play/LATEST.json` records source, build, ZIP and bundle hashes.
 `tests/release.py` verifies the actual downloads and their complete flows.
-Current checks are recorded in `LEVEL3_VALIDATION-v5.json`; older reports and
+Current checks are recorded in `LEVEL3_VALIDATION-v6.json`; older reports and
 versioned ZIPs are historical. Managed Chromium tests exact offline HTML bytes
 through an in-memory HTTPS origin; direct file opening in the user browser and
 classroom load capacity are not claimed as tested.
