@@ -67,10 +67,6 @@ export function effortGroups(run: WeightRun) {
   }));
 }
 
-export function finding(run: WeightRun) {
-  return effortGroups(run).map(group => `${group.names}: ${EFFORT_LABELS[group.effort].toLowerCase()}.`).join(' ');
-}
-
 /** Supply the missing pattern only after two freely chosen player tests. */
 export function referenceTest(runs: WeightRun[]): { weights: Weights; kind: WeightRun['kind'] } | null {
   if (runs.filter(run => run.kind === 'player').length < 2 || compareRuns(runs)) return null;

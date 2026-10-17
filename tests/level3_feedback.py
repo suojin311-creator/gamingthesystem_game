@@ -84,7 +84,7 @@ with sync_playwright() as p:
 
     context,page=open_level(browser)
     page.locator('.l3-bottom-dialogue').scroll_into_view_if_needed();advance(page,1)
-    expect(page.locator('.l3-bottom-dialogue .maya-bubble p')).to_have_text('I’ll test whether these weights change how Alex spends his effort.')
+    expect(page.locator('.l3-bottom-dialogue .maya-bubble p')).to_have_text('Alex, how will you decide which tasks to focus on?')
     assert page.locator('.l3-decision .conversation').count()==0
     assert page.locator('.l3-bottom-dialogue').bounding_box()['y']>=page.locator('.l3-body').bounding_box()['y']+page.locator('.l3-body').bounding_box()['height']-1
     assert page.locator('.l3-editor-tools').bounding_box()['y']<page.locator('.l3-decision .action-row').bounding_box()['y']
@@ -138,9 +138,11 @@ with sync_playwright() as p:
         split(page,[34,33,33]);run(page)
         page.get_by_role('button',name='Compare the patterns',exact=True).click();advance(page,1);aligned(page)
         assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
-        assert page.locator('.l3-row-metric').first.evaluate('element=>getComputedStyle(element).fontSize')==metric_size
+        assert page.locator('.l3-row-metric').first.evaluate('element=>parseFloat(getComputedStyle(element).fontSize)')>=14
+        expect(page.locator('.l3-comparison-card > p')).to_have_count(0)
+        expect(page.locator('.l3-finding')).to_have_count(0)
         if width==390:page.screenshot(path=str(OUT/'level3-feedback-mobile.png'),full_page=True,animations='disabled')
-        record(f'{width}px results and comparisons keep the same metric size, aligned labelled columns and no horizontal overflow')
+        record(f'{width}px results and comparisons keep readable type, aligned labelled columns, no repeated summaries and no horizontal overflow')
         context.close()
     for values,near_even in [([40,30,30],True),([40,31,29],False)]:
         context,page=open_level(browser)
@@ -164,18 +166,22 @@ with sync_playwright() as p:
             expect(page.locator('.near-even .eyebrow')).to_have_text('YOUR SECOND TEST')
         else:
             expect(page.get_by_role('button',name='What if they counted equally?',exact=True)).to_be_visible()
-            expect(page.locator('.maya-bubble p')).to_have_text('I’ve tried two different splits. What would an equal split show?')
+            expect(page.locator('.maya-bubble p')).to_have_text('Alex, what if all three counted equally?')
         record(f'Second test {values}: '+('compares the player’s actual near-even run without a third test' if near_even else 'offers the explained optional balance check beyond 10 points'))
         context.close()
     context,page=open_level(browser)
+    expect(page.locator('.l3-decision .action-row')).not_to_contain_text('Choose any three')
     split(page,[76,6,18]);run(page)
-    expect(page.locator('.l3-finding')).to_have_text('Preparation: intense effort. Participation and Focus: minimum effort.')
-    expect(page.locator('.thought-bubble .thought-cloud')).to_have_count(1)
+    expect(page.locator('.l3-finding')).to_have_count(0)
+    expect(page.locator('.thought-bubble, .thought-cloud, .thought-label')).to_have_count(0)
+    expect(page.locator('.maya-bubble p')).to_have_text('Alex, why did you focus on some tasks more than others?')
+    expect(page.locator('.alex-bubble p')).to_have_text(['Preparation is worth more points. 🥇','Participation and Focus? I only did the basics.'])
     expect(page.locator('.l3-bottom-dialogue .alex-bubble p')).to_have_count(2)
-    assert page.locator('.l3-effort-label').first.evaluate('e=>parseFloat(getComputedStyle(e).fontSize)')>page.locator('.l3-row-weight').first.evaluate('e=>parseFloat(getComputedStyle(e).fontSize)')
+    assert page.locator('.l3-effort-label').first.evaluate('e=>parseFloat(getComputedStyle(e).fontWeight)')<=600
+    assert page.locator('.l3-row-weight').first.evaluate('e=>parseFloat(getComputedStyle(e).fontSize)')>=20
     expect(page.locator('.l3-bottom-dialogue .alex-character.message-continuation')).to_have_count(1)
-    page.screenshot(path=str(OUT/'level3-thought-and-grouping.png'),full_page=True,animations='disabled')
-    record('The 76/6/18 finding names both low-effort areas; thought clouds, two Alex bubbles and effort emphasis are visible')
+    page.screenshot(path=str(OUT/'level3-conversation-and-clean-results.png'),full_page=True,animations='disabled')
+    record('Ordinary teacher/Alex speech bubbles form a connected exchange; duplicate summaries are absent and result type is balanced')
     page.get_by_role('button',name='Try another split',exact=True).click()
     split(page,[80,10,10]);run(page)
     page.get_by_role('button',name='What if they counted equally?',exact=True).click()
@@ -186,6 +192,9 @@ with sync_playwright() as p:
         expect(page.locator(f'[data-run="{index}"] .l3-row-weight')).to_have_text(expected)
     assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
     aligned(page)
+    expect(page.locator('.l3-comparison-card > p')).to_have_count(0)
+    expect(page.locator('.l3-finding')).to_have_count(0)
+    assert page.locator('.l3-only-action').evaluate("row=>Array.from(row.children).filter(e=>e.tagName!=='BUTTON').every(e=>!e.textContent.trim())")
     page.screenshot(path=str(OUT/'level3-three-tests-desktop.png'),full_page=True,animations='disabled')
     page.set_viewport_size({'width':320,'height':740});advance(page,1);aligned(page)
     assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')

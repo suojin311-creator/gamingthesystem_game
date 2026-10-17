@@ -20,11 +20,16 @@ players may swap them before weighting. A standalone Level 3 starts empty.
 - The scene has exactly three selected metric/intensity shots, using the 18
   Narrative V2 behaviours. Returning reveals qualitative effort rows, then the
   teacher/Alex conversation; the next action appears with Alex’s second message.
-- Findings group every selected metric by its actual effort category. For
-  76/6/18, Preparation gets intense effort; Participation and Focus are both
-  named as minimum effort. We do not infer exact measured effort from a category.
-- Score weights are visually smaller and muted. Alex’s effort and its bars are
-  prominent. Metric typography is shared with Levels 1–2; see TYPOGRAPHY.md.
+- Results use the three evidence rows without an additional effort-summary box.
+  Comparison cards have no repeated prose footnotes. Both player attempts and
+  any system reference remain visible as actual data rows.
+- Level 3 action footers have no explanatory left-side captions. Selection
+  feedback stays next to the chosen-priorities list; unchanged-allocation
+  validation is shown above the weight cards. Replay scene remains a control.
+- Table typography is composed for the view: main metric names are 16px,
+  compact names 15px, percentages 22px and effort labels 16px with medium
+  weight. Qualitative bars are slimmer. The columns retain aligned headings
+  and a quiet divider. There are no invented numerical effort percentages.
 
 Near-even means highest minus lowest at most **10 percentage points**, including
 10. Thus 38/33/29 and 40/30/30 qualify; 40/31/29 does not. Near-even produces three
@@ -34,7 +39,7 @@ These categories are narrative choices, not measured learning gains or losses.
 ## Free second attempt and a missing reference
 
 After the first observation, Try another split opens the editor. The only extra
-requirement is to change the allocation. Neither the title, teacher thought nor
+requirement is to change the allocation. Neither the title, teacher dialogue nor
 Run gate requires the player to make it more even or reach a specific spread.
 
 | Two player tests | Next |
@@ -52,11 +57,14 @@ Alex’s choices even when effort is distributed more evenly.
 
 ## Conversations and final placeholder
 
-Teacher observations and plans have `delivery: 'thought'`: a cloud outline,
-small circular tail and Thinking label. Spoken lines keep ordinary speech
-bubbles. Alex’s statements stand alone or respond to spoken questions, rather
-than answering an unspoken thought. Each Level 3 workbench beat has two short
-Alex messages. All authored emoji are distinct across the source tree.
+Teacher and Alex use ordinary speech bubbles throughout. The cloud-outline
+mode, circular tails and Thinking labels are removed from the shared component.
+Level 3 teachers address Alex directly and ask concrete questions; Alex’s two
+short messages answer the question, then add a playful follow-up. For example,
+the teacher asks why he focused on some tasks more than others; Alex identifies
+the higher-reward areas and says he only did the basics in the lower-effort
+areas. Actual categories still determine those metric names, without repeating
+a category summary under the table. All authored emoji remain distinct.
 
 The replaceable scene chain is `level3.weights` for each test, then
 `level3.compare` for Alex’s response, then `theory.reveal`. The final theory
@@ -112,7 +120,7 @@ across all three chapters; Reset weights is retained.
 `play/Level3-and-Full-game-play.zip`, containing standalone Level 3 and connected
 Levels 1–3. `play/LATEST.json` records source, build, ZIP and bundle hashes.
 `tests/release.py` verifies the actual downloads and their complete flows.
-Current checks are recorded in `LEVEL3_VALIDATION-v4.json`; older reports and
+Current checks are recorded in `LEVEL3_VALIDATION-v5.json`; older reports and
 versioned ZIPs are historical. Managed Chromium tests exact offline HTML bytes
 through an in-memory HTTPS origin; direct file opening in the user browser and
 classroom load capacity are not claimed as tested.

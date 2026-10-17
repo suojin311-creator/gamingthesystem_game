@@ -127,7 +127,7 @@ with sync_playwright() as playwright:
     expect(guide).to_contain_text('Your conversation with Alex appears here.')
     assert 'Maya' not in guide.inner_text()
     guide.get_by_role('button', name='Start Level 1', exact=True).click()
-    expect(page.get_by_role('status', name=name+' is thinking')).to_be_visible()
+    expect(page.get_by_role('status', name=name+' is typing')).to_be_visible()
     name_visible(page, name)
     record('Confirmed opening name reaches Level 1 labels, avatar and typing accessibility; guide has no fixed Maya name')
 

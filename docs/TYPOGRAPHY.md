@@ -1,8 +1,7 @@
 # Typography across Levels 1–3
 
-Equivalent content uses the same responsive token in `src/shared/styles/base.css`.
-The ordinary metric name is now 16px in all three levels, including selection
-cards and result lists. Deliberate warning emphasis is retained: Level 2’s
+Shared interface roles use responsive tokens in `src/shared/styles/base.css`.
+The ordinary metric name is now 16px in all three levels, in selection cards and main result lists. Level 3’s compact comparison uses 15px metric names for its own layout. Deliberate warning emphasis is retained: Level 2’s
 untracked metrics are 18px, bold, with the amber warning treatment.
 
 | Content role | Desktop | 390px phone |
@@ -25,9 +24,12 @@ All three chapter titles use 25px below 350px. On short desktop viewports the
 shared section heading uses 26px. A tablet primary action uses the shared
 responsive button rules. These changes depend on viewport, not chapter.
 
-The Level 3 result table deliberately distinguishes different roles: a repeated
-score weight uses muted 18px text, while Alex’s effort uses bold 20px text and
-larger qualitative bars. They are not quantitative effort percentages.
+The Level 3 tables have been revised for visual balance rather than forcing
+all content into a single size. Readable 22px sans-serif percentages, 16px
+medium-weight effort labels and slim bars replace the earlier tiny numbers
+and oversized bold labels. Main metric names are 16px; compact comparison
+names are 15px. Repeated summaries and card footnotes are removed. Headings,
+columns and row spacing align across all displayed attempts.
 
 `tests/typography.py` measures the actual production DOM at 1366px, 390px and
 320px, verifies equality across chapters for ordinary interface roles, verifies

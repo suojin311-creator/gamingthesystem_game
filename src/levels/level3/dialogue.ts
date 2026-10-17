@@ -4,23 +4,26 @@ import { effortGroups } from './data';
 import { isNearEven, type WeightGoal } from './weights';
 
 export function workbenchDialogue(phase: string, playerName: string, goal: WeightGoal, current: WeightRun | undefined, hasComparison: boolean): ConversationLine[] {
-  const thought = (text: string): ConversationLine => ({ speaker: 'Maya', name: playerName, text, delivery: 'thought' });
+  const teacher = (text: string): ConversationLine => ({ speaker: 'Maya', name: playerName, text });
   const alex = (text: string): ConversationLine => ({ speaker: 'Alex', name: 'Alex', text });
   if (phase === 'weights') {
-    if (goal === 'different') return [thought('Would a different split change what Alex focuses on?'), alex('New percentages again? 🙃'), alex('Hang on… which task pays off now?')];
-    return [thought('I’ll test whether these weights change how Alex spends his effort.'), alex('Let me check the percentages. 🔎'), alex('I know where to spend my energy!')];
+    if (goal === 'different') return [teacher('Alex, I’m trying a different split. Will that change your plan?'), alex('New percentages again? 🙃'), alex('Let me see what earns the most points now.')];
+    return [teacher('Alex, how will you decide which tasks to focus on?'), alex('Let me check the percentages. 🔎'), alex('The bigger rewards get more of my time!')];
   }
-  if (phase === 'publish') return [thought('I’ll see how Alex responds.'), alex('Got the new scoring sheet!'), alex('Time to plan my next move. 🔀')];
+  if (phase === 'publish') return [teacher('Here are the new weights, Alex. What’s your plan?'), alex('Got the new scoring sheet!'), alex('I’ll start with whatever earns the most points. 🔀')];
   if (phase === 'result' && current) {
     if (current.round === 1) {
-      if (isNearEven(current.weights)) return [thought('Would a different split change Alex’s choices?'), alex('Each task is worth about the same.'), alex('A bit of everything, then! 🤑')];
+      if (isNearEven(current.weights)) return [teacher('Alex, how did you divide your effort this time?'), alex('The tasks were worth about the same.'), alex('So I gave each one some time! 🤑')];
       const groups = effortGroups(current);
       const low = groups.find(group => group.effort === 'low');
-      return [thought('Would another split change what Alex works on?'), alex(`I’m putting my energy into ${groups[0].names}. 🥇`), alex(low ? `${low.names}? Just the basics.` : 'I want every point I can get!')];
+      return [teacher('Alex, why did you focus on some tasks more than others?'), alex(`${groups[0].names} ${groups[0].metricIds.length === 1 ? 'is' : 'are'} worth more points. 🥇`), alex(low ? `${low.names}? I only did the basics.` : 'I want every point I can get!')];
     }
-    if (!hasComparison) return [thought(isNearEven(current.weights) ? 'Both tests look similar. What if one task counted much more?' : 'I’ve tried two different splits. What would an equal split show?'), alex('I’ve tried both sets of rules. 🧮'), alex('I check what earns points before I start.')];
-    return [thought('The weights changed. So did Alex’s priorities.'), alex('Different points, different plan. 🧩'), alex('I still want the best score!')];
+    if (!hasComparison) {
+      const alreadyEven = isNearEven(current.weights);
+      return [teacher(alreadyEven ? 'Alex, what if one task counted much more?' : 'Alex, what if all three counted equally?'), alex(`${alreadyEven ? 'I’d check that one first.' : 'Then each task would matter for my score.'} 🧮`), alex(alreadyEven ? 'That’s where more of my effort would go.' : 'I’d have a reason to spend time on all three.')];
+    }
+    return [teacher('Alex, what made you change your plan?'), alex('Different points, different plan. 🧩'), alex('I still want the best score!')];
   }
-  if (phase === 'compare') return [thought('Different splits, but the scoring rules still guide his choices.'), alex('I plan my work around the scores. 🗺️'), alex('That’s how I know what counts!')];
+  if (phase === 'compare') return [teacher('Alex, are you choosing what helps you learn, or what earns points?'), alex('I plan my work around the scores. 🗺️'), alex('That’s how I know what counts!')];
   return [];
 }

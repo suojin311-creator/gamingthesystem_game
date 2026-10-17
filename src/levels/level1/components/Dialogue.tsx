@@ -11,7 +11,7 @@ export default function Dialogue({ phase, playerName, studentReplies, enabled, p
     result: 'Looking good. I’ll check the classroom.', cinematic: '',
     review: 'The score went up. What did you learn?',
   };
-  const lines: ConversationLine[] = [{ speaker: 'Maya', name: playerName, text: single[phase], delivery: phase === 'review' ? 'speech' : 'thought' }];
+  const lines: ConversationLine[] = [{ speaker: 'Maya', name: playerName, text: single[phase] }];
   if (phase === 'review') lines.push(...(studentReplies || ['I finished the tasks.']).map(text => ({ speaker: 'Alex' as const, name: 'Alex', text })));
   return <Conversation lines={lines} enabled={enabled} paused={paused} play={play} onSettled={onSettled} />;
 }

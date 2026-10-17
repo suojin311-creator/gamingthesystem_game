@@ -118,4 +118,4 @@ Keep the same LevelOne instance mounted while its renderer plays the selected ci
 
 The game-side dialogue and 16 non-repeating emoji are documented in [Dialogue review](DIALOGUE_REVIEW.md). The partner cinematic slots and completion payload are unchanged.
 
-Player observations and plans use a cloud thought bubble. The review question is spoken and keeps its ordinary speech bubble. Equivalent typography across the chapters is documented in [Typography](TYPOGRAPHY.md).
+All player and Alex dialogue uses the original ordinary speech-bubble style; cloud outlines and Thinking labels have been removed. Equivalent typography across the chapters is documented in [Typography](TYPOGRAPHY.md).

@@ -1,6 +1,6 @@
 {
-  "validatedAtUtc": "2026-10-17T22:24:00.479173+00:00",
-  "version": "Level 3 refinement v4: free exploration, complete history, shared typography and two-version review ZIP",
+  "validatedAtUtc": "2026-10-17T22:41:48.308574+00:00",
+  "version": "Level 3 refinement v5: connected spoken dialogue and cleaner comparison",
   "passed": 105,
   "builds": [
     "npm run build: passed",
@@ -61,15 +61,15 @@
         "80/15/5 keeps both remainders editable and confirms the final pair: first focus, then part",
         "Published weights remain until an explicit Observe click, with Management and Students cards showing the same current round",
         "Results remove the requested note and align weights/responses with their headings and a visible vertical divider",
-        "768px results and comparisons keep the same metric size, aligned labelled columns and no horizontal overflow",
-        "390px results and comparisons keep the same metric size, aligned labelled columns and no horizontal overflow",
-        "320px results and comparisons keep the same metric size, aligned labelled columns and no horizontal overflow",
+        "768px results and comparisons keep readable type, aligned labelled columns, no repeated summaries and no horizontal overflow",
+        "390px results and comparisons keep readable type, aligned labelled columns, no repeated summaries and no horizontal overflow",
+        "320px results and comparisons keep readable type, aligned labelled columns, no repeated summaries and no horizontal overflow",
         "First test [40, 30, 30]: the inclusive 10-point boundary selects the correct next task",
         "First test [40, 31, 29]: the inclusive 10-point boundary selects the correct next task",
         "Second test [38, 33, 29]: compares the player’s actual near-even run without a third test",
         "Second test [40, 30, 30]: compares the player’s actual near-even run without a third test",
         "Second test [40, 31, 29]: offers the explained optional balance check beyond 10 points",
-        "The 76/6/18 finding names both low-effort areas; thought clouds, two Alex bubbles and effort emphasis are visible",
+        "Ordinary teacher/Alex speech bubbles form a connected exchange; duplicate summaries are absent and result type is balanced",
         "A more uneven second attempt is allowed; all two player tests plus the reference stay visible on desktop and 320px",
         "Two near-even player tests offer an explicitly labelled uneven reference and retain all three actual splits",
         "No runtime errors in the feedback regressions"
@@ -380,58 +380,56 @@
     }
   },
   "manifest": {
-    "sourceSha256": "f6ffed3604175e7d5c8372558e6fdb770758ea10e3b3fe2f1779c68f2477428d",
+    "sourceSha256": "044521307c1948dd60ea105c5ad6427cb067bead281a51caeb4062c6997f08fa",
     "entries": [
       {
         "archive": "Level1-play.zip",
         "html": "Level1.html",
         "build": "dist-level1/index.html",
-        "htmlSha256": "2fb57a21982cf197d42ea4791f0ef00b23d3e0399e6b10187e6ab420e6c6db8f",
-        "zipSha256": "dc266a8c8f714a327aa47bab205e6dffff368cd1c837dc318ba01a1afb56008c"
+        "htmlSha256": "086414605731cf4fcecdcf7fd1e025a7d2881ed66be301ff200b594b941dcabd",
+        "zipSha256": "d038818e174ddf872b92254d6de47287e6ebdb788c5f3c65dee4ea3d56e242ec"
       },
       {
         "archive": "Level2-play.zip",
         "html": "Level2.html",
         "build": "dist-level2/index.html",
-        "htmlSha256": "06958264ea0c344152c05a40682cb4c6e7102c979bc6715a6afadf7213792bbb",
-        "zipSha256": "533fbf35ccef5cb53b843118cf85c0c19a6f37999d02c273fec8519d63c35cc7"
+        "htmlSha256": "96f50dd9ed3cfb95aab91dcf8e7744903e3f01cd785159613e5106d078ae40f5",
+        "zipSha256": "2aec8817d3af4fa1e63474027875adc9c80276dfa326b9a7ef28af866c12d22c"
       },
       {
         "archive": "Level3-play.zip",
         "html": "Level3.html",
         "build": "dist-level3/index.html",
-        "htmlSha256": "b412474c1e4ccd0ce27528adae8cbcead87a76a0ecf8a7eb528a012e136b884c",
-        "zipSha256": "a3925f788df8ecf7357b52b7f719623459a5d3b0c2568506baf4be1b31935bb0"
+        "htmlSha256": "bc9521b21497555d0dd316481150166836f9f26171d93df892312f3b41a6dfd9",
+        "zipSha256": "8fe42026723943216a752008c7b750b21e7fca0d9973ce3d340af55c4a2f7115"
       },
       {
         "archive": "Full-game-play.zip",
         "html": "Gaming-the-System.html",
         "build": "dist/index.html",
-        "htmlSha256": "0b2dd889aaf5bdacbc3c83b9cf97ac26a77c1b9b4740ea1948096b5541edfe2b",
-        "zipSha256": "1d1de2c84c3f16161d1c0399342321d4d24f8e6a76d743b688fda638f7c05b44"
+        "htmlSha256": "aa203c1ae217f57cf914d0664d2035145e7bce1f6d0438f1e4db84933b751402",
+        "zipSha256": "80fb49792a1dbcc73b5b8ea9edaa8b9b7640af24ff329110207ec79ee374a698"
       }
     ],
     "reviewBundle": {
       "archive": "Level3-and-Full-game-play.zip",
-      "zipSha256": "0a8a611b3b6fa068024f1d4bc7b283c480a473e15bd100b9c4dc44cdfea8b449",
+      "zipSha256": "0497a328db9d7422b685b3645ac2198937e2db4d9db0438be6aa962046bed19d",
       "htmlSha256": {
-        "Level3/Level3.html": "b412474c1e4ccd0ce27528adae8cbcead87a76a0ecf8a7eb528a012e136b884c",
-        "Full-game/Gaming-the-System.html": "0b2dd889aaf5bdacbc3c83b9cf97ac26a77c1b9b4740ea1948096b5541edfe2b"
+        "Level3/Level3.html": "bc9521b21497555d0dd316481150166836f9f26171d93df892312f3b41a6dfd9",
+        "Full-game/Gaming-the-System.html": "aa203c1ae217f57cf914d0664d2035145e7bce1f6d0438f1e4db84933b751402"
       }
     }
   },
   "notes": [
-    "The second player attempt can use any changed valid allocation, even a more uneven one. No title, player thought or Run condition forces a more balanced split. The inclusive near-even spread remains 10 percentage points.",
-    "After two attempts, mixed patterns compare directly; two uneven attempts offer What if they counted equally?, and two near-even attempts offer What if one counted more?. System references require a click and the same manual Observe flow.",
-    "Comparison displays every actual run in order, including both player attempts and a system reference. Browser checks cover all three cards on desktop and 320px with exact tested snapshots, including the 76/6/18 to 80/10/10 case.",
-    "Findings group all selected metrics by actual qualitative effort category. Both Participation and Focus are named as minimum effort for 76/6/18. Score weights are smaller and muted; effort labels and bars are prominent. No exact numerical effort or learning result is inferred.",
-    "Teacher observations/plans have cloud thought bubbles and Thinking accessibility. Spoken questions keep ordinary bubbles. Each Level 3 workbench beat has two short independent Alex messages; source emoji remain distinct.",
-    "The preview ends on the final Goodhart theory placeholder. There is no Design Lab destination, completion screen or final navigation button. Reserved onDesignLab is never called, including by duplicate cinematic completion callbacks.",
-    "Restart controls and dialogs are removed from all three player entries; administrator functionality is deferred by user instruction. Reset weights only resets the current allocation. Fresh/reloaded/restored-page behavior remains unchanged.",
-    "Ordinary metric names are 16px throughout. Shared tokens align equivalent chapter, step, description, dialogue, perspective, student-behaviour, evidence and scene-caption roles. Actual production selection pages match across all three chapters at 1366, 390 and 320px and do not overflow. Narrative intro text and warning emphasis retain their intended distinct roles.",
-    "The real Gameplay host retains opening identity, original Level 2 choices and sound preference into Level 3; players can swap preselected metrics. Level 1/2 name, custom-scene, no-restart, storage-blocked, hidden-page and 320px integration checks passed.",
-    "All four current entries were rebuilt together. The added Level3-and-Full-game-play.zip contains Level3/Level3.html and Full-game/Gaming-the-System.html, byte-identical to the individual latest tested downloads. The manifest records all source/build/archive/review hashes.",
-    "Managed Chromium tests exact offline production bytes through an in-memory HTTPS origin because local file navigation is blocked. Direct file opening in the user browser, a classroom load test, finished partner videos and an administrator login are not claimed.",
-    "Historical validation reports and version-numbered ZIPs remain unchanged. The broad historical Level 2 presentation suite was updated for removal of the retired Restart UI; its broad timing run is not counted here. Current Level 2 integration, identity, package and typography suites were executed."
+    "The shared cloud/thought-bubble mode, SVG outline, circular tails and Thinking labels were removed. All player and Alex messages use the original ordinary speech-bubble style, including Level 1. Player names and typing accessibility remain correct.",
+    "Level 3 teacher lines now address Alex and ask concrete questions. Alex retains two short replies per workbench beat that answer the question and add detail; metric names in his first uneven response follow the actual effort categories with singular/plural agreement. All 25 authored emoji remain distinct.",
+    "Level 3 action footers no longer show left-side explanatory captions, including the Choose any three helper, publication-ready caption, confirmation counter and comparison caption. Necessary selection feedback lives beside the priorities list; unchanged-split validation appears above the editor. Replay scene and Reset weights remain working controls.",
+    "The result effort-summary box, per-comparison-card summary footnotes and redundant comparison summary panel were removed. The three evidence rows, two actual player attempts and optional system reference remain fully visible.",
+    "Result/comparison typography is composed for balance rather than identical sizes across contexts: 22px readable sans-serif percentages, 16px medium-weight effort labels, slimmer bars, 16px main metric labels and 15px compact metric labels. Aligned headings and subtle dividers remain. Desktop and mobile screenshots were visually reviewed.",
+    "The user’s exact Focus/Reflection/Peer response example was also played through 67/17/16, 45/34/21 and the equal reference, confirming all three complete cards without repeated summary text or overflow.",
+    "All 20 priority trios, free second-attempt routes, both kinds of reference test, complete snapshots, name/sound/selection handoffs, real-time sequencing/audio, hidden-page holds, storage/no-audio fallbacks and 320–1366px layouts passed. No player Restart controls or administrator login were added.",
+    "The inclusive 10-point near-even range, editable original Level 2 trio, linked final-pair confirmation and manual Observe flow are unchanged. The final theory placeholder remains the endpoint; no Design Lab transition or completion page is present.",
+    "All four current entries and the two-version review ZIP were rebuilt together. Release checks verified all hashes and byte equality and played the individual and combined HTMLs. The review ZIP contains Level3/Level3.html and Full-game/Gaming-the-System.html from those exact tested builds.",
+    "Managed Chromium uses an in-memory HTTPS origin for exact offline production bytes because local file navigation is blocked. Direct file opening in the user browser, classroom load capacity and finished partner videos were not tested. Earlier validation reports remain historical."
   ]
 }
