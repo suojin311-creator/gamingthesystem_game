@@ -233,7 +233,7 @@ export default function LevelOne({ playerName = 'Maya', renderCinematic, onCompl
                 {observed ? <article className="observation-recap" key="evidence"><span className="eyebrow">IN THE CLASSROOM</span><p>{metric.evidence}</p></article> : <div className="observation-waiting"><span>Recalling the classroom…</span></div>}
               </div>
               {dialogue}
-              <div className="action-row"><button className="text-button" onClick={() => go('cinematic')}>Replay scene</button>{dialogueSettled ? <span className="level-finished" role="status"><Icon name="check" />LEVEL 1 COMPLETE</span> : <span className="next-action-space" aria-hidden="true" />}</div>
+              <div className="action-row"><button className="text-button" onClick={() => go('cinematic')}>Replay scene</button>{dialogueSettled ? <button className="button primary-button level-finished" disabled>Continue to Level 2<Icon name="arrow" /></button> : <span className="next-action-space" aria-hidden="true" />}</div>
             </>}
           </section>
           <PerspectivePanel metric={metric} evaluated={evaluated} observed={observed} highlight={highlight} />

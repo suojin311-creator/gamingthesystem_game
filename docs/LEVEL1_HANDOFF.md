@@ -55,7 +55,7 @@ After the final Alex reply has received its reading interval, `onComplete` autom
 }
 ```
 
-The standalone view stays on the observation page and shows LEVEL 1 COMPLETE; all four progress steps are done. There is no Try more metrics button or separate completion/Level 2 page. The callback fires once per run after the final dialogue reading interval. Replaying the cinematic does not fire it again; Restart, reload or remount starts a new run. The current host should retain the result in memory without navigating. Later Level 2 integration can choose how and when to use it.
+The standalone view stays on the observation page and shows a disabled Continue to Level 2 button with a right arrow; all four progress steps are done. The button is a reserved entrance; Level 2 is not mounted. There is no separate completion/Level 2 page. The callback fires once per run after the final dialogue reading interval. Replaying the cinematic does not fire it again; Restart, reload or remount starts a new run. The current host should retain the result in memory without navigating. Later Level 2 integration can choose how and when to use it.
 
 ## Narrative adjustments for the highlighted operations
 
@@ -66,7 +66,7 @@ The standalone view stays on the observation page and shows LEVEL 1 COMPLETE; al
 5. Maya: “Looking good. Let’s check the classroom.” Player chooses `Observe the class`.
 6. The selected branch cinematic plays. The existing placeholder is replaced here.
 7. Completing the cinematic returns to a compact, static prediction reference. After 1000 ms of visible time, the classroom observation and student uncertainty appear together, with one shared observation cue. Show only `metric.evidence` under IN THE CLASSROOM: the former details paragraph. Do not add the old takeaway headline or details toggle. Students is a quiet summary: no NEW badge, separate sound, pulse or forced sidebar scroll. Management’s view retains the already reported score.
-8. Give the observation 6–8 seconds of visible reading time before Maya: “The score is up. What about learning?” Alex then replies with the selected branch quote. Both bubbles sit within the main content column, Maya above-left and Alex below-right. Each starts with 650 ms of typing dots, followed by 3–5 seconds to read. Keep all messages visible. Wait for the final reply’s reading interval before showing LEVEL 1 COMPLETE on this page and reporting completion once. Replies wait until the chat is on screen. Guide and restart dialogs suspend reading and typing; closing them resumes automatically. There is no Pause / Resume control.
+8. Give the observation 6–8 seconds of visible reading time before Maya: “The score is up. What about learning?” Alex then replies with the selected branch quote. Both bubbles sit within the main content column, Maya above-left and Alex below-right. Each starts with 650 ms of typing dots, followed by 3–5 seconds to read. Keep all messages visible. Wait for the final reply’s reading interval before showing the reserved Continue to Level 2 button on this page and reporting completion once. Replies wait until the chat is on screen. Guide and restart dialogs suspend reading and typing; closing them resumes automatically. There is no Pause / Resume control.
 9. The former “What if we measured more than one?” screen, More metrics card and “Maybe one metric is too narrow” bridge are reserved in `src/components/LevelTwoEntryPlaceholder.tsx` for the future Level 2 host. LevelOne never imports or renders this component. Any future management-email scene remains the narrative host’s responsibility.
 10. The prediction page has one Change button beside the selected metric; the duplicate Back to metrics link is removed. Run evaluation remains right-aligned.
 
@@ -81,7 +81,7 @@ Do not display Goodhart's Law in Level 1. All six choices are plausible educatio
 - There are no live processes, credentials or external services required by the finished HTML. For source development, restart Vite with `npm run dev` in the project directory.
 - Each browser is one independent game. Two students may share that game; no room server or multiplayer connection is implied.
 
-## Interface feedback and orientation (v6)
+## Interface feedback and orientation (v7)
 
 The dashboard owns locally synthesized Web Audio cues: count ticks, an ascending success chime, one shared classroom-observation/student-summary cue, and softer message pips. No audio files, network calls, or credentials are needed. Sound is unlocked by pointer/keyboard interaction, can be muted immediately for the current run, and resets to sound on for a new run. Hidden tabs stop pending sounds. Voice acting, ambience and cinematic audio remain with the cinematic creator.
 

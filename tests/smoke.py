@@ -68,7 +68,8 @@ def reveal_review(page, settle=True):
     expect(page.locator('.observation-recap')).to_be_visible(timeout=10000)
     expect(page.locator('.student')).to_contain_text('Unclear', timeout=10000)
     if settle:
-        expect(page.locator('.level-finished')).to_have_text('LEVEL 1 COMPLETE', timeout=22000)
+        expect(page.get_by_role('button', name='Continue to Level 2')).to_be_visible(timeout=22000)
+        expect(page.get_by_role('button', name='Continue to Level 2')).to_be_disabled()
 
 
 def story_to_review(page):

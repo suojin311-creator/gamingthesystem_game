@@ -68,8 +68,6 @@ a { color: inherit; }
 .metric-card p { font-size: 11px; line-height: 1.45; color: #7a7b6c; }
 .action-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: auto; padding: 14px 0 18px; border-top: 1px solid #e6e1d4; min-height: 73px; }
 .prediction-actions { justify-content: flex-end; }
-.level-finished { display: inline-flex; align-items: center; gap: 7px; min-height: 42px; font-size: 10px; letter-spacing: .08em; color: #647852; }
-.level-finished .icon { width: 17px; height: 17px; }
 .button { display: inline-flex; gap: 10px; align-items: center; justify-content: center; min-height: 42px; border-radius: 3px; padding: 11px 16px; font-size: 12px; font-weight: 700; border: 1px solid transparent; transition: background .15s; white-space: nowrap; line-height: 1.4; }
 .button .icon { width: 16px; height: 16px; }
 .primary-button { color: #fff9ef; background: #ad5840; border-color: #9f4f39; box-shadow: 0 2px 0 #813d2c; }

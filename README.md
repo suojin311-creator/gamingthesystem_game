@@ -2,19 +2,21 @@
 
 A standalone, English-language Level 1 workbench. The supplied cinematic opening has **not** been merged or modified. Its office and classroom backgrounds are reused as visual references/assets from the supplied project.
 
-**Just want to play? [Download the playable ZIP (v6)](play/Level1-play-v6.zip?raw=true), extract it, and open `Level1.html` in Chrome or Edge. No developer tools are needed. Sign in to a GitHub account with access to this repository before downloading.**
+**Just want to play? [Download the playable ZIP (v7)](play/Level1-play-v7.zip?raw=true), extract it, and open `Level1.html` in Chrome or Edge. No developer tools are needed. Sign in to a GitHub account with access to this repository before downloading.**
 
 ## Play without installing anything
 
 Open `dist/index.html` in a current desktop browser. The production file contains its own JavaScript, styles, and images, and needs no server or Internet connection. The separately delivered `Gaming-the-System-Level1.html` is the same file with a descriptive name.
 
-Select one of six metrics, write a prediction of up to 100 characters, run the evaluation, observe the selected story placeholder, then compare the result with the prediction. Level 1 ends on that observation page. After the final reply’s reading interval, LEVEL 1 COMPLETE appears there and all four progress steps are marked done. No additional click or Level 2 page appears. Replay scene and the header Restart remain available.
+Select one of six metrics, write a prediction of up to 100 characters, run the evaluation, observe the selected story placeholder, then compare the result with the prediction. Level 1 ends on that observation page. After the final reply’s reading interval, a disabled Continue to Level 2 button appears there and all four progress steps are marked done. No click is required to finish Level 1, and the current build stays on this page. Replay scene and the header Restart remain available.
 
-Version 6 removes the duplicate Back to metrics control: use Change beside the selected metric. The Run evaluation button stays on the right. The former next-level screen is reserved separately in `src/components/LevelTwoEntryPlaceholder.tsx` and is not mounted or included in this playable flow.
+Version 7 replaces the final completion label with **Continue to Level 2 →**, reserved as a disabled button until the next level is ready.
+
+The prediction page removes the duplicate Back to metrics control: use Change beside the selected metric. The Run evaluation button stays on the right. The former next-level screen is reserved separately in `src/components/LevelTwoEntryPlaceholder.tsx` and is not mounted or included in this playable flow.
 
 The post-scene page stays simple. The prediction is a quiet reference line. A single classroom observation paragraph (the former details text) appears automatically together with the Students summary, sharing one sound cue. There is no duplicate headline, details toggle, student badge or separate student animation. Management’s view retains its existing score without renewed emphasis.
 
-The classroom observation has 6–8 seconds of visible reading time, based on its English length, before conversation begins. Maya appears above-left, then Alex below-right within the main content column. Each message starts with 650 ms of typing dots and gets 3–5 seconds of visible reading time. The completion status appears only after the last reply’s reading interval. All revealed information stays available. Hidden tabs, off-screen text, Guide and restart dialogs hold the pending beat; sequences resume automatically when visible again. There are no pause or reveal buttons.
+The classroom observation has 6–8 seconds of visible reading time, based on its English length, before conversation begins. Maya appears above-left, then Alex below-right within the main content column. Each message starts with 650 ms of typing dots and gets 3–5 seconds of visible reading time. The reserved next-level button appears only after the last reply’s reading interval. All revealed information stays available. Hidden tabs, off-screen text, Guide and restart dialogs hold the pending beat; sequences resume automatically when visible again. There are no pause or reveal buttons.
 
 The score's Target 70 label sits directly below the 70-point marker at every screen size. The finding fades in once; the student card changes quietly as its summary. The evaluation’s management highlight ends after 1.6 visible seconds. Reduced-motion preferences remove movement while retaining the reading intervals and sequence.
 

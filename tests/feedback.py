@@ -55,7 +55,8 @@ def finish_scene(page):
     page.get_by_role('button', name='Return to dashboard').click()
 
 def settle(page):
-    expect(page.locator('.level-finished')).to_have_text('LEVEL 1 COMPLETE', timeout=22000)
+    expect(page.get_by_role('button', name='Continue to Level 2')).to_be_visible(timeout=22000)
+    expect(page.get_by_role('button', name='Continue to Level 2')).to_be_disabled()
 
 timeline_probe = '''
 window.reviewTimeline = {};

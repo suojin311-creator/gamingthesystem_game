@@ -1,0 +1,15 @@
+{
+  "version": "Level 1 v7",
+  "build_sha256": "b6134a767f9030e566d2b6a83752722508288fce3ea507e26c8bde0ed2a460ba",
+  "passed": 2,
+  "checks": [
+    "1366px: reserved Continue to Level 2 button appears after dialogue reading, has an arrow, is disabled, and leaves the final observation page visible without overflow.",
+    "320px: reserved Continue to Level 2 button appears after dialogue reading, has an arrow, is disabled, and leaves the final observation page visible without overflow."
+  ],
+  "runtime_errors": [],
+  "notes": [
+    "TypeScript and production build passed.",
+    "Exact production HTML checked offline through an in-memory origin; managed Chromium blocks file URLs.",
+    "Targeted desktop/mobile verification for the label and reserved-button change; full v6 regression suite was not rerun."
+  ]
+}
