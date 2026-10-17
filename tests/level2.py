@@ -69,7 +69,7 @@ with sync_playwright() as playwright:
     expect(page.get_by_test_id('level2-metric-prep')).to_have_attribute('aria-pressed', 'true')
     expect(page.get_by_test_id('level2-notebook')).to_contain_text('Preparation')
     page.get_by_test_id('level2-metric-prep').click()
-    expect(page.locator('.maya-bubble p')).to_have_text('One metric wasn’t enough. What if we tracked three? Which ones would you choose?')
+    expect(page.locator('.maya-bubble p')).to_have_text('One metric wasn’t enough. What if I tracked three? Which ones should I choose?')
     expect(page.locator('.alex-bubble p')).to_have_text('Three metrics now? Okay, I can handle that!', timeout=4000)
     record('Level 2 opens with six interactive cards and both highlighted opening lines, without a transition page')
     expect(page.get_by_role('button', name='Guide', exact=True)).to_have_count(0)

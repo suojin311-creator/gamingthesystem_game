@@ -8,7 +8,7 @@ export default function Dialogue({ phase, playerName, studentQuote, enabled, pau
 }) {
   const single: Record<Phase, string> = {
     choose: 'Where should I start?', predict: 'What do I expect students to do?',
-    result: 'Looking good. Let’s check the classroom.', cinematic: '',
+    result: 'Looking good. I’ll check the classroom.', cinematic: '',
     review: 'The score is up. What about learning?',
   };
   const lines: ConversationLine[] = [{ speaker: 'Maya', name: playerName, text: single[phase] }];

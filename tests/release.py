@@ -6,7 +6,7 @@ import zipfile
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 
-archive = Path('play/Level2-play-v3.zip')
+archive = Path('play/Level2-play-v4.zip')
 checks, errors = [], []
 with zipfile.ZipFile(archive) as bundle:
     assert bundle.testzip() is None

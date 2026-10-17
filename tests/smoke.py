@@ -285,7 +285,7 @@ root.render(React.createElement(LevelOne, {
         report_if_needed(host)
         host.get_by_role('button', name='Observe the class').click()
         expect(host.get_by_role('heading', name='Partner cinematic')).to_be_visible()
-        assert host.evaluate('window.storyRequest') == {'sceneId': 'level1.focus', 'metricId': 'focus'}
+        assert host.evaluate('window.storyRequest') == {'sceneId': 'level1.focus', 'metricId': 'focus', 'playerName': 'Jordan'}
         assert host.get_by_test_id('cinematic-placeholder').count() == 0
         host.get_by_role('button', name='Finish partner scene').click()
         expect(host.locator('.prediction-recap')).to_contain_text('Students will concentrate on the task.')

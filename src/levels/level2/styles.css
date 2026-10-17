@@ -135,7 +135,7 @@
 .level-two .l2-scene-intro p { font-size: 12px; line-height: 1.6; color: #f3ecd6; max-width: 490px; }
 .level-two .l2-scene-intro small { display: block; font-size: 9px; color: #c7c6b1; margin-top: 15px; }
 .level-two .l2-scene-caption { border-left: 2px solid #b8c39c; padding-left: 17px; margin-top: auto; max-width: 700px; animation: panel-arrive .3s ease-out; min-height: 83px; }
-.level-two .l2-scene-caption > span { font-size: 11px; color: #e9cca7; }
+.level-two .l2-scene-caption > span { font-size: 11px; color: #e9cca7; overflow-wrap: anywhere; }
 .level-two .l2-scene-caption p { font: 26px/1.4 var(--serif); margin-top: 7px; }
 .level-two .l2-scene-controls { display: flex; justify-content: space-between; gap: 15px; align-items: center; margin-top: 27px; }
 .level-two .l2-scene-dots { display: flex; gap: 6px; }

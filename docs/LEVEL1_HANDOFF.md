@@ -16,7 +16,7 @@ The cinematic owns Maya/Alex's descriptive actions and dialogue for the selected
 
 `LevelOne` lives in `src/levels/level1/LevelOne.tsx` and imports its own scoped styles. Import `src/shared/styles/base.css` once in the host entry before the level. `src/App.tsx` is the current game entry.
 
-`LevelOne` is a React component. Its default player name is Maya; the later host can pass the name already collected in the opening. Every mount starts a new in-memory run. The component never restores progress or preferences from browser storage.
+`LevelOne` is a React component. The final host passes the opening's confirmed name into `Gameplay`, which forwards it to both levels. See [Opening handoff](OPENING_HANDOFF.md) for the exact integration point in the supplied opening. Standalone previews use Maya as a fallback. Every mount starts a new in-memory run. The component never restores progress or preferences from browser storage.
 
 ```tsx
 import LevelOne from './levels/level1/LevelOne';
@@ -27,6 +27,7 @@ import LevelOne from './levels/level1/LevelOne';
   renderCinematic={(request, complete) => (
     <YourClassroomScene
       metricId={request.metricId}
+      playerName={request.playerName}
       onComplete={complete}
     />
   )}
@@ -35,7 +36,7 @@ import LevelOne from './levels/level1/LevelOne';
 />
 ```
 
-The renderer receives `{ sceneId, metricId }`, then calls `complete()` when the scene ends. No score or prediction is needed to choose the branch. Mount the Level 1 component once through the interlude to retain its session. Names for the current slots:
+The renderer receives `{ sceneId, metricId, playerName }`, then calls `complete()` when the scene ends. Resolve the player role's visible name using `playerName`; Alex keeps his name. No score or prediction is needed to choose the branch. Mount the Level 1 component once through the interlude to retain its session. Names for the current slots:
 
 | Metric ID | Scene ID | Metric |
 | --- | --- | --- |
@@ -66,7 +67,7 @@ The view stays on the observation page; all four progress steps are done. After 
 2. Maya: “Where should I start?”
 3. Prediction prompt: “What do you expect students to do?” Supporting text asks the player to imagine the metric as the main target.
 4. `Run evaluation` shows the illustrative score rising. Management’s view and Target met status then update automatically with a success chime. The Target 70 label is aligned to the real threshold marker.
-5. Maya: “Looking good. Let’s check the classroom.” Player chooses `Observe the class`.
+5. Player: “Looking good. I’ll check the classroom.” Player chooses `Observe the class`.
 6. The selected branch cinematic plays. The existing placeholder is replaced here.
 7. Completing the cinematic returns to a compact, static prediction reference. After 1000 ms of visible time, the classroom observation and student uncertainty appear together, with one shared observation cue. Show only `metric.evidence` under IN THE CLASSROOM: the former details paragraph. Do not add the old takeaway headline or details toggle. Students is a quiet summary: no NEW badge, separate sound, pulse or forced sidebar scroll. Management’s view retains the already reported score.
 8. Give the observation 6–8 seconds of visible reading time before Maya: “The score is up. What about learning?” Alex then replies with the selected branch quote. Both bubbles sit within the main content column, Maya above-left and Alex below-right. Each starts with 650 ms of typing dots, followed by 3–5 seconds to read. Keep all messages visible. Wait for the final reply’s reading interval before showing Continue to Level 2 on this page and reporting completion once. Replies wait until the chat is on screen. Guide and restart dialogs suspend reading and typing; closing them resumes automatically. There is no Pause / Resume control.

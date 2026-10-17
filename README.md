@@ -2,7 +2,9 @@
 
 An English-language game about measuring engagement. Level 1 and Level 2 gameplay are implemented. The opening and finished cinematics remain the partner's separate work; classroom scenes are clearly labelled, replaceable placeholders.
 
-**[Download the Level 2 preview (v3)](play/Level2-play-v3.zip?raw=true).** Sign in to GitHub with access to this private repository, download and extract the ZIP, then open **Level2.html** in Chrome or Edge. No installation is needed. **Levels1-and-2.html** in the same ZIP starts at Level 1 and continues to Level 2.
+**[Download the Level 2 preview (v4)](play/Level2-play-v4.zip?raw=true).** Sign in to GitHub with access to this private repository, download and extract the ZIP, then open **Level2.html** in Chrome or Edge. No installation is needed. **Levels1-and-2.html** in the same ZIP starts at Level 1 and continues to Level 2.
+
+Player decisions now use **I**. The reusable `Gameplay` host accepts the name already collected in the opening and carries it through both levels, dialogue labels, avatars and cinematic requests. These standalone previews still use Maya because they omit the opening. See [Opening/name handoff](docs/OPENING_HANDOFF.md) for the integration point in the partner's supplied source.
 
 The saved [Level 1 v7 preview](play/Level1-play-v7.zip?raw=true) is preserved unchanged on `level1-preview` and in `play/`. New development is on `level2-dev`.
 
@@ -47,7 +49,8 @@ npm run build:level2  # dist-level2/index.html: start directly at Level 2
 
 ```text
 src/
-  App.tsx                 In-memory Level 1 → Level 2 navigation
+  App.tsx                 Standalone preview entry (Maya fallback)
+  Gameplay.tsx            Opening-name handoff and in-memory Level 1 → Level 2 navigation
   main.tsx                Bootstrap and shared base stylesheet
   levels/
     level1/               One-metric choices, scores, guide and observations
@@ -63,12 +66,12 @@ src/
     components/           Icons and timed conversation bubbles
     data/metrics.ts       Six metric names, IDs and descriptions
     hooks/                Audio and visible-time delays
-    utils/                Reading-time calculation
+    utils/                Reading-time calculation and player-name fallback
     styles/               Common design tokens, controls and conversation defaults
   assets/                 Office and classroom artwork
 ```
 
-Each level owns its rules and text. Shared modules do not import level internals. `App.tsx` connects levels without storage or full-page navigation. The cinematic opening has not been merged. See [Level 1 handoff](docs/LEVEL1_HANDOFF.md) and [Level 2 handoff](docs/LEVEL2_HANDOFF.md) for the partner integration contracts.
+Each level owns its rules and text. Shared modules do not import level internals. `Gameplay.tsx` connects levels without storage or full-page navigation. The cinematic opening has not been merged. See [Opening handoff](docs/OPENING_HANDOFF.md), [Level 1 handoff](docs/LEVEL1_HANDOFF.md) and [Level 2 handoff](docs/LEVEL2_HANDOFF.md) for the partner integration contracts.
 
 ## Validate
 
@@ -83,6 +86,7 @@ python tests/feedback.py --file dist/index.html
 python tests/guide.py --file dist/index.html
 # With npm run dev running, also check the partner scene contracts:
 python tests/level2_integration.py
+python tests/player_identity.py
 # After packaging the playable ZIP:
 python tests/release.py
 ```
@@ -92,6 +96,6 @@ The browser tests serve the exact production HTML bytes through an in-memory tes
 Checks cover the 20 trios, complete expansion flow, both levels' handoff, outcome text, timing, selection limits, sound, keyboard controls, restart, fresh-page lifetime and responsive layouts. They are browser functional checks, not a classroom concurrency/load test.
 
 The current results and artifact hashes are recorded in
-[LEVEL2_VALIDATION-v3.json](docs/LEVEL2_VALIDATION-v3.json). Earlier previews and
+[LEVEL2_VALIDATION-v4.json](docs/LEVEL2_VALIDATION-v4.json). Earlier previews and
 their validation records are preserved. The highlighted narrative ownership
 check is in [LEVEL2_NARRATIVE_AUDIT.md](docs/LEVEL2_NARRATIVE_AUDIT.md).

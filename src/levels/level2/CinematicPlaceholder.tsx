@@ -3,9 +3,10 @@ import classroom from '../../assets/classroom.png';
 import Icon from '../../shared/components/Icon';
 import { THREE_OUTCOMES, type LevelTwoCinematicRequest } from './data';
 
-export default function CinematicPlaceholder({ request, playerName, onComplete }: {
-  request: LevelTwoCinematicRequest; playerName: string; onComplete: () => void;
+export default function CinematicPlaceholder({ request, onComplete }: {
+  request: LevelTwoCinematicRequest; onComplete: () => void;
 }) {
+  const playerName = request.playerName;
   const [line, setLine] = useState(0);
   const title = useRef<HTMLHeadingElement>(null);
   useEffect(() => title.current?.focus(), []);

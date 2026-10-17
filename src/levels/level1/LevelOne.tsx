@@ -9,6 +9,7 @@ import { useFeedback } from '../../shared/hooks/useFeedback';
 import WorkbenchGuide from './components/WorkbenchGuide';
 import { useVisibleDelay } from '../../shared/hooks/useVisibleDelay';
 import { readingTime } from '../../shared/utils/readingTime';
+import { resolvePlayerName } from '../../shared/utils/playerName';
 
 export type LevelOneResult = {
   metricId: MetricId; prediction: string;
@@ -57,7 +58,8 @@ function PerspectivePanel({ metric, evaluated, observed, highlight }: {
   </aside>;
 }
 
-export default function LevelOne({ playerName = 'Maya', renderCinematic, onComplete, onContinue, showIntro = true }: LevelOneProps) {
+export default function LevelOne({ playerName: suppliedName, renderCinematic, onComplete, onContinue, showIntro = true }: LevelOneProps) {
+  const playerName = resolvePlayerName(suppliedName);
   const [session, setSession] = useState(() => ({ ...INITIAL_SESSION }));
   const [guideOpen, setGuideOpen] = useState(showIntro);
   const [runId, setRunId] = useState(0);
@@ -196,6 +198,7 @@ export default function LevelOne({ playerName = 'Maya', renderCinematic, onCompl
   }
 
   const dialogue = <Dialogue key={`${runId}:${phase}`} phase={phase} playerName={playerName} studentQuote={metric?.studentQuote} enabled={dialogueEnabled} paused={paused} play={feedback.play} onSettled={settleDialogue} />;
+  const request: CinematicRequest | null = phase === 'cinematic' && metric ? { sceneId: `level1.${metric.id}`, metricId: metric.id, playerName } : null;
 
   return <div className="game-page level-one" onPointerDownCapture={feedback.unlock} onKeyDownCapture={feedback.unlock}>
     <header className="masthead"><a className="wordmark" href="#main-content" aria-label="Gaming the System, skip to game"><span className="brand-emblem" aria-hidden="true">g<span>s</span><i /></span><span>GAMING<br /><b>THE SYSTEM</b></span></a><div className="header-controls">{phase !== 'cinematic' && <button ref={guideButton} className="guide-button" aria-label="Guide" onClick={openGuide}><Icon name="question" /><span>Guide</span></button>}<button className="sound-button" aria-pressed={!feedback.muted} disabled={!feedback.available} onClick={feedback.toggle} title={feedback.available ? 'Toggle feedback sounds' : 'Audio is unavailable in this browser'}><Icon name={feedback.muted || !feedback.available ? 'muted' : 'sound'} /><span>{!feedback.available ? 'No audio' : feedback.muted ? 'Sound off' : 'Sound on'}</span></button><button ref={restartButton} className="restart-button" onClick={() => setRestartOpen(true)}><Icon name="restart" /><span>Restart</span></button></div></header>
@@ -204,7 +207,7 @@ export default function LevelOne({ playerName = 'Maya', renderCinematic, onCompl
       <div className="workbench-heading"><div className="chapter-heading"><span className="chapter-number">01</span><h1>One metric.</h1></div><span className="office-location"><span /> THE OFFICE</span></div>
       <nav className="stepper" aria-label="Level 1 progress"><ol>{steps.map((step, index) => <li key={step} className={`${currentStep === index ? 'current' : ''} ${currentStep > index ? 'done' : ''}`} aria-current={currentStep === index ? 'step' : undefined}><span className="step-number">{currentStep > index ? <Icon name="check" /> : `0${index + 1}`}</span><span>{step}</span></li>)}</ol></nav>
 
-      {phase === 'cinematic' && metric ? (renderCinematic ? renderCinematic({ sceneId: `level1.${metric.id}`, metricId: metric.id }, () => go('review')) : <CinematicPlaceholder request={{ sceneId: `level1.${metric.id}`, metricId: metric.id }} playerName={playerName} onComplete={() => go('review')} />) : <>
+      {request ? (renderCinematic ? renderCinematic(request, () => go('review')) : <CinematicPlaceholder request={request} onComplete={() => go('review')} />) : <>
         <div className={`workbench-body phase-${phase}`}>
           <section className="decision-area" aria-label="Current decision">
             {phase === 'choose' && <>

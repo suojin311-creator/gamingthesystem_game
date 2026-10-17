@@ -1,0 +1,136 @@
+{
+  "validated_at_utc": "2026-10-17T17:30:37.180154+00:00",
+  "branch": "level2-dev",
+  "version": "Level 2 preview v4",
+  "passed": 75,
+  "builds": [
+    "npm run build: passed",
+    "npm run build:level2: passed"
+  ],
+  "suites": {
+    "level2-results.json": {
+      "passed": 52,
+      "cases": [
+        "Level 2 opens with six interactive cards and both highlighted opening lines, without a transition page",
+        "Running the chosen three metrics also checks Alex’s three-entry notebook",
+        "Offline Level 2 entry without Guide and mixed evaluation",
+        "Student behaviour is the main text, with Learning at risk as a smaller supporting label",
+        "Finding precedes dialogue and next action",
+        "Restart confirmation freezes the reading sequence and restores keyboard focus",
+        "Cover the gaps appears with Alex’s reply, with a shorter delay between speakers",
+        "Gap view shows exactly the three unselected areas",
+        "Untracked areas have a larger type size and a prominent warning",
+        "Adding remaining metrics unfolds the notebook to six entries and six checks",
+        "Six-metric report and pending student card share the current round without stale observations",
+        "Six-metric evaluation retains first three and adds the missing three",
+        "The six-metric observation also shows its next button with the faster Alex reply",
+        "10 metrics automatically reveal the matching student checklist",
+        "10 metrics: action items tick in sequence and next button opens about one second after the last",
+        "25 metrics automatically reveal the matching student checklist",
+        "25 metrics: action items tick in sequence and next button opens about one second after the last",
+        "100 metrics automatically reveal the matching student checklist",
+        "100 metrics: action items tick in sequence and next button opens about one second after the last",
+        "Level 2 ends at weighting question with Level 3 reserved and all-English UI",
+        "Restart cancels safely or clears progress without persistent saves",
+        "Exactly-three limit, selection hint and deselect-to-swap",
+        "Trio prep+part+focus routes to visible outcome",
+        "Trio prep+part+discuss routes to mixed outcome",
+        "Trio prep+part+reflect routes to mixed outcome",
+        "Trio prep+part+peer routes to mixed outcome",
+        "Trio prep+focus+discuss routes to mixed outcome",
+        "Trio prep+focus+reflect routes to mixed outcome",
+        "Trio prep+focus+peer routes to mixed outcome",
+        "Trio prep+discuss+reflect routes to mixed outcome",
+        "Trio prep+discuss+peer routes to mixed outcome",
+        "Trio prep+reflect+peer routes to mixed outcome",
+        "Trio part+focus+discuss routes to mixed outcome",
+        "Trio part+focus+reflect routes to mixed outcome",
+        "Trio part+focus+peer routes to mixed outcome",
+        "Trio part+discuss+reflect routes to mixed outcome",
+        "Trio part+discuss+peer routes to mixed outcome",
+        "Trio part+reflect+peer routes to mixed outcome",
+        "Trio focus+discuss+reflect routes to mixed outcome",
+        "Trio focus+discuss+peer routes to mixed outcome",
+        "Trio focus+reflect+peer routes to mixed outcome",
+        "Trio discuss+reflect+peer routes to quality outcome",
+        "1366px layout, normal motion and automatic dialogue",
+        "1366px reload and restored tab start fresh",
+        "768px layout, normal motion and automatic dialogue",
+        "768px reload and restored tab start fresh",
+        "390px layout, normal motion and automatic dialogue",
+        "390px reload and restored tab start fresh",
+        "320px layout, normal motion and automatic dialogue",
+        "320px reload and restored tab start fresh",
+        "Full game carries Level 1 context and sound preference to Level 2; refresh restarts full game",
+        "No browser runtime errors across all offline playthroughs"
+      ],
+      "runtimeErrors": []
+    },
+    "level2-integration-results.json": {
+      "passed": 9,
+      "checks": [
+        "Partner replaces all three scene slots; original trio, branch and custom name retained",
+        "Completion reports exact result once after final reading",
+        "Level 2 emits actual count, success, evidence and softer message cues",
+        "Final replay retains completion count and mute suppresses new cues",
+        "Restart clears the original trio and permits a new completion",
+        "Hidden tab holds metric updates and resumes them on return",
+        "Growth counter and automatic observation wait while restart confirmation is open",
+        "The shortened next-button wait pauses under restart confirmation and resumes after closing it",
+        "Complete expansion and partner-scene flow works at 320px"
+      ],
+      "runtimeErrors": []
+    },
+    "player-identity-results.json": {
+      "passed": 10,
+      "checks": [
+        "Confirmed opening name reaches Level 1 labels, avatar and typing accessibility; guide has no fixed Maya name",
+        "Level 1 restart retains identity and its custom cinematic receives playerName; Alex stays Alex",
+        "Level 1 → Level 2 retains the same opening name and prior metric; choice/gap thoughts use I",
+        "Both levels and every custom cinematic slot share one name; six-metric decision uses I; result callbacks still fire",
+        "Level 2 restart retains identity; reloading the full host returns to a fresh opening/name entry with storage blocked",
+        "Full-host restored-page reset returns to the opening and clears the previous identity",
+        "Built-in Level 1 and Level 2 three/six-metric placeholders display the opening name and keep Alex unchanged",
+        "Final Level 2 placeholder and closing player thought retain the same opening name",
+        "Names including Alex, HTML-like text and 40 unbroken characters render literally without horizontal overflow at 320px",
+        "No runtime errors during opening-name integration checks"
+      ],
+      "runtimeErrors": []
+    },
+    "release-results.json": {
+      "passed": 4,
+      "checks": [
+        "ZIP integrity and byte identity with both production builds",
+        "Packaged Level2.html completes 3 → 6 → 10 → 25 → 100 offline with normal motion",
+        "Packaged Levels1-and-2.html starts at Level 1 with its guide",
+        "Packaged entries have no browser runtime errors"
+      ],
+      "runtimeErrors": []
+    }
+  },
+  "artifacts": {
+    "dist/index.html": {
+      "sha256": "3653c1d1b7348c44f2caa171115e7cf9c8da648d9bfaa764fd6478192785b61a",
+      "bytes": 9801342
+    },
+    "dist-level2/index.html": {
+      "sha256": "46a2643a7a768d7ca4f812deb1b0a5d253abd89fda1487bc351c8dd442cee946",
+      "bytes": 9801342
+    },
+    "play/Level2-play-v4.zip": {
+      "sha256": "e96da491cfdb70b8c8f0012c3054cf9e7e0f7bf367b4280e71652e76c5af060d",
+      "bytes": 14579953
+    }
+  },
+  "notes": [
+    "Player thoughts and decisions use I. The opening narrative is adapted to a single player perspective.",
+    "The supplied opening already holds playerName but ends at officeEnd without a gameplay callback. Its required handoff and restored-page reset are documented in OPENING_HANDOFF.md; that separate source and the live Netlify opening have not been merged or deployed.",
+    "Gameplay accepts the confirmed name and retains it through Level 1, Level 2, dialogue labels, avatar initials, accessible typing labels, placeholder captions and both custom cinematic requests.",
+    "The opening integration test uses a form harness with the same draftName/playerName confirmation model. It tests both levels, all custom scene slots, placeholder scenes, restart, page reload, restored-page reset, blocked storage, names matching Alex, HTML-like input and 40-character unbroken names at 320px.",
+    "Standalone downloadable previews intentionally retain Maya because the opening is excluded. The final host supplies its collected name without another input form or browser persistence.",
+    "The Level 2 regression suite uses real presentation intervals; host-contract, name-handoff and packaged-release checks advance waits with the browser clock.",
+    "Offline browser checks use actual bundled HTML bytes through an in-memory HTTPS origin because the managed browser blocks file navigation. Direct file opening in the user browser was not observed.",
+    "The downloadable ZIP passed integrity checks and both contained HTML entries match the production build bytes.",
+    "Finished partner cinematics and Level 3 remain outside this build."
+  ]
+}

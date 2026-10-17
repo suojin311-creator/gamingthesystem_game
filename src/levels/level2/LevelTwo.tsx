@@ -8,6 +8,7 @@ import { useVisibleDelay } from '../../shared/hooks/useVisibleDelay';
 import Conversation, { findingReadingTime } from './Conversation';
 import Notebook from './Notebook';
 import CinematicPlaceholder from './CinematicPlaceholder';
+import { resolvePlayerName } from '../../shared/utils/playerName';
 import Perspectives from './Perspectives';
 import { CHECKLISTS, FINAL_EVIDENCE, SIX_EVIDENCE, THREE_OUTCOMES, classifyTrio, nextCount, sceneRequest, type LevelTwoCinematicRequest, type LevelTwoResult, type RoundCount } from './data';
 
@@ -21,7 +22,8 @@ export type LevelTwoProps = {
 const ALL_IDS = METRIC_CATALOG.map(metric => metric.id);
 const STAGES = ['Choose three', 'Cover the gaps', 'Keep adding'];
 
-export default function LevelTwo({ playerName = 'Maya', previousMetricId, renderCinematic, onComplete }: LevelTwoProps) {
+export default function LevelTwo({ playerName: suppliedName, previousMetricId, renderCinematic, onComplete }: LevelTwoProps) {
+  const playerName = resolvePlayerName(suppliedName);
   const [phase, setPhase] = useState<Phase>('choose');
   const [selected, setSelected] = useState<MetricId[]>([]);
   const [count, setCount] = useState<RoundCount>(3);
@@ -157,8 +159,8 @@ export default function LevelTwo({ playerName = 'Maya', previousMetricId, render
     ? [{ speaker: 'Maya', name: playerName, text: 'What if some metrics mattered more than others?' }]
     : count === 3
       ? [{ speaker: 'Maya', name: playerName, text: 'Maybe I’m still missing something…' }, { speaker: 'Alex', name: 'Alex', text: 'Other parts? Are those being graded too?' }]
-      : [{ speaker: 'Maya', name: playerName, text: 'What if we added even more metrics?' }, { speaker: 'Alex', name: 'Alex', text: 'I learned exactly how to meet the criteria!' }];
-  const request = phase === 'scene' ? sceneRequest(count as 3 | 6 | 100, selected) : null;
+      : [{ speaker: 'Maya', name: playerName, text: 'What if I added even more metrics?' }, { speaker: 'Alex', name: 'Alex', text: 'I learned exactly how to meet the criteria!' }];
+  const request = phase === 'scene' ? sceneRequest(count as 3 | 6 | 100, selected, playerName) : null;
   const counter = <div className="l2-counter" aria-label={`${shownCount} metrics tracked`}><div className="l2-counter-value"><span className="eyebrow">METRICS TRACKED</span><strong>{shownCount}</strong><span className="l2-count-change">{fromCount}<Icon name="arrow" />{count}</span></div><div className="l2-matrix" aria-hidden="true">{Array.from({ length: 100 }, (_, index) => <i key={index} data-active={index < shownCount} />)}</div></div>;
 
   return <div className="game-page level-two" data-phase={phase} data-round={count} data-branch={branch || ''} onPointerDown={feedback.unlock} onKeyDown={feedback.unlock}>
@@ -166,11 +168,11 @@ export default function LevelTwo({ playerName = 'Maya', previousMetricId, render
     <main id="level-two-main" className="l2-workbench">
       <div className="l2-heading"><div><span className="chapter-number">02</span><h1>More metrics.</h1></div><span className="l2-location"><i />THE OFFICE</span></div>
       <nav className="l2-stepper" aria-label="Level 2 progress"><ol>{STAGES.map((label, index) => <li key={label} className={stage === index ? 'current' : stage > index ? 'done' : ''} aria-current={stage === index ? 'step' : undefined}><span>{stage > index ? <Icon name="check" /> : `0${index + 1}`}</span>{label}</li>)}</ol></nav>
-      {request ? (renderCinematic ? renderCinematic(request, finishScene) : <CinematicPlaceholder key={`${runId}:${request.sceneId}`} request={request} playerName={playerName} onComplete={finishScene} />)
+      {request ? (renderCinematic ? renderCinematic(request, finishScene) : <CinematicPlaceholder key={`${runId}:${request.sceneId}`} request={request} onComplete={finishScene} />)
         : <div className="l2-body"><section className="l2-decision">
-          <div className="section-intro"><h2 ref={title} tabIndex={-1}>{phase === 'choose' ? 'Which three will you track?' : phase === 'gaps' ? 'What are we still missing?' : phase === 'evaluate' ? evaluationReady ? count === 3 && branch ? THREE_OUTCOMES[branch].report : count === 6 ? 'Six metrics. Six green ticks.' : 'More of the picture?' : growth ? 'Expanding the system…' : 'Watch the metrics.' : phase === 'complete' ? 'More measurement. What changed?' : growth ? `${count} metrics. What counts now?` : 'Look a little closer.'}</h2>{phase === 'choose' && <><p>Choose exactly three. Click a selected card to swap it.</p>{previousMetricId && <p className="l2-previous">Previously tracked: {metricDefinition(previousMetricId).shortName}</p>}</>}</div>
+          <div className="section-intro"><h2 ref={title} tabIndex={-1}>{phase === 'choose' ? 'Which three will you track?' : phase === 'gaps' ? 'What am I still missing?' : phase === 'evaluate' ? evaluationReady ? count === 3 && branch ? THREE_OUTCOMES[branch].report : count === 6 ? 'Six metrics. Six green ticks.' : 'More of the picture?' : growth ? 'Expanding the system…' : 'Watch the metrics.' : phase === 'complete' ? 'More measurement. What changed?' : growth ? `${count} metrics. What counts now?` : 'Look a little closer.'}</h2>{phase === 'choose' && <><p>Choose exactly three. Click a selected card to swap it.</p>{previousMetricId && <p className="l2-previous">Previously tracked: {metricDefinition(previousMetricId).shortName}</p>}</>}</div>
           {phase === 'choose' && <><div className="l2-metric-grid">{METRIC_CATALOG.map((metric, index) => <button key={metric.id} data-testid={`level2-metric-${metric.id}`} className={`l2-metric-card ${selected.includes(metric.id) ? 'selected' : ''}`} aria-pressed={selected.includes(metric.id)} aria-disabled={selected.length === 3 && !selected.includes(metric.id)} onClick={() => chooseMetric(metric.id)}><span className="l2-card-top"><span className="l2-metric-icon"><Icon name={metric.id} /></span><span className="l2-selection">{selected.includes(metric.id) ? <Icon name="check" /> : `0${index + 1}`}</span></span><h3>{metric.name}</h3><p>{metric.description}</p></button>)}</div><Conversation key={`choose:${runId}`} lines={[
-            { speaker: 'Maya', name: playerName, text: 'One metric wasn’t enough. What if we tracked three? Which ones would you choose?' },
+            { speaker: 'Maya', name: playerName, text: 'One metric wasn’t enough. What if I tracked three? Which ones should I choose?' },
             { speaker: 'Alex', name: 'Alex', text: 'Three metrics now? Okay, I can handle that!' },
           ]} paused={paused} play={feedback.play} onSettled={() => {}} /><div className="action-row l2-choice-actions"><div className="l2-choice-summary"><Notebook ids={selected} checked={[]} choosing />{hint && <span className="l2-selection-note" role="status">{hint}</span>}</div><button className="button primary-button" disabled={selected.length !== 3} onClick={() => beginRound(3)}>Run evaluation<Icon name="arrow" /></button></div></>}
           {phase === 'evaluate' && <><section className="l2-evaluation" aria-label="Metric evaluation">{growth ? counter : <ul className="l2-evaluation-list">{currentIds.map(id => <li key={id} data-checked={checked.includes(id)}><span className="l2-eval-name"><Icon name={id} />{metricDefinition(id).name}</span><span className="l2-eval-result">{checked.includes(id) ? <><Icon name="check" />Improved</> : <><i className="l2-checking" />Checking</>}</span></li>)}</ul>}{!growth && <Notebook ids={currentIds} checked={checked} />}<p className="l2-data-note">{growth ? 'Requirements tracked, not a learning score.' : 'Illustrative outcomes'}</p></section><div className="action-row"><span className="l2-small-note" role="status">{evaluationReady ? `${count} metrics tracked` : 'Evaluation in progress…'}</span>{!growth && <button className="button primary-button" disabled={!evaluationReady} onClick={() => movePhase('scene')}><Icon name="play" />Observe the class</button>}</div></>}

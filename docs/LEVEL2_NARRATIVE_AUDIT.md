@@ -5,6 +5,13 @@ screens are story beats; they do not require separate full-page click-throughs.
 All player-facing content stays in English. The opening remains separate and
 finished partner cinematics still use replaceable scene renderers.
 
+The latest identity revision adapts the original collective player line to
+“One metric wasn’t enough. What if I tracked three? Which ones should I choose?”
+Other player decisions also use “I”. Maya is an internal role; the opening's
+confirmed playerName replaces its displayed name in both levels and scene
+requests. See [Opening handoff](OPENING_HANDOFF.md). Original source quotes below
+are retained to identify the highlighted requirements, not current display text.
+
 | Highlighted requirement | v2 gap | v3 implementation |
 | --- | --- | --- |
 | Choose three of the same six metrics | Implemented after an unnecessary introduction page | Level 2 immediately opens the six working metric cards; no extra entry click |

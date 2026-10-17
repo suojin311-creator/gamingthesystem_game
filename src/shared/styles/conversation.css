@@ -5,7 +5,7 @@
 :where(.conversation .avatar) { width: 32px; height: 32px; flex-shrink: 0; display: grid; place-items: center; border: 1px solid #c4b39b; border-radius: 50%; font: italic 21px var(--serif); background: #e3d3bd; color: #735a3e; }
 :where(.conversation .speech-bubble) { padding: 9px 14px; position: relative; background: #fffaf0; border: 1px solid #ddd2bf; border-radius: 0 10px 10px 10px; min-width: 85px; max-width: 550px; }
 :where(.conversation .speech-bubble)::before { content: ''; position: absolute; left: -6px; top: 12px; width: 10px; height: 10px; background: inherit; border-left: 1px solid #ddd2bf; border-bottom: 1px solid #ddd2bf; transform: rotate(45deg); }
-:where(.conversation .speaker-name) { display: block; font-size: 9px; font-weight: 700; color: #996747; margin-bottom: 4px; }
+:where(.conversation .speaker-name) { display: block; font-size: 9px; font-weight: 700; color: #996747; margin-bottom: 4px; overflow-wrap: anywhere; }
 :where(.conversation .speech-bubble p) { font: 15px/1.4 var(--serif); color: #635a46; }
 :where(.conversation .alex-character) { align-self: flex-end; flex-direction: row-reverse; }
 :where(.conversation .alex-avatar) { background: #d7ddca; color: #5d6a4c; border-color: #b5bca5; }

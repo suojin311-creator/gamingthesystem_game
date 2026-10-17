@@ -148,7 +148,7 @@
 :where(.level-one) .eyebrow.light { color: #ccbf9b; }
 :where(.level-one) .interlude-title h2 { font: 39px/1.2 var(--serif); margin: 12px 0 16px; color: #fff1d3; }
 :where(.level-one) .interlude-title > p:last-child { font-size: 11px; line-height: 1.7; color: #d1c6ae; }
-:where(.level-one) .scene-caption { margin: auto auto 24px; width: min(90%,700px); text-align: center; animation: message-in .3s ease both; }
+:where(.level-one) .scene-caption { margin: auto auto 24px; width: min(90%,700px); text-align: center; animation: message-in .3s ease both; overflow-wrap: anywhere; }
 :where(.level-one) .speaker-label { display: block; font-size: 10px; letter-spacing: .12em; color: #e9c69a; margin-bottom: 10px; }
 :where(.level-one) .speaker-label.alex { color: #bcccaa; }
 :where(.level-one) .scene-caption > p { font: italic 26px/1.5 var(--serif); color: #fff4dc; text-shadow: 0 2px 8px #000; }

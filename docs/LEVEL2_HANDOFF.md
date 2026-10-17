@@ -43,7 +43,7 @@ import LevelTwo from './levels/level2/LevelTwo';
   playerName={playerName}
   previousMetricId={levelOneResult?.metricId}
   renderCinematic={(request, complete) => (
-    <PartnerScene sceneId={request.sceneId} onComplete={complete} />
+    <PartnerScene sceneId={request.sceneId} playerName={request.playerName} onComplete={complete} />
   )}
   onComplete={result => setLevelTwoResult(result)}
 />
@@ -55,6 +55,7 @@ The renderer receives:
 ```ts
 {
   sceneId: 'level2.three.mixed',
+  playerName: 'Jordan',        // confirmed in the opening, replaces Maya's display name
   kind: 'three',               // 'three' | 'six' | 'checklist'
   branch: 'mixed',             // 'visible' | 'quality' | 'mixed'
   selectedMetricIds: ['prep', 'part', 'discuss'], // original trio, retained
@@ -88,6 +89,10 @@ After the last finding and Maya reply have received visible reading time,
 
 Replay does not repeat completion. Restart permits a new completion. Every fresh
 page starts a new run. The callback does not automatically navigate to Level 3.
+
+The shared `Gameplay` host forwards the opening's name to both levels and their
+scene requests. See [Opening handoff](OPENING_HANDOFF.md). Player decisions use
+“I”; the older narrative's “we” is adapted to the player's first-person role.
 
 ## Presentation and lifetime
 

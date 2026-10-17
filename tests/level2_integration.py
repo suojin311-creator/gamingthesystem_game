@@ -87,6 +87,7 @@ OscillatorNode.prototype.start=function(...args){window.notes.push(values.get(th
     assert {request['sceneId'] for request in requests} == {'level2.three.quality', 'level2.six', 'level2.checklist'}, requests
     assert all(request['selectedMetricIds'] == ['discuss', 'reflect', 'peer'] for request in requests)
     assert all(request['branch'] == 'quality' for request in requests)
+    assert all(request['playerName'] == 'Jordan' for request in requests)
     assert not page.get_by_test_id('level2-cinematic').count()
     expect(page.locator('.maya-bubble .speaker-name')).to_have_text('Jordan')
     record('Partner replaces all three scene slots; original trio, branch and custom name retained')
