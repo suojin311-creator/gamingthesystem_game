@@ -70,12 +70,33 @@ Alex’s choices even when effort is distributed more evenly.
 
 Teacher and Alex use ordinary speech bubbles throughout. The cloud-outline
 mode, circular tails and Thinking labels are removed from the shared component.
-Level 3 teachers address Alex directly and ask concrete questions; Alex’s two
-short messages answer the question, then add a playful follow-up. For example,
-the teacher asks why he focused on some tasks more than others; Alex identifies
-the higher-reward areas and says he only did the basics in the lower-effort
-areas. Actual categories still determine those metric names, without repeating
-a category summary under the table. All authored emoji remain distinct.
+Teacher and student portraits replace initial-letter avatars across all chapters,
+including classroom notebook and checklist illustrations. Player names still
+come from the opening-supplied prop, independently of the role artwork.
+
+Level 3 conversations use submitted run snapshots and earlier trials. Publication
+plans distinguish one higher reward, two higher rewards and near-even weights;
+the second publication also recognizes whether the leading priorities changed.
+Result questions describe actual increases/decreases in qualitative effort, or
+acknowledge when changed weights left the effort bands unchanged. Each workbench
+exchange gives Alex two short replies. Teacher questions and reactions advance
+from planning to observed behaviour to comparing goals.
+
+`workbenchDialogue` receives the full run history. `weightedSceneReply(request,
+shotIndex)` varies a repeated metric/intensity reply according to earlier shots;
+replaying that request keeps the same words. `comparisonDialogue(playerName,
+runs)` describes the final actual pattern, including near-even-first trials and
+both system references. It never assumes rebalancing happened in a particular
+direction. Custom animation renderers can use these same narrative helpers.
+Scene IDs, shot actions, intensity rules and result payloads are unchanged.
+
+Level 1 has six metric-specific review questions. Level 2's three-metric exchange
+uses the selected trio and its visible/quality/mixed branch. The final cinematic
+and returned conversation make different points before leading into weighting.
+All authored emoji remain distinct. `tests/dialogue_narrative.mjs` checks 8,640
+complete three-level story paths for repeated dialogue/emoji, along with pattern
+boundaries, unchanged effort bands and both comparison orders. Intentional
+Replay scene repeats are exempt from that no-repeat story-path check.
 
 The replaceable scene chain is `level3.weights` for each test, then
 `level3.compare` for Alex’s response, then `theory.reveal`. The final theory
@@ -131,7 +152,7 @@ across all three chapters; Reset weights is retained.
 `play/Level3-and-Full-game-play.zip`, containing standalone Level 3 and connected
 Levels 1–3. `play/LATEST.json` records source, build, ZIP and bundle hashes.
 `tests/release.py` verifies the actual downloads and their complete flows.
-Current checks are recorded in `LEVEL3_VALIDATION-v7.json`; older reports and
+Current checks are recorded in `LEVEL3_VALIDATION-v8.json`; older reports and
 versioned ZIPs are historical. Managed Chromium tests exact offline HTML bytes
 through an in-memory HTTPS origin; direct file opening in the user browser and
 classroom load capacity are not claimed as tested.

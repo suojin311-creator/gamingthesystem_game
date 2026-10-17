@@ -71,8 +71,9 @@ useEffect(() => {
 
 `GameplayProps.playerName` is required. The same value is passed to Levels 1, 2
 and 3 across their in-page transitions. Each level trims outer whitespace and
-uses the name for the player speaker label, avatar initial, typing label and
-temporary cinematic captions. React renders names as text. Names are not
+uses the name for the player speaker label, typing label and temporary
+cinematic captions. Teacher and student have distinct, role-based portrait
+icons; neither avatar depends on a name or initial. React renders names as text. Names are not
 translated or inserted as HTML. Alex remains Alex. Player-facing Restart controls have been removed from all levels; a new page runs the host opening again.
 
 The source role ID `Maya` identifies the player character internally, including
@@ -116,14 +117,14 @@ host integration entry. `initialLevel={2}` or `{3}` is available for direct work
 the real opening hands off at the default Level 1. Empty names in standalone
 level usage also fall back to Maya; the opening itself requires a nonempty name.
 
-Player thoughts and decisions use the first person: “What if I tracked three?”,
-“Which ones should I choose?”, “What am I still missing?”, and “What if I added
-even more metrics?” This supersedes the older narrative's collective wording.
+Player decisions use the first person: “What if I tracked three?” and
+“What am I still missing?” Spoken exchanges address Alex and respond to his
+actions. This supersedes the older narrative's collective wording.
 Management speaking for itself and dialogue referring to students as a group
 can still use the plural where its meaning requires it.
 
 The browser integration check `tests/player_identity.py` exercises an opening
-name-form harness, both levels, both placeholder and custom scene routes,
+name-form harness, Levels 1 and 2, both placeholder and custom scene routes,
 restart/reload and names with punctuation/long text. It does not claim that the
 separate Netlify opening has already been connected.
 

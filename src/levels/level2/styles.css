@@ -221,7 +221,7 @@
 .level-two .l2-checklist-stack[data-load="25"]::before { opacity: 1; transform: translate(5px, 6px) rotate(1.5deg); }
 .level-two .l2-checklist-stack[data-load="100"]::before { opacity: 1; transform: translate(8px, 9px) rotate(2deg); }
 .level-two .l2-checklist-stack[data-load="100"]::after { opacity: 1; transform: translate(-5px, 5px) rotate(-2deg); }
-.level-two .l2-checklist-stack > .eyebrow::before { content: 'A'; display: inline-grid; place-items: center; width: 25px; height: 25px; border-radius: 50%; background: #e1e8d2; color: #6f8057; font: italic 18px var(--serif); margin-right: 9px; vertical-align: middle; }
+.level-two .l2-checklist-portrait { display: inline-grid; place-items: center; width: 25px; height: 25px; border-radius: 50%; background: #e1e8d2; color: #6f8057; margin-right: 9px; vertical-align: middle; }
 .level-two .l2-checklist-stack h3 { font-size: 22px; margin: 4px 0 17px; }
 .level-two .l2-checklist-stack li { font: 14px/1.45 'Trebuchet MS', Arial, sans-serif; min-height: 48px; padding: 12px 0; border-top: 1px solid #e6dcc7; }
 .level-two .l2-checklist-stack .l2-check-box { width: 22px; height: 22px; margin: 0; }

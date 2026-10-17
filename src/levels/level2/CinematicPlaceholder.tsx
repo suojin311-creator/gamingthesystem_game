@@ -2,26 +2,15 @@ import { useEffect, useRef, useState } from 'react';
 import classroom from '../../assets/classroom.png';
 import Icon from '../../shared/components/Icon';
 import { THREE_OUTCOMES, type LevelTwoCinematicRequest } from './data';
+import { classroomDialogue } from './dialogue';
 
 export default function CinematicPlaceholder({ request, onComplete }: {
   request: LevelTwoCinematicRequest; onComplete: () => void;
 }) {
-  const playerName = request.playerName;
   const [line, setLine] = useState(0);
   const title = useRef<HTMLHeadingElement>(null);
   useEffect(() => title.current?.focus(), []);
-  const lines = request.kind === 'three' ? [
-    { speaker: 'Alex', text: 'I’ve completed all three requirements!' },
-    { speaker: playerName, text: 'And what about the other parts of your learning?' },
-    { speaker: 'Alex', text: 'Other parts? Are those being graded too?' },
-  ] : request.kind === 'six' ? [
-    { speaker: 'Alex', text: 'Six metrics, six green ticks! I’ve got everything covered!' },
-    { speaker: playerName, text: 'But what did you actually learn?' },
-    { speaker: 'Alex', text: 'Well... I learned exactly how to meet the criteria!' },
-  ] : [
-    { speaker: playerName, text: 'Maybe adding more metrics isn’t the answer...' },
-    { speaker: playerName, text: 'What if some metrics mattered more than others?' },
-  ];
+  const lines = classroomDialogue(request);
   const current = lines[line];
   return <section className="l2-cinematic" aria-label="Level 2 classroom story placeholder" data-testid="level2-cinematic" data-scene-id={request.sceneId}>
     <img src={classroom} className="l2-scene-background" alt="A sunlit classroom." />

@@ -168,6 +168,6 @@ No game storage, runtime server, API key or multiplayer service is used.
 Two students at one computer share one run. Classroom network capacity and
 finished-video delivery should be checked separately when hosting is chosen.
 
-The player and Alex dialogue uses the approved [Dialogue review](DIALOGUE_REVIEW.md). Alex sends two consecutive short messages at the chapter introduction and three/six-metric observations; the next action appears with the second reply. The shared conversation groups consecutive messages under one visible name/avatar and brings new replies into view when needed.
+The player and Alex dialogue uses the approved [Dialogue review](DIALOGUE_REVIEW.md). Alex sends two consecutive short messages at the chapter introduction and three/six-metric observations and final weighting bridge; the next action appears with the second reply. The three-metric exchange uses the actual selected trio and branch, while the final cinematic and workbench have different lines. The shared conversation groups consecutive messages under one visible name/avatar and brings new replies into view when needed.
 
 Equivalent typography now shares responsive tokens with Levels 1 and 3, including 16px ordinary metric names. There is no player Restart button or dialog; administrator functionality is deferred. See [Typography](TYPOGRAPHY.md).

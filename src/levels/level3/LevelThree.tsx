@@ -75,7 +75,7 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
   const stage = phase === 'intro' || phase === 'choose' ? 0 : ['compare', 'comparison-scene', 'theory'].includes(phase) ? 3 : runs.length > (phase === 'weights' ? 0 : 1) ? 2 : 1;
   const sceneKind = phase === 'scene' ? 'weights' : phase === 'comparison-scene' ? 'comparison' : phase === 'theory' ? 'theory' : null;
   const request = sceneKind ? cinematicRequest(sceneKind, playerName, runs) : null;
-  const lines = workbenchDialogue(phase, playerName, goal, current, !!compared);
+  const lines = workbenchDialogue(phase, playerName, goal, runs);
 
   function move(next: Phase) { feedback.stop(); setHint(''); setResultTalkReady(false); setDialogueReady(false); setPhase(next); }
   function choose(id: MetricId) {

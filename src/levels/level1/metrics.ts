@@ -13,6 +13,7 @@ export type Metric = {
   uncertainty: string;
   evidence: string;
   studentReplies: readonly string[];
+  reviewQuestion: string;
   studentBehaviour: string;
   learningLabel: string;
   takeaway: string;
@@ -27,6 +28,7 @@ export const METRICS: Metric[] = [
     improvement: 'More preparation tasks completed', uncertainty: 'Understanding still unclear',
     evidence: 'Students complete the preparation, but some skim just enough to meet the requirement.',
     studentReplies: ['I finished the whole list! 📋', 'The reading? I mostly skimmed it 😬'],
+    reviewQuestion: 'Alex, how did you get through the reading so quickly?',
     studentBehaviour: 'Skimming just to finish.',
     learningLabel: 'Understanding', takeaway: 'The checklist is complete. The ideas are unclear.',
     scene: [
@@ -41,6 +43,7 @@ export const METRICS: Metric[] = [
     improvement: 'More visible contributions', uncertainty: 'Depth still unclear',
     evidence: 'Students speak more often, but some contributions are brief or repetitive.',
     studentReplies: ['I put my hand up! 🙋', 'I… didn’t really have an explanation 🤷'],
+    reviewQuestion: 'I saw your hand up, Alex. What were you adding to the lesson?',
     studentBehaviour: 'More talk. Little explanation.',
     learningLabel: 'Depth', takeaway: 'More contributions. Little explanation.',
     scene: [
@@ -55,12 +58,13 @@ export const METRICS: Metric[] = [
     improvement: 'More visible time on task', uncertainty: 'Thinking still unclear',
     evidence: 'Students stay visibly on task, but some focus on looking busy rather than thinking deeply.',
     studentReplies: ['I kept the page open! 💻', 'That counts as staying focused… right? 👀'],
+    reviewQuestion: 'You looked focused, Alex. How were you using that time?',
     studentBehaviour: 'Looking busy takes priority.',
     learningLabel: 'Thinking', takeaway: 'The page stayed open. The thinking is unclear.',
     scene: [
       { speaker: 'Alex', text: 'Look, I stayed on task the whole time!' },
       { speaker: 'Maya', text: 'What did you discover?' },
-      { speaker: 'Alex', text: 'I... kept the page open.' },
+      { speaker: 'Alex', text: 'I was making sure I looked busy.' },
     ],
   },
   {
@@ -69,6 +73,7 @@ export const METRICS: Metric[] = [
     improvement: 'More discussion criteria met', uncertainty: 'New ideas still unclear',
     evidence: 'Students use the discussion behaviours that earn credit, but some contributions become formulaic.',
     studentReplies: ['I used all the right phrases! 💬', 'A new idea? Umm… 🤔'],
+    reviewQuestion: 'Alex, those phrases sound familiar. What did they help you work out?',
     studentBehaviour: 'Discussion turns formulaic.',
     learningLabel: 'New ideas', takeaway: 'The right phrases. Few new ideas.',
     scene: [
@@ -83,6 +88,7 @@ export const METRICS: Metric[] = [
     improvement: 'More structured reflections', uncertainty: 'Changed thinking still unclear',
     evidence: 'Reflections match the expected structure, but some students repeat the same safe patterns.',
     studentReplies: ['I followed the example! 📝', 'I just used the same pattern again 🔁'],
+    reviewQuestion: 'Your reflection looks polished. How did you decide what to write, Alex?',
     studentBehaviour: 'Repeating safe reflection patterns.',
     learningLabel: 'Changed thinking', takeaway: 'A polished reflection. Changed thinking is unclear.',
     scene: [
@@ -97,6 +103,7 @@ export const METRICS: Metric[] = [
     improvement: 'More response criteria met', uncertainty: 'Exchange of ideas still unclear',
     evidence: 'Online replies become more specific, but some students learn a repeatable response formula.',
     studentReplies: ['A suggestion and a question! 🎯', 'I use that pattern every time 🤭'],
+    reviewQuestion: 'Alex, what helped you write those replies so fast?',
     studentBehaviour: 'Replying to tick boxes.',
     learningLabel: 'Real exchange', takeaway: 'The criteria are met. The exchange is unclear.',
     scene: [

@@ -70,7 +70,8 @@ def advance(page, seconds=30):
 
 def name_visible(page, name):
     expect(page.locator('.maya-bubble .speaker-name')).to_have_text(name)
-    expect(page.locator('.maya-avatar')).to_have_text(name[0].upper())
+    expect(page.locator('.maya-avatar')).to_have_text('')
+    expect(page.locator('.maya-avatar svg')).to_have_attribute('data-character', 'teacher')
     if name != 'Maya': assert 'Maya' not in page.locator('body').inner_text()
 
 
@@ -155,12 +156,12 @@ with sync_playwright() as playwright:
     partner_scene(page, name)
     page.get_by_role('button', name='Cover the gaps', exact=True).click()
     expect(page.get_by_role('heading', name='What am I still missing?', exact=True)).to_be_visible()
-    record('Level 1 → Level 2 retains the same opening name and prior metric; choice/gap thoughts use I')
+    record('Level 1 → Level 2 retains the same opening name and prior metric; choice/gap prompts retain the player perspective')
 
     page.get_by_role('button', name='Add remaining metrics', exact=True).click()
     advance(page, 6)
     partner_scene(page, name)
-    expect(page.locator('.maya-bubble p')).to_have_text('What if I added even more metrics?')
+    expect(page.locator('.maya-bubble p')).to_have_text('Now all six count. Are you learning more, or just keeping up?')
     for count in [10,25,100]:
         page.get_by_role('button', name='Add more metrics', exact=True).click()
         advance(page)
@@ -170,7 +171,7 @@ with sync_playwright() as playwright:
     assert {request['sceneId'] for request in requests} == {'level1.focus','level2.three.mixed','level2.six','level2.checklist'}
     assert all(request['playerName'] == name for request in requests), requests
     assert [item['level'] for item in page.evaluate('window.results')] == [1,2]
-    record('Both levels and every custom cinematic slot share one name; six-metric decision uses I; result callbacks still fire')
+    record('Both levels and every custom cinematic slot share one name; the six-metric review addresses Alex; result callbacks still fire')
 
     expect(page.get_by_role('button', name='Restart', exact=True)).to_have_count(0)
     name_visible(page, name)

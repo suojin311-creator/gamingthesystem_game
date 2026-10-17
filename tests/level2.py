@@ -139,8 +139,8 @@ new MutationObserver(() => {
     stamps = page.evaluate('window.observationTimeline["observe:3"]')
     assert 900 <= stamps['alex'] - stamps['maya'] < 2500, stamps
     assert 0 <= stamps['button'] - stamps['alexFinal'] < 180, stamps
-    expect(page.locator('.maya-bubble p')).to_have_text('These three look better. What about the other three?')
-    expect(page.locator('.alex-bubble p')).to_have_text(['Are those worth any points? 🧐', 'I only worked on the three you picked 😇'])
+    expect(page.locator('.maya-bubble p')).to_have_text('Alex, Discussion, Reflection, and Peer response still matter. Where did they fit in?')
+    expect(page.locator('.alex-bubble p')).to_have_text(['Looking busy was the mission, right? 🧐', 'I left Discussion, Reflection, and Peer response for later.'])
     record('Cover the gaps appears with Alex’s second reply; the dialogue explicitly identifies the other three areas')
     page.screenshot(path=str(output / 'level2-three-observation.png'), full_page=True)
     page.get_by_role('button', name='Cover the gaps', exact=True).click()
@@ -176,8 +176,8 @@ new MutationObserver(() => {
     stamps = page.evaluate('window.observationTimeline["observe:6"]')
     assert stamps['alex'] - stamps['finding'] < 5500, stamps
     assert 0 <= stamps['button'] - stamps['alexFinal'] < 180, stamps
-    expect(page.locator('.alex-bubble p')).to_have_text(['Even more? 😅', 'Okay… just tell me what gets the points.'])
-    record('Six-metric dialogue answers the proposal to add metrics, and releases the next action with its second Alex message')
+    expect(page.locator('.alex-bubble p')).to_have_text(['Keeping up! There’s a box for everything now. 😅', 'I’m getting quick at ticking them off.'])
+    record('Six-metric dialogue reflects keeping up with the expanded criteria, and releases the next action with its second Alex message')
     page.get_by_role('button', name='Sound on', exact=True).click()
     expect(page.get_by_role('button', name='Sound off', exact=True)).to_be_visible()
     page.evaluate('''window.checklistTimeline = {};

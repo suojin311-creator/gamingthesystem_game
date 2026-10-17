@@ -72,7 +72,7 @@ with sync_playwright() as p:
     browser=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox'])
     context,page=start(browser)
     advance(page);expect(page.locator('.maya-bubble .speaker-name')).to_have_text('Riley')
-    expect(page.locator('.maya-avatar')).to_have_text('R');assert 'Maya' not in page.locator('body').inner_text()
+    expect(page.locator('.maya-avatar')).to_have_text('');expect(page.locator('.maya-avatar svg')).to_have_attribute('data-character','teacher');assert 'Maya' not in page.locator('body').inner_text()
     choose(page);weights(page,[70,20,10]);publish(page)
     request=page.evaluate('window.requests.at(-1)')
     assert request['sceneId']=='level3.weights' and request['playerName']=='Riley'

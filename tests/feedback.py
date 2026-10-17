@@ -143,7 +143,7 @@ with sync_playwright() as p:
     assert 2400 <= stamps['mayaTyping'] - stamps['finding'] < 3300, stamps
     record('Level 1 starts its conversation after about 2.5 visible seconds for this finding, 3.5 seconds earlier')
     expect(page.locator('.alex-character')).to_have_count(0)
-    expect(page.locator('.maya-bubble p')).to_have_text('The score went up. What did you learn?')
+    expect(page.locator('.maya-bubble p')).to_have_text('Alex, how did you get through the reading so quickly?')
     expect(page.get_by_role('status', name='Alex is typing')).to_be_visible(timeout=6000)
     expect(page.locator('.maya-bubble p')).to_be_visible()
     page.screenshot(path=str(out / 'feedback-typing.png'), full_page=True)

@@ -167,7 +167,7 @@ with sync_playwright() as p:
             expect(page.locator('.near-even .eyebrow')).to_have_text('YOUR SECOND TEST')
         else:
             expect(page.get_by_role('button',name='What if they counted equally?',exact=True)).to_be_visible()
-            expect(page.locator('.maya-bubble p')).to_have_text('Alex, what if all three counted equally?')
+            expect(page.locator('.maya-bubble p')).to_have_text('You eased off on Preparation. What changed?')
         record(f'Second test {values}: '+('compares the player’s actual near-even run without a third test' if near_even else 'offers the explained optional balance check beyond 10 points'))
         context.close()
     context,page=open_level(browser)
@@ -175,8 +175,8 @@ with sync_playwright() as p:
     split(page,[76,6,18]);run(page)
     expect(page.locator('.l3-finding')).to_have_count(0)
     expect(page.locator('.thought-bubble, .thought-cloud, .thought-label')).to_have_count(0)
-    expect(page.locator('.maya-bubble p')).to_have_text('Alex, why did you focus on some tasks more than others?')
-    expect(page.locator('.alex-bubble p')).to_have_text(['Preparation is worth more points. 🥇','Participation and Focus? I only did the basics.'])
+    expect(page.locator('.maya-bubble p')).to_have_text('You gave Preparation most of your attention. What happened to the other two?')
+    expect(page.locator('.alex-bubble p')).to_have_text(['Preparation got my best shot. 🥇','Participation and Focus? Just enough to get by.'])
     expect(page.locator('.l3-bottom-dialogue .alex-bubble p')).to_have_count(2)
     assert page.locator('.l3-effort-label').first.evaluate('e=>parseFloat(getComputedStyle(e).fontWeight)')<=600
     assert page.locator('.l3-row-weight').first.evaluate('e=>parseFloat(getComputedStyle(e).fontSize)')>=20

@@ -194,7 +194,7 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
     });
   }
 
-  const dialogue = <Dialogue key={`${runId}:${phase}`} phase={phase} playerName={playerName} studentReplies={metric?.studentReplies} enabled={dialogueEnabled} paused={paused} play={feedback.play} onSettled={settleDialogue} />;
+  const dialogue = <Dialogue key={`${runId}:${phase}`} phase={phase} playerName={playerName} studentReplies={metric?.studentReplies} reviewQuestion={metric?.reviewQuestion} enabled={dialogueEnabled} paused={paused} play={feedback.play} onSettled={settleDialogue} />;
   const request: CinematicRequest | null = phase === 'cinematic' && metric ? { sceneId: `level1.${metric.id}`, metricId: metric.id, playerName } : null;
 
   return <div className="game-page level-one" onPointerDownCapture={feedback.unlock} onKeyDownCapture={feedback.unlock}>

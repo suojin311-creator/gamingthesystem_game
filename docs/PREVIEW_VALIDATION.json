@@ -1,7 +1,7 @@
 {
-  "validatedAtUtc": "2026-10-17T23:22:18.509797+00:00",
-  "version": "Level 3 refinement v7: visual choices and classroom consequences across Levels 1\u20133",
-  "passed": 134,
+  "validatedAtUtc": "2026-10-17T23:51:32.968762+00:00",
+  "version": "Level 3 refinement v8: contextual dialogue and role portraits across Levels 1\u20133",
+  "passed": 146,
   "builds": [
     "npm run build: passed",
     "npm run build:level1: passed",
@@ -76,21 +76,6 @@
       ],
       "runtimeErrors": []
     },
-    "level3-integration-results.json": {
-      "passed": 9,
-      "checks": [
-        "Opening-supplied player name reaches Level 3 labels, avatar and the three weighted partner shots",
-        "Level 3 completes once with immutable tested runs and an explicit near-even/uneven comparison payload",
-        "Comparison leads to theory; even duplicate final callbacks stay in the placeholder and never invoke Design Lab",
-        "Real Gameplay host carries the opening name and sound preference from Level 2 into the new Level 3 chapter",
-        "Level 3 preselects the actual Level 2 trio, permits swapping, and has no player Restart control",
-        "Reloading the connected host starts fresh from its configured entry level",
-        "Hidden-page publication holds its visible-time sequence and resumes without skipping the three weights",
-        "Real-time publication and evidence arrive one at a time; Web Audio cues play and Sound off silences later updates",
-        "No browser errors in partner, chapter handoff or real-time audio checks"
-      ],
-      "runtimeErrors": []
-    },
     "level3-rules-results.json": {
       "passed": 7,
       "checks": [
@@ -103,60 +88,12 @@
         "The second experiment requires a changed split and never forces a direction or degree of balance"
       ]
     },
-    "level2-integration-results.json": {
-      "passed": 10,
-      "checks": [
-        "Partner replaces all three scene slots; original trio, branch and custom name retained",
-        "Completion reports exact result once after final reading",
-        "Level 2 emits actual count, success, evidence and softer message cues",
-        "Final replay retains completion count and mute suppresses new cues",
-        "Player view has no restart control and keeps its single completion result",
-        "Chapter dialogue waits while hidden; its next button appears on return and waits for a click",
-        "Hidden tab holds metric updates and resumes them on return",
-        "Growth counter and automatic observation wait while the page is hidden",
-        "The shortened next-button wait pauses while hidden and resumes on return",
-        "Complete expansion and partner-scene flow works at 320px"
-      ],
-      "runtimeErrors": []
-    },
-    "player-identity-results.json": {
-      "passed": 10,
-      "checks": [
-        "Confirmed opening name reaches Level 1 labels, avatar and typing accessibility; guide has no fixed Maya name",
-        "Level 1 has no player restart; its custom cinematic retains playerName and Alex stays Alex",
-        "Level 1 \u2192 Level 2 retains the same opening name and prior metric; choice/gap thoughts use I",
-        "Both levels and every custom cinematic slot share one name; six-metric decision uses I; result callbacks still fire",
-        "Level 2 has no player restart; reloading the full host returns to a fresh opening/name entry with storage blocked",
-        "Full-host restored-page reset returns to the opening and clears the previous identity",
-        "Built-in Level 1 and Level 2 three/six-metric placeholders display the opening name and keep Alex unchanged",
-        "Final Level 2 placeholder and closing player thought retain the same opening name",
-        "Names including Alex, HTML-like text and 40 unbroken characters render literally without horizontal overflow at 320px",
-        "No runtime errors during opening-name integration checks"
-      ],
-      "runtimeErrors": []
-    },
-    "release-results.json": {
-      "passed": 10,
-      "checks": [
-        "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
-        "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
-        "Packaged Level2.html completes 3 \u2192 6 \u2192 10 \u2192 25 \u2192 100 offline with normal motion",
-        "Packaged standalone Level3.html completes both weight tests and compares the actual results offline",
-        "Packaged Level1.html includes the latest behaviour and two replies, stops after Level 1 and permits replay",
-        "Standalone Level 1 reload starts a fresh Level 1 run",
-        "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
-        "Packaged combined game connects Level 1 \u2192 Level 2 \u2192 playable Level 3 in one open run",
-        "Combined preview reload starts from Level 1 rather than restoring Level 2",
-        "Packaged entries have no browser runtime errors"
-      ],
-      "runtimeErrors": []
-    },
     "dialogue-emoji-results.json": {
       "passed": 1,
       "checks": [
         "All gameplay emoji are distinct across all levels"
       ],
-      "emojiCount": 25,
+      "emojiCount": 36,
       "inventory": [
         {
           "emoji": "\ud83d\udccb",
@@ -207,24 +144,56 @@
           "file": "src/levels/level1/metrics.ts"
         },
         {
-          "emoji": "\ud83e\uddd0",
-          "file": "src/levels/level2/LevelTwo.tsx"
-        },
-        {
-          "emoji": "\ud83d\ude07",
-          "file": "src/levels/level2/LevelTwo.tsx"
-        },
-        {
-          "emoji": "\ud83d\ude05",
-          "file": "src/levels/level2/LevelTwo.tsx"
-        },
-        {
           "emoji": "\ud83d\ude0e",
           "file": "src/levels/level2/LevelTwo.tsx"
         },
         {
+          "emoji": "\ud83e\ude99",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83d\ude05",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\uddd0",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\ude84",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\uddf7",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
           "emoji": "\ud83e\udee1",
           "file": "src/levels/level3/LevelThree.tsx"
+        },
+        {
+          "emoji": "\ud83c\udfc6",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\u2696",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83c\udf70",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\uddf2",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83d\udee0",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\uddc1",
+          "file": "src/levels/level3/dialogue.ts"
         },
         {
           "emoji": "\ud83d\ude43",
@@ -235,7 +204,11 @@
           "file": "src/levels/level3/dialogue.ts"
         },
         {
-          "emoji": "\ud83d\udd00",
+          "emoji": "\ud83e\udd47",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83d\udece",
           "file": "src/levels/level3/dialogue.ts"
         },
         {
@@ -243,11 +216,15 @@
           "file": "src/levels/level3/dialogue.ts"
         },
         {
-          "emoji": "\ud83e\udd47",
+          "emoji": "\ud83e\uddee",
           "file": "src/levels/level3/dialogue.ts"
         },
         {
-          "emoji": "\ud83e\uddee",
+          "emoji": "\ud83e\udd68",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\ude81",
           "file": "src/levels/level3/dialogue.ts"
         },
         {
@@ -257,8 +234,75 @@
         {
           "emoji": "\ud83d\uddfa",
           "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83c\udfb2",
+          "file": "src/levels/level3/dialogue.ts"
         }
       ]
+    },
+    "level3-integration-results.json": {
+      "passed": 9,
+      "checks": [
+        "Opening-supplied player name reaches Level 3 labels, avatar and the three weighted partner shots",
+        "Level 3 completes once with immutable tested runs and an explicit near-even/uneven comparison payload",
+        "Comparison leads to theory; even duplicate final callbacks stay in the placeholder and never invoke Design Lab",
+        "Real Gameplay host carries the opening name and sound preference from Level 2 into the new Level 3 chapter",
+        "Level 3 preselects the actual Level 2 trio, permits swapping, and has no player Restart control",
+        "Reloading the connected host starts fresh from its configured entry level",
+        "Hidden-page publication holds its visible-time sequence and resumes without skipping the three weights",
+        "Real-time publication and evidence arrive one at a time; Web Audio cues play and Sound off silences later updates",
+        "No browser errors in partner, chapter handoff or real-time audio checks"
+      ],
+      "runtimeErrors": []
+    },
+    "level2-integration-results.json": {
+      "passed": 10,
+      "checks": [
+        "Partner replaces all three scene slots; original trio, branch and custom name retained",
+        "Completion reports exact result once after final reading",
+        "Level 2 emits actual count, success, evidence and softer message cues",
+        "Final replay retains completion count and mute suppresses new cues",
+        "Player view has no restart control and keeps its single completion result",
+        "Chapter dialogue waits while hidden; its next button appears on return and waits for a click",
+        "Hidden tab holds metric updates and resumes them on return",
+        "Growth counter and automatic observation wait while the page is hidden",
+        "The shortened next-button wait pauses while hidden and resumes on return",
+        "Complete expansion and partner-scene flow works at 320px"
+      ],
+      "runtimeErrors": []
+    },
+    "player-identity-results.json": {
+      "passed": 10,
+      "checks": [
+        "Confirmed opening name reaches Level 1 labels, avatar and typing accessibility; guide has no fixed Maya name",
+        "Level 1 has no player restart; its custom cinematic retains playerName and Alex stays Alex",
+        "Level 1 \u2192 Level 2 retains the same opening name and prior metric; choice/gap prompts retain the player perspective",
+        "Both levels and every custom cinematic slot share one name; six-metric decision uses I; result callbacks still fire",
+        "Level 2 has no player restart; reloading the full host returns to a fresh opening/name entry with storage blocked",
+        "Full-host restored-page reset returns to the opening and clears the previous identity",
+        "Built-in Level 1 and Level 2 three/six-metric placeholders display the opening name and keep Alex unchanged",
+        "Final Level 2 placeholder and closing player thought retain the same opening name",
+        "Names including Alex, HTML-like text and 40 unbroken characters render literally without horizontal overflow at 320px",
+        "No runtime errors during opening-name integration checks"
+      ],
+      "runtimeErrors": []
+    },
+    "release-results.json": {
+      "passed": 10,
+      "checks": [
+        "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
+        "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
+        "Packaged Level2.html completes 3 \u2192 6 \u2192 10 \u2192 25 \u2192 100 offline with normal motion",
+        "Packaged standalone Level3.html completes both weight tests and compares the actual results offline",
+        "Packaged Level1.html includes the latest behaviour and two replies, stops after Level 1 and permits replay",
+        "Standalone Level 1 reload starts a fresh Level 1 run",
+        "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
+        "Packaged combined game connects Level 1 \u2192 Level 2 \u2192 playable Level 3 in one open run",
+        "Combined preview reload starts from Level 1 rather than restoring Level 2",
+        "Packaged entries have no browser runtime errors"
+      ],
+      "runtimeErrors": []
     },
     "typography-results.json": {
       "passed": 3,
@@ -418,59 +462,79 @@
         "No runtime errors in the visual interaction and responsive production checks"
       ],
       "runtimeErrors": []
+    },
+    "dialogue-narrative-results.json": {
+      "passed": 6,
+      "checks": [
+        "Every valid integer split uses the 10-point near-even boundary and the correct one/two higher-reward family",
+        "All 20 trios publish distinct plans and teacher reviews for one high, two high and near-even weights",
+        "Second-result questions describe actual increases, decreases and unchanged effort bands",
+        "Both comparison orders and both system references describe the latest actual pattern without assuming an improvement",
+        "No dialogue or emoji repeats within 8,640 complete trial paths, including repeated patterns and unchanged scene intensity",
+        "Six Level 1 review questions and all 20 Level 2 trio exchanges differ; player names remain supplied text"
+      ],
+      "completeTrialPaths": 8640
+    },
+    "dialogue-browser-results.json": {
+      "passed": 6,
+      "checks": [
+        "[70, 20, 10]: publication plan and teacher review match the selected weight pattern; two Alex replies and distinct name-independent portraits are visible",
+        "[45, 45, 10]: publication plan and teacher review match the selected weight pattern; two Alex replies and distinct name-independent portraits are visible",
+        "[34, 33, 33]: publication plan and teacher review match the selected weight pattern; two Alex replies and distinct name-independent portraits are visible",
+        "Two concentrated trials acknowledge unchanged effort, use fresh classroom replies, retain both trials and offer a different near-even reference exchange",
+        "Near-even-first trial followed by a new leading priority describes concentration correctly in both workbench and final cinematic",
+        "Dialogue branch browser checks have no runtime errors"
+      ],
+      "runtimeErrors": []
     }
   },
-  "manifest": {
-    "sourceSha256": "12d3e6f2e8e506df8e76fa5f9506857e5cecac406409e7d217b3aea268b3a389",
+  "artifacts": {
+    "sourceSha256": "593c23787d191097a3f3755b9a6311617ecb1e816802d55e3dd39b1aa74428ca",
     "entries": [
       {
         "archive": "Level1-play.zip",
         "html": "Level1.html",
         "build": "dist-level1/index.html",
-        "htmlSha256": "947c3eb229ef3450e8a2d70985ed62cd87351d5fb597c86293a96b6a07705be4",
-        "zipSha256": "aba36ebb89ca57abc7118df7adebd1fd0c1bd2d983043a2e70ff861de70a3c4e"
+        "htmlSha256": "024e2406f03db13a65c6192387d8b7dad3935fe6fbb3422f71163b19b379c327",
+        "zipSha256": "de73082e6bfbb2e70c3ab537063ff6f76b90e624555f32d372b30039ba4a7cb9"
       },
       {
         "archive": "Level2-play.zip",
         "html": "Level2.html",
         "build": "dist-level2/index.html",
-        "htmlSha256": "618be7be5c1988ab9ceb3db0081dfb5a59bd09c81dbb7aabd7d978f0ff737cab",
-        "zipSha256": "ce45b0a7359f079de82d16945ef6fb386fe891eb2eda5a7f34eacf4d58179bf5"
+        "htmlSha256": "3865c6f163c095881091b67dcef6d17c6dc0a6cc69030a9505d247f6212a6ede",
+        "zipSha256": "7ec817928c230c2c6a45d9b466d9faf4c1afa05efe79a125344949af0cc4b01c"
       },
       {
         "archive": "Level3-play.zip",
         "html": "Level3.html",
         "build": "dist-level3/index.html",
-        "htmlSha256": "94b0e5c6f06ba2869dcf5d50651586c606fbc26a8288415639ebc13311b95d3c",
-        "zipSha256": "2d7ce978412a229fb9fda7661910140533396cea051490fa5b04b1247346e1fb"
+        "htmlSha256": "a4efb5fd6a60a7547603057be388ab1c7ca24acf3522a03cd67f4fbcfa36a972",
+        "zipSha256": "bfb2a30fee73ee8a119920d2aa1bb770c32cba9f08c958ff40fff956b2defe62"
       },
       {
         "archive": "Full-game-play.zip",
         "html": "Gaming-the-System.html",
         "build": "dist/index.html",
-        "htmlSha256": "085ea8e03939098f137c26b8444daa2f14a73a621e38efab283568bc05caa603",
-        "zipSha256": "8149512378d87855ba13748d13a9e28bf12119d223a354c1582132d4cbb5083d"
+        "htmlSha256": "6aa833a7e7d55ae412b866fa6d960b811871d3a0db15d3773d684dc902f805fa",
+        "zipSha256": "3a4735433ac5d728340b1ceee1f7f8d58cf46389a3376e4e5fc4d0bafac3b04f"
       }
     ],
     "reviewBundle": {
       "archive": "Level3-and-Full-game-play.zip",
-      "zipSha256": "9e22949be862f65d3a96192d401e8e858d7d5fbe2149e6b0e6c2c3eb88823c56",
+      "zipSha256": "40d0ebfba3eb21f00d67b622f598b37801fd8db76e4a081ba5788e6a0e165ec8",
       "htmlSha256": {
-        "Level3/Level3.html": "94b0e5c6f06ba2869dcf5d50651586c606fbc26a8288415639ebc13311b95d3c",
-        "Full-game/Gaming-the-System.html": "085ea8e03939098f137c26b8444daa2f14a73a621e38efab283568bc05caa603"
+        "Level3/Level3.html": "a4efb5fd6a60a7547603057be388ab1c7ca24acf3522a03cd67f4fbcfa36a972",
+        "Full-game/Gaming-the-System.html": "6aa833a7e7d55ae412b866fa6d960b811871d3a0db15d3773d684dc902f805fa"
       }
     }
   },
   "notes": [
-    "All three levels use one shared MetricSelection component. Six cards show large icons and short names. Official full names remain accessible button labels; a selected definition appears once in the tray. One or three physical slots support keyboard selection, review and removal; Level 1 permits direct replacement and Levels 2/3 retain the three-choice limit.",
-    "A 420ms card flight and slot arrival provide normal-motion feedback without delaying the primary action. Reduced motion fills the slot immediately. Transient flights clean up after completion and unmount. Tablet layouts place the tray above the cards; phone slots use complete horizontal rows to avoid broken words. All 1366/768/390/320px choices passed and screenshots were reviewed.",
-    "Repeated action-footer captions are removed in every chapter, including Choose 1 of 6, selection summaries, evaluation-ready text and cover-six instructions. Necessary choice-limit feedback lives beside the slots. Replay scene and Reset weights remain controls. Obsolete per-level choice styles and the replaced MetricChecklist component were removed.",
-    "Classroom observations pair an illustrated notebook with a quieter fact and stronger behavioural consequence. Level 1 preserves its original evidence. Level 2 uses shorter two-part copy for visible, quality and mixed branches, all-six and final observations. The notebook marks the actual tracked categories and leaves other categories outside it; full six-area coverage removes the outside group.",
-    "Level 2 core reports use short metric names and icon/check cards. Its 10/25/100 expansions fill the real checkbox field and gain decorative paper layers. Checklist actions still reveal and tick in order. No duplicate checklist was added to three/six-metric evaluation dashboards.",
-    "Level 3 results and every comparison record include an Alex desk vignette driven by the existing effort category: rapid work and extra papers for intense effort, ordinary work for steady effort, relaxed posture with a checked sheet for minimum effort. Weight numbers are secondary and no numerical effort or learning score was invented. Vignettes reveal with observed rows after manual Observe, not during weight editing/publication.",
-    "All 20 Level 3 trios, adaptive routes, inclusive 10-point near-even boundaries, linked final-pair confirmation, freely changed second tests, exact actual snapshots, partner scene IDs, name/sound/trio handoffs, real-time audio, hidden-page holds and fresh-session behaviour passed. All 25 authored emoji remain distinct and Alex retains two short workbench replies. The added visual suite also verifies all three Level 2 evidence branches.",
-    "The shared satisfaction report milestones and chapter baselines remain unchanged. Reports raise the bar once; choosing/resetting/replaying/comparing does not. Near-even weights earn no bonus. There is no player Restart, administrator login or Design Lab transition. Partner cinematic assets remain replaceable placeholders, ending at the final theory frame.",
-    "All four individual/combined entries and the two-version review ZIP were rebuilt from the same source. Release checks verified actual ZIP contents, byte equality and hashes and played through all three connected chapters. Version-numbered historical archives and earlier validation reports remain unchanged.",
-    "Managed Chromium serves exact offline production HTML bytes through an in-memory HTTPS origin because local file navigation is blocked. Direct file opening in the user browser, classroom load capacity and finished partner videos were not tested."
+    "All downloadable standalone and connected previews use the same source revision and are verified byte-for-byte against the production builds.",
+    "Dialogue model checks cover all integer split classifications and 8,640 complete combination paths through Level 1 and Level 2 scenes/reviews followed by two Level 3 trials and any missing-pattern reference. No normalized line or emoji repeats within a tested story path; intentional Replay scene replays preserve their lines.",
+    "Browser dialogue checks read the actual production plans/reviews for all three weight patterns, unchanged effort bands, repeated classroom shots, a system reference and reversed trial order. Teacher and student have distinct SVG portraits; opening-supplied names remain text labels.",
+    "The separate partner opening and finished videos remain unmerged. Integration tests use host harnesses and the real Gameplay component; the final preview stops at the theory placeholder without entering Design Lab.",
+    "Offline checks serve exact packaged HTML bytes on an in-memory HTTPS origin because managed Chromium blocks file navigation. Direct file opening on the user\u2019s browser and classroom load capacity are not claimed as tested.",
+    "The archive/pre-visual-redesign-v6 branch and version-numbered historical ZIPs remain unchanged."
   ]
 }

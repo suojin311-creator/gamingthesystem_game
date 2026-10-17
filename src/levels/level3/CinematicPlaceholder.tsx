@@ -3,22 +3,17 @@ import classroom from '../../assets/classroom.png';
 import Icon from '../../shared/components/Icon';
 import { metricDefinition } from '../../shared/data/metrics';
 import { BEHAVIOURS, EFFORT_LABELS, type LevelThreeCinematicRequest } from './data';
+import { comparisonDialogue, weightedSceneReply } from './dialogue';
 
 export default function CinematicPlaceholder({ request, onComplete }: { request: LevelThreeCinematicRequest; onComplete: () => void }) {
   const [index, setIndex] = useState(0);
   const title = useRef<HTMLHeadingElement>(null);
   useEffect(() => title.current?.focus(), [index]);
-  const lines = request.kind === 'weights' ? request.shots.map(shot => ({
-    speaker: 'Alex', text: BEHAVIOURS[shot.metricId][shot.effort].line,
+  const lines = request.kind === 'weights' ? request.shots.map((shot, index) => ({
+    speaker: 'Alex', text: weightedSceneReply(request, index),
     title: metricDefinition(shot.metricId).name, action: BEHAVIOURS[shot.metricId][shot.effort].action,
     badge: `${shot.weight}% · ${EFFORT_LABELS[shot.effort]}`,
-  })) : request.kind === 'comparison' ? [
-    { speaker: request.playerName, text: 'Balancing the weights helped. Alex is spreading his effort more evenly now.' },
-    { speaker: 'Alex', text: 'Exactly! I just follow the percentages!' },
-    { speaker: request.playerName, text: 'But you’re still deciding what matters based on the scoring system...' },
-    { speaker: 'Alex', text: 'Isn’t that what I’m supposed to do?' },
-    { speaker: request.playerName, text: 'Maybe it’s not just about finding the perfect weights...' },
-  ].map(line => ({ ...line, title: 'The same rules. A different split.', action: `All ${request.runs.length} tested versions are compared: Alex changes his effort to match each set of percentages.`, badge: 'COMPARE THE PATTERNS' })) : [
+  })) : request.kind === 'comparison' ? comparisonDialogue(request.playerName, request.runs).map(line => ({ ...line, title: 'The same rules. A different split.', action: `All ${request.runs.length} tested versions are compared: Alex changes his effort to match each set of percentages.`, badge: 'COMPARE THE PATTERNS' })) : [
     { speaker: request.playerName, text: 'Am I improving learning, or just improving the numbers?', title: 'One pattern. Three levels.', action: 'One metric became a target. More metrics became a checklist. Weights shaped Alex’s priorities.', badge: 'FINAL SCENE' },
     { speaker: 'Goodhart’s Law', text: 'When a measure becomes a target, it ceases to be a good measure.', title: 'Goodhart’s Law', action: 'Better indicators and better weighting can help. Higher scores alone do not show that learning improved.', badge: 'THEORY REVEAL' },
   ];

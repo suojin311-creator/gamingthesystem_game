@@ -35,7 +35,7 @@ export const BEHAVIOURS: Record<MetricId, Record<Effort, { action: string; line:
   reflect: {
     low: { action: 'Alex writes two quick sentences and submits them.', line: 'That should be enough.' },
     medium: { action: 'Alex writes a complete reflection.', line: 'I learned something new today.' },
-    high: { action: 'Alex checks every line of the reflection against the rubric.', line: 'Before, I thought... Now, I think...' },
+    high: { action: 'Alex checks every line of the reflection against the rubric.', line: 'Every reflection criterion needs its own sentence!' },
   },
   peer: {
     low: { action: 'Alex leaves a brief comment.', line: 'Nice work!' },
