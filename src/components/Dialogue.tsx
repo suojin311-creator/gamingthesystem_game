@@ -8,9 +8,10 @@ function TypingDots({ speaker }: { speaker: string }) {
   return <span className="typing-indicator" role="status" aria-label={`${speaker} is typing`}><i /><i /><i /></span>;
 }
 
-export default function Dialogue({ phase, playerName, studentQuote, enabled, play, onSettled }: {
+export default function Dialogue({ phase, playerName, studentQuote, enabled, paused = false, play, onSettled }: {
   phase: Phase; playerName: string; studentQuote?: string; enabled: boolean;
   play: (cue: Cue) => void; onSettled: () => void;
+  paused?: boolean;
 }) {
   const single: Record<Phase, string> = {
     choose: 'Where should I start?', predict: 'What do I expect students to do?',
@@ -40,7 +41,7 @@ export default function Dialogue({ phase, playerName, studentQuote, enabled, pla
   }, []);
 
   useEffect(() => {
-    if (!enabled || !inView || !pageVisible) return;
+    if (!enabled || paused || !inView || !pageVisible) return;
     if (beat % 2 === 1 && lastSound.current !== beat) { play('message'); lastSound.current = beat; }
     if (beat === lastBeat) {
       if (!settled.current) { settled.current = true; callback.current(); }
@@ -55,7 +56,7 @@ export default function Dialogue({ phase, playerName, studentQuote, enabled, pla
       setBeat(value => value + 1);
     }, delay);
     return () => { window.clearTimeout(timer); if (!fired) remaining.current = Math.max(0, delay - (performance.now() - start)); };
-  }, [beat, enabled, inView, pageVisible, lastBeat, play]);
+  }, [beat, enabled, paused, inView, pageVisible, lastBeat, play]);
 
   return <section ref={container} className={`dialogue-strip ${phase === 'review' ? 'two-voices' : ''}`} aria-label="Character dialogue">
     {enabled && lines.map((line, index) => {

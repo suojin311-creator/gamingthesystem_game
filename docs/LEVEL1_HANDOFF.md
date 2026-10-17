@@ -22,6 +22,7 @@ import LevelOne from './LevelOne';
 <LevelOne
   playerName={playerName}
   persist={false}
+  showIntro={false}
   renderCinematic={(request, complete) => (
     <YourClassroomScene
       metricId={request.metricId}
@@ -62,11 +63,11 @@ The standalone view shows a Level 1 completion / Level 2 placeholder. The host s
 1. Six cards appear in an independent office-themed workbench instead of requiring tiny interactions on a perspective-skewed laptop or a new whiteboard shot.
 2. Maya: “Where should I start?”
 3. Prediction prompt: “What do you expect students to do?” Supporting text asks the player to imagine the metric as the main target.
-4. `Run evaluation` shows the illustrative score rising. `See university response` explicitly reveals the green university score and Target met status with a success chime.
+4. `Run evaluation` shows the illustrative score rising. The university score and Target met status then appear automatically with a success chime. The Target 70 label is aligned to the real threshold marker.
 5. Maya: “Looking good. Let’s check the classroom.” Player chooses `Observe the class`.
 6. The selected branch cinematic plays. The existing placeholder is replaced here.
-7. Back at the workbench, `You expected` shows the original prediction. `Reveal observation` shows a short classroom finding; full behavioural context is available under More context. `See student response` then reveals the amber student uncertainty with a separate cue. These steps wait for clicks instead of disappearing on a timer.
-8. Maya: “The score is up. What about learning?” Then Alex replies with the selected branch quote. Maya appears above-left, Alex below-right; each message starts with 650 ms of typing dots. The first message stays visible during a reading pause before the second types. Replies wait until the chat is on screen, and pause in hidden tabs. Read replies scrolls to the chat if needed.
+7. Completing the cinematic automatically starts a recap: original prediction → classroom finding → student uncertainty → conversation. Visible-time delays are 1000 ms before the finding, 1700 ms before student status, and 1600 ms before the conversation starts. No reveal buttons are needed. The finding stays visible, and full behavioural context is available under More context. Opening it pauses the recap; Resume continues.
+8. Maya: “The score is up. What about learning?” Then Alex replies with the selected branch quote. Maya appears above-left, Alex below-right; each message starts with 650 ms of typing dots. The first message stays visible during a reading pause before the second types. Replies wait until the chat is on screen, and pause in hidden tabs. The recap brings the conversation into view automatically if needed. Pause / Resume also controls the typing sequence.
 9. The standalone completion bridge uses “Maybe one metric is too narrow.” The final management-email scene can be inserted by the narrative host around this bridge. It is not recreated as a second finished cinematic here.
 
 Do not display Goodhart's Law in Level 1. All six choices are plausible educational indicators. Behaviour improves in the measured respect, while deeper engagement remains uncertain. There is no fixed student-health penalty, no right/wrong grading of predictions, and no conversion of qualitative evidence into an unsupported learning percentage.
@@ -80,8 +81,12 @@ Do not display Goodhart's Law in Level 1. All six choices are plausible educatio
 - There are no live processes, credentials or external services required by the finished HTML. For source development, restart Vite with `npm run dev` in the project directory.
 - Each browser is one independent game. Two students may share that game; no room server or multiplayer connection is implied.
 
-## Interface feedback (v2)
+## Interface feedback and orientation (v3)
 
-The dashboard owns quiet synthesized Web Audio cues: count ticks, an ascending success chime, an observation cue, a softer two-note student update, and message pips. No audio files, network calls, or credentials are needed. Sound is unlocked by pointer/keyboard interaction, can be muted immediately, and remembers mute independently from the game save. Hidden tabs stop pending sounds. Voice acting, ambience and cinematic audio remain with the cinematic creator.
+The dashboard owns locally synthesized Web Audio cues: count ticks, an ascending success chime, an observation cue, a softer two-note student update, and message pips. No audio files, network calls, or credentials are needed. Sound is unlocked by pointer/keyboard interaction, can be muted immediately, and remembers mute independently from the game save. Hidden tabs stop pending sounds. Voice acting, ambience and cinematic audio remain with the cinematic creator.
 
-The host can preserve these interface cues or coordinate them with its eventual audio system. Neither qualitative student uncertainty nor sound is a numerical learning penalty. Save data now includes `resultReported` and `reviewStep` so reloads retain acknowledged reveal steps. Older saves migrate to a valid first reveal. The cinematic renderer and completion callback contracts are unchanged.
+The host can preserve these interface cues or coordinate them with its eventual audio system. Neither qualitative student uncertainty nor sound is a numerical learning penalty. Save data now includes `resultReported` and `reviewStep` so reloads retain completed presentation beats. Older saves migrate to a valid first reveal. The cinematic renderer and completion callback contracts are unchanged.
+
+The first-visit guide uses a separate `gaming-the-system:workbench-guide:v1` preference. Completing or skipping it marks it seen; Guide reopens it without changing the game state. Pass `showIntro={false}` if the integrated host owns onboarding. Guide and restart dialogs pause the presentation. The guide follows the real region positions and supports keyboard navigation, Escape, touch layouts and reduced motion.
+
+The automatic recap uses a visible-time delay hook. Hidden tabs, off-screen information, explicit Pause and an open guide suspend the pending beat rather than skipping it. The data-cue master gain is 0.13 (v2: 0.045); reply envelopes remain softer. No sound files or network calls are required. Entrance and emphasis animations keep one focus at a time.

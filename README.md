@@ -2,7 +2,7 @@
 
 A standalone, English-language Level 1 workbench. The supplied cinematic opening has **not** been merged or modified. Its office and classroom backgrounds are reused as visual references/assets from the supplied project.
 
-**Just want to play? [Download the playable ZIP (v2)](play/Level1-play-v2.zip?raw=true), extract it, and open `Level1.html` in Chrome or Edge. No developer tools are needed. Sign in to a GitHub account with access to this repository before downloading.**
+**Just want to play? [Download the playable ZIP (v3)](play/Level1-play-v3.zip?raw=true), extract it, and open `Level1.html` in Chrome or Edge. No developer tools are needed. Sign in to a GitHub account with access to this repository before downloading.**
 
 ## Play without installing anything
 
@@ -10,9 +10,13 @@ Open `dist/index.html` in a current desktop browser. The production file contain
 
 Select one of six metrics, write a prediction of up to 100 characters, run the evaluation, observe the selected story placeholder, then compare the result with the prediction. `Try more metrics` finishes Level 1 at a Level 2 handoff placeholder. Level 2 is not implemented.
 
-Version 2 uses a shorter, more visual interface. The result is revealed in deliberate steps: score animation → `See university response` → classroom → `Reveal observation` → `See student response` → replies. Each step waits for a click. New status cards retain their outline and NEW badge until leaving the step. Maya's message appears above Alex's; each first shows a brief typing indicator. Conversation timing pauses while the chat is off screen or the tab is hidden. `Read replies` brings the conversation into view on small screens.
+Version 3 introduces a short, skippable four-step guide on the first visit to the decision board. Use **Guide** to reopen it. The guide highlights decisions, university score, student response and conversation, without revealing the lesson's conclusion. It pauses the underlying presentation.
 
-Short, quiet Web Audio tones mark the rising score, university success, observation, student update and arriving replies. The header’s **Sound on / Sound off** control remembers the preference. Audio starts after a user gesture; a refreshed page waits for another gesture. Unsupported audio falls back to the visual feedback. Reduced-motion mode preserves the order with static dots and immediate score changes.
+The evaluation and post-scene recap now advance automatically. After the score rises, the university card updates. After the cinematic ends, the original prediction returns, the classroom finding appears, the student card updates, and Maya/Alex reply in order. No extra reveal buttons are required. Each update has an entrance animation and a distinct cue, remains on screen, and waits if its information is off screen or the tab is hidden. On small screens the presentation brings the next region into view. **Pause / Resume** controls the sequence; opening More context pauses it for reading. Players still choose the metric, write the prediction, run the evaluation, enter the classroom and choose when to proceed to Level 2.
+
+The score's Target 70 label sits directly below the 70-point marker at every screen size. Card entrances, selection confirmation, the growing result bar, revealed observations and the student signal use restrained animations. Reduced-motion preferences remove movement while retaining the order.
+
+More audible Web Audio tones mark the rising score, university success, observation, student update and arriving replies. Data cues use a higher output level than v2, with reply pips kept softer. The header’s **Sound on / Sound off** control remembers the preference. Audio starts after a user gesture; a refreshed page waits for another gesture. Unsupported audio falls back to the visual feedback. Reduced-motion mode preserves the order with static dots and immediate score changes.
 
 Scores are illustrative 0–100 indices. Each metric has a stable before/after pair and an illustrative target of 70. Predictions are never graded or sent to a service. Moodle references are fictional game content; no Moodle or AI connection is required.
 
@@ -42,6 +46,8 @@ The build checks TypeScript and creates a self-contained `dist/index.html`. `vit
 - `src/metrics.ts`: six metrics, illustrative scores, behavioural evidence and temporary scene dialogue.
 - `src/components/CinematicPlaceholder.tsx`: replaceable three-line interlude for each branch.
 - `src/components/Dialogue.tsx`: visible-time chat sequence and typing indicators.
+- `src/components/WorkbenchGuide.tsx`: first-visit, replayable guide with actual-region spotlights.
+- `src/useVisibleDelay.ts`: pausable, visible-time presentation beats.
 - `src/useFeedback.ts`: self-contained, gesture-unlocked sound cues and mute preference.
 - `src/state.ts`: versioned, validated local saves with an in-memory fallback.
 - `src/styles.css`: warm paper/office styling, responsive layouts and reduced-motion support.
@@ -57,6 +63,7 @@ python tests/smoke.py
 python tests/smoke.py --file dist/index.html
 python tests/feedback.py
 python tests/feedback.py --file dist/index.html
+python tests/guide.py --file dist/index.html
 ```
 
 Pass `--chromium /path/to/chromium` if needed. Test results and screenshots are written to ignored `test-results/`.

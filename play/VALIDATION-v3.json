@@ -1,0 +1,76 @@
+{
+  "version": "Level 1 v3",
+  "build_sha256": "509b1e2a753aec38daba4591a9639f92de50710c267a4ee2d8b8b7eeea05a8ed",
+  "checks": {
+    "offline_flow": {
+      "passed": 20,
+      "checks": [
+        "Empty selection is blocked; player interface is English without author notes",
+        "prep: correct score, story, evidence, saved prediction, reload, and completion",
+        "part: correct score, story, evidence, saved prediction, reload, and completion",
+        "focus: correct score, story, evidence, saved prediction, reload, and completion",
+        "discuss: correct score, story, evidence, saved prediction, reload, and completion",
+        "reflect: correct score, story, evidence, saved prediction, reload, and completion",
+        "peer: correct score, story, evidence, saved prediction, reload, and completion",
+        "Prediction validation: whitespace, 100-character limit, reload, literal rendering",
+        "Restart cancellation preserves progress; confirmed restart clears only this game",
+        "Keyboard selection and focus; changing metric resets the previous prediction",
+        "Corrupt or incompatible saves recover to a playable start",
+        "Refreshing a story restarts the selected interlude without losing the prediction",
+        "Layout and functional flow at 1366 \u00d7 768, including touch and reduced motion",
+        "Layout and functional flow at 1024 \u00d7 768, including touch and reduced motion",
+        "Layout and functional flow at 768 \u00d7 1024, including touch and reduced motion",
+        "Layout and functional flow at 390 \u00d7 844, including touch and reduced motion",
+        "Layout and functional flow at 375 \u00d7 667, including touch and reduced motion",
+        "Layout and functional flow at 320 \u00d7 640, including touch and reduced motion",
+        "Unavailable browser storage is reported and does not block gameplay",
+        "No uncaught browser errors"
+      ],
+      "runtime_errors": []
+    },
+    "automatic_feedback": {
+      "passed": 9,
+      "checks": [
+        "Score animates, then university updates automatically; Pause holds the next beat",
+        "Actual Web Audio plays count and success cues at the increased master gain",
+        "Scene completion automatically recalls the finding, then student status, with distinct cues",
+        "Typing and replies follow the recap automatically; Maya stays above Alex on a laptop",
+        "Mute suppresses automatic update cues and survives reload",
+        "Unmuting restores actual Web Audio feedback",
+        "Reading optional context pauses the presentation until Resume",
+        "Off-screen recap waits, then resumes and brings student status and replies into view",
+        "Browsers without Web Audio retain the complete visual sequence"
+      ],
+      "runtime_errors": []
+    },
+    "guide_and_alignment": {
+      "passed": 12,
+      "checks": [
+        "1366px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
+        "1366px: guide runs once, reopens on demand, and preserves the selected metric",
+        "1366px: Target 70 sits under its real marker; reopening guide retains the evaluation",
+        "960px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
+        "960px: guide runs once, reopens on demand, and preserves the selected metric",
+        "960px: Target 70 sits under its real marker; reopening guide retains the evaluation",
+        "390px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
+        "390px: guide runs once, reopens on demand, and preserves the selected metric",
+        "390px: Target 70 sits under its real marker; reopening guide retains the evaluation",
+        "320px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
+        "320px: guide runs once, reopens on demand, and preserves the selected metric",
+        "320px: Target 70 sits under its real marker; reopening guide retains the evaluation"
+      ],
+      "runtime_errors": []
+    },
+    "partner_handoff": {
+      "passed": 1,
+      "checks": [
+        "Host-provided cinematic returns into automatic recap; prediction and final score reach host completion callback; host can disable intro."
+      ],
+      "runtime_errors": []
+    }
+  },
+  "notes": [
+    "Exact production bytes tested without network access at an in-memory origin; managed browser blocks direct file URLs.",
+    "No finished partner cinematics or Level 2 gameplay included."
+  ]
+}

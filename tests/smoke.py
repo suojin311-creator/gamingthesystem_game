@@ -36,6 +36,11 @@ def record(name):
     cases.append(name)
     print('PASS', name, flush=True)
 
+def skip_guide(page):
+    button = page.get_by_role('button', name='Skip guide')
+    if button.count(): button.click()
+
+
 def begin(context):
     if args.file:
         context.set_offline(True)
@@ -43,11 +48,13 @@ def begin(context):
     page = context.new_page()
     page.on('pageerror', lambda error: runtime_errors.append(str(error)))
     page.goto(url, wait_until='networkidle')
+    skip_guide(page)
     return page
 
 def fresh(page):
     page.evaluate('localStorage.clear()')
     page.reload(wait_until='networkidle')
+    skip_guide(page)
 
 def select(page, metric='prep', prediction='Students will explain their ideas more clearly.'):
     page.get_by_test_id('metric-' + metric).click()
@@ -55,25 +62,14 @@ def select(page, metric='prep', prediction='Students will explain their ideas mo
     page.get_by_label('What do you expect students to do?').fill(prediction)
 
 def report_if_needed(page):
-    button = page.get_by_role('button', name='See university response')
-    if button.count():
-        expect(button).to_be_enabled()
-        expect(page.locator('.university-value')).to_have_count(0)
-        button.click()
-        expect(page.locator('.university-value')).to_be_visible()
+    expect(page.get_by_role('button', name='Observe the class')).to_be_enabled(timeout=12000)
 
 
 def reveal_review(page, settle=True):
-    if page.get_by_role('button', name='Reveal observation').count():
-        expect(page.locator('.student')).to_contain_text('Not observed yet')
-        page.get_by_role('button', name='Reveal observation').click()
-        expect(page.locator('.observation-recap')).to_be_visible()
-        expect(page.locator('.student')).to_contain_text('Not observed yet')
-        page.get_by_role('button', name='See student response').click()
-    expect(page.locator('.student')).to_contain_text('Unclear')
+    expect(page.locator('.observation-recap')).to_be_visible(timeout=10000)
+    expect(page.locator('.student')).to_contain_text('Unclear', timeout=10000)
     if settle:
-        page.locator('.dialogue-strip').scroll_into_view_if_needed()
-        expect(page.get_by_role('button', name='Try more metrics')).to_be_enabled(timeout=8000)
+        expect(page.get_by_role('button', name='Try more metrics')).to_be_enabled(timeout=15000)
 
 
 def story_to_review(page):
@@ -106,7 +102,7 @@ with sync_playwright() as p:
         select(page, metric_id, prediction)
         expect(page.get_by_label('What do you expect students to do?')).to_be_focused()
         page.get_by_role('button', name='Run evaluation').click()
-        expect(page.get_by_role('button', name='See university response')).to_be_enabled()
+        expect(page.get_by_role('button', name='Observe the class')).to_be_enabled(timeout=12000)
         expect(page.locator('.after-score')).to_contain_text(str(after))
         expect(page.locator('.before-score')).to_contain_text(str(before))
         expect(page.locator('.student')).to_contain_text('Not observed yet')
@@ -232,7 +228,7 @@ import LevelOne from '/src/LevelOne.tsx';
 import '/src/styles.css';
 const root = createRoot(document.getElementById('root'));
 root.render(React.createElement(LevelOne, {
-  playerName: 'Jordan', persist: false,
+  playerName: 'Jordan', persist: false, showIntro: false,
   renderCinematic: (request, complete) => {
     window.storyRequest = request;
     return React.createElement('section', null,

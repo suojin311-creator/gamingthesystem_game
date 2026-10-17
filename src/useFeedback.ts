@@ -24,7 +24,7 @@ export function useFeedback() {
       if (!context.current) {
         context.current = new AudioContext();
         master.current = context.current.createGain();
-        master.current.gain.value = 0.045;
+        master.current.gain.value = 0.13;
         master.current.connect(context.current.destination);
       }
       if (context.current.state === 'suspended') void context.current.resume().catch(() => setAvailable(false));
@@ -46,7 +46,7 @@ export function useFeedback() {
       oscillator.type = 'sine';
       oscillator.frequency.setValueAtTime(frequency, when);
       envelope.gain.setValueAtTime(0, when);
-      envelope.gain.linearRampToValueAtTime(cue === 'tick' ? 0.35 : cue === 'message' ? 0.3 : 0.7, when + 0.008);
+      envelope.gain.linearRampToValueAtTime(cue === 'tick' ? 0.35 : cue === 'message' ? 0.15 : 0.7, when + 0.008);
       envelope.gain.exponentialRampToValueAtTime(0.001, when + length);
       oscillator.connect(envelope);
       envelope.connect(master.current!);
