@@ -2,7 +2,7 @@
 
 An English-language game about measuring engagement. Level 1 and Level 2 gameplay are implemented. The opening and finished cinematics remain the partner's separate work; classroom scenes are clearly labelled, replaceable placeholders.
 
-**[Download the Level 2 preview](play/Level2-play-v1.zip?raw=true).** Sign in to GitHub with access to this private repository, download and extract the ZIP, then open **Level2.html** in Chrome or Edge. No installation is needed. **Levels1-and-2.html** in the same ZIP starts at Level 1 and continues to Level 2.
+**[Download the Level 2 preview (v2)](play/Level2-play-v2.zip?raw=true).** Sign in to GitHub with access to this private repository, download and extract the ZIP, then open **Level2.html** in Chrome or Edge. No installation is needed. **Levels1-and-2.html** in the same ZIP starts at Level 1 and continues to Level 2.
 
 The saved [Level 1 v7 preview](play/Level1-play-v7.zip?raw=true) is preserved unchanged on `level1-preview` and in `play/`. New development is on `level2-dev`.
 
@@ -14,7 +14,9 @@ The saved [Level 1 v7 preview](play/Level1-play-v7.zip?raw=true) is preserved un
 
 Level 2 counts requirements; it does not invent numerical learning results or a declining student health score. Level 1's 0–100 reported scores remain illustrative. Neither predictions nor choices are graded or sent to a service.
 
-Results arrive before observations. Each classroom finding has 6–8 seconds of visible reading time before dialogue. Maya/Alex messages arrive chronologically with 650 ms of typing dots and 3–5 seconds to read. At 10, 25 and 100 metrics the checklist appears automatically, followed by time to read. Data cues are stronger than message pips. Revealed information remains on screen. Hidden tabs, off-screen information and open guide/restart dialogs hold the pending beat; reduced motion preserves reading time. There is no Pause or Reveal button.
+The gap view emphasizes **3 areas untracked** with larger metric names and one amber warning animation. The student card puts **Learning at risk** first, followed by one stage-specific description of behaviour. Each new round clears both cards' old presentation: management awaits its report and students show **Awaiting observation** until current classroom evidence arrives. There is no stale observed-at count or numerical learning penalty.
+
+Results arrive before observations. Each classroom finding has 6–8 seconds of visible reading time before dialogue. Maya/Alex messages arrive chronologically with 650 ms of typing dots and 3–5 seconds to read. At 10, 25 and 100 metrics the checklist's action items appear and tick one at a time. The next button opens about one second after the final item, while the text remains available to read. Data cues are stronger than message pips. Hidden tabs, off-screen information and open restart dialogs hold the pending beat (Level 1 also has a guide); reduced motion removes movement. There is no Pause or Reveal button.
 
 State and sound preference live only in the current page's memory. Moving between levels and scenes retains the open run. Reloading, reopening or restoring the page from the browser back-forward cache starts fresh. No progress or preferences are written to localStorage, sessionStorage or cookies. Each computer runs independently; two students can share one open game. This is not networked multiplayer.
 
@@ -52,6 +54,7 @@ src/
     level2/
       LevelTwo.tsx        Level 2 gameplay and presentation sequence
       LevelTwoIntro.tsx   The “more than one?” bridge
+      Perspectives.tsx   Current-round report and student learning-risk card
       data.ts             Trio branches, expansion stages and scene contract
       CinematicPlaceholder.tsx
       styles.css          Level 2 layouts scoped to .level-two
@@ -87,5 +90,6 @@ The browser tests serve the exact production HTML bytes through an in-memory tes
 
 Checks cover the 20 trios, complete expansion flow, both levels' handoff, outcome text, timing, selection limits, sound, keyboard controls, restart, fresh-page lifetime and responsive layouts. They are browser functional checks, not a classroom concurrency/load test.
 
-The current preview passed 98 browser/artifact checks. The recorded results and
-artifact hashes are in [LEVEL2_VALIDATION.json](docs/LEVEL2_VALIDATION.json).
+The v2 preview passed 60 browser/artifact checks. Results and artifact hashes are recorded in
+[LEVEL2_VALIDATION-v2.json](docs/LEVEL2_VALIDATION-v2.json). The earlier v1
+preview and its [validation record](docs/LEVEL2_VALIDATION.json) are preserved.

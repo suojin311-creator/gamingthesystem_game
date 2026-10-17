@@ -64,26 +64,32 @@ with sync_playwright() as playwright:
     browser = playwright.chromium.launch(executable_path='/usr/bin/chromium', headless=True, args=['--no-sandbox'])
     context, page = load(browser)
     expect(page.get_by_role('heading', name='What if we measured more than one?')).to_be_visible()
+    expect(page.get_by_role('button', name='Guide', exact=True)).to_have_count(0)
     page.screenshot(path=str(output / 'level2-intro.png'), full_page=True)
     choose(page, IDS[:2] + ['discuss'])
     expect(page.locator('.level-two')).to_have_attribute('data-branch', 'mixed')
     expect(page.get_by_role('button', name='Observe the class', exact=True)).to_be_enabled(timeout=7000)
-    record('Offline direct entry and mixed evaluation')
+    record('Offline Level 2 entry without Guide and mixed evaluation')
     scene(page)
     expect(page.locator('.l2-observation')).to_be_visible(timeout=8000)
+    expect(page.locator('.l2-learning-risk strong')).to_have_text('Learning at risk')
+    expect(page.locator('.l2-student-observation')).to_have_text('Untracked areas get overlooked.')
+    assert page.locator('.l2-observed-round').count() == 0
+    assert page.locator('.l2-learning-risk strong').evaluate('e => parseFloat(getComputedStyle(e).fontSize)') > page.locator('.l2-student-observation').evaluate('e => parseFloat(getComputedStyle(e).fontSize)') * 1.8
+    record('Learning risk is the primary student state, with the approved three-metric description')
     # The finding is readable before either character starts typing.
     expect(page.locator('.conversation .dialogue-character')).to_have_count(0)
     assert not page.get_by_role('button', name='Cover the gaps', exact=True).count()
     page.wait_for_timeout(2200)
     expect(page.locator('.conversation .dialogue-character')).to_have_count(0)
     record('Finding precedes dialogue and next action')
-    page.get_by_role('button', name='Guide', exact=True).click()
+    page.get_by_role('button', name='Restart', exact=True).click()
     page.wait_for_timeout(5500)
     expect(page.locator('.conversation .dialogue-character')).to_have_count(0)
     page.keyboard.press('Escape')
     expect(page.get_by_role('dialog')).not_to_be_visible()
-    expect(page.get_by_role('button', name='Guide', exact=True)).to_be_focused()
-    record('Guide freezes the reading sequence and restores keyboard focus')
+    expect(page.get_by_role('button', name='Restart', exact=True)).to_be_focused()
+    record('Restart confirmation freezes the reading sequence and restores keyboard focus')
     core_ready(page, 'Cover the gaps')
     page.screenshot(path=str(output / 'level2-three-observation.png'), full_page=True)
     page.get_by_role('button', name='Cover the gaps', exact=True).click()
@@ -91,31 +97,65 @@ with sync_playwright() as playwright:
     expect(page.locator('.l2-missing li')).to_have_count(3)
     assert 'Pre-class Preparation' in page.locator('.l2-covered').inner_text()
     for name in [NAMES[2], NAMES[4], NAMES[5]]: expect(page.locator('.l2-missing')).to_contain_text(name)
+    expect(page.locator('.l2-gap-warning')).to_have_text('3 areas untracked')
+    assert page.locator('.l2-missing li').first.evaluate('e => parseFloat(getComputedStyle(e).fontSize)') >= page.locator('.l2-covered li').first.evaluate('e => parseFloat(getComputedStyle(e).fontSize)') * 1.25
+    page.screenshot(path=str(output / 'level2-gap-warning.png'), full_page=True)
     record('Gap view shows exactly the three unselected areas')
+    record('Untracked areas have a larger type size and a prominent warning')
     page.get_by_role('button', name='Add the other three', exact=True).click()
+    expect(page.locator('.l2-students')).to_contain_text('Awaiting observation')
+    expect(page.locator('.l2-students')).to_have_attribute('data-round', '6')
+    expect(page.locator('.l2-management')).to_have_attribute('data-round', '6')
+    expect(page.locator('.l2-learning-risk')).to_have_count(0)
     expect(page.locator('.l2-evaluation-list li')).to_have_count(6)
     expect(page.locator('.l2-evaluation-list [data-checked=true]')).to_have_count(6, timeout=6000)
     expect(page.get_by_role('button', name='Observe the class', exact=True)).to_be_enabled(timeout=6000)
+    expect(page.locator('.l2-reported-count')).to_have_text('6')
+    expect(page.locator('.l2-students')).to_contain_text('Awaiting observation')
+    page.screenshot(path=str(output / 'level2-six-pending.png'), full_page=True)
+    record('Six-metric report and pending student card share the current round without stale observations')
     record('Six-metric evaluation retains first three and adds the missing three')
     scene(page)
     expect(page.locator('.l2-observation')).to_contain_text('system is becoming part of the task', timeout=8000)
+    expect(page.locator('.l2-student-observation')).to_have_text('Meeting criteria becomes the goal.')
     core_ready(page, 'Add more metrics')
     page.get_by_role('button', name='Sound on', exact=True).click()
     expect(page.get_by_role('button', name='Sound off', exact=True)).to_be_visible()
-    for count, label, focus in [(10, 'Completing requirements', 'Requirements'), (25, 'Managing criteria', 'Criteria'), (100, 'Optimizing the checklist', 'Checklist')]:
+    page.evaluate('''window.checklistTimeline = {};
+new MutationObserver(() => {
+  const root = document.querySelector('.level-two[data-phase="observe"]');
+  if (!root || !root.querySelector('.l2-checklist')) return;
+  const count = root.dataset.round;
+  const timeline = window.checklistTimeline[count] ||= {rows: []};
+  root.querySelectorAll('.l2-checklist li[data-shown="true"]').forEach((row, index) => {
+    timeline.rows[index] ??= performance.now();
+  });
+  if (root.querySelector('.l2-decision .action-row .primary-button')) timeline.ready ??= performance.now();
+}).observe(document, {childList: true, subtree: true, attributes: true});''')
+    for count, label, observation in [(10, 'Completing requirements', 'Ticking boxes takes priority.'), (25, 'Managing criteria', 'Optimizing for the criteria takes priority.'), (100, 'Optimizing the checklist', 'Doing the minimum becomes the strategy.')]:
         page.get_by_role('button', name='Add more metrics', exact=True).click()
         expect(page.locator('.level-two')).to_have_attribute('data-round', str(count))
+        expect(page.locator('.l2-students')).to_contain_text('Awaiting observation')
+        expect(page.locator('.l2-students')).to_have_attribute('data-observed', 'false')
         expect(page.locator('.l2-checklist')).to_contain_text(label, timeout=10000)
         expect(page.locator('.l2-checklist [data-shown=true]')).to_have_count(3, timeout=5000)
+        expect(page.locator('.l2-check-box[data-checked=true] .icon')).to_have_count(3)
         expect(page.locator('.l2-reported-count')).to_have_text(str(count))
-        expect(page.locator('.l2-student-focus')).to_have_text(focus)
+        expect(page.locator('.l2-learning-risk strong')).to_have_text('Learning at risk')
+        expect(page.locator('.l2-student-observation')).to_have_text(observation)
+        expect(page.locator('.l2-students')).to_have_attribute('data-round', str(count))
         expect(page.locator('.l2-matrix [data-active=true]')).to_have_count(count)
         page.locator('.l2-checklist').scroll_into_view_if_needed()
         action = 'Observe the class' if count == 100 else 'Add more metrics'
-        expect(page.get_by_role('button', name=action, exact=True)).to_be_visible(timeout=14000)
+        expect(page.get_by_role('button', name=action, exact=True)).to_be_visible(timeout=2500)
+        stamps = page.evaluate(f'window.checklistTimeline[{count}]')
+        assert len(stamps['rows']) == 3, stamps
+        assert all(stamps['rows'][index + 1] - stamps['rows'][index] >= 450 for index in [0, 1]), stamps
+        assert 900 <= stamps['ready'] - stamps['rows'][2] < 2300, stamps
         page.screenshot(path=str(output / f'level2-{count}.png'), full_page=True)
         layout(page)
         record(f'{count} metrics automatically reveal the matching student checklist')
+        record(f'{count} metrics: action items tick in sequence and next button opens about one second after the last')
     scene(page, lines=2)
     core_ready(page, 'Continue to Level 3')
     expect(page.get_by_role('button', name='Continue to Level 3', exact=True)).to_be_disabled()
@@ -178,6 +218,10 @@ with sync_playwright() as playwright:
         core_ready(page, 'Cover the gaps')
         layout(page)
         page.screenshot(path=str(output / f'level2-observation-{width}.png'), full_page=True)
+        page.get_by_role('button', name='Cover the gaps', exact=True).click()
+        expect(page.locator('.l2-gap-warning')).to_be_visible()
+        layout(page)
+        page.screenshot(path=str(output / f'level2-gaps-{width}.png'), full_page=True)
         record(f'{width}px layout, normal motion and automatic dialogue')
         page.reload(wait_until='networkidle')
         expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')

@@ -1,4 +1,10 @@
-# Play Level 1
+# Play Gaming the System
+
+For the current Level 2 preview, [download Level2-play-v2.zip](Level2-play-v2.zip?raw=true),
+extract it and open `Level2.html`. Open `Levels1-and-2.html` in the same ZIP to
+start at Level 1 and continue to Level 2. Both run offline after download.
+
+## Saved Level 1 preview
 
 1. Sign in to GitHub with an account that can access this repository.
 2. [Download Level1-play-v7.zip](Level1-play-v7.zip?raw=true).

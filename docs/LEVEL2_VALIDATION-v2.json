@@ -1,0 +1,119 @@
+{
+  "validated_at_utc": "2026-10-17T16:43:20.748852+00:00",
+  "branch": "level2-dev",
+  "version": "Level 2 preview v2",
+  "passed": 60,
+  "builds": [
+    "npm run build: passed",
+    "npm run build:level2: passed"
+  ],
+  "suites": {
+    "level2-results.json": {
+      "passed": 47,
+      "cases": [
+        "Offline Level 2 entry without Guide and mixed evaluation",
+        "Learning risk is the primary student state, with the approved three-metric description",
+        "Finding precedes dialogue and next action",
+        "Restart confirmation freezes the reading sequence and restores keyboard focus",
+        "Gap view shows exactly the three unselected areas",
+        "Untracked areas have a larger type size and a prominent warning",
+        "Six-metric report and pending student card share the current round without stale observations",
+        "Six-metric evaluation retains first three and adds the missing three",
+        "10 metrics automatically reveal the matching student checklist",
+        "10 metrics: action items tick in sequence and next button opens about one second after the last",
+        "25 metrics automatically reveal the matching student checklist",
+        "25 metrics: action items tick in sequence and next button opens about one second after the last",
+        "100 metrics automatically reveal the matching student checklist",
+        "100 metrics: action items tick in sequence and next button opens about one second after the last",
+        "Level 2 ends at weighting question with Level 3 reserved and all-English UI",
+        "Restart cancels safely or clears progress without persistent saves",
+        "Exactly-three limit, selection hint and deselect-to-swap",
+        "Trio prep+part+focus routes to visible outcome",
+        "Trio prep+part+discuss routes to mixed outcome",
+        "Trio prep+part+reflect routes to mixed outcome",
+        "Trio prep+part+peer routes to mixed outcome",
+        "Trio prep+focus+discuss routes to mixed outcome",
+        "Trio prep+focus+reflect routes to mixed outcome",
+        "Trio prep+focus+peer routes to mixed outcome",
+        "Trio prep+discuss+reflect routes to mixed outcome",
+        "Trio prep+discuss+peer routes to mixed outcome",
+        "Trio prep+reflect+peer routes to mixed outcome",
+        "Trio part+focus+discuss routes to mixed outcome",
+        "Trio part+focus+reflect routes to mixed outcome",
+        "Trio part+focus+peer routes to mixed outcome",
+        "Trio part+discuss+reflect routes to mixed outcome",
+        "Trio part+discuss+peer routes to mixed outcome",
+        "Trio part+reflect+peer routes to mixed outcome",
+        "Trio focus+discuss+reflect routes to mixed outcome",
+        "Trio focus+discuss+peer routes to mixed outcome",
+        "Trio focus+reflect+peer routes to mixed outcome",
+        "Trio discuss+reflect+peer routes to quality outcome",
+        "1366px layout, normal motion and automatic dialogue",
+        "1366px reload and restored tab start fresh",
+        "768px layout, normal motion and automatic dialogue",
+        "768px reload and restored tab start fresh",
+        "390px layout, normal motion and automatic dialogue",
+        "390px reload and restored tab start fresh",
+        "320px layout, normal motion and automatic dialogue",
+        "320px reload and restored tab start fresh",
+        "Full game carries Level 1 context and sound preference to Level 2; refresh restarts full game",
+        "No browser runtime errors across all offline playthroughs"
+      ],
+      "runtimeErrors": []
+    },
+    "level2-integration-results.json": {
+      "passed": 9,
+      "checks": [
+        "Partner replaces all three scene slots; original trio, branch and custom name retained",
+        "Completion reports exact result once after final reading",
+        "Level 2 emits actual count, success, evidence and softer message cues",
+        "Final replay retains completion count and mute suppresses new cues",
+        "Restart clears the original trio and permits a new completion",
+        "Hidden tab holds metric updates and resumes them on return",
+        "Growth counter and automatic observation wait while restart confirmation is open",
+        "The shortened next-button wait pauses under restart confirmation and resumes after closing it",
+        "Complete expansion and partner-scene flow works at 320px"
+      ],
+      "runtimeErrors": []
+    },
+    "release-results.json": {
+      "passed": 4,
+      "checks": [
+        "ZIP integrity and byte identity with both production builds",
+        "Packaged Level2.html completes 3 \u2192 6 \u2192 10 \u2192 25 \u2192 100 offline with normal motion",
+        "Packaged Levels1-and-2.html starts at Level 1 with its guide",
+        "Packaged entries have no browser runtime errors"
+      ],
+      "runtimeErrors": []
+    }
+  },
+  "artifacts": {
+    "dist/index.html": {
+      "sha256": "a0105d0972519708534ad736433d5fdc66fc74e483311a581397d72dd5e6cec8",
+      "bytes": 9799420
+    },
+    "dist-level2/index.html": {
+      "sha256": "d9ab735b6cf8c0363533cb47c77953554bce8a1e49ee3c5298b47d0998a9ecfd",
+      "bytes": 9799420
+    },
+    "play/Level2-play-v2.zip": {
+      "sha256": "3102421570af656392609f49be9785e5e4d7ab1584f716249e28189f5123b7de",
+      "bytes": 14577870
+    }
+  },
+  "changes": [
+    "Untracked metric names are over 25% larger than tracked names, with an amber warning and one arrival pulse.",
+    "Students prominently display Learning at risk, followed by the five approved stage descriptions.",
+    "Every new round clears the previous report presentation and student observation; students await the current evidence. No observed-at count is shown.",
+    "Checklist action items appear and tick sequentially, then the next action opens after about one second of visible time.",
+    "Level 2 Guide button, dialog and unused guide state/styles are removed."
+  ],
+  "notes": [
+    "The 47-check offline suite uses real presentation intervals. Integration and release flows use the browser clock to advance reading time.",
+    "The exact final ZIP was checked offline and its two HTML entries match the production builds byte for byte.",
+    "The full Level 1-to-Level 2 handoff is covered. Level 1 source and styles were not changed, and its separate broad regression suites were not repeated for this revision.",
+    "The saved v1 ZIP and prior validation record are preserved.",
+    "Managed Chromium blocks file:// navigation; offline checks serve the exact artifact through an in-memory HTTPS route. Opening a local file in a particular user browser is not directly observed.",
+    "Partner cinematics remain placeholders. This is browser/artifact validation, not a classroom network-load test."
+  ]
+}

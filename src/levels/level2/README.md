@@ -3,6 +3,7 @@
 - `LevelTwo.tsx`: complete 3 → 6 → 10 → 25 → 100 flow, in-memory state and paced presentation.
 - `LevelTwoIntro.tsx`: introductory bridge, optionally showing the Level 1 selected metric.
 - `data.ts`: three combination branches, evidence, checklists and integration types.
+- `Perspectives.tsx`: same-round management report, awaiting-observation state and prominent student learning-risk summary.
 - `CinematicPlaceholder.tsx`: replaceable three-metric, six-metric and final story slots.
 - `styles.css`: layout scoped to `.level-two`.
 

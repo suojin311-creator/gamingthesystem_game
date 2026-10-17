@@ -19,6 +19,7 @@ const shapes = {
   muted: <><path d="M4 9h4l5-4v14l-5-4H4Z M17 9l5 6m0-6-5 6"/></>,
   eye: <><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></>,
   question: <><circle cx="12" cy="12" r="9"/><path d="M9 8a3 3 0 1 1 4 3c-1 .4-1 1-1 2M12 17h.01"/></>,
+  warning: <><path d="m12 3 10 18H2Z"/><path d="M12 9v5M12 17h.01"/></>,
 } satisfies Record<string, ReactNode>;
 
 export type IconName = keyof typeof shapes;

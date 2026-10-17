@@ -39,21 +39,29 @@ export const THREE_OUTCOMES: Record<Branch, { report: string; evidence: string; 
 export const SIX_EVIDENCE = 'Students check what each criterion requires and plan their work around what still needs to be shown. The measurement system is becoming part of the task itself.';
 export const FINAL_EVIDENCE = 'The system tracks 100 requirements. Students reuse evidence, close unchecked gaps and look for the minimum needed to meet the remaining criteria.';
 
-export const CHECKLISTS: Record<10 | 25 | 100, { label: string; focus: string; questions: string[] }> = {
-  10: { label: 'Completing requirements', focus: 'Requirements', questions: [
-    'Which requirements have I completed?',
-    'Which ones are still missing?',
-    'What do I need to do next?',
+export const STUDENT_OBSERVATIONS: Record<RoundCount, string> = {
+  3: 'Untracked areas get overlooked.',
+  6: 'Meeting criteria becomes the goal.',
+  10: 'Ticking boxes takes priority.',
+  25: 'Optimizing for the criteria takes priority.',
+  100: 'Doing the minimum becomes the strategy.',
+};
+
+export const CHECKLISTS: Record<10 | 25 | 100, { label: string; actions: string[] }> = {
+  10: { label: 'Completing requirements', actions: [
+    'Check completed requirements.',
+    'Find what is still missing.',
+    'Plan the next task.',
   ] },
-  25: { label: 'Managing criteria', focus: 'Criteria', questions: [
-    'Which criteria still need evidence?',
-    'Can one task cover several criteria?',
-    'Which requirements can I complete most efficiently?',
+  25: { label: 'Managing criteria', actions: [
+    'Check which criteria still need evidence.',
+    'Use one task to cover several criteria.',
+    'Choose the most efficient route.',
   ] },
-  100: { label: 'Optimizing the checklist', focus: 'Checklist', questions: [
-    'Which boxes are still unchecked?',
-    'Where can the same evidence count more than once?',
-    'What is the minimum needed to close the remaining gaps?',
+  100: { label: 'Optimizing the checklist', actions: [
+    'Find the remaining unchecked boxes.',
+    'Reuse evidence across requirements.',
+    'Do the minimum needed to meet the criteria.',
   ] },
 };
 

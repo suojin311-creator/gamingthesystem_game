@@ -84,18 +84,40 @@ page starts a new run. The callback does not automatically navigate to Level 3.
 
 ## Presentation and lifetime
 
-The central content is the reading focus. The right-hand cards retain quiet
-summaries: requirements tracked and students' current attention. No sidebar
-badges, extra student sound or independently pulsing update competes with it.
+The central content is the reading focus. The right-hand cards summarize the
+same current round. Starting a round hides the previous report until the new
+evaluation finishes and resets students to **Awaiting observation**. The student
+card changes to **Learning at risk** only when the current observation arrives.
+Do not retain an observed-at count from an earlier round. The risk is a
+qualitative interpretation of the story; actual learning gains remain unverified.
+No sidebar badges, extra student sound or independently pulsing update competes
+with the central content. The Level 2 header has Sound and Restart controls;
+there is no Guide button or guide dialog.
+
+| Metric count | Description below Learning at risk |
+| --- | --- |
+| 3 | Untracked areas get overlooked. |
+| 6 | Meeting criteria becomes the goal. |
+| 10 | Ticking boxes takes priority. |
+| 25 | Optimizing for the criteria takes priority. |
+| 100 | Doing the minimum becomes the strategy. |
+
+The gap view keeps tracked areas quiet and emphasizes the other three with
+larger names, an amber border, **3 areas untracked**, and a single arrival pulse.
+Untracked areas are blind spots; no declining learning score is inferred.
 
 Core metrics turn green one at a time, followed by the report cue. After each
 scene, the observation and student summary appear together with one evidence
 cue, followed by 6–8 seconds to read. Dialogue uses 650 ms typing dots and
 3–5 seconds per message; the next action follows the final reading interval.
-The 10/25/100 checklist questions arrive in order and remain visible, with a
-6.5–9 second final reading interval. Guides, restart dialogs, hidden tabs and
-off-screen text hold these sequences. Reduced motion removes movement but
-keeps reading time. Sound preference carries between levels in page memory.
+The 10/25/100 checklist uses action items, rather than questions. Each item
+appears 550 ms after the previous one and its checkbox ticks. The ticks represent
+Alex completing checklist actions, not demonstrating learning. The next button
+opens after 1000 ms of visible time following the final item. All items remain
+visible and the player decides when to continue. Restart dialogs, hidden
+tabs and off-screen text hold these sequences. Reduced motion removes movement
+but keeps the sequence and waits. Sound preference carries between levels in page
+memory.
 
 No game storage, runtime server, API key or multiplayer service is used.
 Two students at one computer share one run. Classroom network capacity and

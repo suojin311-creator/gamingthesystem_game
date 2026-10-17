@@ -133,7 +133,7 @@ OscillatorNode.prototype.start=function(...args){window.notes.push(values.get(th
     advance(page, 6)
     finish_scene(page)
     page.get_by_role('button', name='Add more metrics', exact=True).click()
-    page.get_by_role('button', name='Guide', exact=True).click()
+    page.get_by_role('button', name='Restart', exact=True).click()
     frozen = page.locator('.l2-counter-value strong').inner_text()
     advance(page, 5)
     assert page.locator('.l2-counter-value strong').inner_text() == frozen
@@ -141,7 +141,21 @@ OscillatorNode.prototype.start=function(...args){window.notes.push(values.get(th
     page.keyboard.press('Escape')
     advance(page)
     expect(page.locator('.l2-checklist')).to_contain_text('Completing requirements')
-    record('Growth counter and automatic observation wait while guide is open')
+    record('Growth counter and automatic observation wait while restart confirmation is open')
+    page.get_by_role('button', name='Add more metrics', exact=True).click()
+    for _ in range(80):
+        page.clock.run_for(100)
+        page.wait_for_timeout(12)
+        if page.locator('.l2-checklist li[data-shown=true]').count() == 3: break
+    expect(page.locator('.l2-checklist li[data-shown=true]')).to_have_count(3)
+    expect(page.get_by_role('button', name='Add more metrics', exact=True)).to_have_count(0)
+    page.get_by_role('button', name='Restart', exact=True).click()
+    advance(page, 5)
+    expect(page.get_by_role('button', name='Add more metrics', exact=True)).to_have_count(0)
+    page.keyboard.press('Escape')
+    advance(page, 2)
+    expect(page.get_by_role('button', name='Add more metrics', exact=True)).to_be_enabled()
+    record('The shortened next-button wait pauses under restart confirmation and resumes after closing it')
     context.close()
 
     context = browser.new_context(viewport={'width': 320, 'height': 740}, reduced_motion='reduce')
