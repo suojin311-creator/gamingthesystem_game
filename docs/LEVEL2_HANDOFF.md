@@ -43,7 +43,8 @@ The player then adds more requirements: 6 → 10 → 25 → 100. Each increase f
 changes the count and matrix, then automatically reveals Alex's checklist.
 At 100, Observe the class plays the final scene. The last dashboard stays at
 100 with qualitative evidence and the question about relative importance.
-Continue to Level 3 is disabled until the next level exists.
+Continue to Level 3 is enabled by the combined host's optional onContinue
+callback. The standalone Level 2 entry leaves it reserved and disabled.
 
 ## Component contract
 
@@ -59,6 +60,7 @@ import LevelTwo from './levels/level2/LevelTwo';
     <PartnerScene sceneId={request.sceneId} playerName={request.playerName} onComplete={complete} />
   )}
   onComplete={result => setLevelTwoResult(result)}
+  onContinue={() => setCurrentLevel(3)}
 />
 ```
 
@@ -102,8 +104,10 @@ After the last finding and Maya reply have received visible reading time,
 
 Replay does not repeat completion. Restart permits a new completion. Every fresh
 page starts a new run. The callback does not automatically navigate to Level 3.
+The explicit Continue to Level 3 action settles completion once before calling
+onContinue(result), including when clicked before the final reading delay ends.
 
-The shared `Gameplay` host forwards the opening's name to both levels and their
+The shared `Gameplay` host forwards the opening's name to all three levels and their
 scene requests. See [Opening handoff](OPENING_HANDOFF.md). Player decisions use
 “I”; the older narrative's “we” is adapted to the player's first-person role.
 

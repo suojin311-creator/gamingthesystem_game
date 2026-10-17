@@ -2,6 +2,7 @@ node_modules/
 dist/
 dist-level1/
 dist-level2/
+dist-level3/
 test-results/
 .DS_Store
 *.local

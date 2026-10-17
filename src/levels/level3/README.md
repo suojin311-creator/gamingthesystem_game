@@ -1,59 +1,18 @@
-# Level 3 — Gameplay workspace
+# Level 3 — The Weighting Trap
 
-This is the Level 3 development folder on `level3-dev`. Development starts from
-the accepted Level 1 + Level 2 v6 version (`336c59f`). Both earlier levels,
-shared modules, artwork and the latest individual/combined playable ZIPs are
-included in this branch. Preview branches are synchronized when publishing;
-versioned ZIPs and Git history preserve earlier releases.
+- `LevelThree.tsx`: chapter introduction, free three-metric selection, per-card confirmation, publication, adaptive tests and compared run history.
+- `weights.ts`: deterministic allocation, locked-value invariants, near-even classification and contrast/rebalance validation.
+- `data.ts`: 18 Narrative V2 behaviours, immutable runs, cinematic and completion contracts.
+- `CinematicPlaceholder.tsx`: the selected three shots, comparison dialogue and final theory slots, all replaceable by the partner.
+- `styles.css`: office layout, ranges, sequential observations and responsive comparison, scoped to `.level-three`.
 
-## Current state
+The shared Gameplay host connects Level 2 here with the same opening-confirmed
+name and sound preference. The `level3` build mode mounts this component directly.
+The standalone Level 1/2 modes still end at their own level.
 
-Only the folder and integration notes are prepared. There is no Level 3 gameplay
-component or playable Level 3 preview yet. `Gameplay.tsx` still connects Level 1
-and Level 2, and Level 2's final Continue to Level 3 action remains reserved.
-The preview refresh adds a Level 1-only build and packages all three current
-entries together without changing the accepted gameplay or adding Level 3.
+Run `npm run dev -- --mode level3` for direct development,
+`npm run build:level3` for its HTML, or `npm run package:previews` to refresh
+all individual and combined downloads. Latest entry: `play/Level3-play.zip`.
 
-## Implementation location
-
-The planned modules belong here as the level is implemented:
-
-| Planned module | Responsibility |
-| --- | --- |
-| `LevelThree.tsx` | Level 3 gameplay, state and presentation |
-| `data.ts` | Level-specific choices, outcomes and scene contracts |
-| `styles.css` | Styles scoped to `.level-three` |
-| `CinematicPlaceholder.tsx` | Replaceable story slots for partner cinematics |
-
-The filenames above are a layout plan, not existing working components. Reuse
-the common metric IDs, conversation bubbles, icons, audio, visible-time delays
-and learning-risk presentation from `../../shared/`. The current six core
-metrics keep their IDs: `prep`, `part`, `focus`, `discuss`, `reflect`, `peer`.
-
-## Existing handoff context
-
-Level 2 ends after 100 tracked requirements, with the player's question:
-“What if some metrics mattered more than others?” The earlier narrative reserves
-priority choices for the next stage. Its detailed rules and presentation will
-be implemented from the supplied mechanics and Narrative V2 documents.
-
-The existing `LevelTwoResult` completion value is:
-
-```ts
-{
-  selectedMetricIds: ['prep', 'part', 'discuss'],
-  branch: 'mixed',
-  metricsTracked: 100
-}
-```
-
-The host in `src/Gameplay.tsx` is the integration point for the later Level 2 →
-Level 3 transition. Carry the opening's confirmed `playerName` through that host,
-the same way as the first two levels. Player decisions use I, all authored game
-text stays in English, Alex's emoji remain distinct, and new scenes can use
-placeholders until the cinematics are ready. Game progress and sound preferences
-remain in the current page's memory.
-
-See [repository guide](../../../docs/REPOSITORY_GUIDE.md),
-[Level 2 handoff](../../../docs/LEVEL2_HANDOFF.md) and
-[opening/name handoff](../../../docs/OPENING_HANDOFF.md).
+See [Level 3 handoff](../../../docs/LEVEL3_HANDOFF.md) for mechanics, highlighted
+narrative adjustments, scene IDs and result payloads. Design Lab is reserved.

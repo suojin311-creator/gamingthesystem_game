@@ -10,7 +10,7 @@ from playwright.sync_api import sync_playwright, expect
 checks, errors = [], []
 artifacts = {}
 manifest = json.loads(Path('play/LATEST.json').read_text())
-assert {entry['html'] for entry in manifest['entries']} == {'Level1.html', 'Level2.html', 'Gaming-the-System.html'}
+assert {entry['html'] for entry in manifest['entries']} == {'Level1.html', 'Level2.html', 'Level3.html', 'Gaming-the-System.html'}
 for entry in manifest['entries']:
     archive = Path('play') / entry['archive']
     with zipfile.ZipFile(archive) as bundle:
@@ -21,7 +21,7 @@ for entry in manifest['entries']:
         assert entry['html'] in bundle.read('START-HERE.txt').decode()
     assert hashlib.sha256(artifacts[entry['html']]).hexdigest() == entry['htmlSha256']
     assert hashlib.sha256(archive.read_bytes()).hexdigest() == entry['zipSha256']
-checks.append('All three latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest')
+checks.append('All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest')
 
 
 def advance(page, seconds=24):
@@ -49,6 +49,38 @@ def level_one(page):
     expect(page.locator('.student .student-behaviour')).to_have_text('Skimming just to finish.')
     expect(page.locator('.alex-bubble p')).to_have_text(['I finished the whole list! 📋', 'The reading? I mostly skimmed it 😬'])
     expect(page.get_by_role('button', name='Continue to Level 2', exact=True)).to_be_visible()
+
+
+def finish_two(page):
+    scene(page)
+    page.get_by_role('button', name='Cover the gaps', exact=True).click()
+    page.get_by_role('button', name='Add remaining metrics', exact=True).click()
+    advance(page, 6)
+    scene(page)
+    for count in [10, 25, 100]:
+        page.get_by_role('button', name='Add more metrics', exact=True).click()
+        advance(page)
+        expect(page.locator('.l2-reported-count')).to_have_text(str(count))
+    scene(page, lines=2)
+
+
+def choose_three(page):
+    advance(page,8)
+    page.get_by_role('button',name='Choose priorities',exact=True).click()
+    for id in ['prep','part','focus']:page.get_by_test_id('level3-metric-'+id).click()
+    page.get_by_role('button',name='Set the weights',exact=True).click()
+
+
+def weights_three(page, values):
+    for index,id in enumerate(['prep','part','focus']):
+        slider=page.get_by_test_id('weight-card-'+id).locator('input')
+        if not slider.is_disabled():slider.evaluate('''(input,value)=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(input,value);input.dispatchEvent(new Event('input',{bubbles:true}));}''', values[index])
+        page.get_by_test_id('confirm-'+id).click()
+    page.get_by_role('button',name='Run evaluation',exact=True).click()
+    page.locator('.l3-publish').scroll_into_view_if_needed();advance(page,5)
+    for _ in range(2):page.get_by_role('button',name='Continue scene',exact=True).click()
+    page.get_by_role('button',name='Return to dashboard',exact=True).click()
+    page.locator('.l3-results').scroll_into_view_if_needed();advance(page,5)
 
 
 with sync_playwright() as playwright:
@@ -88,6 +120,21 @@ with sync_playwright() as playwright:
     context.close()
     context = browser.new_context()
     context.set_offline(True)
+    context.route('https://release.test/**', lambda route: route.fulfill(status=200, content_type='text/html', body=artifacts['Level3.html']))
+    page = context.new_page()
+    page.on('pageerror', lambda error: errors.append(str(error)))
+    page.clock.install()
+    page.goto('https://release.test/', wait_until='networkidle')
+    choose_three(page);weights_three(page,[34,33,33])
+    page.get_by_role('button',name='Create a contrast',exact=True).click()
+    weights_three(page,[70,20,10])
+    page.get_by_role('button',name='Compare the patterns',exact=True).click()
+    expect(page.locator('.near-even .l3-row-weight')).to_have_text(['34%','33%','33%'])
+    expect(page.locator('.uneven .l3-row-weight')).to_have_text(['70%','20%','10%'])
+    checks.append('Packaged standalone Level3.html completes both weight tests and compares the actual results offline')
+    context.close()
+    context = browser.new_context()
+    context.set_offline(True)
     context.route('https://release.test/**', lambda route: route.fulfill(status=200, content_type='text/html', body=artifacts['Level1.html']))
     page = context.new_page()
     page.on('pageerror', lambda error: errors.append(str(error)))
@@ -123,6 +170,13 @@ with sync_playwright() as playwright:
     advance(page, 6)
     expect(page.locator('.l2-reported-count')).to_have_text('3')
     checks.append('Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference')
+    finish_two(page)
+    page.get_by_role('button',name='Continue to Level 3',exact=True).click()
+    expect(page.locator('.level-three')).to_have_attribute('data-phase','intro')
+    expect(page.get_by_role('button',name='Sound off',exact=True)).to_be_visible()
+    choose_three(page);weights_three(page,[70,20,10])
+    expect(page.get_by_role('button',name='Try a better balance',exact=True)).to_be_visible()
+    checks.append('Packaged combined game connects Level 1 → Level 2 → playable Level 3 in one open run')
     page.reload(wait_until='networkidle')
     expect(page.get_by_role('dialog', name='Workbench guide')).to_be_visible()
     expect(page.locator('.level-one')).to_be_visible()

@@ -1,0 +1,42 @@
+export type Weights = readonly [number, number, number];
+export type Confirmed = readonly [boolean, boolean, boolean];
+export type WeightGoal = 'first' | 'rebalance' | 'contrast';
+export type Effort = 'low' | 'medium' | 'high';
+export const EVEN_WEIGHTS: Weights = [34, 33, 33];
+export const MIN_WEIGHT = 10;
+
+export const spread = (weights: Weights) => Math.max(...weights) - Math.min(...weights);
+export const isNearEven = (weights: Weights) => spread(weights) <= 5;
+export const validWeights = (weights: Weights) => weights.length === 3 && weights.every(value => Number.isInteger(value) && value >= MIN_WEIGHT && value <= 80) && weights.reduce((sum, value) => sum + value, 0) === 100;
+
+/** Integer percentages keep the total exact; a one-point remainder goes in card order. */
+export function allocateWeight(weights: Weights, confirmed: Confirmed, index: number, requested: number): Weights {
+  if (!Number.isInteger(index) || index < 0 || index > 2 || confirmed[index] || !Number.isFinite(requested)) return weights;
+  const others = [0, 1, 2].filter(i => i !== index && !confirmed[i]);
+  if (!others.length) return weights;
+  const lockedTotal = weights.reduce((sum, value, i) => sum + (confirmed[i] ? value : 0), 0);
+  const value = Math.max(MIN_WEIGHT, Math.min(100 - lockedTotal - MIN_WEIGHT * others.length, Math.round(requested)));
+  const next: [number, number, number] = [...weights];
+  next[index] = value;
+  const remaining = 100 - lockedTotal - value;
+  others.forEach((i, position) => { next[i] = Math.floor(remaining / others.length) + (position < remaining % others.length ? 1 : 0); });
+  return next;
+}
+
+export function maximumWeight(weights: Weights, confirmed: Confirmed, index: number) {
+  return 100 - weights.reduce((sum, value, i) => sum + (confirmed[i] ? value : 0), 0)
+    - MIN_WEIGHT * confirmed.filter((locked, i) => !locked && i !== index).length;
+}
+
+export function goalMet(weights: Weights, baseline: Weights, goal: WeightGoal) {
+  return goal === 'first' || (goal === 'contrast' ? spread(weights) >= 20 : spread(weights) < spread(baseline));
+}
+
+export function canRun(weights: Weights, confirmed: Confirmed, baseline: Weights, goal: WeightGoal) {
+  return validWeights(weights) && confirmed.length === 3 && confirmed.every(Boolean) && goalMet(weights, baseline, goal);
+}
+
+export function effortAt(weights: Weights, index: number): Effort {
+  // Narrative V2: near-even overrides the absolute thresholds for all three shots.
+  return isNearEven(weights) ? 'medium' : weights[index] < 34 ? 'low' : weights[index] < 67 ? 'medium' : 'high';
+}

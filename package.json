@@ -8,7 +8,8 @@
     "build": "tsc --noEmit && vite build",
     "build:level1": "tsc --noEmit && vite build --mode level1 --outDir dist-level1",
     "build:level2": "tsc --noEmit && vite build --mode level2 --outDir dist-level2",
-    "package:previews": "npm run build && npm run build:level1 && npm run build:level2 && python3 scripts/package_previews.py",
+    "build:level3": "tsc --noEmit && vite build --mode level3 --outDir dist-level3",
+    "package:previews": "npm run build && npm run build:level1 && npm run build:level2 && npm run build:level3 && python3 scripts/package_previews.py",
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {

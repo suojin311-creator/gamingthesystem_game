@@ -16,7 +16,7 @@ The cinematic owns Maya/Alex's descriptive actions and dialogue for the selected
 
 `LevelOne` lives in `src/levels/level1/LevelOne.tsx` and imports its own scoped styles. Import `src/shared/styles/base.css` once in the host entry before the level. `src/App.tsx` is the current game entry.
 
-`LevelOne` is a React component. The final host passes the opening's confirmed name into `Gameplay`, which forwards it to both levels. See [Opening handoff](OPENING_HANDOFF.md) for the exact integration point in the supplied opening. Standalone previews use Maya as a fallback. Every mount starts a new in-memory run. The component never restores progress or preferences from browser storage.
+`LevelOne` is a React component. The final host passes the opening's confirmed name into `Gameplay`, which forwards it to all three levels. See [Opening handoff](OPENING_HANDOFF.md) for the exact integration point in the supplied opening. Standalone previews use Maya as a fallback. Every mount starts a new in-memory run. The component never restores progress or preferences from browser storage.
 
 ```tsx
 import LevelOne from './levels/level1/LevelOne';

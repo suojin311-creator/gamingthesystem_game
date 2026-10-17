@@ -1,4 +1,4 @@
-"""Publish the three latest offline previews from one set of production builds.
+"""Publish the latest offline previews from one set of production builds.
 
 Run via npm run package:previews so changes to shared components reach every entry.
 Versioned ZIPs are historical records and are deliberately left untouched.
@@ -14,9 +14,11 @@ ENTRIES = [
     ('Level1-play.zip', 'Level1.html', 'dist-level1/index.html',
      'Level 1 only. Continue to Level 2 is reserved and disabled.'),
     ('Level2-play.zip', 'Level2.html', 'dist-level2/index.html',
-     'Start directly at Level 2. Level 3 is reserved.'),
+     'Level 2 only. Continue to Level 3 is reserved and disabled in this standalone entry.'),
+    ('Level3-play.zip', 'Level3.html', 'dist-level3/index.html',
+     'Level 3 only. Choose priorities, set weights and compare Alex’s responses. Design Lab is reserved.'),
     ('Full-game-play.zip', 'Gaming-the-System.html', 'dist/index.html',
-     'Start at Level 1, then choose Continue to Level 2 to keep playing.'),
+     'Start at Level 1, then continue to Level 2 and Level 3 in the same open game.'),
 ]
 
 

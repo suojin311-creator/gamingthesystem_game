@@ -18,6 +18,6 @@ scan('src');
 assert.ok(inventory.length > 0, 'Expected emoji in the approved dialogue');
 assert.equal(new Set(inventory.map(item => item.emoji)).size, inventory.length, 'Each emoji must occur at only one source location');
 mkdirSync('test-results', { recursive: true });
-const report = { passed: 1, checks: ['All gameplay emoji are distinct across both levels'], emojiCount: inventory.length, inventory };
+const report = { passed: 1, checks: ['All gameplay emoji are distinct across all levels'], emojiCount: inventory.length, inventory };
 writeFileSync('test-results/dialogue-emoji-results.json', JSON.stringify(report, null, 2) + '\n');
-console.log(`PASS ${inventory.length} distinct emoji across both levels`);
+console.log(`PASS ${inventory.length} distinct emoji across all levels`);

@@ -69,8 +69,8 @@ useEffect(() => {
 
 ## Contract and presentation
 
-`GameplayProps.playerName` is required. The same value is passed to Level 1 and
-Level 2 across their in-page transition. Each level trims outer whitespace and
+`GameplayProps.playerName` is required. The same value is passed to Levels 1, 2
+and 3 across their in-page transitions. Each level trims outer whitespace and
 uses the name for the player speaker label, avatar initial, typing label and
 temporary cinematic captions. React renders names as text. Names are not
 translated or inserted as HTML. Alex remains Alex. An individual level's Restart
@@ -80,7 +80,7 @@ The source role ID `Maya` identifies the player character internally, including
 left-side styling. It is never a fixed display name when a custom name is
 supplied. Future scenes should resolve that role using `request.playerName`.
 
-Both cinematic renderers now receive a `playerName` field:
+All three cinematic renderers receive a `playerName` field:
 
 ```tsx
 <Gameplay
@@ -99,16 +99,21 @@ Both cinematic renderers now receive a `playerName` field:
       onComplete={complete}
     />
   )}
+  renderLevelThreeCinematic={(request, complete) => (
+    <PartnerScene request={request} onComplete={complete} />
+  )}
 />
 ```
 
-`onLevelOneComplete` and `onLevelTwoComplete` are optional result callbacks;
-their result shapes are unchanged. Keep Gameplay mounted throughout each scene
+`onLevelOneComplete`, `onLevelTwoComplete` and `onLevelThreeComplete` are optional
+result callbacks; the earlier two shapes are unchanged. Level 3's request and
+comparison result are documented in [Level 3 handoff](LEVEL3_HANDOFF.md).
+Keep Gameplay mounted throughout each scene
 and call `complete()` only at its end. Branches/scores never depend on the name.
 
 `src/App.tsx` is the standalone preview entry. It intentionally uses **Maya**
 because these downloadable previews exclude the opening. It is not the final
-host integration entry. `initialLevel={2}` is available for direct Level 2 work;
+host integration entry. `initialLevel={2}` or `{3}` is available for direct work;
 the real opening hands off at the default Level 1. Empty names in standalone
 level usage also fall back to Maya; the opening itself requires a nonempty name.
 
@@ -122,3 +127,8 @@ The browser integration check `tests/player_identity.py` exercises an opening
 name-form harness, both levels, both placeholder and custom scene routes,
 restart/reload and names with punctuation/long text. It does not claim that the
 separate Netlify opening has already been connected.
+
+`tests/level3_integration.py` additionally checks the same name through Level 2
+→ Level 3, weighted shot requests, comparison/theory renderers and the optional
+Design Lab callback. The combined preview connects all three gameplay levels;
+individual App modes mount only their selected level.

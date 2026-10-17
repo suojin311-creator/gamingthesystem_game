@@ -16,4 +16,4 @@ utilities from `../../shared/`. Do not import Level 1's component internals.
 The optional `previousMetricId` prop carries the prior choice in memory.
 
 See [LEVEL2_HANDOFF.md](../../../docs/LEVEL2_HANDOFF.md) for cinematic IDs,
-completion data and boundaries. Level 3 is reserved, not implemented.
+completion data and boundaries. The combined host enables Continue to Level 3 through the optional onContinue callback. The standalone Level 2 entry leaves that callback absent and stops here.
