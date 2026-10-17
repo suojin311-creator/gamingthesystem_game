@@ -1,13 +1,14 @@
+import './styles.css';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { METRICS, getMetric, type Metric, type MetricId } from './metrics';
 import { INITIAL_SESSION, type Phase } from './state';
-import Icon from './components/Icon';
+import Icon from '../../shared/components/Icon';
 import Dialogue from './components/Dialogue';
 import CinematicPlaceholder, { type CinematicRequest } from './components/CinematicPlaceholder';
-import { useFeedback } from './useFeedback';
+import { useFeedback } from '../../shared/hooks/useFeedback';
 import WorkbenchGuide from './components/WorkbenchGuide';
-import { useVisibleDelay } from './useVisibleDelay';
-import { readingTime } from './readingTime';
+import { useVisibleDelay } from '../../shared/hooks/useVisibleDelay';
+import { readingTime } from '../../shared/utils/readingTime';
 
 export type LevelOneResult = {
   metricId: MetricId; prediction: string;
@@ -195,7 +196,7 @@ export default function LevelOne({ playerName = 'Maya', renderCinematic, onCompl
 
   const dialogue = <Dialogue key={`${runId}:${phase}`} phase={phase} playerName={playerName} studentQuote={metric?.studentQuote} enabled={dialogueEnabled} paused={paused} play={feedback.play} onSettled={settleDialogue} />;
 
-  return <div className="game-page" onPointerDownCapture={feedback.unlock} onKeyDownCapture={feedback.unlock}>
+  return <div className="game-page level-one" onPointerDownCapture={feedback.unlock} onKeyDownCapture={feedback.unlock}>
     <header className="masthead"><a className="wordmark" href="#main-content" aria-label="Gaming the System, skip to game"><span className="brand-emblem" aria-hidden="true">g<span>s</span><i /></span><span>GAMING<br /><b>THE SYSTEM</b></span></a><div className="header-controls">{phase !== 'cinematic' && <button ref={guideButton} className="guide-button" aria-label="Guide" onClick={openGuide}><Icon name="question" /><span>Guide</span></button>}<button className="sound-button" aria-pressed={!feedback.muted} disabled={!feedback.available} onClick={feedback.toggle} title={feedback.available ? 'Toggle feedback sounds' : 'Audio is unavailable in this browser'}><Icon name={feedback.muted || !feedback.available ? 'muted' : 'sound'} /><span>{!feedback.available ? 'No audio' : feedback.muted ? 'Sound off' : 'Sound on'}</span></button><button ref={restartButton} className="restart-button" onClick={() => setRestartOpen(true)}><Icon name="restart" /><span>Restart</span></button></div></header>
 
     <main className="workbench" id="main-content">

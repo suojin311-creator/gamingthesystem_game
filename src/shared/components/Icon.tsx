@@ -1,7 +1,6 @@
-import type { MetricId } from '../metrics';
+import type { ReactNode } from 'react';
 
-type Name = MetricId | 'arrow' | 'check' | 'school' | 'student' | 'restart' | 'play' | 'pause' | 'spark' | 'sound' | 'muted' | 'eye' | 'question';
-const shapes: Record<Name, React.ReactNode> = {
+const shapes = {
   prep: <><path d="M4 5.5c3-1.1 5.6-.8 8 1.2 2.4-2 5-2.3 8-1.2V19c-3-1.1-5.6-.8-8 1.2-2.4-2-5-2.3-8-1.2Z"/><path d="M12 7v13M7 9l2 .3M15 9.3l2-.3M7 12l2 .3M15 12.3l2-.3"/></>,
   part: <><path d="M7 13V5a1.5 1.5 0 0 1 3 0v6-8a1.5 1.5 0 0 1 3 0v8-6a1.5 1.5 0 0 1 3 0v7-4a1.5 1.5 0 0 1 3 0v7c0 4-2.2 7-6 7-2.8 0-4.1-1.8-5.5-3.6L4 14.2a1.7 1.7 0 0 1 2.4-2.4L9 14"/></>,
   focus: <><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".8"/></>,
@@ -20,8 +19,10 @@ const shapes: Record<Name, React.ReactNode> = {
   muted: <><path d="M4 9h4l5-4v14l-5-4H4Z M17 9l5 6m0-6-5 6"/></>,
   eye: <><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></>,
   question: <><circle cx="12" cy="12" r="9"/><path d="M9 8a3 3 0 1 1 4 3c-1 .4-1 1-1 2M12 17h.01"/></>,
-};
+} satisfies Record<string, ReactNode>;
 
-export default function Icon({ name, className = '' }: { name: Name; className?: string }) {
+export type IconName = keyof typeof shapes;
+
+export default function Icon({ name, className = '' }: { name: IconName; className?: string }) {
   return <svg className={`icon ${className}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{shapes[name]}</svg>;
 }

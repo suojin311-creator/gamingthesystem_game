@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Phase } from '../state';
-import type { Cue } from '../useFeedback';
-import { readingTime } from '../readingTime';
+import type { Cue } from '../../../shared/hooks/useFeedback';
+import { readingTime } from '../../../shared/utils/readingTime';
 
 type Line = { speaker: 'Maya' | 'Alex'; text: string };
 

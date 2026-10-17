@@ -1,0 +1,15 @@
+/* Reserved Level 2 entry styles stay inside .level-two-entry. */
+:where(.level-two-entry) .completion-seal { display: flex; gap: 8px; align-items: center; color: #647852; font-size: 10px; letter-spacing: .1em; margin-bottom: 28px; }
+:where(.level-two-entry) .completion-seal .icon { width: 18px; height: 18px; border: 1px solid #9fac89; border-radius: 50%; padding: 2px; }
+:where(.level-two-entry) .completion-intro h2 { font-size: 38px; line-height: 1.2; }
+:where(.level-two-entry) .completion-intro h2 em { color: #94724e; }
+:where(.level-two-entry) .next-chapter { display: flex; align-items: center; gap: 17px; padding: 20px; border-top: 1px solid #d8d1be; border-bottom: 1px solid #d8d1be; margin: 3px 0 20px; background: #f7f2e6; }
+:where(.level-two-entry) .next-chapter h3 { font: 25px var(--serif); margin-top: 4px; }
+:where(.level-two-entry) .coming-label { margin-left: auto; white-space: nowrap; font-size: 9px; color: #a39478; border: 1px solid #d5cab2; padding: 5px 7px; border-radius: 20px; }
+:where(.level-two-entry) .next-chapter { animation: panel-arrive .4s ease-out both; }
+@media (max-width: 520px) {
+  :where(.level-two-entry) .completion-intro h2 { font-size: 32px; }
+  :where(.level-two-entry) .next-chapter { gap: 12px; padding: 18px 12px; }
+  :where(.level-two-entry) .next-chapter h3 { font-size: 22px; }
+  :where(.level-two-entry) .coming-label { font-size: 7px; padding: 4px 5px; }
+}

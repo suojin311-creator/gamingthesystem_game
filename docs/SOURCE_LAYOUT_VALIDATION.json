@@ -1,0 +1,115 @@
+{
+  "change": "Source reorganized by level after Level 1 v7",
+  "build_sha256": "f6692735fb6d925dcf975dafea8af3d59589ee0be9b5b08b67413255532df6c6",
+  "baseline_v7_build_sha256": "b6134a767f9030e566d2b6a83752722508288fce3ea507e26c8bde0ed2a460ba",
+  "build_and_typecheck": "passed",
+  "functional_browser_checks": {
+    "offline_flow": {
+      "passed": 22,
+      "checks": [
+        "Empty selection is blocked; player interface is English without author notes",
+        "prep: correct score, story and evidence; completion stays on the observation page without Level 2",
+        "part: correct score, story and evidence; completion stays on the observation page without Level 2",
+        "focus: correct score, story and evidence; completion stays on the observation page without Level 2",
+        "discuss: correct score, story and evidence; completion stays on the observation page without Level 2",
+        "reflect: correct score, story and evidence; completion stays on the observation page without Level 2",
+        "peer: correct score, story and evidence; completion stays on the observation page without Level 2",
+        "Prediction validation: whitespace, 100-character limit, literal rendering",
+        "Restart cancellation preserves progress; confirmed restart clears only this game",
+        "One Change control replaces duplicate Back; same metric keeps prediction and a new metric clears it",
+        "Refresh starts fresh and ignores legacy progress, guide and sound preferences",
+        "Refresh during a scene returns to a new game, not the interlude",
+        "New and reopened tabs start fresh while the existing open page keeps its own run",
+        "Returning from the browser back-forward cache also starts fresh",
+        "Layout and functional flow at 1366 \u00d7 768, including touch and reduced motion",
+        "Layout and functional flow at 1024 \u00d7 768, including touch and reduced motion",
+        "Layout and functional flow at 768 \u00d7 1024, including touch and reduced motion",
+        "Layout and functional flow at 390 \u00d7 844, including touch and reduced motion",
+        "Layout and functional flow at 375 \u00d7 667, including touch and reduced motion",
+        "Layout and functional flow at 320 \u00d7 640, including touch and reduced motion",
+        "Full game works with localStorage and sessionStorage completely unavailable",
+        "No uncaught browser errors"
+      ],
+      "runtime_errors": []
+    },
+    "automatic_feedback": {
+      "passed": 11,
+      "checks": [
+        "Score and management feedback advance automatically without pause controls",
+        "Actual Web Audio plays count and success cues at the increased master gain",
+        "Management emphasis ends after one cue and the score remains available",
+        "One evidence paragraph and student summary arrive together with one cue and no duplicate text or controls",
+        "Classroom evidence receives at least six seconds of visible reading time before conversation",
+        "Replies stay in the main column; both speakers receive reading time before the next message or completion",
+        "Mute suppresses all subsequent cues within the current game",
+        "Unmuting restores actual Web Audio feedback",
+        "Guide temporarily holds the reading sequence and closing it resumes automatically",
+        "Off-screen recap waits, then resumes reading and brings replies into view without visiting the sidebar",
+        "Browsers without Web Audio retain the complete visual sequence"
+      ],
+      "runtime_errors": []
+    },
+    "guide_and_alignment": {
+      "passed": 12,
+      "checks": [
+        "1366px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
+        "1366px: guide returns for every new page and preserves in-page choices when reopened",
+        "1366px: Target 70 sits under its real marker; reopening guide retains the evaluation",
+        "960px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
+        "960px: guide returns for every new page and preserves in-page choices when reopened",
+        "960px: Target 70 sits under its real marker; reopening guide retains the evaluation",
+        "390px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
+        "390px: guide returns for every new page and preserves in-page choices when reopened",
+        "390px: Target 70 sits under its real marker; reopening guide retains the evaluation",
+        "320px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
+        "320px: guide returns for every new page and preserves in-page choices when reopened",
+        "320px: Target 70 sits under its real marker; reopening guide retains the evaluation"
+      ],
+      "runtime_errors": []
+    },
+    "host_and_style_isolation": {
+      "passed": 4,
+      "checks": [
+        "The reorganized Level 1 component supports the same host-provided cinematic and completion result payload.",
+        "Loading the reserved Level 2 module and its stylesheet does not change any Level 1 pixels or mount the next-level screen.",
+        "Replaying the cinematic reports completion only once per run.",
+        "Restart clears the run and reports the next metric and prediction correctly."
+      ],
+      "runtime_errors": []
+    }
+  },
+  "visual_comparison": {
+    "passed": 2,
+    "checks": [
+      {
+        "width": 1366,
+        "pixel_identical": true,
+        "difference_bounds": null
+      },
+      {
+        "width": 320,
+        "pixel_identical": true,
+        "difference_bounds": null
+      }
+    ]
+  },
+  "source_structure": {
+    "unchanged_core_files": [
+      "src/levels/level1/metrics.ts",
+      "src/levels/level1/state.ts",
+      "src/shared/hooks/useFeedback.ts",
+      "src/shared/hooks/useVisibleDelay.ts",
+      "src/shared/utils/readingTime.ts"
+    ],
+    "shared_has_no_level_imports": true,
+    "document_links_resolve": true
+  },
+  "notes": [
+    "No gameplay or level transition behavior was changed. App is the single entry and still opens Level 1.",
+    "Existing v7 playable ZIPs are preserved. The reorganized source builds into one self-contained HTML file.",
+    "Level 1 and Level 2 styles are scoped separately; loading the reserved Level 2 module did not change any Level 1 pixels.",
+    "Exact production HTML was tested offline through an in-memory origin; managed Chromium blocks direct file URLs.",
+    "Host integration and dynamic Level 2 stylesheet loading were tested through the development server.",
+    "Level 2 gameplay and finished partner cinematics are not implemented."
+  ]
+}

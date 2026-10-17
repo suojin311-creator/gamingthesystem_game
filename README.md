@@ -1,6 +1,6 @@
-# Gaming the System — Level 1
+# Gaming the System
 
-A standalone, English-language Level 1 workbench. The supplied cinematic opening has **not** been merged or modified. Its office and classroom backgrounds are reused as visual references/assets from the supplied project.
+One English-language game project, organised by level. Level 1 is implemented; Level 2 has a reserved source folder. The supplied cinematic opening has **not** been merged or modified. Its office and classroom backgrounds are reused as visual references/assets from the supplied project.
 
 **Just want to play? [Download the playable ZIP (v7)](play/Level1-play-v7.zip?raw=true), extract it, and open `Level1.html` in Chrome or Edge. No developer tools are needed. Sign in to a GitHub account with access to this repository before downloading.**
 
@@ -12,7 +12,7 @@ Select one of six metrics, write a prediction of up to 100 characters, run the e
 
 Version 7 replaces the final completion label with **Continue to Level 2 →**, reserved as a disabled button until the next level is ready.
 
-The prediction page removes the duplicate Back to metrics control: use Change beside the selected metric. The Run evaluation button stays on the right. The former next-level screen is reserved separately in `src/components/LevelTwoEntryPlaceholder.tsx` and is not mounted or included in this playable flow.
+The prediction page removes the duplicate Back to metrics control: use Change beside the selected metric. The Run evaluation button stays on the right. The former next-level screen is reserved separately in `src/levels/level2/LevelTwoEntryPlaceholder.tsx` and is not mounted or included in this playable flow.
 
 The post-scene page stays simple. The prediction is a quiet reference line. A single classroom observation paragraph (the former details text) appears automatically together with the Students summary, sharing one sound cue. There is no duplicate headline, details toggle, student badge or separate student animation. Management’s view retains its existing score without renewed emphasis.
 
@@ -48,21 +48,46 @@ npm run build
 
 The build checks TypeScript and creates a self-contained `dist/index.html`. `vite-plugin-singlefile` embeds the assets so this first prototype can be shared as one HTML file. No external fonts, runtime network calls, or secret variables are needed.
 
-## Files
+## Source layout
 
-- `src/LevelOne.tsx`: complete decision flow, dashboard, perspectives, dialogue, restart and completion.
-- `src/metrics.ts`: six metrics, illustrative scores, behavioural evidence and temporary scene dialogue.
-- `src/components/CinematicPlaceholder.tsx`: replaceable three-line interlude for each branch.
-- `src/components/Dialogue.tsx`: visible-time chat sequence and typing indicators.
-- `src/components/LevelTwoEntryPlaceholder.tsx`: reserved next-level introduction; never mounted by Level 1.
-- `src/components/WorkbenchGuide.tsx`: new-run, replayable guide with actual-region spotlights.
-- `src/useVisibleDelay.ts`: pausable, visible-time presentation beats.
-- `src/readingTime.ts`: text-length-based reading intervals for observations and replies.
-- `src/useFeedback.ts`: self-contained, gesture-unlocked sound cues and mute preference.
-- `src/state.ts`: in-memory run types and initial state; no save/load API.
-- `src/styles.css`: warm paper/office styling, responsive layouts and reduced-motion support.
-- `docs/LEVEL1_HANDOFF.md`: scene contract and responsibilities for later integration.
-- `tests/smoke.py`: actual Chromium browser checks; requires Python Playwright and Chromium.
+```text
+src/
+  main.tsx                 Browser bootstrap; loads shared base styles
+  App.tsx                  Game entry; currently opens Level 1
+  levels/
+    level1/
+      LevelOne.tsx         Implemented Level 1 flow
+      metrics.ts           Choices, scores and narrative observations
+      state.ts             Level 1 in-memory state
+      components/          Level 1 dialogue, guide and cinematic placeholder
+      styles.css           Scoped Level 1 layouts
+    level2/
+      LevelTwoEntryPlaceholder.tsx
+      styles.css           Reserved Level 2 entry styles
+      README.md            Development boundary for the next level
+  shared/
+    components/            Common icons, independent of level data
+    hooks/                 Audio and visible-time delays
+    utils/                 Reading-time calculation
+    styles/base.css        Design tokens, resets and common controls
+  assets/                  Office and classroom artwork
+```
+
+Open [Level 1](src/levels/level1/), [Level 2](src/levels/level2/), or
+[shared code](src/shared/) to work on that area. Each has a short README.
+
+Keep each level's rules, text and state in its own folder. Shared modules do not
+import level internals. `App.tsx` owns the application entry and is where future
+level navigation will be connected. Level 2 is not mounted yet, and the next-level
+button remains reserved. The cinematic opening has not been merged.
+
+`main.tsx` imports the shared base stylesheet once before App. Each level imports
+its own stylesheet. Level 1 selectors are scoped to `.level-one`, and the reserved
+Level 2 entry selectors to `.level-two-entry`, so level layouts can evolve separately.
+
+[LEVEL1_HANDOFF.md](docs/LEVEL1_HANDOFF.md) documents scene integration and result
+callbacks. Existing playable ZIPs in `play/` remain saved previews; the current
+source still builds into one self-contained HTML file with `npm run build`.
 
 ## Validate
 

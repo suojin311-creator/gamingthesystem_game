@@ -255,8 +255,8 @@ with sync_playwright() as p:
 <script type="module">
 import React from 'react';
 import {createRoot} from 'react-dom/client';
-import LevelOne from '/src/LevelOne.tsx';
-import '/src/styles.css';
+import '/src/shared/styles/base.css';
+import LevelOne from '/src/levels/level1/LevelOne.tsx';
 const root = createRoot(document.getElementById('root'));
 root.render(React.createElement(LevelOne, {
   playerName: 'Jordan', showIntro: false,

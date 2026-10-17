@@ -14,10 +14,12 @@ The cinematic owns Maya/Alex's descriptive actions and dialogue for the selected
 
 ## Component contract
 
+`LevelOne` lives in `src/levels/level1/LevelOne.tsx` and imports its own scoped styles. Import `src/shared/styles/base.css` once in the host entry before the level. `src/App.tsx` is the current game entry.
+
 `LevelOne` is a React component. Its default player name is Maya; the later host can pass the name already collected in the opening. Every mount starts a new in-memory run. The component never restores progress or preferences from browser storage.
 
 ```tsx
-import LevelOne from './LevelOne';
+import LevelOne from './levels/level1/LevelOne';
 
 <LevelOne
   playerName={playerName}
@@ -67,7 +69,7 @@ The standalone view stays on the observation page and shows a disabled Continue 
 6. The selected branch cinematic plays. The existing placeholder is replaced here.
 7. Completing the cinematic returns to a compact, static prediction reference. After 1000 ms of visible time, the classroom observation and student uncertainty appear together, with one shared observation cue. Show only `metric.evidence` under IN THE CLASSROOM: the former details paragraph. Do not add the old takeaway headline or details toggle. Students is a quiet summary: no NEW badge, separate sound, pulse or forced sidebar scroll. Management’s view retains the already reported score.
 8. Give the observation 6–8 seconds of visible reading time before Maya: “The score is up. What about learning?” Alex then replies with the selected branch quote. Both bubbles sit within the main content column, Maya above-left and Alex below-right. Each starts with 650 ms of typing dots, followed by 3–5 seconds to read. Keep all messages visible. Wait for the final reply’s reading interval before showing the reserved Continue to Level 2 button on this page and reporting completion once. Replies wait until the chat is on screen. Guide and restart dialogs suspend reading and typing; closing them resumes automatically. There is no Pause / Resume control.
-9. The former “What if we measured more than one?” screen, More metrics card and “Maybe one metric is too narrow” bridge are reserved in `src/components/LevelTwoEntryPlaceholder.tsx` for the future Level 2 host. LevelOne never imports or renders this component. Any future management-email scene remains the narrative host’s responsibility.
+9. The former “What if we measured more than one?” screen, More metrics card and “Maybe one metric is too narrow” bridge are reserved in `src/levels/level2/LevelTwoEntryPlaceholder.tsx` for the future Level 2 host. LevelOne never imports or renders this component. Any future management-email scene remains the narrative host’s responsibility.
 10. The prediction page has one Change button beside the selected metric; the duplicate Back to metrics link is removed. Run evaluation remains right-aligned.
 
 Do not display Goodhart's Law in Level 1. All six choices are plausible educational indicators. Behaviour improves in the measured respect, while deeper engagement remains uncertain. There is no fixed student-health penalty, no right/wrong grading of predictions, and no conversion of qualitative evidence into an unsupported learning percentage.
@@ -76,7 +78,7 @@ Do not display Goodhart's Law in Level 1. All six choices are plausible educatio
 
 - React 19, TypeScript 5.9 and Vite 7 match the opening's toolchain family. Framer Motion is not needed for these operations.
 - The independent build is portable. The later combined app can use ordinary asset chunks instead of single-file bundling.
-- The stylesheet includes standalone page/base styles. Reconcile these with the opening's global styles when merging; importing both global stylesheets unchanged is not the integration plan.
+- Shared base styles live in `src/shared/styles/base.css`; Level 1 layout is scoped to `.level-one` in its own folder. Reconcile the shared global resets/tokens with the opening's base styles when merging, then load the shared base once. Level 1 component styles are imported by the component.
 - Keep keyboard focus, reduced-motion handling and the in-page state lifetime when replacing the placeholder.
 - There are no live processes, credentials or external services required by the finished HTML. For source development, restart Vite with `npm run dev` in the project directory.
 - Each browser is one independent game. Two students may share that game; no room server or multiplayer connection is implied.

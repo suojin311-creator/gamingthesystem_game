@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import classroom from '../assets/classroom.png';
+import classroom from '../../../assets/classroom.png';
 import { getMetric, type MetricId } from '../metrics';
-import Icon from './Icon';
+import Icon from '../../../shared/components/Icon';
 
 export type CinematicRequest = { sceneId: string; metricId: MetricId };
 

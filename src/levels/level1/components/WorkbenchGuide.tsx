@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import Icon from './Icon';
+import Icon from '../../../shared/components/Icon';
 
 const steps = [
   { selector: '.metric-grid, .decision-area', title: 'Your decisions', text: 'Choose a metric, predict what will happen, then run your experiment.' },

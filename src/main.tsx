@@ -1,8 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import LevelOne from './LevelOne';
-import './styles.css';
+import './shared/styles/base.css';
+import App from './App';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode><LevelOne /></StrictMode>,
+  <StrictMode><App /></StrictMode>,
 );

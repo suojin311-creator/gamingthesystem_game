@@ -1,4 +1,5 @@
-import Icon from './Icon';
+import './styles.css';
+import Icon from '../../shared/components/Icon';
 
 /** Reserved for the future Level 2 host. Never mounted by LevelOne. */
 export default function LevelTwoEntryPlaceholder({ onReview, onRestart }: {
