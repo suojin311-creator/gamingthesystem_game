@@ -6,7 +6,16 @@ An English-language game about measuring engagement. Level 1 and Level 2 gamepla
 
 Player decisions now use **I**. The reusable `Gameplay` host accepts the name already collected in the opening and carries it through both levels, dialogue labels, avatars and cinematic requests. These standalone previews still use Maya because they omit the opening. See [Opening/name handoff](docs/OPENING_HANDOFF.md) for the integration point in the partner's supplied source.
 
-The saved [Level 1 v7 preview](play/Level1-play-v7.zip?raw=true) is preserved unchanged on `level1-preview` and in `play/`. New development is on `level2-dev`.
+The accepted Level 1 + Level 2 v6 version is saved on `level2-preview` at commit `336c59f`. New work continues on **`level3-dev`**, with Level 3's folder at [`src/levels/level3/`](src/levels/level3/README.md). The current playable build still contains Level 1 and Level 2; Level 3 is being prepared.
+
+| Branch | Purpose |
+| --- | --- |
+| `level1-preview` | Saved standalone Level 1 v7 preview |
+| `level2-preview` | Saved accepted Level 1 + Level 2 v6 version |
+| `level2-dev` | Previous Level 2 development history, retained |
+| **`level3-dev`** | **Current development: complete game source plus the Level 3 workspace** |
+
+See the [repository guide / GitHub 使用说明](docs/REPOSITORY_GUIDE.md) for direct branch, folder and download links. The saved [Level 1 v7 preview](play/Level1-play-v7.zip?raw=true) and existing download paths remain available.
 
 ## What is playable
 
@@ -64,6 +73,8 @@ src/
       data.ts             Trio branches, expansion stages and scene contract
       CinematicPlaceholder.tsx
       styles.css          Level 2 layouts scoped to .level-two
+    level3/
+      README.md           Level 3 development location and existing handoff context
   shared/
     components/           Icons, timed conversation bubbles and shared student learning-risk presentation
     data/metrics.ts       Six metric names, IDs and descriptions
@@ -74,6 +85,8 @@ src/
 ```
 
 Each level owns its rules and text. Shared modules do not import level internals. `Gameplay.tsx` connects levels without storage or full-page navigation. The cinematic opening has not been merged. See [Opening handoff](docs/OPENING_HANDOFF.md), [Level 1 handoff](docs/LEVEL1_HANDOFF.md) and [Level 2 handoff](docs/LEVEL2_HANDOFF.md) for the partner integration contracts.
+
+The Level 3 folder currently documents the integration context and planned module layout. Its gameplay, preview entry and Level 2 continuation will be connected during implementation; the current app and build commands are unchanged.
 
 ## Validate
 

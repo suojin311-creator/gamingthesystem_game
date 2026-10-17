@@ -16,3 +16,9 @@ The cinematic and completion contracts are documented in
 
 The existing [v7 playable ZIP](../../../play/Level1-play-v7.zip?raw=true) remains
 the saved Level 1 preview. The current App opens this level directly.
+
+This folder in `level3-dev` contains the later Level 1 updates included in the
+accepted Level 1 + Level 2 v6 release. The older `level1-preview` branch retains
+the standalone v7 version and was not separately updated during Level 2 work.
+See the [repository guide](../../../docs/REPOSITORY_GUIDE.md) for the current
+source and saved preview locations.

@@ -1,8 +1,13 @@
 # Play Gaming the System
 
-For the current Level 2 preview, [download Level2-play-v3.zip](Level2-play-v3.zip?raw=true),
+For the accepted Level 1 + Level 2 v6 preview, [download Level2-play-v6.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level2-preview/play/Level2-play-v6.zip?raw=true),
 extract it and open `Level2.html`. Open `Levels1-and-2.html` in the same ZIP to
 start at Level 1 and continue to Level 2. Both run offline after download.
+
+This version is saved on `level2-preview`. Current development continues on
+[`level3-dev`](https://github.com/suojin311-creator/gamingthesystem_game/tree/level3-dev),
+with Level 3's folder at `src/levels/level3/`. There is no playable Level 3 entry yet.
+See the [repository guide / GitHub 使用说明](../docs/REPOSITORY_GUIDE.md).
 
 ## Saved Level 1 preview
 
