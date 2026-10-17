@@ -19,7 +19,8 @@ untracked metrics are 18px, bold, with the amber warning treatment.
 | Management satisfaction state | 30px | 25px |
 | Management report evidence | 11px | 10px |
 | Student behaviour | 25px | 21px |
-| Evidence paragraph | 22px | 20px |
+| Observation fact | 18px | 16px |
+| Behavioural consequence | 24px | 21px |
 | Cinematic spoken caption | 26px | 23px |
 
 All three chapter titles use 25px below 350px. On short desktop viewports the
@@ -27,8 +28,8 @@ shared section heading uses 26px. A tablet primary action uses the shared
 responsive button rules. These changes depend on viewport, not chapter.
 
 The Level 3 tables have been revised for visual balance rather than forcing
-all content into a single size. Readable 22px sans-serif percentages, 16px
-medium-weight effort labels and slim bars replace the earlier tiny numbers
+all content into a single size. Quiet 20px sans-serif percentages (19px compact), 14px
+medium-weight effort labels (13px phone), slim bars and Alex task vignettes replace the earlier tiny numbers
 and oversized bold labels. Main metric names are 16px; compact comparison
 names are 15px. Repeated summaries and card footnotes are removed. Headings,
 columns and row spacing align across all displayed attempts.
@@ -42,3 +43,7 @@ text is intentionally larger than ordinary workbench dialogue.
 Management satisfaction uses the same component and stylesheet in all three
 chapters. Its initial Awaiting results state uses 25px desktop / 22px phone.
 Report numbers are supporting evidence, not the main display.
+
+Selection cards now show the shared short names and larger icons. The original
+full metric name (13px desktop / 12px phone) and 11px description appear once in
+the selection tray. Ordinary card names remain 16px across all three levels.

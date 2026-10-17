@@ -4,6 +4,11 @@ The highlighted priority selector and weight editor use the opening-confirmed
 player name. The connected host preselects Level 2’s original three choices;
 players may swap them before weighting. A standalone Level 3 starts empty.
 
+The shared short-name icon cards feed three removable/reviewable selection
+slots. Full metric definitions appear in the tray. Alex task vignettes now lead
+the results and comparison; they match each row’s existing qualitative effort
+category. See [visual operations](VISUAL_PLAY.md).
+
 ## Tests and observations
 
 - Three integer weights total exactly 100%, each allowed from 0–100%.
@@ -32,7 +37,8 @@ players may swap them before weighting. A standalone Level 3 starts empty.
   feedback stays next to the chosen-priorities list; unchanged-allocation
   validation is shown above the weight cards. Replay scene remains a control.
 - Table typography is composed for the view: main metric names are 16px,
-  compact names 15px, percentages 22px and effort labels 16px with medium
+  compact names 15px, percentages 20px (19px compact) and effort labels 14px
+  (13px phone) with medium
   weight. Qualitative bars are slimmer. The columns retain aligned headings
   and a quiet divider. There are no invented numerical effort percentages.
 
@@ -125,7 +131,7 @@ across all three chapters; Reset weights is retained.
 `play/Level3-and-Full-game-play.zip`, containing standalone Level 3 and connected
 Levels 1–3. `play/LATEST.json` records source, build, ZIP and bundle hashes.
 `tests/release.py` verifies the actual downloads and their complete flows.
-Current checks are recorded in `LEVEL3_VALIDATION-v6.json`; older reports and
+Current checks are recorded in `LEVEL3_VALIDATION-v7.json`; older reports and
 versioned ZIPs are historical. Managed Chromium tests exact offline HTML bytes
 through an in-memory HTTPS origin; direct file opening in the user browser and
 classroom load capacity are not claimed as tested.

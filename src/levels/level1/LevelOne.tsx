@@ -1,9 +1,11 @@
 import './styles.css';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { METRICS, getMetric, type Metric, type MetricId } from './metrics';
+import { getMetric, type Metric, type MetricId } from './metrics';
 import { INITIAL_SESSION, type Phase } from './state';
 import Icon from '../../shared/components/Icon';
 import LearningRisk from '../../shared/components/LearningRisk';
+import MetricSelection from '../../shared/components/MetricSelection';
+import ObservationContent from '../../shared/components/ObservationContent';
 import ManagementSatisfaction, { MANAGEMENT_PROGRESS } from '../../shared/components/ManagementSatisfaction';
 import Dialogue from './components/Dialogue';
 import CinematicPlaceholder, { type CinematicRequest } from './components/CinematicPlaceholder';
@@ -144,7 +146,8 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
     setSession(value => ({ ...value, phase: next, reviewStep: next === 'review' || next === 'cinematic' ? 0 : value.reviewStep }));
   }
   function choose(id: MetricId) {
-    setSession(value => ({ ...value, metricId: id, prediction: value.metricId === id ? value.prediction : '', resultReported: false, reviewStep: 0 }));
+    feedback.play('tick');
+    setSession(value => ({ ...value, metricId: value.metricId === id ? null : id, prediction: '', resultReported: false, reviewStep: 0 }));
   }
   function bringIntoView(selector: string) {
     window.requestAnimationFrame(() => {
@@ -205,9 +208,9 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
         <div className={`workbench-body phase-${phase}`}>
           <section className="decision-area" aria-label="Current decision">
             {phase === 'choose' && <>
-              <div className="section-intro"><h2 ref={title} tabIndex={-1}>What will you measure?</h2><p>Choose one metric.</p></div>
-              <div className="metric-grid" role="group" aria-label="Choose one metric">{METRICS.map((item, index) => <button key={item.id} type="button" data-testid={`metric-${item.id}`} className={`metric-card ${metricId === item.id ? 'selected' : ''}`} aria-pressed={metricId === item.id} onClick={() => choose(item.id)}><div className="metric-card-top"><span className="metric-illustration"><Icon name={item.id} /></span><span className="selection-circle">{metricId === item.id ? <Icon name="check" /> : <span className="card-index">0{index + 1}</span>}</span></div><h3>{item.name}</h3><p>{item.description}</p></button>)}</div>
-              <div className="action-row"><span className="selection-note" role="status">{metric ? <><Icon name="check" />{metric.shortName}</> : 'Choose 1 of 6'}</span><button className="button primary-button" disabled={!metric} onClick={() => go('predict')}>Make a prediction<Icon name="arrow" /></button></div>
+              <div className="section-intro"><h2 ref={title} tabIndex={-1}>What will you measure?</h2></div>
+              <MetricSelection level={1} capacity={1} selected={metricId ? [metricId] : []} onToggle={choose} />
+              <div className="action-row only-action"><button className="button primary-button" disabled={!metric} onClick={() => go('predict')}>Make a prediction<Icon name="arrow" /></button></div>
             </>}
 
             {phase === 'predict' && metric && <>
@@ -223,13 +226,13 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
             {phase === 'result' && metric && <>
               <div className="section-intro"><h2 ref={title} tabIndex={-1}>{resultReported ? 'Target achieved.' : 'Watch the score.'}</h2></div>
               <ResultChart metric={metric} ready={resultReady} score={animatedScore} />
-              <div className="action-row"><span className="selection-note" role="status">{!resultReady ? 'Evaluating…' : !resultReported ? 'Updating management…' : 'Ready to visit the class'}</span><button className="button primary-button" disabled={!resultReported} onClick={() => go('cinematic')}><Icon name="play" />Observe the class</button></div>
+              <div className="action-row only-action"><button className="button primary-button" disabled={!resultReported} onClick={() => go('cinematic')}><Icon name="play" />Observe the class</button></div>
             </>}
 
             {phase === 'review' && metric && <>
               <div className="section-intro"><h2 ref={title} tabIndex={-1}>Look a little closer.</h2></div>
               <div className="comparison-stack"><article className="prediction-recap"><span className="eyebrow">YOU EXPECTED</span><blockquote>“{prediction}”</blockquote></article>
-                {observed ? <article className="observation-recap" key="evidence"><span className="eyebrow">IN THE CLASSROOM</span><p>{metric.evidence}</p></article> : <div className="observation-waiting"><span>Recalling the classroom…</span></div>}
+                {observed ? <article className="observation-recap classroom-observation" key="evidence"><ObservationContent evidence={metric.evidence} metricIds={[metric.id]} /></article> : <div className="observation-waiting"><span>Recalling the classroom…</span></div>}
               </div>
               {dialogue}
               <div className="action-row"><button className="text-button" onClick={() => go('cinematic')}>Replay scene</button>{dialogueSettled ? <button className="button primary-button level-finished" disabled={!onContinue} onClick={onContinue}>Continue to Level 2<Icon name="arrow" /></button> : <span className="next-action-space" aria-hidden="true" />}</div>

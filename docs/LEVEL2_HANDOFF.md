@@ -113,6 +113,13 @@ scene requests. See [Opening handoff](OPENING_HANDOFF.md). Player decisions use
 
 ## Presentation and lifetime
 
+The shared short-name icon cards feed a three-slot Alex’s Checklist tray.
+Players can review full selected definitions or remove a slot; the exactly-three
+rules are unchanged. Core reports use icon/check cards; observations use shorter
+two-part evidence beside the actual tracked/untracked notebook categories.
+The 10/25/100 expansions add physical paper layers and check fields. Repeated
+left-footer captions are removed. See [visual operations](VISUAL_PLAY.md).
+
 The central content is the reading focus. Management’s view shows cumulative
 satisfaction, retaining the previous value while a new evaluation is pending.
 Each completed 3/6/10/25/100-metric report raises it once and shows its tracked

@@ -1,7 +1,7 @@
 {
-  "validatedAtUtc": "2026-10-17T22:53:00.145400+00:00",
-  "version": "Level 3 refinement v6: shared management satisfaction across Levels 1\u20133",
-  "passed": 119,
+  "validatedAtUtc": "2026-10-17T23:22:18.509797+00:00",
+  "version": "Level 3 refinement v7: visual choices and classroom consequences across Levels 1\u20133",
+  "passed": 134,
   "builds": [
     "npm run build: passed",
     "npm run build:level1: passed",
@@ -397,57 +397,80 @@
         "No runtime errors during satisfaction, replay, chapter handoff and responsive checks"
       ],
       "runtimeErrors": []
+    },
+    "visual-play-results.json": {
+      "passed": 15,
+      "checks": [
+        "1366px: all three levels show six short icon cards, correct empty/filled slots, keyboard selection, removal, full-definition review and no repeated footer hints or overflow",
+        "768px: all three levels show six short icon cards, correct empty/filled slots, keyboard selection, removal, full-definition review and no repeated footer hints or overflow",
+        "390px: all three levels show six short icon cards, correct empty/filled slots, keyboard selection, removal, full-definition review and no repeated footer hints or overflow",
+        "320px: all three levels show six short icon cards, correct empty/filled slots, keyboard selection, removal, full-definition review and no repeated footer hints or overflow",
+        "Level 1 retains the player prediction and actual evidence, with a task vignette and separate visual emphasis for the behavioural consequence",
+        "Level 2 core reports use short names; observation clearly distinguishes the three tracked and three untracked areas, then all six, with shorter two-part evidence",
+        "10 \u2192 25 \u2192 100 grows the checkbox field and physical paper pile; each existing action still reveals and ticks in order",
+        "1366px: each revealed Alex vignette matches the actual qualitative effort; both tested splits and quiet weight labels remain readable without overflow",
+        "768px: each revealed Alex vignette matches the actual qualitative effort; both tested splits and quiet weight labels remain readable without overflow",
+        "390px: each revealed Alex vignette matches the actual qualitative effort; both tested splits and quiet weight labels remain readable without overflow",
+        "320px: each revealed Alex vignette matches the actual qualitative effort; both tested splits and quiet weight labels remain readable without overflow",
+        "quality trio retains its own short evidence and the actual three tracked notebook categories",
+        "mixed trio retains its own short evidence and the actual three tracked notebook categories",
+        "Normal-motion selection lands in its slot and cleans up its temporary flight without delaying the next action",
+        "No runtime errors in the visual interaction and responsive production checks"
+      ],
+      "runtimeErrors": []
     }
   },
   "manifest": {
-    "sourceSha256": "b50108c87f9c93263634738846926e6d9d00d608a60f1f97d47daaa3be0614ab",
+    "sourceSha256": "12d3e6f2e8e506df8e76fa5f9506857e5cecac406409e7d217b3aea268b3a389",
     "entries": [
       {
         "archive": "Level1-play.zip",
         "html": "Level1.html",
         "build": "dist-level1/index.html",
-        "htmlSha256": "a8517efed5f8d30fad0720103761b12fcda4da21978a4524df85ccb0b6523ab0",
-        "zipSha256": "df8a0edae82858d9403f22c71a5364c3d2a8c153d340816120693052f04228e4"
+        "htmlSha256": "947c3eb229ef3450e8a2d70985ed62cd87351d5fb597c86293a96b6a07705be4",
+        "zipSha256": "aba36ebb89ca57abc7118df7adebd1fd0c1bd2d983043a2e70ff861de70a3c4e"
       },
       {
         "archive": "Level2-play.zip",
         "html": "Level2.html",
         "build": "dist-level2/index.html",
-        "htmlSha256": "e89326d266b0ef41c6cf17964ea25e6dd8bf1e18cfd175c4c4ae682a33694a55",
-        "zipSha256": "1c694d2210aacc60324b13efe24f8d889a8df10d58127fdd04800481dc37fb87"
+        "htmlSha256": "618be7be5c1988ab9ceb3db0081dfb5a59bd09c81dbb7aabd7d978f0ff737cab",
+        "zipSha256": "ce45b0a7359f079de82d16945ef6fb386fe891eb2eda5a7f34eacf4d58179bf5"
       },
       {
         "archive": "Level3-play.zip",
         "html": "Level3.html",
         "build": "dist-level3/index.html",
-        "htmlSha256": "d87cf260d4da70f50db46960e8eed7ffac85d8c9b88b941930a2fa780d157db7",
-        "zipSha256": "b8fdecd62ca79bff00778a047ccf6e3f84df5e1988766b85f4f9ccbd8aa21e96"
+        "htmlSha256": "94b0e5c6f06ba2869dcf5d50651586c606fbc26a8288415639ebc13311b95d3c",
+        "zipSha256": "2d7ce978412a229fb9fda7661910140533396cea051490fa5b04b1247346e1fb"
       },
       {
         "archive": "Full-game-play.zip",
         "html": "Gaming-the-System.html",
         "build": "dist/index.html",
-        "htmlSha256": "1dff14c1749a4a99ab880b2037fcd4965df1ffd7871ef5799ea0bd3cba1c1ead",
-        "zipSha256": "fc2592716cca418b7dacbd2c1959164aecaf921e544db57ade2f9868cb07d66e"
+        "htmlSha256": "085ea8e03939098f137c26b8444daa2f14a73a621e38efab283568bc05caa603",
+        "zipSha256": "8149512378d87855ba13748d13a9e28bf12119d223a354c1582132d4cbb5083d"
       }
     ],
     "reviewBundle": {
       "archive": "Level3-and-Full-game-play.zip",
-      "zipSha256": "33dc31c672e7213dc7b57bf63260ebd465f61814e71ba11183fee6e7eaee8960",
+      "zipSha256": "9e22949be862f65d3a96192d401e8e858d7d5fbe2149e6b0e6c2c3eb88823c56",
       "htmlSha256": {
-        "Level3/Level3.html": "d87cf260d4da70f50db46960e8eed7ffac85d8c9b88b941930a2fa780d157db7",
-        "Full-game/Gaming-the-System.html": "1dff14c1749a4a99ab880b2037fcd4965df1ffd7871ef5799ea0bd3cba1c1ead"
+        "Level3/Level3.html": "94b0e5c6f06ba2869dcf5d50651586c606fbc26a8288415639ebc13311b95d3c",
+        "Full-game/Gaming-the-System.html": "085ea8e03939098f137c26b8444daa2f14a73a621e38efab283568bc05caa603"
       }
     }
   },
   "notes": [
-    "All three chapters render the same shared satisfaction state, green bar and small report-evidence line. No precise satisfaction percentage is printed. The main score chart, actual metric counts and weight evidence are retained.",
-    "Satisfaction is derived from completed reports: Level 1 target met 44; Level 2 reports 60/70/77/82/86; Level 3 publications 90/93/95. Qualitative states progress from Satisfied to Very satisfied to Delighted, with larger early and smaller later increases. These narrative positions do not measure learning.",
-    "Chapter baselines match exactly, including standalone previews. Selecting/swapping, dragging/confirming/resetting weights, observing, replaying and comparing never add satisfaction. Near-even and uneven allocations receive the same publication increment. Students retain specific negative behaviour and Learning at risk.",
-    "A production combined playthrough verified all report milestones, both chapter handoffs, Level 1/2/3 replays, a more uneven second allocation and the third reference. A separate near-even first allocation earned the identical increment. Fresh visits reset according to the existing entry point.",
-    "Normal-motion browser playback verified the bar fills smoothly from its preceding position over one second. Reduced motion is immediate. 320/390/1366px standalone layouts, shared type and no overflow passed; desktop and mobile screenshots were visually reviewed.",
-    "Existing suites passed for all 20 priority trios, inclusive 10-point near-even boundaries, linked confirmation, free second attempts, all actual comparison records, manual Observe, name/sound/trio handoffs, real-time audio, hidden-page holds and fresh-visit behaviour. No player Restart, administrator login or Design Lab transition was added.",
-    "All four latest previews and the two-version review ZIP were rebuilt together. Release tests verified exact downloaded ZIP hashes and byte equality, then played through the individual and combined production HTMLs. Versioned historical archives and validation reports remain unchanged.",
-    "Managed Chromium uses an in-memory HTTPS origin for exact offline production bytes because local file navigation is blocked. Direct file opening in the user browser, classroom load capacity and finished partner videos were not tested. The preview still stops at the final theory placeholder."
+    "All three levels use one shared MetricSelection component. Six cards show large icons and short names. Official full names remain accessible button labels; a selected definition appears once in the tray. One or three physical slots support keyboard selection, review and removal; Level 1 permits direct replacement and Levels 2/3 retain the three-choice limit.",
+    "A 420ms card flight and slot arrival provide normal-motion feedback without delaying the primary action. Reduced motion fills the slot immediately. Transient flights clean up after completion and unmount. Tablet layouts place the tray above the cards; phone slots use complete horizontal rows to avoid broken words. All 1366/768/390/320px choices passed and screenshots were reviewed.",
+    "Repeated action-footer captions are removed in every chapter, including Choose 1 of 6, selection summaries, evaluation-ready text and cover-six instructions. Necessary choice-limit feedback lives beside the slots. Replay scene and Reset weights remain controls. Obsolete per-level choice styles and the replaced MetricChecklist component were removed.",
+    "Classroom observations pair an illustrated notebook with a quieter fact and stronger behavioural consequence. Level 1 preserves its original evidence. Level 2 uses shorter two-part copy for visible, quality and mixed branches, all-six and final observations. The notebook marks the actual tracked categories and leaves other categories outside it; full six-area coverage removes the outside group.",
+    "Level 2 core reports use short metric names and icon/check cards. Its 10/25/100 expansions fill the real checkbox field and gain decorative paper layers. Checklist actions still reveal and tick in order. No duplicate checklist was added to three/six-metric evaluation dashboards.",
+    "Level 3 results and every comparison record include an Alex desk vignette driven by the existing effort category: rapid work and extra papers for intense effort, ordinary work for steady effort, relaxed posture with a checked sheet for minimum effort. Weight numbers are secondary and no numerical effort or learning score was invented. Vignettes reveal with observed rows after manual Observe, not during weight editing/publication.",
+    "All 20 Level 3 trios, adaptive routes, inclusive 10-point near-even boundaries, linked final-pair confirmation, freely changed second tests, exact actual snapshots, partner scene IDs, name/sound/trio handoffs, real-time audio, hidden-page holds and fresh-session behaviour passed. All 25 authored emoji remain distinct and Alex retains two short workbench replies. The added visual suite also verifies all three Level 2 evidence branches.",
+    "The shared satisfaction report milestones and chapter baselines remain unchanged. Reports raise the bar once; choosing/resetting/replaying/comparing does not. Near-even weights earn no bonus. There is no player Restart, administrator login or Design Lab transition. Partner cinematic assets remain replaceable placeholders, ending at the final theory frame.",
+    "All four individual/combined entries and the two-version review ZIP were rebuilt from the same source. Release checks verified actual ZIP contents, byte equality and hashes and played through all three connected chapters. Version-numbered historical archives and earlier validation reports remain unchanged.",
+    "Managed Chromium serves exact offline production HTML bytes through an in-memory HTTPS origin because local file navigation is blocked. Direct file opening in the user browser, classroom load capacity and finished partner videos were not tested."
   ]
 }

@@ -21,7 +21,7 @@ Current development is on **level3-dev**. The existing level1-preview, level2-pr
 
 **Level 1 — One metric.** Choose one of six plausible indicators, write a prediction, watch an illustrative score rise, then observe a selected classroom story and its unintended behaviour. The comparison keeps the prediction, one evidence paragraph and the player/Alex conversation. Alex replies in two grouped bubbles with distinct emoji. The standalone entry stops here; the combined game enables Continue to Level 2.
 
-**Level 2 — More metrics.** A separate chapter conversation introduces choosing three of the same six metrics. The vertical Alex’s Checklist records those choices. Three/six-metric evaluations avoid duplicate checklists. All 20 trios route to descriptive branches; missing areas receive a continuous amber warning. Expanding from 6 to 10, 25 and 100 requirements reveals how students move from completing requirements to managing and optimizing a checklist. The standalone entry ends here; the combined game enables Continue to Level 3.
+**Level 2 — More metrics.** A separate chapter conversation introduces choosing three of the same six metrics. A three-slot Alex’s Checklist records those choices. Three/six-metric icon/check reports avoid duplicate checklists. All 20 trios route to descriptive branches; missing areas receive a continuous amber warning. Expanding from 6 to 10, 25 and 100 requirements fills a checkbox field and grows a paper pile as students move from completing requirements to managing and optimizing a checklist. The standalone entry ends here; the combined game enables Continue to Level 3.
 
 **Level 3 — The weighting trap.** The combined game preselects Level 2’s three metrics; players may swap them before weighting. Standalone Level 3 starts with an empty selection. Allocate exactly 100% across three priorities using 0–100% sliders. Confirm one card, then adjust either remaining slider; confirming either final card locks the pair and marks the other Auto-confirmed. Reset weights sits above the action row. Player/Alex conversations use a separate bottom region. Publication stays visible with both perspective cards until the player clicks Observe the class. Results reveal three qualitative responses with aligned, divided columns and the same metric font size used in Levels 1–2.
 
@@ -87,6 +87,7 @@ node tests/level3_rules.mjs
 python tests/level3.py
 python tests/level3_feedback.py
 python tests/management_satisfaction.py
+python tests/visual_play.py
 python tests/typography.py
 # With npm run dev running:
 python tests/level3_integration.py
@@ -96,6 +97,6 @@ python tests/release.py
 node tests/dialogue_emojis.mjs
 ```
 
-The Level 3 checks cover allocation invariants, all 20 trios, three adaptive routes, actual cinematic shot selection, compared snapshots, name/completion contracts, chapter handoff, real-time audio and sequential updates, no player Restart controls and 320–1366px layouts. The shared [management satisfaction](docs/MANAGEMENT_SATISFACTION.md) checks cover report-triggered increases, chapter baselines, replay stability, standalone previews and the one-second fill animation. The release test reads all four individual/combined ZIPs, verifies the two-version review ZIP against those exact builds, and plays across all three chapters. [LEVEL3_VALIDATION-v6.json](docs/LEVEL3_VALIDATION-v6.json) records this release. Earlier validation reports and versioned ZIPs are historical records.
+The Level 3 checks cover allocation invariants, all 20 trios, three adaptive routes, actual cinematic shot selection, compared snapshots, name/completion contracts, chapter handoff, real-time audio and sequential updates, no player Restart controls and 320–1366px layouts. The shared [management satisfaction](docs/MANAGEMENT_SATISFACTION.md) checks cover report-triggered increases, chapter baselines, replay stability, standalone previews and the one-second fill animation. [Visual operations](docs/VISUAL_PLAY.md) add checks for compact cards, removable slots, illustrated evidence, checklist growth and matching Alex poses. The release test reads all four individual/combined ZIPs, verifies the two-version review ZIP against those exact builds, and plays across all three chapters. [LEVEL3_VALIDATION-v7.json](docs/LEVEL3_VALIDATION-v7.json) records this release. Earlier validation reports and versioned ZIPs are historical records.
 
 Offline browser tests serve exact production HTML through an in-memory HTTPS origin because managed Chromium blocks local file navigation. Opening the downloaded file in the user’s particular browser remains a separate check. Test outputs/screenshots go to ignored test-results/. These are functional checks, not a classroom load test.

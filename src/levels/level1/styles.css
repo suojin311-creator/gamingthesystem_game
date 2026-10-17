@@ -28,23 +28,10 @@
 :where(.level-one) .stepper .done .step-number { border-color: #aab59b; background: #edf0e5; color: #4d6546; }
 :where(.level-one) .workbench-body { display: grid; grid-template-columns: minmax(0,1fr) 238px; min-height: 410px; }
 :where(.level-one) .decision-area { padding: 22px 30px 0; display: flex; flex-direction: column; min-width: 0; }
-:where(.level-one) .metric-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; margin-bottom: 18px; }
-:where(.level-one) .metric-card { position: relative; text-align: left; background: #fffdf7; border: 1px solid #dedbcd; border-radius: 3px; padding: 12px 13px; min-height: 129px; transition: background .16s, border-color .16s, transform .16s; }
-:where(.level-one) .metric-card:hover { transform: translateY(-2px); border-color: #a6a088; }
-:where(.level-one) .metric-card.selected { border-color: #b0654c; background: #f8ece0; box-shadow: inset 0 0 0 1px #b0654c; }
-:where(.level-one) .metric-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 :where(.level-one) .metric-illustration { display: grid; place-items: center; width: 32px; height: 32px; color: #75664b; background: #f0ecdf; border-radius: 50% 47% 43% 48%; }
 :where(.level-one) .metric-illustration > .icon { width: 21px; height: 21px; }
 :where(.level-one) .selected .metric-illustration { background: #ecd5bc; color: #855338; }
-:where(.level-one) .selection-circle { width: 21px; height: 21px; border-radius: 50%; display: grid; place-items: center; }
-:where(.level-one) .card-index { font: italic 10px var(--serif); color: #aaa794; }
-:where(.level-one) .selected .selection-circle { background: #ae6049; color: #fff7e8; }
-:where(.level-one) .selection-circle .icon { width: 13px; height: 13px; }
-:where(.level-one) .metric-card h3 { font-size: var(--metric-name-size); line-height: 1.35; margin-bottom: 6px; }
-:where(.level-one) .metric-card p { font-size: var(--metric-description-size); line-height: 1.45; color: #7a7b6c; }
 :where(.level-one) .prediction-actions { justify-content: flex-end; }
-:where(.level-one) .selection-note { font-size: 11px; color: #818271; display: flex; align-items: center; gap: 6px; line-height: 1.5; }
-:where(.level-one) .selection-note > .icon { width: 14px; height: 14px; color: var(--sage); }
 /* These two cards are status instruments, not paragraphs. */
 :where(.level-one) .perspectives { border-left: 1px solid var(--line); background: #f4f1e7; padding: 22px 19px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 :where(.level-one) .perspective { position: relative; padding: 16px; border: 1px solid #ddd8c8; border-radius: 5px; background: #faf7ed; min-height: 158px; transition: background .25s, border-color .25s; }
@@ -161,14 +148,6 @@
 :where(.level-one) .guide-dots i { width: 5px; height: 5px; border-radius: 50%; background: #d7ceba; }
 :where(.level-one) .guide-dots .active { background: var(--coral); }
 :where(.level-one) .guide-actions .button { min-height: 38px; font-size: 11px; padding: 9px 12px; }
-:where(.level-one) .metric-card { animation: card-deal .4s ease-out both; }
-:where(.level-one) .metric-card:nth-child(2) { animation-delay: .045s; }
-:where(.level-one) .metric-card:nth-child(3) { animation-delay: .09s; }
-:where(.level-one) .metric-card:nth-child(4) { animation-delay: .135s; }
-:where(.level-one) .metric-card:nth-child(5) { animation-delay: .18s; }
-:where(.level-one) .metric-card:nth-child(6) { animation-delay: .225s; }
-:where(.level-one) .metric-card:active { transform: translateY(1px) scale(.985); }
-:where(.level-one) .metric-card.selected .selection-circle { animation: choice-mark .3s ease-out; }
 :where(.level-one) .selected-focus, :where(.level-one) .score-paper { animation: panel-arrive .4s ease-out both; }
 :where(.level-one) .observation-recap { animation: panel-arrive .4s ease-out both; }
 @keyframes card-deal { from { opacity: 0; translate: 0 9px; } to { opacity: 1; translate: 0 0; } }
@@ -182,12 +161,8 @@
   :where(.level-one) .workbench-heading { padding-top: 13px; padding-bottom: 13px; }
   :where(.level-one) .workbench-body { min-height: 370px; }
   :where(.level-one) .decision-area { padding-top: 17px; }
-  :where(.level-one) .metric-card { min-height: 112px; padding: 10px 12px; }
-  :where(.level-one) .metric-card-top { margin-bottom: 5px; }
   :where(.level-one) .metric-illustration { width: 27px; height: 27px; }
   :where(.level-one) .metric-illustration > .icon { width: 19px; height: 19px; }
-  :where(.level-one) .metric-card h3 { font-size: var(--metric-name-size); margin-bottom: 4px; }
-  :where(.level-one) .metric-grid { margin-bottom: 14px; }
   :where(.level-one) .dialogue-strip { padding: 10px 30px; min-height: 77px; }
   :where(.level-one) .dialogue-strip.two-voices { min-height: 137px; gap: 7px; }
   :where(.level-one) .dialogue-character { min-height: 53px; }
@@ -200,8 +175,6 @@
   :where(.level-one) .decision-area { padding-left: 23px; padding-right: 23px; }
   :where(.level-one) .perspectives { padding: 20px 14px; }
   :where(.level-one) .perspective { padding: 14px 12px; }
-  :where(.level-one) .selection-note { font-size: 10px; }
-  :where(.level-one) .metric-card h3 { font-size: var(--metric-name-size); }
 }
 @media (max-width: 760px) {
   :where(.level-one).game-page { padding: 0 14px 14px; }
@@ -216,8 +189,6 @@
   :where(.level-one) .pending-title { font-size: 9px; margin-top: 5px; }
   :where(.level-one) .new-badge { font-size: 6px; }
   :where(.level-one) .decision-area { padding: 20px 23px 0; }
-  :where(.level-one) .metric-card { min-height: 135px; }
-  :where(.level-one) .metric-grid { gap: 10px; }
   :where(.level-one) .dialogue-strip, :where(.level-one) .dialogue-strip.two-voices { padding: 14px 23px; }
   :where(.level-one) .dialogue-character { max-width: 94%; }
 }
@@ -247,11 +218,6 @@
   :where(.level-one) .perspective-heading > .icon { width: 18px; height: 18px; }
   :where(.level-one) .perspective-label { font-size: var(--perspective-label-size); }
   :where(.level-one) .decision-area { padding: 20px 18px 0; }
-  :where(.level-one) .metric-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
-  :where(.level-one) .metric-card { min-height: 135px; padding: 12px; }
-  :where(.level-one) .metric-card h3 { font-size: var(--metric-name-size); }
-  :where(.level-one) .metric-card p { font-size: var(--metric-description-size); }
-  :where(.level-one) .selection-note { font-size: 10px; }
   :where(.level-one) .dialogue-strip, :where(.level-one) .dialogue-strip.two-voices { padding: 14px 18px; }
   :where(.level-one) .phase-review .dialogue-strip.two-voices { min-height: 190px; }
   :where(.level-one) .speech-bubble p { font-size: var(--dialogue-size); }

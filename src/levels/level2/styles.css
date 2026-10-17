@@ -37,28 +37,10 @@
 .level-two .l2-intro .avatar { width: 38px; height: 38px; font-size: 26px; }
 .level-two .l2-intro-actions { display: flex; justify-content: flex-end; min-height: 42px; margin-top: 12px; }
 .level-two .l2-choosing { display: block; }
-.level-two .l2-choice-layout { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 22px; align-items: start; margin-bottom: 22px; }
-.level-two .l2-choice-layout .l2-metric-grid { margin-bottom: 0; }
-.level-two .l2-choice-checklist { padding: 19px 20px; }
-.level-two .l2-choice-checklist > .l2-checklist-count { font: 12px/1.4 'Trebuchet MS', Arial, sans-serif; color: #8e7c5c; margin: -4px 0 13px; }
-.level-two .l2-choice-checklist [data-empty=true] { color: #a99e87; }
-.level-two .l2-choice-summary { font-size: 12px; color: #818271; line-height: 1.5; max-width: 65%; }
 .level-two .l2-decision { padding: 22px 30px 0; display: flex; flex-direction: column; min-width: 0; animation: panel-arrive .28s ease-out; }
 .level-two .l2-small-note, .level-two .l2-selection-note { color: #818271; font-size: 11px; line-height: 1.5; }
 .level-two .l2-selection-note { max-width: 52%; }
 .level-two .l2-previous { font-size: 11px; color: #85816e; margin-top: 10px; }
-.level-two .l2-metric-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 20px; }
-.level-two .l2-metric-card { position: relative; text-align: left; background: #fffdf7; border: 1px solid #dedbcd; border-radius: 3px; padding: 13px; min-height: 142px; transition: background .16s, border-color .16s, transform .16s; }
-.level-two .l2-metric-card:hover { transform: translateY(-2px); border-color: #a6a088; }
-.level-two .l2-metric-card.selected { border-color: #ad6048; background: #f8ece0; box-shadow: inset 0 0 0 1px #ad6048; }
-.level-two .l2-metric-card[aria-disabled=true] { color: #7e8074; }
-.level-two .l2-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-.level-two .l2-metric-icon { display: grid; place-items: center; width: 32px; height: 32px; color: #75664b; background: #f0ecdf; border-radius: 50% 47% 43% 48%; }
-.level-two .l2-selection { width: 21px; height: 21px; display: grid; place-items: center; border-radius: 50%; font: italic 10px var(--serif); color: #aaa794; }
-.level-two .selected .l2-selection { background: #ad6048; color: #fff7e8; }
-.level-two .l2-selection .icon { width: 13px; height: 13px; }
-.level-two .l2-metric-card h3 { font-size: var(--metric-name-size); line-height: 1.35; margin-bottom: 6px; }
-.level-two .l2-metric-card p { font-size: var(--metric-description-size); line-height: 1.45; color: #7a7b6c; }
 .level-two .l2-perspectives { border-left: 1px solid var(--line); background: #f4f1e7; padding: 22px 19px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .level-two .l2-perspective { border: 1px solid #ddd8c8; border-radius: 5px; padding: 16px; background: #faf7ed; min-height: 168px; transition: background .25s, border-color .25s; }
 .level-two .l2-perspective-heading { display: flex; align-items: center; gap: 8px; margin-bottom: 13px; }
@@ -146,7 +128,6 @@
   .level-two .l2-heading { padding: 13px 25px; }
   .level-two .l2-decision { padding: 19px 25px 0; }
   .level-two .l2-perspectives { padding: 19px 17px; }
-  .level-two .l2-metric-card { min-height: 131px; padding: 11px 12px; }
   .level-two .l2-counter-value strong { font-size: 67px; }
   .level-two .l2-matrix { width: 150px; }
   .level-two .l2-checklist li { font-size: 15px; padding: 6px 0; }
@@ -160,17 +141,14 @@
   .level-two .l2-decision { padding-left: 22px; padding-right: 22px; }
   .level-two .l2-perspectives { padding: 20px 13px; }
   .level-two .l2-perspective { padding: 14px; }
-  .level-two .l2-metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .level-two .l2-matrix { width: 150px; margin: 0; }
 }
 @media (max-width: 760px) {
-  .level-two .l2-choice-layout { grid-template-columns: 1fr; gap: 16px; }
   .level-two.game-page { padding: 0 16px 12px; }
   .level-two .l2-body { display: flex; flex-direction: column; }
   .level-two .l2-decision { min-height: 420px; }
   .level-two .l2-perspectives { border-top: 1px solid var(--line); border-left: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 18px 22px; gap: 12px; }
   .level-two .l2-perspective { min-height: 165px; }
-  .level-two .l2-metric-card { min-height: 130px; }
   .level-two .l2-cinematic { padding: 23px; }
   .level-two .l2-scene-caption p { font-size: var(--scene-dialogue-size); }
 }
@@ -198,10 +176,6 @@
   .level-two .l2-stepper li { font-size: var(--step-label-size); gap: 5px; min-height: 44px; }
   .level-two .l2-stepper li > span { width: 19px; height: 19px; font-size: 7px; }
   .level-two .l2-decision { padding: 23px 17px 0; }
-  .level-two .l2-metric-grid { gap: 8px; }
-  .level-two .l2-metric-card { padding: 11px; min-height: 153px; }
-  .level-two .l2-metric-card h3 { font-size: var(--metric-name-size); }
-  .level-two .l2-metric-card p { font-size: var(--metric-description-size); }
   .level-two .l2-perspectives { padding: 17px; gap: 10px; }
   .level-two .l2-perspective { padding: 11px; }
   .level-two .l2-perspective-heading { gap: 5px; }
@@ -232,4 +206,35 @@
   .level-two .l2-scene-controls { gap: 10px; }
   .level-two .l2-scene-header { font-size: 8px; letter-spacing: .05em; }
   .level-two .l2-scene-intro { margin: 30px 0; }
+}
+
+/* Reports read as cards; checklist growth becomes a visible paper pile. */
+.level-two .l2-evaluation-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.level-two .l2-evaluation-list li { flex-direction: column; justify-content: center; min-height: 118px; padding: 15px 8px; gap: 12px; border: 1px solid #e4dccb; border-radius: 5px; background: #faf7ee; }
+.level-two .l2-eval-name { flex-direction: column; text-align: center; gap: 10px; }
+.level-two .l2-eval-name .icon { width: 29px; height: 29px; }
+.level-two .l2-evaluation-list li[data-checked=true] { border-color: #bdcba9; background: #eff3e6; }
+.level-two .l2-evaluation-list li:last-child { border-bottom: 1px solid #e4dccb; }
+.level-two .l2-evaluation-list li[data-checked=true]:last-child { border-bottom-color: #bdcba9; }
+.level-two .l2-checklist-stack { isolation: isolate; position: relative; margin: 19px 10px 28px 2px; background: #fff9ea; border: 1px solid #c9b68d; border-left: 3px solid #b99662; border-radius: 3px; padding: 23px 25px 24px 31px; box-shadow: 3px 4px 0 #d9c7a3; }
+.level-two .l2-checklist-stack::before, .level-two .l2-checklist-stack::after { content: ''; position: absolute; z-index: -1; inset: 1px; background: repeating-linear-gradient(0deg, #e4d7be 0 1px, #f6eedc 1px 23px); border: 1px solid #c9b68d; border-radius: 3px; opacity: 0; }
+.level-two .l2-checklist-stack[data-load="25"]::before { opacity: 1; transform: translate(5px, 6px) rotate(1.5deg); }
+.level-two .l2-checklist-stack[data-load="100"]::before { opacity: 1; transform: translate(8px, 9px) rotate(2deg); }
+.level-two .l2-checklist-stack[data-load="100"]::after { opacity: 1; transform: translate(-5px, 5px) rotate(-2deg); }
+.level-two .l2-checklist-stack > .eyebrow::before { content: 'A'; display: inline-grid; place-items: center; width: 25px; height: 25px; border-radius: 50%; background: #e1e8d2; color: #6f8057; font: italic 18px var(--serif); margin-right: 9px; vertical-align: middle; }
+.level-two .l2-checklist-stack h3 { font-size: 22px; margin: 4px 0 17px; }
+.level-two .l2-checklist-stack li { font: 14px/1.45 'Trebuchet MS', Arial, sans-serif; min-height: 48px; padding: 12px 0; border-top: 1px solid #e6dcc7; }
+.level-two .l2-checklist-stack .l2-check-box { width: 22px; height: 22px; margin: 0; }
+.level-two .l2-checklist-stack .l2-check-box .icon { width: 17px; height: 17px; }
+.level-two .l2-matrix { padding: 9px; background: #fffaf0; border: 1px solid #cabb9b; border-radius: 3px; transform: rotate(-2deg); box-shadow: 4px 4px 0 #dfd2b8; }
+.level-two .l2-matrix i { display: grid; place-items: center; border: 1px solid #e0d8c3; }
+.level-two .l2-matrix i .icon { width: 100%; height: 100%; opacity: 0; stroke-width: 2; color: #fffdf4; }
+.level-two .l2-matrix [data-active=true] .icon { opacity: 1; }
+.level-two .l2-counter[data-load="25"] .l2-matrix { box-shadow: 4px 4px 0 #dfd2b8, 8px 8px 0 #ede1c9; }
+.level-two .l2-counter[data-load="100"] .l2-matrix { box-shadow: 4px 4px 0 #dfd2b8, 8px 8px 0 #cfc1a4, 12px 12px 0 #ede1c9; }
+@media (max-width: 520px) {
+  .level-two .l2-evaluation-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .level-two .l2-evaluation-list li { min-height: 112px; }
+  .level-two .l2-checklist-stack { padding: 17px 17px 17px 20px; }
+  .level-two .l2-checklist-stack h3 { font-size: 21px; }
 }

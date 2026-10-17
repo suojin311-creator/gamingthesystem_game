@@ -101,7 +101,7 @@ with sync_playwright() as p:
     for id in IDS[:3]: page.get_by_test_id('level3-metric-' + id).click()
     page.get_by_test_id('level3-metric-peer').click(force=True)
     expect(page.locator('.l3-metric-card[aria-pressed=true]')).to_have_count(3)
-    expect(page.locator('.l3-choice-hint')).to_contain_text('Deselect one')
+    expect(page.locator('.choice-hint')).to_contain_text('Deselect one')
     page.get_by_test_id('level3-metric-focus').click()
     page.get_by_test_id('level3-metric-peer').click()
     expect(page.get_by_test_id('level3-metric-peer')).to_have_attribute('aria-pressed','true')

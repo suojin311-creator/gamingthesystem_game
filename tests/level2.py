@@ -170,7 +170,7 @@ new MutationObserver(() => {
     record('Six-metric report and pending student card share the current round without stale observations')
     record('Six-metric evaluation retains first three and adds the missing three')
     scene(page)
-    expect(page.locator('.l2-observation')).to_contain_text('system is becoming part of the task', timeout=8000)
+    expect(page.locator('.l2-observation')).to_contain_text('Meeting the criteria becomes the task', timeout=8000)
     expect(page.locator('.student-behaviour')).to_have_text('Meeting criteria becomes the goal.')
     core_ready(page, 'Add more metrics')
     stamps = page.evaluate('window.observationTimeline["observe:6"]')
@@ -236,7 +236,7 @@ new MutationObserver(() => {
     # A disabled-by-limit card cannot become a fourth choice; a selected card remains swappable.
     page.get_by_test_id('level2-metric-discuss').dispatch_event('click')
     expect(page.locator('.l2-metric-card[aria-pressed=true]')).to_have_count(3)
-    expect(page.locator('.l2-choice-summary')).to_contain_text('Deselect one')
+    expect(page.locator('.choice-hint')).to_contain_text('Deselect one')
     page.get_by_test_id('level2-metric-prep').click()
     expect(run).to_be_disabled()
     page.get_by_test_id('level2-metric-discuss').click()
@@ -254,7 +254,7 @@ new MutationObserver(() => {
         expect(page.get_by_role('button', name='Observe the class', exact=True)).to_be_enabled(timeout=7000)
         if branch in ['visible', 'quality']:
             scene(page)
-            expect(page.locator('.l2-observation')).to_contain_text('visible focus' if branch == 'visible' else 'patterns that score well', timeout=8000)
+            expect(page.locator('.l2-observation')).to_contain_text('Students look prepared' if branch == 'visible' else 'patterns that earn points', timeout=8000)
         record(f'Trio {"+".join(trio)} routes to {branch} outcome')
         context.close()
 

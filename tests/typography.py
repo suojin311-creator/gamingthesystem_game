@@ -15,7 +15,8 @@ with sync_playwright() as p:
    else:
     for _ in range(10):page.clock.run_for(1000);page.wait_for_timeout(15)
     page.get_by_role('button',name='Choose three metrics' if level==2 else 'Choose priorities',exact=True).click()
-   selectors={1:{'chapter':'.chapter-heading h1','step':'.stepper li','metric':'.metric-card h3','description':'.metric-card p','heading':'.section-intro h2'},2:{'chapter':'.l2-heading h1','step':'.l2-stepper li','metric':'.l2-metric-card h3','description':'.l2-metric-card p','heading':'.section-intro h2'},3:{'chapter':'.l3-heading h1','step':'.l3-stepper li','metric':'.l3-metric-card h3','description':'.l3-metric-card p','heading':'.section-intro h2'}}[level]
+   page.get_by_test_id('metric-prep' if level==1 else f'level{level}-metric-prep').click()
+   selectors={1:{'chapter':'.chapter-heading h1','step':'.stepper li','metric':'.metric-card h3','description':'.choice-detail p','heading':'.section-intro h2'},2:{'chapter':'.l2-heading h1','step':'.l2-stepper li','metric':'.l2-metric-card h3','description':'.choice-detail p','heading':'.section-intro h2'},3:{'chapter':'.l3-heading h1','step':'.l3-stepper li','metric':'.l3-metric-card h3','description':'.choice-detail p','heading':'.section-intro h2'}}[level]
    selectors['button']='.primary-button'
    sizes={k:page.locator(s).first.evaluate('element=>getComputedStyle(element).fontSize') for k,s in selectors.items()}
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')

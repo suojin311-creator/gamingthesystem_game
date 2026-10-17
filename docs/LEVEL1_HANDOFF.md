@@ -10,6 +10,12 @@ The opening remains a separate project in the supplied ZIP. No opening scenes ha
 
 The workbench owns the six cards, prediction input, illustrative numerical result and animation, `Target achieved`, both perspective panels, and the post-observation comparison. It retains the original prediction and displays it after observation without evaluating it for correctness.
 
+Selection now uses the shared six short-name icon cards and one removable tray
+slot, with the original full definition shown only for the selected metric.
+Repeated left-footer captions are removed. Observed evidence retains its exact
+wording, split into a quieter fact and emphasized consequence beside a notebook
+vignette. See [visual operations](VISUAL_PLAY.md).
+
 Management’s view now leads with satisfaction and a rising green bar. The
 reported score and target-met evidence remain a small line below. Satisfaction
 changes only when the result is reported; replay does not add to it. The shared

@@ -21,23 +21,23 @@ export function classifyTrio(ids: readonly MetricId[]): Branch {
 export const THREE_OUTCOMES: Record<Branch, { report: string; evidence: string; action: string }> = {
   visible: {
     report: 'The class looks more engaged.',
-    evidence: 'Preparation, participation and visible focus improve. Some students concentrate on looking prepared, active and on-task because those are the things being checked.',
+    evidence: 'Students look prepared, active and focused. Some focus only on what gets checked.',
     action: 'The classroom is busy: students raise their hands, keep materials open and show that they are on task.',
   },
   quality: {
     report: 'The work looks stronger.',
-    evidence: 'Discussion, reflection and peer responses improve. Some students repeat the patterns that score well across the three criteria.',
+    evidence: 'Discussions and written work look stronger. Some repeat the patterns that earn points.',
     action: 'The work looks polished: discussion phrases, reflections and peer responses closely follow the expected criteria.',
   },
   mixed: {
     report: 'The dashboard looks convincing.',
-    evidence: 'Different parts of engagement improve together. Some students plan their behaviour around the three selected criteria.',
+    evidence: 'Three areas of engagement improve. Other learning gets less attention.',
     action: 'Several parts of classroom life improve, while students keep checking which of their actions will count.',
   },
 };
 
-export const SIX_EVIDENCE = 'Students check what each criterion requires and plan their work around what still needs to be shown. The measurement system is becoming part of the task itself.';
-export const FINAL_EVIDENCE = 'The system tracks 100 requirements. Students reuse evidence, close unchecked gaps and look for the minimum needed to meet the remaining criteria.';
+export const SIX_EVIDENCE = 'All six areas are being checked. Meeting the criteria becomes the task.';
+export const FINAL_EVIDENCE = 'All 100 requirements get a tick. Alex finds the quickest way to meet them.';
 
 export const STUDENT_OBSERVATIONS: Record<RoundCount, string> = {
   3: 'Untracked areas get overlooked.',
