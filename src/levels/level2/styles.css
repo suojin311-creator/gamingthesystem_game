@@ -237,31 +237,6 @@
 .level-two .l2-growth-mark { animation: l2-check-mark .2s ease-out both; }
 .level-two .l2-reuse-arrow { animation: l2-reuse .7s ease-in-out 2; }
 @keyframes l2-reuse { 50% { transform: translateX(5px); } }
-.level-two .l2-peer-practice { display: flex; align-items: center; gap: 12px; margin: 20px 0 5px; padding: 22px 18px; border: 1px solid #c8c1a844; border-radius: 3px; background: #f5ebd50e; width: min(600px, 100%); }
-.level-two .l2-peer-person { display: flex; flex-direction: column; align-items: center; gap: 10px; flex-shrink: 0; font-size: 12px; color: #e1d7ba; }
-.level-two .l2-peer-portrait { display: grid; place-items: center; width: 65px; height: 65px; border: 1px solid #b8c49c; border-radius: 50%; color: #c3cfaa; background: #54644b; }
-.level-two .l2-peer-portrait.classmate { color: #ded0ab; background: #665f49; border-color: #b3a47e; }
-.level-two .l2-peer-desk { flex: 1; min-width: 0; min-height: 145px; position: relative; display: flex; align-items: center; justify-content: center; gap: 12px; }
-.level-two .l2-phrase-card { background: #f5e9cc; color: #776344; border: 1px solid #c6b384; border-radius: 2px; padding: 13px; rotate: -4deg; box-shadow: 3px 4px 0 #1e281e55; }
-.level-two .l2-phrase-card > span { display: block; font-size: 8px; letter-spacing: .1em; }
-.level-two .l2-phrase-card > strong { display: block; font: 21px/1.2 var(--serif); margin: 10px 0; }
-.level-two .l2-phrase-card > i { color: #74875e; font-style: normal; font-size: 23px; display: block; text-align: right; }
-.level-two .l2-content-question { position: absolute; right: 0; top: -10px; color: #dbc89c; border: 1px dashed #b7aa7c; border-radius: 8px 0 8px 8px; padding: 6px 12px; font: italic 21px var(--serif); visibility: hidden; }
-.level-two .l2-content-question[data-active=true] { visibility: visible; }
-.level-two .l2-phrase-copy { padding: 13px 10px; border: 1px solid #aaa985; background: #e1e2c7; color: #5b664e; font: 18px/1.25 var(--serif); rotate: 3deg; animation: panel-arrive .35s ease-out; }
-.level-two .l2-phrase-copy b { display: block; text-align: right; margin-top: 9px; font-size: 20px; }
-.level-two .l2-shared-tick { position: absolute; bottom: 0; left: calc(50% - 12px); color: #b9cb99; font-size: 26px; }
 @media (max-width: 520px) {
-  .level-two .l2-peer-practice { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 16px 12px; }
-  .level-two .l2-peer-person:first-child { grid-column: 1; grid-row: 1; justify-self: start; }
-  .level-two .l2-peer-person:last-child { grid-column: 2; grid-row: 1; justify-self: end; }
-  .level-two .l2-peer-portrait { width: 38px; height: 38px; }
-  .level-two .l2-peer-person { font-size: 10px; }
-  .level-two .l2-peer-desk { grid-column: 1 / -1; grid-row: 2; width: 100%; gap: 12px; min-height: 158px; }
-  .level-two .l2-phrase-card { padding: 9px; }
-  .level-two .l2-phrase-card > span { font-size: 6px; }
-  .level-two .l2-phrase-card > strong { font-size: 16px; }
-  .level-two .l2-phrase-copy { font-size: 14px; padding: 8px 6px; }
-  .level-two .l2-content-question { right: 0; font-size: 18px; padding: 4px 8px; }
   .level-two .l2-growth-action figcaption { font-size: 20px; }
 }

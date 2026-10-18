@@ -1,82 +1,65 @@
-# Learning-focused gameplay revision
+# Current gameplay and feedback corrections
 
-The v11 baseline is preserved on `archive/pre-learning-optimizations-v11` at
-`fc279fc38c2a8ce4d913317b4f2102fae44d78c8`, including the previous downloads.
-This revision implements the four approved gameplay changes. Opening animation
-integration and the Level 1 opening handoff remain a separate next step.
+The v12 prototype is preserved on `archive/pre-feedback-cleanup-v12` at
+`031bbb0a737990294258ae97c86ad1badb43b5af`, including its original downloads.
+The following corrections supersede the forecast and peer-scene additions
+introduced in v12. Versioned validation reports remain historical records.
 
-## Positive scoring weights
+## Scoped chapter styles
 
-Every selected Level 3 priority receives at least 1%; all three still total
-exactly 100%. A single shared lower bound controls allocation, available maxima,
-validation and native/accessible slider bounds. The first priority can reach
-98%, reserving 1% for each other priority. After confirming 61%, either remaining
-slider can reach at most 38%, producing 61/38/1. The final linked pair still
-confirms in either order. Zero-weight runs cannot pass publication validation.
-Near-even still means a highest-minus-lowest spread of at most ten points.
+The chapter-transition stylesheet used `.chapter-heading`, which already named
+Level 1’s workbench title. Its hidden state, 56px font and reserved title area
+leaked into Level 1. At 1366px the affected header measured 163px and its title
+was hidden. Scoping every transition selector under `.chapter-transition`
+restores the visible 31px workbench title and its 71px header. Tests explicitly
+check visible chapter titles and compact headers in all three levels at
+1366/768/390/320px, alongside the existing transition checks.
 
-## Predict, observe, compare
+## Direct weight trials
 
-After confirming weights, Make a prediction opens a short three-card forecast.
-The player selects one or more priorities expected to receive Alex’s highest
-effort, then runs the evaluation. There is no text entry, preselected answer or
-correctness reward. Returning to weights and re-entering the forecast clears
-the unsubmitted prediction. Each explicit system reference also requires a fresh
-forecast before publication.
+The Level 3 prediction page and prediction/result markers have been removed.
+Forecasting which task receives effort after showing its scoring weight mostly
+repeated an already apparent relationship. Confirmed weights now run directly
+into publication. Explicit reference actions also publish directly. The
+comparison retains both actual player attempts and any needed reference.
 
-Result rows place the recorded prediction beside the actual qualitative effort.
-Highest observed effort follows the categories actually shown: for 61/38/1,
-Preparation and Participation can both be Steady while Focus is Minimum; both
-Steady rows therefore share the highest observed band. Near-even shows three
-Steady rows. The game does not invent precise numerical effort percentages.
-Forecasts never affect weights, effort categories, reference selection,
-management satisfaction or the narrative outcome.
+The positive-weight rule stays: each priority receives at least 1%, the total
+is exactly 100%, and a priority can reach 98% while reserving 1% for each other
+priority. After confirming 61%, either remaining slider can reach at most 38%,
+producing 61/38/1. Native/accessible bounds and publication validation agree.
 
-`WeightRun.predictedMetricIds?: MetricId[]` is an additive partner/result field.
-All new internal runs include it. `copyRun`, scene requests, comparison snapshots
-and completion results copy its array independently. Legacy external runs may
-omit it. Replays retain the original recorded forecast.
+Level 1 retains its original prediction. Level 3’s cognitive work remains the
+comparison of actual observations and the tension between meeting reported
+criteria and score-directed classroom behaviour. There is no new forecast task,
+correctness reward or invented learning score.
 
-## A scoring routine spreads between students
+## Existing authored animations own classroom action
 
-The six-metric placeholder replaces its prior explanatory paragraph and three
-teacher/Alex lines with a three-beat illustrated peer interaction:
+The added peer-passing-card demonstration, new peer narrative module and
+`peerInteraction` request field are withdrawn. The original simple Level 2
+classroom placeholder/dialogue and request schema are restored. The user’s
+existing formal scripts and animation files have not been edited.
 
-1. Alex passes along a discussion phrase card that earns a tick.
-2. A classmate copies the phrase, then asks why the lesson idea is true.
-3. Alex redirects both students to completing the scored phrase. Both get ticks;
-   the content question remains visibly open.
+`renderCinematic(request, complete)` owns the entire classroom scene slot. When
+provided, its output replaces the entire placeholder, so no duplicate visual
+panel or extra peer story appears before/after it. The final authored animation
+will carry its own events; the interface does not generate an additional social
+scene or reinterpret that script.
 
-This shows institutional criteria acting through a shared tool and peer routine,
-rather than treating the presence of character dialogue as sufficient social
-interaction. The classmate is a separate speaker and portrait position. The
-ordinary three/final-checklist scenes retain their existing contracts.
-`level2.six` now supplies optional `peerInteraction` action/text beats for a
-finished partner animation; the current preview remains an illustrated story
-placeholder, not a claim that finished video assets have been produced.
+## Slower continuous escalation
 
-## One continuous escalation
+One Add more metrics action still runs 10 → 25 → 100. Each milestone retains its
+real count, growing paper stack, short caption and report-triggered management
+satisfaction checkpoint. The completed actions at 10 and 25 now each remain
+visible for **3.5 seconds** before advancing. Hidden/off-screen time does not
+consume that hold. At 100, Observe the class still waits for a click.
 
-After the six-metric observation, Add more metrics starts the whole 10 → 25 →
-100 sequence. Each milestone keeps its real count, report-triggered satisfaction
-checkpoint and growing paper stack. A short illustrated Alex action replaces
-the former three-sentence checklist: checking boxes, reusing one answer across
-criteria, then doing just enough for every tick. The first two milestones move
-on after their visible action; there are no repeated Add clicks. At 100, Observe
-the class still waits for the player. Hidden/off-screen presentation holds;
-reduced motion removes movement while retaining each milestone and outcome.
+## Validation and scope
 
-## Relationship to the submitted design
-
-| Dimension | Concrete experience |
-| --- | --- |
-| Game mechanics | Choose criteria, allocate a limited total, confirm decisions, forecast and observe distinct consequences |
-| Narrative | The teacher changes the assessment system; students adapt to its rewards and stopping conditions |
-| Cognitive foundation | Make a prediction, inspect evidence, contrast two actual tests and reconsider the scoring model |
-| Sociocultural foundation | Management expectations shape criteria; students share a scoring tool and reproduce a classroom routine |
-| Levels | Single metric → more metrics → weighting, with the existing distinct chapter transitions and inherited choices |
-
-These describe implemented design opportunities; functional checks do not
-establish measured learning effectiveness. Fresh rule, forecast/peer-contract,
-offline-browser, dialogue, partner and actual-ZIP checks are recorded in
-`LEVEL3_VALIDATION-v12.json`. Earlier broader reports remain historical.
+Current checks cover compact visible headers, the retained positive-weight
+bounds, direct trial/reference flows, original animation-request contracts,
+replacement without duplicate content, longer visible holds, three-level
+handoff, dialogue consistency and exact packaged offline HTML. They are recorded
+in `LEVEL3_VALIDATION-v13.json`. Earlier broader reports were not rerun in full.
+Opening-animation integration and the Level 1 opening handoff remain a separate
+next step; this correction does not merge or rewrite the authored opening.

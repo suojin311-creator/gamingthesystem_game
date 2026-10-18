@@ -87,8 +87,6 @@ def weights_three(page, values):
         slider=page.get_by_test_id('weight-card-'+id).locator('input')
         if not slider.is_disabled():slider.evaluate('''(input,value)=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(input,value);input.dispatchEvent(new Event('input',{bubbles:true}));}''', values[index])
         if page.get_by_test_id('confirm-'+id).is_enabled(): page.get_by_test_id('confirm-'+id).click()
-    page.get_by_role('button',name='Make a prediction',exact=True).click()
-    page.get_by_test_id('predict-prep').click()
     page.get_by_role('button',name='Run evaluation',exact=True).click()
     page.locator('.l3-publish').scroll_into_view_if_needed();advance(page,5)
     page.get_by_role('button',name='Observe the class',exact=True).click()

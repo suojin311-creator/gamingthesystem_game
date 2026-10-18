@@ -7,7 +7,6 @@ import Conversation from '../../shared/components/Conversation';
 import LearningRisk from '../../shared/components/LearningRisk';
 import MetricSelection from '../../shared/components/MetricSelection';
 import EffortDisplay from './EffortDisplay';
-import EffortPrediction from './EffortPrediction';
 import CriteriaStop from './CriteriaStop';
 import WeightComparison from './WeightComparison';
 import ManagementSatisfaction, { MANAGEMENT_PROGRESS } from '../../shared/components/ManagementSatisfaction';
@@ -16,10 +15,10 @@ import { useVisibleDelay } from '../../shared/hooks/useVisibleDelay';
 import { resolvePlayerName } from '../../shared/utils/playerName';
 import CinematicPlaceholder from './CinematicPlaceholder';
 import { workbenchDialogue } from './dialogue';
-import { EFFORT_LABELS, cinematicRequest, compareRuns, copyRun, mostEffortIds, referenceTest, type LevelThreeCinematicRequest, type LevelThreeResult, type WeightRun } from './data';
-import { EVEN_WEIGHTS, MIN_WEIGHT, allocateWeight, canRun, confirmWeight, effortAt, goalMet, isNearEven, maximumWeight, validWeights, type Confirmed, type WeightGoal, type Weights } from './weights';
+import { EFFORT_LABELS, cinematicRequest, compareRuns, copyRun, referenceTest, type LevelThreeCinematicRequest, type LevelThreeResult, type WeightRun } from './data';
+import { EVEN_WEIGHTS, MIN_WEIGHT, allocateWeight, canRun, confirmWeight, effortAt, goalMet, isNearEven, maximumWeight, type Confirmed, type WeightGoal, type Weights } from './weights';
 
-type Phase = 'intro' | 'choose' | 'weights' | 'predict' | 'publish' | 'scene' | 'result' | 'compare' | 'comparison-scene' | 'theory' ;
+type Phase = 'intro' | 'choose' | 'weights' | 'publish' | 'scene' | 'result' | 'compare' | 'comparison-scene' | 'theory' ;
 export type LevelThreeProps = {
   playerName?: string;
   initialMetricIds?: readonly MetricId[];
@@ -32,15 +31,12 @@ const EMPTY_CONFIRMATIONS: Confirmed = [false, false, false];
 const dialogueTime = (text: string) => Math.min(2500, Math.max(1300, 450 + text.split(/\s+/).length * 110));
 
 function RunRows({ run, shown = 3 }: { run: WeightRun; shown?: number }) {
-  const most = mostEffortIds(run);
-  return <div className="l3-run-table"><div className="l3-result-legend" aria-hidden="true"><span>METRIC</span><span>WEIGHT</span><span>YOUR PREDICTION</span><span>ALEX’S EFFORT</span></div><ol className="l3-run-rows">{run.metricIds.map((id, index) => {
+  return <div className="l3-run-table"><div className="l3-result-legend" aria-hidden="true"><span>METRIC</span><span>WEIGHT</span><span>ALEX’S EFFORT</span></div><ol className="l3-run-rows">{run.metricIds.map((id, index) => {
     const effort = effortAt(run.weights, index);
-    const predicted = !!run.predictedMetricIds?.includes(id);
-    return <li key={id} data-metric={id} data-effort={effort} data-predicted={predicted} data-most={most.includes(id)} data-shown={index < shown} aria-hidden={index >= shown} aria-label={`${metricDefinition(id).name}: score weight ${run.weights[index]} percent; ${predicted ? 'you predicted highest effort; ' : ''}Alex’s effort: ${EFFORT_LABELS[effort]}${most.includes(id) ? ', highest observed effort' : ''}`} style={{ '--row-index': index } as React.CSSProperties}>
+    return <li key={id} data-metric={id} data-effort={effort} data-shown={index < shown} aria-hidden={index >= shown} aria-label={`${metricDefinition(id).name}: score weight ${run.weights[index]} percent; Alex’s effort: ${EFFORT_LABELS[effort]}`} style={{ '--row-index': index } as React.CSSProperties}>
       <span className="l3-row-metric"><Icon name={id} /><span>{metricDefinition(id).shortName}</span></span>
       <strong className="l3-row-weight">{run.weights[index]}<small>%</small></strong>
-      <span className="l3-result-pick"><span className="l3-prediction-dot" data-selected={predicted} aria-hidden="true" /><span className="sr-only">{predicted ? 'Your prediction' : 'Not selected in your prediction'}</span></span>
-      <span className="l3-observed-effort"><EffortDisplay metricId={id} effort={effort} />{most.includes(id) && <small className="l3-most-label">Most effort</small>}</span>
+      <EffortDisplay metricId={id} effort={effort} />
     </li>;
   })}</ol></div>;
 }
@@ -56,8 +52,6 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
   const [autoConfirmedIndex, setAutoConfirmedIndex] = useState<number | null>(null);
   const [runs, setRuns] = useState<WeightRun[]>([]);
   const [goal, setGoal] = useState<WeightGoal>('first');
-  const [prediction, setPrediction] = useState<MetricId[]>([]);
-  const [pendingKind, setPendingKind] = useState<WeightRun['kind']>('player');
   const [published, setPublished] = useState(0);
   const [reportReady, setReportReady] = useState(false);
   const [resultRows, setResultRows] = useState(0);
@@ -81,7 +75,7 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
   const satisfaction = MANAGEMENT_PROGRESS.weightTests[Math.min(completedReports, 3)];
   const hasObservation = phase === 'compare' || phase === 'result' && resultRows === 3;
   const reference = referenceTest(runs);
-  const stage = phase === 'intro' || phase === 'choose' ? 0 : ['compare', 'comparison-scene', 'theory'].includes(phase) ? 3 : runs.length > (phase === 'weights' || phase === 'predict' ? 0 : 1) ? 2 : 1;
+  const stage = phase === 'intro' || phase === 'choose' ? 0 : ['compare', 'comparison-scene', 'theory'].includes(phase) ? 3 : runs.length > (phase === 'weights' ? 0 : 1) ? 2 : 1;
   const sceneKind = phase === 'scene' ? 'weights' : phase === 'comparison-scene' ? 'comparison' : phase === 'theory' ? 'theory' : null;
   const request = sceneKind ? cinematicRequest(sceneKind, playerName, runs) : null;
   const lines = workbenchDialogue(phase, playerName, goal, runs);
@@ -94,7 +88,7 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
     setHint(''); feedback.play('tick');
   }
   function startEditor(next: WeightGoal) {
-    setPrediction([]); setPendingKind('player'); setGoal(next); setWeights(next === 'first' ? EVEN_WEIGHTS : [...runs[0].weights]);
+    setGoal(next); setWeights(next === 'first' ? EVEN_WEIGHTS : [...runs[0].weights]);
     setConfirmed(EMPTY_CONFIRMATIONS); setAutoConfirmedIndex(null); move('weights');
   }
   function adjust(index: number, value: number) {
@@ -110,19 +104,9 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
   function resetWeights() {
     setWeights([...baseline]); setConfirmed(EMPTY_CONFIRMATIONS); setAutoConfirmedIndex(null); feedback.play('tick');
   }
-  function startPrediction(next = weights, kind: WeightRun['kind'] = 'player') {
-    if (!validWeights(next)) return;
+  function publish(next = weights, kind: WeightRun['kind'] = 'player') {
     if (kind === 'player' && !canRun(next, confirmed, baseline, goal)) return;
-    setWeights([...next]); setPendingKind(kind); setPrediction([]); move('predict');
-  }
-  function togglePrediction(id: MetricId) {
-    setPrediction(value => value.includes(id) ? value.filter(metric => metric !== id) : selected.filter(metric => metric === id || value.includes(metric)));
-    feedback.play('tick');
-  }
-  function publish() {
-    if (!validWeights(weights) || !prediction.length || prediction.some(id => !selected.includes(id))) return;
-    if (pendingKind === 'player' && !canRun(weights, confirmed, baseline, goal)) return;
-    const record: WeightRun = { round: runs.length + 1, kind: pendingKind, metricIds: [...selected], weights: [...weights], predictedMetricIds: [...prediction] };
+    const record: WeightRun = { round: runs.length + 1, kind, metricIds: [...selected], weights: [...next] };
     setRuns([...runs, record]); setPublished(0); setReportReady(false); setResultRows(0); move('publish');
   }
   function completeLevel() {
@@ -137,7 +121,7 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
   }
   function resetForNewVisit() {
     completionReported.current = false; setSelected(initialSelection); setWeights(EVEN_WEIGHTS); setConfirmed(EMPTY_CONFIRMATIONS);
-    setRuns([]); setGoal('first'); setPrediction([]); setPendingKind('player'); setPublished(0); setReportReady(false); setResultRows(0); setAutoConfirmedIndex(null);
+    setRuns([]); setGoal('first'); setPublished(0); setReportReady(false); setResultRows(0); setAutoConfirmedIndex(null);
     setRunId(value => value + 1); feedback.reset(); move('intro');
   }
 
@@ -169,7 +153,7 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
   const action = current && (runs.length === 1
     ? <button className="button primary-button" onClick={() => startEditor('different')}>Try another split<Icon name="arrow" /></button>
     : compared ? <button className="button primary-button" onClick={() => move('compare')}>Compare the patterns<Icon name="arrow" /></button>
-    : reference && <button className="button primary-button" onClick={() => startPrediction(reference.weights, reference.kind)}>{reference.kind === 'balance-check' ? 'What if they counted equally?' : 'What if one counted more?'}<Icon name="arrow" /></button>);
+    : reference && <button className="button primary-button" onClick={() => publish(reference.weights, reference.kind)}>{reference.kind === 'balance-check' ? 'What if they counted equally?' : 'What if one counted more?'}<Icon name="arrow" /></button>);
 
   return <div className="game-page level-three" data-phase={phase} data-round={runs.length} onPointerDown={feedback.unlock} onKeyDown={feedback.unlock}>
     <header className="l3-masthead"><a className="l3-wordmark" href="#level-three-main" aria-label="Gaming the System, skip to game"><span className="l3-emblem" aria-hidden="true">g<span>s</span><i /></span><span>GAMING<br /><b>THE SYSTEM</b></span></a><div className="l3-header-controls"><button aria-pressed={!feedback.muted} disabled={!feedback.available} onClick={feedback.toggle}><Icon name={feedback.muted || !feedback.available ? 'muted' : 'sound'} /><span>{!feedback.available ? 'No audio' : feedback.muted ? 'Sound off' : 'Sound on'}</span></button></div></header>
@@ -179,7 +163,7 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
       {request ? (renderCinematic ? renderCinematic(request, finishScene) : <CinematicPlaceholder key={`${key}:${request.sceneId}`} request={request} onComplete={finishScene} />)
         : phase === 'intro' ? <ChapterTransition key={`intro:${runId}`} level={3} playerName={playerName} initialMetricIds={initialSelection} play={feedback.play} onStart={() => move('choose')} />
         : <div className={`l3-body ${showPerspectives ? 'l3-with-perspectives' : ''}`}><section className="l3-decision">
-          <div className="section-intro"><span className="eyebrow l3-round-label">{phase === 'weights' || phase === 'predict' ? pendingKind !== 'player' ? 'REFERENCE TEST' : goal === 'first' ? 'ROUND 1 · YOUR PRIORITIES' : 'ROUND 2 · ANOTHER SPLIT' : current && phase !== 'choose' ? current.kind !== 'player' ? 'REFERENCE TEST' : `ROUND ${current.round}` : 'CHOOSE EXACTLY THREE'}</span><h2 ref={title} tabIndex={-1}>{phase === 'choose' ? 'Which three would I prioritize?' : phase === 'weights' ? goal === 'first' ? 'How much should each one count?' : 'Try a different split.' : phase === 'predict' ? 'Where will Alex put the most effort?' : phase === 'publish' ? reportReady ? 'Weights published.' : 'Sharing the new weights…' : phase === 'result' ? 'Where did Alex’s effort go?' : 'What changed across the tests?'}</h2></div>
+          <div className="section-intro"><span className="eyebrow l3-round-label">{phase === 'weights' ? goal === 'first' ? 'ROUND 1 · YOUR PRIORITIES' : 'ROUND 2 · ANOTHER SPLIT' : current && phase !== 'choose' ? current.kind !== 'player' ? 'REFERENCE TEST' : `ROUND ${current.round}` : 'CHOOSE EXACTLY THREE'}</span><h2 ref={title} tabIndex={-1}>{phase === 'choose' ? 'Which three would I prioritize?' : phase === 'weights' ? goal === 'first' ? 'How much should each one count?' : 'Try a different split.' : phase === 'publish' ? reportReady ? 'Weights published.' : 'Sharing the new weights…' : phase === 'result' ? 'Where did Alex’s effort go?' : 'What changed across the tests?'}</h2></div>
           {phase === 'choose' && <><MetricSelection level={3} capacity={3} selected={selected} onToggle={choose} hint={hint} /><div className="action-row l3-only-action"><button className="button primary-button" disabled={selected.length !== 3} onClick={() => startEditor('first')}>Set the weights<Icon name="arrow" /></button></div></>}
           {phase === 'weights' && <>{goal !== 'first' && confirmedCount === 3 && !goalMet(weights, baseline, goal) && <p className="l3-edit-error" role="alert">{goalHint}</p>}{goal !== 'first' && <div className="l3-previous"><span>Last run</span>{selected.map((id, index) => <span key={id}>{metricDefinition(id).shortName} <b>{baseline[index]}%</b></span>)}</div>}<div className="l3-weight-grid">{selected.map((id, index) => {
             const locked = confirmed[index];
@@ -189,8 +173,7 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
               <input id={`weight-${id}`} type="range" min={MIN_WEIGHT} max={locked ? weights[index] : maximumWeight(weights, confirmed, index)} aria-valuemin={MIN_WEIGHT} aria-valuemax={locked ? weights[index] : maximumWeight(weights, confirmed, index)} step={1} value={weights[index]} disabled={locked} aria-label={`${metricDefinition(id).name} weight`} aria-valuetext={`${weights[index]} percent${locked ? automatic ? ', confirmed automatically' : ', confirmed' : ''}`} onChange={event => adjust(index, Number(event.target.value))} />
               <button className={`button ${locked ? 'secondary-button' : 'primary-button'}`} disabled={locked} data-testid={`confirm-${id}`} onClick={() => confirm(index)}>{locked ? <><Icon name="check" />{automatic ? 'Auto-confirmed' : 'Confirmed'}</> : 'Confirm weight'}</button>
             </article>;
-          })}</div><div className="l3-allocation" aria-label="100 percent allocated"><div className="l3-allocation-bar" aria-hidden="true">{weights.map((value, index) => <i key={index} style={{ width: `${value}%` }} />)}</div><span>100% allocated</span></div><div className="l3-editor-tools"><button className="text-button" onClick={resetWeights}><Icon name="restart" />Reset weights</button></div><div className="action-row l3-only-action"><button className="button primary-button" disabled={!canRun(weights, confirmed, baseline, goal)} onClick={() => startPrediction()}>Make a prediction<Icon name="arrow" /></button></div></>}
-          {phase === 'predict' && <><EffortPrediction metricIds={selected} weights={weights} selected={prediction} onToggle={togglePrediction} /><div className="action-row"><button className="text-button" onClick={() => move(pendingKind === 'player' ? 'weights' : 'result')}>{pendingKind === 'player' ? 'Back to weights' : 'Back to observation'}</button><button className="button primary-button" disabled={!prediction.length} onClick={publish}>Run evaluation<Icon name="arrow" /></button></div></>}
+          })}</div><div className="l3-allocation" aria-label="100 percent allocated"><div className="l3-allocation-bar" aria-hidden="true">{weights.map((value, index) => <i key={index} style={{ width: `${value}%` }} />)}</div><span>100% allocated</span></div><div className="l3-editor-tools"><button className="text-button" onClick={resetWeights}><Icon name="restart" />Reset weights</button></div><div className="action-row l3-only-action"><button className="button primary-button" disabled={!canRun(weights, confirmed, baseline, goal)} onClick={() => publish()}>Run evaluation<Icon name="arrow" /></button></div></>}
           {phase === 'publish' && current && <><div className="l3-publish" role="status"><ol>{selected.map((id, index) => <li key={id} data-published={index < published}><Icon name={id} /><span>{metricDefinition(id).shortName}</span><strong>{current.weights[index]}%</strong><span>{index < published ? <Icon name="check" /> : <i className="l3-pending-dot" />}</span></li>)}</ol></div><div className="action-row l3-only-action"><button className="button primary-button" disabled={!reportReady} onClick={() => move('scene')}><Icon name="play" />Observe the class</button></div></>}
           {phase === 'result' && current && <><div className="l3-results"><RunRows run={current} shown={resultRows} />{resultRows === 3 && isNearEven(current.weights) && <CriteriaStop key={key} runKey={key} onComplete={() => setRoutineReady(true)} />}{resultRows < 3 && <p className="l3-watching" role="status">Watching Alex adapt…</p>}</div><div className="action-row"><button className="text-button" onClick={() => move('scene')}>Replay scene</button>{resultRows === 3 && dialogueReady ? action : <span className="l3-action-space" aria-hidden="true" />}</div></>}
           {phase === 'compare' && compared && <><WeightComparison runs={runs} /><div className="action-row l3-only-action"><button className="button primary-button" onClick={() => { completeLevel(); move('comparison-scene'); }}>Watch Alex’s response<Icon name="play" /></button></div></>}

@@ -17,7 +17,7 @@ category. See [visual operations](VISUAL_PLAY.md).
 
 ## Tests and observations
 
-- Three positive integer weights total exactly 100%, each at least 1% and at most 98%. Native and accessible slider bounds reserve a minimum of 1% for every other unlocked priority; publication rejects zero weights.
+- Three positive integer weights total exactly 100%, each at least 1% and at most 98%. Native and accessible slider bounds reserve 1% for every other unlocked priority; publication rejects zero weights.
 - Moving an unlocked slider divides the remainder among other unlocked sliders.
   Confirmed values stay locked, and a one-point remainder follows card order.
 - Confirm any first card, then adjust either remaining card. Confirming either
@@ -25,7 +25,6 @@ category. See [visual operations](VISUAL_PLAY.md).
   The 80/10/10 → 80/15/5 case works in every confirmation order.
 - Reset weights resets only the current allocation. It sits below the allocation
   bar, above the action row; there is no player Restart-level control or dialog.
-- After confirmation, Make a prediction opens three cards. Players select one or more expected highest-effort priorities before Run evaluation; each system reference also requests a fresh prediction. Result rows align Your prediction with actual qualitative effort and label tied highest bands. Forecasts do not change outcomes or satisfaction.
 - Publication ticks the three weights and waits for Observe the class.
   Management satisfaction starts at Level 2’s final value and rises a little
   after each completed publication, irrespective of the chosen split. The small
@@ -157,12 +156,6 @@ off-screen timed information hold their remaining delay. The Level 1 guide also
 holds that level’s pending information. Player Restart controls are removed
 across all three chapters; Reset weights is retained.
 
-`WeightRun` now accepts optional `predictedMetricIds: MetricId[]`. Every internal
-run includes a player-selected forecast, including reference tests. Copied runs,
-partner scene requests, compared snapshots and completion results copy this
-array independently. Older external runs may omit it. See
-[learning-focused gameplay](LEARNING_OPTIMIZATIONS.md).
-
 `npm run package:previews` builds all four entries plus
 `play/Level3-and-Full-game-play.zip`, containing standalone Level 3 and connected
 Levels 1–3. `play/LATEST.json` records source, build, ZIP and bundle hashes.
@@ -171,3 +164,5 @@ Current checks are recorded in `LEVEL3_VALIDATION-v10.json`; older reports and
 versioned ZIPs are historical. Managed Chromium tests exact offline HTML bytes
 through an in-memory HTTPS origin; direct file opening in the user browser and
 classroom load capacity are not claimed as tested.
+
+The v12 Level 3 forecast page and prediction/result fields have been withdrawn. Confirmed weights run directly into publication; reference tests also publish after their explicit action. The positive-weight rule remains. See [current feedback corrections](LEARNING_OPTIMIZATIONS.md).

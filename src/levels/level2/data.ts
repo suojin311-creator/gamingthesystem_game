@@ -1,5 +1,4 @@
 import { METRIC_CATALOG, type MetricId } from '../../shared/data/metrics';
-import { PEER_PRACTICE } from './peerPractice';
 
 export type Branch = 'visible' | 'quality' | 'mixed';
 export type RoundCount = 3 | 6 | 10 | 25 | 100;
@@ -7,7 +6,6 @@ export type SceneKind = 'three' | 'six' | 'checklist';
 export type LevelTwoCinematicRequest = {
   sceneId: string; kind: SceneKind; branch: Branch; playerName: string;
   selectedMetricIds: MetricId[]; metricCount: 3 | 6 | 100;
-  peerInteraction?: { speaker: string; text: string; action: string }[];
 };
 export type LevelTwoResult = { selectedMetricIds: MetricId[]; branch: Branch; metricsTracked: 100 };
 
@@ -74,7 +72,5 @@ export function nextCount(count: RoundCount): 10 | 25 | 100 | null {
 export function sceneRequest(count: 3 | 6 | 100, selectedMetricIds: MetricId[], playerName: string): LevelTwoCinematicRequest {
   const branch = classifyTrio(selectedMetricIds);
   const kind: SceneKind = count === 3 ? 'three' : count === 6 ? 'six' : 'checklist';
-  return { sceneId: count === 3 ? `level2.three.${branch}` : `level2.${kind}`, kind, branch, selectedMetricIds: [...selectedMetricIds], metricCount: count, playerName,
-    ...(kind === 'six' ? { peerInteraction: PEER_PRACTICE.map(beat => ({ ...beat })) } : {}),
-  };
+  return { sceneId: count === 3 ? `level2.three.${branch}` : `level2.${kind}`, kind, branch, selectedMetricIds: [...selectedMetricIds], metricCount: count, playerName };
 }

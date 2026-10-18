@@ -114,7 +114,7 @@ export default function LevelTwo({ playerName: suppliedName, previousMetricId, p
     feedback.play('evidence'); bringIntoView('.l2-observation');
   });
   useVisibleDelay(`${beatKey}:${checklistRows}`, '.l2-checklist', 300, growthObservation && evidenceVisible && checklistRows < 3 && !paused, () => setChecklistRows(value => value + 1));
-  useVisibleDelay(beatKey, '.l2-checklist', 1000, growthObservation && checklistRows === 3 && !roundReady && !paused, () => { if (followingCount) beginRound(followingCount); else setRoundReady(true); });
+  useVisibleDelay(beatKey, '.l2-checklist', count < 100 ? 3500 : 1000, growthObservation && checklistRows === 3 && !roundReady && !paused, () => { if (followingCount) beginRound(followingCount); else setRoundReady(true); });
   useVisibleDelay(beatKey, '.l2-observation', findingReadingTime(evidence), (phase === 'observe' || phase === 'complete') && !growthObservation && evidenceVisible && !talkReady && !paused, () => {
     setTalkReady(true); bringIntoView('.conversation');
   });

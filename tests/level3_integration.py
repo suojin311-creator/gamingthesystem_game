@@ -59,13 +59,7 @@ def weights(page,values):
         if page.get_by_test_id('confirm-'+id).is_enabled(): page.get_by_test_id('confirm-'+id).click()
 
 
-def predict(page):
-    page.get_by_role('button',name='Make a prediction',exact=True).click()
-    page.get_by_test_id('predict-prep').click()
-
-
 def publish(page):
-    predict(page)
     page.get_by_role('button',name='Run evaluation',exact=True).click()
     page.locator('.l3-publish').scroll_into_view_if_needed();advance(page,4)
     page.get_by_role('button',name='Observe the class',exact=True).click()
@@ -115,6 +109,7 @@ with sync_playwright() as p:
     def scene_two():
         page.get_by_role('button',name='Observe the class',exact=True).click()
         expect(page.locator('.partner-name')).to_have_text('Riley')
+        expect(page.locator('.l2-cinematic,.l2-peer-practice')).to_have_count(0)
         page.get_by_role('button',name='Finish partner scene',exact=True).click();advance(page,14)
     scene_two();page.get_by_role('button',name='Cover the gaps',exact=True).click()
     page.get_by_role('button',name='Add remaining metrics',exact=True).click();advance(page,6);scene_two()
@@ -140,7 +135,7 @@ with sync_playwright() as p:
     record('Reloading the connected host starts fresh from its configured entry level')
     context.close()
 
-    context,page=start(browser);advance(page);choose(page);weights(page,[70,20,10]);predict(page)
+    context,page=start(browser);advance(page);choose(page);weights(page,[70,20,10])
     page.get_by_role('button',name='Run evaluation',exact=True).click()
     page.evaluate("Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'))")
     shown=page.locator('.l3-publish [data-published=true]').count();advance(page,8)
@@ -156,7 +151,7 @@ with sync_playwright() as p:
     AudioContext.prototype.createOscillator=function(){const oscillator=old.call(this);const start=oscillator.start.bind(oscillator);oscillator.start=(...args)=>{window.oscillatorStarts++;return start(...args)};return oscillator};'''
     context,page=start(browser,script=audio_script,clock=False)
     expect(page.get_by_role('button',name='Choose priorities',exact=True)).to_be_visible(timeout=12000)
-    choose(page);weights(page,[70,20,10]);predict(page)
+    choose(page);weights(page,[70,20,10])
     page.evaluate('''window.publicationTimes=[];window.resultTimes=[];
     new MutationObserver(records=>{for(const record of records){
       if(record.attributeName==='data-published'&&record.target.dataset.published==='true')window.publicationTimes.push(performance.now());

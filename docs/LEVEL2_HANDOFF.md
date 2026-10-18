@@ -43,14 +43,11 @@ right/wrong answer, theory explanation or Level 3 weighting is introduced.
 
 After the first observation, Cover the gaps displays the exact other three.
 Adding them gives six green ticks, followed by the shared six-metric scene.
-Its three-beat illustration shows Alex sharing a scoring phrase, a classmate
-copying it and asking a content question, then both returning to the scored
-criterion while that question remains open. `level2.six` supplies optional
-`peerInteraction` action/text beats for the finished partner animation.
-After six, one Add more metrics action runs the continuous 10 → 25 → 100
-sequence. Each milestone changes the count and matrix, then reveals one short
-illustrated action: checking boxes, reusing an answer, then doing just enough.
-The first two advance after visible-time holds; no repeated Add click is needed.
+One Add more metrics action runs the 10 → 25 → 100 sequence. Each milestone
+changes the count/matrix and reveals a short illustrated checklist action. After
+the 10- and 25-item actions finish, each holds for 3.5 visible seconds before
+advancing. Hidden/off-screen time does not consume the hold. No repeated Add
+click is required.
 At 100, Observe the class plays the final scene. The last dashboard stays at
 100 with qualitative evidence and the question about relative importance.
 Continue to Level 3 is enabled by the combined host's optional onContinue
@@ -182,3 +179,5 @@ finished-video delivery should be checked separately when hosting is chosen.
 The player and Alex dialogue uses the approved [Dialogue review](DIALOGUE_REVIEW.md). Alex sends two consecutive short messages at the three/six-metric observations and final weighting bridge; the next action appears with the second reply. The three-metric exchange uses the actual selected trio and branch, while the final cinematic and workbench have different lines. The shared conversation groups consecutive messages under one visible name/avatar and brings new replies into view when needed.
 
 Equivalent typography now shares responsive tokens with Levels 1 and 3, including 16px ordinary metric names. There is no player Restart button or dialog; administrator functionality is deferred. See [Typography](TYPOGRAPHY.md).
+
+The added v12 peer demonstration, generated peer narrative and `peerInteraction` field are withdrawn. The original classroom placeholder/dialogue and request schema are restored. The user’s existing finished-animation script owns classroom events. A custom `renderCinematic` replaces the entire placeholder; no second peer panel is rendered before or after it.
