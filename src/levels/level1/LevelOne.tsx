@@ -12,7 +12,7 @@ import CinematicPlaceholder, { type CinematicRequest } from './components/Cinema
 import { useFeedback } from '../../shared/hooks/useFeedback';
 import WorkbenchGuide from './components/WorkbenchGuide';
 import { useVisibleDelay } from '../../shared/hooks/useVisibleDelay';
-import { readingTime } from '../../shared/utils/readingTime';
+import { findingReadingTime } from '../../shared/utils/conversationTiming';
 import { resolvePlayerName } from '../../shared/utils/playerName';
 
 export type LevelOneResult = {
@@ -49,7 +49,7 @@ function PerspectivePanel({ metric, evaluated, observed, highlight }: {
   metric?: Metric; evaluated: boolean; observed: boolean; highlight: 'university' | null;
 }) {
   return <aside className="perspectives" aria-label="Two perspectives">
-    <section className={`perspective university ${evaluated ? 'has-result' : ''} ${highlight === 'university' ? 'just-updated' : ''}`} aria-labelledby="university-title" data-updated={highlight === 'university'} tabIndex={-1}>
+    <section className={`perspective university ${evaluated ? 'has-result' : ''} ${highlight === 'university' ? 'just-updated' : ''}`} aria-labelledby="university-title" data-management-panel data-updated={highlight === 'university'} tabIndex={-1}>
       <div className="perspective-heading"><Icon name="school" /><h3 id="university-title">Management’s view</h3>{highlight === 'university' && <span className="new-badge">NEW</span>}</div>
       <ManagementSatisfaction value={evaluated ? MANAGEMENT_PROGRESS.targetMet : MANAGEMENT_PROGRESS.awaiting}>
         {evaluated && metric ? <><span className="university-value">Reported score {metric.after}</span> · target met</> : 'Run an evaluation'}
@@ -94,8 +94,8 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
     phase === 'result' && highlight === 'university' && !paused, () => setHighlight(null));
   useVisibleDelay(`evidence:${runId}:${phase}:${metricId}:${reviewStep}`, '.prediction-recap', 1000,
     phase === 'review' && reviewStep === 0 && !paused, showObservation);
-  // Bring the conversation forward by 3.5 seconds while preserving reading order.
-  useVisibleDelay(`conversation:${runId}:${phase}:${metricId}:${reviewStep}`, '.observation-recap', readingTime(metric?.evidence || '', 6000, 8000) - 3500,
+  // Match Level 2’s evidence-to-conversation rhythm.
+  useVisibleDelay(`conversation:${runId}:${phase}:${metricId}:${reviewStep}`, '.observation-recap', findingReadingTime(metric?.evidence || ''),
     phase === 'review' && reviewStep === 1 && !paused && !reviewTalkReady, () => {
       setReviewTalkReady(true);
       bringIntoView('.dialogue-strip');
@@ -218,7 +218,12 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
               <div className="selected-focus"><span className="metric-illustration"><Icon name={metric.id} /></span><h3>{metric.name}</h3><button className="text-button" onClick={() => go('choose')}>Change</button></div>
               <form className="prediction-form" onSubmit={event => { event.preventDefault(); if (prediction.trim()) setSession(value => ({ ...value, prediction: value.prediction.trim(), phase: 'result', resultReported: false })); }}>
                 <label htmlFor="prediction" className="sr-only">What do you expect students to do?</label>
-                <div className="prediction-paper"><span className="paper-corner" aria-hidden="true" /><textarea ref={predictionField} id="prediction" maxLength={100} value={prediction} placeholder={`e.g. ${metric.example}`} aria-describedby="prediction-count" onChange={event => setSession(value => ({ ...value, prediction: event.target.value }))} /><div id="prediction-count" className="character-counter">{prediction.length}<span> / 100</span></div></div>
+                <div className="prediction-paper"><span className="paper-corner" aria-hidden="true" /><textarea ref={predictionField} id="prediction" maxLength={100} value={prediction} placeholder={`e.g. ${metric.example}`} aria-describedby="prediction-count" onKeyDown={event => {
+                  if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing && event.nativeEvent.keyCode !== 229) {
+                    event.preventDefault();
+                    if (prediction.trim() && !event.repeat) event.currentTarget.form?.requestSubmit();
+                  }
+                }} onChange={event => setSession(value => ({ ...value, prediction: event.target.value }))} /><div id="prediction-count" className="character-counter">{prediction.length}<span> / 100</span></div></div>
                 <div className="action-row prediction-actions"><button type="submit" className="button primary-button" disabled={!prediction.trim()}>Run evaluation<Icon name="arrow" /></button></div>
               </form>
             </>}

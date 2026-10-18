@@ -11,7 +11,7 @@ export default function Perspectives({ count, reportedCount, observedCount, eval
   const observed = observedCount === count;
   const satisfaction = MANAGEMENT_PROGRESS.metrics[reportedCount as RoundCount] ?? MANAGEMENT_PROGRESS.targetMet;
   return <aside className="l2-perspectives" aria-label="Two perspectives">
-    <section className={`l2-perspective l2-management ${reportedCount > 0 ? 'l2-has-report' : ''}`} data-round={count}>
+    <section className={`l2-perspective l2-management ${reportedCount > 0 ? 'l2-has-report' : ''}`} data-round={count} data-management-panel>
       <div className="l2-perspective-heading"><Icon name="school" /><h3>Management’s view</h3></div>
       <ManagementSatisfaction value={satisfaction}>
         {reported ? <><span className="l2-reported-count">{count}</span> metrics tracked{count <= 6 ? ' · targets met' : ''}</> : evaluating ? 'Evaluating…' : 'Previous target met'}

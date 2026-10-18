@@ -37,3 +37,11 @@ The bar fills over one second after a new report and never replays its fill on
 ordinary remounts. Reduced-motion users see the new value immediately. A
 labelled progressbar exposes the qualitative state to assistive technology.
 The student card retains specific observed behaviour and Learning at risk.
+
+A new report also gives the whole management card three green outline pulses
+(650 ms each). The shared indicator responds to an actual increase, including
+updates within the same qualitative label. It holds while the card is off-screen
+or the page hidden, and resumes when visible. Remounts/replays at the same value
+and fresh-session decreases do not pulse. Reduced motion uses a single steady
+outline for the same total duration. This attention cue does not change any
+satisfaction values or block the next action.

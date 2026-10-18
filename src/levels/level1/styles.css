@@ -45,7 +45,6 @@
 :where(.level-one) .waiting-signal > .icon { width: 35px; height: 35px; }
 :where(.level-one) .has-evidence { background: #f7e9cf; border-color: #ceb183; }
 :where(.level-one) .new-badge { position: absolute; top: 6px; right: 7px; font-size: 7px; letter-spacing: .08em; color: #fffaf0; background: #6f8a59; padding: 3px 4px; border-radius: 2px; }
-:where(.level-one) .just-updated { animation: status-arrival .65s ease-out; outline: 2px solid #8fa878; outline-offset: 2px; }
 /* Chronological chat: the first message stays above the next one. */
 :where(.level-one) .dialogue-strip { min-height: 90px; padding: 14px 30px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; border-top: 1px solid #d8d2c2; background: #f0ebdf; }
 :where(.level-one) .dialogue-strip.two-voices { min-height: 154px; }
@@ -155,7 +154,6 @@
 @keyframes bar-arrive { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes typing { 0%,60%,100% { opacity: .4; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
 @keyframes message-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes status-arrival { 0% { box-shadow: 0 0 0 0 #a1ae7570; } 100% { box-shadow: 0 0 0 10px #a1ae7500; } }
 @media (min-width: 900px) and (max-height: 820px) {
   :where(.level-one) .masthead { min-height: 61px; }
   :where(.level-one) .workbench-heading { padding-top: 13px; padding-bottom: 13px; }

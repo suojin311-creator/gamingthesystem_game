@@ -1,6 +1,7 @@
 import type { Phase } from '../state';
 import type { Cue } from '../../../shared/hooks/useFeedback';
 import Conversation, { type ConversationLine } from '../../../shared/components/Conversation';
+import { BRISK_TYPING_DELAY, briskDialogueTime } from '../../../shared/utils/conversationTiming';
 
 export default function Dialogue({ phase, playerName, studentReplies, reviewQuestion, enabled, paused = false, play, onSettled }: {
   phase: Phase; playerName: string; studentReplies?: readonly string[]; reviewQuestion?: string; enabled: boolean;
@@ -13,5 +14,5 @@ export default function Dialogue({ phase, playerName, studentReplies, reviewQues
   };
   const lines: ConversationLine[] = [{ speaker: 'Maya', name: playerName, text: single[phase] }];
   if (phase === 'review') lines.push(...(studentReplies || ['I finished the tasks.']).map(text => ({ speaker: 'Alex' as const, name: 'Alex', text })));
-  return <Conversation lines={lines} enabled={enabled} paused={paused} play={play} onSettled={onSettled} />;
+  return <Conversation lines={lines} enabled={enabled} paused={paused} play={play} typingDelay={phase === 'review' ? BRISK_TYPING_DELAY : undefined} readDelay={phase === 'review' ? briskDialogueTime : undefined} onLastMessage={phase === 'review' ? onSettled : undefined} onSettled={onSettled} />;
 }

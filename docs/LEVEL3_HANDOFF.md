@@ -94,8 +94,8 @@ can use both helpers. Existing scene IDs, effort thresholds and result payloads
 are unchanged. The partner's finished videos remain separate.
 
 `comparisonDialogue(playerName, runs)` has three brief lines and describes the
-actual final pattern in either experiment order. All authored emoji remain
-distinct. `tests/dialogue_narrative.mjs` checks 8,640 complete combination paths
+actual final pattern in either experiment order. Comparison trial headings and weight-pattern labels are larger: 12px on
+desktop and 11px at phone widths. All authored emoji remain distinct. `tests/dialogue_narrative.mjs` checks 8,640 complete combination paths
 for repeated lines/emoji; Replay scene intentionally preserves its established
 lines. See [Level 3 focus revision](LEVEL3_FOCUS.md) for the saved baseline and
 accepted visual/narrative scope.
@@ -154,7 +154,7 @@ across all three chapters; Reset weights is retained.
 `play/Level3-and-Full-game-play.zip`, containing standalone Level 3 and connected
 Levels 1–3. `play/LATEST.json` records source, build, ZIP and bundle hashes.
 `tests/release.py` verifies the actual downloads and their complete flows.
-Current checks are recorded in `LEVEL3_VALIDATION-v9.json`; older reports and
+Current checks are recorded in `LEVEL3_VALIDATION-v10.json`; older reports and
 versioned ZIPs are historical. Managed Chromium tests exact offline HTML bytes
 through an in-memory HTTPS origin; direct file opening in the user browser and
 classroom load capacity are not claimed as tested.

@@ -140,8 +140,8 @@ with sync_playwright() as p:
 
     expect(page.get_by_role('status', name='Maya is typing')).to_be_visible(timeout=10000)
     stamps = page.evaluate('window.reviewTimeline')
-    assert 2400 <= stamps['mayaTyping'] - stamps['finding'] < 3300, stamps
-    record('Level 1 starts its conversation after about 2.5 visible seconds for this finding, 3.5 seconds earlier')
+    assert 1500 <= stamps['mayaTyping'] - stamps['finding'] < 2900, stamps
+    record('Level 1 starts its review with the same 1.6–2.8 second evidence wait as Level 2')
     expect(page.locator('.alex-character')).to_have_count(0)
     expect(page.locator('.maya-bubble p')).to_have_text('Alex, how did you get through the reading so quickly?')
     expect(page.get_by_role('status', name='Alex is typing')).to_be_visible(timeout=6000)
@@ -156,13 +156,13 @@ with sync_playwright() as p:
     assert maya['x'] < alex['x']
     assert page.locator('body').bounding_box()['height'] <= 768
     stamps = page.evaluate('window.reviewTimeline')
-    assert stamps['alexTyping'] - stamps['maya'] >= 3000, stamps
-    assert stamps['completed'] - stamps['alexSecond'] >= 2900, stamps
+    assert 1300 <= stamps['alexTyping'] - stamps['maya'] <= 2600, stamps
+    assert 0 <= stamps['completed'] - stamps['alexSecond'] < 180, stamps
     expect(page.locator('.alex-bubble p')).to_have_text(['I finished the whole list! 📋', 'The reading? I mostly skimmed it 😬'])
     expect(page.locator('.message-continuation .avatar')).to_have_css('visibility', 'hidden')
     expect(page.locator('.message-continuation .speaker-name')).to_have_class('speaker-name sr-only')
     page.screenshot(path=str(out / 'feedback-review.png'), full_page=True)
-    record('Replies stay in the main column; both speakers receive reading time before the next message or completion')
+    record('Replies stay in the main column; messages use the Level 2 reading rhythm and continuation appears with the second Alex reply')
 
     page.get_by_role('button', name='Sound on', exact=True).click()
     before = page.evaluate('window.audioStarts.length')

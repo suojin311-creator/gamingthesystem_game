@@ -30,8 +30,9 @@ helped him work out; reflection asks how he chose what to write; peer response
 asks how he wrote the replies so fast.
 
 The earlier classroom scene and later review use different lines. Evidence
-stays visible and does not assert a measured learning loss. Completion still
-waits for the final message's reading interval.
+stays visible and does not assert a measured learning loss. The Level 1 closing review now shares Level 2’s 300 ms typing and 1.1–2.2 second
+reading rhythm. Continue and the once-only result callback are released with
+Alex’s final message.
 
 ## Level 2
 
