@@ -1,19 +1,15 @@
 {
-  "validatedAtUtc": "2026-10-18T20:17:54.758867+00:00",
-  "version": "Download organization v22; approved v21 gameplay unchanged",
-  "gameplayBaseline": {
-    "commit": "3549b5a4d27584fad2b320e20c1a834aa80d7db5",
-    "allGameplaySourceUnchanged": true,
-    "fourHtmlBuildsAndFivePriorPackagesByteIdentical": true,
-    "previousGameplayValidation": "docs/LEVEL3_VALIDATION-v21.json"
-  },
+  "validatedAtUtc": "2026-10-18T20:33:13.098468+00:00",
+  "version": "Animation integration preparation and scoped development/release workflow",
+  "baselineCommit": "6068b0efe68c91f2835b65d0a79e9c2c685d04f3",
   "passed": 12,
-  "builds": [
-    "npm run build: passed",
-    "npm run build:level1: passed",
-    "npm run build:level2: passed",
-    "npm run build:level3: passed"
-  ],
+  "workflowBuild": {
+    "exitCode": 0,
+    "elapsedSeconds": 18.17,
+    "typeCheckExecutions": 1,
+    "productionBuilds": 4
+  },
+  "dailyPreviewCheck": "npm run dev:level3 -- --port 5174 --strictPort: actual Level 3 chapter and metric selection rendered without a production build or runtime errors",
   "suites": {
     "release-results.json": {
       "passed": 12,
@@ -35,7 +31,7 @@
     }
   },
   "artifacts": {
-    "sourceSha256": "8022c0812b8e20fda2752b730077b47e4db8effad2629efb74e60fd060057830",
+    "sourceSha256": "76fc58622e1aba21233996f20ce240a9845eb4dba5b77aa9d87bc4a793337831",
     "entries": [
       {
         "archive": "Level1-play.zip",
@@ -86,18 +82,14 @@
       }
     }
   },
-  "packagingSources": {
-    "scripts/package_previews.py": "9b3fbe5385b63eb5f58219a3861acd5856cc8c2bf724106550a64e7b48fc4a48",
-    "scripts/package_start.html": "a311a3de7f322588c142c144e6cd5958270f1f85be8621bf1aa4bb67dde93881"
-  },
   "notes": [
-    "The user clarified that the screenshot did not show a bug. Tentative uncommitted observation-label changes were discarded. All product source, prior HTML builds and the five existing packages remain identical to the approved v21 release.",
-    "The repository home now leads with one complete download and clear entry paths. Detailed gameplay/development explanation is preserved in docs/PROJECT_DETAILS.md, with a new docs index. Historical packages, versioned validation reports and branches are retained.",
-    "Gaming-the-System-complete.zip contains the connected three-level game and separate Level1/Level1.html, Level2/Level2.html and Level3/Level3.html. START-HERE.html is an offline version chooser; START-HERE.txt provides Chinese and English instructions.",
-    "The new complete archive is generated alongside every existing download. Its four playable HTMLs are byte-identical to their corresponding tested individual packages and production builds. All six archive hashes and all HTML hashes are recorded in the manifest.",
-    "The actual complete-ZIP launcher opens each version offline and fits 1366px and 320px widths. Desktop and phone screenshots were visually inspected. Production ZIP checks also complete the Level 2 3-to-6-to-10-to-25-to-100 sequence, Level 3 two/optional-third path, standalone Level 1 and connected Level 1-to-2-to-3 with sound and fresh reload behaviour.",
-    "Level 2 experiment framing and the unassigned first Level 3 allocation remain included. No gameplay logic, theory endpoint or authored animation script is changed. The completed opening/cinematics have not been merged.",
-    "The current packaging suite contains 12 passing checks with no runtime errors. The 75 earlier gameplay checks remain historical validation for the unchanged v21 source; they were not all rerun for this packaging/documentation-only release.",
-    "Offline checks serve exact packaged bytes through an in-memory HTTPS route because managed Chromium blocks file navigation. Direct file opening in a particular user browser was not observed."
+    "The gameplay TypeScript/CSS/artwork and dependency lockfile are unchanged. src/cinematics currently contains only integration instructions; no finished animation has been merged, rewritten or substituted.",
+    "Added one current animation landing guide with actual scene IDs and existing Gameplay renderer/complete callbacks, plus a scene-local source destination. The opening keeps its supplied name and authored script. The final theory endpoint remains without Design Lab navigation.",
+    "Daily work now previews and checks only the relevant module, then saves level3-dev. Full offline packaging and preview-branch synchronization happen for playable releases. Documentation-only changes need no builds, and minor changes need no numbered report or extra archive tag.",
+    "The new package:previews pipeline was exercised once: it invoked TypeScript once instead of once for each of four builds, completed all four production modes and regenerated six archives. Individual build commands still type-check themselves. The measured elapsed time is for this run only, not a controlled before/after benchmark.",
+    "All four HTMLs and six archive digests remain byte-identical to the preceding approved release. No new binary package content needs uploading; LATEST sourceSha256 changed because package.json scripts changed. All existing download paths and history remain.",
+    "The actual ZIP/launcher/connected-flow suite passed all12checks with no runtime errors. Allocation/dialogue suites were not repeated because gameplay source and outputs are unchanged. Seventy-four local links in the relevant documentation were checked.",
+    "This preparation checkpoint synchronizes existing release aliases after validating the changed release command. Future routine development saves only level3-dev; the default level1-preview branch remains the latest playable release alias.",
+    "The observed local Git loose-object size is not a measurement of GitHub storage. No history rewrite, archive deletion, default-branch change or Git garbage collection was performed. Avoiding routine ZIP churn and unrelated historical reads/tests is the immediate cost reduction."
   ]
 }

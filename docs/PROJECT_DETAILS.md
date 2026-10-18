@@ -3,6 +3,7 @@
 For the latest one-ZIP download containing the full game and all three standalone
 levels, use [the download guide](../play/README.md). This page retains the detailed
 gameplay and development explanation from the preceding repository home.
+For the current daily/release commands, follow [Development workflow](DEVELOPMENT_WORKFLOW.md).
 
 An English-language game about measuring engagement. Levels 1, 2 and 3 are playable. The partner’s opening and finished cinematics remain separate; story slots use replaceable placeholders.
 

@@ -2,6 +2,12 @@
 
 最新试玩请从 [仓库首页](../README.md) 或 [下载说明](../play/README.md) 进入。
 
+## 下一步：动画合并
+
+- [动画接入说明](ANIMATION_INTEGRATION.md)：开场、场景 ID、真实结束回调和已有玩法边界。
+- [开发流程](DEVELOPMENT_WORKFLOW.md)：日常预览、相关检查、正式发包分开。
+- [动画代码接收目录](../src/cinematics/README.md)：按实际交付导入，不重新编写同伴脚本。
+
 ## 当前玩法与源码
 
 - [项目详细说明](PROJECT_DETAILS.md)：三关玩法、运行和打包命令。

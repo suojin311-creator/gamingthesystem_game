@@ -36,16 +36,26 @@
 | GitHub 分支与文件说明 | [仓库使用说明](docs/REPOSITORY_GUIDE.md) |
 | 各关源码 | [Level 1](src/levels/level1/) · [Level 2](src/levels/level2/) · [Level 3](src/levels/level3/) |
 | 共享模块 | [src/shared/](src/shared/) |
+| 动画接入位置与场景对照 | [src/cinematics/](src/cinematics/README.md) · [接入说明](docs/ANIMATION_INTEGRATION.md) |
+| 日常开发与正式发包 | [开发流程](docs/DEVELOPMENT_WORKFLOW.md) |
 
 ## 开发与发布
 
-当前统一开发分支为 **level3-dev**；发布时同步 level1-preview、level2-preview 和 level2-dev。历史 ZIP、标签和版本化验证报告保留，不作为最新下载入口。
+当前统一开发分支为 **level3-dev**。日常只保存开发进度、调试当前关卡和做相关检查；需要交付试玩包时才完整打包，并同步 level1-preview、level2-preview 和 level2-dev。历史 ZIP、标签和版本化验证报告保留。
+
+日常开发（依赖安装说明见 [项目说明](docs/PROJECT_DETAILS.md)）：
 
 ```sh
-npm ci --cache /tmp/gaming-the-system-npm-cache
 npm run dev
-npm run package:previews
-python3 tests/release.py
+npm run dev:level3
+npm run check
 ```
 
-使用 Node.js 20.19+、22.12+ 或更新版本，以及 Python 3。统一打包会生成四个独立/完整包、原双版本包和新的全部版本总包；`play/LATEST.json` 记录各文件校验值。
+准备交付时：
+
+```sh
+npm run package:previews
+npm run test:release
+```
+
+使用 Node.js 20.19+、22.12+ 或更新版本，以及 Python 3。统一打包只做一次类型检查，再构建四个入口、生成六个包；`play/LATEST.json` 记录最近一次打包的校验值。具体检查按 [开发流程](docs/DEVELOPMENT_WORKFLOW.md) 选择。

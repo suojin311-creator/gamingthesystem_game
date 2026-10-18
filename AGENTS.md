@@ -1,21 +1,45 @@
-# Preview releases
+# Working on this game
 
-- Keep one implementation per level under `src/levels/`; reuse shared modules.
-  Individual previews and the combined game must use these same components.
-- Current development is on `level3-dev`. Levels 1–3 are playable; Design Lab is reserved.
-- After an approved gameplay change, run `npm run package:previews` to rebuild
-  all latest downloads and the two-version review ZIP together. Never update only an individual package
-  or only the combined package when they share affected code.
-- The fixed latest entries are `play/Level1-play.zip`, `play/Level2-play.zip`,
-  `play/Level3-play.zip`, `play/Full-game-play.zip` and
-  `play/Level3-and-Full-game-play.zip`, plus `play/Gaming-the-System-complete.zip`.
-  The complete archive contains the full game, all three standalone levels and
-  an offline START-HERE.html launcher. Rebuild and validate all six together.
-  The two-version archive contains both Level 3
-  and the connected three-level game from those same production builds. Keep version-numbered archives unchanged.
-- Run `python tests/release.py` against the actual latest ZIPs. Use the relevant
-  gameplay suites when behaviour changes. Record current validation/hashes.
-- When publishing is authorized, fast-forward the preview branches to the
-  approved release as well; do not leave `level1-preview` with stale Level 1
-  source or downloads. Check remote changes first and never force-push.
-- Use this checkout; do not create a worktree unless the user requests one.
+- Work in this checkout on `level3-dev`; do not create a worktree unless asked.
+- Keep one implementation per level under `src/levels/`. All playable entries
+  reuse these components. Existing gameplay and authored animation scripts are
+  approved; integrate finished scenes through `Gameplay` renderer props.
+- For animation work, start with `docs/ANIMATION_INTEGRATION.md` and
+  `src/cinematics/README.md`. Read a level’s handoff only when that scene needs it.
+  Use `docs/DEVELOPMENT_WORKFLOW.md` for current commands. Historical design
+  reports are references, not instructions to restore superseded gameplay.
+
+# Daily development
+
+- Use `npm run dev` or `npm run dev:level1`, `dev:level2`, `dev:level3` for the
+  affected entry. Use the running Vite server rather than rebuilding downloads
+  for each visual/timing adjustment.
+- Run `npm run check` for TypeScript changes and the relevant behaviour checks.
+  Do not run every historical test suite or recheck unchanged allocation rules
+  for an animation/style-only change. See the workflow’s check-selection table.
+- Documentation-only changes need relevant link/content checks, not builds.
+- Commit and push daily work to `level3-dev`. Do not routinely synchronize all
+  preview branches, rebuild ZIPs or create numbered reports for minor edits.
+- Keep a concrete baseline before a substantial gameplay change or animation
+  merge; an already-pushed commit is a saved baseline. Extra archive tags are
+  not required for every small change.
+
+# Playable releases
+
+- When a ZIP/review version is requested or a playable release is being made,
+  run `npm run package:previews` once. It type-checks once, builds all four
+  entries, then generates all six current archives together.
+- Fixed latest entries: `play/Level1-play.zip`, `play/Level2-play.zip`,
+  `play/Level3-play.zip`, `play/Full-game-play.zip`,
+  `play/Level3-and-Full-game-play.zip`, `play/Gaming-the-System-complete.zip`.
+  Never replace only part of a release. Keep numbered archives unchanged.
+- Run `npm run test:release` against the actual ZIPs. Record current checks and
+  hashes in `docs/PREVIEW_VALIDATION.json`; keep old versioned reports historical.
+- Check remote changes, then fast-forward `level1-preview`, `level2-preview`
+  and `level2-dev` to the same tested release as `level3-dev`. Never force-push.
+  The repository’s current default branch is the `level1-preview` release alias;
+  daily development may be ahead on `level3-dev` until the next release.
+- Reuse a verified build/package until relevant source changes. Do not repeat
+  broad testing after it passes unless a change or unresolved failure warrants it.
+- Preserve history, tags and existing download links. Do not rewrite Git history
+  or move historical binary archives as routine cleanup.

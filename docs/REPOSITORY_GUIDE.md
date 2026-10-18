@@ -31,11 +31,14 @@ Level 1 单独包已补齐后来制作 Level 2 时对 Level 1 的改进：学生
 | Level 2 源码 | [src/levels/level2](https://github.com/suojin311-creator/gamingthesystem_game/tree/level3-dev/src/levels/level2) |
 | Level 3 源码 | [src/levels/level3](https://github.com/suojin311-creator/gamingthesystem_game/tree/level3-dev/src/levels/level3) |
 | 共用模块 | [src/shared](https://github.com/suojin311-creator/gamingthesystem_game/tree/level3-dev/src/shared) |
+| 成片动画与素材接入 | [src/cinematics](../src/cinematics/README.md) |
+| 动画场景与回调对照 | [动画接入说明](ANIMATION_INTEGRATION.md) |
 | 全部试玩包及说明 | [play](https://github.com/suojin311-creator/gamingthesystem_game/tree/level3-dev/play) |
 
 ```text
 src/
   Gameplay.tsx       各关之间的衔接和姓名传递
+  cinematics/        后续导入的成片动画和素材
   levels/
     level1/          第一关
     level2/          第二关
@@ -54,13 +57,16 @@ scripts/             统一打包命令
 - **level2-preview**：已同步到这次发布，提供同样的最新单关和连玩包。
 - **level2-dev**：保留此前开发历史，本次也同步；后续开发使用 level3-dev。
 
-本次四个分支指向同一次发布。分支本身不会自动同步；每次发布已认可的
-修改时，要一起重新打包并更新预览分支。历史版本通过带版本号的 ZIP 或
+日常只在 level3-dev 保存进度，不必为每次修改更新 ZIP 或同步其他分支。
+准备交付试玩版本时，四个分支再指向同一次经过验证的发布。仓库当前默认
+分支为 level1-preview，显示最近发布；日常开发分支可以领先它。
+历史版本通过带版本号的 ZIP 或
 Git 提交记录查找，v6 原始提交仍是 `336c59f`。
 
-开发时使用 `npm run package:previews` 一次重建连玩、Level 1 独立和
-Level 2 / Level 3 独立四个包，以及双版本包和全部版本总包，避免只更新其中一个。`play/LATEST.json` 记录源码及
+日常使用 Vite 调试当前关卡；正式发包时使用 `npm run package:previews`，
+只做一次类型检查，再重建四个入口及全部六个 ZIP。`play/LATEST.json` 记录最近打包的源码及
 文件校验值。发布前用 `python tests/release.py` 验证实际包的内容与衔接。
+完整命令和按改动选择检查的方法见 [开发流程](DEVELOPMENT_WORKFLOW.md)。
 
 Level 3 已可试玩：选出三个重点、分配并逐项确认 100% 权重、观察反应，
 再根据实际观察自由调整；两次后可以比较，第三次可选，不强制平均或不同均衡程度。首次权重显示未分配，由玩家拖动后生成。
