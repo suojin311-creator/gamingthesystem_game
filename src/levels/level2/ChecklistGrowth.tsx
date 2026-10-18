@@ -1,5 +1,4 @@
 import CharacterPortrait from '../../shared/components/CharacterPortrait';
-import Icon from '../../shared/components/Icon';
 
 const CAPTIONS = { 10: 'Checking each box.', 25: 'One answer. Several boxes.', 100: 'Just enough for every tick.' };
 
@@ -19,6 +18,6 @@ export default function ChecklistGrowth({ count, beat }: { count: 10 | 25 | 100;
       {count === 100 && <><path d="M217 67h31v13h-31Z" fill="#b57555" /><path d="M226 66V51h13v15" stroke="#946b4b" strokeWidth="5" /><path d="M212 87h41" stroke="#87976e" strokeWidth="4" /></>}
     </svg>
     <figcaption>{CAPTIONS[count]}</figcaption>
-    <span className="l2-growth-beats" aria-hidden="true">{[10, 25, 100].map(value => <span key={value} data-current={value === count} data-done={value < count}>{value < count ? <Icon name="check" /> : value}</span>)}</span>
+
   </figure>;
 }

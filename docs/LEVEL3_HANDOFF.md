@@ -37,8 +37,7 @@ category. See [visual operations](VISUAL_PLAY.md).
   Narrative V2 behaviours. Returning reveals qualitative effort rows, then the
   teacher/Alex conversation; the next action appears with Alex’s second short message. Weight editing, publication and comparison contain no workbench dialogue.
 - Results use the three evidence rows without an additional effort-summary box.
-  A single neutral table aligns all tests in adjacent columns, with each metric label shown once. Cells with changed effort have a restrained marker; near-even does not receive a success colour. Both player attempts and
-  any system reference remain visible as actual data rows.
+  A single neutral table aligns all tests in adjacent columns, with each metric label shown once. Cells with changed effort have a restrained marker; near-even does not receive a success colour. All three player-confirmed attempts remain visible as actual data rows.
 - Level 3 action footers have no explanatory left-side captions. Selection
   feedback stays next to the chosen-priorities list; unchanged-allocation
   validation is shown above the weight cards. Replay scene remains a control.
@@ -53,23 +52,45 @@ Near-even means highest minus lowest at most **10 percentage points**, including
 medium story shots. Among valid weights, 1–33% is low, 34–66% medium and 67–98% high effort.
 These categories are narrative choices, not measured learning gains or losses.
 
-## Free second attempt and a missing reference
+## Explore, Adjust and Verify
 
-After the first observation, Try another split opens the editor. The only extra
-requirement is to change the allocation. Neither the title, teacher dialogue nor
-Run gate requires the player to make it more even or reach a specific spread.
+Level 3 now has exactly three player-confirmed tests. The first editor states
+“Can changing the weights change what Alex is aiming for?” The second uses the
+actual first observation to ask about neglected tasks or changing the reward
+when Alex already completed all three. Its allocation can change freely.
 
-| Two player tests | Next |
+The third task tests the explanation:
+
+| First two tests | Verification task |
 | --- | --- |
-| One near-even, one uneven | Compare the two actual player tests |
-| Both uneven | What if they counted equally? offers a 34/33/33 system reference |
-| Both near-even | What if one counted more? offers a 70/20/10 system reference |
+| Both uneven | Try similar shares; highest-to-lowest spread must be at most 10 points |
+| Both near-even | Try clearly different shares; spread must exceed 10 points |
+| One of each | Move reward towards a previously low-effort task; its effort band must rise in a new uneven allocation |
 
-The reference is explicitly identified, requires a click, and uses the same
-publication → Observe → classroom → results flow. The comparison displays all
-actual runs in order: Your first test, Your second test, and System reference
-when present. No second player test is omitted. On narrow layouts each metric label spans the table, followed by the same two or three trial columns. All actual records remain visible. The concern remains that scoring rules guide
-Alex’s choices even when effort is distributed more evenly.
+`experiments.ts` supplies the one-sentence question, relevant card emphasis,
+optional starting point and task validation. “Show me a starting point” only
+loads editable values; it clears current confirmations and never runs a trial.
+Players can use their own values. Repeating an actual prior allocation is
+rejected. Reset restores the immediately previous trial. Comparison is available
+only after the third observation and contains First/Second/Third test, all
+`kind: 'player'`. The prior two-tests-plus-reference flow is superseded.
+
+The third review has distinct teacher/Alex lines and exposes continued
+score-directed behaviour, including when effort becomes near-even.
+
+## First-use weight guide
+
+The four-step, nonmodal guide appears automatically the first time the editor
+opens during a visit: move any slider → confirm the chosen value → adjust and
+confirm either remaining value (locking the pair) → Run evaluation. It follows
+actual controls, supports keyboard input and does not prescribe percentages.
+The same edited/confirmed values become the first actual trial.
+
+Skip guide and Escape close it; Guide in the editor header reopens it at the
+current control state. Reset restarts the instructions if the guide is open,
+without replaying it automatically on later tests. Reopening the page starts a
+fresh visit. The inline guide remains reachable on narrow screens; highlighted
+controls retain normal keyboard focus indicators.
 
 ## Conversations and final placeholder
 
@@ -146,7 +167,7 @@ advance to another screen. The finished opening/cinematics remain separate.
 `onComplete` / `onLevelThreeComplete` fires once when the comparison is read or
 its next action is clicked. It returns `selectedMetricIds`, every copied `run`
 and `compared: { nearEven, uneven }`. The compared pair remains compatible while
-the UI and all-runs payload also retain the second test and any reference.
+the UI and all-runs payload retain all three actual tests. Completion waits for all three.
 
 ## Lifetime and validation
 
@@ -160,9 +181,9 @@ across all three chapters; Reset weights is retained.
 `play/Level3-and-Full-game-play.zip`, containing standalone Level 3 and connected
 Levels 1–3. `play/LATEST.json` records source, build, ZIP and bundle hashes.
 `tests/release.py` verifies the actual downloads and their complete flows.
-Current checks are recorded in `LEVEL3_VALIDATION-v10.json`; older reports and
+Current checks are recorded in `LEVEL3_VALIDATION-v14.json`; older reports and
 versioned ZIPs are historical. Managed Chromium tests exact offline HTML bytes
 through an in-memory HTTPS origin; direct file opening in the user browser and
 classroom load capacity are not claimed as tested.
 
-The v12 Level 3 forecast page and prediction/result fields have been withdrawn. Confirmed weights run directly into publication; reference tests also publish after their explicit action. The positive-weight rule remains. See [current feedback corrections](LEARNING_OPTIMIZATIONS.md).
+The v12 Level 3 forecast page and prediction/result fields have been withdrawn. Confirmed weights run directly into publication; all three player-confirmed tests publish directly after Run evaluation. The positive-weight rule remains. See [current feedback corrections](LEARNING_OPTIMIZATIONS.md).

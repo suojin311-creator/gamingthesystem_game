@@ -46,7 +46,7 @@ Adding them gives six green ticks, followed by the shared six-metric scene.
 One Add more metrics action runs the 10 → 25 → 100 sequence. Each milestone
 changes the count/matrix and reveals a short illustrated checklist action. After
 the 10- and 25-item actions finish, each holds for 3.5 visible seconds before
-advancing. Hidden/off-screen time does not consume the hold. No repeated Add
+a 0.7-second paper turn. A persistent counter, matrix and paper surface prevents page replacement; the next milestone lights before the count changes. Internal transitions retain scroll position and paper height. Hidden/off-screen time does not consume either hold or turn. No repeated Add
 click is required.
 At 100, Observe the class plays the final scene. The last dashboard stays at
 100 with qualitative evidence and the question about relative importance.
@@ -163,14 +163,14 @@ message, including Alex's last reply on the three- and six-metric pages. The
 shared Conversation's optional onLastMessage callback releases the action;
 onSettled still waits for the final reading interval before reporting completion.
 Level 1’s closing review now shares the brisk 300 ms typing, 1.1–2.2 second reply intervals and 1.6–2.8 second finding wait. Its earlier single workbench lines retain the original defaults. All revealed text remains available.
-The 10/25/100 checklist uses action items, rather than questions. Each item
-appears 550 ms after the previous one and its checkbox ticks. The ticks represent
-Alex completing checklist actions, not demonstrating learning. The next button
-opens after 1000 ms of visible time following the final item. All items remain
-visible and the player decides when to continue. Hidden
-tabs and off-screen text hold these sequences. Reduced motion removes movement
-but keeps the sequence and waits. Sound preference carries between levels in page
-memory.
+The 10/25/100 illustrations complete their checkmarks at 300 ms intervals, then
+hold 3.5 visible seconds at 10/25. The next milestone highlights and the current
+illustration fades out over a 700 ms paper turn; the same mounted counter runs
+upwards and the next illustration fades in. The paper surface keeps its height
+and no repeated automatic scrolling occurs. At 100 the final Observe action
+waits for the player. Hidden/off-screen time pauses the sequence and its paper
+animation. Reduced motion removes movement while retaining readable holds and
+milestone cues. Sound preference carries between levels in page memory.
 
 No game storage, runtime server, API key or multiplayer service is used.
 Two students at one computer share one run. Classroom network capacity and

@@ -19,9 +19,7 @@ check visible chapter titles and compact headers in all three levels at
 
 The Level 3 prediction page and prediction/result markers have been removed.
 Forecasting which task receives effort after showing its scoring weight mostly
-repeated an already apparent relationship. Confirmed weights now run directly
-into publication. Explicit reference actions also publish directly. The
-comparison retains both actual player attempts and any needed reference.
+repeated an already apparent relationship. Confirmed weights run directly into publication. Level 3 now uses three player-led Explore/Adjust/Verify trials, as described in [scaffolding](SCAFFOLDING.md). The comparison retains all three actual attempts.
 
 The positive-weight rule stays: each priority receives at least 1%, the total
 is exactly 100%, and a priority can reach 98% while reserving 1% for each other
@@ -51,15 +49,15 @@ scene or reinterpret that script.
 One Add more metrics action still runs 10 → 25 → 100. Each milestone retains its
 real count, growing paper stack, short caption and report-triggered management
 satisfaction checkpoint. The completed actions at 10 and 25 now each remain
-visible for **3.5 seconds** before advancing. Hidden/off-screen time does not
+visible for **3.5 seconds**, followed by a 0.7-second anticipated paper turn on the same mounted surface. Hidden/off-screen time does not
 consume that hold. At 100, Observe the class still waits for a click.
 
 ## Validation and scope
 
 Current checks cover compact visible headers, the retained positive-weight
-bounds, direct trial/reference flows, original animation-request contracts,
+bounds, three player-led trial flows, original animation-request contracts,
 replacement without duplicate content, longer visible holds, three-level
 handoff, dialogue consistency and exact packaged offline HTML. They are recorded
-in `LEVEL3_VALIDATION-v13.json`. Earlier broader reports were not rerun in full.
+in `LEVEL3_VALIDATION-v14.json`. Earlier broader reports were not rerun in full.
 Opening-animation integration and the Level 1 opening handoff remain a separate
 next step; this correction does not merge or rewrite the authored opening.

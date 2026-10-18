@@ -79,15 +79,20 @@ with sync_playwright() as p:
     assert [shot['sceneId'] for shot in request['shots']]==['level3.prep.high','level3.part.low','level3.focus.low']
     assert request['runs'][0]['weights']==[70,20,10]
     record('Opening-supplied player name reaches Level 3 labels, avatar and the three weighted partner shots')
-    page.get_by_role('button',name='Try another split',exact=True).click()
+    page.get_by_role('button',name='Adjust the weights',exact=True).click()
     weights(page,[34,33,33]);publish(page)
+    assert page.evaluate('window.results.length')==0
+    page.get_by_role('button',name='Test your explanation',exact=True).click()
+    weights(page,[10,70,20]);publish(page)
     page.get_by_role('button',name='Compare the patterns',exact=True).click();advance(page,3)
     results=page.evaluate('window.results')
     assert len(results)==1 and results[0]['level']==3
     result=results[0]['result'];assert result['runs'][0]['weights']==[70,20,10]
+    assert len(result['runs'])==3 and all(run['kind']=='player' for run in result['runs'])
+    assert result['runs'][2]['weights']==[10,70,20]
     assert result['compared']['nearEven']['weights']==[34,33,33]
     assert result['compared']['uneven']['weights']==[70,20,10]
-    record('Level 3 completes once with immutable tested runs and an explicit near-even/uneven comparison payload')
+    record('Level 3 completes once after three player-led tests with immutable tested runs and an explicit near-even/uneven comparison payload')
     page.get_by_role('button',name='Watch Alex’s response',exact=True).click()
     assert page.evaluate('window.requests.at(-1).sceneId')=='level3.compare'
     page.get_by_role('button',name='Finish partner scene',exact=True).click()

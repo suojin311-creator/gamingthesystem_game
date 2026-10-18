@@ -1,0 +1,275 @@
+{
+  "validatedAtUtc": "2026-10-18T12:09:40.296212+00:00",
+  "version": "Scaffolding v14: continuous Level 2 paper transitions, three player-led experiments and an interactive first-use weight guide",
+  "passed": 48,
+  "builds": [
+    "npm run build: passed",
+    "npm run build:level1: passed",
+    "npm run build:level2: passed",
+    "npm run build:level3: passed"
+  ],
+  "suites": {
+    "level3-rules-results.json": {
+      "passed": 7,
+      "checks": [
+        "Every possible integer split preserves total 100, range 1\u201398 and deterministic effort",
+        "Either remaining card confirms the pair after any first-card choice",
+        "Both equal remaining sliders can move in either direction before confirmation",
+        "Available bounds clamp safely, reserving one percent, without changing locked weights or snapshots",
+        "Near-even accepts gaps through 10 points inclusively, rejects 11, and produces three medium shots",
+        "Run requires all three confirmed weights (including the linked pair) and a valid complete allocation",
+        "The second experiment requires a changed split and never forces a direction or degree of balance"
+      ]
+    },
+    "experiment-rules-results.json": {
+      "passed": 3,
+      "checks": [
+        "Every positive first split has a relevant second-test prompt and a valid optional starting point, without changing the first record",
+        "All three adaptive verification routes produce a third distinct player test and a near-even/uneven comparison",
+        "Verification accepts player-chosen valid alternatives, rejects irrelevant repeats and zero, and supplies independently copied suggestions"
+      ]
+    },
+    "learning-contract-results.json": {
+      "passed": 2,
+      "checks": [
+        "Actual trial snapshots and partner/comparison copies remain independent after removing the forecast layer",
+        "All 20 trios retain the original animation request fields without generated peer-story data"
+      ]
+    },
+    "learning-optimization-results.json": {
+      "passed": 10,
+      "checks": [
+        "The once-per-visit guide follows real keyboard/slider/confirmation actions, explains the linked pair, preserves actual first-trial values and supports Skip, Escape and reopening without resetting weights",
+        "one-higher: three distinct player-confirmed tests use the redirect verification, retain every actual trial and reach the existing theory placeholder",
+        "two-higher: three distinct player-confirmed tests use the redirect verification, retain every actual trial and reach the existing theory placeholder",
+        "near-even: three distinct player-confirmed tests use the redirect verification, retain every actual trial and reach the existing theory placeholder",
+        "both-uneven: three distinct player-confirmed tests use the balance verification, retain every actual trial and reach the existing theory placeholder",
+        "both-near-even: three distinct player-confirmed tests use the contrast verification, retain every actual trial and reach the existing theory placeholder",
+        "Guide, skipped/default confirmations, reopening and reset remain usable at 1366/768/390/320px without overflow or hidden headers",
+        "Normal-motion escalation preserves the same counter/matrix/paper nodes, scroll and card height, holds content for 3.5 seconds, anticipates each next node and turns for 0.7 seconds; hidden tabs pause the turn and 100 still waits for Observe",
+        "At 320px, all three growth states keep the same paper height and retain the reading position within 8px despite caption wrapping; reduced motion keeps the holds and final manual Observe with no moving paper",
+        "No runtime errors in guide actions, all adaptive third-test routes, original placeholder endpoints or continuous escalation"
+      ],
+      "timings": {
+        "holdMs": 3602,
+        "turnMs": 909,
+        "phoneGeometry": [
+          {
+            "scroll": 141,
+            "height": 255
+          },
+          {
+            "scroll": 135,
+            "height": 255
+          },
+          {
+            "scroll": 135,
+            "height": 255
+          }
+        ]
+      },
+      "runtimeErrors": []
+    },
+    "release-results.json": {
+      "passed": 10,
+      "checks": [
+        "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
+        "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
+        "Packaged Level2.html completes 3 \u2192 6 \u2192 10 \u2192 25 \u2192 100 offline with normal motion",
+        "Packaged standalone Level3.html completes three player-led tests and compares all actual results offline",
+        "Packaged Level1.html includes the latest behaviour and two replies, stops after Level 1 and permits replay",
+        "Standalone Level 1 reload starts a fresh Level 1 run",
+        "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
+        "Packaged combined game connects Level 1 \u2192 Level 2 \u2192 playable Level 3 in one open run",
+        "Combined preview reload starts from Level 1 rather than restoring Level 2",
+        "Packaged entries have no browser runtime errors"
+      ],
+      "runtimeErrors": []
+    },
+    "level3-integration-results.json": {
+      "passed": 9,
+      "checks": [
+        "Opening-supplied player name reaches Level 3 labels, avatar and the three weighted partner shots",
+        "Level 3 completes once after three player-led tests with immutable tested runs and an explicit near-even/uneven comparison payload",
+        "Comparison leads to theory; even duplicate final callbacks stay in the placeholder and never invoke Design Lab",
+        "Real Gameplay host carries the opening name and sound preference from Level 2 into the new Level 3 chapter",
+        "Level 3 preselects the actual Level 2 trio, permits swapping, and has no player Restart control",
+        "Reloading the connected host starts fresh from its configured entry level",
+        "Hidden-page publication holds its visible-time sequence and resumes without skipping the three weights",
+        "Real-time publication and evidence arrive one at a time; Web Audio cues play and Sound off silences later updates",
+        "No browser errors in partner, chapter handoff or real-time audio checks"
+      ],
+      "runtimeErrors": []
+    },
+    "dialogue-emoji-results.json": {
+      "passed": 1,
+      "checks": [
+        "All gameplay emoji are distinct across all levels"
+      ],
+      "emojiCount": 24,
+      "inventory": [
+        {
+          "emoji": "\ud83d\udccb",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\ude2c",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\ude4b",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83e\udd37",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\udcbb",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\udc40",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\udcac",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83e\udd14",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\udcdd",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\udd01",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83c\udfaf",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83e\udd2d",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83e\ude99",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83d\ude05",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\uddd0",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\ude84",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\uddf7",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\udd47",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83d\udece",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83d\ude0f",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\uddee",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\udd68",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\ude81",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\udde9",
+          "file": "src/levels/level3/dialogue.ts"
+        }
+      ]
+    },
+    "dialogue-narrative-results.json": {
+      "passed": 6,
+      "checks": [
+        "Every valid integer split uses the 10-point near-even boundary and the correct one/two higher-reward family",
+        "All 20 trios have concise pattern-specific reviews; near-even exposes the scoring stopping rule",
+        "Second-result questions describe actual increases, decreases and unchanged effort bands",
+        "All verification routes and both comparison orders describe the latest actual pattern without assuming an improvement",
+        "No dialogue or emoji repeats within 8,640 complete trial paths, including repeated patterns and unchanged scene intensity",
+        "Six Level 1 review questions and all 20 Level 2 trio exchanges differ; player names remain supplied text"
+      ],
+      "completeTrialPaths": 8640
+    }
+  },
+  "artifacts": {
+    "sourceSha256": "faf1eda59a89496b42a0294809c91d6122c05562273ef12fa9dacc70560e9754",
+    "entries": [
+      {
+        "archive": "Level1-play.zip",
+        "html": "Level1.html",
+        "build": "dist-level1/index.html",
+        "htmlSha256": "975e4edf1dc21ad3292164fdbdb9840afc1046038e5ebdc342c8652c41ce4496",
+        "zipSha256": "271dd917faae5308b66d51cc4b0f2411f07326ee142232811421d47f8d7e4d88"
+      },
+      {
+        "archive": "Level2-play.zip",
+        "html": "Level2.html",
+        "build": "dist-level2/index.html",
+        "htmlSha256": "406f4c03caa2a6d0fa4e8fb64a69026435a294ea5bae5e37cff9b3b57e9e756a",
+        "zipSha256": "ed596b7a4641addbfa6f3bc1e76a1ca36559643b6a63c05496aab29b3734d811"
+      },
+      {
+        "archive": "Level3-play.zip",
+        "html": "Level3.html",
+        "build": "dist-level3/index.html",
+        "htmlSha256": "bcfc417ecbc75c8e77e466083b692be40bc0fd55336ffb12b0fd2160b50e1c95",
+        "zipSha256": "6433d8cb0b23f3e8626e787661cef8b14ff5fe11f688feb982919320b6b6ec9d"
+      },
+      {
+        "archive": "Full-game-play.zip",
+        "html": "Gaming-the-System.html",
+        "build": "dist/index.html",
+        "htmlSha256": "1629a3b8b76906c90f361c13db35e6f2dfa00ce085999a418d875a4b7aa71c40",
+        "zipSha256": "afcea6b2310f3bb9cd8e08dd50859960c254fb2ce51b7a2d8be745790bcc652c"
+      }
+    ],
+    "reviewBundle": {
+      "archive": "Level3-and-Full-game-play.zip",
+      "zipSha256": "e255d81b5a57b1ef0665c019ad2aa9b2f90010842b9e1852aff413f57c736215",
+      "htmlSha256": {
+        "Level3/Level3.html": "bcfc417ecbc75c8e77e466083b692be40bc0fd55336ffb12b0fd2160b50e1c95",
+        "Full-game/Gaming-the-System.html": "1629a3b8b76906c90f361c13db35e6f2dfa00ce085999a418d875a4b7aa71c40"
+      }
+    }
+  },
+  "notes": [
+    "The Level 2 growth counter, matrix and paper stay mounted during 10/25/100 escalation. Completed 10/25 actions hold 3.5 visible seconds before a 700 ms paper turn; the next milestone is highlighted before the number changes. Tests check DOM identity, paper height, scroll position and measured timing. CSS pauses the actual paper animation while hidden, matching the visible-time state delay.",
+    "Phone captions reserve two lines so short and wrapped captions keep the same paper height. Scroll anchoring is disabled during continuous escalation. At 320px, the three growth milestones retain matching paper heights and keep the reading position within 8px of native viewport settling. Narrow-screen perspective-card space is reserved as well. Reduced motion removes moving paper while retaining readable holds and the final explicit Observe action.",
+    "Level 3 now requires exactly three player-confirmed trials: Explore, Adjust and Verify. The first editor asks whether weights change Alex\u2019s aim. The second prompt uses the actual neglected tasks or near-even stopping rule and permits any new split. The third task supplies the missing near-even/uneven contrast, or redirects the reward to a previously low-effort task when both families have already been observed.",
+    "Third-test validation accepts player-chosen values satisfying its task and excludes earlier exact allocations. Optional Show me a starting point only loads editable unconfirmed weights; it never confirms, runs or inserts a system reference. Reset restores the immediately previous run. Every actual test remains a copied kind=player record, labelled First/Second/Third test in the comparison.",
+    "The first-use nonmodal guide advances from actual slider actions to Confirm weight, remaining-pair confirmation and Run evaluation. It retains the player\u2019s actual first allocation, supports keyboard use and arbitrary confirmation order, and can be skipped, closed with Escape or reopened through Guide. It does not auto-open during later tests; reset reflects the new current control state.",
+    "All 4,851 positive first splits have a valid optional next starting point. All 20 selected trios and representative one-higher, two-higher, near-even, extreme and reordered histories exercise the three verification routes. The near-even spread remains at most ten points and all priorities retain at least one percent.",
+    "Observation reviews remain one teacher question and two short Alex replies, with distinct third-test reasoning. The dialogue suite checks 8,640 complete three-test paths across the earlier-level stories without repeated lines or emoji. Existing authored animation scripts, player-name propagation, scene IDs, editable Level 2 imports and the final theory-placeholder endpoint remain intact.",
+    "All five latest ZIPs pass CRC and SHA-256 checks and contain HTML identical to the final production builds. The review bundle contains standalone Level 3 and connected Levels 1\u20133 from the same builds. Actual offline packages, three-level handoff, partner scene replacement, one-time completion, mute and real-time publication are verified.",
+    "The v13 baseline and downloads remain on archive/pre-scaffolding-v13 at d10e09bc7a34cae462ea594bce09f4fc8671f593. Historical archive branches, validation records and versioned ZIPs are unchanged.",
+    "These are functional checks, not measured learning-effectiveness results. Opening-animation integration, finished authored videos, direct file opening in the user browser, Design Lab navigation and classroom hosting capacity are outside this release. Earlier broader suites remain historical and were not rerun in full."
+  ]
+}

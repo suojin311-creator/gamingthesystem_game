@@ -1,6 +1,7 @@
 # Level 2 — More metrics
 
 - `LevelTwo.tsx`: complete 3 → 6 → 10 → 25 → 100 flow, in-memory state and paced presentation.
+- `GrowthSequence.tsx`: stable counter/matrix/paper surface, next-milestone cue and pausable 0.7-second paper transition.
 - `Conversation.tsx`: faster Level 2 dialogue and finding pace; the last message releases the next action immediately.
 - Shared `MetricSelection.tsx`: short icon cards and a three-slot Alex’s Checklist; selected definitions are reviewed in the tray. Evaluations do not duplicate it.
 - `data.ts`: three combination branches, evidence, checklists and integration types.
@@ -18,4 +19,4 @@ The optional `previousMetricId` prop carries the prior choice in memory.
 See [LEVEL2_HANDOFF.md](../../../docs/LEVEL2_HANDOFF.md) for cinematic IDs,
 completion data and boundaries. The combined host enables Continue to Level 3 through the optional onContinue callback. The standalone Level 2 entry leaves that callback absent and stops here.
 
-The original classroom scene slot remains for the user’s authored animation. The added peer demonstration and narrative are withdrawn. One Add more metrics action runs 10 → 25 → 100 through `ChecklistGrowth`; completed 10/25 actions each hold 3.5 visible seconds and the final Observe action stays explicit. See docs/LEARNING_OPTIMIZATIONS.md.
+The original classroom scene slot remains for the user’s authored animation. The added peer demonstration and narrative are withdrawn. One Add more metrics action runs 10 → 25 → 100 through `ChecklistGrowth`; completed 10/25 actions each hold 3.5 visible seconds, anticipate the next count and turn over 0.7 seconds. The surface keeps its DOM, height and scroll position, and the final Observe action stays explicit. See docs/LEARNING_OPTIMIZATIONS.md.

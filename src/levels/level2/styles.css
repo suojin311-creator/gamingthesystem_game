@@ -240,3 +240,33 @@
 @media (max-width: 520px) {
   .level-two .l2-growth-action figcaption { font-size: 20px; }
 }
+
+/* Escalation happens on one desk, with an anticipated paper turn between counts. */
+html:has(.l2-growth-sequence), .level-two:has(.l2-growth-sequence) { overflow-anchor: none; }
+.level-two .l2-growth-sequence .l2-observation-slot { margin-bottom: 0; }
+.level-two .l2-growth-sequence .l2-checklist-stack { margin-bottom: 15px; min-height: 245px; }
+.level-two .l2-growth-sequence .l2-growth-action { min-height: 195px; }
+.level-two .l2-growth-sequence[data-state=loading] .l2-growth-action { opacity: 0; visibility: hidden; }
+.level-two .l2-growth-sequence[data-state=shown] .l2-growth-action { animation: l2-growth-enter .4s ease-out both; }
+.level-two .l2-growth-sequence[data-state=leaving] .l2-growth-action { animation: l2-growth-leave .7s ease-in-out both; }
+.level-two .l2-growth-sequence[data-state] .l2-growth-action, .level-two .l2-growth-sequence[data-state] .l2-growth-action * { animation-play-state: var(--growth-play-state, running); }
+.level-two .l2-growth-sequence .l2-checklist-stack::before, .level-two .l2-growth-sequence .l2-checklist-stack::after { transition: opacity .7s, transform .7s; }
+.level-two .l2-growth-sequence .l2-growth-beats { justify-content: center; margin: 0 0 8px; gap: 18px; }
+.level-two .l2-growth-beats > span { transition: background .35s, border-color .35s, color .35s, box-shadow .35s; position: relative; }
+.level-two .l2-growth-beats > span:not(:last-child)::after { content: ''; position: absolute; left: calc(100% + 3px); width: 12px; height: 1px; background: #cfbea0; }
+.level-two .l2-growth-beats [data-next=true] { background: #eee0c4; border-color: #b58d57; color: #805a31; box-shadow: 0 0 0 3px #c6a66b26; }
+.level-two .l2-growth-actions { justify-content: flex-end; min-height: 65px; }
+@keyframes l2-growth-enter { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes l2-growth-leave { 0%, 25% { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-7px); } }
+@media (max-width: 760px) {
+  .level-two .l2-body:has(.l2-growth-sequence) .l2-perspectives { min-height: 300px; }
+}
+@media (max-width: 520px) {
+  .level-two .l2-growth-sequence .l2-checklist-stack { min-height: 255px; }
+  .level-two .l2-growth-sequence .l2-growth-action figcaption { min-height: 54px; display: flex; align-items: center; justify-content: center; }
+  .level-two .l2-growth-sequence .l2-growth-action { min-height: 185px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .level-two .l2-growth-sequence *, .level-two .l2-growth-sequence *::before, .level-two .l2-growth-sequence *::after { animation: none !important; transition: none !important; transform: none !important; }
+  .level-two .l2-growth-sequence[data-state=leaving] .l2-growth-action { opacity: .6; }
+}

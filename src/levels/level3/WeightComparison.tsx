@@ -8,7 +8,7 @@ import EffortDisplay from './EffortDisplay';
 export default function WeightComparison({ runs }: { runs: WeightRun[] }) {
   return <div className="l3-comparison" data-testid="weight-comparison">
     <table className="l3-compare-table" aria-label="Alex’s effort across all tested weights" style={{ '--trial-count': runs.length } as CSSProperties}>
-      <thead><tr><th scope="col" className="l3-compare-metric-heading">Metric</th>{runs.map(run => <th scope="col" key={run.round} data-run={run.round} data-kind={run.kind} className={isNearEven(run.weights) ? 'near-even' : 'uneven'}><span className="eyebrow">{run.kind !== 'player' ? 'Reference' : run.round === 1 ? 'First test' : 'Second test'}</span><small>{isNearEven(run.weights) ? 'Near-even weights' : 'Uneven weights'}</small></th>)}</tr></thead>
+      <thead><tr><th scope="col" className="l3-compare-metric-heading">Metric</th>{runs.map(run => <th scope="col" key={run.round} data-run={run.round} data-kind={run.kind} className={isNearEven(run.weights) ? 'near-even' : 'uneven'}><span className="eyebrow">{run.kind !== 'player' ? 'Reference' : run.round === 1 ? 'First test' : run.round === 2 ? 'Second test' : 'Third test'}</span><small>{isNearEven(run.weights) ? 'Near-even weights' : 'Uneven weights'}</small></th>)}</tr></thead>
       <tbody>{runs[0].metricIds.map(id => <tr key={id} data-metric={id}>
         <th scope="row"><Icon name={id} /><span>{metricDefinition(id).shortName}</span></th>
         {runs.map((run, runIndex) => {

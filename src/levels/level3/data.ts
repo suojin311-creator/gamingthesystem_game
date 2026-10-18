@@ -1,5 +1,5 @@
 import { metricDefinition, type MetricId } from '../../shared/data/metrics';
-import { CONTRAST_WEIGHTS, EVEN_WEIGHTS, effortAt, isNearEven, type Effort, type Weights } from './weights';
+import { effortAt, isNearEven, type Effort, type Weights } from './weights';
 
 export type WeightRun = { round: number; kind: 'player' | 'balance-check' | 'contrast-check'; metricIds: MetricId[]; weights: Weights };
 export type LevelThreeCinematicRequest = {
@@ -65,14 +65,6 @@ export function effortGroups(run: WeightRun) {
   })).filter(group => group.metricIds.length).map(group => ({ ...group,
     names: joinNames(group.metricIds.map(id => metricDefinition(id).shortName)),
   }));
-}
-
-/** Supply the missing pattern only after two freely chosen player tests. */
-export function referenceTest(runs: WeightRun[]): { weights: Weights; kind: WeightRun['kind'] } | null {
-  if (runs.filter(run => run.kind === 'player').length < 2 || compareRuns(runs)) return null;
-  return isNearEven(runs[0].weights)
-    ? { weights: CONTRAST_WEIGHTS, kind: 'contrast-check' }
-    : { weights: EVEN_WEIGHTS, kind: 'balance-check' };
 }
 
 export function cinematicRequest(kind: LevelThreeCinematicRequest['kind'], playerName: string, runs: WeightRun[]): LevelThreeCinematicRequest {

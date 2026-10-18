@@ -31,6 +31,11 @@ export function workbenchDialogue(phase: string, playerName: string, _goal: Weig
     if (pattern === 'two-higher') return [teacher(`What happened to ${low}?`), alex(`${lead} kept me busy. 🛎️`), alex(`I gave ${low} the quick version.`)];
     return [teacher('What would you like to explore next?'), alex('Does that earn extra points?'), alex('If not, I’m done. 😏')];
   }
+  if (current.round === 3) {
+    if (pattern === 'near-even') return [teacher('Everyone got a share. Did your reason for working change?'), alex('I covered all three requirements.'), alex('The checklist still tells me when to stop.')];
+    if (runs.slice(0, 2).every(run => isNearEven(run.weights))) return [teacher(`Why did ${lead} pull you back?`), alex('That’s where the marks went.'), alex('I’m still checking what pays off.')];
+    return [teacher('What made you change which task came first?'), alex(`${lead} pays more now.`), alex('Same plan: collect the marks, then stop.')];
+  }
   if (current.kind !== 'player') {
     if (pattern === 'near-even') return [teacher('All three got time. What about going further?'), alex('I’d need a reason to keep going. 🧮'), alex('Is there another mark for that?')];
     return [teacher(`What pulled you toward ${lead}?`), alex('That bigger reward! 🥨'), alex('The smaller tasks could wait.')];

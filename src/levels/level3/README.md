@@ -1,6 +1,8 @@
 # Level 3 — The Weighting Trap
 
 - `LevelThree.tsx`: chapter introduction, editable inherited three-metric selection, linked confirmation, publication, adaptive tests and compared run history.
+- `experiments.ts`: evidence-based Explore/Adjust/Verify tasks, optional editable suggestions and contextual third-test validation.
+- `WeightGuide.tsx`: four steps driven by actual slider/confirmation state; skippable and reopenable without resetting choices.
 - `weights.ts`: deterministic allocation, locked-value invariants, near-even classification and free second-split validation.
 - `dialogue.ts`: concise observation exchanges and final cinematic dialogue; editing/publication/comparison operations remain silent.
 - `data.ts`: 18 Narrative V2 behaviours, immutable runs, cinematic and completion contracts.
@@ -16,6 +18,6 @@ Run `npm run dev -- --mode level3` for direct development,
 all individual and combined downloads. Latest entry: `play/Level3-play.zip`.
 
 See [Level 3 handoff](../../../docs/LEVEL3_HANDOFF.md) for mechanics, highlighted
-narrative adjustments, scene IDs and result payloads. The preview stops at the final theory placeholder. `onDesignLab` is reserved and is not called. All actual test snapshots are displayed; any system reference is explicitly labelled. No player Restart control is available.
+narrative adjustments, scene IDs and result payloads. The preview stops at the final theory placeholder. `onDesignLab` is reserved and is not called. All three player-confirmed test snapshots are displayed; no system reference is inserted. No player Restart control is available.
 
 Weights reserve at least 1% for each priority. The v12 forecast page and result markers are withdrawn: confirmed weights run directly, and the comparison retains actual observed trials.

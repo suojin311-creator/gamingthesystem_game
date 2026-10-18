@@ -1,7 +1,7 @@
 {
-  "validatedAtUtc": "2026-10-18T11:21:45.651082+00:00",
-  "version": "Feedback corrections v13: scoped chapter headings, direct weight trials, original authored-animation slots and longer growth holds",
-  "passed": 57,
+  "validatedAtUtc": "2026-10-18T12:09:40.296212+00:00",
+  "version": "Scaffolding v14: continuous Level 2 paper transitions, three player-led experiments and an interactive first-use weight guide",
+  "passed": 48,
   "builds": [
     "npm run build: passed",
     "npm run build:level1: passed",
@@ -21,6 +21,14 @@
         "The second experiment requires a changed split and never forces a direction or degree of balance"
       ]
     },
+    "experiment-rules-results.json": {
+      "passed": 3,
+      "checks": [
+        "Every positive first split has a relevant second-test prompt and a valid optional starting point, without changing the first record",
+        "All three adaptive verification routes produce a third distinct player test and a near-even/uneven comparison",
+        "Verification accepts player-chosen valid alternatives, rejects irrelevant repeats and zero, and supplies independently copied suggestions"
+      ]
+    },
     "learning-contract-results.json": {
       "passed": 2,
       "checks": [
@@ -31,20 +39,34 @@
     "learning-optimization-results.json": {
       "passed": 10,
       "checks": [
-        "Level 1 headings remain visible and compact at 1366/768/390/320px; transition styles cannot hide or enlarge the workbench title",
-        "Level 2 headings remain visible and compact at 1366/768/390/320px; transition styles cannot hide or enlarge the workbench title",
-        "Level 3 headings remain visible and compact at 1366/768/390/320px; transition styles cannot hide or enlarge the workbench title",
-        "Positive-weight bounds remain enforced; confirming runs directly into publication and two actual trials compare without any forecast screen or prediction column",
-        "balance-check publishes directly after its explicit action and preserves both player attempts plus the reference",
-        "contrast-check publishes directly after its explicit action and preserves both player attempts plus the reference",
-        "The six-metric placeholder uses the original simple scene; no added peer demonstration or new scene title remains",
-        "The first two completed growth actions each hold about 3.5 visible seconds, pause in hidden tabs, retain every satisfaction checkpoint and still wait for Observe at 100",
-        "Restored three-column result layouts fit 390px and 320px with the prediction layer removed",
-        "No runtime errors in scoped headers, positive bounds, direct trials, original scenes or longer growth holds"
+        "The once-per-visit guide follows real keyboard/slider/confirmation actions, explains the linked pair, preserves actual first-trial values and supports Skip, Escape and reopening without resetting weights",
+        "one-higher: three distinct player-confirmed tests use the redirect verification, retain every actual trial and reach the existing theory placeholder",
+        "two-higher: three distinct player-confirmed tests use the redirect verification, retain every actual trial and reach the existing theory placeholder",
+        "near-even: three distinct player-confirmed tests use the redirect verification, retain every actual trial and reach the existing theory placeholder",
+        "both-uneven: three distinct player-confirmed tests use the balance verification, retain every actual trial and reach the existing theory placeholder",
+        "both-near-even: three distinct player-confirmed tests use the contrast verification, retain every actual trial and reach the existing theory placeholder",
+        "Guide, skipped/default confirmations, reopening and reset remain usable at 1366/768/390/320px without overflow or hidden headers",
+        "Normal-motion escalation preserves the same counter/matrix/paper nodes, scroll and card height, holds content for 3.5 seconds, anticipates each next node and turns for 0.7 seconds; hidden tabs pause the turn and 100 still waits for Observe",
+        "At 320px, all three growth states keep the same paper height and retain the reading position within 8px despite caption wrapping; reduced motion keeps the holds and final manual Observe with no moving paper",
+        "No runtime errors in guide actions, all adaptive third-test routes, original placeholder endpoints or continuous escalation"
       ],
-      "growthHoldsMs": {
-        "10": 3542,
-        "25": 3558
+      "timings": {
+        "holdMs": 3602,
+        "turnMs": 909,
+        "phoneGeometry": [
+          {
+            "scroll": 141,
+            "height": 255
+          },
+          {
+            "scroll": 135,
+            "height": 255
+          },
+          {
+            "scroll": 135,
+            "height": 255
+          }
+        ]
       },
       "runtimeErrors": []
     },
@@ -54,7 +76,7 @@
         "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
         "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
         "Packaged Level2.html completes 3 \u2192 6 \u2192 10 \u2192 25 \u2192 100 offline with normal motion",
-        "Packaged standalone Level3.html completes both weight tests and compares the actual results offline",
+        "Packaged standalone Level3.html completes three player-led tests and compares all actual results offline",
         "Packaged Level1.html includes the latest behaviour and two replies, stops after Level 1 and permits replay",
         "Standalone Level 1 reload starts a fresh Level 1 run",
         "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
@@ -68,7 +90,7 @@
       "passed": 9,
       "checks": [
         "Opening-supplied player name reaches Level 3 labels, avatar and the three weighted partner shots",
-        "Level 3 completes once with immutable tested runs and an explicit near-even/uneven comparison payload",
+        "Level 3 completes once after three player-led tests with immutable tested runs and an explicit near-even/uneven comparison payload",
         "Comparison leads to theory; even duplicate final callbacks stay in the placeholder and never invoke Design Lab",
         "Real Gameplay host carries the opening name and sound preference from Level 2 into the new Level 3 chapter",
         "Level 3 preselects the actual Level 2 trio, permits swapping, and has no player Restart control",
@@ -77,33 +99,6 @@
         "Real-time publication and evidence arrive one at a time; Web Audio cues play and Sound off silences later updates",
         "No browser errors in partner, chapter handoff or real-time audio checks"
       ],
-      "runtimeErrors": []
-    },
-    "chapter-transition-results.json": {
-      "passed": 12,
-      "checks": [
-        "Three visible beats take about three seconds; a prominent chapter replaces the old intro, shortens dialogue and waits for explicit entry into three empty slots",
-        "Standalone Level 3 shows unassigned priority cards and starts empty; chapter slider artwork cannot change any weights",
-        "Hidden tabs pause both the visible-time beats and the card animations, then resume without skipping the chapter",
-        "A chapter moved off screen holds its pending information until it becomes visible again",
-        "Reduced motion removes movement while retaining the chapter sequence; keyboard entry works",
-        "No AudioContext or autoplay permission is needed to see the full transition and enter the next chapter",
-        "Real Level 1 handoff carries its chosen card and actual negative observation; one rustle and a low descending tone reuse the unlocked audio context without reward sounds or looping",
-        "Sound off suppresses both chapter cues while the complete visual sequence and entry button still appear",
-        "Muting during the paper movement stops its active sound immediately and suppresses the later chapter tone",
-        "Level 2 chapter and three cards fit 1366/768/390/320px, with a reachable entry button",
-        "Level 3 chapter and three cards fit 1366/768/390/320px, with a reachable entry button",
-        "No runtime errors in normal/reduced motion, audio fallback, hidden-page and offline chapter checks"
-      ],
-      "timings": {
-        "standalone2": {
-          "start": 3510,
-          "hold": 3510,
-          "turn": 4499,
-          "chapter": 5506,
-          "ready": 6622
-        }
-      },
       "runtimeErrors": []
     },
     "dialogue-emoji-results.json": {
@@ -217,7 +212,7 @@
         "Every valid integer split uses the 10-point near-even boundary and the correct one/two higher-reward family",
         "All 20 trios have concise pattern-specific reviews; near-even exposes the scoring stopping rule",
         "Second-result questions describe actual increases, decreases and unchanged effort bands",
-        "Both comparison orders and both system references describe the latest actual pattern without assuming an improvement",
+        "All verification routes and both comparison orders describe the latest actual pattern without assuming an improvement",
         "No dialogue or emoji repeats within 8,640 complete trial paths, including repeated patterns and unchanged scene intensity",
         "Six Level 1 review questions and all 20 Level 2 trio exchanges differ; player names remain supplied text"
       ],
@@ -225,55 +220,56 @@
     }
   },
   "artifacts": {
-    "sourceSha256": "8a19324080f31fd81f2b72e7b0d8a9e9ca6de1956818909fcf1f723111f38292",
+    "sourceSha256": "faf1eda59a89496b42a0294809c91d6122c05562273ef12fa9dacc70560e9754",
     "entries": [
       {
         "archive": "Level1-play.zip",
         "html": "Level1.html",
         "build": "dist-level1/index.html",
-        "htmlSha256": "23e4c5831fcb4e62e1b2fd0bb6debbb77d4ed5fad515ae81db4ed0909cdb8a07",
-        "zipSha256": "f473662d55ade037a97d3d8fb42c16fded0325dc59af5f5edc2ec0e7bf8886c0"
+        "htmlSha256": "975e4edf1dc21ad3292164fdbdb9840afc1046038e5ebdc342c8652c41ce4496",
+        "zipSha256": "271dd917faae5308b66d51cc4b0f2411f07326ee142232811421d47f8d7e4d88"
       },
       {
         "archive": "Level2-play.zip",
         "html": "Level2.html",
         "build": "dist-level2/index.html",
-        "htmlSha256": "04708a18f92e1bbe1c87900f4f20b55b8bf141fb570e74f521bbd95d7031d473",
-        "zipSha256": "4f63ebcea26091a621ff323b156ea2fed4c933c544bd28c2a7153cf845d1c7ba"
+        "htmlSha256": "406f4c03caa2a6d0fa4e8fb64a69026435a294ea5bae5e37cff9b3b57e9e756a",
+        "zipSha256": "ed596b7a4641addbfa6f3bc1e76a1ca36559643b6a63c05496aab29b3734d811"
       },
       {
         "archive": "Level3-play.zip",
         "html": "Level3.html",
         "build": "dist-level3/index.html",
-        "htmlSha256": "89f8583050537129bdf5d3551fb2019ccec6d7610c663a343e8695562391e42c",
-        "zipSha256": "eda4fe3e6018a341b24c5a76c28db7c6fcec8a7230aa1c5eec1e18a53f997821"
+        "htmlSha256": "bcfc417ecbc75c8e77e466083b692be40bc0fd55336ffb12b0fd2160b50e1c95",
+        "zipSha256": "6433d8cb0b23f3e8626e787661cef8b14ff5fe11f688feb982919320b6b6ec9d"
       },
       {
         "archive": "Full-game-play.zip",
         "html": "Gaming-the-System.html",
         "build": "dist/index.html",
-        "htmlSha256": "b37d01359a326861a98072a0d50be76c094f0a3ccc87fd182ad20fda7d873260",
-        "zipSha256": "6e44f1c111b5675de116bda876ad48876a4b6f540b68cc7bb96e4fe992c1449b"
+        "htmlSha256": "1629a3b8b76906c90f361c13db35e6f2dfa00ce085999a418d875a4b7aa71c40",
+        "zipSha256": "afcea6b2310f3bb9cd8e08dd50859960c254fb2ce51b7a2d8be745790bcc652c"
       }
     ],
     "reviewBundle": {
       "archive": "Level3-and-Full-game-play.zip",
-      "zipSha256": "810169938580e9e7b1af122e7c630086808c1decb742cdd1e584897566e1dc77",
+      "zipSha256": "e255d81b5a57b1ef0665c019ad2aa9b2f90010842b9e1852aff413f57c736215",
       "htmlSha256": {
-        "Level3/Level3.html": "89f8583050537129bdf5d3551fb2019ccec6d7610c663a343e8695562391e42c",
-        "Full-game/Gaming-the-System.html": "b37d01359a326861a98072a0d50be76c094f0a3ccc87fd182ad20fda7d873260"
+        "Level3/Level3.html": "bcfc417ecbc75c8e77e466083b692be40bc0fd55336ffb12b0fd2160b50e1c95",
+        "Full-game/Gaming-the-System.html": "1629a3b8b76906c90f361c13db35e6f2dfa00ce085999a418d875a4b7aa71c40"
       }
     }
   },
   "notes": [
-    "Transition styles are now scoped beneath .chapter-transition. The Level 1 header at 1366px changed from 163px with a hidden title and 56px title font to 71px with a visible 31px title. All three compact workbench headings are checked at 1366/768/390/320px; existing chapter transitions retain their sequence, mute, reduced-motion and visible-time behaviour.",
-    "The redundant Level 3 effort-prediction page, stored predictions and prediction/result markers were removed. Confirmed weights and explicit references run directly into publication; comparison preserves both actual player attempts and any actual reference run. Level 1 retains its original prediction.",
-    "The positive-weight rule remains 1% minimum and 100% total, with endpoints 98/1/1 and 61/38/1. All valid positive integer triples, linked confirmation orders and the inclusive ten-point near-even boundary pass their rule checks.",
-    "The newly invented peer-passing-card story, visual panel, narrative module and peerInteraction request field are withdrawn. The original simple Level 2 placeholder/dialogue and six-field request schema are restored. Existing user-authored formal scripts and animation files were not edited. A supplied renderCinematic replaces the whole placeholder without a duplicated panel or appended social story.",
-    "The completed 10- and 25-metric illustrated actions each hold approximately 3.5 visible seconds; timing is measured from their completed DOM state, excluding hidden intervals. Scrolling and assertions consume time and are not used as the start of the hold. The continuous 10/25/100 sequence preserves satisfaction checkpoints 70/77/82/86, hidden-page pauses and the final explicit Observe action at 100.",
-    "All five latest ZIPs pass integrity and hash checks, with HTML identical to the production builds. The review ZIP contains both standalone Level 3 and connected Levels 1\u20133 from those same builds. Packaged offline flows, partner replacement, player-name transfer, editable imported priorities, mute and the theory-placeholder endpoint are verified.",
-    "The original v12 source and downloads remain frozen on archive/pre-feedback-cleanup-v12 at 031bbb0a737990294258ae97c86ad1badb43b5af. Earlier archive branches and versioned ZIPs are unchanged.",
-    "Opening-animation integration and the Level 1 opening handoff remain a separate next step. No Design Lab navigation or new authored animation script was added.",
-    "Functional checks do not establish measured learning effectiveness. Offline checks use exact production/packaged HTML on an in-memory HTTPS origin; direct file opening in the user browser, classroom load capacity and finished video assets are not claimed as tested. Earlier broader suites remain historical in their versioned reports and were not rerun in full."
+    "The Level 2 growth counter, matrix and paper stay mounted during 10/25/100 escalation. Completed 10/25 actions hold 3.5 visible seconds before a 700 ms paper turn; the next milestone is highlighted before the number changes. Tests check DOM identity, paper height, scroll position and measured timing. CSS pauses the actual paper animation while hidden, matching the visible-time state delay.",
+    "Phone captions reserve two lines so short and wrapped captions keep the same paper height. Scroll anchoring is disabled during continuous escalation. At 320px, the three growth milestones retain matching paper heights and keep the reading position within 8px of native viewport settling. Narrow-screen perspective-card space is reserved as well. Reduced motion removes moving paper while retaining readable holds and the final explicit Observe action.",
+    "Level 3 now requires exactly three player-confirmed trials: Explore, Adjust and Verify. The first editor asks whether weights change Alex\u2019s aim. The second prompt uses the actual neglected tasks or near-even stopping rule and permits any new split. The third task supplies the missing near-even/uneven contrast, or redirects the reward to a previously low-effort task when both families have already been observed.",
+    "Third-test validation accepts player-chosen values satisfying its task and excludes earlier exact allocations. Optional Show me a starting point only loads editable unconfirmed weights; it never confirms, runs or inserts a system reference. Reset restores the immediately previous run. Every actual test remains a copied kind=player record, labelled First/Second/Third test in the comparison.",
+    "The first-use nonmodal guide advances from actual slider actions to Confirm weight, remaining-pair confirmation and Run evaluation. It retains the player\u2019s actual first allocation, supports keyboard use and arbitrary confirmation order, and can be skipped, closed with Escape or reopened through Guide. It does not auto-open during later tests; reset reflects the new current control state.",
+    "All 4,851 positive first splits have a valid optional next starting point. All 20 selected trios and representative one-higher, two-higher, near-even, extreme and reordered histories exercise the three verification routes. The near-even spread remains at most ten points and all priorities retain at least one percent.",
+    "Observation reviews remain one teacher question and two short Alex replies, with distinct third-test reasoning. The dialogue suite checks 8,640 complete three-test paths across the earlier-level stories without repeated lines or emoji. Existing authored animation scripts, player-name propagation, scene IDs, editable Level 2 imports and the final theory-placeholder endpoint remain intact.",
+    "All five latest ZIPs pass CRC and SHA-256 checks and contain HTML identical to the final production builds. The review bundle contains standalone Level 3 and connected Levels 1\u20133 from the same builds. Actual offline packages, three-level handoff, partner scene replacement, one-time completion, mute and real-time publication are verified.",
+    "The v13 baseline and downloads remain on archive/pre-scaffolding-v13 at d10e09bc7a34cae462ea594bce09f4fc8671f593. Historical archive branches, validation records and versioned ZIPs are unchanged.",
+    "These are functional checks, not measured learning-effectiveness results. Opening-animation integration, finished authored videos, direct file opening in the user browser, Design Lab navigation and classroom hosting capacity are outside this release. Earlier broader suites remain historical and were not rerun in full."
   ]
 }

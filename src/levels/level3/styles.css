@@ -294,3 +294,27 @@
 .level-three .l3-routine-beat[data-shown=true] .l3-pack-paper { animation: l3-pack-away .55s ease-in-out both; transform-box: fill-box; transform-origin: center; }
 @keyframes l3-pack-away { from { transform: translateY(-10px) rotate(-9deg); opacity: .5; } to { transform: translateY(0) rotate(0); opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .level-three .l3-pack-paper { animation: none !important; } }
+
+/* One question explains the experiment; the optional guide teaches actual controls. */
+.level-three .l3-experiment { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 0 0 18px; }
+.level-three .l3-experiment > p { font: 18px/1.45 var(--serif); color: #786342; flex: 1 1 380px; }
+.level-three .l3-experiment .text-button { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: #8c6341; }
+.level-three .l3-experiment .icon { width: 15px; height: 15px; }
+.level-three .l3-weight-card[data-focus=true] { border-top: 3px solid #b69867; padding-top: 17px; }
+.level-three .l3-weight-guide { position: sticky; top: 10px; z-index: 5; background: #f5edda; border: 1px solid #ccba94; border-left: 3px solid #aa7650; border-radius: 4px; padding: 13px 17px; margin-bottom: 20px; box-shadow: 0 4px 14px #574c2e0c; }
+.level-three .l3-guide-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 9px; }
+.level-three .l3-guide-top .eyebrow { color: #9a734c; font-size: 10px; }
+.level-three .l3-guide-top .text-button { font-size: 11px; }
+.level-three .l3-weight-guide strong { display: block; font-size: 16px; color: #564b37; margin-bottom: 4px; }
+.level-three .l3-weight-guide p { font-size: 13px; line-height: 1.5; color: #796b53; }
+.level-three .l3-guide-dots { display: flex; gap: 5px; margin-top: 11px; }
+.level-three .l3-guide-dots i { width: 20px; height: 3px; background: #dfd3ba; border-radius: 2px; }
+.level-three .l3-guide-dots [data-current=true] { background: #ac654b; }
+.level-three .l3-guide-dots [data-done=true] { background: #8a9a72; }
+.level-three .l3-weight-card[data-guide=slider] input, .level-three .l3-weight-card[data-guide=remaining] input { box-shadow: 0 0 0 4px #be985a35; border-radius: 8px; }
+.level-three .l3-weight-card[data-guide=confirm] button, .level-three .l3-weight-card[data-guide=remaining] button, .level-three .l3-run-action[data-guide=run] button { box-shadow: 0 0 0 4px #be985a50, 0 3px 0 #8a402d; }
+@media (max-width: 520px) {
+  .level-three .l3-weight-guide { top: 6px; padding: 11px 13px; }
+  .level-three .l3-experiment > p { font-size: 17px; }
+  .level-three .l3-weight-guide p { font-size: 13px; }
+}
