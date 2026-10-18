@@ -21,10 +21,11 @@ try {
   assert.match(first.hint,/Move any slider/);
   const neglected=nextExperiment([run([70,20,10])]);
   assert.match(neglected.question,/Participation and Focus/);
-  assert.doesNotMatch(neglected.hint,/Give .*more|even|equal|balance|\d/);
+  assert.equal(neglected.hint,'Give a neglected task more weight. Watch what happens to the others.');
+  assert.doesNotMatch(neglected.hint,/even|equal|balance|\d/);
   const covered=nextExperiment([run([34,33,33])]);
-  assert.equal(covered.question,'Can new weights make Alex go further?');
-  assert.match(covered.hint,/checklist/);
+  assert.equal(covered.question,'All three got attention. Has that solved the problem?');
+  assert.match(covered.hint,/still stop once the criteria are met/);
   assert.doesNotMatch(covered.hint,/even|equal|balance/);
  });
 

@@ -16,30 +16,31 @@ export function nextExperiment(runs: WeightRun[]): Experiment {
     hint: 'Move any slider to start. Confirm your weights, then watch Alex.',
   };
   const previous = runs.at(-1)!;
-  const neglected = joinNames(previous.metricIds.filter((_, index) => effortAt(previous.weights, index) === 'low').map(id => metricDefinition(id).shortName));
+  const neglectedIds = previous.metricIds.filter((_, index) => effortAt(previous.weights, index) === 'low');
+  const neglected = joinNames(neglectedIds.map(id => metricDefinition(id).shortName));
   if (runs.length === 1) return neglected ? {
     purpose: 'respond',
-    question: `What would you change for ${neglected}?`,
-    hint: 'Change their share. What happens to Alex’s other tasks?',
+    question: `Can you bring more attention to ${neglected}?`,
+    hint: 'Give a neglected task more weight. Watch what happens to the others.',
   } : {
     purpose: 'respond',
-    question: 'Can new weights make Alex go further?',
-    hint: 'Try new weights. Does Alex do more than the checklist asks?',
+    question: 'All three got attention. Has that solved the problem?',
+    hint: 'Try a different split. Does Alex still stop once the criteria are met?',
   };
   const unchanged = runs.slice(1).every((run, index) => !effortChanged(runs[index], run));
   if (unchanged) return {
     purpose: 'verify',
-    question: 'Alex kept the same routine. What else could you try?',
-    hint: 'Shift the weight to another task. Watch what changes.',
+    question: 'Alex’s effort stayed the same. What could you change?',
+    hint: 'Make a bigger change to the shares. Does Alex’s effort change this time?',
   };
   return hasLowEffort(previous.weights) ? {
     purpose: 'verify',
-    question: `What would you change for ${neglected} now?`,
-    hint: 'Change a share, then compare Alex’s choices.',
+    question: `${neglected} ${neglectedIds.length === 1 ? 'gets' : 'get'} little attention. What could you change?`,
+    hint: 'Give a neglected task more weight. Can you avoid neglecting another?',
   } : {
     purpose: 'verify',
-    question: 'Alex still stopped for the marks. What else could you try?',
-    hint: 'Change the shares. Watch whether Alex keeps going after earning the marks.',
+    question: 'The effort changed. Did the stopping point?',
+    hint: 'Try another split. Does Alex still stop when the criteria are met?',
   };
 }
 

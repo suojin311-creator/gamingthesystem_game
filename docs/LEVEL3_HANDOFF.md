@@ -34,6 +34,22 @@ are accepted and described as unchanged, not a failed or newly changed result.
 Exact repeats of earlier allocations are rejected. Reset restores the previous
 observed allocation, or unassigned dashes before the first test.
 
+The editor question, Last observation and optional hint form one evidence-led
+sequence. On the second trial, all three low-containing families (one high/two
+low, two high/one low, and high/medium/low) name the actual neglected task(s)
+and suggest watching the trade-off. All-medium results acknowledge shared
+attention and ask whether score-based stopping persists. On the optional third
+trial, unchanged per-task effort bands take precedence and invite a bigger
+shift; otherwise the prompt follows the latest neglected task(s) or retained
+stopping point. No hint implies that a perfect split unlocks extra exploration.
+The result Students message is carried unchanged into the next editor.
+
+The animation team's current picture-and-dialogue script is
+[Level 3 Narration](LEVEL3_NARRATION.md), also available as
+[Word](LEVEL3_NARRATION.docx). It supersedes only the old Narrative V2 Level 3
+and final-theory instructions; the opening and other authored levels are not
+rewritten.
+
 See [player path](LEVEL3_PLAYER_PATH.md) and
 [player-led experiments](PLAYER_EXPERIMENTS.md). The preceding v16/v17 gates are
 historical; they are not prerequisites in this revision.
@@ -101,7 +117,7 @@ follow actual effort bands and changes, including improved coverage or an
 unchanged routine. Replays remain deterministic.
 
 Any all-medium allocation shows criteria → ticks → packing up in visible time,
-including uneven splits such as 40/31/29. Low-effort tasks remain unticked. The
+including non-equal splits such as 38/34/28. Low-effort tasks remain unticked. The
 risk concerns stopping at scoring requirements; it must not imply that every
 requirement was met in neglected tasks, measured learning loss or a special
 penalty for balancing. Improved attention and score-directed stopping can both

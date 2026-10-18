@@ -33,7 +33,7 @@ while allowing the player to reach the comparison after two tests.
 | Starting observation | Context for another experiment | What the next result must acknowledge |
 | --- | --- | --- |
 | One or more tasks receive minimum effort | Keep those actual task names and effort visible; ask about changing the allocation | If attention improves, acknowledge it; do not label every adjustment a failure |
-| A near-even split gives three steady responses | Acknowledge shared attention; retain the observed score-based stopping and ask whether new weights help Alex go further | The first balanced allocation was legitimate; scoring-directed stopping remains a separate observation |
+| A similar-share split gives three steady responses, including non-equal weights | Acknowledge shared attention; retain the observed score-based stopping and invite checking whether it persists under a different split | The first covered allocation was legitimate; scoring-directed stopping remains a separate observation |
 | New values leave every effort band unchanged | Describe no observed band change and let the player compare or optionally investigate further | Do not claim attention shifted merely because the numerical weights changed |
 
 The questions do not require a prescribed answer, near-even split, band change
