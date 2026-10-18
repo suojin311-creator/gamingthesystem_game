@@ -1,66 +1,49 @@
-import { metricDefinition, type MetricId } from '../../shared/data/metrics';
-import { joinNames, type TrialIntent, type WeightRun } from './data';
-import { effortAt, validWeights, type Weights } from './weights';
+import { metricDefinition } from '../../shared/data/metrics';
+import { effortChanged, joinNames, type WeightRun } from './data';
+import { effortAt, hasLowEffort, validWeights, type Weights } from './weights';
 
-export const TRIAL_INTENTS: { id: TrialIntent; label: string; shortLabel: string }[] = [
-  { id: 'attention', label: 'Give all three attention', shortLabel: 'Share attention' },
-  { id: 'priority', label: 'Shift Alex’s priority', shortLabel: 'Shift priority' },
-  { id: 'exploration', label: 'Keep Alex exploring', shortLabel: 'Encourage exploration' },
-];
-export const intentLabel = (intent?: TrialIntent) => TRIAL_INTENTS.find(item => item.id === intent)?.shortLabel;
-export type Experiment = { purpose: 'explore' | 'adjust' | 'verify'; label: string; question: string; focus: MetricId[]; hint: string; suggestion?: Weights };
-const names = (ids: MetricId[]) => joinNames(ids.map(id => metricDefinition(id).shortName));
-const wasTested = (weights: Weights, runs: WeightRun[]) => runs.some(run => run.weights.every((value, i) => value === weights[i]));
+export const MIN_TRIALS = 2;
+export const MAX_TRIALS = 3;
+export type Experiment = { purpose: 'explore' | 'respond' | 'verify'; label: string; question: string; hint: string };
+export const canCompare = (runs: WeightRun[]) => runs.length >= MIN_TRIALS && runs.length <= MAX_TRIALS;
+export const canTryAgain = (runs: WeightRun[]) => runs.length < MAX_TRIALS;
 
-/** Suggestions are opt-in examples, never an answer or a condition for progression. */
-export function nextExperiment(runs: WeightRun[], intent?: TrialIntent): Experiment {
-  const previous = runs.at(-1);
-  const purpose = !runs.length ? 'explore' : runs.length === 1 ? 'adjust' : 'verify';
-  const plan: Experiment = { purpose, label: purpose === 'explore' ? 'Explore' : purpose === 'adjust' ? 'Adjust' : 'Verify',
-    question: !runs.length ? 'What do you want to change?' : runs.length === 1 ? 'What will you try next?' : 'What will you check again?',
-    focus: [], hint: 'Choose what you want this test to investigate.' };
-  if (!intent) return plan;
-  if (intent === 'priority') {
-    const target = previous ? previous.weights.indexOf(Math.min(...previous.weights)) : 0;
-    const candidates = [70, 75, 80].map(value => {
-      const weights: [number, number, number] = [10, 10, 10];
-      weights[target] = value;
-      weights[(target + 1) % 3] = 90 - value;
-      return weights;
-    });
-    return { ...plan, hint: 'Move the biggest reward to another task. Watch where Alex puts his effort.', suggestion: candidates.find(weights => !wasTested(weights, runs)) };
-  }
-  const candidates: Weights[] = [[34,33,33], [36,32,32], [30,40,30], [31,35,34]];
-  return { ...plan,
-    hint: intent === 'attention' ? 'Try giving the overlooked tasks a larger share. Watch all three.' : 'Try a different split. Watch what Alex does after meeting the requirements.',
-    suggestion: candidates.find(weights => !wasTested(weights, runs)),
+/** A question follows the observed result; no goal choice or prescribed numbers. */
+export function nextExperiment(runs: WeightRun[]): Experiment {
+  if (!runs.length) return {
+    purpose: 'explore', label: 'Your first test',
+    question: 'Can a different split improve what happens in class?',
+    hint: 'Choose a split you think will help. Publish it, then observe Alex’s choices.',
+  };
+  const previous = runs.at(-1)!;
+  const neglected = joinNames(previous.metricIds.filter((_, index) => effortAt(previous.weights, index) === 'low').map(id => metricDefinition(id).shortName));
+  if (runs.length === 1) return neglected ? {
+    purpose: 'respond', label: 'Follow the evidence',
+    question: `What would you change for ${neglected}?`,
+    hint: `${neglected} received minimum effort. You could give those tasks a larger share and watch the trade-off.`,
+  } : {
+    purpose: 'respond', label: 'Follow the evidence',
+    question: 'All three got attention. What would a different emphasis change?',
+    hint: 'You already gave each task attention. Try changing which task counts most, and watch whether Alex’s choices change.',
+  };
+  const unchanged = runs.slice(1).every((run, index) => !effortChanged(runs[index], run));
+  if (unchanged) return {
+    purpose: 'verify', label: 'An optional check',
+    question: 'The routine stayed the same. What would make a useful contrast?',
+    hint: 'Similar splits can produce a similar routine. Try moving the emphasis to another task to check what guides Alex’s choices.',
+  };
+  return hasLowEffort(previous.weights) ? {
+    purpose: 'verify', label: 'An optional check',
+    question: `What would you change for ${neglected} now?`,
+    hint: 'Use the comparison to choose what you want to check. You decide which shares to change.',
+  } : {
+    purpose: 'verify', label: 'An optional check',
+    question: 'Attention is broader. Would another split change when Alex stops?',
+    hint: 'All three now receive attention. If you try another idea, watch both where Alex works and what makes him stop.',
   };
 }
 
-/** Any new positive allocation can test an idea, including unchanged effort bands. */
-export function meetsExperiment(weights: Weights, runs: WeightRun[], _experiment?: Experiment) {
-  return validWeights(weights) && !wasTested(weights, runs);
+export function meetsExperiment(weights: Weights, runs: WeightRun[]) {
+  return canTryAgain(runs) && validWeights(weights) && !runs.some(run => run.weights.every((value, index) => value === weights[index]));
 }
-export function experimentHint() { return 'This split was already tested. Reset weights to try another.'; }
-
-/** These are observations about effort, not a score for learning or the player's choice. */
-export function trialFinding(run: WeightRun, previous?: WeightRun) {
-  if (run.intent === 'attention') {
-    const low = run.metricIds.filter((_, i) => effortAt(run.weights, i) === 'low');
-    return low.length ? `${names(low)} received minimum effort.` : 'All three received attention. What made Alex stop?';
-  }
-  if (run.intent === 'priority') {
-    if (!previous) return 'A starting point. Compare his priority after your next change.';
-    const rank = { low: 0, medium: 1, high: 2 };
-    const leaders = (record: WeightRun) => {
-      const levels = record.metricIds.map((_, i) => rank[effortAt(record.weights, i)]);
-      return record.metricIds.filter((_, i) => levels[i] === Math.max(...levels));
-    };
-    const current = leaders(run), before = leaders(previous);
-    if (current.length === 3) return 'Alex gave all three the same level of effort.';
-    const moved = current.some(id => !before.includes(id)) || before.some(id => !current.includes(id));
-    return `${names(current)} ${moved ? 'now' : 'still'} ${current.length > 1 ? 'draw' : 'draws'} his strongest effort.`;
-  }
-  if (run.intent === 'exploration') return 'Alex packed up after collecting the marks. Further learning is still unproven.';
-  return '';
-}
+export function experimentHint() { return 'That split is already in your results. Reset weights to try a different one.'; }

@@ -1,7 +1,7 @@
 {
-  "validatedAtUtc": "2026-10-18T16:56:53.653377+00:00",
-  "version": "Effort rules v17: independent monotone effort bands, descriptive near-even metadata and score-based stopping across allocations",
-  "passed": 67,
+  "validatedAtUtc": "2026-10-18T17:40:09.284521+00:00",
+  "version": "Complete Level 3 path v18: evidence-led second test, comparison after two observations, optional cancellable third and modal spotlight guide",
+  "passed": 73,
   "builds": [
     "npm run build: passed",
     "npm run build:level1: passed",
@@ -25,21 +25,24 @@
       ]
     },
     "experiment-rules-results.json": {
-      "passed": 4,
+      "passed": 5,
       "checks": [
-        "Every positive allocation is allowed in a third test regardless of earlier balance, except exact repeats",
-        "All 20 trios have opt-in goal-specific editable examples and real recorded purposes; no strategy is selected for the player",
-        "Goal feedback acknowledges shared attention, unchanged effort and shifted priorities without equating any with learning",
-        "Findings describe actual low-effort tasks across all integer splits, including uncovered and all-covered uneven distributions"
+        "Two real observations unlock comparison; a third experiment is optional and no fourth can run",
+        "Every new positive split is valid for the second and optional third trials, including unchanged effort bands",
+        "All 20 trios receive concise observation-based questions and optional text hints without prefilled solutions",
+        "Every possible split gives a review of actual neglected tasks or score-based stopping; effort-change detection respects task identity",
+        "New trial and cinematic records need neither intent nor decision, and copied observations remain independent"
       ]
     },
     "task-clarity-contract-results.json": {
-      "passed": 4,
+      "passed": 6,
       "checks": [
         "Weight changes within steady effort stay explicitly Same effort, including the reported near-even boundary example",
         "Actual intensity changes are labelled against the immediately previous test",
         "Comparisons follow each metric identity through reordered runs and distinguish changed weights from unchanged effort",
-        "All trio prompts stay single-question and concise while preserving the same optional valid suggestions"
+        "All trio prompts stay concise without requiring a purpose choice or supplying numerical answers",
+        "Two-trial comparison preserves the same evidence labels without a synthetic third column",
+        "All 20 trios display every actual observation and match effort changes by metric identity"
       ]
     },
     "learning-contract-results.json": {
@@ -56,53 +59,160 @@
         "All 20 trios have concise reviews naming actual low-effort tasks; covered tasks expose the scoring stopping rule",
         "Medium scene actions and score-based stopping replies depend on the task effort, including uneven covered splits",
         "Second-result questions describe actual increases, decreases and unchanged effort bands",
-        "All verification routes and comparison orders describe actual effort without assuming an improvement or a shift",
+        "Both two-trial and three-trial comparisons describe actual effort without assuming an improvement or a shift",
         "No dialogue or emoji repeats across complete trial paths, including uneven covered splits and unchanged scene intensity",
         "Six Level 1 review questions and all 20 Level 2 trio exchanges differ; player names remain supplied text"
       ],
       "completeTrialPaths": 13200
     },
     "player-dialogue-results.json": {
+      "passed": 2,
+      "checks": [
+        "Two-trial endings and optional-third endings keep short, fresh dialogue across every trio and observed pattern",
+        "Legacy intent fields cannot change the actual-observation dialogue or create a new required choice"
+      ],
+      "trialPaths": 320
+    },
+    "dialogue-emoji-results.json": {
       "passed": 1,
       "checks": [
-        "Player-purpose dialogue and all three scene readings stay fresh across uniform and mixed patterns, every trio and all purpose combinations"
+        "All gameplay emoji are distinct across all levels"
       ],
-      "trialPurposePaths": 4320
+      "emojiCount": 24,
+      "inventory": [
+        {
+          "emoji": "\ud83d\udccb",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\ude2c",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\ude4b",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83e\udd37",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\udcbb",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\udc40",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\udcac",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83e\udd14",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\udcdd",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\udd01",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83c\udfaf",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83e\udd2d",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83e\ude99",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83d\ude05",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\uddd0",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\ude84",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\uddf7",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\udd47",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83d\udece",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83d\ude0f",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\uddee",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\udd68",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\ude81",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\udde9",
+          "file": "src/levels/level3/dialogue.ts"
+        }
+      ]
     },
     "effort-browser-results.json": {
       "passed": 5,
       "checks": [
-        "40/30/30 \u2192 40/31/29 preserves effort after a share increase; uneven 50/25/25 acknowledges attention across all three without a near-even override or false change claim",
-        "67/66 and 25/24 boundary crossings affect only the corresponding effort bands; every uneven result stops for marks, with low-effort tasks left unticked and accurately named",
-        "A real high/low \u2192 all-medium \u2192 shifted high/low route compares actual changes, describes the newly prioritized task correctly and ends at the theory placeholder",
-        "The universal score-based stopping observation fits a 320px normal-motion phone route and desktop without horizontal overflow",
-        "No runtime errors in independent effort bands, boundary observations, tick coverage, comparison or the final theory endpoint"
+        "40/30/30 \u2192 40/31/29 \u2192 50/25/25 preserves medium effort independently of the near-even label, and the optional three-test conclusion reports no invented change",
+        "Crossing 67/66 and 25/24 changes only the corresponding effort band; covered-task ticks and adjacent-trial comparison labels follow the actual observations",
+        "A real uneven \u2192 even \u2192 shifted-uneven experiment acknowledges improved coverage while each tested distribution independently exposes score-based stopping",
+        "Score-based stopping is readable in a 320px normal-motion phone route and desktop without horizontal overflow",
+        "No runtime errors in boundary observations, tick coverage, optional third trial, comparison or the theory endpoint"
       ],
       "runtimeErrors": []
     },
     "player-experiments-results.json": {
       "passed": 8,
       "checks": [
-        "No experiment aim or strategy is preselected; keyboard aim choice preserves confirmed weights, and operation guidance remains separate",
-        "Strategy help is hidden until requested, follows the selected aim and only loads editable unconfirmed weights; a player can reject the example",
-        "Three actual uneven trials can finish; unchanged effort is valid evidence, exact allocation repeats are explained, and every chosen purpose is recorded",
-        "The player judges the evidence before the final response; keeping a split produces a matching question and the preview still ends at Goodhart\u2019s Law",
-        "At a 720px window height, scrolling to the closing evidence lets three near-even tests finish without inserting a contrasting example; shared attention is acknowledged while stopping at the checklist remains visible",
-        "Both judgments are accepted without correctness scores and the comparison fits 1366/768/390/320px",
-        "The compact goal choices and collapsed hints fit phone, tablet and desktop without horizontal overflow",
-        "No runtime errors in purpose selection, optional hints, unrestricted trials, judgments or the theory endpoint"
+        "The first-use spotlight guide supports Next, Back and Escape without changing or confirming player weights; closing returns focus to an available workbench control",
+        "Reopening and completing the operation-only guide preserves edits; confirmed positive weights can run without an abstract goal choice or preset button",
+        "An uneven first attempt can be rebalanced immediately; two actual observations compare and reach the theory without a forced third trial or final verdict",
+        "A player who starts evenly can finish after another all-medium split; the unchanged evidence is accepted and the closing response does not invent a change",
+        "A third experiment can be cancelled after editing without creating a record, then reopened; distinct same-band trials remain valid, exact repeats are rejected and no fourth-test loop appears",
+        "Two deliberately uneven experiments can compare and finish; no hidden requirement forces near-even weights or an automatic reference example",
+        "The widest valid allocation remains 98/1/1, totals 100 and observes one covered task without any zero-weight route",
+        "No runtime errors in the guide, first-even and first-uneven paths, optional third experiment, positive bounds or theory endpoint"
       ],
       "runtimeErrors": []
     },
     "task-clarity-results.json": {
-      "passed": 6,
+      "passed": 7,
       "checks": [
-        "The task is a prominent 24px question card with a four-pixel accent and three finite pulses; hidden time pauses the animation and the card stays readable after it ends",
-        "The player-selected question and optional Apply suggested weights button load editable values, announce the result, stop the attention cue and still require manual confirmation",
-        "Reduced motion uses one steady outline, and the 320px task card and explicit suggestion button remain readable and usable",
-        "The reported three-trial example now correctly shows unchanged medium effort throughout under the unified bands; comparison baselines and quiet weight references remain explicit",
-        "All three records, comparison bases and change labels fit 1366/768/390/320px without horizontal overflow",
-        "No runtime errors in task animation, editable suggestions, three actual trials or responsive comparison"
+        "The evidence question retains three finite attention pulses, pauses on hidden pages and never becomes a mandatory goal questionnaire",
+        "Strategy help remains collapsed and optional; opening it supplies contextual words without choosing or changing an allocation",
+        "The second editor retains the previous allocation and shows all three actual effort observations beside a short next question",
+        "The optional third editor responds to the latest all-medium evidence rather than repeating the old low-effort prompt; reduced motion and 1366/768/390/320px remain usable",
+        "Every comparison cell names its effort change against the immediately previous actual test, with explicit baselines and no ambiguous whole-cell highlighting at desktop or phone widths",
+        "All four spotlight explanations fit phone, tablet and desktop, trap keyboard focus and can be skipped without altering allocation or confirmations",
+        "No runtime errors in evidence prompts, optional hints, responsive spotlight guidance or adjacent-test comparisons"
       ],
       "runtimeErrors": []
     },
@@ -110,13 +220,13 @@
       "passed": 10,
       "checks": [
         "Opening-supplied player name reaches Level 3 labels, avatar and the three weighted partner shots",
-        "Level 3 completes once after three player-led tests with immutable tested runs and an explicit near-even/uneven comparison payload",
+        "Level 3 completes once on Watch after two immutable player tests, without intent or verdict data, and preserves a real near-even/uneven comparison",
         "Comparison leads to theory; even duplicate final callbacks stay in the placeholder and never invoke Design Lab",
         "Real Gameplay host carries the opening name and sound preference from Level 2 into the new Level 3 chapter",
         "Level 3 preselects the actual Level 2 trio, permits swapping, and has no player Restart control",
         "Reloading the connected host starts fresh from its configured entry level",
         "Hidden-page publication holds its visible-time sequence and resumes without skipping the three weights",
-        "Uniform uneven and uniform near-even histories complete once with all actual trials, explicit player decision and compared=null in the partner contract",
+        "Optional third tests preserve all actual uneven or near-even records, allow compared=null, and emit completion once with no synthetic reference or choice fields",
         "Real-time publication and evidence arrive one at a time; Web Audio cues play and Sound off silences later updates",
         "No browser errors in partner, chapter handoff or real-time audio checks"
       ],
@@ -128,7 +238,7 @@
         "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
         "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
         "Packaged Level2.html completes 3 \u2192 6 \u2192 10 \u2192 25 \u2192 100 offline with normal motion",
-        "Packaged standalone Level3.html completes three player-led tests and compares all actual results offline",
+        "Packaged standalone Level3.html compares after two tests and can add an optional third, keeping all actual results offline",
         "Packaged Level1.html includes the latest behaviour and two replies, stops after Level 1 and permits replay",
         "Standalone Level 1 reload starts a fresh Level 1 run",
         "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
@@ -140,57 +250,57 @@
     }
   },
   "artifacts": {
-    "sourceSha256": "994a0d546793f662e41adaf3041c8cdecbeea7a9d826281ab544b925a669642b",
+    "sourceSha256": "cd9f6bd3d561903fa5c6690d37f42ae3602270c30c21efb079aa281835ccaf64",
     "entries": [
       {
         "archive": "Level1-play.zip",
         "html": "Level1.html",
         "build": "dist-level1/index.html",
-        "htmlSha256": "bebdf0f4e3260d876d0a7e6c5678d4d271b20a36a1113fedd2b06853b5fa68f1",
-        "zipSha256": "8b64ccf79fb9f12b20c3751255d2469188e0f45b05abbb2afd292945499dc551"
+        "htmlSha256": "7a8f95fdb51369e4673051df5236a28068a756b4e36ba4e1803cb8488ebc67ab",
+        "zipSha256": "47b6befde3c8735cdb8e33e98f7b9434bd74b07f03f687da39f34d99a9058fe0"
       },
       {
         "archive": "Level2-play.zip",
         "html": "Level2.html",
         "build": "dist-level2/index.html",
-        "htmlSha256": "9140288344005f9deeb4e28ef33e14a08e5e34257c9598c09a21a8cdf29a5ef8",
-        "zipSha256": "de384c201bd3df6693dd6a87ba92814ae352234f1429f42479dea673081a076b"
+        "htmlSha256": "d5534e603a2dd2952239cfd1472f2b314d720965198c6038f43df6f0793187d4",
+        "zipSha256": "baf15b965a5498c405f60e61d86028483d92d64b53d8ac5b2d03798f0ebe5d6a"
       },
       {
         "archive": "Level3-play.zip",
         "html": "Level3.html",
         "build": "dist-level3/index.html",
-        "htmlSha256": "cc136d514a89741595ecaaf69b33f673b94f56036446af3cb597ee7bb5294183",
-        "zipSha256": "f42ff16d6d60af1021a64660aa994a8a0e45cc2966e71b4a775cc8a46db0f694"
+        "htmlSha256": "781abc3eca72ab0781bb11167a5a30226a8cb2b7b9bcdb2d6cd0804c697d55a0",
+        "zipSha256": "48e2087eb7ff7e7b5928947d88aa71c97763490aced0afa3cc4de885d3088241"
       },
       {
         "archive": "Full-game-play.zip",
         "html": "Gaming-the-System.html",
         "build": "dist/index.html",
-        "htmlSha256": "c8cab697b691f57c73c0c420941285c400958a4bef7d44a00af1dd636592c68b",
-        "zipSha256": "5214c82e4278cfc3d788c1bf57c80dd15a04114ef6f01030a32481783da9219f"
+        "htmlSha256": "18a75b323ae7fbdd4f14efed9b997aff4f28aca6742a8a08f1f63b2209421761",
+        "zipSha256": "c213428475187cc6b447773c8c5ba902e1539ed3d64f9fd225dd7c1ab7a2151e"
       }
     ],
     "reviewBundle": {
       "archive": "Level3-and-Full-game-play.zip",
-      "zipSha256": "f01832d0b886319992e2760aba7a7458497028b2506afae5d17991555f755cac",
+      "zipSha256": "2b21c824f458e3ada1292bfdd64c494e2d1bbbf0dbdd08f9fadfa96b35a7ecf6",
       "htmlSha256": {
-        "Level3/Level3.html": "cc136d514a89741595ecaaf69b33f673b94f56036446af3cb597ee7bb5294183",
-        "Full-game/Gaming-the-System.html": "c8cab697b691f57c73c0c420941285c400958a4bef7d44a00af1dd636592c68b"
+        "Level3/Level3.html": "781abc3eca72ab0781bb11167a5a30226a8cb2b7b9bcdb2d6cd0804c697d55a0",
+        "Full-game/Gaming-the-System.html": "18a75b323ae7fbdd4f14efed9b997aff4f28aca6742a8a08f1f63b2209421761"
       }
     }
   },
   "notes": [
-    "The previous v16 source and downloads are frozen on archive/pre-effort-rules-v16 at69f2bb4906a6d6c85442686180e49dc6a0800291. Historical archives, versioned ZIPs and validation reports are preserved.",
-    "Every task now uses only its own weight:1\u201324 Minimum effort,25\u201366 Steady effort,67\u201398 Intense effort. Near-even remains max-minus-min at most10percentage points, but only labels the weight distribution. It never overrides an effort band or selects special criticism. Positive1\u201398 weights, total100 and linked-pair confirmation remain intact.",
-    "All4851 legal positive integer splits are checked in every card position for contextual invariance, own-share monotonicity and valid one-point transfers. Boundary tests cover24/25,66/67 and exact40/30/30\u219240/31/29; the raised31share remains medium. Uneven50/25/25 also naturally produces three medium responses.",
-    "The score-based closing observation appears for all allocations. Its marks reflect actual nonlow tasks: neglected low-effort tasks stay unticked. Every run shows checking rewards, collecting marks and packing up without claiming all three criteria are met when effort is unevenly neglected. Visible-time pausing and actual manual observation remain.",
-    "Medium task actions and fresh criterion-based replies now depend on medium effort, including uneven allocations, rather than a near-even override. Teacher questions, neglected task names and coverage findings use actual bands. Third-result dialogue says what is prioritized this time without falsely assuming it already was the priority. Comparison summaries distinguish actual shifts from unchanged effort patterns.",
-    "Dialogue checks cover all20trios,13200 complete cross-level scenario paths and4320 purpose/history paths with both final judgments. These representative paths include uneven all-medium splits and the24/25 boundary; no repeated dialogue lines or emojis are found. Replay remains deterministic.",
-    "Production-browser regressions exercise40/30/30\u219240/31/29\u219250/25/25 with identical medium effort and no false change claim;67/25/8\u219266/25/9\u219266/24/10 with accurate bands and partial ticks; and70/20/10\u219234/33/33\u219210/70/20 with true comparison changes and the final theory endpoint. A320px normal-motion route checks the universal stopping observation.",
-    "Existing production checks retain the task attention cue, optional editable examples, manual confirmation, three actual trial records, both final judgments and1366/768/390/320px comparison layouts. The earlier43/29/28\u219234/33/33\u219228/43/29 example now correctly remains medium across all records under the approved bands.",
-    "Partner-host checks verify opening names, selected-trio handoff, scene IDs, actual copied runs, once-only completion, nullable compared pairs, final decision context, custom renderer replacement, hidden-time pauses, real-time cues and sound. Final scene callbacks stay at theory.reveal and never invoke Design Lab.",
-    "All four final builds and all five latest ZIPs pass. CRC and SHA-256 checks establish that packaged HTML matches the final builds and current manifest. Actual packaged standalone Levels1/2/3 and the connected game pass offline routes; the review ZIP contains standalone Level3 and connected Levels1\u20133 from those same builds.",
-    "This release implements the approved underlying-rule step only. The existing aim selector, three required attempts, final judgment and inline guide remain pending the separately discussed player-path redesign. Level1/2 gameplay and the partner\u2019s authored animation scripts are unchanged. Functional checks do not establish measured learning effectiveness or classroom hosting capacity."
+    "Before this revision, the previous v17 source and downloads were archived on GitHub at archive/pre-level3-path-v17, commit 5d56d4cbb763b039b4a8a7a4c3bceb7932f303b2. Earlier archives, numbered downloads and validation reports remain unchanged.",
+    "The complete player path now uses a free first allocation and an evidence-led second allocation. After two observed tests, the player can compare both actual results and continue directly to Alex\u2019s response. Test another idea opens an optional third; Back to comparison discards unsubmitted edits and preserves the two recorded results. Reopening starts from the last tested allocation with unconfirmed controls. There is no fourth test.",
+    "Abstract aim radios, preselected strategies, numerical examples, automatically set suggested weights, compulsory contrast patterns, the required third test and the final keep/rethink gate have been removed. Optional Need a hint? provides only verbal scaffolding. Exact repeats remain invalid, while changed allocations with unchanged effort bands remain valid evidence.",
+    "Each later editor shows a compact Last observation grouped by the actual selected metric names and effort bands. Its short question follows the previous observation, including first-even, uneven all-covered, low-attention and unchanged-band histories. First-even attention is acknowledged rather than treated as a numerical failure; scoring-directed stopping remains a separate observation across allocations.",
+    "The guide is now a once-per-visit native modal spotlight with static Next/Back/Skip/Escape and a final Try your weights action. It highlights the actual slider, Confirm, remaining pair and Run. It changes no allocation and requires no practice. Keyboard focus, responsive bounds and reopening the guide with the optional Back control are browser checked.",
+    "Retained v17 rules are checked across all 4,851 legal positive integer splits: each weight 1\u201398, total 100, independent minimum 1\u201324 / steady 25\u201366 / intense 67\u201398 bands and monotone own-share effort. Near-even is descriptive max-minus-min \u2264 10 points, never an effort override. Linked-pair confirmation, either-order adjustment, positive native bounds, locked values and snapshot copies remain.",
+    "The comparison contains the actual two or three trial records. Every later cell labels More/Less/Same effort relative to the preceding trial by metric identity; quiet percentage references do not imply proportional effort. Actual unchanged patterns receive matching concluding dialogue rather than a false shift claim. Repeated effort-summary boxes, per-column aim headings and extra verdict controls are absent.",
+    "Seven pure suites pass 33 checks, including 13,200 complete cross-level dialogue paths, 320 two/three-test dialogue histories, legacy intent independence and 24 distinct emoji. Browser checks cover first-even and uneven starts, same-band results, partial completion ticks, optional-third cancellation, scene replay, timing visibility, exact-repeat recovery and 320/390/768/1366 px layouts. Imported pure modules were unchanged by the final workbench-only cancel/spotlight fixes; final-build browser tests cover both.",
+    "Partner-host checks verify dynamic opening names, distinct portraits, Level 2\u2019s original selected trio inherited and editable, stable scene IDs, actual immutable run payloads, once-only completion after two or three tests, no newly populated intent/decision fields, nullable compared pairs and custom renderer replacement. The endpoint remains theory.reveal; no Design Lab navigation occurs.",
+    "All four builds and all five latest ZIPs pass. CRC/SHA256 and byte comparisons establish that packages match the final builds and manifest. Actual standalone Level 1/2/3 downloads and the connected Level 1 \u2192 2 \u2192 3 game are exercised offline. The review ZIP contains both standalone Level 3 and connected Levels 1\u20133 from those same builds.",
+    "This completes the approved Level 3 path revision, preserving Level 1/2 gameplay and the partner\u2019s authored animation scripts. Opening integration and the separately requested Level 2 growth framing remain outside this step. Functional checks do not establish the best possible learning design, measured learning efficacy, classroom capacity or direct-file compatibility in every user browser."
   ]
 }

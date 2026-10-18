@@ -1,11 +1,13 @@
-# Level 3 effort rules (v17)
+# Level 3 effort rules (introduced v17, retained v18)
 
 The pre-change v16 source and downloads are frozen on
 `archive/pre-effort-rules-v16` at
 `69f2bb4906a6d6c85442686180e49dc6a0800291`.
 
-This revision fixes the relation between weights, observed effort and narrative
-feedback. It does not redesign the Level 3 player path.
+The v17 revision fixed the relation between weights, observed effort and
+narrative feedback. Those rules remain in v18; the subsequent
+[player-path revision](LEVEL3_PLAYER_PATH.md) removes the aim and judgment gates
+and allows completion after two observations, with an optional third.
 
 ## One per-item rule
 
@@ -58,10 +60,10 @@ summary claiming that effort moved each time.
 
 ## Scope and compatibility
 
-The required aim selector, three trials, optional strategy hints and final
-keep/rethink judgment remain from v16. They are pending a separate player-path
-redesign; this release does not claim that those design issues are resolved.
-Level 1 and Level 2 behaviour is unchanged.
+The current flow uses a free first allocation, an evidence-led second editor,
+comparison after two observations and an optional third experiment. Strategy
+help is verbal and optional, without numerical examples. Required aims and the
+keep/rethink gate have been removed. Level 1 and Level 2 behaviour is unchanged.
 
 Existing cinematic IDs, prop shapes, opening-name routing and endpoint remain
 the same: weighted observations → Alex's response → `theory.reveal`. The game
@@ -70,7 +72,7 @@ partner's authored animation scripts are unchanged; custom renderers continue
 to replace the entire placeholder.
 
 Current validation is recorded in
-[LEVEL3_VALIDATION-v17.json](LEVEL3_VALIDATION-v17.json). The preceding
-[v16 report](LEVEL3_VALIDATION-v16.json), older archives and versioned ZIPs stay
-historical. Behaviour and packaging checks do not establish classroom learning
-effectiveness.
+[LEVEL3_VALIDATION-v18.json](LEVEL3_VALIDATION-v18.json). The
+[v17 report](LEVEL3_VALIDATION-v17.json) preserves the original rule correction;
+the v16 report, older archives and versioned ZIPs stay historical. Behaviour and
+packaging checks do not establish classroom learning effectiveness.

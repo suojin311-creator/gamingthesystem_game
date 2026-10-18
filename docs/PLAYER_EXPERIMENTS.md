@@ -1,98 +1,89 @@
-# Player-led experiments (retained v16 flow, v17 rules)
+# Player-led experiments (v18)
 
-The v15 source and downloads are frozen on `archive/pre-player-experiments-v15`
-at `d3075b72950e8bf9a0f693d15cf37b95440cfe7d`.
+The pre-change source and downloads are frozen on
+`archive/pre-level3-path-v17` at
+`5d56d4cbb763b039b4a8a7a4c3bceb7932f303b2`.
+The v17 effort rules remain; this revision replaces the required aim selector,
+three-test gate and final keep/rethink judgment. Level 1, Level 2 and the
+partner's authored animation scripts are unchanged.
 
-The v16 source and downloads are frozen on `archive/pre-effort-rules-v16`
-at `69f2bb4906a6d6c85442686180e49dc6a0800291`. The current revision corrects
-the effort and narrative rules described in [effort rules](EFFORT_RULES.md).
-It retains the aim selector, three required attempts and final judgment below.
-Their player-path design remains unresolved and is a separate next task.
+## Follow evidence rather than a prescribed allocation
 
-## Choose a purpose, then investigate
+The first confirmed allocation is free. The second editor carries forward the
+last actual observation, with the selected task names and their qualitative
+effort. A short question responds to neglected tasks or shared attention,
+rather than asking the player to pick an abstract aim. A near-even first
+allocation is legitimate evidence; it is not marked wrong or forced onto a
+different route.
 
-Each of the three weight editors asks the player to choose an aim: give all
-three tasks attention, shift Alex’s priority, or keep Alex exploring. There is
-no default and no scored correct choice. Choosing an aim does not move sliders
-or clear confirmed values. The aim is recorded in that actual trial.
+Need a hint? is collapsed verbal help. It suggests what could be observed and
+leaves the numerical choice to the player. There is no Apply suggested weights
+control, automatic allocation, system reference or required pattern. Changed
+weights with the same effort bands remain valid evidence of unchanged effort;
+exact repeats of an earlier allocation are rejected.
 
-Explore / Adjust / Verify remain the three stages, but Verify no longer
-requires a prescribed weight pattern. Every new positive integer split totaling
-100 is accepted. Exact repeated allocations ask the player to reset and try a
-new split. Different weights with identical effort bands remain valid evidence.
-Three uneven or three near-even trials can reach comparison and completion.
-No system reference trial is inserted, and no fourth trial is implied.
+The first-use guide only explains controls. Its four static spotlight steps use
+Next, Back, Skip and Escape, ending with Try your weights. It does not ask for
+practice, move sliders or confirm values. Guide reopens it during editing.
 
-The first-use guide still teaches only controls: slide, confirm, adjust the
-remaining pair, then run. Strategy help is collapsed under “Need a hint?”. After
-choosing an aim, a player may read a goal-specific hint and explicitly apply an
-editable example. Applying it never confirms or runs it. Suggestions are
-examples, not progression requirements or a winning weighting.
+## Two observations, with room for one more
 
-## Feedback follows the player's question
+After the first result, the next action returns to the editor to try a change.
+After the second observed result, Compare the results opens a table containing
+both real experiments. Its primary Watch Alex's response action continues
+without a judgment question. Test another idea optionally opens a third editor.
+Back to comparison abandons unsubmitted edits without adding a trial.
+After a third observation the comparison retains all three tests and offers the
+same direct continuation. There is no fourth experiment.
 
-Each result keeps the existing effort illustrations and adds one short finding
-under the chosen aim. Shared attention can be acknowledged; moving a priority
-can be distinguished from changing weights within the same effort bands. The
-exploration aim remains unproven by score-directed effort, with the near-even
-and other all-steady allocations showing a criteria → ticks → packing-up
-sequence. This now depends on actual effort bands, not the near-even label.
-Low-effort tasks remain unticked; a neglected task must not be presented as
-meeting all requirements. Scoring-directed stopping is an independent narrative
-observation across allocations, rather than a special punishment for balancing.
+The second or third allocation does not have to be near-even, uneven or cross
+an effort threshold. Each is a new positive integer split totaling 100%,
+confirmed by the player and actually observed before it can be compared.
+No additional aim selection is needed before Run evaluation.
 
-There is still only one teacher question and two short Alex replies per result.
-The teacher follows the selected aim; the replies reflect the actual pattern.
-Third-test language no longer assumes priorities necessarily changed. Uniform
-effort histories are described as unchanged, even if their weights or
-near-even labels differ. Repeat all-steady observations have different scene
-replies without inventing new evidence.
-Replay remains deterministic. No extra editing or publication dialogue is added.
+## Evidence and stopping are different observations
 
-## Judge the evidence
+Results retain the effort illustrations and one teacher question with two short
+Alex replies. They do not add aim headings or repeated result-summary boxes.
+Questions and final dialogue use the actual effort bands and their changes:
+improved coverage is acknowledged, while unchanged bands are described as
+unchanged. Different numerical weights are not automatically a new finding.
 
-The comparison retains all three actual trials, their aims and explicit
-More / Less / Same effort labels relative to the preceding trial. It asks whether
-the player would keep the latest split for now or rethink the setup. Neither
-choice is marked correct, given a score or blocked. The chosen judgment must
-precede the final response, whose opening question acknowledges it.
+Stopping at the scoring requirements remains a separate narrative observation.
+Every all-steady allocation uses criteria → ticks → packing up, independently
+of the near-even label. Low-effort tasks remain unticked. The rule is not a
+special punishment for a balanced split or evidence of measured learning loss.
+Replay preserves the established result; it does not create another trial.
 
-The same replaceable scene chain ends at `theory.reveal`. No authored animation
-scripts or opening assets are edited. Custom renderers still replace the entire
-placeholder. There is no Design Lab navigation or player restart.
+The replaceable scene chain remains weighted observations → Alex's response →
+`theory.reveal`. Custom renderers replace the complete placeholder. There is no
+Design Lab navigation, additional ending page or player Restart control.
 
-## Contract changes
+## Contracts and compatibility
 
-- `WeightRun.intent?: 'attention' | 'priority' | 'exploration'` is set for every
-  new player-confirmed trial. It is optional in the type for older host fixtures.
-- `LevelThreeCinematicRequest.decision?: 'keep' | 'revise'` is supplied after the
-  player's final judgment. Scene IDs, weighted shots and player-name routing stay
-  the same. A custom renderer may use this additional context.
-- Completion fires once on Watch Alex’s response after the three observations
-  and explicit judgment. It returns the copied trials and `decision`.
-- `compared` retains `{ nearEven, uneven }` for mixed histories. It is `null` for
-  histories without both patterns; consumers must handle this. The all-runs
-  payload and table are authoritative and always contain the three actual trials.
+- New trial records have `kind: 'player'` and do not populate the legacy optional
+  `WeightRun.intent`. Older host fixtures may still provide that field.
+- The optional `LevelThreeCinematicRequest.decision` remains accepted for older
+  hosts, but the current game has no decision gate and does not populate it.
+- Completion fires once on Watch Alex's response after two or three observed
+  tests. It returns copied `selectedMetricIds`, copied actual `runs` and
+  `compared: { nearEven, uneven } | null`. `LevelThreeResult.decision` is optional
+  and omitted by this UI.
+- A mixed history retains a copied near-even/uneven pair. Without both pattern
+  classes, `compared` is null. Consumers must use the all-runs payload as the
+  authoritative two- or three-test history.
+- Weighted shot IDs, player-name routing, renderer props and final theory
+  endpoint remain compatible. See [Level 3 handoff](LEVEL3_HANDOFF.md).
 
-## Validation
+## Validation and scope
 
-[LEVEL3_VALIDATION-v17.json](LEVEL3_VALIDATION-v17.json) records the current
-effort-rule correction and release validation.
-`LEVEL3_VALIDATION-v16.json` is the historical report for
-free third allocations, optional hints, aim-specific findings, both judgments,
-uniform-pattern completion, partner callbacks and names, chapter handoff,
-visible-time timing, responsive layouts and actual downloadable ZIPs. Dialogue
-checks include all 20 metric trios and representative uniform/mixed histories
-under all 27 purpose sequences. Existing v15/v14 reports remain historical.
-These checks verify game behaviour rather than measured learning effectiveness.
+[LEVEL3_PLAYER_PATH.md](LEVEL3_PLAYER_PATH.md) describes the two main player
+routes and their limits. [LEVEL3_VALIDATION-v18.json](LEVEL3_VALIDATION-v18.json)
+records the current checks and downloadable builds. The v17 report preserves
+the effort-rule correction; v16 and earlier reports describe previous flows,
+including removed aims, numerical examples and judgments.
 
-## Pending player-path design
-
-The three aims are not equivalent controllable outcomes: weight changes can
-alter attention or priority but cannot guarantee exploration. Different aims
-can still suggest the same weights, and three required trials can still yield
-the same observed effort. The final keep/rethink gate also remains in place.
-The v17 correction makes those observations causally consistent; it does not
-claim that these flow problems have been solved. No new trial count, forced
-contrast route, overlay guide or opening/cinematic integration is implemented
-as part of this rule-only change.
+These checks verify behaviour and packaging. They do not establish that this
+is the best possible design or that classroom learning outcomes have improved.
+Opening integration and Level 2's additional growth framing remain separate
+work; neither is added by this Level 3 revision.

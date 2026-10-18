@@ -1,17 +1,33 @@
 import assert from 'node:assert/strict';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { createServer } from 'vite';
+
 const server = await createServer({server:{middlewareMode:true,hmr:false},appType:'custom'});
-const checks=[];const check=(name,run)=>{run();checks.push(name);console.log('PASS',name)};
+const checks=[];
+const check=(name,run)=>{run();checks.push(name);console.log('PASS',name)};
 try {
- const {nextExperiment,meetsExperiment,trialFinding,TRIAL_INTENTS}=await server.ssrLoadModule('/src/levels/level3/experiments.ts');
+ const {nextExperiment,meetsExperiment,experimentHint,MIN_TRIALS,MAX_TRIALS,canCompare,canTryAgain}=await server.ssrLoadModule('/src/levels/level3/experiments.ts');
  const {validWeights}=await server.ssrLoadModule('/src/levels/level3/weights.ts');
- const {compareRuns,copyRun,cinematicRequest}=await server.ssrLoadModule('/src/levels/level3/data.ts');
+ const {copyRun,cinematicRequest,effortChanged}=await server.ssrLoadModule('/src/levels/level3/data.ts');
+ const {workbenchDialogue}=await server.ssrLoadModule('/src/levels/level3/dialogue.ts');
  const ids=['prep','part','focus','discuss','reflect','peer'];
  const trios=ids.flatMap((a,i)=>ids.slice(i+1).flatMap((b,j)=>ids.slice(i+j+2).map(c=>[a,b,c])));
- const run=(weights,round=1,metricIds=ids.slice(0,3),intent='attention')=>({round,kind:'player',metricIds,weights,intent});
- check('Every positive allocation is allowed in a third test regardless of earlier balance, except exact repeats',()=>{
-  for(const history of [[[70,20,10],[80,10,10]],[[34,33,33],[40,30,30]],[[70,20,10],[34,33,33]]]){
+ const run=(weights,round=1,metricIds=ids.slice(0,3))=>({round,kind:'player',metricIds,weights});
+
+ check('Two real observations unlock comparison; a third experiment is optional and no fourth can run',()=>{
+  assert.equal(MIN_TRIALS,2);assert.equal(MAX_TRIALS,3);
+  const records=[[70,20,10],[34,33,33],[20,70,10]].map((weights,i)=>run(weights,i+1));
+  for(let count=0;count<=3;count++) {
+   const history=records.slice(0,count);
+   assert.equal(canCompare(history),count>=2);
+   assert.equal(canTryAgain(history),count<3);
+  }
+  assert.ok(!meetsExperiment([45,45,10],records));
+  assert.ok(!canCompare([...records,run([45,45,10],4)]));
+ });
+
+ check('Every new positive split is valid for the second and optional third trials, including unchanged effort bands',()=>{
+  for(const history of [[],[[70,20,10]],[[34,33,33]],[[70,20,10],[80,10,10]],[[34,33,33],[40,30,30]],[[70,20,10],[34,33,33]]]){
    const runs=history.map((weights,i)=>run(weights,i+1)),saved=JSON.stringify(runs);
    for(let a=1;a<=98;a++)for(let b=1;b<100-a;b++){
     const weights=[a,b,100-a-b];
@@ -20,50 +36,62 @@ try {
    assert.equal(JSON.stringify(runs),saved);
    for(const invalid of [[61,39,0],[99,0,1],[20,20,20],[33.5,33.5,33]])assert.ok(!meetsExperiment(invalid,runs));
   }
+  assert.ok(meetsExperiment([40,31,29],[run([40,30,30])]));
+  assert.ok(meetsExperiment([31,35,34],[run([34,33,33]),run([36,32,32],2)]));
+  assert.match(experimentHint(),/already|tested|different|new/i);
  });
- check('All 20 trios have opt-in goal-specific editable examples and real recorded purposes; no strategy is selected for the player',()=>{
-  const cases=[[70,20,10],[45,45,10],[34,33,33],[40,30,30],[98,1,1]];
-  assert.equal(nextExperiment([]).suggestion,undefined);
-  for(const metricIds of trios)for(const first of cases)for(const second of cases){
-   if(first.every((v,i)=>v===second[i]))continue;
-   const runs=[run(first,1,metricIds),run(second,2,metricIds)],before=JSON.stringify(runs);
-   assert.equal(nextExperiment(runs).suggestion,undefined);
-   for(const {id:intent} of TRIAL_INTENTS){
-    const plan=nextExperiment(runs,intent);
-    assert.equal(plan.purpose,'verify');assert.ok(validWeights(plan.suggestion));assert.ok(meetsExperiment(plan.suggestion,runs));
-    assert.equal((plan.question.match(/\?/g)||[]).length,1);
-    const third=run(plan.suggestion,3,metricIds,intent),request=cinematicRequest('comparison','Riley',[...runs,third],'keep');
-    assert.equal(request.runs[2].intent,intent);assert.equal(request.decision,'keep');assert.ok(trialFinding(third,runs[1]));
-    const copy=copyRun(third);copy.weights[0]=1;assert.notEqual(copy.weights[0],third.weights[0]);
-   }
-   assert.equal(JSON.stringify(runs),before);
+
+ check('All 20 trios receive concise observation-based questions and optional text hints without prefilled solutions',()=>{
+  assert.equal(trios.length,20);
+  const histories=[[],[[70,20,10]],[[45,45,10]],[[34,33,33]],[[50,25,25]],[[70,20,10],[80,10,10]],[[70,20,10],[34,33,33]],[[34,33,33],[70,20,10]],[[34,33,33],[40,30,30]]];
+  const questions=new Set();
+  for(const metricIds of trios)for(const history of histories){
+   const runs=history.map((weights,i)=>run(weights,i+1,metricIds)),saved=JSON.stringify(runs);
+   const plan=nextExperiment(runs);
+   assert.equal(plan.purpose,!runs.length?'explore':runs.length===1?'respond':'verify');
+   assert.equal((plan.question.match(/\?/g)||[]).length,1,plan.question);
+   assert.ok(plan.question.split(/\s+/).length<=22,plan.question);
+   assert.ok(plan.label&&plan.hint);
+   assert.equal(plan.suggestion,undefined);
+   assert.doesNotMatch(plan.hint,/\b\d+\s*%|\b\d+\s*\/\s*\d+/);
+   assert.doesNotMatch(JSON.stringify(plan),/undefined/);
+   assert.equal(JSON.stringify(runs),saved);
+   questions.add(plan.question);
   }
+  assert.ok(questions.size>=5,'Prompts must distinguish observed coverage, changes and repeated patterns.');
  });
- check('Goal feedback acknowledges shared attention, unchanged effort and shifted priorities without equating any with learning',()=>{
-  assert.match(trialFinding(run([34,33,33])),/All three received attention/);
-  assert.match(trialFinding(run([50,25,25])),/All three received attention/);
-  const low=trialFinding(run([70,20,10]));assert.match(low,/Participation and Focus.*minimum effort/);assert.ok(!low.includes('still'));
-  assert.match(trialFinding(run([24,25,51])),/Preparation.*minimum effort/);
-  assert.ok(!trialFinding(run([24,25,51])).includes('Participation'));
-  assert.match(trialFinding(run([34,33,33],2,ids.slice(0,3),'exploration')),/packed up/);
-  assert.match(trialFinding(run([50,25,25],2,ids.slice(0,3),'exploration')),/packed up/);
-  assert.match(trialFinding(run([70,20,10],2,ids.slice(0,3),'exploration')),/unproven/);
-  assert.match(trialFinding(run([80,10,10],2,ids.slice(0,3),'priority'),run([70,20,10])),/Preparation still draws/);
-  assert.match(trialFinding(run([10,70,20],2,ids.slice(0,3),'priority'),run([70,20,10])),/Participation now draws/);
-  assert.equal(compareRuns([run([70,20,10]),run([80,10,10],2),run([10,70,20],3)]),null);
-  assert.equal(compareRuns([run([34,33,33]),run([40,30,30],2),run([31,35,34],3)]),null);
-  assert.ok(compareRuns([run([70,20,10]),run([34,33,33],2),run([10,70,20],3)]));
- });
- check('Findings describe actual low-effort tasks across all integer splits, including uncovered and all-covered uneven distributions',()=>{
+
+ check('Every possible split gives a review of actual neglected tasks or score-based stopping; effort-change detection respects task identity',()=>{
+  const baseline=run([34,33,33]);
   for(let a=1;a<=98;a++)for(let b=1;b<100-a;b++){
-   const weights=[a,b,100-a-b],record=run(weights),finding=trialFinding(record);
-   const expected=record.metricIds.filter((_,i)=>weights[i]<25);
-   if(!expected.length)assert.match(finding,/All three received attention/);
-   else {
-    for(const [index,name] of ['Preparation','Participation','Focus'].entries()) assert.equal(finding.includes(name),weights[index]<25,JSON.stringify({weights,finding,name}));
-    assert.match(finding,/minimum effort/);
+   const weights=[a,b,100-a-b],record=run(weights),lines=workbenchDialogue('result','Riley','first',[record]);
+   assert.equal(lines.length,3);
+   const text=lines.map(line=>line.text).join(' ');
+   const low=record.metricIds.filter((_,i)=>weights[i]<25);
+   if(!low.length) {
+    assert.match(text,/done|stop|point|mark|requirement/i);
+    assert.doesNotMatch(text,/rushed|quick version|little time/i);
+   } else {
+    for(const [index,name] of ['Preparation','Participation','Focus'].entries())if(weights[index]<25)assert.ok(text.includes(name),JSON.stringify({weights,text,name}));
    }
+   assert.doesNotMatch(text,/learning improved|learned more|better learning/i);
+   assert.equal(effortChanged(baseline,record),weights.some(weight=>weight<25||weight>66));
+   assert.ok(!effortChanged(record,{...record,metricIds:['focus','prep','part'],weights:[weights[2],weights[0],weights[1]]}));
   }
  });
- mkdirSync('test-results',{recursive:true});writeFileSync('test-results/experiment-rules-results.json',JSON.stringify({passed:checks.length,checks},null,2)+'\n');
+
+ check('New trial and cinematic records need neither intent nor decision, and copied observations remain independent',()=>{
+  for(const metricIds of trios){
+   const records=[run([70,20,10],1,metricIds),run([34,33,33],2,metricIds)];
+   const before=JSON.stringify(records),request=cinematicRequest('comparison','Riley',records);
+   assert.equal(request.decision,undefined);
+   assert.ok(request.runs.every(record=>record.intent===undefined));
+   const copy=copyRun(records[0]);copy.weights[0]=1;copy.metricIds[0]='peer';
+   request.runs[1].weights[0]=1;request.runs[1].metricIds.length=0;
+   assert.equal(JSON.stringify(records),before);
+   assert.ok(validWeights(records[0].weights));
+  }
+ });
+ mkdirSync('test-results',{recursive:true});
+ writeFileSync('test-results/experiment-rules-results.json',JSON.stringify({passed:checks.length,checks},null,2)+'\n');
 } finally {await server.close()}

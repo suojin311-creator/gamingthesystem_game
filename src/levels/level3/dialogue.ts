@@ -1,6 +1,6 @@
 import type { ConversationLine } from '../../shared/components/Conversation';
 import { metricDefinition, type MetricId } from '../../shared/data/metrics';
-import { BEHAVIOURS, joinNames, type LevelThreeCinematicRequest, type SetupDecision, type WeightRun } from './data';
+import { BEHAVIOURS, effortChanged, joinNames, type LevelThreeCinematicRequest, type SetupDecision, type WeightRun } from './data';
 import { effortAt, hasLowEffort, isNearEven, type Effort, type WeightGoal } from './weights';
 
 export type WeightPattern = 'one-higher' | 'two-higher' | 'near-even';
@@ -23,7 +23,7 @@ function priorities(run: WeightRun) {
 }
 
 /** Only observation results need a workbench exchange; operations stay visual. */
-function observationDialogue(phase: string, playerName: string, _goal: WeightGoal, runs: WeightRun[]): ConversationLine[] {
+export function workbenchDialogue(phase: string, playerName: string, _goal: WeightGoal, runs: WeightRun[]): ConversationLine[] {
   if (phase !== 'result') return [];
   const teacher = (text: string): ConversationLine => ({ speaker: 'Maya', name: playerName, text });
   const alex = (text: string): ConversationLine => ({ speaker: 'Alex', name: 'Alex', text });
@@ -60,34 +60,6 @@ function observationDialogue(phase: string, playerName: string, _goal: WeightGoa
   return [teacher(question), alex(`I’m following the rewards in ${lead}. 🧩`), alex(up || down ? `${low} got the quick version.` : 'I could keep my old shortcuts.')];
 }
 
-
-/** The teacher follows the player's question; no extra editing conversation is added. */
-export function workbenchDialogue(phase: string, playerName: string, goal: WeightGoal, runs: WeightRun[]): ConversationLine[] {
-  const lines = observationDialogue(phase, playerName, goal, runs);
-  const run = runs.at(-1);
-  if (!lines.length || !run?.intent) return lines;
-  const round = Math.min(run.round - 1, 2);
-  const low = names(run.metricIds.filter((_, i) => effortAt(run.weights, i) === 'low'));
-  let question: string;
-  if (run.intent === 'attention') question = !hasLowEffort(run.weights)
-    ? ['All three got time. What made you stop?', 'Nobody was left out. Would you go further?', 'The tasks are covered. Why finish there?'][round]
-    : [`Why did ${low} get so little time?`, `What kept ${low} on the sidelines?`, `What still puts ${low} last?`][round];
-  else if (run.intent === 'priority') question = !hasLowEffort(run.weights)
-    ? ['Did one task take priority, Alex?', 'How did you decide when each task was done?', 'What sets your priorities beyond this list?'][round]
-    : ['How did you choose which task came first?', lines[0].text, 'What guided your choice this time?'][round];
-  else {
-    question = ['What would make you keep exploring, Alex?', 'Any reason to go beyond those requirements?', 'What would make another question worth pursuing?'][round];
-    if (hasLowEffort(run.weights)) {
-      const replies = [
-        ['I checked what earned the marks.', 'Anything extra could wait. 🛋️'],
-        ['My time still goes where the points are.', 'I’m done when the requirements are covered. 🧭'],
-        ['A new split, but I’m still chasing marks.', 'No extra credit? I’ll leave it there.'],
-      ][round];
-      return [{ ...lines[0], text: question }, ...replies.map(text => ({ speaker: 'Alex' as const, name: 'Alex', text }))];
-    }
-  }
-  return [{ ...lines[0], text: question }, ...lines.slice(1)];
-}
 
 const repeatedAction: Record<MetricId, Record<Effort, readonly [string, string]>> = {
   prep: {
@@ -153,11 +125,11 @@ export function weightedSceneReply(request: LevelThreeCinematicRequest, index: n
   return seen ? repeatedAction[shot.metricId][shot.effort][Math.min(seen - 1, 1)] : BEHAVIOURS[shot.metricId][shot.effort].line;
 }
 
-export function comparisonDialogue(playerName: string, runs: WeightRun[], decision?: SetupDecision) {
-  const current = runs.at(-1)!;
+export function comparisonDialogue(playerName: string, runs: WeightRun[], _decision?: SetupDecision) {
+  const changed = runs.some((run, index) => index > 0 && effortChanged(runs[index - 1], run));
   return [
-    { speaker: playerName, text: decision === 'keep' ? 'I’d keep this split for now. What would you do after meeting the requirements?' : decision === 'revise' ? 'I’d rethink this setup. What are these weights asking you to do?' : !hasLowEffort(current.weights) ? 'Your time is shared now. What are you aiming for?' : 'You moved your effort. What are you aiming for?' },
-    { speaker: 'Alex', text: decision === 'keep' ? 'Close the book. I’ve got the marks I need.' : decision === 'revise' ? 'Find the best score for my time.' : 'The best score I can get.' },
-    { speaker: 'Alex', text: decision === 'keep' ? 'Would another question count toward my grade?' : decision === 'revise' ? 'Different percentages, same finish line: enough marks.' : 'I work out what earns marks, then stop when I’ve got them.' },
+    { speaker: playerName, text: changed ? 'What stayed the same across the different splits?' : 'The numbers changed. Did your reason for working change?' },
+    { speaker: 'Alex', text: changed ? 'I was aiming for the best score I could get.' : 'No. I was still working out what earns marks.' },
+    { speaker: 'Alex', text: changed ? 'Once I’d collected the marks, I stopped.' : 'When the requirements are covered, I’m done.' },
   ];
 }

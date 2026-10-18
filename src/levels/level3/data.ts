@@ -11,7 +11,7 @@ export type LevelThreeCinematicRequest = {
   shots: { sceneId: string; metricId: MetricId; weight: number; effort: Effort }[];
   decision?: SetupDecision;
 };
-export type LevelThreeResult = { selectedMetricIds: MetricId[]; runs: WeightRun[]; compared: { nearEven: WeightRun; uneven: WeightRun } | null; decision: SetupDecision };
+export type LevelThreeResult = { selectedMetricIds: MetricId[]; runs: WeightRun[]; compared: { nearEven: WeightRun; uneven: WeightRun } | null; decision?: SetupDecision };
 
 export const EFFORT_LABELS: Record<Effort, string> = { low: 'Minimum effort', medium: 'Steady effort', high: 'Intense effort' };
 export const BEHAVIOURS: Record<MetricId, Record<Effort, { action: string; line: string }>> = {
@@ -57,12 +57,15 @@ export function compareRuns(runs: WeightRun[]) {
   return nearEven && uneven ? { nearEven: copyRun(nearEven), uneven: copyRun(uneven) } : null;
 }
 
-export function comparisonSummary(runs: WeightRun[]) {
-  const changed = runs.some((run, index) => index > 0 && run.metricIds.some((id, metricIndex) => {
-    const previous = runs[index - 1];
+export function effortChanged(previous: WeightRun, current: WeightRun) {
+  return current.metricIds.some((id, index) => {
     const previousIndex = previous.metricIds.indexOf(id);
-    return previousIndex >= 0 && effortAt(run.weights, metricIndex) !== effortAt(previous.weights, previousIndex);
-  }));
+    return previousIndex >= 0 && effortAt(current.weights, index) !== effortAt(previous.weights, previousIndex);
+  });
+}
+
+export function comparisonSummary(runs: WeightRun[]) {
+  const changed = runs.some((run, index) => index > 0 && effortChanged(runs[index - 1], run));
   return changed
     ? 'Across the tests, Alex shifts effort between tasks. He still stops when he has the marks he wants.'
     : 'These weights produced the same effort pattern. Alex still stops when the scoring requirements are covered.';

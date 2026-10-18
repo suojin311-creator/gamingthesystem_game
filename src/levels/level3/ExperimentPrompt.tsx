@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import Icon from '../../shared/components/Icon';
-import { TRIAL_INTENTS, type Experiment } from './experiments';
-import type { TrialIntent } from './data';
+import { metricDefinition } from '../../shared/data/metrics';
+import { EFFORT_LABELS, type WeightRun } from './data';
+import { effortAt } from './weights';
+import type { Experiment } from './experiments';
 
-export default function ExperimentPrompt({ experiment, intent, attended, applied, onIntent, onApply }: {
-  experiment: Experiment; intent: TrialIntent | null; attended: boolean; applied: boolean; onIntent: (intent: TrialIntent) => void; onApply: () => void;
+export default function ExperimentPrompt({ experiment, previous, attended, paused }: {
+  experiment: Experiment; previous?: WeightRun; attended: boolean; paused: boolean;
 }) {
   const root = useRef<HTMLElement>(null);
   const [attention, setAttention] = useState(true);
@@ -17,8 +19,12 @@ export default function ExperimentPrompt({ experiment, intent, attended, applied
     document.addEventListener('visibilitychange', visibility);
     return () => { observer.disconnect(); document.removeEventListener('visibilitychange', visibility); };
   }, []);
-  return <section ref={root} className="l3-experiment" data-purpose={experiment.purpose} data-attention={attention && !attended} aria-labelledby="experiment-question" style={{ '--prompt-play-state': visible && pageVisible ? 'running' : 'paused' } as CSSProperties} onAnimationEnd={event => { if (event.target === event.currentTarget) setAttention(false); }}>
-    <fieldset className="l3-experiment-choice"><legend id="experiment-question">{experiment.question}</legend><div className="l3-intent-options">{TRIAL_INTENTS.map(item => <label key={item.id} data-selected={intent === item.id}><input type="radio" name="trial-intent" value={item.id} checked={intent === item.id} onChange={() => onIntent(item.id)} /><span>{item.label}</span></label>)}</div></fieldset>
-    <details className="l3-strategy-hint" key={intent || 'unselected'}><summary>Need a hint?</summary><p>{experiment.hint}</p>{experiment.suggestion && <div className="l3-experiment-suggestion"><button className="button secondary-button" onClick={onApply}>Apply suggested weights<Icon name="arrow" /></button><span role="status" aria-live="polite">{applied ? 'Weights set. Adjust or confirm.' : 'Sets the sliders; you confirm.'}</span></div>}</details>
+  return <section ref={root} className="l3-experiment" data-purpose={experiment.purpose} data-attention={attention && !attended} aria-labelledby="experiment-question" style={{ '--prompt-play-state': visible && pageVisible && !paused ? 'running' : 'paused' } as CSSProperties} onAnimationEnd={event => { if (event.target === event.currentTarget) setAttention(false); }}>
+    <div className="l3-experiment-question"><span className="eyebrow">{experiment.label}</span><h3 id="experiment-question">{experiment.question}</h3></div>
+    {previous && <div className="l3-previous" role="group" aria-label="Last observation"><span className="eyebrow">LAST OBSERVATION</span><ul>{previous.metricIds.map((id, index) => {
+      const effort = effortAt(previous.weights, index);
+      return <li key={id} data-metric={id} data-effort={effort}><Icon name={id} /><span><b>{metricDefinition(id).shortName}</b><span className="l3-context-effort"><span className="l3-effort-bars" aria-hidden="true">{[0, 1, 2].map(i => <i key={i} data-active={i < (effort === 'low' ? 1 : effort === 'medium' ? 2 : 3)} />)}</span>{EFFORT_LABELS[effort]}</span></span></li>;
+    })}</ul></div>}
+    <details className="l3-strategy-hint"><summary>Need a hint?</summary><p>{experiment.hint}</p></details>
   </section>;
 }

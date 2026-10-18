@@ -11,7 +11,7 @@ try {
   const { observationDialogue, classroomDialogue } = await server.ssrLoadModule('/src/levels/level2/dialogue.ts');
   const { sceneRequest } = await server.ssrLoadModule('/src/levels/level2/data.ts');
   const { METRICS } = await server.ssrLoadModule('/src/levels/level1/metrics.ts');
-  const { nextExperiment } = await server.ssrLoadModule('/src/levels/level3/experiments.ts');
+  const { canCompare, meetsExperiment } = await server.ssrLoadModule('/src/levels/level3/experiments.ts');
   const { effortAt, isNearEven } = await server.ssrLoadModule('/src/levels/level3/weights.ts');
   const ids = METRICS.map(m => m.id);
   const trios = ids.flatMap((a, i) => ids.slice(i + 1).flatMap((b, j) => ids.slice(i + j + 2).map(c => [a, b, c])));
@@ -74,20 +74,22 @@ try {
     assert.match(question([70,20,10],[34,33,33]),/What made you stop/);
     assert.match(question([45,45,10],[70,20,10]),/from Participation to Preparation/);
   });
-  check('All verification routes and comparison orders describe actual effort without assuming an improvement or a shift', () => {
-    for (const sequence of [[[70,20,10],[34,33,33]],[[34,33,33],[70,20,10]],[[70,20,10],[80,10,10]],[[34,33,33],[40,30,30]]]) {
+  check('Both two-trial and three-trial comparisons describe actual effort without assuming an improvement or a shift', () => {
+    const cases=[[[70,20,10],[34,33,33]],[[34,33,33],[70,20,10]],[[70,20,10],[80,10,10]],[[34,33,33],[40,30,30]],[[70,20,10],[34,33,33],[10,70,20]],[[34,33,33],[40,30,30],[31,35,34]]];
+    for (const sequence of cases) {
       const runs=sequence.map((weights,i)=>makeRun(ids.slice(0,3),weights,i+1));
-      const plan=nextExperiment(runs,'attention');
-      runs.push(makeRun(ids.slice(0,3),plan.suggestion,3));
+      assert.ok(canCompare(runs));
       assert.equal(!!compareRuns(runs),runs.some(run=>isNearEven(run.weights))&&runs.some(run=>!isNearEven(run.weights)));
       const same=runs.slice(1).every(run=>run.metricIds.every((id,i)=>effortAt(run.weights,i)===effortAt(runs[0].weights,runs[0].metricIds.indexOf(id))));
       assert.match(comparisonSummary(runs),same?/same effort pattern/:/shifts effort/);
       assert.ok(!JSON.stringify(comparisonDialogue('Riley',runs)).includes('Balancing the weights helped'));
+      const request=cinematicRequest('comparison','Riley',runs);
+      assert.equal(request.runs.length,runs.length);assert.equal(request.decision,undefined);
     }
     const fixed=[[34,33,33],[40,31,29],[50,25,25]].map((weights,i)=>makeRun(ids.slice(0,3),weights,i+1));
     const shifted=[[70,20,10],[34,33,33],[10,70,20]].map((weights,i)=>makeRun(ids.slice(0,3),weights,i+1));
     assert.notEqual(comparisonSummary(fixed),comparisonSummary(shifted));
-    for(const decision of [undefined,'keep','revise'])assert.doesNotMatch(JSON.stringify(comparisonDialogue('Riley',fixed,decision)),/\b(?:moved|shifted|switched)\b.*\beffort\b/i);
+    assert.doesNotMatch(JSON.stringify(comparisonDialogue('Riley',fixed)),/\b(?:moved|shifted|switched)\b.*\beffort\b/i);
     const reordered=[makeRun(['prep','part','focus'],[70,20,10]),makeRun(['part','focus','prep'],[10,20,70],2),makeRun(['focus','prep','part'],[15,75,10],3)];
     assert.match(comparisonSummary(reordered),/same effort pattern/);
   });
@@ -106,9 +108,10 @@ try {
         append(request.shots.map((_,i)=>({speaker:'Alex',text:weightedSceneReply(request,i)})));
         append(talk('result','Riley',runs.length===1?'first':'different',runs));
       }
-      const plan=nextExperiment(runs,'attention');
+      const third=splitCases.find(weights=>meetsExperiment(weights,runs));
       {
-        runs.push(makeRun(trio,plan.suggestion,3));
+        assert.ok(third);
+        runs.push(makeRun(trio,third,3));
         append(talk('publish','Riley','different',runs));
         const request=cinematicRequest('weights','Riley',runs);
         append(request.shots.map((_,i)=>({speaker:'Alex',text:weightedSceneReply(request,i)})));

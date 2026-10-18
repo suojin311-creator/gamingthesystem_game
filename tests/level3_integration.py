@@ -48,10 +48,10 @@ def choose(page):
     page.get_by_role('button',name='Choose priorities',exact=True).click()
     for id in ['prep','part','focus']: page.get_by_test_id('level3-metric-'+id).click()
     page.get_by_role('button',name='Set the weights',exact=True).click()
+    page.get_by_role('button',name='Skip guide',exact=True).click()
 
 
 def weights(page,values):
-    page.get_by_role('radio',name='Give all three attention',exact=True).check()
     for index,id in enumerate(['prep','part','focus']):
         card=page.get_by_test_id('weight-card-'+id)
         if not card.locator('input').is_disabled():
@@ -66,7 +66,9 @@ def publish(page):
     page.get_by_role('button',name='Observe the class',exact=True).click()
     expect(page.locator('.partner-name')).to_have_text('Riley')
     page.get_by_role('button',name='Finish partner scene',exact=True).click()
-    advance(page,12)
+    page.locator('.l3-results').scroll_into_view_if_needed();advance(page,12)
+    page.locator('.l3-criteria-stop').scroll_into_view_if_needed();advance(page,4)
+    page.locator('.l3-bottom-dialogue').scroll_into_view_if_needed();advance(page,8)
 
 
 with sync_playwright() as p:
@@ -80,25 +82,22 @@ with sync_playwright() as p:
     assert [shot['sceneId'] for shot in request['shots']]==['level3.prep.high','level3.part.low','level3.focus.low']
     assert request['runs'][0]['weights']==[70,20,10]
     record('Opening-supplied player name reaches Level 3 labels, avatar and the three weighted partner shots')
-    page.get_by_role('button',name='Adjust the weights',exact=True).click()
+    page.get_by_role('button',name='Try another split',exact=True).click()
     weights(page,[34,33,33]);publish(page)
     assert page.evaluate('window.results.length')==0
-    page.get_by_role('button',name='Test your explanation',exact=True).click()
-    weights(page,[10,70,20]);publish(page)
-    page.get_by_role('button',name='Compare the patterns',exact=True).click();advance(page,3)
+    page.get_by_role('button',name='Compare the results',exact=True).click();advance(page,3)
     assert page.evaluate('window.results.length')==0
-    page.get_by_role('radio',name='Keep this split for now',exact=True).check()
+    expect(page.get_by_role('radio')).to_have_count(0)
     page.get_by_role('button',name='Watch Alex’s response',exact=True).click()
     results=page.evaluate('window.results')
     assert len(results)==1 and results[0]['level']==3
     result=results[0]['result'];assert result['runs'][0]['weights']==[70,20,10]
-    assert len(result['runs'])==3 and all(run['kind']=='player' for run in result['runs'])
-    assert result['runs'][2]['weights']==[10,70,20]
-    assert result['decision']=='keep' and all(run['intent']=='attention' for run in result['runs'])
+    assert len(result['runs'])==2 and all(run['kind']=='player' for run in result['runs'])
+    assert result['runs'][1]['weights']==[34,33,33]
+    assert all('intent' not in run for run in result['runs']) and 'decision' not in result
     assert result['compared']['nearEven']['weights']==[34,33,33]
     assert result['compared']['uneven']['weights']==[70,20,10]
-    record('Level 3 completes once after three player-led tests with immutable tested runs and an explicit near-even/uneven comparison payload')
-    assert page.evaluate('window.requests.at(-1).decision')=='keep'
+    record('Level 3 completes once on Watch after two immutable player tests, without intent or verdict data, and preserves a real near-even/uneven comparison')
     assert page.evaluate('window.requests.at(-1).sceneId')=='level3.compare'
     page.get_by_role('button',name='Finish partner scene',exact=True).click()
     assert page.evaluate('window.requests.at(-1).sceneId')=='theory.reveal'
@@ -157,25 +156,30 @@ with sync_playwright() as p:
     record('Hidden-page publication holds its visible-time sequence and resumes without skipping the three weights')
     context.close()
 
-    for sequence,decision in [([[70,20,10],[80,10,10],[10,70,20]],'keep'),([[34,33,33],[40,30,30],[31,35,34]],'revise')]:
+    for sequence in [[[70,20,10],[80,10,10],[10,70,20]],[[34,33,33],[40,30,30],[31,35,34]]]:
         context,page=start(browser);advance(page);choose(page)
         for index,values in enumerate(sequence):
             weights(page,values);publish(page)
-            if index<2:page.get_by_role('button',name='Adjust the weights' if index==0 else 'Test your explanation',exact=True).click()
-        page.get_by_role('button',name='Compare the patterns',exact=True).click();advance(page,3)
+            if index==0:page.get_by_role('button',name='Try another split',exact=True).click()
+            elif index==1:
+                page.get_by_role('button',name='Compare the results',exact=True).click()
+                assert page.evaluate('window.results.length')==0
+                page.get_by_role('button',name='Test another idea',exact=True).click()
+        page.get_by_role('button',name='Compare the results',exact=True).click();advance(page,3)
         assert page.evaluate('window.results.length')==0
-        page.get_by_role('radio',name='Keep this split for now' if decision=='keep' else 'I’d rethink this setup',exact=True).check()
+        expect(page.get_by_role('button',name='Test another idea',exact=True)).to_have_count(0)
         page.get_by_role('button',name='Watch Alex’s response',exact=True).click()
         result=page.evaluate('window.results.at(-1).result')
-        assert result['compared'] is None and result['decision']==decision
+        assert result['compared'] is None and 'decision' not in result
         assert [run['weights'] for run in result['runs']]==sequence
-        assert page.evaluate('window.requests.at(-1).decision')==decision
+        assert all('intent' not in run for run in result['runs'])
+        assert 'decision' not in page.evaluate('window.requests.at(-1)')
         assert len(page.evaluate('window.results'))==1
         page.get_by_role('button',name='Finish partner scene',exact=True).click()
         expect(page.locator('.partner-scene h2')).to_have_text('theory.reveal')
         assert page.evaluate('window.designLabCount')==0
         context.close()
-    record('Uniform uneven and uniform near-even histories complete once with all actual trials, explicit player decision and compared=null in the partner contract')
+    record('Optional third tests preserve all actual uneven or near-even records, allow compared=null, and emit completion once with no synthetic reference or choice fields')
 
     audio_script='''window.oscillatorStarts=0;const old=AudioContext.prototype.createOscillator;
     AudioContext.prototype.createOscillator=function(){const oscillator=old.call(this);const start=oscillator.start.bind(oscillator);oscillator.start=(...args)=>{window.oscillatorStarts++;return start(...args)};return oscillator};'''

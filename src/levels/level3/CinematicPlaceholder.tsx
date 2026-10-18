@@ -14,7 +14,7 @@ export default function CinematicPlaceholder({ request, onComplete }: { request:
     title: metricDefinition(shot.metricId).name, action: weightedSceneAction(request, index),
     badge: `${shot.weight}% · ${EFFORT_LABELS[shot.effort]}`,
   })) : request.kind === 'comparison' ? comparisonDialogue(request.playerName, request.runs, request.decision).map(line => ({ ...line, title: 'The same rules. A different split.', action: comparisonSummary(request.runs), badge: 'COMPARE THE PATTERNS' })) : [
-    { speaker: request.playerName, text: 'Am I improving learning, or just improving the numbers?', title: 'One pattern. Three levels.', action: 'One metric became a target. More metrics became a checklist. Weights shaped Alex’s priorities.', badge: 'FINAL SCENE' },
+    { speaker: request.playerName, text: 'Am I improving learning, or just improving the numbers?', title: 'One pattern. Three levels.', action: 'One metric became a target. More metrics became a checklist. We tested how weights guide Alex’s choices.', badge: 'FINAL SCENE' },
     { speaker: 'Goodhart’s Law', text: 'When a measure becomes a target, it ceases to be a good measure.', title: 'Goodhart’s Law', action: 'Better indicators and better weighting can help. Higher scores alone do not show that learning improved.', badge: 'THEORY REVEAL' },
   ];
   const line = lines[index];

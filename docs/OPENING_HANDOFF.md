@@ -141,4 +141,9 @@ standalone Level 3 has no inherited choices. Custom hosts can pass
 The reserved `onDesignLab` prop is not invoked; even a duplicate final cinematic
 callback cannot advance into Design Lab. Administrator access is deferred.
 
-Level 3 trials now record the player’s experiment aim, and final requests include an optional keep/rethink `decision`. Completion waits for that judgment; `compared` can be `null` when all three actual tests have the same weight-pattern class. See [Level 3 contracts](LEVEL3_HANDOFF.md).
+Level 3 now completes on Watch Alex's response after two observed tests or an
+optional third. No aim selection or keep/rethink judgment is required. The
+legacy optional trial `intent` and cinematic/result `decision` fields remain
+accepted but are not populated by the current UI. `compared` can be `null` when
+the actual tests do not include both near-even and uneven allocations. All
+copied actual trials remain in `runs`. See [Level 3 contracts](LEVEL3_HANDOFF.md).
