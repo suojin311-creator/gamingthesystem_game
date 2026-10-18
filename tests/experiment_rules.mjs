@@ -51,7 +51,7 @@ try {
    assert.equal(plan.purpose,!runs.length?'explore':runs.length===1?'respond':'verify');
    assert.equal((plan.question.match(/\?/g)||[]).length,1,plan.question);
    assert.ok(plan.question.split(/\s+/).length<=22,plan.question);
-   assert.ok(plan.label&&plan.hint);
+   assert.ok(plan.hint);
    assert.equal(plan.suggestion,undefined);
    assert.doesNotMatch(plan.hint,/\b\d+\s*%|\b\d+\s*\/\s*\d+/);
    assert.doesNotMatch(JSON.stringify(plan),/undefined/);

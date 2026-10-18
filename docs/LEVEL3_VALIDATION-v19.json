@@ -1,0 +1,131 @@
+{
+  "validatedAtUtc": "2026-10-18T18:49:46.009355+00:00",
+  "version": "Level 3 feedback v19: shorter questions, no prompt eyebrows or allocation strip, single-line desktop hints and explicit score-based stopping context",
+  "passed": 39,
+  "builds": [
+    "npm run build: passed",
+    "npm run build:level1: passed",
+    "npm run build:level2: passed",
+    "npm run build:level3: passed"
+  ],
+  "suites": {
+    "level3-rules-results.json": {
+      "passed": 10,
+      "checks": [
+        "Every possible integer split preserves total 100, range 1\u201398 and deterministic allocation",
+        "The 24/25 and 66/67 boundaries apply independently to the same task in every card position",
+        "Across all 4,851 positive splits, increasing a task share never lowers its effort and other shares cannot change its effort",
+        "Crossing the near-even description boundary cannot reduce effort when a share rises",
+        "Either remaining card confirms the pair after any first-card choice",
+        "Both equal remaining sliders can move in either direction before confirmation",
+        "Available bounds clamp safely, reserving one percent, without changing locked weights or snapshots",
+        "Near-even accepts gaps through 10 points inclusively, rejects 11, and produces three medium shots",
+        "Run requires all three confirmed weights (including the linked pair) and a valid complete allocation",
+        "The second experiment requires a changed split and never forces a direction or degree of balance"
+      ]
+    },
+    "experiment-rules-results.json": {
+      "passed": 5,
+      "checks": [
+        "Two real observations unlock comparison; a third experiment is optional and no fourth can run",
+        "Every new positive split is valid for the second and optional third trials, including unchanged effort bands",
+        "All 20 trios receive concise observation-based questions and optional text hints without prefilled solutions",
+        "Every possible split gives a review of actual neglected tasks or score-based stopping; effort-change detection respects task identity",
+        "New trial and cinematic records need neither intent nor decision, and copied observations remain independent"
+      ]
+    },
+    "task-clarity-contract-results.json": {
+      "passed": 6,
+      "checks": [
+        "Weight changes within steady effort stay explicitly Same effort, including the reported near-even boundary example",
+        "Actual intensity changes are labelled against the immediately previous test",
+        "Comparisons follow each metric identity through reordered runs and distinguish changed weights from unchanged effort",
+        "All trio prompts stay concise without requiring a purpose choice or supplying numerical answers",
+        "Two-trial comparison preserves the same evidence labels without a synthetic third column",
+        "All 20 trios display every actual observation and match effort changes by metric identity"
+      ]
+    },
+    "task-clarity-results.json": {
+      "passed": 8,
+      "checks": [
+        "The evidence question retains three finite attention pulses, pauses on hidden pages and never becomes a mandatory goal questionnaire",
+        "Strategy help remains collapsed and optional; opening it supplies contextual words without choosing or changing an allocation",
+        "The second editor retains the previous allocation and shows all three actual effort observations beside a short next question",
+        "The optional third editor responds to the latest all-medium evidence rather than repeating the old low-effort prompt; reduced motion and 1366/768/390/320px remain usable",
+        "Every comparison cell names its effort change against the immediately previous actual test, with explicit baselines and no ambiguous whole-cell highlighting at desktop or phone widths",
+        "The reported 49/26/25 allocation retains all three steady responses and an explicit stopping concern; concise help fits desktop and phone, while 49/27/24 truthfully preserves the unchanged preset boundary",
+        "All four spotlight explanations fit phone, tablet and desktop, trap keyboard focus and can be skipped without altering allocation or confirmations",
+        "No runtime errors in evidence prompts, optional hints, responsive spotlight guidance or adjacent-test comparisons"
+      ],
+      "runtimeErrors": []
+    },
+    "release-results.json": {
+      "passed": 10,
+      "checks": [
+        "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
+        "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
+        "Packaged Level2.html completes 3 \u2192 6 \u2192 10 \u2192 25 \u2192 100 offline with normal motion",
+        "Packaged standalone Level3.html compares after two tests and can add an optional third, keeping all actual results offline",
+        "Packaged Level1.html includes the latest behaviour and two replies, stops after Level 1 and permits replay",
+        "Standalone Level 1 reload starts a fresh Level 1 run",
+        "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
+        "Packaged combined game connects Level 1 \u2192 Level 2 \u2192 playable Level 3 in one open run",
+        "Combined preview reload starts from Level 1 rather than restoring Level 2",
+        "Packaged entries have no browser runtime errors"
+      ],
+      "runtimeErrors": []
+    }
+  },
+  "artifacts": {
+    "sourceSha256": "c4a74105b63dada94618b580f972ca581a359a1fe8315de3df4769a734f913fe",
+    "entries": [
+      {
+        "archive": "Level1-play.zip",
+        "html": "Level1.html",
+        "build": "dist-level1/index.html",
+        "htmlSha256": "1a513f40340dca54c42eac1b5f43dc643c895fbf6c01f89001e2b7d083658ca2",
+        "zipSha256": "f4f877054b07972eebe7b737dc131979a1559997a229d501bdf91d42bb6ca848"
+      },
+      {
+        "archive": "Level2-play.zip",
+        "html": "Level2.html",
+        "build": "dist-level2/index.html",
+        "htmlSha256": "e4218a288faa9909c180b0ce64f407028c2dede29c8c354d42cd890f1136da76",
+        "zipSha256": "00a70b6ebcecfcc29818625b14f4e3bd02f52c8e260e58ce03207b7b4e376716"
+      },
+      {
+        "archive": "Level3-play.zip",
+        "html": "Level3.html",
+        "build": "dist-level3/index.html",
+        "htmlSha256": "3a48f0e6ba0acb97af9501ec4404b189cde1a754d2c58a776cb51a3c9b05dea1",
+        "zipSha256": "9cb191ecb57978f78a2d2dfa97b53abd3b33a07ae38a04bc512ca256f55bbca0"
+      },
+      {
+        "archive": "Full-game-play.zip",
+        "html": "Gaming-the-System.html",
+        "build": "dist/index.html",
+        "htmlSha256": "1b09d3a519b92ad4c397229a064a22faa6fe5805702585db25ab5f9e5708867b",
+        "zipSha256": "9322044ca2afedb95db1fc64dfb098d37a99822025ba5b2b909d011b12827d27"
+      }
+    ],
+    "reviewBundle": {
+      "archive": "Level3-and-Full-game-play.zip",
+      "zipSha256": "53eca88a6a0b7eefdcabef5d7e809837aea69fe0a16d712c6c4b38b90e9e8ce9",
+      "htmlSha256": {
+        "Level3/Level3.html": "3a48f0e6ba0acb97af9501ec4404b189cde1a754d2c58a776cb51a3c9b05dea1",
+        "Full-game/Gaming-the-System.html": "1b09d3a519b92ad4c397229a064a22faa6fe5805702585db25ab5f9e5708867b"
+      }
+    }
+  },
+  "notes": [
+    "The previous v18 release was archived before editing on archive/pre-level3-feedback-v18 at 25bc397aec1bad90158f318d1a0efbfd6a953509. Existing historical archives, reports and numbered ZIPs are preserved.",
+    "All small editor-question headings have been removed. The all-covered first result now asks Can new weights make Alex go further? Optional hints are shorter and no longer constrained to a 570px text column. Browser checks establish a single desktop line while allowing narrow layouts to wrap without overflow.",
+    "The redundant editor allocation strip and 100% allocated label are removed. Positive weight validation, exact total 100, native slider bounds, confirmation order, linked final pair and manual publication/observation are unchanged.",
+    "Last observation retains each actual effort band and adds an amber warning-icon reminder: Stopped after earning the marks he wanted. This describes the existing stopping observation across distributions and does not label shared attention as failure or assert that another split necessarily solves the stopping rule.",
+    "The reported Focus/Reflection/Peer response route 49/26/25 is browser checked with three steady bands, the simplified question, visible stopping concern and one-line desktop hint. At 49/27/24, the last task still changes to minimum and Less effort under the unchanged preset rule. Desktop1366 and phone320 screenshots were inspected; other prompt/comparison/guide layouts cover 768/390 as well.",
+    "Effort remains an independent three-band lookup of each task\u2019s own weight:1\u201324 minimum,25\u201366 steady,67\u201398 intense. There is no continuous effort-spent calculation or shared effort-budget simulation. The25/67 cutoffs are implementation presets, not empirical thresholds or consequences of Goodhart\u2019s Law. Their hard24/25 display boundary is a known design limitation, explicitly documented for a separately agreed model revision.",
+    "Targeted checks total39: allocation/effort rules10, experiment contracts5, comparison/prompt contracts6, production clarity8 and actual ZIP release10. All4851 positive integer allocations and the24/25/66/67 boundaries remain covered. This report records current targeted verification; the broader complete-path validation is preserved separately in v18.",
+    "All four production builds and all five latest ZIPs were regenerated together. CRC/SHA256 checks match packaged HTML, build bytes and manifest. Actual ZIP routes cover standalone Levels1/2/3 and connected Level1\u21922\u21923, including optional-third cancellation and the theory placeholder. No browser runtime errors were found.",
+    "No effort rule, attempt count, authored animation script, Level1/2 gameplay, opening contract or final navigation was changed. The preview still stops at the theory placeholder without Design Lab navigation."
+  ]
+}

@@ -48,8 +48,7 @@ historical; they are not prerequisites in this revision.
 - Confirm any first card, then adjust either remaining card. Confirming either
   final card locks both, with the other button gray and Auto-confirmed. The
   80/10/10 → 80/15/5 case works in every confirmation order.
-- Reset weights resets only the current editor. It sits below the allocation
-  bar and above the action row. There is no player Restart-level control.
+- Reset weights resets only the current editor. It sits below the weight cards and above the action row. There is no player Restart-level control.
 - Publication ticks three weights and waits for Observe the class. Management
   satisfaction begins at Level 2's final checkpoint and rises slightly with
   completed publications, irrespective of the split. Replays and comparison add

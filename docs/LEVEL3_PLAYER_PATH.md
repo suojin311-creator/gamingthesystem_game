@@ -33,7 +33,7 @@ while allowing the player to reach the comparison after two tests.
 | Starting observation | Context for another experiment | What the next result must acknowledge |
 | --- | --- | --- |
 | One or more tasks receive minimum effort | Keep those actual task names and effort visible; ask about changing the allocation | If attention improves, acknowledge it; do not label every adjustment a failure |
-| A near-even split gives three steady responses | Acknowledge shared attention; ask what a different emphasis would reveal | The first balanced allocation was legitimate; scoring-directed stopping remains a separate observation |
+| A near-even split gives three steady responses | Acknowledge shared attention; retain the observed score-based stopping and ask whether new weights help Alex go further | The first balanced allocation was legitimate; scoring-directed stopping remains a separate observation |
 | An uneven split gives three steady responses | Use the same actual bands, rather than treating the uneven label as low attention | Near-even is descriptive metadata, not a second behaviour rule |
 | New values leave every effort band unchanged | Describe no observed band change and let the player compare or optionally investigate further | Do not claim attention shifted merely because the numerical weights changed |
 

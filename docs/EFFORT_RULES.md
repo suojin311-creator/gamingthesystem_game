@@ -25,6 +25,13 @@ Each task uses only its own weight to select its effort band. Increasing that
 weight cannot reduce its effort band. These are qualitative illustrative rules,
 not measured percentages of effort, learning gains or learning losses.
 
+The 25% and 67% cutoffs are implementation presets, not thresholds derived
+from Goodhart's Law or empirical learning data. The current model has no
+continuous effort-spent calculation: 25% to 24% crosses a hard display boundary.
+That discontinuity remains a known design limitation pending a separately
+agreed revision of the effort model. The v19 copy/layout update does not change
+these rules.
+
 ## Near-even is a description
 
 An allocation is near-even when its highest and lowest weights differ by at

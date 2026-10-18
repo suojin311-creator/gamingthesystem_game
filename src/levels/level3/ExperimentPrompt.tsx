@@ -20,8 +20,8 @@ export default function ExperimentPrompt({ experiment, previous, attended, pause
     return () => { observer.disconnect(); document.removeEventListener('visibilitychange', visibility); };
   }, []);
   return <section ref={root} className="l3-experiment" data-purpose={experiment.purpose} data-attention={attention && !attended} aria-labelledby="experiment-question" style={{ '--prompt-play-state': visible && pageVisible && !paused ? 'running' : 'paused' } as CSSProperties} onAnimationEnd={event => { if (event.target === event.currentTarget) setAttention(false); }}>
-    <div className="l3-experiment-question"><span className="eyebrow">{experiment.label}</span><h3 id="experiment-question">{experiment.question}</h3></div>
-    {previous && <div className="l3-previous" role="group" aria-label="Last observation"><span className="eyebrow">LAST OBSERVATION</span><ul>{previous.metricIds.map((id, index) => {
+    <div className="l3-experiment-question"><h3 id="experiment-question">{experiment.question}</h3></div>
+    {previous && <div className="l3-previous" role="group" aria-label="Last observation"><div className="l3-previous-heading"><span className="eyebrow">LAST OBSERVATION</span><span className="l3-stopping-reminder"><Icon name="warning" />Stopped after earning the marks he wanted.</span></div><ul>{previous.metricIds.map((id, index) => {
       const effort = effortAt(previous.weights, index);
       return <li key={id} data-metric={id} data-effort={effort}><Icon name={id} /><span><b>{metricDefinition(id).shortName}</b><span className="l3-context-effort"><span className="l3-effort-bars" aria-hidden="true">{[0, 1, 2].map(i => <i key={i} data-active={i < (effort === 'low' ? 1 : effort === 'medium' ? 2 : 3)} />)}</span>{EFFORT_LABELS[effort]}</span></span></li>;
     })}</ul></div>}

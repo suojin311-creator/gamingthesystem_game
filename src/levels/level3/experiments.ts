@@ -4,42 +4,42 @@ import { effortAt, hasLowEffort, validWeights, type Weights } from './weights';
 
 export const MIN_TRIALS = 2;
 export const MAX_TRIALS = 3;
-export type Experiment = { purpose: 'explore' | 'respond' | 'verify'; label: string; question: string; hint: string };
+export type Experiment = { purpose: 'explore' | 'respond' | 'verify'; question: string; hint: string };
 export const canCompare = (runs: WeightRun[]) => runs.length >= MIN_TRIALS && runs.length <= MAX_TRIALS;
 export const canTryAgain = (runs: WeightRun[]) => runs.length < MAX_TRIALS;
 
 /** A question follows the observed result; no goal choice or prescribed numbers. */
 export function nextExperiment(runs: WeightRun[]): Experiment {
   if (!runs.length) return {
-    purpose: 'explore', label: 'Your first test',
+    purpose: 'explore',
     question: 'Can a different split improve what happens in class?',
-    hint: 'Choose a split you think will help. Publish it, then observe Alex’s choices.',
+    hint: 'Set the shares, confirm them, then watch Alex.',
   };
   const previous = runs.at(-1)!;
   const neglected = joinNames(previous.metricIds.filter((_, index) => effortAt(previous.weights, index) === 'low').map(id => metricDefinition(id).shortName));
   if (runs.length === 1) return neglected ? {
-    purpose: 'respond', label: 'Follow the evidence',
+    purpose: 'respond',
     question: `What would you change for ${neglected}?`,
-    hint: `${neglected} received minimum effort. You could give those tasks a larger share and watch the trade-off.`,
+    hint: `Give ${neglected} more weight. Watch what Alex leaves out.`,
   } : {
-    purpose: 'respond', label: 'Follow the evidence',
-    question: 'All three got attention. What would a different emphasis change?',
-    hint: 'You already gave each task attention. Try changing which task counts most, and watch whether Alex’s choices change.',
+    purpose: 'respond',
+    question: 'Can new weights make Alex go further?',
+    hint: 'Try new weights. Does Alex do more than the checklist asks?',
   };
   const unchanged = runs.slice(1).every((run, index) => !effortChanged(runs[index], run));
   if (unchanged) return {
-    purpose: 'verify', label: 'An optional check',
-    question: 'The routine stayed the same. What would make a useful contrast?',
-    hint: 'Similar splits can produce a similar routine. Try moving the emphasis to another task to check what guides Alex’s choices.',
+    purpose: 'verify',
+    question: 'Alex kept the same routine. What else could you try?',
+    hint: 'Shift the weight to another task. Watch what changes.',
   };
   return hasLowEffort(previous.weights) ? {
-    purpose: 'verify', label: 'An optional check',
+    purpose: 'verify',
     question: `What would you change for ${neglected} now?`,
-    hint: 'Use the comparison to choose what you want to check. You decide which shares to change.',
+    hint: 'Change a share, then compare Alex’s choices.',
   } : {
-    purpose: 'verify', label: 'An optional check',
-    question: 'Attention is broader. Would another split change when Alex stops?',
-    hint: 'All three now receive attention. If you try another idea, watch both where Alex works and what makes him stop.',
+    purpose: 'verify',
+    question: 'Alex still stopped for the marks. What else could you try?',
+    hint: 'Change the shares. Watch whether Alex keeps going after earning the marks.',
   };
 }
 
