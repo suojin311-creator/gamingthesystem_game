@@ -14,6 +14,20 @@ try {
  const trios=ids.flatMap((a,i)=>ids.slice(i+1).flatMap((b,j)=>ids.slice(i+j+2).map(c=>[a,b,c])));
  const run=(weights,round=1,metricIds=ids.slice(0,3))=>({round,kind:'player',metricIds,weights});
 
+ check('The initial question has no implied earlier allocation or preferred balance, and later questions follow the actual evidence',()=>{
+  const first=nextExperiment([]);
+  assert.equal(first.question,'How would you split the 100%?');
+  assert.doesNotMatch(JSON.stringify(first),/different|even|equal|balance|higher|lower/i);
+  assert.match(first.hint,/Move any slider/);
+  const neglected=nextExperiment([run([70,20,10])]);
+  assert.match(neglected.question,/Participation and Focus/);
+  assert.doesNotMatch(neglected.hint,/Give .*more|even|equal|balance|\d/);
+  const covered=nextExperiment([run([34,33,33])]);
+  assert.equal(covered.question,'Can new weights make Alex go further?');
+  assert.match(covered.hint,/checklist/);
+  assert.doesNotMatch(covered.hint,/even|equal|balance/);
+ });
+
  check('Two real observations unlock comparison; a third experiment is optional and no fourth can run',()=>{
   assert.equal(MIN_TRIALS,2);assert.equal(MAX_TRIALS,3);
   const records=[[70,20,10],[34,33,33],[20,70,10]].map((weights,i)=>run(weights,i+1));

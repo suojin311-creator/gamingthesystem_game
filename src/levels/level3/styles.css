@@ -38,6 +38,7 @@
 .level-three .l3-weight-card h3 { font-size: var(--metric-name-size); line-height: 1.45; min-height: 38px; }
 .level-three .l3-weight-value { font: 56px/1.2 var(--serif); letter-spacing: -.045em; color: #766241; margin: 10px 0 5px; }
 .level-three .l3-weight-value span { font-size: 23px; padding-left: 2px; }
+.level-three .l3-weight-card[data-assigned=false] .l3-weight-value { color: #aa9b80; letter-spacing: 0; }
 .level-three .l3-weight-card[data-confirmed=true] .l3-weight-value, .level-three .l3-weight-card[data-confirmed=true] .l3-weight-card-top { color: #5d744c; }
 .level-three .l3-weight-card input { width: 100%; margin: 12px 0 22px; accent-color: #ad6048; cursor: pointer; min-height: 24px; }
 .level-three .l3-weight-card input:disabled { accent-color: #73865e; cursor: default; }

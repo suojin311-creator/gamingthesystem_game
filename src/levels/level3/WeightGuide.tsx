@@ -3,7 +3,7 @@ import Icon from '../../shared/components/Icon';
 import './guide.css';
 
 const STEPS = [
-  { title: 'Move a slider', text: 'You have 100% to share. Move any slider; the other two adjust to keep the total at 100%.' },
+  { title: 'Move a slider', text: 'Start with any slider. The other two share what remains of your 100%. Nothing is confirmed yet.' },
   { title: 'Confirm the weight', text: 'Sliding changes the number. Click Confirm weight to lock the value you want to keep.' },
   { title: 'Set the remaining pair', text: 'You can adjust either remaining slider. Confirm one, and both values are locked together.' },
   { title: 'Watch what happens', text: 'Once all three are confirmed, run the evaluation. Then choose Observe the class to see Alex’s response.' },

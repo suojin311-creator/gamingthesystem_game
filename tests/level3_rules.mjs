@@ -1,9 +1,26 @@
 import assert from 'node:assert/strict';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { allocateWeight, canRun, confirmWeight, effortAt, goalMet, isNearEven, maximumWeight, spread, validWeights, MIN_WEIGHT, MAX_WEIGHT } from '../src/levels/level3/weights.ts';
+import { startAllocation, allocateWeight, canRun, confirmWeight, effortAt, goalMet, isNearEven, maximumWeight, spread, validWeights, MIN_WEIGHT, MAX_WEIGHT } from '../src/levels/level3/weights.ts';
 
 const checks = [];
 const check = (name, run) => { run(); checks.push(name); console.log('PASS', name); };
+check('Starting with any card creates an exact positive allocation from the requested value, including safe bounds and no preferred first split', () => {
+  for (let index = 0; index < 3; index++) for (let requested = -2; requested <= 102; requested++) {
+    const next = startAllocation(index, requested);
+    assert.ok(validWeights(next));
+    assert.equal(next[index], Math.max(MIN_WEIGHT, Math.min(MAX_WEIGHT, requested)));
+    const others = next.filter((_, i) => i !== index);
+    assert.ok(Math.abs(others[0] - others[1]) <= 1);
+    assert.deepEqual(startAllocation(index, requested), next);
+    const confirmed = confirmWeight([false, false, false], index);
+    assert.equal(next[index], allocateWeight(next, confirmed, (index + 1) % 3, 20)[index]);
+  }
+  for (const index of [-1, 3, .5, NaN]) assert.equal(startAllocation(index, 50), null);
+  for (const value of [NaN, Infinity, -Infinity]) assert.equal(startAllocation(0, value), null);
+  assert.deepEqual(startAllocation(0, 70), [70,15,15]);
+  assert.deepEqual(startAllocation(0, 34), [34,33,33]);
+  assert.deepEqual(startAllocation(2, 98), [1,1,98]);
+});
 check('Every possible integer split preserves total 100, range 1–98 and deterministic proportional reallocation without reversing the edited priority', () => {
   for (let a = 1; a <= 98; a++) for (let b = 1; b < 100 - a; b++) {
     const weights = [a, b, 100 - a - b];

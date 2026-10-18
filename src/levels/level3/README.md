@@ -25,6 +25,8 @@ page-local sound setting. `initialMetricIds` preselects the cards without
 preventing changes; standalone Level 3 starts empty. The standalone Level 1/2
 entries still stop at their respective endings.
 
+The first editor is unassigned (three dashes), with Confirm and Run disabled. Moving any slider creates the first positive allocation; the other two share the remainder. The guide never fills it. Reset returns to blank before the first run and to the last observed allocation on later trials. No blank or zero-weight record can be published.
+
 The first allocation is free. The second editor keeps the last observation in
 view and asks a question based on its actual effort bands. Every new valid
 split is accepted, even when the bands remain unchanged. After two observed
@@ -52,6 +54,7 @@ The current UI does not populate the legacy optional `WeightRun.intent`,
 cinematic `decision` or optional result `decision`. Completion fires once on
 Watch Alex's response after two or three observations and copies all runs.
 `compared` remains a near-even/uneven pair or null for uniform-pattern histories.
+Near-even is optional; no final dialogue claims an untested allocation was disproved. The current builds retain Level 2’s explicit six-metric hypothesis and final score-chasing response.
 The scene chain ends at the final theory placeholder. `onDesignLab` is reserved
 and never called; no player Restart control is present.
 
@@ -64,4 +67,4 @@ See [player path](../../../docs/LEVEL3_PLAYER_PATH.md),
 [partner handoff](../../../docs/LEVEL3_HANDOFF.md),
 [player-led experiments](../../../docs/PLAYER_EXPERIMENTS.md) and
 [effort rules](../../../docs/EFFORT_RULES.md). Current validation:
-[v20](../../../docs/LEVEL3_VALIDATION-v20.json); v19 and earlier are historical.
+[v21](../../../docs/LEVEL3_VALIDATION-v21.json); v20 preserves the approved relative-effort baseline and earlier reports are historical.

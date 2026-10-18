@@ -137,6 +137,8 @@ with sync_playwright() as p:
     assert [card.get_attribute('data-testid') for card in page.locator('.l3-metric-card[aria-pressed=true]').all()]==['level3-metric-prep','level3-metric-part','level3-metric-peer']
     page.get_by_role('button',name='Set the weights',exact=True).click()
     expect(page.locator('.l3-weight-card')).to_have_count(3)
+    expect(page.locator('.l3-weight-value')).to_have_text(['—','—','—'])
+    expect(page.locator('#experiment-question')).to_have_text('How would you split the 100%?')
     expect(page.get_by_role('button',name='Restart',exact=True)).to_have_count(0)
     record('Level 3 preselects the actual Level 2 trio, permits swapping, and has no player Restart control')
     page.reload(wait_until='networkidle')

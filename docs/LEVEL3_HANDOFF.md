@@ -32,7 +32,7 @@ references, prescribed patterns or repeated aim/finding boxes. A near-even first
 allocation is legitimate evidence. Changed values with the same effort bands
 are accepted and described as unchanged, not a failed or newly changed result.
 Exact repeats of earlier allocations are rejected. Reset restores the previous
-observed allocation, or the initial editor values before the first test.
+observed allocation, or unassigned dashes before the first test.
 
 See [player path](LEVEL3_PLAYER_PATH.md) and
 [player-led experiments](PLAYER_EXPERIMENTS.md). The preceding v16/v17 gates are
@@ -40,6 +40,7 @@ historical; they are not prerequisites in this revision.
 
 ## Allocation, reports and evidence
 
+- The first editor has no allocation (`null` locally): three dashes, sliders at the start, Confirm and Run disabled. A deliberate move of any slider creates positive weights and divides the remainder between the other two. Unassigned range positions are not zero-valued trial weights and never enter callbacks or effort calculations.
 - Three positive integer weights total exactly 100%; each is 1–98%. Native and
   accessible range bounds reserve the minimum for other unlocked priorities.
   Publication rejects zero weights.
@@ -184,13 +185,14 @@ combined game; standalone entries use their existing defaults.
 `play/Level3-and-Full-game-play.zip`. That review archive contains standalone
 Level 3 and connected Levels 1–3 from the same builds. `play/LATEST.json` records
 source/build/ZIP hashes. `tests/release.py` verifies the actual downloads.
-Current checks are recorded in [LEVEL3_VALIDATION-v20.json](LEVEL3_VALIDATION-v20.json).
+Current checks are recorded in [LEVEL3_VALIDATION-v21.json](LEVEL3_VALIDATION-v21.json).
 The v17 report preserves the effort-rule correction; v16 and older reports and
 versioned ZIPs remain historical. Managed Chromium tests exact offline bytes
 through an in-memory HTTPS origin. Direct file opening in a particular user's
 browser, classroom load capacity and learning effectiveness are not established
 by those checks.
 
-This scope completes the current Level 3 path revision. Opening integration and
-Level 2's requested additional growth framing remain separate work. The withdrawn
+This scope adds an unassigned first editor while retaining the relative effort
+model and free two-/three-test path. Level 2's additional growth framing is
+included in the current packages; opening integration remains separate. The withdrawn
 v12 prediction page and extra peer-script prototype are not reintroduced.

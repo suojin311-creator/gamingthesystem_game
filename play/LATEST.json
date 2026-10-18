@@ -1,41 +1,41 @@
 {
-  "sourceSha256": "d9b547d12adcfd94e81c7b1c5ddb2f55fba293f6f2c168be2c575327754f7267",
+  "sourceSha256": "8022c0812b8e20fda2752b730077b47e4db8effad2629efb74e60fd060057830",
   "entries": [
     {
       "archive": "Level1-play.zip",
       "html": "Level1.html",
       "build": "dist-level1/index.html",
-      "htmlSha256": "a63195d721a361bbd82c0fb0a7a84f2fe0286e56c595d37c9bd5c8a95ca117fb",
-      "zipSha256": "e601efea45fc8b479d260d0daa6676b9e989767418d9fc28dd612201097e3baa"
+      "htmlSha256": "2be40f7c509586704b8a2ab5ed0dbab00f666f6051542c0694c857086af0c29f",
+      "zipSha256": "b3cfd4dfba37ea0471355d660e6a8f049d4945d90b8d8f3d45157829ca50fe5e"
     },
     {
       "archive": "Level2-play.zip",
       "html": "Level2.html",
       "build": "dist-level2/index.html",
-      "htmlSha256": "556729ebae2eb2cfa8c302d4867149d9b8ec3425e6c1203aeeaa0af10de83ce7",
-      "zipSha256": "b34585032800f9798867ccfb8f79dcc0ac51b125e9e94f187c877c2037f73f8b"
+      "htmlSha256": "3967b26a40b8efc4eeb03b52a42234591fa40f90be681c42dbbfc5bad745cc2c",
+      "zipSha256": "88dc706521187b3aa7a08c3ba076a17f6e6f2af434dccd0c218ea23581c46e40"
     },
     {
       "archive": "Level3-play.zip",
       "html": "Level3.html",
       "build": "dist-level3/index.html",
-      "htmlSha256": "330293b556753f73701da80dc7919a1e3ba16e3f03d0b6c56ec02bb459db70de",
-      "zipSha256": "ad50234a95c86807dac94521ab30211c4004e5eef16cc1a6be8964dcd6b541e1"
+      "htmlSha256": "ecd7d641d908d943a7e1f5159a127eb884787f814a3c56f8175e87ff3f529f06",
+      "zipSha256": "f777bc72b3d430714071b4ab5e46762b943866f133822a342ba77c1a0c707dec"
     },
     {
       "archive": "Full-game-play.zip",
       "html": "Gaming-the-System.html",
       "build": "dist/index.html",
-      "htmlSha256": "04a9f31e116271f29e6efb21d93583e6a6e222f05dd3c5aaf4453aaff838e71d",
-      "zipSha256": "ebd81484d7ad4e536179a543a7b490414a521070c0babe31ee95b66eb10684c4"
+      "htmlSha256": "23ffd4e22f77b1b78b2137d06dfde70771567668a2fa16088beb652627ecc872",
+      "zipSha256": "aa98e3f73eebcb1cdc4c4c8c9ec91993ab2e496c3558f593261887c0e7179d96"
     }
   ],
   "reviewBundle": {
     "archive": "Level3-and-Full-game-play.zip",
-    "zipSha256": "f8f564c50bfa382819df7130d8ba4d00dbc4d88f838db640f5a4f5e38c4475b5",
+    "zipSha256": "29ea725f1731bc7c5c5d810abf13feb23ecdc96f007edc48920a2b3011743bf3",
     "htmlSha256": {
-      "Level3/Level3.html": "330293b556753f73701da80dc7919a1e3ba16e3f03d0b6c56ec02bb459db70de",
-      "Full-game/Gaming-the-System.html": "04a9f31e116271f29e6efb21d93583e6a6e222f05dd3c5aaf4453aaff838e71d"
+      "Level3/Level3.html": "ecd7d641d908d943a7e1f5159a127eb884787f814a3c56f8175e87ff3f529f06",
+      "Full-game/Gaming-the-System.html": "23ffd4e22f77b1b78b2137d06dfde70771567668a2fa16088beb652627ecc872"
     }
   }
 }

@@ -6,6 +6,10 @@ Extract first. Open `Level3/Level3.html` for standalone Level 3, or
 `Full-game/Gaming-the-System.html` for connected Levels 1 → 2 → 3.
 The two HTMLs are identical to the current individual downloads below.
 
+This release includes both the Level 3 unassigned first editor (— / — / —)
+and Level 2’s six-metric question, Test more metrics experiment and final
+score-chasing observation. Near-even weights are optional.
+
 # 最新试玩下载 / Latest previews
 
 四个最新版放在同一个分支 **level3-dev** 的这个文件夹中：

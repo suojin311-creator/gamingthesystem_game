@@ -89,6 +89,7 @@ with sync_playwright() as p:
     expect(guide).to_be_visible()
     assert guide.evaluate('e=>e.matches(":modal")')
     initial = page.locator('.l3-weight-value').all_text_contents()
+    assert initial == ['—', '—', '—']
     expect(guide).to_contain_text('Move a slider')
     page.get_by_role('button', name='Next', exact=True).click()
     expect(guide).to_contain_text('Confirm')
@@ -100,6 +101,20 @@ with sync_playwright() as p:
     expect(page.locator('.l3-weight-card[data-confirmed=true]')).to_have_count(0)
     assert page.evaluate("document.activeElement.matches('.guide-button, .l3-weight-card input:not(:disabled)')")
     record('The first-use spotlight guide supports Next, Back and Escape without changing or confirming player weights; closing returns focus to an available workbench control')
+    expect(page.locator('#experiment-question')).to_have_text('How would you split the 100%?')
+    expect(page.get_by_role('group', name='Last observation', exact=True)).to_have_count(0)
+    expect(page.get_by_role('button', name='Run evaluation', exact=True)).to_be_disabled()
+    for button in page.locator('.l3-weight-card button').all(): expect(button).to_be_disabled()
+    for field in page.locator('.l3-weight-card input').all():
+        assert field.input_value() == '0'
+        expect(field).to_have_attribute('aria-valuetext', 'Not assigned. Move this slider to start.')
+    page.locator('.l3-strategy-hint summary').click()
+    expect(page.locator('.l3-strategy-hint')).to_contain_text('Move any slider to start.')
+    advance(page, 12000)
+    expect(page.locator('.l3-weight-value')).to_have_text(['—', '—', '—'])
+    expect(page.locator('.level-three')).to_have_attribute('data-round', '0')
+    page.locator('.l3-strategy-hint summary').click()
+    record('The first editor stays genuinely unassigned through waiting, guide and hint use, with no percentages, confirmations, result record or runnable default')
     slider(page, 'prep', 70)
     values = page.locator('.l3-weight-value').all_text_contents()
     page.get_by_role('button', name='Guide', exact=True).click()
@@ -114,6 +129,13 @@ with sync_playwright() as p:
     set_weights(page, [70, 20, 10])
     expect(page.get_by_role('button', name='Run evaluation', exact=True)).to_be_enabled()
     record('Reopening and completing the operation-only guide preserves edits; confirmed positive weights can run without an abstract goal choice or preset button')
+    page.get_by_role('button', name='Reset weights', exact=True).click()
+    expect(page.locator('.l3-weight-value')).to_have_text(['—', '—', '—'])
+    expect(page.locator('.l3-weight-card[data-confirmed=true]')).to_have_count(0)
+    expect(page.get_by_role('button', name='Run evaluation', exact=True)).to_be_disabled()
+    expect(page.locator('.level-three')).to_have_attribute('data-round', '0')
+    set_weights(page, [70,20,10])
+    record('Reset before the first run returns to blank without recording an experiment, while a deliberate non-even allocation can still be confirmed directly')
     finish_run(page)
     expect(page.get_by_role('button', name='Try another split', exact=True)).to_be_visible()
     expect(page.get_by_role('button', name='Compare the results', exact=True)).to_have_count(0)
@@ -121,6 +143,12 @@ with sync_playwright() as p:
     expect(guide).to_have_count(0)
     expect(page.locator('.l3-weight-value')).to_have_text(['70%', '20%', '10%'])
     expect(page.locator('.l3-weight-card[data-confirmed=true]')).to_have_count(0)
+    slider(page, 'part', 40)
+    page.get_by_test_id('confirm-part').click()
+    page.get_by_role('button', name='Reset weights', exact=True).click()
+    expect(page.locator('.l3-weight-value')).to_have_text(['70%', '20%', '10%'])
+    expect(page.locator('.l3-weight-card[data-confirmed=true]')).to_have_count(0)
+    expect(page.locator('.level-three')).to_have_attribute('data-round', '1')
     expect(page.locator('.l3-strategy-hint')).not_to_have_attribute('open', '')
     set_weights(page, [34, 33, 33])
     finish_run(page)
@@ -191,6 +219,34 @@ with sync_playwright() as p:
     finish_theory(page)
     record('Two deliberately uneven experiments can compare and finish; no hidden requirement forces near-even weights or an automatic reference example')
     context.close()
+
+    for index, metric in enumerate(['prep', 'part', 'focus']):
+        width = 320 if index == 2 else 1366
+        context, page = start(browser, width, motion='no-preference')
+        expect(page.locator('.l3-weight-card[data-assigned=false]')).to_have_count(3)
+        assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
+        if index in [0,2]: page.screenshot(path=f'test-results/unassigned-editor-{width}.png', full_page=True)
+        field = page.get_by_test_id('weight-card-' + metric).locator('input')
+        field.focus(); field.press('ArrowRight')
+        values = [int(value.rstrip('%')) for value in page.locator('.l3-weight-value').all_text_contents()]
+        assert values[index] == 1 and sum(values) == 100 and min(values) >= 1, values
+        field.press('End')
+        values = [int(value.rstrip('%')) for value in page.locator('.l3-weight-value').all_text_contents()]
+        assert values[index] == 98 and sum(values) == 100 and min(values) == 1, values
+        field.press('Home')
+        values = [int(value.rstrip('%')) for value in page.locator('.l3-weight-value').all_text_contents()]
+        assert values[index] == 1 and sum(values) == 100 and min(values) >= 1, values
+        page.get_by_role('button', name='Reset weights', exact=True).click()
+        expect(page.locator('.l3-weight-value')).to_have_text(['—','—','—'])
+        field.scroll_into_view_if_needed()
+        rect = field.bounding_box()
+        field.click(position={'x':rect['width']*.6,'y':rect['height']/2})
+        values = [int(value.rstrip('%')) for value in page.locator('.l3-weight-value').all_text_contents()]
+        assert sum(values) == 100 and min(values) >= 1, values
+        page.reload(wait_until='networkidle')
+        expect(page.locator('.level-three')).to_have_attribute('data-phase','intro')
+        context.close()
+    record('Any of the three cards can start by real keyboard or pointer input; positive bounds hold after initialization and reset, desktop/phone layouts fit, and reload begins a fresh visit')
 
     context, page = start(browser)
     set_weights(page, [98, 1, 1])

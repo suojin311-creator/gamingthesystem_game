@@ -12,15 +12,15 @@ export const canTryAgain = (runs: WeightRun[]) => runs.length < MAX_TRIALS;
 export function nextExperiment(runs: WeightRun[]): Experiment {
   if (!runs.length) return {
     purpose: 'explore',
-    question: 'Can a different split improve what happens in class?',
-    hint: 'Set the shares, confirm them, then watch Alex.',
+    question: 'How would you split the 100%?',
+    hint: 'Move any slider to start. Confirm your weights, then watch Alex.',
   };
   const previous = runs.at(-1)!;
   const neglected = joinNames(previous.metricIds.filter((_, index) => effortAt(previous.weights, index) === 'low').map(id => metricDefinition(id).shortName));
   if (runs.length === 1) return neglected ? {
     purpose: 'respond',
     question: `What would you change for ${neglected}?`,
-    hint: `Give ${neglected} more weight. Watch what Alex leaves out.`,
+    hint: 'Change their share. What happens to Alex’s other tasks?',
   } : {
     purpose: 'respond',
     question: 'Can new weights make Alex go further?',

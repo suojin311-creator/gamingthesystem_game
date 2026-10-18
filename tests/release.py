@@ -67,10 +67,12 @@ def finish_two(page):
     page.get_by_role('button', name='Add remaining metrics', exact=True).click()
     advance(page, 6)
     scene(page)
+    expect(page.get_by_role('heading', name='Would more metrics help Alex learn?', exact=True)).to_be_visible()
     page.get_by_role('button', name='Test more metrics', exact=True).click()
     advance(page, 30)
     expect(page.locator('.l2-reported-count')).to_have_text('100')
     scene(page, lines=2)
+    expect(page.get_by_role('heading', name='More metrics. Still chasing marks.', exact=True)).to_be_visible()
 
 
 def choose_three(page):
@@ -81,6 +83,8 @@ def choose_three(page):
         if card.get_attribute('aria-pressed')!='true':card.click()
     page.get_by_role('button',name='Set the weights',exact=True).click()
     page.get_by_role('button',name='Skip guide',exact=True).click()
+    expect(page.locator('.l3-weight-value')).to_have_text(['—','—','—'])
+    expect(page.get_by_role('button',name='Run evaluation',exact=True)).to_be_disabled()
 
 
 def weights_three(page, values):
@@ -124,11 +128,13 @@ with sync_playwright() as playwright:
     page.get_by_role('button', name='Add remaining metrics', exact=True).click()
     advance(page, 6)
     scene(page)
+    expect(page.get_by_role('heading', name='Would more metrics help Alex learn?', exact=True)).to_be_visible()
     page.get_by_role('button', name='Test more metrics', exact=True).click()
     advance(page, 30)
     expect(page.locator('.l2-reported-count')).to_have_text('100')
     expect(page.locator('.l2-matrix [data-active=true]')).to_have_count(100)
     scene(page, lines=2)
+    expect(page.get_by_role('heading', name='More metrics. Still chasing marks.', exact=True)).to_be_visible()
     expect(page.get_by_role('button', name='Continue to Level 3', exact=True)).to_be_disabled()
     expect(page.get_by_role('button', name='Guide', exact=True)).to_have_count(0)
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')

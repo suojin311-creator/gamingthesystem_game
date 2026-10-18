@@ -1,4 +1,4 @@
-# Level 3 player path (v18 path, v20 relative effort)
+# Level 3 player path (v21 unassigned start, v20 relative effort)
 
 Saved baseline: `archive/pre-level3-path-v17` at
 `5d56d4cbb763b039b4a8a7a4c3bceb7932f303b2`.
@@ -13,8 +13,8 @@ while allowing the player to reach the comparison after two tests.
 
 1. **Choose priorities.** In the combined game, the original Level 2 trio is
    already selected and can be changed. Standalone Level 3 starts empty.
-2. **Try an allocation.** Allocate positive integers totaling 100%, confirm the
-   cards and run. The spotlight guide teaches only controls.
+2. **Try an allocation.** Start with unassigned dashes, not preset percentages. Move any slider to create positive integers totaling 100%, confirm the
+   cards and run. The spotlight guide teaches only controls. Before the first run Reset returns to blank; later it restores the last observation.
 3. **Observe.** Publication waits for Observe the class. The selected shots,
    qualitative effort rows and short teacher/Alex exchange show the result.
 4. **Try a change.** The second editor retains the last observation and asks a
@@ -37,7 +37,7 @@ while allowing the player to reach the comparison after two tests.
 | New values leave every effort band unchanged | Describe no observed band change and let the player compare or optionally investigate further | Do not claim attention shifted merely because the numerical weights changed |
 
 The questions do not require a prescribed answer, near-even split, band change
-or numerical example. Exact allocation repeats are rejected, but changed values
+or numerical example. Near-even is optional, never a required counterexample the player must operate. Final dialogue cannot claim the player tested an allocation absent from the records. Exact allocation repeats are rejected, but changed values
 with identical bands remain valid observations.
 
 ## Controls and evidence
@@ -73,5 +73,5 @@ and the reserved unused Design Lab callback are preserved.
 This revision is limited to Level 3. It neither merges the opening nor changes
 the partner's authored animation scripts or Level 2's growth sequence. Functional
 path, accessibility and packaging checks are recorded in
-[LEVEL3_VALIDATION-v20.json](LEVEL3_VALIDATION-v20.json); classroom efficacy and
+[LEVEL3_VALIDATION-v21.json](LEVEL3_VALIDATION-v21.json); classroom efficacy and
 the best possible learning design are not established by those checks.

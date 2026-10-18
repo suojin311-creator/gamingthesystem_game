@@ -1,24 +1,26 @@
-# Player-led experiments (v18 path, v20 relative effort)
+# Player-led experiments (v21 unassigned start, v20 relative effort)
 
-The pre-change source and downloads are frozen on
-`archive/pre-level3-path-v17` at
-`5d56d4cbb763b039b4a8a7a4c3bceb7932f303b2`.
-The v17 effort rules remain; this revision replaces the required aim selector,
-three-test gate and final keep/rethink judgment. Level 1, Level 2 and the
-partner's authored animation scripts are unchanged.
+The source and downloads before the unassigned-start revision are saved on
+`archive/pre-unassigned-weights-v21` at
+`2d91487e87d73e77987424580016d0fb10406a43`.
+The v20 relative effort rules remain. The v18 path replaced the required aim selector,
+three-test gate and final keep/rethink judgment. Level 1, the latest Level 2
+framing and the partner's authored animation scripts are retained.
 
 ## Follow evidence rather than a prescribed allocation
+
+The first editor starts unassigned: — / — / —. Its sliders are at the start; Confirm and Run stay disabled. Only a deliberate slider move creates the first allocation, dividing the remainder between the other two. Those values are editable and not yet confirmed. Reset returns to blank before the first run; on subsequent trials it restores the last observed allocation. Blank is never an experiment record.
 
 The first confirmed allocation is free. The second editor carries forward the
 last actual observation, with the selected task names and their qualitative
 effort. A short question responds to neglected tasks or shared attention,
 rather than asking the player to pick an abstract aim. A near-even first
 allocation is legitimate evidence; it is not marked wrong or forced onto a
-different route.
+different route. A player who never tries near-even can also finish. The closing response describes only actual observed behaviour and never claims an untried balanced solution was disproved.
 
 Need a hint? is collapsed verbal help. It suggests what could be observed and
 leaves the numerical choice to the player. There is no Apply suggested weights
-control, automatic allocation, system reference or required pattern. Changed
+control, preset allocation, system reference or required pattern. Linked sliders still redistribute the remainder after a player move. Changed
 weights with the same effort bands remain valid evidence of unchanged effort;
 exact repeats of an earlier allocation are rejected.
 
@@ -78,12 +80,11 @@ Design Lab navigation, additional ending page or player Restart control.
 ## Validation and scope
 
 [LEVEL3_PLAYER_PATH.md](LEVEL3_PLAYER_PATH.md) describes the two main player
-routes and their limits. [LEVEL3_VALIDATION-v20.json](LEVEL3_VALIDATION-v20.json)
-records the current checks and downloadable builds. The v17 report preserves
+routes and their limits. [LEVEL3_VALIDATION-v21.json](LEVEL3_VALIDATION-v21.json)
+records the current checks and downloadable builds, including the retained Level 2 framing. The v17 report preserves
 the effort-rule correction; v16 and earlier reports describe previous flows,
 including removed aims, numerical examples and judgments.
 
 These checks verify behaviour and packaging. They do not establish that this
 is the best possible design or that classroom learning outcomes have improved.
-Opening integration and Level 2's additional growth framing remain separate
-work; neither is added by this Level 3 revision.
+Opening integration remains separate. Level 2’s six-metric hypothesis, Test more metrics action and final score-chasing observation are retained in every current build.

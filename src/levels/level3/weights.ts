@@ -13,6 +13,19 @@ export const spread = (weights: Weights) => Math.max(...weights) - Math.min(...w
 export const isNearEven = (weights: Weights) => spread(weights) <= NEAR_EVEN_SPREAD;
 export const validWeights = (weights: Weights) => weights.length === 3 && weights.every(value => Number.isInteger(value) && value >= MIN_WEIGHT && value <= MAX_WEIGHT) && weights.reduce((sum, value) => sum + value, 0) === 100;
 
+/** The first deliberate slider move creates an allocation; blank is not a run. */
+export function startAllocation(index: number, requested: number): Weights | null {
+  if (!Number.isInteger(index) || index < 0 || index > 2 || !Number.isFinite(requested)) return null;
+  const value = Math.max(MIN_WEIGHT, Math.min(MAX_WEIGHT, Math.round(requested)));
+  const others = [0, 1, 2].filter(i => i !== index);
+  const remaining = 100 - value;
+  const next: [number, number, number] = [0, 0, 0];
+  next[index] = value;
+  next[others[0]] = Math.ceil(remaining / 2);
+  next[others[1]] = Math.floor(remaining / 2);
+  return next;
+}
+
 /** Preserve the other unlocked shares' ratio while keeping an exact positive total. */
 export function allocateWeight(weights: Weights, confirmed: Confirmed, index: number, requested: number): Weights {
   if (!Number.isInteger(index) || index < 0 || index > 2 || confirmed[index] || !Number.isFinite(requested)) return weights;
