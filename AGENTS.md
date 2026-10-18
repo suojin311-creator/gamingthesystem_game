@@ -8,7 +8,10 @@
   or only the combined package when they share affected code.
 - The fixed latest entries are `play/Level1-play.zip`, `play/Level2-play.zip`,
   `play/Level3-play.zip`, `play/Full-game-play.zip` and
-  `play/Level3-and-Full-game-play.zip`. The last archive contains both Level 3
+  `play/Level3-and-Full-game-play.zip`, plus `play/Gaming-the-System-complete.zip`.
+  The complete archive contains the full game, all three standalone levels and
+  an offline START-HERE.html launcher. Rebuild and validate all six together.
+  The two-version archive contains both Level 3
   and the connected three-level game from those same production builds. Keep version-numbered archives unchanged.
 - Run `python tests/release.py` against the actual latest ZIPs. Use the relevant
   gameplay suites when behaviour changes. Record current validation/hashes.

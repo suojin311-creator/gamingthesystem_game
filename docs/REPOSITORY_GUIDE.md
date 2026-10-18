@@ -5,6 +5,8 @@
 
 ## 最新试玩入口
 
+优先下载 [全部版本总 ZIP](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Gaming-the-System-complete.zip?raw=true)。解压后打开 START-HERE.html，可进入完整三关或三个独立关卡，包内另有中英文说明。
+
 | 要找的内容 | 下载 | 解压后打开 |
 | --- | --- | --- |
 | Level 1＋2＋3 连玩 | [Full-game-play.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Full-game-play.zip?raw=true) | Gaming-the-System.html |
@@ -12,7 +14,7 @@
 | Level 2 单独试玩 | [Level2-play.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Level2-play.zip?raw=true) | Level2.html |
 | Level 3 单独试玩 | [Level3-play.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Level3-play.zip?raw=true) | Level3.html |
 
-以后更新时替换这四个固定文件名的包，分享入口保持不变。旧版带版本号的
+以后更新时一起替换总包、四个独立/完整包及原双版本包，分享入口保持不变。旧版带版本号的
 ZIP 留作历史记录，不再当作最新版入口。仓库为私有；试玩者没有 GitHub
 访问权限时，可以直接把下载后的 ZIP 发给他们。
 
@@ -57,9 +59,9 @@ scripts/             统一打包命令
 Git 提交记录查找，v6 原始提交仍是 `336c59f`。
 
 开发时使用 `npm run package:previews` 一次重建连玩、Level 1 独立和
-Level 2 / Level 3 独立四个包，避免只更新其中一个。`play/LATEST.json` 记录源码及
+Level 2 / Level 3 独立四个包，以及双版本包和全部版本总包，避免只更新其中一个。`play/LATEST.json` 记录源码及
 文件校验值。发布前用 `python tests/release.py` 验证实际包的内容与衔接。
 
 Level 3 已可试玩：选出三个重点、分配并逐项确认 100% 权重、观察反应，
-再根据第一次结果做平衡或对照测试。两次均衡程度不同的结果并排比较。
+再根据实际观察自由调整；两次后可以比较，第三次可选，不强制平均或不同均衡程度。首次权重显示未分配，由玩家拖动后生成。
 剧情和最终理论揭示仍为 placeholder；Design Lab 继续预留。

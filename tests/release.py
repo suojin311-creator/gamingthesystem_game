@@ -6,6 +6,7 @@ import re
 import hashlib
 import zipfile
 from pathlib import Path
+from urllib.parse import urlsplit
 from playwright.sync_api import sync_playwright, expect
 
 checks, errors = [], []
@@ -32,6 +33,29 @@ with zipfile.ZipFile(Path('play') / review['archive']) as bundle:
         assert hashlib.sha256(bundle.read(name)).hexdigest() == review['htmlSha256'][name]
 assert hashlib.sha256((Path('play') / review['archive']).read_bytes()).hexdigest() == review['zipSha256']
 checks.append('The review ZIP contains separate Level 3 and connected Levels 1–3 HTMLs, identical to their tested latest packages')
+
+complete = manifest['completeBundle']
+complete_entries = {
+    'Full-game/Gaming-the-System.html': 'Gaming-the-System.html',
+    'Level1/Level1.html': 'Level1.html',
+    'Level2/Level2.html': 'Level2.html',
+    'Level3/Level3.html': 'Level3.html',
+}
+complete_html = {}
+with zipfile.ZipFile(Path('play') / complete['archive']) as bundle:
+    assert bundle.testzip() is None
+    assert set(bundle.namelist()) == {*complete_entries, 'START-HERE.html', 'START-HERE.txt'}
+    for name, html in complete_entries.items():
+        complete_html[name] = bundle.read(name)
+        assert complete_html[name] == artifacts[html]
+        assert name in bundle.read('START-HERE.txt').decode()
+    complete_html['START-HERE.html'] = bundle.read('START-HERE.html')
+    assert complete_html['START-HERE.html'] == Path('scripts/package_start.html').read_bytes()
+    assert set(re.findall(r'href="([^"]+)"', complete_html['START-HERE.html'].decode())) == set(complete_entries)
+    for name, data in complete_html.items():
+        assert hashlib.sha256(data).hexdigest() == complete['htmlSha256'][name]
+assert hashlib.sha256((Path('play') / complete['archive']).read_bytes()).hexdigest() == complete['zipSha256']
+checks.append('The complete ZIP contains all four byte-identical playable versions, an offline launcher and bilingual instructions with verified hashes')
 
 
 def advance(page, seconds=24):
@@ -105,6 +129,35 @@ def weights_three(page, values):
 
 with sync_playwright() as playwright:
     browser = playwright.chromium.launch(executable_path='/usr/bin/chromium', args=['--no-sandbox'])
+    context = browser.new_context(viewport={'width':1366,'height':900})
+    context.set_offline(True)
+    def serve_complete(route):
+        data = complete_html.get(urlsplit(route.request.url).path.lstrip('/'))
+        if data is None:
+            route.abort()
+        else:
+            route.fulfill(status=200, content_type='text/html', body=data)
+    context.route('https://complete.test/**', serve_complete)
+    page = context.new_page()
+    page.on('pageerror', lambda error: errors.append(str(error)))
+    for name in complete_entries:
+        page.goto('https://complete.test/START-HERE.html', wait_until='networkidle')
+        expect(page.get_by_role('navigation',name='Game versions').get_by_role('link')).to_have_count(4)
+        for width in [1366,320]:
+            page.set_viewport_size({'width':width,'height':900})
+            assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
+            if name.startswith('Full-game/'):
+                page.screenshot(path=f'test-results/complete-launcher-{width}.png',full_page=True)
+        page.locator(f'a[href="{name}"]').click()
+        expect(page).to_have_url('https://complete.test/'+name)
+        if name.startswith('Level2/'):
+            expect(page.locator('.level-two')).to_have_attribute('data-phase','intro')
+        elif name.startswith('Level3/'):
+            expect(page.locator('.level-three')).to_have_attribute('data-phase','intro')
+        else:
+            expect(page.get_by_role('heading',name='One metric.',exact=True)).to_be_visible()
+    context.close()
+    checks.append('The actual complete-ZIP launcher fits desktop/phone and opens the full game and all three standalone levels offline')
     context = browser.new_context(viewport={'width': 1366, 'height': 768})
     context.set_offline(True)
     context.route('https://release.test/**', lambda route: route.fulfill(status=200, content_type='text/html', body=artifacts['Level2.html']))

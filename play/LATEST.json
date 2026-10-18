@@ -37,5 +37,16 @@
       "Level3/Level3.html": "ecd7d641d908d943a7e1f5159a127eb884787f814a3c56f8175e87ff3f529f06",
       "Full-game/Gaming-the-System.html": "23ffd4e22f77b1b78b2137d06dfde70771567668a2fa16088beb652627ecc872"
     }
+  },
+  "completeBundle": {
+    "archive": "Gaming-the-System-complete.zip",
+    "zipSha256": "fc5d2ec7a81812bc86dd79d1e62712d530ae972f4108963dae6512258bc0adf4",
+    "htmlSha256": {
+      "START-HERE.html": "a311a3de7f322588c142c144e6cd5958270f1f85be8621bf1aa4bb67dde93881",
+      "Full-game/Gaming-the-System.html": "23ffd4e22f77b1b78b2137d06dfde70771567668a2fa16088beb652627ecc872",
+      "Level1/Level1.html": "2be40f7c509586704b8a2ab5ed0dbab00f666f6051542c0694c857086af0c29f",
+      "Level2/Level2.html": "3967b26a40b8efc4eeb03b52a42234591fa40f90be681c42dbbfc5bad745cc2c",
+      "Level3/Level3.html": "ecd7d641d908d943a7e1f5159a127eb884787f814a3c56f8175e87ff3f529f06"
+    }
   }
 }

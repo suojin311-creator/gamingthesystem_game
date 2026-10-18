@@ -85,4 +85,41 @@ manifest['reviewBundle'] = {
     'htmlSha256': {name: digest(data) for name, data in review_files.items()},
 }
 print(f'Packaged {review_archive}: standalone Level 3 and connected Levels 1–3')
+
+# A single delivery includes the complete game and every standalone level.
+complete_archive = 'Gaming-the-System-complete.zip'
+complete_files = {
+    'START-HERE.html': (ROOT / 'scripts/package_start.html').read_bytes(),
+    'Full-game/Gaming-the-System.html': builds['dist/index.html'],
+    'Level1/Level1.html': builds['dist-level1/index.html'],
+    'Level2/Level2.html': builds['dist-level2/index.html'],
+    'Level3/Level3.html': builds['dist-level3/index.html'],
+}
+complete_instruction = (
+    'Gaming the System — complete playable package / 完整试玩包\n\n'
+    '先解压整个 ZIP，再用 Chrome 或 Edge 打开 START-HERE.html 选择版本。\n'
+    'Extract the entire ZIP, then open START-HERE.html in Chrome or Edge.\n\n'
+    '完整三关 / Full game: Full-game/Gaming-the-System.html\n'
+    '单独第一关 / Level 1: Level1/Level1.html\n'
+    '单独第二关 / Level 2: Level2/Level2.html\n'
+    '单独第三关 / Level 3: Level3/Level3.html\n\n'
+    '下载后不需要网络或安装软件。各版本使用同一套已确认玩法。\n'
+    'All four versions run offline and use the same approved gameplay.\n'
+    'The full game carries your choices from Level 2 into editable Level 3 priorities.\n'
+    'Closing or reloading starts fresh; standalone levels stop at their own endings.\n'
+    'The latest Level 2 framing and unassigned first Level 3 weights are included.\n'
+    'Opening/final cinematics remain placeholders; Design Lab is not included.\n'
+)
+with zipfile.ZipFile(PLAY / complete_archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:
+    for name, data in [*complete_files.items(), ('START-HERE.txt', complete_instruction.encode())]:
+        info = zipfile.ZipInfo(name)
+        info.compress_type = zipfile.ZIP_DEFLATED
+        info.external_attr = 0o644 << 16
+        bundle.writestr(info, data, compresslevel=9)
+manifest['completeBundle'] = {
+    'archive': complete_archive,
+    'zipSha256': digest((PLAY / complete_archive).read_bytes()),
+    'htmlSha256': {name: digest(data) for name, data in complete_files.items()},
+}
+print(f'Packaged {complete_archive}: full game, standalone Levels 1–3 and offline launcher')
 (PLAY / 'LATEST.json').write_text(json.dumps(manifest, indent=2) + '\n')

@@ -1,0 +1,103 @@
+{
+  "validatedAtUtc": "2026-10-18T20:17:54.758867+00:00",
+  "version": "Download organization v22; approved v21 gameplay unchanged",
+  "gameplayBaseline": {
+    "commit": "3549b5a4d27584fad2b320e20c1a834aa80d7db5",
+    "allGameplaySourceUnchanged": true,
+    "fourHtmlBuildsAndFivePriorPackagesByteIdentical": true,
+    "previousGameplayValidation": "docs/LEVEL3_VALIDATION-v21.json"
+  },
+  "passed": 12,
+  "builds": [
+    "npm run build: passed",
+    "npm run build:level1: passed",
+    "npm run build:level2: passed",
+    "npm run build:level3: passed"
+  ],
+  "suites": {
+    "release-results.json": {
+      "passed": 12,
+      "checks": [
+        "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
+        "The review ZIP contains separate Level 3 and connected Levels 1–3 HTMLs, identical to their tested latest packages",
+        "The complete ZIP contains all four byte-identical playable versions, an offline launcher and bilingual instructions with verified hashes",
+        "The actual complete-ZIP launcher fits desktop/phone and opens the full game and all three standalone levels offline",
+        "Packaged Level2.html completes 3 → 6 → 10 → 25 → 100 offline with normal motion",
+        "Packaged standalone Level3.html compares after two tests and can add an optional third, keeping all actual results offline",
+        "Packaged Level1.html includes the latest behaviour and two replies, stops after Level 1 and permits replay",
+        "Standalone Level 1 reload starts a fresh Level 1 run",
+        "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
+        "Packaged combined game connects Level 1 → Level 2 → playable Level 3 in one open run",
+        "Combined preview reload starts from Level 1 rather than restoring Level 2",
+        "Packaged entries have no browser runtime errors"
+      ],
+      "runtimeErrors": []
+    }
+  },
+  "artifacts": {
+    "sourceSha256": "8022c0812b8e20fda2752b730077b47e4db8effad2629efb74e60fd060057830",
+    "entries": [
+      {
+        "archive": "Level1-play.zip",
+        "html": "Level1.html",
+        "build": "dist-level1/index.html",
+        "htmlSha256": "2be40f7c509586704b8a2ab5ed0dbab00f666f6051542c0694c857086af0c29f",
+        "zipSha256": "b3cfd4dfba37ea0471355d660e6a8f049d4945d90b8d8f3d45157829ca50fe5e"
+      },
+      {
+        "archive": "Level2-play.zip",
+        "html": "Level2.html",
+        "build": "dist-level2/index.html",
+        "htmlSha256": "3967b26a40b8efc4eeb03b52a42234591fa40f90be681c42dbbfc5bad745cc2c",
+        "zipSha256": "88dc706521187b3aa7a08c3ba076a17f6e6f2af434dccd0c218ea23581c46e40"
+      },
+      {
+        "archive": "Level3-play.zip",
+        "html": "Level3.html",
+        "build": "dist-level3/index.html",
+        "htmlSha256": "ecd7d641d908d943a7e1f5159a127eb884787f814a3c56f8175e87ff3f529f06",
+        "zipSha256": "f777bc72b3d430714071b4ab5e46762b943866f133822a342ba77c1a0c707dec"
+      },
+      {
+        "archive": "Full-game-play.zip",
+        "html": "Gaming-the-System.html",
+        "build": "dist/index.html",
+        "htmlSha256": "23ffd4e22f77b1b78b2137d06dfde70771567668a2fa16088beb652627ecc872",
+        "zipSha256": "aa98e3f73eebcb1cdc4c4c8c9ec91993ab2e496c3558f593261887c0e7179d96"
+      }
+    ],
+    "reviewBundle": {
+      "archive": "Level3-and-Full-game-play.zip",
+      "zipSha256": "29ea725f1731bc7c5c5d810abf13feb23ecdc96f007edc48920a2b3011743bf3",
+      "htmlSha256": {
+        "Level3/Level3.html": "ecd7d641d908d943a7e1f5159a127eb884787f814a3c56f8175e87ff3f529f06",
+        "Full-game/Gaming-the-System.html": "23ffd4e22f77b1b78b2137d06dfde70771567668a2fa16088beb652627ecc872"
+      }
+    },
+    "completeBundle": {
+      "archive": "Gaming-the-System-complete.zip",
+      "zipSha256": "fc5d2ec7a81812bc86dd79d1e62712d530ae972f4108963dae6512258bc0adf4",
+      "htmlSha256": {
+        "START-HERE.html": "a311a3de7f322588c142c144e6cd5958270f1f85be8621bf1aa4bb67dde93881",
+        "Full-game/Gaming-the-System.html": "23ffd4e22f77b1b78b2137d06dfde70771567668a2fa16088beb652627ecc872",
+        "Level1/Level1.html": "2be40f7c509586704b8a2ab5ed0dbab00f666f6051542c0694c857086af0c29f",
+        "Level2/Level2.html": "3967b26a40b8efc4eeb03b52a42234591fa40f90be681c42dbbfc5bad745cc2c",
+        "Level3/Level3.html": "ecd7d641d908d943a7e1f5159a127eb884787f814a3c56f8175e87ff3f529f06"
+      }
+    }
+  },
+  "packagingSources": {
+    "scripts/package_previews.py": "9b3fbe5385b63eb5f58219a3861acd5856cc8c2bf724106550a64e7b48fc4a48",
+    "scripts/package_start.html": "a311a3de7f322588c142c144e6cd5958270f1f85be8621bf1aa4bb67dde93881"
+  },
+  "notes": [
+    "The user clarified that the screenshot did not show a bug. Tentative uncommitted observation-label changes were discarded. All product source, prior HTML builds and the five existing packages remain identical to the approved v21 release.",
+    "The repository home now leads with one complete download and clear entry paths. Detailed gameplay/development explanation is preserved in docs/PROJECT_DETAILS.md, with a new docs index. Historical packages, versioned validation reports and branches are retained.",
+    "Gaming-the-System-complete.zip contains the connected three-level game and separate Level1/Level1.html, Level2/Level2.html and Level3/Level3.html. START-HERE.html is an offline version chooser; START-HERE.txt provides Chinese and English instructions.",
+    "The new complete archive is generated alongside every existing download. Its four playable HTMLs are byte-identical to their corresponding tested individual packages and production builds. All six archive hashes and all HTML hashes are recorded in the manifest.",
+    "The actual complete-ZIP launcher opens each version offline and fits 1366px and 320px widths. Desktop and phone screenshots were visually inspected. Production ZIP checks also complete the Level 2 3-to-6-to-10-to-25-to-100 sequence, Level 3 two/optional-third path, standalone Level 1 and connected Level 1-to-2-to-3 with sound and fresh reload behaviour.",
+    "Level 2 experiment framing and the unassigned first Level 3 allocation remain included. No gameplay logic, theory endpoint or authored animation script is changed. The completed opening/cinematics have not been merged.",
+    "The current packaging suite contains 12 passing checks with no runtime errors. The 75 earlier gameplay checks remain historical validation for the unchanged v21 source; they were not all rerun for this packaging/documentation-only release.",
+    "Offline checks serve exact packaged bytes through an in-memory HTTPS route because managed Chromium blocks file navigation. Direct file opening in a particular user browser was not observed."
+  ]
+}

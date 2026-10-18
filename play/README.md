@@ -1,45 +1,37 @@
-# Latest review package
+# 最新试玩下载 / Latest downloads
 
-[Download Level 3 + full game in one ZIP](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Level3-and-Full-game-play.zip?raw=true).
+## 推荐：一个 ZIP 包含所有版本
 
-Extract first. Open `Level3/Level3.html` for standalone Level 3, or
-`Full-game/Gaming-the-System.html` for connected Levels 1 → 2 → 3.
-The two HTMLs are identical to the current individual downloads below.
+**[Gaming-the-System-complete.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Gaming-the-System-complete.zip?raw=true)**
 
-This release includes both the Level 3 unassigned first editor (— / — / —)
-and Level 2’s six-metric question, Test more metrics experiment and final
-score-chasing observation. Near-even weights are optional.
+解压整个压缩包，用 Chrome 或 Edge 打开 **START-HERE.html** 选择版本。也可以直接打开下面的 HTML。包内有中英文 `START-HERE.txt`，无需安装软件，下载后可离线使用。
 
-# 最新试玩下载 / Latest previews
+```text
+START-HERE.html                     版本选择入口
+START-HERE.txt                      中英文说明
+Full-game/Gaming-the-System.html    完整三关：Level 1 → 2 → 3
+Level1/Level1.html                  单独 Level 1
+Level2/Level2.html                  单独 Level 2
+Level3/Level3.html                  单独 Level 3
+```
 
-四个最新版放在同一个分支 **level3-dev** 的这个文件夹中：
+所有版本包含已确认的 Level 2 实验铺垫和过渡、Level 3 未分配开局与自由实验路径。完整三关版会传递实际选择；三个独立关卡停在各自关卡末尾。
 
-| 想怎么玩 | 下载 | 解压后打开 |
+## 分别下载
+
+| 版本 | 下载 | 解压后打开 |
 | --- | --- | --- |
-| 从 Level 1 一直玩到 Level 3 | [三关连玩最新版](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Full-game-play.zip?raw=true) | **Gaming-the-System.html** |
-| 只试玩 Level 1 | [Level 1 独立最新版](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Level1-play.zip?raw=true) | **Level1.html** |
-| 直接试玩 Level 2 | [Level 2 独立最新版](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Level2-play.zip?raw=true) | **Level2.html** |
-| 只试玩 Level 3 | [Level 3 独立最新版](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Level3-play.zip?raw=true) | **Level3.html** |
+| 完整三关 | [Full-game-play.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Full-game-play.zip?raw=true) | Gaming-the-System.html |
+| 单独 Level 1 | [Level1-play.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Level1-play.zip?raw=true) | Level1.html |
+| 单独 Level 2 | [Level2-play.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Level2-play.zip?raw=true) | Level2.html |
+| 单独 Level 3 | [Level3-play.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Level3-play.zip?raw=true) | Level3.html |
 
-1. 登录有此仓库访问权限的 GitHub 账号。
-2. 点击对应下载链接，下载 ZIP。
-3. 解压，再用 Chrome 或 Edge 打开表格中的 HTML 文件。
+原先的 [Level 3＋完整三关双版本包](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Level3-and-Full-game-play.zip?raw=true) 继续保留并同步更新。
 
-不需要安装软件或输入命令；下载后可以离线运行。每个 ZIP 里也有英文的
-START-HERE.txt 操作说明。仓库是私有的，可以把下载后的 ZIP 直接发给试玩者。
+## 更新与历史
 
-这四个固定文件名都表示当前最新版，后续更新继续使用这些入口。各入口复用
-同一套关卡源码。Level 1 单独版停在第一关结尾；连玩版同一位置可以继续到
-Level 2 和 Level 3。独立包只试玩对应的一关。Level 3 已包含选指标、确认权重、看 Alex 的反应和两次结果对比。
+最新版统一位于 **level3-dev**，四个预览/开发分支同步发布。上述固定文件名始终指向最新版；文件名带版本号的 ZIP、旧报告与标签是历史记录，保持原样。
 
-关闭或刷新会重新开始；电影片段仍用 placeholder。姓名衔接接口已保留，
-独立试玩暂用 Maya，正式开场尚未合并。
+`npm run package:previews` 一次更新全部六个 ZIP；`python3 tests/release.py` 验证实际文件、版本选择入口和三关衔接。校验值在 [LATEST.json](LATEST.json)。
 
-旧的 level1-preview 分支已同步，里面的 [Level1-play.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level1-preview/play/Level1-play.zip?raw=true)
-也更新为这次的单关最新版。以后优先使用上表统一入口。
-
-文件名含版本号的 ZIP（例如 Level1-play-v7.zip、Level2-play-v6.zip）是历史
-存档，保留当时内容；请用上表的固定入口分享最新版。
-
-开发时运行 `npm run package:previews` 会一起生成四个最新包与 `LATEST.json`。
-发布前运行 `python tests/release.py` 检查真实 ZIP 的内容和关卡衔接。
+关闭或刷新会开始新游戏；正式开场及成片尚未合并，剧情仍为 placeholder。
