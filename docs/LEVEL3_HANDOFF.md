@@ -37,7 +37,7 @@ category. See [visual operations](VISUAL_PLAY.md).
   Narrative V2 behaviours. Returning reveals qualitative effort rows, then the
   teacher/Alex conversation; the next action appears with Alex’s second short message. Weight editing, publication and comparison contain no workbench dialogue.
 - Results use the three evidence rows without an additional effort-summary box.
-  A single neutral table aligns all tests in adjacent columns, with each metric label shown once. Cells with changed effort have a restrained marker; near-even does not receive a success colour. All three player-confirmed attempts remain visible as actual data rows.
+  A single neutral table aligns all tests in adjacent columns, with each metric label shown once. Each cell explicitly states First result, Same effort, More effort or Less effort; the second column compares with the first test and the third with the second. Whole-cell highlight fills have been removed; near-even does not receive a success colour. All three player-confirmed attempts remain visible as actual data rows.
 - Level 3 action footers have no explanatory left-side captions. Selection
   feedback stays next to the chosen-priorities list; unchanged-allocation
   validation is shown above the weight cards. Replay scene remains a control.
@@ -55,7 +55,7 @@ These categories are narrative choices, not measured learning gains or losses.
 ## Explore, Adjust and Verify
 
 Level 3 now has exactly three player-confirmed tests. The first editor states
-“Can changing the weights change what Alex is aiming for?” The second uses the
+“Can new weights change Alex’s goal?” The second uses the
 actual first observation to ask about neglected tasks or changing the reward
 when Alex already completed all three. Its allocation can change freely.
 
@@ -68,7 +68,7 @@ The third task tests the explanation:
 | One of each | Move reward towards a previously low-effort task; its effort band must rise in a new uneven allocation |
 
 `experiments.ts` supplies the one-sentence question, relevant card emphasis,
-optional starting point and task validation. “Show me a starting point” only
+optional starting point and task validation. “Apply suggested weights” only
 loads editable values; it clears current confirmations and never runs a trial.
 Players can use their own values. Repeating an actual prior allocation is
 rejected. Reset restores the immediately previous trial. Comparison is available
@@ -181,7 +181,7 @@ across all three chapters; Reset weights is retained.
 `play/Level3-and-Full-game-play.zip`, containing standalone Level 3 and connected
 Levels 1–3. `play/LATEST.json` records source, build, ZIP and bundle hashes.
 `tests/release.py` verifies the actual downloads and their complete flows.
-Current checks are recorded in `LEVEL3_VALIDATION-v14.json`; older reports and
+Current focused checks are recorded in `LEVEL3_VALIDATION-v15.json`; v14 retains the preceding broader checks; older reports and
 versioned ZIPs are historical. Managed Chromium tests exact offline HTML bytes
 through an in-memory HTTPS origin; direct file opening in the user browser and
 classroom load capacity are not claimed as tested.

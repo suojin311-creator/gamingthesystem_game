@@ -10,6 +10,7 @@ import EffortDisplay from './EffortDisplay';
 import CriteriaStop from './CriteriaStop';
 import WeightComparison from './WeightComparison';
 import WeightGuide from './WeightGuide';
+import ExperimentPrompt from './ExperimentPrompt';
 import { experimentHint, meetsExperiment, nextExperiment } from './experiments';
 import ManagementSatisfaction, { MANAGEMENT_PROGRESS } from '../../shared/components/ManagementSatisfaction';
 import { useFeedback } from '../../shared/hooks/useFeedback';
@@ -55,6 +56,8 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
   const [runs, setRuns] = useState<WeightRun[]>([]);
   const [goal, setGoal] = useState<WeightGoal>('first');
   const [guideOpen, setGuideOpen] = useState(false);
+  const [promptAttended, setPromptAttended] = useState(false);
+  const [suggestionApplied, setSuggestionApplied] = useState(false);
   const [guideSeen, setGuideSeen] = useState(false);
   const [adjustedIndex, setAdjustedIndex] = useState<number | null>(null);
   const [published, setPublished] = useState(0);
@@ -95,11 +98,12 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
     setHint(''); feedback.play('tick');
   }
   function startEditor(next: WeightGoal) {
-    setGoal(next); setWeights([...baseline]); setAdjustedIndex(null);
+    setGoal(next); setWeights([...baseline]); setAdjustedIndex(null); setPromptAttended(false); setSuggestionApplied(false);
     if (!guideSeen) { setGuideOpen(true); setGuideSeen(true); }
     setConfirmed(EMPTY_CONFIRMATIONS); setAutoConfirmedIndex(null); move('weights');
   }
   function adjust(index: number, value: number) {
+    setPromptAttended(true); setSuggestionApplied(false);
     const next = allocateWeight(weights, confirmed, index, value);
     setWeights(next);
     if (next.some((weight, i) => weight !== weights[i])) setAdjustedIndex(index);
@@ -107,11 +111,13 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
   }
   function confirm(index: number) {
     if (confirmed[index]) return;
+    setPromptAttended(true);
     const automatic = confirmedCount === 1 ? confirmed.findIndex((locked, i) => !locked && i !== index) : -1;
     setAutoConfirmedIndex(automatic >= 0 ? automatic : null);
     setConfirmed(confirmWeight(confirmed, index)); feedback.play('tick');
   }
   function resetWeights() {
+    setPromptAttended(true); setSuggestionApplied(false);
     setWeights([...baseline]); setAdjustedIndex(null); setConfirmed(EMPTY_CONFIRMATIONS); setAutoConfirmedIndex(null); feedback.play('tick');
   }
   function publish(next = weights, kind: WeightRun['kind'] = 'player') {
@@ -166,6 +172,7 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
 
   function useSuggestion() {
     if (!experiment.suggestion) return;
+    setPromptAttended(true); setSuggestionApplied(true);
     setWeights([...experiment.suggestion]); setAdjustedIndex(null); setConfirmed(EMPTY_CONFIRMATIONS); setAutoConfirmedIndex(null); feedback.play('tick');
   }
 
@@ -179,7 +186,7 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
         : <div className={`l3-body ${showPerspectives ? 'l3-with-perspectives' : ''}`}><section className="l3-decision">
           <div className="section-intro"><span className="eyebrow l3-round-label">{phase === 'weights' ? `TEST ${runs.length + 1} OF 3 · ${experiment.label.toUpperCase()}` : current && phase !== 'choose' ? `TEST ${current.round} OF 3` : 'CHOOSE EXACTLY THREE'}</span><h2 ref={title} tabIndex={-1}>{phase === 'choose' ? 'Which three would I prioritize?' : phase === 'weights' ? runs.length === 0 ? 'Set your first split.' : runs.length === 1 ? 'Make an adjustment.' : 'Test your explanation.' : phase === 'publish' ? reportReady ? 'Weights published.' : 'Sharing the new weights…' : phase === 'result' ? 'Where did Alex’s effort go?' : 'What changed across the tests?'}</h2></div>
           {phase === 'choose' && <><MetricSelection level={3} capacity={3} selected={selected} onToggle={choose} hint={hint} /><div className="action-row l3-only-action"><button className="button primary-button" disabled={selected.length !== 3} onClick={() => startEditor('first')}>Set the weights<Icon name="arrow" /></button></div></>}
-          {phase === 'weights' && <><div className="l3-experiment" data-purpose={experiment.purpose}><p>{experiment.question}</p>{experiment.suggestion && <button className="text-button" onClick={useSuggestion}>Show me a starting point<Icon name="arrow" /></button>}</div>{guideOpen && <WeightGuide step={guideStep} onClose={() => setGuideOpen(false)} />}{confirmedCount === 3 && !readyToRun && <p className="l3-edit-error" role="alert">{experimentHint(experiment)} Reset weights to adjust.</p>}{goal !== 'first' && <div className="l3-previous"><span>Last run</span>{selected.map((id, index) => <span key={id}>{metricDefinition(id).shortName} <b>{baseline[index]}%</b></span>)}</div>}<div className="l3-weight-grid">{selected.map((id, index) => {
+          {phase === 'weights' && <><ExperimentPrompt experiment={experiment} attended={promptAttended} applied={suggestionApplied} onApply={useSuggestion} />{guideOpen && <WeightGuide step={guideStep} onClose={() => setGuideOpen(false)} />}{confirmedCount === 3 && !readyToRun && <p className="l3-edit-error" role="alert">{experimentHint(experiment)} Reset weights to adjust.</p>}{goal !== 'first' && <div className="l3-previous"><span>Last run</span>{selected.map((id, index) => <span key={id}>{metricDefinition(id).shortName} <b>{baseline[index]}%</b></span>)}</div>}<div className="l3-weight-grid">{selected.map((id, index) => {
             const locked = confirmed[index];
             const automatic = autoConfirmedIndex === index;
             return <article className="l3-weight-card" data-testid={`weight-card-${id}`} data-confirmed={locked} data-auto-confirmed={automatic} data-focus={experiment.focus.includes(id)} data-guide={guideOpen ? guideStep === 0 ? 'slider' : guideStep === 1 && adjustedIndex === index ? 'confirm' : guideStep === 2 && !locked ? 'remaining' : undefined : undefined} key={id} style={{ '--card-index': index } as React.CSSProperties}>

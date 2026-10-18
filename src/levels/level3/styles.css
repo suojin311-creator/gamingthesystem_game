@@ -250,7 +250,6 @@
 .level-three .l3-compare-table tbody th { padding: 18px 14px; color: #52523f; font-size: 16px; line-height: 1.4; border-top: 1px solid #e5ddcb; }
 .level-three .l3-compare-table tbody th .icon { display: block; width: 22px; height: 22px; color: #a18d65; margin-bottom: 9px; }
 .level-three .l3-compare-table td { padding: 11px 10px 14px; vertical-align: top; border-left: 1px solid #e5ddcb; border-top: 1px solid #e5ddcb; position: relative; }
-.level-three .l3-compare-table td[data-changed=true] { background: #f6efdf; box-shadow: inset 0 3px #c2a573; }
 .level-three .l3-compare-weight { display: flex; justify-content: flex-end; min-height: 22px; }
 .level-three .l3-compare-table .l3-row-weight { display: inline-flex; border: 0; padding: 0; font-size: 18px; color: #9c9079; }
 .level-three .l3-compare-table .l3-row-weight small { font-size: 10px; }
@@ -276,7 +275,6 @@
   .level-three .l3-compare-table tbody th .icon { margin: 0; width: 19px; height: 19px; flex-shrink: 0; }
   .level-three .l3-compare-table td { border-top: 0; padding: 9px 10px 13px; }
   .level-three .l3-compare-table td:nth-child(2) { border-left: 0; }
-  .level-three .l3-compare-table td[data-changed=true] { box-shadow: inset 0 -2px #c2a573; }
 }
 @media (max-width: 520px) {
   .level-three .l3-compare-table thead th { padding: 12px 7px; }
@@ -296,10 +294,20 @@
 @media (prefers-reduced-motion: reduce) { .level-three .l3-pack-paper { animation: none !important; } }
 
 /* One question explains the experiment; the optional guide teaches actual controls. */
-.level-three .l3-experiment { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 0 0 18px; }
-.level-three .l3-experiment > p { font: 18px/1.45 var(--serif); color: #786342; flex: 1 1 380px; }
-.level-three .l3-experiment .text-button { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: #8c6341; }
-.level-three .l3-experiment .icon { width: 15px; height: 15px; }
+.level-three .l3-experiment { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; padding: 18px 21px; margin: 0 0 20px; border: 1px solid #c39c72; border-left: 4px solid #ad6042; border-radius: 5px; background: #f6ecd8; }
+.level-three .l3-experiment-question { flex: 1 1 370px; min-width: 0; }
+.level-three .l3-experiment-question > .eyebrow { font-size: 10px; color: #965831; margin-bottom: 7px; }
+.level-three .l3-experiment-question > p { font: 24px/1.3 var(--serif); color: #6e442b; }
+.level-three .l3-experiment-suggestion { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; }
+.level-three .l3-experiment-suggestion .button { border-color: #bd9369; background: #fffbef; color: #754d31; font-size: 12px; white-space: normal; text-align: center; }
+.level-three .l3-experiment-suggestion > span { font-size: 11px; color: #7e6e51; line-height: 1.4; }
+.level-three .l3-experiment[data-attention=true] { animation: l3-task-attention .8s ease-in-out 3; animation-play-state: var(--prompt-play-state, running); }
+@keyframes l3-task-attention { 0%,100% { box-shadow: 0 0 0 0 #b9854e00; } 45%,55% { box-shadow: 0 0 0 4px #b9854e55, 0 0 18px #ad754325; border-color: #a76839; } }
+@keyframes l3-task-still { from,to { box-shadow: 0 0 0 3px #b9854e40; } }
+.level-three .l3-comparison-basis { display: block; color: #75664d; font-size: 11px; line-height: 1.4; margin-top: 9px; }
+.level-three .l3-effort-change { display: flex; justify-content: center; align-items: center; gap: 4px; color: #958b77; font-size: 11px; line-height: 1.3; min-height: 25px; margin-top: 7px; text-align: center; }
+.level-three .l3-effort-change > span { font-size: 14px; line-height: 1; }
+.level-three .l3-effort-change[data-change=more], .level-three .l3-effort-change[data-change=less] { color: #8c5835; font-weight: 700; }
 .level-three .l3-weight-card[data-focus=true] { border-top: 3px solid #b69867; padding-top: 17px; }
 .level-three .l3-weight-guide { position: sticky; top: 10px; z-index: 5; background: #f5edda; border: 1px solid #ccba94; border-left: 3px solid #aa7650; border-radius: 4px; padding: 13px 17px; margin-bottom: 20px; box-shadow: 0 4px 14px #574c2e0c; }
 .level-three .l3-guide-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 9px; }
@@ -315,6 +323,15 @@
 .level-three .l3-weight-card[data-guide=confirm] button, .level-three .l3-weight-card[data-guide=remaining] button, .level-three .l3-run-action[data-guide=run] button { box-shadow: 0 0 0 4px #be985a50, 0 3px 0 #8a402d; }
 @media (max-width: 520px) {
   .level-three .l3-weight-guide { top: 6px; padding: 11px 13px; }
-  .level-three .l3-experiment > p { font-size: 17px; }
+  .level-three .l3-experiment { padding: 15px; gap: 14px; }
+  .level-three .l3-experiment-question > p { font-size: 21px; }
+  .level-three .l3-experiment-suggestion { align-items: flex-start; width: 100%; }
+  .level-three .l3-experiment-suggestion .button { width: 100%; }
+  .level-three .l3-comparison-basis { font-size: 10px; }
+  .level-three .l3-effort-change { font-size: 10px; gap: 3px; }
   .level-three .l3-weight-guide p { font-size: 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .level-three .l3-experiment[data-attention=true] { animation: l3-task-still 2.4s linear both !important; animation-play-state: var(--prompt-play-state, running) !important; }
 }

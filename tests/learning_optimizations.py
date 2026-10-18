@@ -74,7 +74,7 @@ with sync_playwright() as p:
   expect(page.get_by_role('button',name='Compare the patterns',exact=True)).to_have_count(0)
   page.get_by_role('button',name='Test your explanation',exact=True).click();expect(page.locator('.l3-experiment')).to_have_attribute('data-purpose',purpose)
   expect(page.locator('.l3-weight-value')).to_have_text([str(v)+'%' for v in second])
-  page.get_by_role('button',name='Show me a starting point',exact=True).click();expect(page.get_by_role('button',name='Run evaluation',exact=True)).to_be_disabled()
+  page.get_by_role('button',name='Apply suggested weights',exact=True).click();expect(page.get_by_role('button',name='Run evaluation',exact=True)).to_be_disabled()
   page.get_by_role('button',name='Reset weights',exact=True).click();expect(page.locator('.l3-weight-value')).to_have_text([str(v)+'%' for v in second])
   split(page,third);run(page);page.get_by_role('button',name='Compare the patterns',exact=True).click()
   expect(page.locator('.l3-compare-table thead th[data-kind="player"]')).to_have_count(3);expect(page.locator('.l3-compare-table thead th[data-run="3"]')).to_contain_text('Third test')

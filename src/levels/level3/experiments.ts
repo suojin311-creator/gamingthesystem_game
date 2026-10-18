@@ -8,22 +8,22 @@ const names = (ids: MetricId[]) => joinNames(ids.map(id => metricDefinition(id).
 
 /** Three player-led tests: explore, respond to evidence, then test the explanation. */
 export function nextExperiment(runs: WeightRun[]): Experiment {
-  if (!runs.length) return { purpose: 'explore', label: 'Explore', question: 'Can changing the weights change what Alex is aiming for?', focus: [] };
+  if (!runs.length) return { purpose: 'explore', label: 'Explore', question: 'Can new weights change Alex’s goal?', focus: [] };
   const previous = runs.at(-1)!;
   const low = previous.metricIds.filter((_, i) => effortAt(previous.weights, i) === 'low');
   if (runs.length === 1) return {
     purpose: 'adjust', label: 'Adjust',
     question: isNearEven(previous.weights)
-      ? 'Alex stopped at the checklist. What if one task counted much more?'
-      : `${names(low)} got little attention. How would you change the shares?`,
+      ? 'What if one task counted much more?'
+      : `What if ${names(low)} counted more?`,
     focus: low, suggestion: isNearEven(previous.weights) ? [...CONTRAST_WEIGHTS] : [...EVEN_WEIGHTS],
   };
   if (runs.every(run => !isNearEven(run.weights))) return {
-    purpose: 'balance', label: 'Verify', question: 'Give all three a similar share. Does Alex go beyond the checklist?',
+    purpose: 'balance', label: 'Verify', question: 'What if all three counted about the same?',
     focus: low, suggestion: [...EVEN_WEIGHTS],
   };
   if (runs.every(run => isNearEven(run.weights))) return {
-    purpose: 'contrast', label: 'Verify', question: 'Make one task count much more. What pulls Alex towards it?',
+    purpose: 'contrast', label: 'Verify', question: 'Will Alex follow the biggest reward?',
     focus: [previous.metricIds[0]], suggestion: [...CONTRAST_WEIGHTS],
   };
   const reference = [...runs].reverse().find(run => !isNearEven(run.weights))!;
@@ -31,7 +31,7 @@ export function nextExperiment(runs: WeightRun[]): Experiment {
   const suggestion: Weights = [c, a, b];
   const focus = reference.metricIds.filter((_, i) => effortAt(reference.weights, i) === 'low' && effortAt(suggestion, i) !== 'low');
   return {
-    purpose: 'redirect', label: 'Verify', question: `Shift the reward towards ${names(focus)}. Does Alex follow it?`,
+    purpose: 'redirect', label: 'Verify', question: `Will Alex follow a bigger reward for ${names(focus)}?`,
     focus, suggestion, reference,
   };
 }
