@@ -84,7 +84,7 @@ with sync_playwright() as p:
 
     trio = ('focus', 'reflect', 'peer')
     context, page = start(browser, metric_ids=trio)
-    set_weights(page, [49,26,25], trio); finish_run(page); next_trial(page)
+    set_weights(page, [34,33,33], trio); finish_run(page); next_trial(page)
     expect(page.locator('#experiment-question')).to_have_text('Can new weights make Alex go further?')
     last = page.get_by_role('group', name='Last observation', exact=True)
     expect(last.locator('li[data-effort=medium]')).to_have_count(3)
@@ -94,14 +94,17 @@ with sync_playwright() as p:
     page.locator('.l3-strategy-hint summary').click()
     hint_paragraph = page.locator('.l3-strategy-hint > p')
     assert hint_paragraph.evaluate('e=>e.getBoundingClientRect().height<=parseFloat(getComputedStyle(e).lineHeight)+1')
-    page.screenshot(path='test-results/feedback19-editor-1366.png', full_page=True)
+    page.screenshot(path='test-results/feedback20-editor-1366.png', full_page=True)
     page.set_viewport_size({'width':320,'height':900})
     assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
-    page.screenshot(path='test-results/feedback19-editor-320.png', full_page=True)
+    page.screenshot(path='test-results/feedback20-editor-320.png', full_page=True)
+    set_weights(page, [49,26,25], trio); finish_run(page); compare(page); next_trial(page, optional=True)
     set_weights(page, [49,27,24], trio); finish_run(page); compare(page)
-    expect(page.locator('tr[data-metric=peer] td[data-run="2"]')).to_have_attribute('data-effort','low')
-    expect(page.locator('tr[data-metric=peer] td[data-run="2"]')).to_have_attribute('data-effort-change','less')
-    record('The reported 49/26/25 allocation retains all three steady responses and an explicit stopping concern; concise help fits desktop and phone, while 49/27/24 truthfully preserves the unchanged preset boundary')
+    for metric, effort in [('focus','high'),('reflect','low'),('peer','low')]:
+        for index in [2,3]:
+            expect(page.locator(f'tr[data-metric={metric}] td[data-run="{index}"]')).to_have_attribute('data-effort',effort)
+        expect(page.locator(f'tr[data-metric={metric}] td[data-run="3"]')).to_have_attribute('data-effort-change','same')
+    record('Shared attention retains the explicit stopping concern and concise help; 49/26/25 and49/27/24 both show one high/two low with no invented 24/25 cliff')
     context.close()
 
     context, page = start(browser, 320, skip_guide=False)

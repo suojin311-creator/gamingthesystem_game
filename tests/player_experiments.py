@@ -136,7 +136,7 @@ with sync_playwright() as p:
 
     context, page = start(browser)
     set_weights(page, [34, 33, 33]); finish_run(page); next_trial(page)
-    set_weights(page, [40, 31, 29]); finish_run(page); compare(page)
+    set_weights(page, [36, 32, 32]); finish_run(page); compare(page)
     expect(page.locator('td[data-effort-change=same]')).to_have_count(3)
     finish_theory(page, 'same effort pattern')
     record('A player who starts evenly can finish after another all-medium split; the unchanged evidence is accepted and the closing response does not invent a change')

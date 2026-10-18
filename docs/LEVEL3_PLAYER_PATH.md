@@ -1,4 +1,4 @@
-# Level 3 player path (v18)
+# Level 3 player path (v18 path, v20 relative effort)
 
 Saved baseline: `archive/pre-level3-path-v17` at
 `5d56d4cbb763b039b4a8a7a4c3bceb7932f303b2`.
@@ -34,7 +34,6 @@ while allowing the player to reach the comparison after two tests.
 | --- | --- | --- |
 | One or more tasks receive minimum effort | Keep those actual task names and effort visible; ask about changing the allocation | If attention improves, acknowledge it; do not label every adjustment a failure |
 | A near-even split gives three steady responses | Acknowledge shared attention; retain the observed score-based stopping and ask whether new weights help Alex go further | The first balanced allocation was legitimate; scoring-directed stopping remains a separate observation |
-| An uneven split gives three steady responses | Use the same actual bands, rather than treating the uneven label as low attention | Near-even is descriptive metadata, not a second behaviour rule |
 | New values leave every effort band unchanged | Describe no observed band change and let the player compare or optionally investigate further | Do not claim attention shifted merely because the numerical weights changed |
 
 The questions do not require a prescribed answer, near-even split, band change
@@ -54,12 +53,13 @@ test by metric identity. Weight percentages are quiet reference values, not
 effort percentages. No aim heading, result-summary box or keep/rethink gate is
 inserted.
 
-The retained per-item bands are 1–24% minimum, 25–66% steady and 67–98% intense.
-Highest minus lowest at most ten points describes near-even weights without
-overriding the bands. Any all-steady result can show criteria → ticks → packing
-up; minimum-effort tasks stay unticked. Shared attention can improve while
-stopping at the scoring requirement remains visible. Neither observation is a
-measurement of learning gain or loss.
+Relative effort compares each weight with both alternatives, using a ten-point
+similarity tolerance: more higher comparisons means high, more lower means
+low, and a tie means medium. Near-even has highest minus lowest at most ten
+points and naturally produces three medium responses. One-high, two-high and
+graduated patterns remain distinct. The old absolute 25/67cutoffs are removed.
+Shared attention can improve while scoring-directed stopping remains visible;
+neither observation measures learning gain or loss.
 
 ## Compatibility and boundaries
 
@@ -73,5 +73,5 @@ and the reserved unused Design Lab callback are preserved.
 This revision is limited to Level 3. It neither merges the opening nor changes
 the partner's authored animation scripts or Level 2's growth sequence. Functional
 path, accessibility and packaging checks are recorded in
-[LEVEL3_VALIDATION-v18.json](LEVEL3_VALIDATION-v18.json); classroom efficacy and
+[LEVEL3_VALIDATION-v20.json](LEVEL3_VALIDATION-v20.json); classroom efficacy and
 the best possible learning design are not established by those checks.

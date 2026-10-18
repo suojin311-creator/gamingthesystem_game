@@ -10,7 +10,7 @@
   attention pulses and collapsed Need a hint? text.
 - `WeightGuide.tsx`: four static spotlight steps with Next, Back, Skip and Escape;
   explains controls without practice or changing weights.
-- `weights.ts`: exact positive allocation, locked-value invariants, per-item
+- `weights.ts`: exact positive allocation, locked-value invariants, relative
   effort thresholds and descriptive near-even classification.
 - `dialogue.ts`: concise observed-result exchanges and final cinematic dialogue;
   editing, publication and comparison operations remain silent.
@@ -32,11 +32,14 @@ tests the player can compare and Watch Alex's response, or optionally Test
 another idea. The latter adds one third test, not a reference or a compulsory
 pattern. No aim radios or keep/rethink judgment gate remain.
 
-Weights total 100% and reserve at least 1% for each task. Effort follows only
-each task's own weight: 1–24% minimum, 25–66% steady and 67–98% intense.
-Near-even means a highest-to-lowest spread of at most ten percentage points;
-it does not override effort. Thus 40/30/30 → 40/31/29 leaves three steady
-responses. Findings must not invent a changed effort band from changed weights.
+Weights total 100% and reserve at least 1% per task. Each task compares its
+weight with both alternatives using an inclusive ten-point similarity tolerance.
+More higher comparisons means high effort, more lower means low, and a tie
+means medium. One-high, two-high, all-similar and graduated patterns are handled
+without absolute percentage cutoffs. The same 24% can differ by context;
+49/26/25 and49/27/24 both yield high/low/low. Proportional redistribution of
+unlocked weights preserves the player's relative choices, and increasing the
+edited share cannot lower its own effort. See the current effort-rule document.
 
 The scoring stopping rule is independent of that label. All-steady runs show
 criteria/ticks/packing up; low-effort tasks remain unticked. Improved coverage
@@ -61,4 +64,4 @@ See [player path](../../../docs/LEVEL3_PLAYER_PATH.md),
 [partner handoff](../../../docs/LEVEL3_HANDOFF.md),
 [player-led experiments](../../../docs/PLAYER_EXPERIMENTS.md) and
 [effort rules](../../../docs/EFFORT_RULES.md). Current validation:
-[v18](../../../docs/LEVEL3_VALIDATION-v18.json); v17 and earlier are historical.
+[v20](../../../docs/LEVEL3_VALIDATION-v20.json); v19 and earlier are historical.

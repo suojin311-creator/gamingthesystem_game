@@ -7,7 +7,7 @@ const checks=[];
 const check=(name,run)=>{run();checks.push(name);console.log('PASS',name)};
 try {
  const {nextExperiment,meetsExperiment,experimentHint,MIN_TRIALS,MAX_TRIALS,canCompare,canTryAgain}=await server.ssrLoadModule('/src/levels/level3/experiments.ts');
- const {validWeights}=await server.ssrLoadModule('/src/levels/level3/weights.ts');
+ const {validWeights,effortAt}=await server.ssrLoadModule('/src/levels/level3/weights.ts');
  const {copyRun,cinematicRequest,effortChanged}=await server.ssrLoadModule('/src/levels/level3/data.ts');
  const {workbenchDialogue}=await server.ssrLoadModule('/src/levels/level3/dialogue.ts');
  const ids=['prep','part','focus','discuss','reflect','peer'];
@@ -67,15 +67,15 @@ try {
    const weights=[a,b,100-a-b],record=run(weights),lines=workbenchDialogue('result','Riley','first',[record]);
    assert.equal(lines.length,3);
    const text=lines.map(line=>line.text).join(' ');
-   const low=record.metricIds.filter((_,i)=>weights[i]<25);
+   const low=record.metricIds.filter((_,i)=>effortAt(weights,i)==='low');
    if(!low.length) {
     assert.match(text,/done|stop|point|mark|requirement/i);
     assert.doesNotMatch(text,/rushed|quick version|little time/i);
    } else {
-    for(const [index,name] of ['Preparation','Participation','Focus'].entries())if(weights[index]<25)assert.ok(text.includes(name),JSON.stringify({weights,text,name}));
+    for(const [index,name] of ['Preparation','Participation','Focus'].entries())if(effortAt(weights,index)==='low')assert.ok(text.includes(name),JSON.stringify({weights,text,name}));
    }
    assert.doesNotMatch(text,/learning improved|learned more|better learning/i);
-   assert.equal(effortChanged(baseline,record),weights.some(weight=>weight<25||weight>66));
+   assert.equal(effortChanged(baseline,record),weights.some((_,i)=>effortAt(weights,i)!=='medium'));
    assert.ok(!effortChanged(record,{...record,metricIds:['focus','prep','part'],weights:[weights[2],weights[0],weights[1]]}));
   }
  });

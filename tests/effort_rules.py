@@ -1,4 +1,4 @@
-"""Production regressions for independent effort bands and score-based stopping."""
+"""Production regressions for relative effort bands and score-based stopping."""
 import json
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
@@ -30,24 +30,22 @@ def run_sequence(page, sequence):
 with sync_playwright() as p:
     browser = p.chromium.launch(executable_path='/usr/bin/chromium', args=['--no-sandbox'])
     context, page = start(browser)
-    run_sequence(page, [([40, 30, 30], ['medium'] * 3, 3), ([40, 31, 29], ['medium'] * 3, 3), ([50, 25, 25], ['medium'] * 3, 3)])
+    run_sequence(page, [([49,26,25], ['high','low','low'],1), ([49,27,24], ['high','low','low'],1), ([45,45,10], ['high','high','low'],2)])
     compare(page)
-    expect(page.locator('.l3-compare-table thead th.near-even')).to_have_count(1)
-    expect(page.locator('.l3-compare-table thead th.uneven')).to_have_count(2)
-    expect(page.locator('td[data-effort-change=same]')).to_have_count(6)
-    finish_theory(page, 'same effort pattern')
-    record('40/30/30 → 40/31/29 → 50/25/25 preserves medium effort independently of the near-even label, and the optional three-test conclusion reports no invented change')
+    expect(page.locator('td[data-run="2"][data-effort-change=same]')).to_have_count(3)
+    expect(page.locator('td[data-run="3"][data-effort-change=more]')).to_have_count(1)
+    expect(page.locator('tr[data-metric=part] td[data-run="3"]')).to_have_attribute('data-effort','high')
+    finish_theory(page, 'shifts effort')
+    record('49/26/25 and49/27/24 keep one high/two low with no24/25 cliff;45/45/10 gives two high/one low, including correct coverage and final comparison')
     context.close()
 
     context, page = start(browser)
-    cases = [([67,25,8], ['high','medium','low'], 2), ([66,25,9], ['medium','medium','low'], 2), ([66,24,10], ['medium','low','low'], 1)]
-    run_sequence(page, cases)
+    run_sequence(page, [([40,30,30], ['medium']*3,3),([40,31,29],['high','medium','low'],2),([60,30,10],['high','medium','low'],2)])
     compare(page)
-    expect(page.locator('td[data-run="2"][data-effort-change=less]')).to_have_count(1)
-    expect(page.locator('td[data-run="3"][data-effort-change=less]')).to_have_count(1)
-    page.get_by_role('button', name='Watch Alex’s response', exact=True).click()
-    expect(page.locator('.l3-scene-copy > p')).to_contain_text('shifts effort')
-    record('Crossing 67/66 and 25/24 changes only the corresponding effort band; covered-task ticks and adjacent-trial comparison labels follow the actual observations')
+    expect(page.locator('tr[data-metric=part] td[data-run="2"]')).to_have_attribute('data-effort-change','same')
+    expect(page.locator('td[data-run="3"][data-effort-change=same]')).to_have_count(3)
+    finish_theory(page, 'shifts effort')
+    record('The inclusive ten-point similarity and graduated high/medium/low route follow relative comparisons; raising30to31 never lowers that task’s effort')
     context.close()
 
     context, page = start(browser)

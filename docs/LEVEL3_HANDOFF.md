@@ -43,8 +43,8 @@ historical; they are not prerequisites in this revision.
 - Three positive integer weights total exactly 100%; each is 1–98%. Native and
   accessible range bounds reserve the minimum for other unlocked priorities.
   Publication rejects zero weights.
-- Moving an unlocked slider divides the remaining share among other unlocked
-  values. Confirmed values stay locked; a one-point remainder follows card order.
+- Moving an unlocked slider preserves the ratio of other unlocked shares,
+  with positive integer rounding in card order. Confirmed values stay locked.
 - Confirm any first card, then adjust either remaining card. Confirming either
   final card locks both, with the other button gray and Auto-confirmed. The
   80/10/10 → 80/15/5 case works in every confirmation order.
@@ -68,12 +68,15 @@ historical; they are not prerequisites in this revision.
   effort remain the main evidence; there are no numerical effort percentages.
   Level 3 action footers carry controls without explanatory left-side captions.
 
-Each task uses its own weight for effort: **1–24% low, 25–66% medium and
-67–98% high**. Near-even means highest minus lowest at most **10 percentage
-points**, including the boundary. It only names the allocation and never changes
-effort or selects special criticism. Thus 40/30/30 is near-even and 40/31/29 is
-uneven, while both produce three medium shots. These are illustrative narrative
-categories, not measured learning gains or losses. See [effort rules](EFFORT_RULES.md).
+Each task compares its reward with both alternatives, treating differences up to
+10 percentage points as similar. More clearly higher comparisons gives high
+effort, more lower comparisons gives low effort, and a tie gives medium.
+49/26/25 and 49/27/24 both yield high/low/low; 45/45/10 yields high/high/low;
+34/33/33 yields medium/medium/medium; 60/30/10 yields high/medium/low.
+Near-even still means highest minus lowest at most 10points. There is no global
+override or absolute 24/25cutoff. These are qualitative relative categories and
+the tolerance is a game rule, not an empirical effort or learning model.
+See [effort rules](EFFORT_RULES.md).
 
 ## First-use weight guide
 
@@ -181,7 +184,7 @@ combined game; standalone entries use their existing defaults.
 `play/Level3-and-Full-game-play.zip`. That review archive contains standalone
 Level 3 and connected Levels 1–3 from the same builds. `play/LATEST.json` records
 source/build/ZIP hashes. `tests/release.py` verifies the actual downloads.
-Current checks are recorded in [LEVEL3_VALIDATION-v18.json](LEVEL3_VALIDATION-v18.json).
+Current checks are recorded in [LEVEL3_VALIDATION-v20.json](LEVEL3_VALIDATION-v20.json).
 The v17 report preserves the effort-rule correction; v16 and older reports and
 versioned ZIPs remain historical. Managed Chromium tests exact offline bytes
 through an in-memory HTTPS origin. Direct file opening in a particular user's

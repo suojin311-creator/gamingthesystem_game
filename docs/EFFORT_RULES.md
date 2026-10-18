@@ -1,85 +1,82 @@
-# Level 3 effort rules (introduced v17, retained v18)
+# Level 3 relative effort rules (v20)
 
-The pre-change v16 source and downloads are frozen on
-`archive/pre-effort-rules-v16` at
-`69f2bb4906a6d6c85442686180e49dc6a0800291`.
+The prior release is saved at `archive/pre-relative-effort-v19`. V17–v19
+used absolute 25%/67% cutoffs; those rules and reports are historical.
 
-The v17 revision fixed the relation between weights, observed effort and
-narrative feedback. Those rules remain in v18; the subsequent
-[player-path revision](LEVEL3_PLAYER_PATH.md) removes the aim and judgment gates
-and allows completion after two observations, with an optional third.
+## Compare the complete allocation
 
-## One per-item rule
+Three positive integer weights still total exactly 100%, each at least 1%.
+For each task, compare its score weight with each of the other two tasks:
 
-Three positive integer weights total exactly 100%. Each lies between 1% and
-98%, reserving at least 1% for the other tasks. Locked weights and linked-pair
-confirmation keep their existing behaviour.
+- A difference of at most 10percentage points, inclusively, counts as similar.
+- Being more than 10points above an alternative is a higher-reward comparison.
+- Being more than 10points below an alternative is a lower-reward comparison.
+- More higher than lower comparisons produces high effort; more lower than
+  higher produces low effort; a tie produces medium effort.
 
-| A task's weight | Observed effort | Story intensity |
+This compares every task with both alternatives. It gives the three common
+patterns without forcing a graduated distribution into a two-group answer:
+
+| Weights | Effort in the same order | Interpretation |
 | --- | --- | --- |
-| 1–24% | Minimum effort | low |
-| 25–66% | Steady effort | medium |
-| 67–98% | Intense effort | high |
+|49/26/25|high/low/low|One priority, two similar lower rewards|
+|49/27/24|high/low/low|Same pattern; no absolute 24/25cliff|
+|45/45/10|high/high/low|Two priorities, one lower reward|
+|34/33/33|medium/medium/medium|Three similar rewards|
+|65/24/11|high/medium/low|Graduated priorities;24% is medium here|
+|40/30/30|medium/medium/medium|All pair differences are within 10|
+|40/31/29|high/medium/low|The40vs29difference is11; the raised31stays medium|
 
-Each task uses only its own weight to select its effort band. Increasing that
-weight cannot reduce its effort band. These are qualitative illustrative rules,
-not measured percentages of effort, learning gains or learning losses.
+The10-point tolerance reuses the game's agreed notion of similar weights. It
+is an explicit game-design assumption, not an empirical behavioural threshold
+or a formula derived from Goodhart's Law. A categorical model still has
+boundaries: crossing a relative-gap boundary may change a category. It does
+not claim that every1-point edit leaves the scene unchanged.
 
-The 25% and 67% cutoffs are implementation presets, not thresholds derived
-from Goodhart's Law or empirical learning data. The current model has no
-continuous effort-spent calculation: 25% to 24% crosses a hard display boundary.
-That discontinuity remains a known design limitation pending a separately
-agreed revision of the effort model. The v19 copy/layout update does not change
-these rules.
+Effort labels are qualitative relative responses within the tested trio. They
+are neither measured effort percentages nor learning gains or losses. There
+is no fixed rule saying 24% means minimum effort. The same 40% is medium in
+40/30/30 and high in 40/50/10 because the other rewards differ.
 
-## Near-even is a description
+## Stable slider behaviour
 
-An allocation is near-even when its highest and lowest weights differ by at
-most **10 percentage points**, including the boundary. That classification
-never overrides effort, awards a success state or triggers special criticism.
-All valid near-even allocations naturally fall into three medium bands under
-the rule above; uneven allocations can also have three medium bands.
+Editing a share now preserves the ratio of the other unlocked shares, rounding
+the first in card order and assigning the remainder to the other. At least 1%
+is reserved for each. With one unlocked alternative, that card receives the
+exact remainder. Locked weights and linked-pair confirmation are unchanged.
 
-For example, 40/30/30 is near-even, while 40/31/29 is uneven. Both produce three
-steady responses. Moving between them is an unchanged-effort observation, not
-an improvement, deterioration or new discovery merely because a label changed.
-The comparison and final dialogue must preserve that distinction.
+This matters for relative effort: automatically resetting the other shares
+to equal values could change the whole reward structure while the player
+only meant to adjust one value. A no-op edit now leaves all values unchanged.
+Across all 4,851 valid splits, increasing an edited share cannot reduce its own
+effort band, including actual proportional slider reallocations. Equal weights
+receive equal bands, and reordering cards cannot alter their behaviour.
 
-## Stopping at the scoring requirements
+## Keep attention and motivation separate
 
-Alex's attention may become more evenly distributed. That change should be
-acknowledged. It does not by itself establish deeper learning or exploration.
-Stopping once scoring requirements are satisfied is a separate narrative
-observation across allocations, including uneven ones.
+Near-even remains highest minus lowest at most 10points. The pairwise model
+naturally yields three medium responses for these allocations; no global
+near-even override is applied to individual effort.
 
-Every all-medium run uses the criteria → ticks → packing-up sequence and the
-medium-shot criteria actions/replies, independently of its near-even label.
-The effort illustrations and summaries still follow the actual bands. When
-some tasks receive minimum effort, those tasks remain unticked: the visual
-must not imply that all requirements were met. The stopping-rule observation
-must not accuse a near-even allocation of a defect that disappears solely when
-its split label changes.
+Shared attention is acknowledged. The unresolved problem is Alex's reason for
+working: he stops after earning the marks he wants. That observation applies
+across allocations. Low-effort tasks stay unticked in the existing stopping
+sequence; the game does not pretend every criterion was met.
 
-Findings, teacher questions, Alex replies and the final comparison summary use
-actual effort bands and their changes. Three changed allocations with identical
-bands are valid evidence of no observed band change. They must not produce a
-summary claiming that effort moved each time.
+Editor prompts, actual scene requests, result rows, dialogue, coverage ticks
+and comparison deltas all read the same `effortAt` function. Comparison labels
+still refer to the immediately previous actual test by metric identity.
+Changing weights may leave categories unchanged, which must be reported as
+Same effort rather than an invented improvement.
 
-## Scope and compatibility
+## Validation and scope
 
-The current flow uses a free first allocation, an evidence-led second editor,
-comparison after two observations and an optional third experiment. Strategy
-help is verbal and optional, without numerical examples. Required aims and the
-keep/rethink gate have been removed. Level 1 and Level 2 behaviour is unchanged.
+Current checks and package hashes are in
+[LEVEL3_VALIDATION-v20.json](LEVEL3_VALIDATION-v20.json). They include all 4,851
+splits, all card permutations,28,518 one-point transfers, proportional slider
+edits, 20 trios, short fresh dialogue, two-test completion, optional-third
+cancellation, partner requests, offline downloads and responsive layouts.
 
-Existing cinematic IDs, prop shapes, opening-name routing and endpoint remain
-the same: weighted observations → Alex's response → `theory.reveal`. The game
-stays at the final theory placeholder, with no Design Lab navigation. The
-partner's authored animation scripts are unchanged; custom renderers continue
-to replace the entire placeholder.
-
-Current validation is recorded in
-[LEVEL3_VALIDATION-v18.json](LEVEL3_VALIDATION-v18.json). The
-[v17 report](LEVEL3_VALIDATION-v17.json) preserves the original rule correction;
-the v16 report, older archives and versioned ZIPs stay historical. Behaviour and
-packaging checks do not establish classroom learning effectiveness.
+The two-test path, optional third, positive bounds, opening-name/trio handoff,
+authored partner scripts and final theory placeholder remain. There is no
+Design Lab navigation. Functional checks do not establish learning efficacy.

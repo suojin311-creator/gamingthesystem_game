@@ -3,11 +3,12 @@ import { metricDefinition, type MetricId } from '../../shared/data/metrics';
 import { BEHAVIOURS, effortChanged, joinNames, type LevelThreeCinematicRequest, type SetupDecision, type WeightRun } from './data';
 import { effortAt, hasLowEffort, isNearEven, type Effort, type WeightGoal } from './weights';
 
-export type WeightPattern = 'one-higher' | 'two-higher' | 'near-even';
+export type WeightPattern = 'one-higher' | 'two-higher' | 'near-even' | 'mixed';
 
 export function weightPattern(run: WeightRun): WeightPattern {
   if (isNearEven(run.weights)) return 'near-even';
-  return run.weights.filter(weight => weight >= 34).length === 2 ? 'two-higher' : 'one-higher';
+  const efforts = run.weights.map((_, index) => effortAt(run.weights, index));
+  return efforts.includes('medium') ? 'mixed' : efforts.filter(effort => effort === 'high').length === 2 ? 'two-higher' : 'one-higher';
 }
 
 const names = (ids: MetricId[]) => joinNames(ids.map(id => metricDefinition(id).shortName));

@@ -7,12 +7,13 @@ export const CONTRAST_WEIGHTS: Weights = [70, 20, 10];
 export const MIN_WEIGHT = 1;
 export const MAX_WEIGHT = 100 - MIN_WEIGHT * 2;
 export const NEAR_EVEN_SPREAD = 10;
+export const EFFORT_SIMILARITY_GAP = 10;
 
 export const spread = (weights: Weights) => Math.max(...weights) - Math.min(...weights);
 export const isNearEven = (weights: Weights) => spread(weights) <= NEAR_EVEN_SPREAD;
 export const validWeights = (weights: Weights) => weights.length === 3 && weights.every(value => Number.isInteger(value) && value >= MIN_WEIGHT && value <= MAX_WEIGHT) && weights.reduce((sum, value) => sum + value, 0) === 100;
 
-/** Integer percentages keep the total exact; a one-point remainder goes in card order. */
+/** Preserve the other unlocked shares' ratio while keeping an exact positive total. */
 export function allocateWeight(weights: Weights, confirmed: Confirmed, index: number, requested: number): Weights {
   if (!Number.isInteger(index) || index < 0 || index > 2 || confirmed[index] || !Number.isFinite(requested)) return weights;
   const others = [0, 1, 2].filter(i => i !== index && !confirmed[i]);
@@ -22,7 +23,13 @@ export function allocateWeight(weights: Weights, confirmed: Confirmed, index: nu
   const next: [number, number, number] = [...weights];
   next[index] = value;
   const remaining = 100 - lockedTotal - value;
-  others.forEach((i, position) => { next[i] = Math.floor(remaining / others.length) + (position < remaining % others.length ? 1 : 0); });
+  if (others.length === 1) next[others[0]] = remaining;
+  else {
+    const [first, second] = others;
+    const previousTotal = weights[first] + weights[second];
+    next[first] = Math.max(MIN_WEIGHT, Math.min(remaining - MIN_WEIGHT, Math.round(remaining * weights[first] / previousTotal)));
+    next[second] = remaining - next[first];
+  }
   return next;
 }
 
@@ -51,8 +58,13 @@ export function canRun(weights: Weights, confirmed: Confirmed, baseline: Weights
 }
 
 export function effortAt(weights: Weights, index: number): Effort {
-  // The same share always yields the same effort band, regardless of its neighbours.
-  return weights[index] < 25 ? 'low' : weights[index] < 67 ? 'medium' : 'high';
+  // Compare this reward with both alternatives. Differences up to ten points
+  // are treated as similar; one clear win and one clear loss balance out.
+  // This is a qualitative game rule, not a numerical effort-spent estimate.
+  const weight = weights[index];
+  const priority = weights.reduce((score, other, otherIndex) => otherIndex === index ? score
+    : score + (weight - other > EFFORT_SIMILARITY_GAP ? 1 : other - weight > EFFORT_SIMILARITY_GAP ? -1 : 0), 0);
+  return priority > 0 ? 'high' : priority < 0 ? 'low' : 'medium';
 }
 
 export const hasLowEffort = (weights: Weights) => weights.some((_, index) => effortAt(weights, index) === 'low');

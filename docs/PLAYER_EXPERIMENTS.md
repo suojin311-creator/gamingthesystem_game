@@ -1,4 +1,4 @@
-# Player-led experiments (v18)
+# Player-led experiments (v18 path, v20 relative effort)
 
 The pre-change source and downloads are frozen on
 `archive/pre-level3-path-v17` at
@@ -78,7 +78,7 @@ Design Lab navigation, additional ending page or player Restart control.
 ## Validation and scope
 
 [LEVEL3_PLAYER_PATH.md](LEVEL3_PLAYER_PATH.md) describes the two main player
-routes and their limits. [LEVEL3_VALIDATION-v18.json](LEVEL3_VALIDATION-v18.json)
+routes and their limits. [LEVEL3_VALIDATION-v20.json](LEVEL3_VALIDATION-v20.json)
 records the current checks and downloadable builds. The v17 report preserves
 the effort-rule correction; v16 and earlier reports describe previous flows,
 including removed aims, numerical examples and judgments.
