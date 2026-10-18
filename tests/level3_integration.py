@@ -51,6 +51,7 @@ def choose(page):
 
 
 def weights(page,values):
+    page.get_by_role('radio',name='Give all three attention',exact=True).check()
     for index,id in enumerate(['prep','part','focus']):
         card=page.get_by_test_id('weight-card-'+id)
         if not card.locator('input').is_disabled():
@@ -85,15 +86,19 @@ with sync_playwright() as p:
     page.get_by_role('button',name='Test your explanation',exact=True).click()
     weights(page,[10,70,20]);publish(page)
     page.get_by_role('button',name='Compare the patterns',exact=True).click();advance(page,3)
+    assert page.evaluate('window.results.length')==0
+    page.get_by_role('radio',name='Keep this split for now',exact=True).check()
+    page.get_by_role('button',name='Watch Alex’s response',exact=True).click()
     results=page.evaluate('window.results')
     assert len(results)==1 and results[0]['level']==3
     result=results[0]['result'];assert result['runs'][0]['weights']==[70,20,10]
     assert len(result['runs'])==3 and all(run['kind']=='player' for run in result['runs'])
     assert result['runs'][2]['weights']==[10,70,20]
+    assert result['decision']=='keep' and all(run['intent']=='attention' for run in result['runs'])
     assert result['compared']['nearEven']['weights']==[34,33,33]
     assert result['compared']['uneven']['weights']==[70,20,10]
     record('Level 3 completes once after three player-led tests with immutable tested runs and an explicit near-even/uneven comparison payload')
-    page.get_by_role('button',name='Watch Alex’s response',exact=True).click()
+    assert page.evaluate('window.requests.at(-1).decision')=='keep'
     assert page.evaluate('window.requests.at(-1).sceneId')=='level3.compare'
     page.get_by_role('button',name='Finish partner scene',exact=True).click()
     assert page.evaluate('window.requests.at(-1).sceneId')=='theory.reveal'
@@ -151,6 +156,26 @@ with sync_playwright() as p:
     expect(page.locator('.partner-name')).to_have_text('Riley')
     record('Hidden-page publication holds its visible-time sequence and resumes without skipping the three weights')
     context.close()
+
+    for sequence,decision in [([[70,20,10],[80,10,10],[10,70,20]],'keep'),([[34,33,33],[40,30,30],[31,35,34]],'revise')]:
+        context,page=start(browser);advance(page);choose(page)
+        for index,values in enumerate(sequence):
+            weights(page,values);publish(page)
+            if index<2:page.get_by_role('button',name='Adjust the weights' if index==0 else 'Test your explanation',exact=True).click()
+        page.get_by_role('button',name='Compare the patterns',exact=True).click();advance(page,3)
+        assert page.evaluate('window.results.length')==0
+        page.get_by_role('radio',name='Keep this split for now' if decision=='keep' else 'I’d rethink this setup',exact=True).check()
+        page.get_by_role('button',name='Watch Alex’s response',exact=True).click()
+        result=page.evaluate('window.results.at(-1).result')
+        assert result['compared'] is None and result['decision']==decision
+        assert [run['weights'] for run in result['runs']]==sequence
+        assert page.evaluate('window.requests.at(-1).decision')==decision
+        assert len(page.evaluate('window.results'))==1
+        page.get_by_role('button',name='Finish partner scene',exact=True).click()
+        expect(page.locator('.partner-scene h2')).to_have_text('theory.reveal')
+        assert page.evaluate('window.designLabCount')==0
+        context.close()
+    record('Uniform uneven and uniform near-even histories complete once with all actual trials, explicit player decision and compared=null in the partner contract')
 
     audio_script='''window.oscillatorStarts=0;const old=AudioContext.prototype.createOscillator;
     AudioContext.prototype.createOscillator=function(){const oscillator=old.call(this);const start=oscillator.start.bind(oscillator);oscillator.start=(...args)=>{window.oscillatorStarts++;return start(...args)};return oscillator};'''

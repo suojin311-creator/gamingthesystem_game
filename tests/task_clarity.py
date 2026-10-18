@@ -32,23 +32,26 @@ with sync_playwright() as p:
  page.wait_for_timeout(2600);expect(prompt).to_have_attribute('data-attention','true')
  page.evaluate("delete document.hidden;document.dispatchEvent(new Event('visibilitychange'))")
  expect(prompt).to_have_attribute('data-attention','false',timeout=4000)
- assert prompt.locator('p').evaluate('e=>parseFloat(getComputedStyle(e).fontSize)')>=21
+ assert prompt.locator('legend').evaluate('e=>parseFloat(getComputedStyle(e).fontSize)')>=21
  record('The task is a prominent 24px question card with a four-pixel accent and three finite pulses; hidden time pauses the animation and the card stays readable after it ends')
+ page.get_by_role('radio',name='Give all three attention',exact=True).check()
  move(page,'prep',43);page.get_by_test_id('confirm-prep').click();move(page,'part',29);page.get_by_test_id('confirm-part').click();run(page)
  page.get_by_role('button',name='Adjust the weights',exact=True).click()
- expect(prompt.locator('p')).to_have_text('What if Participation and Peer response counted more?')
+ expect(prompt.locator('legend')).to_have_text('What will you try next?')
+ page.get_by_role('radio',name='Give all three attention',exact=True).check();prompt.locator('summary').click()
  button=page.get_by_role('button',name='Apply suggested weights',exact=True);expect(button).to_be_visible();expect(prompt).to_contain_text('Sets the sliders; you confirm.')
  page.screenshot(path='test-results/task-clarity-prompt-1366.png',full_page=True)
  button.click();expect(page.locator('.l3-weight-value')).to_have_text(['34%','33%','33%']);expect(page.locator('.l3-weight-card[data-confirmed=true]')).to_have_count(0)
  expect(page.get_by_role('button',name='Run evaluation',exact=True)).to_be_disabled();expect(prompt).to_contain_text('Weights set. Adjust or confirm.');expect(prompt).to_have_attribute('data-attention','false')
  move(page,'prep',40);expect(page.locator('.l3-weight-value')).to_have_text(['40%','30%','30%']);button.click();confirm(page);run(page)
- record('The shorter targeted question and Apply suggested weights button load editable values, announce the result, stop the attention cue and still require manual confirmation')
+ record('The player-selected question and optional Apply suggested weights button load editable values, announce the result, stop the attention cue and still require manual confirmation')
  page.get_by_role('button',name='Test your explanation',exact=True).click();page.emulate_media(reduced_motion='reduce')
  assert prompt.evaluate('e=>getComputedStyle(e).animationName')=='l3-task-still'
  assert prompt.evaluate('e=>getComputedStyle(e).animationIterationCount')=='1'
  page.set_viewport_size({'width':320,'height':844});page.screenshot(path='test-results/task-clarity-prompt-320.png',full_page=True)
  assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
- button.click();expect(page.locator('.l3-weight-value')).to_have_text(['28%','43%','29%']);confirm(page);run(page)
+ page.get_by_role('radio',name='Shift Alex’s priority',exact=True).check();prompt.locator('summary').click();button.click();expect(page.locator('.l3-weight-card[data-confirmed=true]')).to_have_count(0)
+ move(page,'prep',28);page.get_by_test_id('confirm-prep').click();move(page,'part',43);page.get_by_test_id('confirm-part').click();run(page)
  record('Reduced motion uses one steady outline, and the 320px task card and explicit suggestion button remain readable and usable')
  page.get_by_role('button',name='Compare the patterns',exact=True).click()
  expected={'prep':['baseline','same','less'],'part':['baseline','more','same'],'peer':['baseline','more','less']}

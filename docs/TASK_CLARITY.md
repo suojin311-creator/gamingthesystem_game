@@ -1,5 +1,7 @@
 # Level 3 task and comparison clarity
 
+The task wording and direct strategy suggestions below describe v15. In v16, players choose their aims and strategy help is collapsed: see [player-led experiments](PLAYER_EXPERIMENTS.md). The attention cue and comparison-label semantics remain current.
+
 The v14 source and downloads are preserved on `archive/pre-task-clarity-v14` at
 `3ffe53588ef599673228b9156c4af975c5aabd68`.
 

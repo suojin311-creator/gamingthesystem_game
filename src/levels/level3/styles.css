@@ -293,18 +293,33 @@
 @keyframes l3-pack-away { from { transform: translateY(-10px) rotate(-9deg); opacity: .5; } to { transform: translateY(0) rotate(0); opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .level-three .l3-pack-paper { animation: none !important; } }
 
-/* One question explains the experiment; the optional guide teaches actual controls. */
+/* Players choose a question; strategy suggestions stay behind an optional hint. */
 .level-three .l3-experiment { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; padding: 18px 21px; margin: 0 0 20px; border: 1px solid #c39c72; border-left: 4px solid #ad6042; border-radius: 5px; background: #f6ecd8; }
-.level-three .l3-experiment-question { flex: 1 1 370px; min-width: 0; }
-.level-three .l3-experiment-question > .eyebrow { font-size: 10px; color: #965831; margin-bottom: 7px; }
-.level-three .l3-experiment-question > p { font: 24px/1.3 var(--serif); color: #6e442b; }
-.level-three .l3-experiment-suggestion { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; }
+.level-three .l3-experiment-choice { border: 0; padding: 0; margin: 0; width: 100%; min-width: 0; }
+.level-three .l3-experiment-choice legend { font: 24px/1.3 var(--serif); color: #6e442b; padding: 0; margin-bottom: 13px; }
+.level-three .l3-intent-options, .level-three .l3-verdict-options { display: flex; flex-wrap: wrap; gap: 9px; }
+.level-three .l3-intent-options label, .level-three .l3-verdict-options label { display: flex; align-items: center; gap: 9px; padding: 11px 13px; border: 1px solid #cfc2a7; border-radius: 4px; background: #fffcf4; color: #6b5b40; font-size: 14px; line-height: 1.4; cursor: pointer; min-height: 44px; }
+.level-three .l3-intent-options input, .level-three .l3-verdict-options input { margin: 0; width: 15px; height: 15px; flex-shrink: 0; accent-color: #a8583d; }
+.level-three .l3-intent-options label[data-selected=true], .level-three .l3-verdict-options label[data-selected=true] { background: #efe0c6; border-color: #a76443; color: #663f2b; box-shadow: inset 0 0 0 1px #a76443; }
+.level-three .l3-intent-options label:focus-within, .level-three .l3-verdict-options label:focus-within { outline: 3px solid #376961; outline-offset: 3px; }
+.level-three .l3-strategy-hint { width: 100%; padding-top: 2px; color: #776445; }
+.level-three .l3-strategy-hint summary { cursor: pointer; font-size: 12px; width: fit-content; padding: 4px 0; }
+.level-three .l3-strategy-hint[open] { border-top: 1px solid #d6c3a1; padding-top: 10px; }
+.level-three .l3-strategy-hint > p { margin: 8px 0 12px; max-width: 570px; font-size: 14px; line-height: 1.5; }
+.level-three .l3-experiment-suggestion { display: flex; flex-wrap: wrap; align-items: center; gap: 9px 15px; }
 .level-three .l3-experiment-suggestion .button { border-color: #bd9369; background: #fffbef; color: #754d31; font-size: 12px; white-space: normal; text-align: center; }
 .level-three .l3-experiment-suggestion > span { font-size: 11px; color: #7e6e51; line-height: 1.4; }
 .level-three .l3-experiment[data-attention=true] { animation: l3-task-attention .8s ease-in-out 3; animation-play-state: var(--prompt-play-state, running); }
 @keyframes l3-task-attention { 0%,100% { box-shadow: 0 0 0 0 #b9854e00; } 45%,55% { box-shadow: 0 0 0 4px #b9854e55, 0 0 18px #ad754325; border-color: #a76839; } }
 @keyframes l3-task-still { from,to { box-shadow: 0 0 0 3px #b9854e40; } }
 .level-three .l3-comparison-basis { display: block; color: #75664d; font-size: 11px; line-height: 1.4; margin-top: 9px; }
+.level-three .l3-comparison-aim { display: block; color: #786548; font-size: 11px; line-height: 1.4; margin-top: 7px; }
+.level-three .l3-trial-finding { border-top: 1px dashed #cdbd9c; padding: 12px 0 2px; margin-top: 10px; }
+.level-three .l3-trial-finding .eyebrow { display: block; color: #8a7758; font-size: 10px; letter-spacing: .06em; }
+.level-three .l3-trial-finding p { color: #65583e; font: 18px/1.4 var(--serif); margin-top: 6px; }
+.level-three .l3-verdict { border: 0; border-top: 1px solid #d7cbb4; padding: 18px 0 6px; margin: 0 0 12px; min-width: 0; }
+.level-three .l3-verdict legend { font: 23px/1.3 var(--serif); color: #4c4e3d; padding: 0 12px 0 0; }
+.level-three .l3-verdict > p { font-size: 12px; color: #8b7b62; margin-bottom: 12px; }
 .level-three .l3-effort-change { display: flex; justify-content: center; align-items: center; gap: 4px; color: #958b77; font-size: 11px; line-height: 1.3; min-height: 25px; margin-top: 7px; text-align: center; }
 .level-three .l3-effort-change > span { font-size: 14px; line-height: 1; }
 .level-three .l3-effort-change[data-change=more], .level-three .l3-effort-change[data-change=less] { color: #8c5835; font-weight: 700; }
@@ -324,7 +339,9 @@
 @media (max-width: 520px) {
   .level-three .l3-weight-guide { top: 6px; padding: 11px 13px; }
   .level-three .l3-experiment { padding: 15px; gap: 14px; }
-  .level-three .l3-experiment-question > p { font-size: 21px; }
+  .level-three .l3-experiment-choice legend { font-size: 21px; }
+  .level-three .l3-intent-options label, .level-three .l3-verdict-options label { width: 100%; }
+  .level-three .l3-verdict legend { font-size: 21px; }
   .level-three .l3-experiment-suggestion { align-items: flex-start; width: 100%; }
   .level-three .l3-experiment-suggestion .button { width: 100%; }
   .level-three .l3-comparison-basis { font-size: 10px; }

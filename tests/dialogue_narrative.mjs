@@ -60,9 +60,9 @@ try {
   check('All verification routes and both comparison orders describe the latest actual pattern without assuming an improvement', () => {
     for (const sequence of [[[70,20,10],[34,33,33]],[[34,33,33],[70,20,10]],[[70,20,10],[80,10,10]],[[34,33,33],[40,30,30]]]) {
       const runs=sequence.map((weights,i)=>makeRun(ids.slice(0,3),weights,i+1));
-      const plan=nextExperiment(runs);
+      const plan=nextExperiment(runs,'attention');
       runs.push(makeRun(ids.slice(0,3),plan.suggestion,3));
-      assert.ok(compareRuns(runs));
+      assert.equal(!!compareRuns(runs),runs.some(run=>isNearEven(run.weights))&&runs.some(run=>!isNearEven(run.weights)));
       const text=comparisonDialogue('Riley',runs)[0].text;
       assert.match(text,isNearEven(runs.at(-1).weights)?/Your time is shared/:/You moved your effort/);
       assert.ok(!JSON.stringify(comparisonDialogue('Riley',runs)).includes('Balancing the weights helped'));
@@ -83,7 +83,7 @@ try {
         append(request.shots.map((_,i)=>({speaker:'Alex',text:weightedSceneReply(request,i)})));
         append(talk('result','Riley',runs.length===1?'first':'different',runs));
       }
-      const plan=nextExperiment(runs);
+      const plan=nextExperiment(runs,'attention');
       {
         runs.push(makeRun(trio,plan.suggestion,3));
         append(talk('publish','Riley','different',runs));

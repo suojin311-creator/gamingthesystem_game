@@ -19,7 +19,7 @@ check visible chapter titles and compact headers in all three levels at
 
 The Level 3 prediction page and prediction/result markers have been removed.
 Forecasting which task receives effort after showing its scoring weight mostly
-repeated an already apparent relationship. Confirmed weights run directly into publication. Level 3 now uses three player-led Explore/Adjust/Verify trials, as described in [scaffolding](SCAFFOLDING.md). The comparison retains all three actual attempts.
+repeated an already apparent relationship. Confirmed weights run directly into publication. Level 3 now uses three player-led Explore/Adjust/Verify trials, with player-chosen aims and optional hints, as described in [player-led experiments](PLAYER_EXPERIMENTS.md). The comparison retains all three actual attempts.
 
 The positive-weight rule stays: each priority receives at least 1%, the total
 is exactly 100%, and a priority can reach 98% while reserving 1% for each other

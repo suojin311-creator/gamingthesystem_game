@@ -1,6 +1,6 @@
 import type { ConversationLine } from '../../shared/components/Conversation';
 import { metricDefinition, type MetricId } from '../../shared/data/metrics';
-import { BEHAVIOURS, joinNames, type LevelThreeCinematicRequest, type WeightRun } from './data';
+import { BEHAVIOURS, joinNames, type LevelThreeCinematicRequest, type SetupDecision, type WeightRun } from './data';
 import { effortAt, isNearEven, type Effort, type WeightGoal } from './weights';
 
 export type WeightPattern = 'one-higher' | 'two-higher' | 'near-even';
@@ -17,7 +17,7 @@ function priorities(run: WeightRun) {
 }
 
 /** Only observation results need a workbench exchange; operations stay visual. */
-export function workbenchDialogue(phase: string, playerName: string, _goal: WeightGoal, runs: WeightRun[]): ConversationLine[] {
+function observationDialogue(phase: string, playerName: string, _goal: WeightGoal, runs: WeightRun[]): ConversationLine[] {
   if (phase !== 'result') return [];
   const teacher = (text: string): ConversationLine => ({ speaker: 'Maya', name: playerName, text });
   const alex = (text: string): ConversationLine => ({ speaker: 'Alex', name: 'Alex', text });
@@ -34,7 +34,7 @@ export function workbenchDialogue(phase: string, playerName: string, _goal: Weig
   if (current.round === 3) {
     if (pattern === 'near-even') return [teacher('Everyone got a share. Did your reason for working change?'), alex('I covered all three requirements.'), alex('The checklist still tells me when to stop.')];
     if (runs.slice(0, 2).every(run => isNearEven(run.weights))) return [teacher(`Why did ${lead} pull you back?`), alex('That’s where the marks went.'), alex('I’m still checking what pays off.')];
-    return [teacher('What made you change which task came first?'), alex(`${lead} pays more now.`), alex('Same plan: collect the marks, then stop.')];
+    return [teacher('What guides your priorities this time?'), alex(`I still put ${lead} first.`), alex('Same plan: collect the marks, then stop.')];
   }
   if (current.kind !== 'player') {
     if (pattern === 'near-even') return [teacher('All three got time. What about going further?'), alex('I’d need a reason to keep going. 🧮'), alex('Is there another mark for that?')];
@@ -52,6 +52,35 @@ export function workbenchDialogue(phase: string, playerName: string, _goal: Weig
   const up = names(changed(1)), down = names(changed(-1));
   const question = up && down ? `Why switch effort from ${down} to ${up}?` : up ? `Why spend more time on ${up}?` : down ? `Why ease off on ${down}?` : 'New weights, same routine?';
   return [teacher(question), alex(`I’m following the rewards in ${lead}. 🧩`), alex(up || down ? `${low} got the quick version.` : 'I could keep my old shortcuts.')];
+}
+
+
+/** The teacher follows the player's question; no extra editing conversation is added. */
+export function workbenchDialogue(phase: string, playerName: string, goal: WeightGoal, runs: WeightRun[]): ConversationLine[] {
+  const lines = observationDialogue(phase, playerName, goal, runs);
+  const run = runs.at(-1);
+  if (!lines.length || !run?.intent) return lines;
+  const round = Math.min(run.round - 1, 2);
+  const low = names(run.metricIds.filter((_, i) => effortAt(run.weights, i) === 'low'));
+  let question: string;
+  if (run.intent === 'attention') question = isNearEven(run.weights)
+    ? ['All three got time. What made you stop?', 'Nobody was left out. Would you go further?', 'The tasks are covered. Why finish there?'][round]
+    : [`Why did ${low} get so little time?`, `What kept ${low} on the sidelines?`, `What still puts ${low} last?`][round];
+  else if (run.intent === 'priority') question = isNearEven(run.weights)
+    ? ['Did one task take priority, Alex?', 'How did you decide when each task was done?', 'What sets your priorities beyond this list?'][round]
+    : ['How did you choose which task came first?', lines[0].text, 'What guided your choice this time?'][round];
+  else {
+    question = ['What would make you keep exploring, Alex?', 'Any reason to go beyond those requirements?', 'What would make another question worth pursuing?'][round];
+    if (!isNearEven(run.weights)) {
+      const replies = [
+        ['I checked what earned the marks.', 'Anything extra could wait. 🛋️'],
+        ['My time still goes where the points are.', 'I’m done when the requirements are covered. 🧭'],
+        ['A new split, but I’m still chasing marks.', 'No extra credit? I’ll leave it there.'],
+      ][round];
+      return [{ ...lines[0], text: question }, ...replies.map(text => ({ speaker: 'Alex' as const, name: 'Alex', text }))];
+    }
+  }
+  return [{ ...lines[0], text: question }, ...lines.slice(1)];
 }
 
 const repeatedAction: Record<MetricId, Record<Effort, readonly [string, string]>> = {
@@ -87,13 +116,13 @@ const repeatedAction: Record<MetricId, Record<Effort, readonly [string, string]>
   },
 };
 
-const nearEvenTasks: Record<MetricId, { action: string; lines: readonly [string, string] }> = {
-  prep: { action: 'Alex checks the preparation requirements, completes the reading task and closes the material as soon as every box is ticked.', lines: ['Preparation boxes ticked. Next task!', 'Reading requirement met. Closing that one.'] },
-  part: { action: 'Alex makes the required contributions, marks participation complete and stops looking for another idea to share.', lines: ['Contribution made. That covers my mark.', 'I’ve spoken enough for the participation points.'] },
-  focus: { action: 'Alex stays on task for the required activity, checks the focus criterion and packs away the task when it is met.', lines: ['Stayed on task. That should count.', 'Focus requirement covered. I can wrap this up.'] },
-  discuss: { action: 'Alex follows the discussion criteria, ticks off the required behaviours and puts the prompt cards away.', lines: ['Used the prompts. Discussion box ticked.', 'That’s every discussion behaviour on the list.'] },
-  reflect: { action: 'Alex fills the required reflection sections, checks the rubric and closes the notebook without exploring another question.', lines: ['Every required section is filled in.', 'Reflection format checked. Ready to submit.'] },
-  peer: { action: 'Alex reads a post and writes the required suggestion, then closes the post once the response criteria are satisfied.', lines: ['Suggestion written. Reply requirement met.', 'My response ticks the boxes. On to the next job.'] },
+const nearEvenTasks: Record<MetricId, { action: string; lines: readonly [string, string, string] }> = {
+  prep: { action: 'Alex checks the preparation requirements, completes the reading task and closes the material as soon as every box is ticked.', lines: ['Preparation boxes ticked. Next task!', 'Reading requirement met. Closing that one.', 'Preparation completed. Nothing else on that list.'] },
+  part: { action: 'Alex makes the required contributions, marks participation complete and stops looking for another idea to share.', lines: ['Contribution made. That covers my mark.', 'I’ve spoken enough for the participation points.', 'Required contributions counted. I can sit back.'] },
+  focus: { action: 'Alex stays on task for the required activity, checks the focus criterion and packs away the task when it is met.', lines: ['Stayed on task. That should count.', 'Focus requirement covered. I can wrap this up.', 'My focus criterion is met. Packing up.'] },
+  discuss: { action: 'Alex follows the discussion criteria, ticks off the required behaviours and puts the prompt cards away.', lines: ['Used the prompts. Discussion box ticked.', 'That’s every discussion behaviour on the list.', 'Discussion checklist complete. Putting the prompts away.'] },
+  reflect: { action: 'Alex fills the required reflection sections, checks the rubric and closes the notebook without exploring another question.', lines: ['Every required section is filled in.', 'Reflection format checked. Ready to submit.', 'The rubric is covered. Closing my notebook.'] },
+  peer: { action: 'Alex reads a post and writes the required suggestion, then closes the post once the response criteria are satisfied.', lines: ['Suggestion written. Reply requirement met.', 'My response ticks the boxes. On to the next job.', 'Reply submitted. No more response points needed.'] },
 };
 
 export function weightedSceneAction(request: LevelThreeCinematicRequest, index: number) {
@@ -106,7 +135,7 @@ export function weightedSceneReply(request: LevelThreeCinematicRequest, index: n
   const shot = request.shots[index];
   if (isNearEven(request.runs.at(-1)!.weights)) {
     const seen = request.runs.slice(0, -1).filter(run => isNearEven(run.weights)).length;
-    return nearEvenTasks[shot.metricId].lines[Math.min(seen, 1)];
+    return nearEvenTasks[shot.metricId].lines[Math.min(seen, 2)];
   }
   const seen = request.runs.slice(0, -1).filter(run => {
     const priorIndex = run.metricIds.indexOf(shot.metricId);
@@ -115,11 +144,11 @@ export function weightedSceneReply(request: LevelThreeCinematicRequest, index: n
   return seen ? repeatedAction[shot.metricId][shot.effort][Math.min(seen - 1, 1)] : BEHAVIOURS[shot.metricId][shot.effort].line;
 }
 
-export function comparisonDialogue(playerName: string, runs: WeightRun[]) {
+export function comparisonDialogue(playerName: string, runs: WeightRun[], decision?: SetupDecision) {
   const current = runs.at(-1)!;
   return [
-    { speaker: playerName, text: isNearEven(current.weights) ? 'Your time is shared now. What are you aiming for?' : 'You moved your effort. What are you aiming for?' },
-    { speaker: 'Alex', text: 'The best score I can get.' },
-    { speaker: 'Alex', text: 'I work out what earns marks, then stop when I’ve got them.' },
+    { speaker: playerName, text: decision === 'keep' ? 'I’d keep this split for now. What would you do after meeting the requirements?' : decision === 'revise' ? 'I’d rethink this setup. What are these weights asking you to do?' : isNearEven(current.weights) ? 'Your time is shared now. What are you aiming for?' : 'You moved your effort. What are you aiming for?' },
+    { speaker: 'Alex', text: decision === 'keep' ? 'Close the book. I’ve got the marks I need.' : decision === 'revise' ? 'Find the best score for my time.' : 'The best score I can get.' },
+    { speaker: 'Alex', text: decision === 'keep' ? 'Would another question count toward my grade?' : decision === 'revise' ? 'Different percentages, same finish line: enough marks.' : 'I work out what earns marks, then stop when I’ve got them.' },
   ];
 }

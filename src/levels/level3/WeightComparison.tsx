@@ -4,6 +4,7 @@ import { metricDefinition } from '../../shared/data/metrics';
 import { EFFORT_LABELS, type WeightRun } from './data';
 import { effortAt, isNearEven } from './weights';
 import EffortDisplay from './EffortDisplay';
+import { intentLabel } from './experiments';
 
 const testName = (round: number) => round === 1 ? 'First test' : round === 2 ? 'Second test' : 'Third test';
 const intensity = { low: 0, medium: 1, high: 2 };
@@ -12,7 +13,7 @@ const CHANGE = { baseline: ['—', 'First result'], same: ['=', 'Same effort'], 
 export default function WeightComparison({ runs }: { runs: WeightRun[] }) {
   return <div className="l3-comparison" data-testid="weight-comparison">
     <table className="l3-compare-table" aria-label="Alex’s effort across all tested weights" style={{ '--trial-count': runs.length } as CSSProperties}>
-      <thead><tr><th scope="col" className="l3-compare-metric-heading">Metric</th>{runs.map((run, i) => <th scope="col" key={run.round} data-run={run.round} data-kind={run.kind} className={isNearEven(run.weights) ? 'near-even' : 'uneven'}><span className="eyebrow">{run.kind !== 'player' ? 'Reference' : testName(run.round)}</span><small>{isNearEven(run.weights) ? 'Near-even weights' : 'Uneven weights'}</small><span className="l3-comparison-basis">{i ? `Effort vs ${testName(runs[i - 1].round)}` : 'Starting observation'}</span></th>)}</tr></thead>
+      <thead><tr><th scope="col" className="l3-compare-metric-heading">Metric</th>{runs.map((run, i) => <th scope="col" key={run.round} data-run={run.round} data-kind={run.kind} className={isNearEven(run.weights) ? 'near-even' : 'uneven'}><span className="eyebrow">{run.kind !== 'player' ? 'Reference' : testName(run.round)}</span><small>{isNearEven(run.weights) ? 'Near-even weights' : 'Uneven weights'}</small>{run.intent && <span className="l3-comparison-aim">Aim: {intentLabel(run.intent)}</span>}<span className="l3-comparison-basis">{i ? `Effort vs ${testName(runs[i - 1].round)}` : 'Starting observation'}</span></th>)}</tr></thead>
       <tbody>{runs[0].metricIds.map(id => <tr key={id} data-metric={id}>
         <th scope="row"><Icon name={id} /><span>{metricDefinition(id).shortName}</span></th>
         {runs.map((run, runIndex) => {

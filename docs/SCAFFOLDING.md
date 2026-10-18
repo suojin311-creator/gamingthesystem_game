@@ -1,5 +1,7 @@
 # Continuous escalation and purposeful experiments
 
+The Level 3 prescribed verification tasks below describe v14/v15 and are superseded by [player-led experiments v16](PLAYER_EXPERIMENTS.md). The Level 2 transitions and operational guide remain current.
+
 The v13 baseline is frozen on `archive/pre-scaffolding-v13` at
 `d10e09bc7a34cae462ea594bce09f4fc8671f593` with its existing downloads.
 

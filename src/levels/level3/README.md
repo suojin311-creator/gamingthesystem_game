@@ -1,8 +1,8 @@
 # Level 3 — The Weighting Trap
 
-- `LevelThree.tsx`: chapter introduction, editable inherited three-metric selection, linked confirmation, publication, adaptive tests and compared run history.
-- `experiments.ts`: evidence-based Explore/Adjust/Verify tasks, optional editable suggestions and contextual third-test validation.
-- `ExperimentPrompt.tsx`: concise question card, three finite visible-time pulses and an explicit Apply suggested weights control with editable-value feedback.
+- `LevelThree.tsx`: chapter introduction, editable inherited three-metric selection, linked confirmation, publication, player-led tests, evidence judgment and complete run history.
+- `experiments.ts`: evidence-based Explore/Adjust/Verify tasks, player-chosen aims, optional editable examples, findings and unrestricted third-test validation.
+- `ExperimentPrompt.tsx`: compact aim choices, three finite visible-time pulses and collapsed strategy hints; applying an example still requires confirmation.
 - `WeightGuide.tsx`: four steps driven by actual slider/confirmation state; skippable and reopenable without resetting choices.
 - `weights.ts`: deterministic allocation, locked-value invariants, near-even classification and free second-split validation.
 - `dialogue.ts`: concise observation exchanges and final cinematic dialogue; editing/publication/comparison operations remain silent.
@@ -24,3 +24,5 @@ narrative adjustments, scene IDs and result payloads. The preview stops at the f
 Weights reserve at least 1% for each priority. The v12 forecast page and result markers are withdrawn: confirmed weights run directly, and the comparison retains actual observed trials.
 
 Comparison cells explicitly label First result / Same effort / More effort / Less effort. Column headings name the previous test used for comparison; weight changes alone do not become effort changes. Whole-cell highlight fills are removed.
+
+See [player-led experiments](../../../docs/PLAYER_EXPERIMENTS.md) for the v16 aim/judgment flow and nullable compared-pair completion contract. All three uneven or near-even trials can finish.

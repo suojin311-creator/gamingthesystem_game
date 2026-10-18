@@ -83,6 +83,7 @@ def choose_three(page):
 
 
 def weights_three(page, values):
+    page.get_by_role('radio',name='Give all three attention',exact=True).check()
     for index,id in enumerate(['prep','part','focus']):
         slider=page.get_by_test_id('weight-card-'+id).locator('input')
         if not slider.is_disabled():slider.evaluate('''(input,value)=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(input,value);input.dispatchEvent(new Event('input',{bubbles:true}));}''', values[index])
@@ -93,6 +94,9 @@ def weights_three(page, values):
     for _ in range(2):page.get_by_role('button',name='Continue scene',exact=True).click()
     page.get_by_role('button',name='Return to dashboard',exact=True).click()
     page.locator('.l3-results').scroll_into_view_if_needed();advance(page,12)
+    if page.locator('.l3-criteria-stop').count():
+        page.locator('.l3-criteria-stop').scroll_into_view_if_needed();advance(page,4)
+    page.locator('.l3-bottom-dialogue').scroll_into_view_if_needed();advance(page,8)
 
 
 with sync_playwright() as playwright:

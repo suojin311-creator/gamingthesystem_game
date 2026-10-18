@@ -1,14 +1,17 @@
 import { metricDefinition, type MetricId } from '../../shared/data/metrics';
 import { effortAt, isNearEven, type Effort, type Weights } from './weights';
 
-export type WeightRun = { round: number; kind: 'player' | 'balance-check' | 'contrast-check'; metricIds: MetricId[]; weights: Weights };
+export type TrialIntent = 'attention' | 'priority' | 'exploration';
+export type SetupDecision = 'keep' | 'revise';
+export type WeightRun = { round: number; kind: 'player' | 'balance-check' | 'contrast-check'; metricIds: MetricId[]; weights: Weights; intent?: TrialIntent };
 export type LevelThreeCinematicRequest = {
   sceneId: 'level3.weights' | 'level3.compare' | 'theory.reveal';
   kind: 'weights' | 'comparison' | 'theory'; playerName: string;
   runs: WeightRun[];
   shots: { sceneId: string; metricId: MetricId; weight: number; effort: Effort }[];
+  decision?: SetupDecision;
 };
-export type LevelThreeResult = { selectedMetricIds: MetricId[]; runs: WeightRun[]; compared: { nearEven: WeightRun; uneven: WeightRun } };
+export type LevelThreeResult = { selectedMetricIds: MetricId[]; runs: WeightRun[]; compared: { nearEven: WeightRun; uneven: WeightRun } | null; decision: SetupDecision };
 
 export const EFFORT_LABELS: Record<Effort, string> = { low: 'Minimum effort', medium: 'Steady effort', high: 'Intense effort' };
 export const BEHAVIOURS: Record<MetricId, Record<Effort, { action: string; line: string }>> = {
@@ -67,11 +70,11 @@ export function effortGroups(run: WeightRun) {
   }));
 }
 
-export function cinematicRequest(kind: LevelThreeCinematicRequest['kind'], playerName: string, runs: WeightRun[]): LevelThreeCinematicRequest {
+export function cinematicRequest(kind: LevelThreeCinematicRequest['kind'], playerName: string, runs: WeightRun[], decision?: SetupDecision): LevelThreeCinematicRequest {
   const run = runs[runs.length - 1];
   return { sceneId: kind === 'weights' ? 'level3.weights' : kind === 'comparison' ? 'level3.compare' : 'theory.reveal', kind, playerName,
     runs: runs.map(copyRun), shots: kind !== 'weights' ? [] : run.metricIds.map((metricId, index) => ({
       sceneId: `level3.${metricId}.${effortAt(run.weights, index)}`, metricId, weight: run.weights[index], effort: effortAt(run.weights, index),
-    })),
+    })), ...(decision ? { decision } : {}),
   };
 }

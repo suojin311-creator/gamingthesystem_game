@@ -54,29 +54,24 @@ These categories are narrative choices, not measured learning gains or losses.
 
 ## Explore, Adjust and Verify
 
-Level 3 now has exactly three player-confirmed tests. The first editor states
-“Can new weights change Alex’s goal?” The second uses the
-actual first observation to ask about neglected tasks or changing the reward
-when Alex already completed all three. Its allocation can change freely.
+Level 3 has three player-confirmed tests. Each editor asks the player to choose
+an aim: give all three attention, shift Alex’s priority, or keep Alex exploring.
+No aim is selected automatically. Choosing one preserves the current weights.
+The result's short finding and teacher question follow that chosen aim.
 
-The third task tests the explanation:
+Strategy help is collapsed under “Need a hint?”. “Apply suggested weights” only
+loads editable unconfirmed values; it never runs a trial. The optional example
+responds to the aim and avoids exact prior allocations. Players can ignore it.
 
-| First two tests | Verification task |
-| --- | --- |
-| Both uneven | Try similar shares; highest-to-lowest spread must be at most 10 points |
-| Both near-even | Try clearly different shares; spread must exceed 10 points |
-| One of each | Move reward towards a previously low-effort task; its effort band must rise in a new uneven allocation |
+Every new positive split can run, including three uneven or three near-even
+tests. Verify does not prescribe a pattern, an effort change, or a correct answer.
+Exact allocation repeats are rejected; changed weights with unchanged effort
+are accepted. Reset restores the immediately previous trial. Comparison contains
+First/Second/Third test, each `kind: 'player'`, with no system reference.
 
-`experiments.ts` supplies the one-sentence question, relevant card emphasis,
-optional starting point and task validation. “Apply suggested weights” only
-loads editable values; it clears current confirmations and never runs a trial.
-Players can use their own values. Repeating an actual prior allocation is
-rejected. Reset restores the immediately previous trial. Comparison is available
-only after the third observation and contains First/Second/Third test, all
-`kind: 'player'`. The prior two-tests-plus-reference flow is superseded.
-
-The third review has distinct teacher/Alex lines and exposes continued
-score-directed behaviour, including when effort becomes near-even.
+After comparing, the player judges whether to keep the latest split or rethink
+the setup. Both choices are accepted and the final response acknowledges that
+judgment. See [player-led experiments](PLAYER_EXPERIMENTS.md).
 
 ## First-use weight guide
 
@@ -117,11 +112,10 @@ The sequence holds while hidden or off-screen; reduced motion removes movement.
 `weightedSceneReply(request, shotIndex)` keeps repeat observations fresh and
 replays deterministic. `weightedSceneAction(request, shotIndex)` supplies the
 near-even task/criterion/stop behaviour for each metric. Custom animation hosts
-can use both helpers. Existing scene IDs, effort thresholds and result payloads
-are unchanged. The partner's finished videos remain separate.
+can use both helpers. Existing scene IDs and effort thresholds are unchanged; the contract below includes trial aims and the final judgment. The partner's finished videos remain separate.
 
-`comparisonDialogue(playerName, runs)` has three brief lines and describes the
-actual final pattern in either experiment order. Comparison trial headings and weight-pattern labels are larger: 12px on
+`comparisonDialogue(playerName, runs, decision)` has three brief lines and describes the
+player’s keep/rethink judgment without treating it as a correctness test. Comparison trial headings and weight-pattern labels are larger: 12px on
 desktop and 11px at phone widths. All authored emoji remain distinct. `tests/dialogue_narrative.mjs` checks 8,640 complete combination paths
 for repeated lines/emoji; Replay scene intentionally preserves its established
 lines. See [Level 3 focus revision](LEVEL3_FOCUS.md) for the saved baseline and
@@ -144,11 +138,13 @@ preference and any `renderLevelThreeCinematic` to Level 3. Direct hosts can pass
   sceneId: 'level3.weights' | 'level3.compare' | 'theory.reveal',
   kind: 'weights' | 'comparison' | 'theory',
   playerName: string,
+  decision?: 'keep' | 'revise',
   runs: Array<{
     round: number,
     kind: 'player' | 'balance-check' | 'contrast-check',
     metricIds: MetricId[],
-    weights: [number, number, number]
+    weights: [number, number, number],
+    intent?: 'attention' | 'priority' | 'exploration'
   }>,
   shots: Array<{
     sceneId: string, // e.g. level3.prep.high
@@ -164,10 +160,12 @@ Keep LevelThree mounted during a scene. Its completion callback returns weight
 scenes to results and advances comparison to theory; a theory callback does not
 advance to another screen. The finished opening/cinematics remain separate.
 
-`onComplete` / `onLevelThreeComplete` fires once when the comparison is read or
-its next action is clicked. It returns `selectedMetricIds`, every copied `run`
-and `compared: { nearEven, uneven }`. The compared pair remains compatible while
-the UI and all-runs payload retain all three actual tests. Completion waits for all three.
+`onComplete` / `onLevelThreeComplete` fires once on Watch Alex’s response,
+after all three observations and an explicit keep/rethink judgment. It returns
+`selectedMetricIds`, all copied `runs`, `decision: 'keep' | 'revise'` and
+`compared: { nearEven, uneven } | null`. A mixed history retains the copied pair;
+a history without both patterns returns `null`, so hosts must handle that case.
+The table and all-runs payload always retain all three actual tests.
 
 ## Lifetime and validation
 
@@ -181,7 +179,7 @@ across all three chapters; Reset weights is retained.
 `play/Level3-and-Full-game-play.zip`, containing standalone Level 3 and connected
 Levels 1–3. `play/LATEST.json` records source, build, ZIP and bundle hashes.
 `tests/release.py` verifies the actual downloads and their complete flows.
-Current focused checks are recorded in `LEVEL3_VALIDATION-v15.json`; v14 retains the preceding broader checks; older reports and
+Current checks are recorded in `LEVEL3_VALIDATION-v16.json`; v15/v14 retain the preceding broader checks; older reports and
 versioned ZIPs are historical. Managed Chromium tests exact offline HTML bytes
 through an in-memory HTTPS origin; direct file opening in the user browser and
 classroom load capacity are not claimed as tested.

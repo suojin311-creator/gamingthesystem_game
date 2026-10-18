@@ -140,3 +140,5 @@ standalone Level 3 has no inherited choices. Custom hosts can pass
 `level3.compare` → `theory.reveal`. This preview stops in the theory placeholder.
 The reserved `onDesignLab` prop is not invoked; even a duplicate final cinematic
 callback cannot advance into Design Lab. Administrator access is deferred.
+
+Level 3 trials now record the player’s experiment aim, and final requests include an optional keep/rethink `decision`. Completion waits for that judgment; `compared` can be `null` when all three actual tests have the same weight-pattern class. See [Level 3 contracts](LEVEL3_HANDOFF.md).
