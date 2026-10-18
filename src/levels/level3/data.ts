@@ -1,5 +1,5 @@
 import { metricDefinition, type MetricId } from '../../shared/data/metrics';
-import { effortAt, isNearEven, type Effort, type Weights } from './weights';
+import { effortAt, hasLowEffort, isNearEven, type Effort, type Weights } from './weights';
 
 export type TrialIntent = 'attention' | 'priority' | 'exploration';
 export type SetupDecision = 'keep' | 'revise';
@@ -14,6 +14,10 @@ export type LevelThreeCinematicRequest = {
 export type LevelThreeResult = { selectedMetricIds: MetricId[]; runs: WeightRun[]; compared: { nearEven: WeightRun; uneven: WeightRun } | null; decision?: SetupDecision };
 
 export const EFFORT_LABELS: Record<Effort, string> = { low: 'Minimum effort', medium: 'Steady effort', high: 'Intense effort' };
+export function observedStudentBehaviour(weights: Weights) {
+  return hasLowEffort(weights) ? 'Low-weight areas get less attention.' : 'Stops when the criteria are met.';
+}
+
 export const BEHAVIOURS: Record<MetricId, Record<Effort, { action: string; line: string }>> = {
   prep: {
     low: { action: 'Alex skims the reading title, then closes the page.', line: 'I’ll just do the basics.' },

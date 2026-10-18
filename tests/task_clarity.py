@@ -36,7 +36,7 @@ with sync_playwright() as p:
     set_weights(page, [70,20,10]); finish_run(page); next_trial(page)
     last = page.get_by_role('group', name='Last observation', exact=True)
     expect(last).to_be_visible()
-    expect(last.locator('.l3-stopping-reminder')).to_have_text('Stopped after earning the marks he wanted.')
+    expect(last.locator('.l3-stopping-reminder')).to_have_text('Low-weight areas get less attention.')
     for name, label in [('Preparation','Intense effort'),('Participation','Minimum effort'),('Focus','Minimum effort')]:
         expect(last).to_contain_text(name)
         expect(last).to_contain_text(label)
@@ -89,6 +89,7 @@ with sync_playwright() as p:
     last = page.get_by_role('group', name='Last observation', exact=True)
     expect(last.locator('li[data-effort=medium]')).to_have_count(3)
     expect(last.locator('.l3-stopping-reminder')).to_be_visible()
+    expect(last.locator('.l3-stopping-reminder')).to_have_text('Stops when the criteria are met.')
     expect(page.locator('.l3-experiment-question .eyebrow')).to_have_count(0)
     expect(page.locator('.l3-allocation')).to_have_count(0)
     page.locator('.l3-strategy-hint summary').click()
