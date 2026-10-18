@@ -1,163 +1,197 @@
 {
-  "validated_at_utc": "2026-10-17T15:56:48.914465+00:00",
-  "branch": "level2-dev",
-  "passed": 98,
+  "validatedAtUtc": "2026-10-18T19:37:42.453756+00:00",
+  "version": "Earlier-level follow-up v7: explicit Level 2 metric-count hypothesis and outcome; retained controls and pacing; approved Level 3 unchanged",
+  "branch": "level3-dev",
+  "passed": 29,
+  "builds": [
+    "npm run build: passed",
+    "npm run build:level1: passed",
+    "npm run build:level2: passed",
+    "npm run build:level3: passed"
+  ],
+  "approvedBaseline": {
+    "tag": "level3-approved-v20",
+    "commit": "cdcff6ed5e34b4e09bd0998788152174ec71e04e",
+    "unchangedSourcePaths": [
+      "src/levels/level3",
+      "src/levels/level1",
+      "src/shared"
+    ],
+    "sourceDiffEmpty": true
+  },
   "suites": {
-    "level2-results.json": {
-      "passed": 41,
-      "cases": [
-        "Offline direct entry and mixed evaluation",
-        "Finding precedes dialogue and next action",
-        "Guide freezes the reading sequence and restores keyboard focus",
-        "Gap view shows exactly the three unselected areas",
-        "Six-metric evaluation retains first three and adds the missing three",
-        "10 metrics automatically reveal the matching student checklist",
-        "25 metrics automatically reveal the matching student checklist",
-        "100 metrics automatically reveal the matching student checklist",
-        "Level 2 ends at weighting question with Level 3 reserved and all-English UI",
-        "Restart cancels safely or clears progress without persistent saves",
-        "Exactly-three limit, selection hint and deselect-to-swap",
-        "Trio prep+part+focus routes to visible outcome",
-        "Trio prep+part+discuss routes to mixed outcome",
-        "Trio prep+part+reflect routes to mixed outcome",
-        "Trio prep+part+peer routes to mixed outcome",
-        "Trio prep+focus+discuss routes to mixed outcome",
-        "Trio prep+focus+reflect routes to mixed outcome",
-        "Trio prep+focus+peer routes to mixed outcome",
-        "Trio prep+discuss+reflect routes to mixed outcome",
-        "Trio prep+discuss+peer routes to mixed outcome",
-        "Trio prep+reflect+peer routes to mixed outcome",
-        "Trio part+focus+discuss routes to mixed outcome",
-        "Trio part+focus+reflect routes to mixed outcome",
-        "Trio part+focus+peer routes to mixed outcome",
-        "Trio part+discuss+reflect routes to mixed outcome",
-        "Trio part+discuss+peer routes to mixed outcome",
-        "Trio part+reflect+peer routes to mixed outcome",
-        "Trio focus+discuss+reflect routes to mixed outcome",
-        "Trio focus+discuss+peer routes to mixed outcome",
-        "Trio focus+reflect+peer routes to mixed outcome",
-        "Trio discuss+reflect+peer routes to quality outcome",
-        "1366px layout, normal motion and automatic dialogue",
-        "1366px reload and restored tab start fresh",
-        "768px layout, normal motion and automatic dialogue",
-        "768px reload and restored tab start fresh",
-        "390px layout, normal motion and automatic dialogue",
-        "390px reload and restored tab start fresh",
-        "320px layout, normal motion and automatic dialogue",
-        "320px reload and restored tab start fresh",
-        "Full game carries Level 1 context and sound preference to Level 2; refresh restarts full game",
-        "No browser runtime errors across all offline playthroughs"
+    "level2-framing-results.json": {
+      "passed": 9,
+      "checks": [
+        "Level 1 retains a compact title, clean action footer, Enter submission, Shift+Enter and IME protection, the original button and three report-update pulses",
+        "Level 1 ending uses the existing brisk Level 2 pace, releases Continue with the second Alex reply and carries the actual unresolved behaviour into Level 2",
+        "After six are observed, a visible non-dialogue question and six-to-question-mark diagram frame the next experiment; it fits 1366/768/390/320px and waits for the player",
+        "One Test more metrics action runs the same mounted 10→25→100 experiment; visible 3.5s holds, anticipated 0.7s turns, hidden-page pauses, stable scroll/height and final manual Observe remain intact",
+        "The hundred-item result answers the experiment with score-chasing evidence, preserves both perspectives and leaves the standalone Level 3 action reserved",
+        "The discuss/reflect/peer route reaches the same evidence-based six-metric question after its own trio observation",
+        "The prep/reflect/peer route reaches the same evidence-based six-metric question after its own trio observation",
+        "The reduced-motion 320px route keeps all three growth states readable with stable paper height and reading position",
+        "No browser runtime errors in earlier-level controls, hypothesis framing, continuous growth or outcome feedback"
       ],
+      "timings": {
+        "level1Review": {
+          "evidence": 13120,
+          "typing": 14736,
+          "teacher": 15057,
+          "alex": 16781,
+          "last": 18186,
+          "button": 18187
+        },
+        "growth": {
+          "holdMs": 3538,
+          "turnMs": 730,
+          "before": {
+            "y": 0,
+            "h": 245
+          },
+          "after": {
+            "y": 0,
+            "h": 245
+          }
+        },
+        "phone": [
+          {
+            "y": 103,
+            "h": 255
+          },
+          {
+            "y": 103,
+            "h": 255
+          },
+          {
+            "y": 103,
+            "h": 255
+          }
+        ]
+      },
       "runtimeErrors": []
     },
-    "level2-integration-results.json": {
-      "passed": 8,
+    "level3-integration-results.json": {
+      "passed": 10,
       "checks": [
-        "Partner replaces all three scene slots; original trio, branch and custom name retained",
-        "Completion reports exact result once after final reading",
-        "Level 2 emits actual count, success, evidence and softer message cues",
-        "Final replay retains completion count and mute suppresses new cues",
-        "Restart clears the original trio and permits a new completion",
-        "Hidden tab holds metric updates and resumes them on return",
-        "Growth counter and automatic observation wait while guide is open",
-        "Complete expansion and partner-scene flow works at 320px"
+        "Opening-supplied player name reaches Level 3 labels, avatar and the three weighted partner shots",
+        "Level 3 completes once on Watch after two immutable player tests, without intent or verdict data, and preserves a real near-even/uneven comparison",
+        "Comparison leads to theory; even duplicate final callbacks stay in the placeholder and never invoke Design Lab",
+        "Real Gameplay host carries the opening name and sound preference from Level 2 into the new Level 3 chapter",
+        "Level 3 preselects the actual Level 2 trio, permits swapping, and has no player Restart control",
+        "Reloading the connected host starts fresh from its configured entry level",
+        "Hidden-page publication holds its visible-time sequence and resumes without skipping the three weights",
+        "Optional third tests preserve all actual uneven or near-even records, allow compared=null, and emit completion once with no synthetic reference or choice fields",
+        "Real-time publication and evidence arrive one at a time; Web Audio cues play and Sound off silences later updates",
+        "No browser errors in partner, chapter handoff or real-time audio checks"
       ],
       "runtimeErrors": []
-    },
-    "offline-results.json": {
-      "passed": 22,
-      "checks": [
-        "Empty selection is blocked; player interface is English without author notes",
-        "prep: correct score, story and evidence; waits for explicit continuation to Level 2",
-        "part: correct score, story and evidence; waits for explicit continuation to Level 2",
-        "focus: correct score, story and evidence; waits for explicit continuation to Level 2",
-        "discuss: correct score, story and evidence; waits for explicit continuation to Level 2",
-        "reflect: correct score, story and evidence; waits for explicit continuation to Level 2",
-        "peer: correct score, story and evidence; waits for explicit continuation to Level 2",
-        "Prediction validation: whitespace, 100-character limit, literal rendering",
-        "Restart cancellation preserves progress; confirmed restart clears only this game",
-        "One Change control replaces duplicate Back; same metric keeps prediction and a new metric clears it",
-        "Refresh starts fresh and ignores legacy progress, guide and sound preferences",
-        "Refresh during a scene returns to a new game, not the interlude",
-        "New and reopened tabs start fresh while the existing open page keeps its own run",
-        "Returning from the browser back-forward cache also starts fresh",
-        "Layout and functional flow at 1366 \u00d7 768, including touch and reduced motion",
-        "Layout and functional flow at 1024 \u00d7 768, including touch and reduced motion",
-        "Layout and functional flow at 768 \u00d7 1024, including touch and reduced motion",
-        "Layout and functional flow at 390 \u00d7 844, including touch and reduced motion",
-        "Layout and functional flow at 375 \u00d7 667, including touch and reduced motion",
-        "Layout and functional flow at 320 \u00d7 640, including touch and reduced motion",
-        "Full game works with localStorage and sessionStorage completely unavailable",
-        "No uncaught browser errors"
-      ],
-      "runtime_errors": []
-    },
-    "feedback-offline-results.json": {
-      "passed": 11,
-      "checks": [
-        "Score and management feedback advance automatically without pause controls",
-        "Actual Web Audio plays count and success cues at the increased master gain",
-        "Management emphasis ends after one cue and the score remains available",
-        "One evidence paragraph and student summary arrive together with one cue and no duplicate text or controls",
-        "Classroom evidence receives at least six seconds of visible reading time before conversation",
-        "Replies stay in the main column; both speakers receive reading time before the next message or completion",
-        "Mute suppresses all subsequent cues within the current game",
-        "Unmuting restores actual Web Audio feedback",
-        "Guide temporarily holds the reading sequence and closing it resumes automatically",
-        "Off-screen recap waits, then resumes reading and brings replies into view without visiting the sidebar",
-        "Browsers without Web Audio retain the complete visual sequence"
-      ],
-      "runtime_errors": []
-    },
-    "guide-offline-results.json": {
-      "passed": 12,
-      "checks": [
-        "1366px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
-        "1366px: guide returns for every new page and preserves in-page choices when reopened",
-        "1366px: Target 70 sits under its real marker; reopening guide retains the evaluation",
-        "960px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
-        "960px: guide returns for every new page and preserves in-page choices when reopened",
-        "960px: Target 70 sits under its real marker; reopening guide retains the evaluation",
-        "390px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
-        "390px: guide returns for every new page and preserves in-page choices when reopened",
-        "390px: Target 70 sits under its real marker; reopening guide retains the evaluation",
-        "320px: four anchored guide steps fit, trap keyboard focus, and pause dialogue",
-        "320px: guide returns for every new page and preserves in-page choices when reopened",
-        "320px: Target 70 sits under its real marker; reopening guide retains the evaluation"
-      ],
-      "runtime_errors": []
     },
     "release-results.json": {
-      "passed": 4,
+      "passed": 10,
       "checks": [
-        "ZIP integrity and byte identity with both production builds",
-        "Packaged Level2.html completes 3 \u2192 6 \u2192 10 \u2192 25 \u2192 100 offline with normal motion",
-        "Packaged Levels1-and-2.html starts at Level 1 with its guide",
+        "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
+        "The review ZIP contains separate Level 3 and connected Levels 1–3 HTMLs, identical to their tested latest packages",
+        "Packaged Level2.html completes 3 → 6 → 10 → 25 → 100 offline with normal motion",
+        "Packaged standalone Level3.html compares after two tests and can add an optional third, keeping all actual results offline",
+        "Packaged Level1.html includes the latest behaviour and two replies, stops after Level 1 and permits replay",
+        "Standalone Level 1 reload starts a fresh Level 1 run",
+        "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
+        "Packaged combined game connects Level 1 → Level 2 → playable Level 3 in one open run",
+        "Combined preview reload starts from Level 1 rather than restoring Level 2",
         "Packaged entries have no browser runtime errors"
       ],
       "runtimeErrors": []
     }
   },
   "artifacts": {
-    "dist/index.html": {
-      "sha256": "a406f9dbb48a4e27d1e0f7ff34fb305fd5c281267cdc9d209ff898259917fb21",
-      "bytes": 9799745
-    },
-    "dist-level2/index.html": {
-      "sha256": "bc6d14d3db72a51ac646ec7c48f5c4addefb9e043783981c4d8e0ad29a2842c6",
-      "bytes": 9799745
-    },
-    "play/Level2-play-v1.zip": {
-      "sha256": "6d784acbb14dc3f896e0de9d23dc10d22d66ecd8caae71560c44ef64729aaf62",
-      "bytes": 14577699
+    "sourceSha256": "d9b547d12adcfd94e81c7b1c5ddb2f55fba293f6f2c168be2c575327754f7267",
+    "entries": [
+      {
+        "archive": "Level1-play.zip",
+        "html": "Level1.html",
+        "build": "dist-level1/index.html",
+        "htmlSha256": "a63195d721a361bbd82c0fb0a7a84f2fe0286e56c595d37c9bd5c8a95ca117fb",
+        "zipSha256": "e601efea45fc8b479d260d0daa6676b9e989767418d9fc28dd612201097e3baa"
+      },
+      {
+        "archive": "Level2-play.zip",
+        "html": "Level2.html",
+        "build": "dist-level2/index.html",
+        "htmlSha256": "556729ebae2eb2cfa8c302d4867149d9b8ec3425e6c1203aeeaa0af10de83ce7",
+        "zipSha256": "b34585032800f9798867ccfb8f79dcc0ac51b125e9e94f187c877c2037f73f8b"
+      },
+      {
+        "archive": "Level3-play.zip",
+        "html": "Level3.html",
+        "build": "dist-level3/index.html",
+        "htmlSha256": "330293b556753f73701da80dc7919a1e3ba16e3f03d0b6c56ec02bb459db70de",
+        "zipSha256": "ad50234a95c86807dac94521ab30211c4004e5eef16cc1a6be8964dcd6b541e1"
+      },
+      {
+        "archive": "Full-game-play.zip",
+        "html": "Gaming-the-System.html",
+        "build": "dist/index.html",
+        "htmlSha256": "04a9f31e116271f29e6efb21d93583e6a6e222f05dd3c5aaf4453aaff838e71d",
+        "zipSha256": "ebd81484d7ad4e536179a543a7b490414a521070c0babe31ee95b66eb10684c4"
+      }
+    ],
+    "reviewBundle": {
+      "archive": "Level3-and-Full-game-play.zip",
+      "zipSha256": "f8f564c50bfa382819df7130d8ba4d00dbc4d88f838db640f5a4f5e38c4475b5",
+      "htmlSha256": {
+        "Level3/Level3.html": "330293b556753f73701da80dc7919a1e3ba16e3f03d0b6c56ec02bb459db70de",
+        "Full-game/Gaming-the-System.html": "04a9f31e116271f29e6efb21d93583e6a6e222f05dd3c5aaf4453aaff838e71d"
+      }
     }
   },
+  "artifactVerification": {
+    "play/Level1-play.zip": {
+      "bytes": 9789996,
+      "sha256": "e601efea45fc8b479d260d0daa6676b9e989767418d9fc28dd612201097e3baa",
+      "htmlMatchesBuild": true
+    },
+    "play/Level2-play.zip": {
+      "bytes": 9791130,
+      "sha256": "b34585032800f9798867ccfb8f79dcc0ac51b125e9e94f187c877c2037f73f8b",
+      "htmlMatchesBuild": true
+    },
+    "play/Level3-play.zip": {
+      "bytes": 9797865,
+      "sha256": "ad50234a95c86807dac94521ab30211c4004e5eef16cc1a6be8964dcd6b541e1",
+      "htmlMatchesBuild": true
+    },
+    "play/Full-game-play.zip": {
+      "bytes": 9811987,
+      "sha256": "ebd81484d7ad4e536179a543a7b490414a521070c0babe31ee95b66eb10684c4",
+      "htmlMatchesBuild": true
+    },
+    "play/Level3-and-Full-game-play.zip": {
+      "bytes": 19609579,
+      "sha256": "f8f564c50bfa382819df7130d8ba4d00dbc4d88f838db640f5a4f5e38c4475b5",
+      "entriesMatchIndividualBuilds": true
+    }
+  },
+  "freshness": {
+    "sourceSha256Verified": true,
+    "sourceLastModifiedAtUtc": "2026-10-18T19:15:44.598983+00:00",
+    "packagedAtUtc": "2026-10-18T19:18:53.363853+00:00",
+    "suiteCompletedAtUtc": {
+      "level2-framing-results.json": "2026-10-18T19:34:25.407176+00:00",
+      "level3-integration-results.json": "2026-10-18T19:34:33.192647+00:00",
+      "release-results.json": "2026-10-18T19:34:30.458221+00:00"
+    },
+    "allSuitesAfterCurrentSourceAndPackages": true
+  },
   "notes": [
-    "The first Level 1 regression run exposed a test focus race after closing its automatic guide. The helper now waits for the documented next-frame focus restoration before sending a keyboard action; the complete suite then passed.",
-    "The first clean dependency install could not write to the managed home npm cache. A writable /tmp cache resolved it; lockfile integrity and TLS checks stayed enabled. Both builds passed after the clean install.",
-    "The 41 real-time Level 2 offline checks and Level 1 regressions precede the final metadata correction and background-counter elapsed-time clamp. The final source passed the 8 partner integration checks; the exact packaged HTML passed the offline release flow with normal motion.",
-    "Browser-clock integration/release tests exercise contracts and the final package. The main Level 2, Level 1, feedback and guide suites use real reading intervals.",
-    "Offline tests use the exact HTML through an in-memory HTTPS route because this managed browser blocks file:// navigation. A particular user browser opening a local download was not directly tested.",
-    "Partner cinematics and opening remain placeholders or separate source. Level 3 gameplay and classroom network-load testing are outside this build."
+    "The approved Level 3 source and its preceding downloads were saved on GitHub at level3-approved-v20 before earlier-level edits. The Level 3, Level 1 and shared source folders remain byte-identical to that tag; numbered archives and historical reports are unchanged.",
+    "Only Level 2 product source changes: the six-metric observation heading asks Would more metrics help Alex learn? beside a small non-interactive 6-to-question-mark diagram. Test more metrics explicitly initiates the same continuous experiment. Growth says Testing more metrics.; the final observation answers More metrics. Still chasing marks. No extra page, mandatory choice, measured learning score or animation script is added.",
+    "The existing 10-to-25-to-100 growth keeps its counter, matrix and paper mounted. The current normal-motion timeline measured a 3538 ms completed-state hold and 730 ms anticipated turn; the paper stayed 245 px tall with unchanged scroll. At 320 px in reduced motion, all three states stayed 255 px tall at the same reading position. The next step still waits for Observe the class at 100.",
+    "Existing Level 1 fixes were verified without source changes: Enter submits a valid prediction, Shift+Enter inserts a newline, whitespace and IME composition do not submit, the button remains, update attention lasts three pulses, and the title/footer remain compact. In the measured ending, typing began 1616 ms after evidence, the teacher appeared after 321 ms, Alex after a further 1724 ms, and Continue appeared 1 ms after the last Alex reply.",
+    "The current framing suite covers visible, quality and mixed Level 2 trios, hypothesis visibility before dialogue, explicit manual continuation, layouts at 1366/768/390/320 px, hidden-page pausing, normal/reduced motion, result feedback and runtime errors. Desktop and phone screenshots were inspected.",
+    "The current Level 3 integration suite checks original trio/name/sound handoff, editable preselection, custom partner scenes, immutable observations, two-test completion and optional third records, visible-time pacing, sound and theory placeholder without Design Lab. Existing Level 3 exhaustive model checks are retained in historical v20 validation; they were not all rerun for this Level 2-only change.",
+    "The current release suite reads the actual latest ZIPs and checks standalone Level 1, 2 and 3 and connected Level 1-to-2-to-3. All four builds and five archives match the manifest. The review ZIP contains separate standalone Level 3 and full-game HTMLs from those builds.",
+    "Offline browser checks serve the exact production or packaged HTML through an in-memory HTTPS route because the managed browser blocks local file navigation. Direct opening in a specific user browser was not observed.",
+    "The teammate-authored animation scripts, scene request schema and replacement slots are unchanged. Opening-animation import and Level 1 connection remain the separate integration step. This report records 29 current checks; earlier report counts describe their historical versions."
   ]
 }

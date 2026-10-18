@@ -122,7 +122,7 @@ with sync_playwright() as p:
         page.get_by_role('button',name='Finish partner scene',exact=True).click();advance(page,14)
     scene_two();page.get_by_role('button',name='Cover the gaps',exact=True).click()
     page.get_by_role('button',name='Add remaining metrics',exact=True).click();advance(page,6);scene_two()
-    page.get_by_role('button',name='Add more metrics',exact=True).click();advance(page,30)
+    page.get_by_role('button',name='Test more metrics',exact=True).click();advance(page,30)
     scene_two()
     page.get_by_role('button',name='Continue to Level 3',exact=True).click();advance(page,8)
     expect(page.locator('.level-three')).to_have_attribute('data-phase','intro')

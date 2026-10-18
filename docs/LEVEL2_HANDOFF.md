@@ -43,13 +43,20 @@ right/wrong answer, theory explanation or Level 3 weighting is introduced.
 
 After the first observation, Cover the gaps displays the exact other three.
 Adding them gives six green ticks, followed by the shared six-metric scene.
-One Add more metrics action runs the 10 → 25 → 100 sequence. Each milestone
+The six-metric observation asks **Would more metrics help Alex learn?** as the
+page heading, with a non-interactive **6 → ?** paper diagram. This is visible
+independently of the teacher/Alex exchange. Its **Test more metrics** action
+appears with the existing final reply and waits for the player; the heading
+replaces Look a little closer rather than adding a new page or paragraph.
+One Test more metrics action runs the 10 → 25 → 100 sequence. Each milestone
 changes the count/matrix and reveals a short illustrated checklist action. After
 the 10- and 25-item actions finish, each holds for 3.5 visible seconds before
 a 0.7-second paper turn. A persistent counter, matrix and paper surface prevents page replacement; the next milestone lights before the count changes. Internal transitions retain scroll position and paper height. Hidden/off-screen time does not consume either hold or turn. No repeated Add
 click is required.
 At 100, Observe the class plays the final scene. The last dashboard stays at
-100 with qualitative evidence and the question about relative importance.
+100 with **More metrics. Still chasing marks.**, answering the preceding
+experiment through the observed checklist behaviour. The existing final
+dialogue asks about relative importance as the bridge into Level 3.
 Continue to Level 3 is enabled by the combined host's optional onContinue
 callback. The standalone Level 2 entry leaves it reserved and disabled.
 
@@ -181,3 +188,13 @@ The player and Alex dialogue uses the approved [Dialogue review](DIALOGUE_REVIEW
 Equivalent typography now shares responsive tokens with Levels 1 and 3, including 16px ordinary metric names. There is no player Restart button or dialog; administrator functionality is deferred. See [Typography](TYPOGRAPHY.md).
 
 The added v12 peer demonstration, generated peer narrative and `peerInteraction` field are withdrawn. The original classroom placeholder/dialogue and request schema are restored. The user’s existing finished-animation script owns classroom events. A custom `renderCinematic` replaces the entire placeholder; no second peer panel is rendered before or after it.
+
+## Current checkpoint
+
+The approved Level 3 is frozen at Git tag `level3-approved-v20`
+(`cdcff6ed5e34b4e09bd0998788152174ec71e04e`). This framing release changes only
+Level 2's six-metric question, small diagram, expansion action and growth/final
+headings. It preserves the approved Level 3 folder, Level 1, shared components,
+all partner scene scripts/IDs and timing logic. See
+[Level 2 framing](LEVEL2_FRAMING.md) and
+[LEVEL2_VALIDATION-v7.json](LEVEL2_VALIDATION-v7.json).

@@ -270,3 +270,16 @@ html:has(.l2-growth-sequence), .level-two:has(.l2-growth-sequence) { overflow-an
   .level-two .l2-growth-sequence *, .level-two .l2-growth-sequence *::before, .level-two .l2-growth-sequence *::after { animation: none !important; transition: none !important; transform: none !important; }
   .level-two .l2-growth-sequence[data-state=leaving] .l2-growth-action { opacity: .6; }
 }
+
+/* Carry a concrete question from the six-metric result into the expansion. */
+.level-two .l2-growth-question { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.level-two .l2-growth-question h2 { min-width: 0; }
+.level-two .l2-growth-proposal { display: flex; align-items: center; gap: 9px; color: #a17b4f; flex-shrink: 0; }
+.level-two .l2-growth-proposal > .icon { width: 20px; height: 20px; }
+.level-two .l2-growth-proposal > span { position: relative; display: grid; place-items: center; width: 38px; height: 47px; background: #fff9ec; border: 1px solid #c6b28d; border-radius: 3px; box-shadow: 2px 3px 0 #e2d4b9; }
+.level-two .l2-growth-proposal > span > .icon { width: 18px; height: 18px; opacity: .32; position: absolute; top: 4px; left: 4px; }
+.level-two .l2-growth-proposal b { font: 27px/1 var(--serif); padding-top: 9px; color: #86633e; }
+@media (max-width: 520px) {
+  .level-two .l2-growth-question { align-items: flex-start; flex-direction: column; gap: 12px; }
+  .level-two .l2-growth-proposal { align-self: flex-end; }
+}
