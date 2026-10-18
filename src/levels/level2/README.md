@@ -17,3 +17,5 @@ The optional `previousMetricId` prop carries the prior choice in memory.
 
 See [LEVEL2_HANDOFF.md](../../../docs/LEVEL2_HANDOFF.md) for cinematic IDs,
 completion data and boundaries. The combined host enables Continue to Level 3 through the optional onContinue callback. The standalone Level 2 entry leaves that callback absent and stops here.
+
+The six-metric placeholder uses `PeerPractice` with three shared-tool/classmate beats. One Add more metrics action runs 10 → 25 → 100 through `ChecklistGrowth`; the final Observe action stays explicit. See docs/LEARNING_OPTIMIZATIONS.md.

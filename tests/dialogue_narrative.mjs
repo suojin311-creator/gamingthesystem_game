@@ -18,7 +18,7 @@ try {
   const makeRun = (metricIds, weights, round = 1, kind = 'player') => ({ round, kind, metricIds, weights });
   const splitCases = [[80,10,10],[70,20,10],[20,70,10],[45,45,10],[45,10,45],[46,43,11],[34,33,33],[40,30,30],[31,35,34]];
   check('Every valid integer split uses the 10-point near-even boundary and the correct one/two higher-reward family', () => {
-    for (let a = 0; a <= 100; a++) for (let b = 0; b <= 100-a; b++) {
+    for (let a = 1; a <= 98; a++) for (let b = 1; b < 100-a; b++) {
       const w = [a,b,100-a-b];
       const expected = isNearEven(w) ? 'near-even' : [...w].sort((a,b)=>a-b)[1] >= 34 ? 'two-higher' : 'one-higher';
       assert.equal(weightPattern(makeRun(ids.slice(0,3), w)), expected);

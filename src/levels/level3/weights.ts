@@ -4,12 +4,13 @@ export type WeightGoal = 'first' | 'different';
 export type Effort = 'low' | 'medium' | 'high';
 export const EVEN_WEIGHTS: Weights = [34, 33, 33];
 export const CONTRAST_WEIGHTS: Weights = [70, 20, 10];
-export const MIN_WEIGHT = 0;
+export const MIN_WEIGHT = 1;
+export const MAX_WEIGHT = 100 - MIN_WEIGHT * 2;
 export const NEAR_EVEN_SPREAD = 10;
 
 export const spread = (weights: Weights) => Math.max(...weights) - Math.min(...weights);
 export const isNearEven = (weights: Weights) => spread(weights) <= NEAR_EVEN_SPREAD;
-export const validWeights = (weights: Weights) => weights.length === 3 && weights.every(value => Number.isInteger(value) && value >= MIN_WEIGHT && value <= 100) && weights.reduce((sum, value) => sum + value, 0) === 100;
+export const validWeights = (weights: Weights) => weights.length === 3 && weights.every(value => Number.isInteger(value) && value >= MIN_WEIGHT && value <= MAX_WEIGHT) && weights.reduce((sum, value) => sum + value, 0) === 100;
 
 /** Integer percentages keep the total exact; a one-point remainder goes in card order. */
 export function allocateWeight(weights: Weights, confirmed: Confirmed, index: number, requested: number): Weights {

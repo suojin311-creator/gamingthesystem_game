@@ -1,6 +1,7 @@
 import type { ConversationLine } from '../../shared/components/Conversation';
 import { METRIC_CATALOG, metricDefinition, type MetricId } from '../../shared/data/metrics';
 import { classifyTrio, type LevelTwoCinematicRequest } from './data';
+import { PEER_PRACTICE } from './peerPractice';
 
 const names = (ids: readonly MetricId[]) => new Intl.ListFormat('en', { style: 'long', type: 'conjunction' }).format(ids.map(id => metricDefinition(id).shortName));
 
@@ -29,6 +30,6 @@ export function classroomDialogue(request: LevelTwoCinematicRequest): { speaker:
       case 'mixed': return [alex(`${tracked}—that’s my list done!`), teacher('How did you choose where to spend your time?'), alex('The list told me what mattered for my marks.')];
     }
   }
-  if (request.kind === 'six') return [alex('Six metrics, six green ticks! I’ve got everything covered!'), teacher('But what did you actually learn?'), alex('Well... I learned exactly how to meet the criteria!')];
+  if (request.kind === 'six') return PEER_PRACTICE.map(({ speaker, text }) => ({ speaker, text }));
   return [teacher('A hundred ticks, and you’re racing through the checklist.'), teacher('Adding requirements hasn’t changed what you’re chasing.')];
 }

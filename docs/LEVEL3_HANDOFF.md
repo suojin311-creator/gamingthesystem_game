@@ -17,7 +17,7 @@ category. See [visual operations](VISUAL_PLAY.md).
 
 ## Tests and observations
 
-- Three integer weights total exactly 100%, each allowed from 0–100%.
+- Three positive integer weights total exactly 100%, each at least 1% and at most 98%. Native and accessible slider bounds reserve a minimum of 1% for every other unlocked priority; publication rejects zero weights.
 - Moving an unlocked slider divides the remainder among other unlocked sliders.
   Confirmed values stay locked, and a one-point remainder follows card order.
 - Confirm any first card, then adjust either remaining card. Confirming either
@@ -25,6 +25,7 @@ category. See [visual operations](VISUAL_PLAY.md).
   The 80/10/10 → 80/15/5 case works in every confirmation order.
 - Reset weights resets only the current allocation. It sits below the allocation
   bar, above the action row; there is no player Restart-level control or dialog.
+- After confirmation, Make a prediction opens three cards. Players select one or more expected highest-effort priorities before Run evaluation; each system reference also requests a fresh prediction. Result rows align Your prediction with actual qualitative effort and label tied highest bands. Forecasts do not change outcomes or satisfaction.
 - Publication ticks the three weights and waits for Observe the class.
   Management satisfaction starts at Level 2’s final value and rises a little
   after each completed publication, irrespective of the chosen split. The small
@@ -50,7 +51,7 @@ category. See [visual operations](VISUAL_PLAY.md).
 
 Near-even means highest minus lowest at most **10 percentage points**, including
 10. Thus 38/33/29 and 40/30/30 qualify; 40/31/29 does not. Near-even produces three
-medium story shots. Otherwise 0–33% is low, 34–66% medium and 67–100% high effort.
+medium story shots. Among valid weights, 1–33% is low, 34–66% medium and 67–98% high effort.
 These categories are narrative choices, not measured learning gains or losses.
 
 ## Free second attempt and a missing reference
@@ -155,6 +156,12 @@ there is no persistence or administrator/login implementation. Hidden tabs and
 off-screen timed information hold their remaining delay. The Level 1 guide also
 holds that level’s pending information. Player Restart controls are removed
 across all three chapters; Reset weights is retained.
+
+`WeightRun` now accepts optional `predictedMetricIds: MetricId[]`. Every internal
+run includes a player-selected forecast, including reference tests. Copied runs,
+partner scene requests, compared snapshots and completion results copy this
+array independently. Older external runs may omit it. See
+[learning-focused gameplay](LEARNING_OPTIMIZATIONS.md).
 
 `npm run package:previews` builds all four entries plus
 `play/Level3-and-Full-game-play.zip`, containing standalone Level 3 and connected

@@ -67,10 +67,9 @@ def finish_two(page):
     page.get_by_role('button', name='Add remaining metrics', exact=True).click()
     advance(page, 6)
     scene(page)
-    for count in [10, 25, 100]:
-        page.get_by_role('button', name='Add more metrics', exact=True).click()
-        advance(page)
-        expect(page.locator('.l2-reported-count')).to_have_text(str(count))
+    page.get_by_role('button', name='Add more metrics', exact=True).click()
+    advance(page, 30)
+    expect(page.locator('.l2-reported-count')).to_have_text('100')
     scene(page, lines=2)
 
 
@@ -88,6 +87,8 @@ def weights_three(page, values):
         slider=page.get_by_test_id('weight-card-'+id).locator('input')
         if not slider.is_disabled():slider.evaluate('''(input,value)=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(input,value);input.dispatchEvent(new Event('input',{bubbles:true}));}''', values[index])
         if page.get_by_test_id('confirm-'+id).is_enabled(): page.get_by_test_id('confirm-'+id).click()
+    page.get_by_role('button',name='Make a prediction',exact=True).click()
+    page.get_by_test_id('predict-prep').click()
     page.get_by_role('button',name='Run evaluation',exact=True).click()
     page.locator('.l3-publish').scroll_into_view_if_needed();advance(page,5)
     page.get_by_role('button',name='Observe the class',exact=True).click()
@@ -121,11 +122,10 @@ with sync_playwright() as playwright:
     page.get_by_role('button', name='Add remaining metrics', exact=True).click()
     advance(page, 6)
     scene(page)
-    for count in [10, 25, 100]:
-        page.get_by_role('button', name='Add more metrics', exact=True).click()
-        advance(page)
-        expect(page.locator('.l2-reported-count')).to_have_text(str(count))
-        expect(page.locator('.l2-matrix [data-active=true]')).to_have_count(count)
+    page.get_by_role('button', name='Add more metrics', exact=True).click()
+    advance(page, 30)
+    expect(page.locator('.l2-reported-count')).to_have_text('100')
+    expect(page.locator('.l2-matrix [data-active=true]')).to_have_count(100)
     scene(page, lines=2)
     expect(page.get_by_role('button', name='Continue to Level 3', exact=True)).to_be_disabled()
     expect(page.get_by_role('button', name='Guide', exact=True)).to_have_count(0)

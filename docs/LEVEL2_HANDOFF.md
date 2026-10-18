@@ -43,8 +43,14 @@ right/wrong answer, theory explanation or Level 3 weighting is introduced.
 
 After the first observation, Cover the gaps displays the exact other three.
 Adding them gives six green ticks, followed by the shared six-metric scene.
-The player then adds more requirements: 6 → 10 → 25 → 100. Each increase first
-changes the count and matrix, then automatically reveals Alex's checklist.
+Its three-beat illustration shows Alex sharing a scoring phrase, a classmate
+copying it and asking a content question, then both returning to the scored
+criterion while that question remains open. `level2.six` supplies optional
+`peerInteraction` action/text beats for the finished partner animation.
+After six, one Add more metrics action runs the continuous 10 → 25 → 100
+sequence. Each milestone changes the count and matrix, then reveals one short
+illustrated action: checking boxes, reusing an answer, then doing just enough.
+The first two advance after visible-time holds; no repeated Add click is needed.
 At 100, Observe the class plays the final scene. The last dashboard stays at
 100 with qualitative evidence and the question about relative importance.
 Continue to Level 3 is enabled by the combined host's optional onContinue

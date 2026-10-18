@@ -1,7 +1,7 @@
 import { metricDefinition, type MetricId } from '../../shared/data/metrics';
 import { CONTRAST_WEIGHTS, EVEN_WEIGHTS, effortAt, isNearEven, type Effort, type Weights } from './weights';
 
-export type WeightRun = { round: number; kind: 'player' | 'balance-check' | 'contrast-check'; metricIds: MetricId[]; weights: Weights };
+export type WeightRun = { round: number; kind: 'player' | 'balance-check' | 'contrast-check'; metricIds: MetricId[]; weights: Weights; predictedMetricIds?: MetricId[] };
 export type LevelThreeCinematicRequest = {
   sceneId: 'level3.weights' | 'level3.compare' | 'theory.reveal';
   kind: 'weights' | 'comparison' | 'theory'; playerName: string;
@@ -45,7 +45,15 @@ export const BEHAVIOURS: Record<MetricId, Record<Effort, { action: string; line:
 };
 
 export function copyRun(run: WeightRun): WeightRun {
-  return { ...run, metricIds: [...run.metricIds], weights: [...run.weights] };
+  return { ...run, metricIds: [...run.metricIds], weights: [...run.weights], ...(run.predictedMetricIds ? { predictedMetricIds: [...run.predictedMetricIds] } : {}) };
+}
+
+/** Compare the qualitative effort actually shown, including ties in the same band. */
+export function mostEffortIds(run: WeightRun): MetricId[] {
+  const rank = { low: 0, medium: 1, high: 2 };
+  const efforts = run.metricIds.map((_, index) => rank[effortAt(run.weights, index)]);
+  const highest = Math.max(...efforts);
+  return run.metricIds.filter((_, index) => efforts[index] === highest);
 }
 
 export function compareRuns(runs: WeightRun[]) {

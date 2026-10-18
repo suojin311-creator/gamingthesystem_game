@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { allocateWeight, canRun, confirmWeight, effortAt, goalMet, isNearEven, maximumWeight, spread, validWeights } from '../src/levels/level3/weights.ts';
+import { allocateWeight, canRun, confirmWeight, effortAt, goalMet, isNearEven, maximumWeight, spread, validWeights, MIN_WEIGHT, MAX_WEIGHT } from '../src/levels/level3/weights.ts';
 
 const checks = [];
 const check = (name, run) => { run(); checks.push(name); console.log('PASS', name); };
-check('Every possible integer split preserves total 100, range 0–100 and deterministic effort', () => {
-  for (let a = 0; a <= 100; a++) for (let b = 0; b <= 100 - a; b++) {
+check('Every possible integer split preserves total 100, range 1–98 and deterministic effort', () => {
+  for (let a = 1; a <= 98; a++) for (let b = 1; b < 100 - a; b++) {
     const weights = [a, b, 100 - a - b];
     assert.ok(validWeights(weights));
     assert.equal(isNearEven(weights),Math.max(...weights)-Math.min(...weights)<=10);
@@ -38,19 +38,19 @@ check('Both equal remaining sliders can move in either direction before confirma
   const weights=[80,10,10],locked=[true,false,false];
   assert.deepEqual(allocateWeight(weights,locked,1,15),[80,15,5]);
   assert.deepEqual(allocateWeight(weights,locked,2,15),[80,5,15]);
-  assert.deepEqual(allocateWeight(weights,locked,1,0),[80,0,20]);
-  assert.deepEqual(allocateWeight(weights,locked,2,20),[80,0,20]);
+  assert.deepEqual(allocateWeight(weights,locked,1,0),[80,1,19]);
+  assert.deepEqual(allocateWeight(weights,locked,2,20),[80,1,19]);
   assert.deepEqual(weights,[80,10,10]);
 });
-check('Available bounds clamp safely, including zero, without changing locked weights or snapshots', () => {
+check('Available bounds clamp safely, reserving one percent, without changing locked weights or snapshots', () => {
   const old=[70,20,10];
-  assert.deepEqual(allocateWeight(old,[true,false,false],1,80),[70,30,0]);
-  assert.equal(maximumWeight(old,[true,false,false],1),30);
-  assert.deepEqual(allocateWeight([34,33,33],[false,false,false],0,-100),[0,50,50]);
-  assert.deepEqual(allocateWeight([34,33,33],[false,false,false],0,100),[100,0,0]);
+  assert.deepEqual(allocateWeight(old,[true,false,false],1,80),[70,29,1]);
+  assert.equal(maximumWeight(old,[true,false,false],1),29);
+  assert.deepEqual(allocateWeight([34,33,33],[false,false,false],0,-100),[1,50,49]);
+  assert.deepEqual(allocateWeight([34,33,33],[false,false,false],0,100),[98,1,1]);
   assert.deepEqual(old,[70,20,10]);
   assert.deepEqual(allocateWeight(old,[false,false,false],0,NaN),old);
-  assert.deepEqual(allocateWeight([100,0,0],[true,false,false],1,20),[100,0,0]);
+  assert.deepEqual(allocateWeight([98,1,1],[true,false,false],1,20),[98,1,1]);
 });
 check('Near-even accepts gaps through 10 points inclusively, rejects 11, and produces three medium shots', () => {
   for (const weights of [[36,33,31],[37,33,30],[38,33,29],[40,30,30]]) {
@@ -68,7 +68,11 @@ check('Near-even accepts gaps through 10 points inclusively, rejects 11, and pro
 check('Run requires all three confirmed weights (including the linked pair) and a valid complete allocation', () => {
   for (const confirmed of [[false,false,false], [true,true,false], [true,false,true], [false,true,true]]) assert.ok(!canRun([34,33,33], confirmed, [34,33,33], 'first'));
   assert.ok(canRun([70,20,10], [true,true,true], [34,33,33], 'first'));
-  assert.ok(canRun([100,0,0], [true,true,true], [34,33,33], 'first'));
+  assert.ok(!canRun([100,0,0], [true,true,true], [34,33,33], 'first'));
+  assert.ok(!canRun([61,39,0], [true,true,true], [34,33,33], 'first'));
+  assert.ok(canRun([98,1,1], [true,true,true], [34,33,33], 'first'));
+  assert.equal(MIN_WEIGHT,1);assert.equal(MAX_WEIGHT,98);
+  assert.deepEqual(allocateWeight([61,20,19],[true,false,false],1,39),[61,38,1]);
   assert.ok(canRun([90,5,5], [true,true,true], [34,33,33], 'first'));
   for (const weights of [[30,30,30], [-1,51,50], [101,0,-1], [33.5,33.5,33]]) assert.ok(!validWeights(weights));
 });
