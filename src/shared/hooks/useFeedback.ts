@@ -1,9 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-export type Cue = 'tick' | 'report' | 'evidence' | 'message';
+export type Cue = 'tick' | 'report' | 'evidence' | 'message' | 'paper' | 'chapter';
 
 // One in-memory preference per open game, shared across level mounts.
 let pageMuted = false;
+// Keep the gesture-unlocked context across chapters. Each unmount still stops
+// its voices; retaining a silent context avoids requiring a second audio gesture.
+let pageAudio: AudioContext | null = null;
+let pageMaster: GainNode | null = null;
 const muteSubscribers = new Set<(muted: boolean) => void>();
 function setPageMuted(value: boolean) {
   pageMuted = value;
@@ -14,9 +18,7 @@ export function useFeedback() {
   const [muted, setMuted] = useState(pageMuted);
   const [available, setAvailable] = useState(typeof window.AudioContext === 'function');
   const mutedRef = useRef(muted);
-  const context = useRef<AudioContext | null>(null);
-  const master = useRef<GainNode | null>(null);
-  const voices = useRef(new Set<OscillatorNode>());
+  const voices = useRef(new Set<OscillatorNode | AudioBufferSourceNode>());
 
   const stop = useCallback(() => {
     voices.current.forEach(voice => { try { voice.stop(); } catch { /* Already ended. */ } });
@@ -26,35 +28,53 @@ export function useFeedback() {
   const unlock = useCallback(() => {
     if (mutedRef.current || typeof window.AudioContext !== 'function') return;
     try {
-      if (!context.current) {
-        context.current = new AudioContext();
-        master.current = context.current.createGain();
-        master.current.gain.value = 0.13;
-        master.current.connect(context.current.destination);
+      if (!pageAudio || pageAudio.state === 'closed') {
+        pageAudio = new AudioContext();
+        pageMaster = pageAudio.createGain();
+        pageMaster.gain.value = 0.13;
+        pageMaster.connect(pageAudio.destination);
       }
-      if (context.current.state === 'suspended') void context.current.resume().catch(() => setAvailable(false));
+      if (pageAudio.state === 'suspended') void pageAudio.resume().catch(() => setAvailable(false));
     } catch { setAvailable(false); }
   }, []);
 
   const play = useCallback((cue: Cue) => {
-    const audio = context.current;
-    if (mutedRef.current || !audio || audio.state !== 'running' || !master.current || document.hidden) return;
-    const notes: Record<Cue, number[]> = {
+    const audio = pageAudio;
+    if (mutedRef.current || !audio || audio.state !== 'running' || !pageMaster || document.hidden) return;
+    if (cue === 'paper') {
+      const noise = audio.createBuffer(1, Math.ceil(audio.sampleRate * .24), audio.sampleRate);
+      const samples = noise.getChannelData(0);
+      for (let index = 0; index < samples.length; index++) samples[index] = Math.random() * 2 - 1;
+      const source = audio.createBufferSource();
+      const filter = audio.createBiquadFilter();
+      const envelope = audio.createGain();
+      source.buffer = noise;
+      filter.type = 'bandpass'; filter.frequency.value = 1100; filter.Q.value = .7;
+      envelope.gain.setValueAtTime(0, audio.currentTime);
+      envelope.gain.linearRampToValueAtTime(.42, audio.currentTime + .035);
+      envelope.gain.exponentialRampToValueAtTime(.001, audio.currentTime + .23);
+      source.connect(filter); filter.connect(envelope); envelope.connect(pageMaster);
+      voices.current.add(source);
+      source.onended = () => { voices.current.delete(source); source.disconnect(); filter.disconnect(); envelope.disconnect(); };
+      source.start();
+      return;
+    }
+    const notes: Record<Exclude<Cue, 'paper'>, number[]> = {
       tick: [420], report: [523.25, 659.25, 783.99],
-      evidence: [360], message: [600],
+      evidence: [360], message: [600], chapter: [196, 174.61],
     };
     notes[cue].forEach((frequency, index) => {
       const oscillator = audio.createOscillator();
       const envelope = audio.createGain();
-      const when = audio.currentTime + index * 0.115;
-      const length = cue === 'tick' ? 0.045 : cue === 'message' ? 0.075 : 0.21;
+      const when = audio.currentTime + index * (cue === 'chapter' ? .18 : .115);
+      const length = cue === 'chapter' ? .48 : cue === 'tick' ? 0.045 : cue === 'message' ? 0.075 : 0.21;
       oscillator.type = 'sine';
       oscillator.frequency.setValueAtTime(frequency, when);
       envelope.gain.setValueAtTime(0, when);
-      envelope.gain.linearRampToValueAtTime(cue === 'tick' ? 0.35 : cue === 'message' ? 0.15 : 0.7, when + 0.008);
+      envelope.gain.linearRampToValueAtTime(cue === 'chapter' ? .28 : cue === 'tick' ? 0.35 : cue === 'message' ? 0.15 : 0.7, when + (cue === 'chapter' ? .04 : .008));
       envelope.gain.exponentialRampToValueAtTime(0.001, when + length);
       oscillator.connect(envelope);
-      envelope.connect(master.current!);
+      envelope.connect(pageMaster!);
       voices.current.add(oscillator);
       oscillator.onended = () => { voices.current.delete(oscillator); oscillator.disconnect(); envelope.disconnect(); };
       oscillator.start(when);
@@ -94,10 +114,6 @@ export function useFeedback() {
     return () => {
       document.removeEventListener('visibilitychange', onVisibility);
       stop();
-      const old = context.current;
-      context.current = null;
-      master.current = null;
-      if (old && old.state !== 'closed') void old.close();
     };
   }, [stop]);
 

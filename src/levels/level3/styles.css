@@ -25,15 +25,6 @@
 .level-three .l3-stepper .current::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 12%; height: 2px; background: #ad5941; }
 .level-three .l3-stepper .done { color: #5b6d54; }
 .level-three .l3-stepper .done > span { border-color: #aab59b; background: #edf0e5; }
-.level-three .l3-intro { max-width: 900px; min-height: 420px; margin: auto; padding: 40px 35px 28px; animation: panel-arrive .3s ease-out; }
-.level-three .l3-intro > h2 { color: #ad5941; font-size: 12px; letter-spacing: .16em; }
-.level-three .l3-intro > .conversation { padding: 30px 0; min-height: 235px; gap: 24px; }
-.level-three .l3-intro .dialogue-character { max-width: 92%; }
-.level-three .l3-intro .speech-bubble { max-width: 660px; padding: 13px 18px; }
-.level-three .l3-intro .speech-bubble p { font-size: var(--chapter-dialogue-size); }
-.level-three .l3-intro .speaker-name { font-size: 11px; }
-.level-three .l3-intro .avatar { width: 38px; height: 38px; font-size: 26px; }
-.level-three .l3-intro-actions { display: flex; justify-content: flex-end; min-height: 42px; margin-top: 12px; }
 .level-three .l3-body { min-height: 460px; }
 .level-three .l3-with-perspectives { display: grid; grid-template-columns: minmax(0, 1fr) 238px; }
 .level-three .l3-decision { padding: 25px 30px 0; display: flex; flex-direction: column; min-width: 0; min-height: 460px; animation: panel-arrive .25s ease-out; }
@@ -169,11 +160,6 @@
   .level-three .l3-stepper { padding: 0 10px; }
   .level-three .l3-stepper li { flex-direction: column; justify-content: center; gap: 5px; text-align: center; font-size: var(--step-label-size); }
   .level-three .l3-stepper .current::after { right: 0; }
-  .level-three .l3-intro { padding: 28px 17px 22px; min-height: 430px; }
-  .level-three .l3-intro .dialogue-character { max-width: 100%; gap: 9px; }
-  .level-three .l3-intro .avatar { width: 30px; height: 30px; font-size: 22px; }
-  .level-three .l3-intro .speech-bubble { padding: 11px 13px; }
-  .level-three .l3-intro .speech-bubble p { font-size: var(--chapter-dialogue-size); }
   .level-three .l3-decision { padding: 22px 16px 0; }
   .level-three .l3-weight-grid { grid-template-columns: 1fr; }
   .level-three .l3-weight-card { display: grid; grid-template-columns: minmax(0, 1fr) 75px; gap: 10px; padding: 16px; }

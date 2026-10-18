@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getMetric } from './levels/level1/metrics';
 import LevelOne, { type LevelOneProps, type LevelOneResult } from './levels/level1/LevelOne';
 import LevelTwo, { type LevelTwoProps } from './levels/level2/LevelTwo';
 import type { LevelTwoResult } from './levels/level2/data';
@@ -29,6 +30,6 @@ export default function Gameplay({ playerName, initialLevel = 1, renderLevelOneC
     return () => window.removeEventListener('pageshow', fresh);
   }, [initialLevel]);
   if (level === 1) return <LevelOne playerName={playerName} renderCinematic={renderLevelOneCinematic} onComplete={result => { setPreviousResult(result); onLevelOneComplete?.(result); }} onContinue={() => { setLevel(2); window.scrollTo(0, 0); }} />;
-  if (level === 2) return <LevelTwo playerName={playerName} previousMetricId={previousResult?.metricId} renderCinematic={renderLevelTwoCinematic} onComplete={onLevelTwoComplete} onContinue={result => { setPreviousTwoResult(result); setLevel(3); window.scrollTo(0, 0); }} />;
+  if (level === 2) return <LevelTwo playerName={playerName} previousMetricId={previousResult?.metricId} previousObservation={previousResult ? getMetric(previousResult.metricId)?.studentBehaviour : undefined} renderCinematic={renderLevelTwoCinematic} onComplete={onLevelTwoComplete} onContinue={result => { setPreviousTwoResult(result); setLevel(3); window.scrollTo(0, 0); }} />;
   return <LevelThree playerName={playerName} initialMetricIds={previousTwoResult?.selectedMetricIds} renderCinematic={renderLevelThreeCinematic} onComplete={onLevelThreeComplete} onDesignLab={onDesignLab} />;
 }

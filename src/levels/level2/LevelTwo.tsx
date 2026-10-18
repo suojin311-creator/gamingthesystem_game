@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { METRIC_CATALOG, metricDefinition, type MetricId } from '../../shared/data/metrics';
 import Icon from '../../shared/components/Icon';
 import CharacterPortrait from '../../shared/components/CharacterPortrait';
+import ChapterTransition from '../../shared/components/ChapterTransition';
 import { observationDialogue } from './dialogue';
 import { useFeedback } from '../../shared/hooks/useFeedback';
 import { useVisibleDelay } from '../../shared/hooks/useVisibleDelay';
@@ -18,6 +19,7 @@ type Phase = 'intro' | 'choose' | 'evaluate' | 'scene' | 'observe' | 'gaps' | 'c
 export type LevelTwoProps = {
   playerName?: string;
   previousMetricId?: MetricId;
+  previousObservation?: string;
   renderCinematic?: (request: LevelTwoCinematicRequest, onComplete: () => void) => ReactNode;
   onComplete?: (result: LevelTwoResult) => void;
   onContinue?: (result: LevelTwoResult) => void;
@@ -25,7 +27,7 @@ export type LevelTwoProps = {
 const ALL_IDS = METRIC_CATALOG.map(metric => metric.id);
 const STAGES = ['Choose three', 'Cover the gaps', 'Keep adding'];
 
-export default function LevelTwo({ playerName: suppliedName, previousMetricId, renderCinematic, onComplete, onContinue }: LevelTwoProps) {
+export default function LevelTwo({ playerName: suppliedName, previousMetricId, previousObservation, renderCinematic, onComplete, onContinue }: LevelTwoProps) {
   const playerName = resolvePlayerName(suppliedName);
   const [phase, setPhase] = useState<Phase>('intro');
   const [selected, setSelected] = useState<MetricId[]>([]);
@@ -160,18 +162,10 @@ export default function LevelTwo({ playerName: suppliedName, previousMetricId, r
   return <div className="game-page level-two" data-phase={phase} data-round={count} data-branch={branch || ''} onPointerDown={feedback.unlock} onKeyDown={feedback.unlock}>
     <header className="l2-masthead"><a className="l2-wordmark" href="#level-two-main" aria-label="Gaming the System, skip to game"><span className="l2-emblem" aria-hidden="true">g<span>s</span><i /></span><span>GAMING<br /><b>THE SYSTEM</b></span></a><div className="l2-header-controls"><button aria-pressed={!feedback.muted} disabled={!feedback.available} onClick={feedback.toggle}><Icon name={feedback.muted || !feedback.available ? 'muted' : 'sound'} /><span>{!feedback.available ? 'No audio' : feedback.muted ? 'Sound off' : 'Sound on'}</span></button></div></header>
     <main id="level-two-main" className="l2-workbench">
-      <div className="l2-heading"><div><span className="chapter-number">02</span><h1>More metrics.</h1></div><span className="l2-location"><i />THE OFFICE</span></div>
-      <nav className="l2-stepper" aria-label="Level 2 progress"><ol>{STAGES.map((label, index) => <li key={label} className={stage === index ? 'current' : stage > index ? 'done' : ''} aria-current={stage === index ? 'step' : undefined}><span>{stage > index ? <Icon name="check" /> : `0${index + 1}`}</span>{label}</li>)}</ol></nav>
+      {phase !== 'intro' && <><div className="l2-heading"><div><span className="chapter-number">02</span><h1>More metrics.</h1></div><span className="l2-location"><i />THE OFFICE</span></div>
+      <nav className="l2-stepper" aria-label="Level 2 progress"><ol>{STAGES.map((label, index) => <li key={label} className={stage === index ? 'current' : stage > index ? 'done' : ''} aria-current={stage === index ? 'step' : undefined}><span>{stage > index ? <Icon name="check" /> : `0${index + 1}`}</span>{label}</li>)}</ol></nav></>}
       {request ? (renderCinematic ? renderCinematic(request, finishScene) : <CinematicPlaceholder key={`${runId}:${request.sceneId}`} request={request} onComplete={finishScene} />)
-        : phase === 'intro' ? <section className="l2-intro" aria-label="Level 2 introduction">
-          <h2 ref={title} tabIndex={-1} className="eyebrow">LEVEL 2</h2>
-          <Conversation key={`intro:${runId}`} lines={[
-            { speaker: 'Maya', name: playerName, text: 'One metric wasn’t enough. What if I tracked three?' },
-            { speaker: 'Alex', name: 'Alex', text: 'Three? Easy 😎' },
-            { speaker: 'Alex', name: 'Alex', text: 'Just tell me what gets the points.' },
-          ]} paused={paused} play={feedback.play} onLastMessage={() => setRoundReady(true)} onSettled={() => {}} />
-          <div className="l2-intro-actions">{roundReady ? <button className="button primary-button" onClick={() => movePhase('choose')}>Choose three metrics<Icon name="arrow" /></button> : <span className="l2-next-space" aria-hidden="true" />}</div>
-        </section>
+        : phase === 'intro' ? <ChapterTransition key={`intro:${runId}`} level={2} playerName={playerName} previousMetricId={previousMetricId} previousObservation={previousObservation} play={feedback.play} onStart={() => movePhase('choose')} />
         : <div className={`l2-body ${phase === 'choose' ? 'l2-choosing' : ''}`}><section className="l2-decision">
           <div className="section-intro"><h2 ref={title} tabIndex={-1}>{phase === 'choose' ? 'Which three will you track?' : phase === 'gaps' ? 'What am I still missing?' : phase === 'evaluate' ? evaluationReady ? count === 3 && branch ? THREE_OUTCOMES[branch].report : count === 6 ? 'Six metrics. Six green ticks.' : 'More of the picture?' : growth ? 'Expanding the system…' : 'Watch the metrics.' : phase === 'complete' ? 'More measurement. What changed?' : growth ? `${count} metrics. What counts now?` : 'Look a little closer.'}</h2>{phase === 'choose' && <>{previousMetricId && <p className="l2-previous">Previously tracked: {metricDefinition(previousMetricId).shortName}</p>}</>}</div>
           {phase === 'choose' && <>

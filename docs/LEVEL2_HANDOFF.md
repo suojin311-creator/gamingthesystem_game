@@ -6,12 +6,16 @@ The game owns choosing exactly three metrics, evaluating, identifying the missin
 three, expanding the system and displaying classroom evidence/checklist changes.
 The partner owns finished cinematics. The opening remains separate.
 
-Level 2 begins with a dedicated introduction carrying the visible LEVEL 2
-label and the player/Alex conversation. Typing and reading intervals run in
-sequence. The lower-right Choose three metrics button appears with Alex's final
-message, and the introduction stays on screen until the player clicks it. The
-same level instance then opens the six working metric cards. It replays on a level restart or a fresh page.
-Hidden tabs and off-screen dialogue suspend this sequence.
+Level 2 begins with a [chapter transition](CHAPTER_TRANSITIONS.md): a brief
+hold on the prior target met / actual student consequence, a single metric card
+filing away into three empty slots, and a prominent LEVEL 02 title. One teacher
+line replaces the former three-message opening. After about three visible
+seconds, the lower-right Choose three metrics button appears. The chapter stays
+on screen until the player clicks it; the working metric selection starts empty.
+The optional previousMetricId and previousObservation carry the real Level 1
+card and student behaviour. Without that context, the standalone intro uses
+“One metric” and “Learning still unclear.” rather than fabricating a choice.
+Hidden tabs and off-screen chapters pause their beats and movement.
 
 On the selection page, the vertical **Alex’s Checklist** records exactly the
 current choices using the later checklists' paper, heading and checkbox styles.
@@ -56,6 +60,7 @@ import LevelTwo from './levels/level2/LevelTwo';
 <LevelTwo
   playerName={playerName}
   previousMetricId={levelOneResult?.metricId}
+  previousObservation={levelOneMetric?.studentBehaviour}
   renderCinematic={(request, complete) => (
     <PartnerScene sceneId={request.sceneId} playerName={request.playerName} onComplete={complete} />
   )}
@@ -154,7 +159,7 @@ and 1.1–2.2 second message intervals. The next action appears with the final
 message, including Alex's last reply on the three- and six-metric pages. The
 shared Conversation's optional onLastMessage callback releases the action;
 onSettled still waits for the final reading interval before reporting completion.
-Level 1 retains its 650ms typing and 3–5 second reply intervals; its finding interval is now 3.5 seconds shorter (2.5–4.5 seconds). All revealed text remains available.
+Level 1’s closing review now shares the brisk 300 ms typing, 1.1–2.2 second reply intervals and 1.6–2.8 second finding wait. Its earlier single workbench lines retain the original defaults. All revealed text remains available.
 The 10/25/100 checklist uses action items, rather than questions. Each item
 appears 550 ms after the previous one and its checkbox ticks. The ticks represent
 Alex completing checklist actions, not demonstrating learning. The next button
@@ -168,6 +173,6 @@ No game storage, runtime server, API key or multiplayer service is used.
 Two students at one computer share one run. Classroom network capacity and
 finished-video delivery should be checked separately when hosting is chosen.
 
-The player and Alex dialogue uses the approved [Dialogue review](DIALOGUE_REVIEW.md). Alex sends two consecutive short messages at the chapter introduction and three/six-metric observations and final weighting bridge; the next action appears with the second reply. The three-metric exchange uses the actual selected trio and branch, while the final cinematic and workbench have different lines. The shared conversation groups consecutive messages under one visible name/avatar and brings new replies into view when needed.
+The player and Alex dialogue uses the approved [Dialogue review](DIALOGUE_REVIEW.md). Alex sends two consecutive short messages at the three/six-metric observations and final weighting bridge; the next action appears with the second reply. The three-metric exchange uses the actual selected trio and branch, while the final cinematic and workbench have different lines. The shared conversation groups consecutive messages under one visible name/avatar and brings new replies into view when needed.
 
 Equivalent typography now shares responsive tokens with Levels 1 and 3, including 16px ordinary metric names. There is no player Restart button or dialog; administrator functionality is deferred. See [Typography](TYPOGRAPHY.md).

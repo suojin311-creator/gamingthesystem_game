@@ -8,7 +8,7 @@
 - `CinematicPlaceholder.tsx`: replaceable three-metric, six-metric and final story slots.
 - `styles.css`: layout, icon/check reports and growing checklist paper pile, scoped to `.level-two`.
 
-Default App starts at Level 1 and continues here. A dedicated player/Alex chapter conversation stays on screen until the player clicks its lower-right Choose three metrics button. Alex’s final message releases that action. `npm run dev -- --mode level2`
+Default App starts at Level 1 and continues here. A shared three-second chapter transition files the previous metric away, opens three empty slots, then reveals the LEVEL 02 title and one teacher line. It waits for the lower-right Choose three metrics button. `npm run dev -- --mode level2`
 opens this level directly; `npm run build:level2` produces its self-contained preview.
 
 Use the six common definitions, conversation bubbles, audio and visible-time

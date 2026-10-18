@@ -2,6 +2,7 @@ import './styles.css';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { METRIC_CATALOG, metricDefinition, type MetricId } from '../../shared/data/metrics';
 import Icon from '../../shared/components/Icon';
+import ChapterTransition from '../../shared/components/ChapterTransition';
 import Conversation from '../../shared/components/Conversation';
 import LearningRisk from '../../shared/components/LearningRisk';
 import MetricSelection from '../../shared/components/MetricSelection';
@@ -51,7 +52,6 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
   const [autoConfirmedIndex, setAutoConfirmedIndex] = useState<number | null>(null);
   const [runs, setRuns] = useState<WeightRun[]>([]);
   const [goal, setGoal] = useState<WeightGoal>('first');
-  const [introReady, setIntroReady] = useState(false);
   const [published, setPublished] = useState(0);
   const [reportReady, setReportReady] = useState(false);
   const [resultRows, setResultRows] = useState(0);
@@ -121,7 +121,7 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
   }
   function resetForNewVisit() {
     completionReported.current = false; setSelected(initialSelection); setWeights(EVEN_WEIGHTS); setConfirmed(EMPTY_CONFIRMATIONS);
-    setRuns([]); setGoal('first'); setIntroReady(false); setPublished(0); setReportReady(false); setResultRows(0); setAutoConfirmedIndex(null);
+    setRuns([]); setGoal('first'); setPublished(0); setReportReady(false); setResultRows(0); setAutoConfirmedIndex(null);
     setRunId(value => value + 1); feedback.reset(); move('intro');
   }
 
@@ -158,14 +158,10 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
   return <div className="game-page level-three" data-phase={phase} data-round={runs.length} onPointerDown={feedback.unlock} onKeyDown={feedback.unlock}>
     <header className="l3-masthead"><a className="l3-wordmark" href="#level-three-main" aria-label="Gaming the System, skip to game"><span className="l3-emblem" aria-hidden="true">g<span>s</span><i /></span><span>GAMING<br /><b>THE SYSTEM</b></span></a><div className="l3-header-controls"><button aria-pressed={!feedback.muted} disabled={!feedback.available} onClick={feedback.toggle}><Icon name={feedback.muted || !feedback.available ? 'muted' : 'sound'} /><span>{!feedback.available ? 'No audio' : feedback.muted ? 'Sound off' : 'Sound on'}</span></button></div></header>
     <main className="l3-workbench" id="level-three-main">
-      <div className="l3-heading"><div><span className="chapter-number">03</span><h1>The weighting trap.</h1></div><span className="l3-location"><i />THE OFFICE</span></div>
-      <nav className="l3-stepper" aria-label="Level 3 progress"><ol>{STAGES.map((label, index) => <li key={label} className={stage === index ? 'current' : stage > index ? 'done' : ''} aria-current={stage === index ? 'step' : undefined}><span>{stage > index ? <Icon name="check" /> : `0${index + 1}`}</span>{label}</li>)}</ol></nav>
+      {phase !== 'intro' && <><div className="l3-heading"><div><span className="chapter-number">03</span><h1>The weighting trap.</h1></div><span className="l3-location"><i />THE OFFICE</span></div>
+      <nav className="l3-stepper" aria-label="Level 3 progress"><ol>{STAGES.map((label, index) => <li key={label} className={stage === index ? 'current' : stage > index ? 'done' : ''} aria-current={stage === index ? 'step' : undefined}><span>{stage > index ? <Icon name="check" /> : `0${index + 1}`}</span>{label}</li>)}</ol></nav></>}
       {request ? (renderCinematic ? renderCinematic(request, finishScene) : <CinematicPlaceholder key={`${key}:${request.sceneId}`} request={request} onComplete={finishScene} />)
-        : phase === 'intro' ? <section className="l3-intro" aria-label="Level 3 introduction"><h2 className="eyebrow" ref={title} tabIndex={-1}>LEVEL 3</h2><Conversation key={`intro:${runId}`} lines={[
-          { speaker: 'Maya', name: playerName, text: initialSelection.length === 3 ? 'Alex, I’m changing how these three priorities count.' : 'Alex, I’m choosing three priorities and deciding how much each counts.' },
-          { speaker: 'Alex', name: 'Alex', text: 'New rules? I’m listening! 🫡' },
-          { speaker: 'Alex', name: 'Alex', text: initialSelection.length === 3 ? 'Okay—show me the percentages!' : 'Which three are you picking?' },
-        ]} typingDelay={300} readDelay={dialogueTime} play={feedback.play} onLastMessage={() => setIntroReady(true)} onSettled={() => {}} /><div className="l3-intro-actions">{introReady && <button className="button primary-button" onClick={() => move('choose')}>{initialSelection.length === 3 ? 'Review priorities' : 'Choose priorities'}<Icon name="arrow" /></button>}</div></section>
+        : phase === 'intro' ? <ChapterTransition key={`intro:${runId}`} level={3} playerName={playerName} initialMetricIds={initialSelection} play={feedback.play} onStart={() => move('choose')} />
         : <div className={`l3-body ${showPerspectives ? 'l3-with-perspectives' : ''}`}><section className="l3-decision">
           <div className="section-intro"><span className="eyebrow l3-round-label">{phase === 'weights' ? goal === 'first' ? 'ROUND 1 · YOUR PRIORITIES' : 'ROUND 2 · ANOTHER SPLIT' : current && phase !== 'choose' ? current.kind !== 'player' ? 'REFERENCE TEST' : `ROUND ${current.round}` : 'CHOOSE EXACTLY THREE'}</span><h2 ref={title} tabIndex={-1}>{phase === 'choose' ? 'Which three would I prioritize?' : phase === 'weights' ? goal === 'first' ? 'How much should each one count?' : 'Try a different split.' : phase === 'publish' ? reportReady ? 'Weights published.' : 'Sharing the new weights…' : phase === 'result' ? 'Where did Alex’s effort go?' : 'What changed across the tests?'}</h2></div>
           {phase === 'choose' && <><MetricSelection level={3} capacity={3} selected={selected} onToggle={choose} hint={hint} /><div className="action-row l3-only-action"><button className="button primary-button" disabled={selected.length !== 3} onClick={() => startEditor('first')}>Set the weights<Icon name="arrow" /></button></div></>}

@@ -1,9 +1,10 @@
 # Shared game code
 
 - `components/Icon.tsx`: presentation icons, independent of level data types.
+- `components/ChapterTransition.tsx`: three visible-time beats, real carried metric cards, chapter announcement and explicit entry; paired with `styles/chapter-transition.css`.
 - `components/Conversation.tsx`: chronological bubbles, typing dots and visible reading intervals; each level supplies its own lines.
 - `data/metrics.ts`: the six common metric definitions; scores and outcomes stay in their respective levels.
-- `hooks/useFeedback.ts`: local interface sounds and per-run mute state.
+- `hooks/useFeedback.ts`: local interface sounds, chapter paper/downward-tone cues and per-run mute state. One gesture-unlocked audio context survives level mounts; voices stop on unmount, mute or page hiding.
 - `hooks/useVisibleDelay.ts`: delays that wait for visible information.
 - `utils/readingTime.ts`: reading durations based on text length.
 - `styles/base.css`: global resets, design tokens, common buttons and motion preferences.

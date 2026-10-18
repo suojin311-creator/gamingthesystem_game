@@ -3,6 +3,12 @@
 The highlighted priority selector and weight editor use the opening-confirmed
 player name. The connected host preselects Level 2’s original three choices;
 players may swap them before weighting. A standalone Level 3 starts empty.
+The [chapter transition](CHAPTER_TRANSITIONS.md) closes the long checklist and
+returns those actual three cards with slider artwork under a large LEVEL 03
+title. Without an inherited trio, the artwork shows unassigned priorities. One
+teacher line replaces the old opening conversation; an explicit entry button
+waits for the player after about three visible seconds. The artwork does not
+change selection or allocate weights.
 
 The shared short-name icon cards feed three removable/reviewable selection
 slots. Full metric definitions appear in the tray. Alex task vignettes now lead

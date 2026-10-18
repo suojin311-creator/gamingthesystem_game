@@ -1,7 +1,7 @@
 {
-  "validatedAtUtc": "2026-10-18T09:47:09.847233+00:00",
-  "version": "Interface feedback v10: three update pulses, readable headers, Enter submission and brisk Level 1 review",
-  "passed": 32,
+  "validatedAtUtc": "2026-10-18T10:18:03.635203+00:00",
+  "version": "Chapter transitions v11: unresolved recap, card/checklist movement, prominent chapter titles and restrained sound",
+  "passed": 38,
   "builds": [
     "npm run build: passed",
     "npm run build:level1: passed",
@@ -9,45 +9,45 @@
     "npm run build:level3: passed"
   ],
   "suites": {
-    "interface-feedback-results.json": {
-      "passed": 8,
+    "chapter-transition-results.json": {
+      "passed": 12,
       "checks": [
-        "Blank Enter cannot submit; Shift+Enter remains a newline and an IME-confirming Enter is not intercepted",
-        "Valid Enter runs the existing evaluation form; the original button remains, and the first real report pulses three times with hidden-page pause",
-        "Level 1 review uses Level 2 timing and releases Continue with the last Alex reply; immediate continuation retains the selected metric",
-        "Level 2 report changes also pulse three times, while remounting the same report for classroom observation does not flash again",
-        "Reduced motion keeps the update cue as one steady outline; clicking the retained submit button still evaluates",
-        "All Level 3 publications pulse, including a new value with the same Delighted label; comparison/replay values do not add a cue",
-        "Enlarged trial/pattern headers fit the three-record comparison on desktop, 390px and 320px",
-        "Focused interface checks have no runtime errors"
+        "Three visible beats take about three seconds; a prominent chapter replaces the old intro, shortens dialogue and waits for explicit entry into three empty slots",
+        "Standalone Level 3 shows unassigned priority cards and starts empty; chapter slider artwork cannot change any weights",
+        "Hidden tabs pause both the visible-time beats and the card animations, then resume without skipping the chapter",
+        "A chapter moved off screen holds its pending information until it becomes visible again",
+        "Reduced motion removes movement while retaining the chapter sequence; keyboard entry works",
+        "No AudioContext or autoplay permission is needed to see the full transition and enter the next chapter",
+        "Real Level 1 handoff carries its chosen card and actual negative observation; one rustle and a low descending tone reuse the unlocked audio context without reward sounds or looping",
+        "Sound off suppresses both chapter cues while the complete visual sequence and entry button still appear",
+        "Muting during the paper movement stops its active sound immediately and suppresses the later chapter tone",
+        "Level 2 chapter and three cards fit 1366/768/390/320px, with a reachable entry button",
+        "Level 3 chapter and three cards fit 1366/768/390/320px, with a reachable entry button",
+        "No runtime errors in normal/reduced motion, audio fallback, hidden-page and offline chapter checks"
       ],
-      "reviewTimes": {
-        "evidence": 12749,
-        "typing": 14360,
-        "teacher": 14674,
-        "alex": 16374,
-        "last": 17775,
-        "button": 17776
+      "timings": {
+        "standalone2": {
+          "start": 2788,
+          "hold": 2788,
+          "turn": 3782,
+          "chapter": 4786,
+          "ready": 5892
+        }
       },
       "runtimeErrors": []
     },
-    "management-satisfaction-results.json": {
-      "passed": 14,
+    "level3-integration-results.json": {
+      "passed": 9,
       "checks": [
-        "Level 1 selection/prediction do not raise satisfaction; the completed target report does, with the reported score retained as small evidence",
-        "Observation and replay keep satisfaction unchanged while the student card exposes the learning risk",
-        "Level 1 \u2192 2 preserves the 44 baseline; the three-metric report raises it to 60 once and replay adds nothing",
-        "10-metric report raises satisfaction only after completion; its tracked count remains visible",
-        "25-metric report raises satisfaction only after completion; its tracked count remains visible",
-        "100-metric report raises satisfaction only after completion; its tracked count remains visible",
-        "Level 2 \u2192 3 retains its trio and 86 baseline; first publication rises to 90 and observing/replaying leaves it there",
-        "Second and reference publications make smaller increases; comparison preserves 95 and all three actual test records",
-        "A fresh connected-game visit resets to the existing Level 1 entry baseline",
-        "1366px standalone chapters start at matching baselines, share readable satisfaction type and fit without overflow; near-even earns no bonus and reduced motion is immediate",
-        "390px standalone chapters start at matching baselines, share readable satisfaction type and fit without overflow; near-even earns no bonus and reduced motion is immediate",
-        "320px standalone chapters start at matching baselines, share readable satisfaction type and fit without overflow; near-even earns no bonus and reduced motion is immediate",
-        "With normal motion, a real report smoothly fills the existing bar over one second instead of jumping or refilling from zero",
-        "No runtime errors during satisfaction, replay, chapter handoff and responsive checks"
+        "Opening-supplied player name reaches Level 3 labels, avatar and the three weighted partner shots",
+        "Level 3 completes once with immutable tested runs and an explicit near-even/uneven comparison payload",
+        "Comparison leads to theory; even duplicate final callbacks stay in the placeholder and never invoke Design Lab",
+        "Real Gameplay host carries the opening name and sound preference from Level 2 into the new Level 3 chapter",
+        "Level 3 preselects the actual Level 2 trio, permits swapping, and has no player Restart control",
+        "Reloading the connected host starts fresh from its configured entry level",
+        "Hidden-page publication holds its visible-time sequence and resumes without skipping the three weights",
+        "Real-time publication and evidence arrive one at a time; Web Audio cues play and Sound off silences later updates",
+        "No browser errors in partner, chapter handoff or real-time audio checks"
       ],
       "runtimeErrors": []
     },
@@ -66,57 +66,174 @@
         "Packaged entries have no browser runtime errors"
       ],
       "runtimeErrors": []
+    },
+    "dialogue-emoji-results.json": {
+      "passed": 1,
+      "checks": [
+        "All gameplay emoji are distinct across all levels"
+      ],
+      "emojiCount": 24,
+      "inventory": [
+        {
+          "emoji": "\ud83d\udccb",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\ude2c",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\ude4b",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83e\udd37",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\udcbb",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\udc40",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\udcac",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83e\udd14",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\udcdd",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83d\udd01",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83c\udfaf",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83e\udd2d",
+          "file": "src/levels/level1/metrics.ts"
+        },
+        {
+          "emoji": "\ud83e\ude99",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83d\ude05",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\uddd0",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\ude84",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\uddf7",
+          "file": "src/levels/level2/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\udd47",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83d\udece",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83d\ude0f",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\uddee",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\udd68",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\ude81",
+          "file": "src/levels/level3/dialogue.ts"
+        },
+        {
+          "emoji": "\ud83e\udde9",
+          "file": "src/levels/level3/dialogue.ts"
+        }
+      ]
+    },
+    "dialogue-narrative-results.json": {
+      "passed": 6,
+      "checks": [
+        "Every valid integer split uses the 10-point near-even boundary and the correct one/two higher-reward family",
+        "All 20 trios have concise pattern-specific reviews; near-even exposes the scoring stopping rule",
+        "Second-result questions describe actual increases, decreases and unchanged effort bands",
+        "Both comparison orders and both system references describe the latest actual pattern without assuming an improvement",
+        "No dialogue or emoji repeats within 8,640 complete trial paths, including repeated patterns and unchanged scene intensity",
+        "Six Level 1 review questions and all 20 Level 2 trio exchanges differ; player names remain supplied text"
+      ],
+      "completeTrialPaths": 8640
     }
   },
   "artifacts": {
-    "sourceSha256": "6a5f7968e93b8dc7233e44431f9efe36f0d7a58c8538c09c8a4e41e1ffb48f3e",
+    "sourceSha256": "78aa1f49359709b46bf909ef83b24bba02e309d2abb385bbe3c0135b4865b80d",
     "entries": [
       {
         "archive": "Level1-play.zip",
         "html": "Level1.html",
         "build": "dist-level1/index.html",
-        "htmlSha256": "960d30bb9b2c8d2fbafac90b687c75a128c8aa596d30351e2a911cf5cf8a283e",
-        "zipSha256": "7e018159e1a97265b4d0e7d517557698639cfc193b3005405a9470a1547500d3"
+        "htmlSha256": "5fadcad18aff85f0a0202ac07ffc8b926ccec9c427d26cb1c6edae65ed45513d",
+        "zipSha256": "32a5a645d59d45d5f975b0a91256c339e2fc29db6b2f0117616d20125ea4cd41"
       },
       {
         "archive": "Level2-play.zip",
         "html": "Level2.html",
         "build": "dist-level2/index.html",
-        "htmlSha256": "3ba7cae9a1c75629e68ea2ad210fdf9a28662d9a3c8aa902c3fe4fdeefd80010",
-        "zipSha256": "9d46fdfe4ef1decd7bbf6f4cc2daea4dc4411c21b5e8fd24244d114c138b4a29"
+        "htmlSha256": "362f249d16b847aa294210eabada2d63557941ac3bfe68ade0a66b693fe9733c",
+        "zipSha256": "39365abff22fc3e40db1d9d3f2e3c50c637c115be2b93fdc88c82e6c3b40d8e4"
       },
       {
         "archive": "Level3-play.zip",
         "html": "Level3.html",
         "build": "dist-level3/index.html",
-        "htmlSha256": "30c743c748cc4521776eb0fbd2b0b8c7492f77b6d310b22dcf71ec1165a2dd7c",
-        "zipSha256": "88bca2ec223618df51eff2e9ec8f6041939c7f2be6ef07140b649ccb334970cf"
+        "htmlSha256": "284667750aa0eb6496f554d2225ea0b179993614f9aa453b5688861d56a3080d",
+        "zipSha256": "ff3ae135d6a4a91434219f587ebe7553cc0e6af6692f55a87dd4af98867acc2c"
       },
       {
         "archive": "Full-game-play.zip",
         "html": "Gaming-the-System.html",
         "build": "dist/index.html",
-        "htmlSha256": "cf68528cd507afddd34f5e2d76322c9c646de17be22721738671da0516f9c40e",
-        "zipSha256": "241e38600382028a4d8a9958188d5c90414e29cd35c792154b191e3c5985a357"
+        "htmlSha256": "c277cdd8a25bd480a38a14c09f48a1efd9f2fed7d10ca83acc8d574eeb6e70f6",
+        "zipSha256": "8f96a48382a8d9651e1c71271cf323affceaaa39df6bfa6340602dc03cbe9b8e"
       }
     ],
     "reviewBundle": {
       "archive": "Level3-and-Full-game-play.zip",
-      "zipSha256": "ed1eb6244bdbd13a9c310027614c0d98da70b86960170ee3dff4a4ebb7d15c9a",
+      "zipSha256": "e75285e57a560aac0c46c1739675c23abb10c7db8f023d940df1efd6dde875db",
       "htmlSha256": {
-        "Level3/Level3.html": "30c743c748cc4521776eb0fbd2b0b8c7492f77b6d310b22dcf71ec1165a2dd7c",
-        "Full-game/Gaming-the-System.html": "cf68528cd507afddd34f5e2d76322c9c646de17be22721738671da0516f9c40e"
+        "Level3/Level3.html": "284667750aa0eb6496f554d2225ea0b179993614f9aa453b5688861d56a3080d",
+        "Full-game/Gaming-the-System.html": "c277cdd8a25bd480a38a14c09f48a1efd9f2fed7d10ca83acc8d574eeb6e70f6"
       }
     }
   },
   "notes": [
-    "Focused verification for the approved interface changes; the earlier broad Level 3 checks remain historical in LEVEL3_VALIDATION-v9.json and were not rerun for this release.",
-    "The shared management card pulses exactly three times on a real satisfaction increase, including increases within the same verbal state; hidden/off-screen attention pauses. Same-value remounts/replays do not pulse. Reduced motion uses a timed steady outline.",
-    "Enter submits the existing nonempty prediction form; blank text cannot advance, Shift+Enter remains a newline and IME confirmation is not intercepted. The original submit button is retained.",
-    "Level 1 review shares Level 2\u2019s 300 ms typing, 1.1\u20132.2 second message reading and 1.6\u20132.8 second evidence wait. Continue appears with the second Alex reply, and immediate continuation retains the chosen metric.",
-    "Comparison headings/pattern labels are 12px on desktop and 11px at phone widths; the actual three-trial production table fits at 1366/390/320px.",
-    "All five latest ZIPs are checked for CRC/hash integrity; HTMLs match the tested production builds and the two-version bundle matches the individual packages exactly.",
-    "Offline browser checks serve exact packaged HTML through an in-memory HTTPS origin. Direct file opening on the user\u2019s particular browser and classroom load capacity are not claimed as tested. Partner opening/finished video assets remain separate.",
-    "Both existing archive branches and all versioned historical ZIPs remain unchanged."
+    "Both chapter openings replace the prior three-message conversations with a roughly three-second visible-time transition and one teacher line. Entry is explicit; no chapter auto-advances into the working selection.",
+    "Level 1 to 2 carries the actual chosen card and its existing negative student observation into the recap, then opens three empty selection slots. No additional metric is automatically selected.",
+    "Level 2 to 3 closes the long checklist and returns the original chosen trio with decorative slider artwork. The actual trio remains preselected and editable; standalone Level 3 stays empty.",
+    "Paper movement and low descending tones use one gesture-unlocked page-local AudioContext across chapters. Mute stops active cues; hidden/off-screen timing and animation pause. Reduced motion and missing audio support retain the complete visual information and keyboard-operable entry.",
+    "38 focused chapter, handoff, dialogue and package checks passed on the final source/builds. Earlier broad gameplay/interface/satisfaction suites remain historical in v9 and v10 and were not rerun in full.",
+    "All five latest ZIPs have CRC/hash checks and contain HTML identical to the actual production builds; the review ZIP contains the same standalone Level 3 and full-game HTML as the individual packages.",
+    "The prior release is preserved on archive/pre-chapter-transitions-v10 at 78df0ead3d52bf692292399988a7f0ff0b9aff26. The older archive branches and versioned historical ZIPs are unchanged.",
+    "Offline browser checks serve exact built/packaged HTML through an in-memory HTTPS origin. Direct file opening in the user\u2019s browser, classroom load capacity and finished partner video assets are not claimed as tested. The preview still stops at the final theory placeholder without Design Lab navigation."
   ]
 }
