@@ -67,6 +67,16 @@ def aligned(page):
             assert abs(response['x']-response_header['x'])<1
             assert row.locator('.l3-row-weight').evaluate("element=>parseFloat(getComputedStyle(element).borderRightWidth)")>=1
 
+    for table in page.locator('.l3-compare-table').all():
+        headings=table.locator('thead th[data-run]').all()
+        for row in table.locator('tbody tr').all():
+            cells=row.locator('td').all();assert len(cells)==len(headings)
+            for cell,header in zip(cells,headings):
+                box=cell.bounding_box();head=header.bounding_box()
+                assert abs(box['x']-head['x'])<=1 and abs(box['width']-head['width'])<=1
+                for element in cell.locator('.l3-row-weight,.l3-effort').all():
+                    rect=element.bounding_box();assert rect['x']>=box['x']-1 and rect['x']+rect['width']<=box['x']+box['width']+1
+
 
 with sync_playwright() as p:
     browser=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox'])
@@ -83,14 +93,11 @@ with sync_playwright() as p:
     context.close()
 
     context,page=open_level(browser)
-    page.locator('.l3-bottom-dialogue').scroll_into_view_if_needed();advance(page,1)
-    expect(page.locator('.l3-bottom-dialogue .maya-bubble p')).to_have_text('Alex, how will you decide which tasks to focus on?')
+    expect(page.locator('.l3-bottom-dialogue')).to_have_count(0)
     assert page.locator('.l3-decision .conversation').count()==0
-    assert page.locator('.l3-bottom-dialogue').bounding_box()['y']>=page.locator('.l3-body').bounding_box()['y']+page.locator('.l3-body').bounding_box()['height']-1
     assert page.locator('.l3-editor-tools').bounding_box()['y']<page.locator('.l3-decision .action-row').bounding_box()['y']
     assert page.locator('.l3-weight-card h3').first.evaluate('element=>getComputedStyle(element).fontSize')==metric_size
-    assert page.locator('.l3-bottom-dialogue .speech-bubble p').evaluate('element=>getComputedStyle(element).fontSize')=='15px'
-    record('Metric names match Levels 1/2; Reset stays above the action row and the player uses the shared bottom dialogue region and bubble size')
+    record('Metric names match Levels 1/2; Reset stays above the action row and weighting has no dialogue to interrupt the operation')
     page.screenshot(path=str(OUT/'level3-feedback-weights.png'),full_page=True,animations='disabled')
     context.close()
 
@@ -139,8 +146,8 @@ with sync_playwright() as p:
         split(page,[34,33,33]);run(page)
         page.get_by_role('button',name='Compare the patterns',exact=True).click();advance(page,1);aligned(page)
         assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
-        assert page.locator('.l3-row-metric').first.evaluate('element=>parseFloat(getComputedStyle(element).fontSize)')>=14
-        expect(page.locator('.l3-comparison-card > p')).to_have_count(0)
+        assert page.locator('.l3-compare-table tbody th').first.evaluate('element=>parseFloat(getComputedStyle(element).fontSize)')>=14
+        expect(page.locator('.l3-comparison > p')).to_have_count(0)
         expect(page.locator('.l3-finding')).to_have_count(0)
         if width==390:page.screenshot(path=str(OUT/'level3-feedback-mobile.png'),full_page=True,animations='disabled')
         record(f'{width}px results and comparisons keep readable type, aligned labelled columns, no repeated summaries and no horizontal overflow')
@@ -164,10 +171,10 @@ with sync_playwright() as p:
             expect(page.locator('.l3-run-rows [data-effort=medium]')).to_have_count(3)
             page.get_by_role('button',name='Compare the patterns',exact=True).click()
             expect(page.locator('.near-even .l3-row-weight')).to_have_text([str(value)+'%' for value in values])
-            expect(page.locator('.near-even .eyebrow')).to_have_text('YOUR SECOND TEST')
+            expect(page.locator('.near-even .eyebrow')).to_have_text('Second test')
         else:
             expect(page.get_by_role('button',name='What if they counted equally?',exact=True)).to_be_visible()
-            expect(page.locator('.maya-bubble p')).to_have_text('You eased off on Preparation. What changed?')
+            expect(page.locator('.maya-bubble p')).to_have_text('Why ease off on Preparation?')
         record(f'Second test {values}: '+('compares the player’s actual near-even run without a third test' if near_even else 'offers the explained optional balance check beyond 10 points'))
         context.close()
     context,page=open_level(browser)
@@ -175,8 +182,8 @@ with sync_playwright() as p:
     split(page,[76,6,18]);run(page)
     expect(page.locator('.l3-finding')).to_have_count(0)
     expect(page.locator('.thought-bubble, .thought-cloud, .thought-label')).to_have_count(0)
-    expect(page.locator('.maya-bubble p')).to_have_text('You gave Preparation most of your attention. What happened to the other two?')
-    expect(page.locator('.alex-bubble p')).to_have_text(['Preparation got my best shot. 🥇','Participation and Focus? Just enough to get by.'])
+    expect(page.locator('.maya-bubble p')).to_have_text('Why leave the other two behind, Alex?')
+    expect(page.locator('.alex-bubble p')).to_have_text(['Preparation was worth the most. 🥇','I rushed Participation and Focus.'])
     expect(page.locator('.l3-bottom-dialogue .alex-bubble p')).to_have_count(2)
     assert page.locator('.l3-effort-label').first.evaluate('e=>parseFloat(getComputedStyle(e).fontWeight)')<=600
     assert page.locator('.l3-row-weight').first.evaluate('e=>parseFloat(getComputedStyle(e).fontSize)')>=20
@@ -188,12 +195,12 @@ with sync_playwright() as p:
     page.get_by_role('button',name='What if they counted equally?',exact=True).click()
     page.locator('.l3-publish').scroll_into_view_if_needed();advance(page,5);observe(page)
     page.get_by_role('button',name='Compare the patterns',exact=True).click();advance(page,1)
-    expect(page.locator('.l3-comparison-card')).to_have_count(3)
+    expect(page.locator('.l3-compare-table thead th[data-run]')).to_have_count(3)
     for index,expected in [(1,['76%','6%','18%']),(2,['80%','10%','10%']),(3,['34%','33%','33%'])]:
         expect(page.locator(f'[data-run="{index}"] .l3-row-weight')).to_have_text(expected)
     assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
     aligned(page)
-    expect(page.locator('.l3-comparison-card > p')).to_have_count(0)
+    expect(page.locator('.l3-comparison > p')).to_have_count(0)
     expect(page.locator('.l3-finding')).to_have_count(0)
     assert page.locator('.l3-only-action').evaluate("row=>Array.from(row.children).filter(e=>e.tagName!=='BUTTON').every(e=>!e.textContent.trim())")
     page.screenshot(path=str(OUT/'level3-three-tests-desktop.png'),full_page=True,animations='disabled')
@@ -210,8 +217,8 @@ with sync_playwright() as p:
     page.get_by_role('button',name='What if one counted more?',exact=True).click()
     page.locator('.l3-publish').scroll_into_view_if_needed();advance(page,5);observe(page)
     page.get_by_role('button',name='Compare the patterns',exact=True).click()
-    expect(page.locator('.l3-comparison-card')).to_have_count(3)
-    expect(page.locator('[data-run="3"]')).to_have_attribute('data-kind','contrast-check')
+    expect(page.locator('.l3-compare-table thead th[data-run]')).to_have_count(3)
+    expect(page.locator('thead th[data-run="3"]')).to_have_attribute('data-kind','contrast-check')
     expect(page.locator('[data-run="3"] .l3-row-weight')).to_have_text(['70%','20%','10%'])
     record('Two near-even player tests offer an explicitly labelled uneven reference and retain all three actual splits')
     context.close()

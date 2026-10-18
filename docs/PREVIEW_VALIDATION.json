@@ -1,7 +1,7 @@
 {
-  "validatedAtUtc": "2026-10-17T23:51:32.968762+00:00",
-  "version": "Level 3 refinement v8: contextual dialogue and role portraits across Levels 1\u20133",
-  "passed": 146,
+  "validatedAtUtc": "2026-10-18T09:21:20.234469+00:00",
+  "version": "Level 3 refinement v9: concise reviews, criterion-based stopping and neutral aligned comparisons",
+  "passed": 147,
   "builds": [
     "npm run build: passed",
     "npm run build:level1: passed",
@@ -52,7 +52,7 @@
     "level3-feedback-results.json": {
       "passed": 21,
       "checks": [
-        "Metric names match Levels 1/2; Reset stays above the action row and the player uses the shared bottom dialogue region and bubble size",
+        "Metric names match Levels 1/2; Reset stays above the action row and weighting has no dialogue to interrupt the operation",
         "80/15/5 keeps both remainders editable and confirms the final pair: first prep, then part",
         "80/15/5 keeps both remainders editable and confirms the final pair: first prep, then focus",
         "80/15/5 keeps both remainders editable and confirms the final pair: first part, then prep",
@@ -93,7 +93,7 @@
       "checks": [
         "All gameplay emoji are distinct across all levels"
       ],
-      "emojiCount": 36,
+      "emojiCount": 26,
       "inventory": [
         {
           "emoji": "\ud83d\udccb",
@@ -172,38 +172,6 @@
           "file": "src/levels/level3/LevelThree.tsx"
         },
         {
-          "emoji": "\ud83c\udfc6",
-          "file": "src/levels/level3/dialogue.ts"
-        },
-        {
-          "emoji": "\u2696",
-          "file": "src/levels/level3/dialogue.ts"
-        },
-        {
-          "emoji": "\ud83c\udf70",
-          "file": "src/levels/level3/dialogue.ts"
-        },
-        {
-          "emoji": "\ud83e\uddf2",
-          "file": "src/levels/level3/dialogue.ts"
-        },
-        {
-          "emoji": "\ud83d\udee0",
-          "file": "src/levels/level3/dialogue.ts"
-        },
-        {
-          "emoji": "\ud83e\uddc1",
-          "file": "src/levels/level3/dialogue.ts"
-        },
-        {
-          "emoji": "\ud83d\ude43",
-          "file": "src/levels/level3/dialogue.ts"
-        },
-        {
-          "emoji": "\ud83d\udd0e",
-          "file": "src/levels/level3/dialogue.ts"
-        },
-        {
           "emoji": "\ud83e\udd47",
           "file": "src/levels/level3/dialogue.ts"
         },
@@ -212,7 +180,7 @@
           "file": "src/levels/level3/dialogue.ts"
         },
         {
-          "emoji": "\ud83e\udd11",
+          "emoji": "\ud83d\ude0f",
           "file": "src/levels/level3/dialogue.ts"
         },
         {
@@ -229,14 +197,6 @@
         },
         {
           "emoji": "\ud83e\udde9",
-          "file": "src/levels/level3/dialogue.ts"
-        },
-        {
-          "emoji": "\ud83d\uddfa",
-          "file": "src/levels/level3/dialogue.ts"
-        },
-        {
-          "emoji": "\ud83c\udfb2",
           "file": "src/levels/level3/dialogue.ts"
         }
       ]
@@ -278,7 +238,7 @@
         "Confirmed opening name reaches Level 1 labels, avatar and typing accessibility; guide has no fixed Maya name",
         "Level 1 has no player restart; its custom cinematic retains playerName and Alex stays Alex",
         "Level 1 \u2192 Level 2 retains the same opening name and prior metric; choice/gap prompts retain the player perspective",
-        "Both levels and every custom cinematic slot share one name; six-metric decision uses I; result callbacks still fire",
+        "Both levels and every custom cinematic slot share one name; the six-metric review addresses Alex; result callbacks still fire",
         "Level 2 has no player restart; reloading the full host returns to a fresh opening/name entry with storage blocked",
         "Full-host restored-page reset returns to the opening and clears the previous identity",
         "Built-in Level 1 and Level 2 three/six-metric placeholders display the opening name and keep Alex unchanged",
@@ -467,7 +427,7 @@
       "passed": 6,
       "checks": [
         "Every valid integer split uses the 10-point near-even boundary and the correct one/two higher-reward family",
-        "All 20 trios publish distinct plans and teacher reviews for one high, two high and near-even weights",
+        "All 20 trios have concise pattern-specific reviews; near-even exposes the scoring stopping rule",
         "Second-result questions describe actual increases, decreases and unchanged effort bands",
         "Both comparison orders and both system references describe the latest actual pattern without assuming an improvement",
         "No dialogue or emoji repeats within 8,640 complete trial paths, including repeated patterns and unchanged scene intensity",
@@ -476,65 +436,74 @@
       "completeTrialPaths": 8640
     },
     "dialogue-browser-results.json": {
-      "passed": 6,
+      "passed": 7,
       "checks": [
-        "[70, 20, 10]: publication plan and teacher review match the selected weight pattern; two Alex replies and distinct name-independent portraits are visible",
-        "[45, 45, 10]: publication plan and teacher review match the selected weight pattern; two Alex replies and distinct name-independent portraits are visible",
-        "[34, 33, 33]: publication plan and teacher review match the selected weight pattern; two Alex replies and distinct name-independent portraits are visible",
-        "Two concentrated trials acknowledge unchanged effort, use fresh classroom replies, retain both trials and offer a different near-even reference exchange",
-        "Near-even-first trial followed by a new leading priority describes concentration correctly in both workbench and final cinematic",
-        "Dialogue branch browser checks have no runtime errors"
+        "[70, 20, 10]: operations stay free of dialogue; the sole short review fits the pattern, including the near-even stopping risk",
+        "[45, 45, 10]: operations stay free of dialogue; the sole short review fits the pattern, including the near-even stopping risk",
+        "[34, 33, 33]: operations stay free of dialogue; the sole short review fits the pattern, including the near-even stopping risk",
+        "Both player trials and the reference align under shared metric names at four widths; no near-even success colour or comparison dialogue",
+        "Near-even-first and concentrated-second trials retain their actual order and enter the brief response/theory sequence directly",
+        "All six metrics have different task artwork; the criteria \u2192 ticks \u2192 pack-up sequence pauses while hidden before the review can begin",
+        "Focused Level 3 production checks have no runtime errors"
       ],
       "runtimeErrors": []
     }
   },
   "artifacts": {
-    "sourceSha256": "593c23787d191097a3f3755b9a6311617ecb1e816802d55e3dd39b1aa74428ca",
+    "sourceSha256": "75f221c4742e3f927b186ee26667310ac2035bb95c61a0353d3ca00c02d5e3e6",
     "entries": [
       {
         "archive": "Level1-play.zip",
         "html": "Level1.html",
         "build": "dist-level1/index.html",
-        "htmlSha256": "024e2406f03db13a65c6192387d8b7dad3935fe6fbb3422f71163b19b379c327",
-        "zipSha256": "de73082e6bfbb2e70c3ab537063ff6f76b90e624555f32d372b30039ba4a7cb9"
+        "htmlSha256": "7188b952c5a529369e9d14cd31e684614b59594f416548d49e36baa7cb3c51db",
+        "zipSha256": "2a21a3e20210d2b71f8fe77a741126e028d8bf29671aa5ec722292ca8301c2e4"
       },
       {
         "archive": "Level2-play.zip",
         "html": "Level2.html",
         "build": "dist-level2/index.html",
-        "htmlSha256": "3865c6f163c095881091b67dcef6d17c6dc0a6cc69030a9505d247f6212a6ede",
-        "zipSha256": "7ec817928c230c2c6a45d9b466d9faf4c1afa05efe79a125344949af0cc4b01c"
+        "htmlSha256": "40166343918415fd0ef006ea8c8df3c296ef4c3c44879d5508a25dca3c82038d",
+        "zipSha256": "04fbf549e117679181aa1321d606aca4c3e85b0e7b6c187affc678b9e0008ad0"
       },
       {
         "archive": "Level3-play.zip",
         "html": "Level3.html",
         "build": "dist-level3/index.html",
-        "htmlSha256": "a4efb5fd6a60a7547603057be388ab1c7ca24acf3522a03cd67f4fbcfa36a972",
-        "zipSha256": "bfb2a30fee73ee8a119920d2aa1bb770c32cba9f08c958ff40fff956b2defe62"
+        "htmlSha256": "55948985f3f7997e2090eb082c87ace08cd50c02b1de28fd73cc4b8f5c903467",
+        "zipSha256": "bd0a9c233ef84231387c965ef8ea10085017172bfcb97b5d4e2d0e1b3a7f2f7d"
       },
       {
         "archive": "Full-game-play.zip",
         "html": "Gaming-the-System.html",
         "build": "dist/index.html",
-        "htmlSha256": "6aa833a7e7d55ae412b866fa6d960b811871d3a0db15d3773d684dc902f805fa",
-        "zipSha256": "3a4735433ac5d728340b1ceee1f7f8d58cf46389a3376e4e5fc4d0bafac3b04f"
+        "htmlSha256": "4607dc8f1e4a76ffb81494fb77aaa2ee3a7d5f264834faed0d3e29a5833aeae5",
+        "zipSha256": "43dfd0bfde40b0d83265fdda12181375e682f19b0f290ea147816e508016762e"
       }
     ],
     "reviewBundle": {
       "archive": "Level3-and-Full-game-play.zip",
-      "zipSha256": "40d0ebfba3eb21f00d67b622f598b37801fd8db76e4a081ba5788e6a0e165ec8",
+      "zipSha256": "be339a82073d86e6ff81fd7ae4d7aad28b8f2e8b50812de9701b6ae6bd3d2f69",
       "htmlSha256": {
-        "Level3/Level3.html": "a4efb5fd6a60a7547603057be388ab1c7ca24acf3522a03cd67f4fbcfa36a972",
-        "Full-game/Gaming-the-System.html": "6aa833a7e7d55ae412b866fa6d960b811871d3a0db15d3773d684dc902f805fa"
+        "Level3/Level3.html": "55948985f3f7997e2090eb082c87ace08cd50c02b1de28fd73cc4b8f5c903467",
+        "Full-game/Gaming-the-System.html": "4607dc8f1e4a76ffb81494fb77aaa2ee3a7d5f264834faed0d3e29a5833aeae5"
       }
     }
   },
+  "baselineArchive": {
+    "branch": "archive/pre-level3-focus-v8",
+    "commit": "24d80282b83afd65ba4600f5d2fa4c2718a3f8d4",
+    "originalZipVerification": "All five baseline ZIP hashes and CRCs verified before editing."
+  },
   "notes": [
-    "All downloadable standalone and connected previews use the same source revision and are verified byte-for-byte against the production builds.",
-    "Dialogue model checks cover all integer split classifications and 8,640 complete combination paths through Level 1 and Level 2 scenes/reviews followed by two Level 3 trials and any missing-pattern reference. No normalized line or emoji repeats within a tested story path; intentional Replay scene replays preserve their lines.",
-    "Browser dialogue checks read the actual production plans/reviews for all three weight patterns, unchanged effort bands, repeated classroom shots, a system reference and reversed trial order. Teacher and student have distinct SVG portraits; opening-supplied names remain text labels.",
-    "The separate partner opening and finished videos remain unmerged. Integration tests use host harnesses and the real Gameplay component; the final preview stops at the theory placeholder without entering Design Lab.",
-    "Offline checks serve exact packaged HTML bytes on an in-memory HTTPS origin because managed Chromium blocks file navigation. Direct file opening on the user\u2019s browser and classroom load capacity are not claimed as tested.",
-    "The archive/pre-visual-redesign-v6 branch and version-numbered historical ZIPs remain unchanged."
+    "All standalone and connected ZIPs are rebuilt from one implementation and verified byte-for-byte against their production builds and manifest.",
+    "Weight editing, publication and comparison have no workbench dialogue. Each result has one teacher question and two short Alex replies; the final response cinematic has three lines.",
+    "Near-even keeps three medium effort bands and the inclusive ten-point spread rule. Its visible sequence shows checking criteria, collecting ticks and packing up before the review; hidden/off-screen presentation waits. The risk concerns criterion-based stopping, not an asserted numerical learning loss.",
+    "The six task vignettes have different metric-specific props/actions. A neutral table aligns all actual trials under one metric label per row; changed-effort cells have a restrained marker independent of near-even status.",
+    "Production browser checks cover all three short-review patterns, first-attempt near-even risk, unchanged effort, repeated scene replies, both experiment orders, both system references, six distinct task illustrations, hidden-page sequence holds and comparison columns at 1366/768/390/320px.",
+    "Dialogue model checks cover all integer split classifications and 8,640 complete combination paths without normalized dialogue or emoji repeats. Intentional Replay scene replays preserve their established lines.",
+    "The separate partner opening and finished videos remain unmerged. Host harnesses exercise the real Gameplay name/metric handoff; the preview stops at the final theory placeholder without entering Design Lab.",
+    "Offline tests serve exact packaged HTML through an in-memory HTTPS origin because managed Chromium blocks file navigation. Direct file opening on the user\u2019s browser and classroom load capacity are not claimed as tested.",
+    "Both archive branches and all version-numbered historical ZIPs remain unchanged."
   ]
 }

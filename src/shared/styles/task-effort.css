@@ -5,3 +5,5 @@
 @keyframes task-write { to { transform: rotate(-5deg); } }
 @keyframes task-busy { to { opacity: .25; transform: translateX(2px); } }
 @media (prefers-reduced-motion: reduce) { .task-scene * { animation: none !important; } }
+.task-scene .task-raised-hand { transform-origin: 104px 55px; animation: task-hand .6s ease-in-out 3 alternate; }
+@keyframes task-hand { to { transform: rotate(-6deg); } }

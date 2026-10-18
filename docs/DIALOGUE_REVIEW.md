@@ -8,9 +8,9 @@ independent of either portrait. All authored emoji are distinct, as checked by
 
 ## Clarity and character
 
-Each beat has a purpose: planning before publication, actual behaviour after
-observation, changes between experiments during comparison, then the scoring
-system's effect during the theory reveal. The teacher asks about something the
+The operation screens focus on choices and feedback. Dialogue appears after
+observation to question the actual behaviour, then the final response/theory
+sequence develops the scoring-system conclusion. The teacher asks about something the
 player can see. Alex answers that question before adding a playful follow-up.
 Names and percentages are not recited again when the table already shows them.
 
@@ -53,23 +53,29 @@ its reading interval. The 10/25/100 stages continue to show checklist actions.
 
 ## Level 3
 
-`src/levels/level3/dialogue.ts` supplies plans, reviews and comparisons from
-immutable submitted runs. One higher reward, two higher rewards and near-even
-weights have distinct plans and teacher questions. Later trials recognize
-changed leading priorities, changes in qualitative effort, and unchanged effort
-bands despite changed weights. A repeated metric/intensity shot has a fresh
-follow-up line, without changing its scene ID or behavioural action.
+`src/levels/level3/dialogue.ts` supplies short reviews from immutable submitted
+runs. Weight editing, publication and comparison have no workbench exchange.
+One higher reward, two higher rewards and near-even weights have distinct review
+questions. Later trials recognize actual effort changes and unchanged routines.
+Alex still has two bubbles in each retained review.
 
-Both player attempts and any system reference remain visible. Final dialogue
-describes the actual order: a concentrated second trial is not described as an
-improvement in balance. The comparison advances to the Goodhart theory
-placeholder and stops there.
+For a first near-even test, the teacher asks what Alex would like to explore
+next. He asks whether it earns extra points and says he is done if it does not.
+The preceding illustrated sequence shows criteria → ticks → packing up. This
+keeps even effort distribution intact while showing why score-directed stopping
+can limit further exploration. Later near-even reviews have different lines.
+
+The result artwork distinguishes all six metric tasks. The neutral comparison
+table puts trials into aligned columns with one metric label per row. It retains
+both player attempts and any reference without colouring near-even as success.
+The final response is three short lines before the unchanged Goodhart quote.
 
 `node tests/dialogue_narrative.mjs` checks 8,640 complete combination paths for
 repeated dialogue and emoji, plus every integer split's classification. The
-production browser checks in `tests/dialogue_browser.py` read all three plans,
-teacher reviews, unchanged effort, repeated scene replies and reversed trial
-order, including role portraits on desktop and at 320px.
+production browser checks in `tests/dialogue_browser.py` read all three reviews,
+unchanged effort, repeated scene replies and reversed trial order. They also
+verify silent operation screens, the hidden-page stopping sequence and all trial
+columns at 1366/768/390/320px.
 
 The partner's finished opening and video assets remain separate. The temporary
 readings implement this dialogue; partner renderers receive playerName and run

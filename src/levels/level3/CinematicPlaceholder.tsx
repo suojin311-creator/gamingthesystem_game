@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import classroom from '../../assets/classroom.png';
 import Icon from '../../shared/components/Icon';
 import { metricDefinition } from '../../shared/data/metrics';
-import { BEHAVIOURS, EFFORT_LABELS, type LevelThreeCinematicRequest } from './data';
-import { comparisonDialogue, weightedSceneReply } from './dialogue';
+import { EFFORT_LABELS, type LevelThreeCinematicRequest } from './data';
+import { comparisonDialogue, weightedSceneAction, weightedSceneReply } from './dialogue';
 
 export default function CinematicPlaceholder({ request, onComplete }: { request: LevelThreeCinematicRequest; onComplete: () => void }) {
   const [index, setIndex] = useState(0);
@@ -11,7 +11,7 @@ export default function CinematicPlaceholder({ request, onComplete }: { request:
   useEffect(() => title.current?.focus(), [index]);
   const lines = request.kind === 'weights' ? request.shots.map((shot, index) => ({
     speaker: 'Alex', text: weightedSceneReply(request, index),
-    title: metricDefinition(shot.metricId).name, action: BEHAVIOURS[shot.metricId][shot.effort].action,
+    title: metricDefinition(shot.metricId).name, action: weightedSceneAction(request, index),
     badge: `${shot.weight}% · ${EFFORT_LABELS[shot.effort]}`,
   })) : request.kind === 'comparison' ? comparisonDialogue(request.playerName, request.runs).map(line => ({ ...line, title: 'The same rules. A different split.', action: `All ${request.runs.length} tested versions are compared: Alex changes his effort to match each set of percentages.`, badge: 'COMPARE THE PATTERNS' })) : [
     { speaker: request.playerName, text: 'Am I improving learning, or just improving the numbers?', title: 'One pattern. Three levels.', action: 'One metric became a target. More metrics became a checklist. Weights shaped Alex’s priorities.', badge: 'FINAL SCENE' },

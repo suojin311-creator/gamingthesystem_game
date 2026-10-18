@@ -116,7 +116,7 @@ with sync_playwright() as p:
     page.get_by_role('button', name='Observe the class', exact=True).click(); scene(page)
     page.get_by_role('button', name='Compare the patterns', exact=True).click(); advance(page, 4)
     satisfaction(page, 95, 'Delighted')
-    expect(page.locator('.l3-comparison-card')).to_have_count(3)
+    expect(page.locator('.l3-compare-table thead th[data-run]')).to_have_count(3)
     page.screenshot(path=str(OUT / 'management-comparison-desktop.png'), full_page=True, animations='disabled')
     record('Second and reference publications make smaller increases; comparison preserves 95 and all three actual test records')
     page.reload(wait_until='networkidle'); page.get_by_role('button', name='Skip guide', exact=True).click()

@@ -24,40 +24,37 @@ try {
       assert.equal(weightPattern(makeRun(ids.slice(0,3), w)), expected);
     }
   });
-  check('All 20 trios publish distinct plans and teacher reviews for one high, two high and near-even weights', () => {
-    const publications = new Set(), reviews = new Set();
+  check('All 20 trios have concise pattern-specific reviews; near-even exposes the scoring stopping rule', () => {
+    const reviews = new Set();
     for (const trio of trios) {
       const families = [[70,20,10],[45,45,10],[34,33,33]].map(weights => {
         const run = makeRun(trio, weights);
-        const published = talk('publish','Riley','first',[run]);
+        for (const phase of ['choose','weights','publish','compare']) assert.deepEqual(talk(phase,'Riley','first',[run]), []);
         const review = talk('result','Riley','first',[run]);
-        for (const lines of [published, review]) {
-          assert.equal(lines.length, 3); assert.equal(lines[0].name, 'Riley');
-          assert.equal(lines.filter(line => line.speaker === 'Alex').length, 2);
-          assert.ok(lines.every(line => line.text.length && !line.text.includes('undefined')));
-        }
+        assert.equal(review.length,3); assert.equal(review[0].name,'Riley');
+        assert.equal(review.filter(line=>line.speaker==='Alex').length,2);
+        assert.ok(review.every(line=>line.text.length && !line.text.includes('undefined')));
+        assert.ok(review.every(line=>line.text.split(/\s+/).length<=18));
         if (weightPattern(run) !== 'near-even') {
-          const lower = trio.filter((_,i) => weights[i]<34).map(id=>METRICS.find(m=>m.id===id).shortName);
-          lower.forEach(name=>assert.ok(published.some(line=>line.text.includes(name))));
+          const lower = trio.filter((_,i)=>weights[i]<34).map(id=>METRICS.find(m=>m.id===id).shortName);
           lower.forEach(name=>assert.ok(review.some(line=>line.text.includes(name))));
+        } else {
+          assert.match(review[1].text,/extra points/);assert.match(review[2].text,/I’m done/);
         }
-        publications.add(JSON.stringify(published)); reviews.add(JSON.stringify(review));
-        return { published, review };
+        reviews.add(JSON.stringify(review));return review;
       });
-      assert.equal(new Set(families.map(f=>f.published[0].text)).size,3);
-      assert.equal(new Set(families.map(f=>f.review[0].text)).size,3);
+      assert.equal(new Set(families.map(f=>f[0].text)).size,3);
     }
-    // Near-even deliberately describes all three together; metric-specific table rows carry the names.
-    assert.ok(publications.size >= 41 && reviews.size >= 41);
+    assert.ok(reviews.size>=41);
   });
   check('Second-result questions describe actual increases, decreases and unchanged effort bands', () => {
     const trio=ids.slice(0,3);
     const question=(a,b)=>talk('result','Riley','different',[makeRun(trio,a),makeRun(trio,b,2)])[0].text;
-    assert.match(question([70,20,10],[20,70,10]),/Participation got more effort, while Preparation got less/);
-    assert.match(question([70,20,10],[80,10,10]),/effort looks similar/);
-    assert.match(question([34,33,33],[40,30,30]),/Did that change how you worked/);
-    assert.match(question([70,20,10],[34,33,33]),/more spread out/);
-    assert.match(question([45,45,10],[70,20,10]),/Preparation got more effort, while Participation got less/);
+    assert.match(question([70,20,10],[20,70,10]),/from Preparation to Participation/);
+    assert.match(question([70,20,10],[80,10,10]),/same routine/);
+    assert.match(question([34,33,33],[40,30,30]),/change your goal/);
+    assert.match(question([70,20,10],[34,33,33]),/What made you stop/);
+    assert.match(question([45,45,10],[70,20,10]),/from Participation to Preparation/);
   });
   check('Both comparison orders and both system references describe the latest actual pattern without assuming an improvement', () => {
     for (const sequence of [[[70,20,10],[34,33,33]],[[34,33,33],[70,20,10]],[[70,20,10],[80,10,10]],[[34,33,33],[40,30,30]]]) {
@@ -66,7 +63,7 @@ try {
       if(reference) runs.push(makeRun(ids.slice(0,3),reference.weights,3,reference.kind));
       assert.ok(compareRuns(runs));
       const text=comparisonDialogue('Riley',runs)[0].text;
-      assert.match(text,isNearEven(runs.at(-1).weights)?/Spreading the rewards/:/Making Preparation worth more/);
+      assert.match(text,isNearEven(runs.at(-1).weights)?/Your time is shared/:/You moved your effort/);
       assert.ok(!JSON.stringify(comparisonDialogue('Riley',runs)).includes('Balancing the weights helped'));
     }
   });

@@ -16,61 +16,37 @@ function priorities(run: WeightRun) {
   return { higher, lead: names(higher), low: names(run.metricIds.filter(id => !higher.includes(id))) };
 }
 
-// Reactions belong to separate beats. Replaying a scene keeps its original lines.
-const publishReaction = { 'one-higher': '🏆', 'two-higher': '⚖️', 'near-even': '🍰' };
-const republishReaction = { 'one-higher': '🧲', 'two-higher': '🛠️', 'near-even': '🧁' };
-
-export function workbenchDialogue(phase: string, playerName: string, goal: WeightGoal, runs: WeightRun[]): ConversationLine[] {
+/** Only observation results need a workbench exchange; operations stay visual. */
+export function workbenchDialogue(phase: string, playerName: string, _goal: WeightGoal, runs: WeightRun[]): ConversationLine[] {
+  if (phase !== 'result') return [];
   const teacher = (text: string): ConversationLine => ({ speaker: 'Maya', name: playerName, text });
   const alex = (text: string): ConversationLine => ({ speaker: 'Alex', name: 'Alex', text });
   const current = runs.at(-1);
   const previous = runs.at(-2);
-  if (phase === 'weights') {
-    if (goal === 'different') return [teacher('Alex, I’m trying a different split. Will that change your plan?'), alex('New percentages again? 🙃'), alex('Let me see what earns the most points now.')];
-    return [teacher('Alex, how will you decide which tasks to focus on?'), alex('Let me check the percentages. 🔎'), alex('The bigger rewards get more of my time!')];
-  }
   if (!current) return [];
   const pattern = weightPattern(current);
   const { lead, low } = priorities(current);
-  if (phase === 'publish') {
-    if (!previous) {
-      const reaction = publishReaction[pattern];
-      if (pattern === 'one-higher') return [teacher(`${lead} counts most, Alex. Where will you start?`), alex(`${lead} first! That’s the big prize. ${reaction}`), alex(`I’ll keep ${low} to the basics.`)];
-      if (pattern === 'two-higher') return [teacher(`${lead} count more, Alex. How will you split your time?`), alex(`Those two get most of my time! ${reaction}`), alex(`${low} can wait till I’ve covered them.`)];
-      return [teacher('These three count about the same, Alex. What’s your plan?'), alex(`A little time for each! ${reaction}`), alex('No tiny task I can skip this time.')];
-    }
-    const reaction = republishReaction[pattern];
-    if (pattern === 'near-even') return [teacher(isNearEven(previous.weights) ? 'The rewards are still close, Alex. Would you change your approach?' : 'The rewards are closer now, Alex. How will you tackle the tasks?'), alex(`I’ll keep all three in play. ${reaction}`), alex(isNearEven(previous.weights) ? 'Small changes, same sort of plan!' : 'Leaving one out would hurt my total.')];
-    const samePriority = lead === priorities(previous).lead && !isNearEven(previous.weights);
-    if (pattern === 'one-higher') return [teacher(`${lead} now counts most. Does that change where you’ll start?`), alex(`${samePriority ? 'Still' : 'I’m switching to'} ${lead}${samePriority ? ' first' : ''}! ${reaction}`), alex(samePriority ? 'The numbers moved, but that’s still the biggest reward.' : `I’ll save time on ${low} to make room.`)];
-    return [teacher(`${lead} are the bigger rewards now. What’s your new plan?`), alex(`${samePriority ? 'Those two still' : 'Those two now'} get the best slots! ${reaction}`), alex(`${low} gets whatever time I have left.`)];
+  if (!previous) {
+    if (pattern === 'one-higher') return [teacher('Why leave the other two behind, Alex?'), alex(`${lead} was worth the most. 🥇`), alex(`I rushed ${low}.`)];
+    if (pattern === 'two-higher') return [teacher(`What happened to ${low}?`), alex(`${lead} kept me busy. 🛎️`), alex(`I gave ${low} the quick version.`)];
+    return [teacher('What would you like to explore next?'), alex('Does that earn extra points?'), alex('If not, I’m done. 😏')];
   }
-  if (phase === 'result') {
-    if (!previous) {
-      if (pattern === 'one-higher') return [teacher(`You gave ${lead} most of your attention. What happened to the other two?`), alex(`${lead} got my best shot. 🥇`), alex(`${low}? Just enough to get by.`)];
-      if (pattern === 'two-higher') return [teacher(`You kept up with ${lead}. Why so little time on ${low}?`), alex('The two bigger rewards kept me busy. 🛎️'), alex(`${low} wasn’t worth as much, so I rushed it.`)];
-      return [teacher('You worked on all three, Alex. What kept you moving between them?'), alex('Leaving one out would cost me points. 🤑'), alex('So I made a little room for every task.')];
-    }
-    if (current.kind !== 'player') {
-      if (pattern === 'near-even') return [teacher('With similar rewards, you kept all three going. What were you aiming for?'), alex('No easy points to leave on the table. 🧮'), alex('I spread out the work so I could collect them all.')];
-      return [teacher(`When one reward grew, you put ${lead} first. Why?`), alex('That one was too tempting to ignore! 🥨'), alex('I saved the smaller jobs for whatever time was left.')];
-    }
-    if (pattern === 'near-even') return [teacher(isNearEven(previous.weights) ? 'The percentages changed a little. Did that change how you worked?' : 'Your time is more spread out now. What changed your approach?'), alex(isNearEven(previous.weights) ? 'Not much! Each task still paid about the same.' : 'I couldn’t leave one task behind this time.'), alex('I kept all three going for the score. 🪁')];
-    // Reflect actual effort changes, including changed weights with unchanged effort bands.
-    const intensity = { low: 0, medium: 1, high: 2 };
-    const changed = (direction: number) => current.metricIds.filter((id, index) => {
-      const oldIndex = previous.metricIds.indexOf(id);
-      return oldIndex >= 0 && Math.sign(intensity[effortAt(current.weights, index)] - intensity[effortAt(previous.weights, oldIndex)]) === direction;
-    });
-    const up = names(changed(1)), down = names(changed(-1));
-    const question = up && down ? `${up} got more effort, while ${down} got less. Why the switch?` : up ? `You stepped up your work on ${up}. What made that worth it?` : down ? `You eased off on ${down}. What changed?` : 'The weights moved, but your effort looks similar. Why?';
-    return [teacher(question), alex(`I’m watching the bigger rewards in ${lead}. 🧩`), alex(up || down ? `${low} got the quick version so I could save time.` : 'A few points changed, but I could keep my old routine.')];
+  if (current.kind !== 'player') {
+    if (pattern === 'near-even') return [teacher('All three got time. What about going further?'), alex('I’d need a reason to keep going. 🧮'), alex('Is there another mark for that?')];
+    return [teacher(`What pulled you toward ${lead}?`), alex('That bigger reward! 🥨'), alex('The smaller tasks could wait.')];
   }
-  if (phase === 'compare') {
-    if (pattern === 'near-even') return [teacher('Your effort is more balanced now. Are you choosing by learning value or by points?'), alex('I’m still following the rewards. 🗺️'), alex('A fairer split just means three jobs to score on.')];
-    return [teacher(`You shifted toward ${lead}. What decided which task came first?`), alex('The reward made that decision easy. 🎲'), alex('Change the points and I’ll change my priorities.')];
+  if (pattern === 'near-even') {
+    const stillEven = isNearEven(previous.weights);
+    return [teacher(stillEven ? 'Did the new split change your goal?' : 'You shared your time. What made you stop?'), alex(stillEven ? 'Not really. I still ticked all three boxes.' : 'Every requirement had its tick.'), alex(`${stillEven ? 'Then I packed up.' : 'That’s my cue to close the book.'} 🪁`)];
   }
-  return [];
+  const intensity = { low: 0, medium: 1, high: 2 };
+  const changed = (direction: number) => current.metricIds.filter((id, index) => {
+    const oldIndex = previous.metricIds.indexOf(id);
+    return oldIndex >= 0 && Math.sign(intensity[effortAt(current.weights, index)] - intensity[effortAt(previous.weights, oldIndex)]) === direction;
+  });
+  const up = names(changed(1)), down = names(changed(-1));
+  const question = up && down ? `Why switch effort from ${down} to ${up}?` : up ? `Why spend more time on ${up}?` : down ? `Why ease off on ${down}?` : 'New weights, same routine?';
+  return [teacher(question), alex(`I’m following the rewards in ${lead}. 🧩`), alex(up || down ? `${low} got the quick version.` : 'I could keep my old shortcuts.')];
 }
 
 const repeatedAction: Record<MetricId, Record<Effort, readonly [string, string]>> = {
@@ -106,9 +82,27 @@ const repeatedAction: Record<MetricId, Record<Effort, readonly [string, string]>
   },
 };
 
-/** Scene replies remember earlier shots; replaying the same request is deterministic. */
+const nearEvenTasks: Record<MetricId, { action: string; lines: readonly [string, string] }> = {
+  prep: { action: 'Alex checks the preparation requirements, completes the reading task and closes the material as soon as every box is ticked.', lines: ['Preparation boxes ticked. Next task!', 'Reading requirement met. Closing that one.'] },
+  part: { action: 'Alex makes the required contributions, marks participation complete and stops looking for another idea to share.', lines: ['Contribution made. That covers my mark.', 'I’ve spoken enough for the participation points.'] },
+  focus: { action: 'Alex stays on task for the required activity, checks the focus criterion and packs away the task when it is met.', lines: ['Stayed on task. That should count.', 'Focus requirement covered. I can wrap this up.'] },
+  discuss: { action: 'Alex follows the discussion criteria, ticks off the required behaviours and puts the prompt cards away.', lines: ['Used the prompts. Discussion box ticked.', 'That’s every discussion behaviour on the list.'] },
+  reflect: { action: 'Alex fills the required reflection sections, checks the rubric and closes the notebook without exploring another question.', lines: ['Every required section is filled in.', 'Reflection format checked. Ready to submit.'] },
+  peer: { action: 'Alex reads a post and writes the required suggestion, then closes the post once the response criteria are satisfied.', lines: ['Suggestion written. Reply requirement met.', 'My response ticks the boxes. On to the next job.'] },
+};
+
+export function weightedSceneAction(request: LevelThreeCinematicRequest, index: number) {
+  const shot = request.shots[index];
+  return isNearEven(request.runs.at(-1)!.weights) ? nearEvenTasks[shot.metricId].action : BEHAVIOURS[shot.metricId][shot.effort].action;
+}
+
+/** Replaying a request is deterministic; later observations have fresh lines. */
 export function weightedSceneReply(request: LevelThreeCinematicRequest, index: number) {
   const shot = request.shots[index];
+  if (isNearEven(request.runs.at(-1)!.weights)) {
+    const seen = request.runs.slice(0, -1).filter(run => isNearEven(run.weights)).length;
+    return nearEvenTasks[shot.metricId].lines[Math.min(seen, 1)];
+  }
   const seen = request.runs.slice(0, -1).filter(run => {
     const priorIndex = run.metricIds.indexOf(shot.metricId);
     return priorIndex >= 0 && effortAt(run.weights, priorIndex) === shot.effort;
@@ -118,12 +112,9 @@ export function weightedSceneReply(request: LevelThreeCinematicRequest, index: n
 
 export function comparisonDialogue(playerName: string, runs: WeightRun[]) {
   const current = runs.at(-1)!;
-  const lead = priorities(current).lead;
   return [
-    { speaker: playerName, text: isNearEven(current.weights) ? 'Spreading the rewards changed where your time went. Did it change what you were aiming for?' : `Making ${lead} worth more pulled your attention there. Did your goal change too?` },
-    { speaker: 'Alex', text: 'My goal? Get the best score I can.' },
-    { speaker: playerName, text: 'So a different split changed your strategy, but the score still set the goal.' },
-    { speaker: 'Alex', text: 'Well, you gave me a score to chase!' },
-    { speaker: playerName, text: 'Then I need to look beyond the percentages.' },
+    { speaker: playerName, text: isNearEven(current.weights) ? 'Your time is shared now. What are you aiming for?' : 'You moved your effort. What are you aiming for?' },
+    { speaker: 'Alex', text: 'The best score I can get.' },
+    { speaker: 'Alex', text: 'I work out what earns marks, then stop when I’ve got them.' },
   ];
 }

@@ -29,16 +29,16 @@ category. See [visual operations](VISUAL_PLAY.md).
   observation until its current classroom response has been observed.
 - The scene has exactly three selected metric/intensity shots, using the 18
   Narrative V2 behaviours. Returning reveals qualitative effort rows, then the
-  teacher/Alex conversation; the next action appears with Alex’s second message.
+  teacher/Alex conversation; the next action appears with Alex’s second short message. Weight editing, publication and comparison contain no workbench dialogue.
 - Results use the three evidence rows without an additional effort-summary box.
-  Comparison cards have no repeated prose footnotes. Both player attempts and
+  A single neutral table aligns all tests in adjacent columns, with each metric label shown once. Cells with changed effort have a restrained marker; near-even does not receive a success colour. Both player attempts and
   any system reference remain visible as actual data rows.
 - Level 3 action footers have no explanatory left-side captions. Selection
   feedback stays next to the chosen-priorities list; unchanged-allocation
   validation is shown above the weight cards. Replay scene remains a control.
 - Table typography is composed for the view: main metric names are 16px,
-  compact names 15px, percentages 20px (19px compact) and effort labels 14px
-  (13px phone) with medium
+  comparison names 16px, percentages 20px (18px in comparison) and effort labels 14px
+  (13px in comparison, 12px in narrow comparisons) with medium
   weight. Qualitative bars are slimmer. The columns retain aligned headings
   and a quiet divider. There are no invented numerical effort percentages.
 
@@ -62,8 +62,7 @@ Run gate requires the player to make it more even or reach a specific spread.
 The reference is explicitly identified, requires a click, and uses the same
 publication → Observe → classroom → results flow. The comparison displays all
 actual runs in order: Your first test, Your second test, and System reference
-when present. No second player test is omitted. On narrow layouts cards wrap or
-stack; typography is retained. The concern remains that scoring rules guide
+when present. No second player test is omitted. On narrow layouts each metric label spans the table, followed by the same two or three trial columns. All actual records remain visible. The concern remains that scoring rules guide
 Alex’s choices even when effort is distributed more evenly.
 
 ## Conversations and final placeholder
@@ -74,29 +73,32 @@ Teacher and student portraits replace initial-letter avatars across all chapters
 including classroom notebook and checklist illustrations. Player names still
 come from the opening-supplied prop, independently of the role artwork.
 
-Level 3 conversations use submitted run snapshots and earlier trials. Publication
-plans distinguish one higher reward, two higher rewards and near-even weights;
-the second publication also recognizes whether the leading priorities changed.
-Result questions describe actual increases/decreases in qualitative effort, or
-acknowledge when changed weights left the effort bands unchanged. Each workbench
-exchange gives Alex two short replies. Teacher questions and reactions advance
-from planning to observed behaviour to comparing goals.
+Each observation has one concise teacher question and two short Alex replies.
+Weight editing, publication and the comparison table have no workbench dialogue;
+the final response cinematic develops the scoring-system conclusion once.
+`workbenchDialogue` receives the run history but returns lines only for `result`.
+Questions follow actual effort changes, including an unchanged routine when the
+weights changed within the same bands.
 
-`workbenchDialogue` receives the full run history. `weightedSceneReply(request,
-shotIndex)` varies a repeated metric/intensity reply according to earlier shots;
-replaying that request keeps the same words. `comparisonDialogue(playerName,
-runs)` describes the final actual pattern, including near-even-first trials and
-both system references. It never assumes rebalancing happened in a particular
-direction. Custom animation renderers can use these same narrative helpers.
-Scene IDs, shot actions, intensity rules and result payloads are unchanged.
+Near-even effort stays medium on all three metrics. It also shows a visible-time
+sequence: checking criteria, collecting ticks and packing up. The student card
+reads “Stops when the criteria are met.” The first near-even review asks about
+exploring further; Alex asks whether that earns extra points and says he is done
+if it does not. The risk concerns the stopping rule, not a claimed learning loss.
+The sequence holds while hidden or off-screen; reduced motion removes movement.
 
-Level 1 has six metric-specific review questions. Level 2's three-metric exchange
-uses the selected trio and its visible/quality/mixed branch. The final cinematic
-and returned conversation make different points before leading into weighting.
-All authored emoji remain distinct. `tests/dialogue_narrative.mjs` checks 8,640
-complete three-level story paths for repeated dialogue/emoji, along with pattern
-boundaries, unchanged effort bands and both comparison orders. Intentional
-Replay scene repeats are exempt from that no-repeat story-path check.
+`weightedSceneReply(request, shotIndex)` keeps repeat observations fresh and
+replays deterministic. `weightedSceneAction(request, shotIndex)` supplies the
+near-even task/criterion/stop behaviour for each metric. Custom animation hosts
+can use both helpers. Existing scene IDs, effort thresholds and result payloads
+are unchanged. The partner's finished videos remain separate.
+
+`comparisonDialogue(playerName, runs)` has three brief lines and describes the
+actual final pattern in either experiment order. All authored emoji remain
+distinct. `tests/dialogue_narrative.mjs` checks 8,640 complete combination paths
+for repeated lines/emoji; Replay scene intentionally preserves its established
+lines. See [Level 3 focus revision](LEVEL3_FOCUS.md) for the saved baseline and
+accepted visual/narrative scope.
 
 The replaceable scene chain is `level3.weights` for each test, then
 `level3.compare` for Alex’s response, then `theory.reveal`. The final theory
@@ -152,7 +154,7 @@ across all three chapters; Reset weights is retained.
 `play/Level3-and-Full-game-play.zip`, containing standalone Level 3 and connected
 Levels 1–3. `play/LATEST.json` records source, build, ZIP and bundle hashes.
 `tests/release.py` verifies the actual downloads and their complete flows.
-Current checks are recorded in `LEVEL3_VALIDATION-v8.json`; older reports and
+Current checks are recorded in `LEVEL3_VALIDATION-v9.json`; older reports and
 versioned ZIPs are historical. Managed Chromium tests exact offline HTML bytes
 through an in-memory HTTPS origin; direct file opening in the user browser and
 classroom load capacity are not claimed as tested.

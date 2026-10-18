@@ -5,7 +5,9 @@ import Icon from '../../shared/components/Icon';
 import Conversation from '../../shared/components/Conversation';
 import LearningRisk from '../../shared/components/LearningRisk';
 import MetricSelection from '../../shared/components/MetricSelection';
-import TaskEffort from '../../shared/components/TaskEffort';
+import EffortDisplay from './EffortDisplay';
+import CriteriaStop from './CriteriaStop';
+import WeightComparison from './WeightComparison';
 import ManagementSatisfaction, { MANAGEMENT_PROGRESS } from '../../shared/components/ManagementSatisfaction';
 import { useFeedback } from '../../shared/hooks/useFeedback';
 import { useVisibleDelay } from '../../shared/hooks/useVisibleDelay';
@@ -27,13 +29,13 @@ const STAGES = ['Choose three', 'Set weights', 'Try another split', 'Compare'];
 const EMPTY_CONFIRMATIONS: Confirmed = [false, false, false];
 const dialogueTime = (text: string) => Math.min(2500, Math.max(1300, 450 + text.split(/\s+/).length * 110));
 
-function RunRows({ run, shown = 3, compact = false }: { run: WeightRun; shown?: number; compact?: boolean }) {
-  return <div className={`l3-run-table ${compact ? 'l3-compact-table' : ''}`}><div className="l3-result-legend" aria-hidden="true"><span>METRIC</span><span>WEIGHT</span><span>ALEX’S EFFORT</span></div><ol className="l3-run-rows">{run.metricIds.map((id, index) => {
+function RunRows({ run, shown = 3 }: { run: WeightRun; shown?: number }) {
+  return <div className="l3-run-table"><div className="l3-result-legend" aria-hidden="true"><span>METRIC</span><span>WEIGHT</span><span>ALEX’S EFFORT</span></div><ol className="l3-run-rows">{run.metricIds.map((id, index) => {
     const effort = effortAt(run.weights, index);
     return <li key={id} data-metric={id} data-effort={effort} data-shown={index < shown} aria-hidden={index >= shown} aria-label={`${metricDefinition(id).name}: score weight ${run.weights[index]} percent; Alex’s effort: ${EFFORT_LABELS[effort]}`} style={{ '--row-index': index } as React.CSSProperties}>
       <span className="l3-row-metric"><Icon name={id} /><span>{metricDefinition(id).shortName}</span></span>
       <strong className="l3-row-weight">{run.weights[index]}<small>%</small></strong>
-      <span className="l3-effort"><TaskEffort effort={effort} /><span className="l3-effort-detail"><span className="l3-effort-bars" aria-hidden="true">{[0, 1, 2].map(i => <i key={i} data-active={i < (effort === 'low' ? 1 : effort === 'medium' ? 2 : 3)} />)}</span><strong className="l3-effort-label">{EFFORT_LABELS[effort]}</strong></span></span>
+      <EffortDisplay metricId={id} effort={effort} />
     </li>;
   })}</ol></div>;
 }
@@ -54,6 +56,7 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
   const [reportReady, setReportReady] = useState(false);
   const [resultRows, setResultRows] = useState(0);
   const [resultTalkReady, setResultTalkReady] = useState(false);
+  const [routineReady, setRoutineReady] = useState(false);
   const [dialogueReady, setDialogueReady] = useState(false);
   const [runId, setRunId] = useState(0);
   const [hint, setHint] = useState('');
@@ -77,7 +80,7 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
   const request = sceneKind ? cinematicRequest(sceneKind, playerName, runs) : null;
   const lines = workbenchDialogue(phase, playerName, goal, runs);
 
-  function move(next: Phase) { feedback.stop(); setHint(''); setResultTalkReady(false); setDialogueReady(false); setPhase(next); }
+  function move(next: Phase) { feedback.stop(); setHint(''); setResultTalkReady(false); setRoutineReady(false); setDialogueReady(false); setPhase(next); }
   function choose(id: MetricId) {
     if (selected.includes(id)) setSelected(selected.filter(value => value !== id));
     else if (selected.length < 3) setSelected(METRIC_CATALOG.map(metric => metric.id).filter(value => value === id || selected.includes(value)));
@@ -129,7 +132,7 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
   useVisibleDelay(`${key}:${resultRows}`, '.l3-results', 700, phase === 'result' && resultRows < 3, () => {
     setResultRows(value => value + 1); feedback.play('evidence');
   });
-  useVisibleDelay(`${key}:dialogue`, '.l3-results', 900, phase === 'result' && resultRows === 3 && !resultTalkReady, () => {
+  useVisibleDelay(`${key}:dialogue`, '.l3-results', 450, phase === 'result' && resultRows === 3 && (!current || !isNearEven(current.weights) || routineReady) && !resultTalkReady, () => {
     setResultTalkReady(true);
     requestAnimationFrame(() => document.querySelector('.level-three .l3-bottom-dialogue')?.scrollIntoView({ block: 'nearest', behavior: 'smooth' }));
   });
@@ -176,11 +179,11 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
             </article>;
           })}</div><div className="l3-allocation" aria-label="100 percent allocated"><div className="l3-allocation-bar" aria-hidden="true">{weights.map((value, index) => <i key={index} style={{ width: `${value}%` }} />)}</div><span>100% allocated</span></div><div className="l3-editor-tools"><button className="text-button" onClick={resetWeights}><Icon name="restart" />Reset weights</button></div><div className="action-row l3-only-action"><button className="button primary-button" disabled={!canRun(weights, confirmed, baseline, goal)} onClick={() => publish()}>Run evaluation<Icon name="arrow" /></button></div></>}
           {phase === 'publish' && current && <><div className="l3-publish" role="status"><ol>{selected.map((id, index) => <li key={id} data-published={index < published}><Icon name={id} /><span>{metricDefinition(id).shortName}</span><strong>{current.weights[index]}%</strong><span>{index < published ? <Icon name="check" /> : <i className="l3-pending-dot" />}</span></li>)}</ol></div><div className="action-row l3-only-action"><button className="button primary-button" disabled={!reportReady} onClick={() => move('scene')}><Icon name="play" />Observe the class</button></div></>}
-          {phase === 'result' && current && <><div className="l3-results"><RunRows run={current} shown={resultRows} />{resultRows < 3 && <p className="l3-watching" role="status">Watching Alex adapt…</p>}</div><div className="action-row"><button className="text-button" onClick={() => move('scene')}>Replay scene</button>{resultRows === 3 && dialogueReady ? action : <span className="l3-action-space" aria-hidden="true" />}</div></>}
-          {phase === 'compare' && compared && <><div className={`l3-comparison ${runs.length === 3 ? 'l3-three-runs' : ''}`}>{runs.map(run => <article className={`l3-comparison-card ${isNearEven(run.weights) ? 'near-even' : 'uneven'}`} data-run={run.round} data-kind={run.kind} key={run.round}><span className="eyebrow">{run.kind !== 'player' ? 'SYSTEM REFERENCE' : run.round === 1 ? 'YOUR FIRST TEST' : 'YOUR SECOND TEST'}</span><h3>{isNearEven(run.weights) ? 'Near-even weights' : 'Uneven weights'}</h3><RunRows run={run} compact /></article>)}</div><div className="action-row l3-only-action"><button className="button primary-button" onClick={() => { completeLevel(); move('comparison-scene'); }}>Watch Alex’s response<Icon name="play" /></button></div></>}
+          {phase === 'result' && current && <><div className="l3-results"><RunRows run={current} shown={resultRows} />{resultRows === 3 && isNearEven(current.weights) && <CriteriaStop key={key} runKey={key} onComplete={() => setRoutineReady(true)} />}{resultRows < 3 && <p className="l3-watching" role="status">Watching Alex adapt…</p>}</div><div className="action-row"><button className="text-button" onClick={() => move('scene')}>Replay scene</button>{resultRows === 3 && dialogueReady ? action : <span className="l3-action-space" aria-hidden="true" />}</div></>}
+          {phase === 'compare' && compared && <><WeightComparison runs={runs} /><div className="action-row l3-only-action"><button className="button primary-button" onClick={() => { completeLevel(); move('comparison-scene'); }}>Watch Alex’s response<Icon name="play" /></button></div></>}
 
-        </section>{showPerspectives && current && <aside className="l3-perspectives"><section className="l3-perspective l3-management" data-reported={hasReport}><h3><Icon name="school" />Management’s view</h3><ManagementSatisfaction value={satisfaction}>{hasReport ? '3 priorities · 100% allocated' : 'Publishing weights…'}</ManagementSatisfaction></section><section className={`l3-perspective student ${hasObservation ? 'l3-observed' : ''}`}><h3><Icon name="student" />Students</h3>{hasObservation ? <LearningRisk behaviour={phase === 'compare' || isNearEven(current.weights) ? 'Points still guide Alex’s choices.' : 'Low-weight areas get less attention.'} /> : <><Icon name="eye" /><p className="l3-awaiting">Awaiting observation</p></>}</section></aside>}</div>}
-      {lines.length > 0 && <div className="l3-bottom-dialogue" aria-label="Player dialogue"><Conversation key={`workbench:${key}:${goal}`} lines={lines} enabled={(phase !== 'result' || resultTalkReady) && (phase !== 'publish' || reportReady)} typingDelay={300} readDelay={dialogueTime} play={feedback.play} onLastMessage={() => setDialogueReady(true)} onSettled={() => {}} /></div>}
+        </section>{showPerspectives && current && <aside className="l3-perspectives"><section className="l3-perspective l3-management" data-reported={hasReport}><h3><Icon name="school" />Management’s view</h3><ManagementSatisfaction value={satisfaction}>{hasReport ? '3 priorities · 100% allocated' : 'Publishing weights…'}</ManagementSatisfaction></section><section className={`l3-perspective student ${hasObservation ? 'l3-observed' : ''}`}><h3><Icon name="student" />Students</h3>{hasObservation ? <LearningRisk behaviour={phase === 'compare' ? 'Scores still set the stopping point.' : isNearEven(current.weights) ? 'Stops when the criteria are met.' : 'Low-weight areas get less attention.'} /> : <><Icon name="eye" /><p className="l3-awaiting">Awaiting observation</p></>}</section></aside>}</div>}
+      {lines.length > 0 && <div className="l3-bottom-dialogue" aria-label="Player dialogue"><Conversation key={`workbench:${key}:${goal}`} lines={lines} enabled={resultTalkReady} typingDelay={300} readDelay={dialogueTime} play={feedback.play} onLastMessage={() => setDialogueReady(true)} onSettled={() => {}} /></div>}
     </main><footer className="l3-footer"><span>GAMING THE SYSTEM</span><span>LEVEL 03</span></footer>
 
   </div>;
