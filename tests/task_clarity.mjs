@@ -11,15 +11,22 @@ try {
  const ids=['prep','part','peer'];
  const run=(weights,round,metricIds=ids)=>({round,kind:'player',metricIds,weights});
  const cells=html=>[...html.matchAll(/<tr data-metric="([^"]+)">([\s\S]*?)<\/tr>/g)].map(match=>({id:match[1],changes:[...match[2].matchAll(/<td[^>]*data-effort-change="([^"]+)"/g)].map(cell=>cell[1])}));
- check('The reported 43/29/28 → 34/33/33 → 28/43/29 example labels every effort comparison and names its reference test',()=>{
+ check('Weight changes within steady effort stay explicitly Same effort, including the reported near-even boundary example',()=>{
   const html=renderToStaticMarkup(React.createElement(Comparison,{runs:[run([43,29,28],1),run([34,33,33],2),run([28,43,29],3)]}));
-  assert.deepEqual(cells(html),[{id:'prep',changes:['baseline','same','less']},{id:'part',changes:['baseline','more','same']},{id:'peer',changes:['baseline','more','less']}]);
-  for(const label of ['Effort vs First test','Effort vs Second test','Same effort','More effort','Less effort'])assert.ok(html.includes(label));
+  assert.deepEqual(cells(html),ids.map(id=>({id,changes:['baseline','same','same']})));
+  for(const label of ['Effort vs First test','Effort vs Second test','Same effort'])assert.ok(html.includes(label));
   assert.ok(!html.includes('data-changed='));assert.ok(html.includes('Same effort compared with First test'));
+ });
+ check('Actual intensity changes are labelled against the immediately previous test',()=>{
+  const html=renderToStaticMarkup(React.createElement(Comparison,{runs:[run([70,20,10],1),run([34,33,33],2),run([10,70,20],3)]}));
+  assert.deepEqual(cells(html),[{id:'prep',changes:['baseline','less','less']},{id:'part',changes:['baseline','more','more']},{id:'peer',changes:['baseline','more','less']}]);
+  for(const label of ['More effort','Less effort'])assert.ok(html.includes(label));
  });
  check('Comparisons follow each metric identity through reordered runs and distinguish changed weights from unchanged effort',()=>{
   const reordered=renderToStaticMarkup(React.createElement(Comparison,{runs:[run([43,29,28],1),run([33,34,33],2,['peer','prep','part']),run([43,29,28],3,['part','peer','prep'])]}));
-  assert.deepEqual(cells(reordered),[{id:'prep',changes:['baseline','same','less']},{id:'part',changes:['baseline','more','same']},{id:'peer',changes:['baseline','more','less']}]);
+  assert.deepEqual(cells(reordered),ids.map(id=>({id,changes:['baseline','same','same']})));
+  const reorderedChanges=renderToStaticMarkup(React.createElement(Comparison,{runs:[run([70,20,10],1),run([33,34,33],2,['peer','prep','part']),run([70,20,10],3,['part','peer','prep'])]}));
+  assert.deepEqual(cells(reorderedChanges),[{id:'prep',changes:['baseline','less','less']},{id:'part',changes:['baseline','more','more']},{id:'peer',changes:['baseline','more','less']}]);
   const html=renderToStaticMarkup(React.createElement(Comparison,{runs:[run([70,20,10],1),run([80,10,10],2),run([10,70,20],3)]}));
   assert.deepEqual(cells(html),[{id:'prep',changes:['baseline','same','less']},{id:'part',changes:['baseline','same','more']},{id:'peer',changes:['baseline','same','same']}]);
  });

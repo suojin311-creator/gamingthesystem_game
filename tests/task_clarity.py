@@ -15,6 +15,7 @@ def run(page):
  page.get_by_role('button',name='Observe the class',exact=True).click()
  for _ in range(2):page.get_by_role('button',name='Continue scene',exact=True).click()
  page.get_by_role('button',name='Return to dashboard',exact=True).click();page.locator('.l3-results').scroll_into_view_if_needed();advance(page,14000)
+ if page.locator('.l3-criteria-stop').count():page.locator('.l3-criteria-stop').scroll_into_view_if_needed();advance(page,4000)
  page.locator('.l3-bottom-dialogue').scroll_into_view_if_needed();advance(page,8000)
 with sync_playwright() as p:
  browser=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox'])
@@ -54,7 +55,7 @@ with sync_playwright() as p:
  move(page,'prep',28);page.get_by_test_id('confirm-prep').click();move(page,'part',43);page.get_by_test_id('confirm-part').click();run(page)
  record('Reduced motion uses one steady outline, and the 320px task card and explicit suggestion button remain readable and usable')
  page.get_by_role('button',name='Compare the patterns',exact=True).click()
- expected={'prep':['baseline','same','less'],'part':['baseline','more','same'],'peer':['baseline','more','less']}
+ expected={id:['baseline','same','same'] for id in ['prep','part','peer']}
  for id,values in expected.items():
   cells=page.locator(f'.l3-compare-table tr[data-metric="{id}"] td')
   assert [c.get_attribute('data-effort-change') for c in cells.all()]==values
@@ -65,7 +66,7 @@ with sync_playwright() as p:
  expect(page.locator('.l3-comparison-basis')).to_have_text(['Starting observation','Effort vs First test','Effort vs Second test'])
  expect(page.locator('.l3-compare-table tr[data-metric="prep"] td[data-run="2"]')).to_contain_text('34%')
  expect(page.locator('.l3-compare-table tr[data-metric="part"] td[data-run="3"]')).to_contain_text('43%')
- record('The exact reported three-trial example names every comparison baseline and labels increases, decreases and equal effort even when weights change; ambiguous full-cell highlighting is removed')
+ record('The reported three-trial example now correctly shows unchanged medium effort throughout under the unified bands; comparison baselines and quiet weight references remain explicit')
  for width in [1366,768,390,320]:
   page.set_viewport_size({'width':width,'height':900 if width>520 else 844})
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')

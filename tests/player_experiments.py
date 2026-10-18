@@ -71,7 +71,7 @@ with sync_playwright() as p:
  expect(page.locator('.l3-edit-error')).to_contain_text('already tested')
  page.get_by_role('button',name='Reset weights',exact=True).click()
  set_weights(page,[10,70,20]);expect(page.get_by_role('button',name='Run evaluation',exact=True)).to_be_enabled();finish_run(page)
- expect(page.locator('.l3-trial-finding')).to_contain_text('Preparation and Focus still got minimum effort')
+ expect(page.locator('.l3-trial-finding')).to_contain_text('Preparation and Focus received minimum effort')
  page.get_by_role('button',name='Compare the patterns',exact=True).click()
  expect(page.locator('.l3-compare-table thead th[data-kind=player]')).to_have_count(3)
  expect(page.locator('.l3-compare-table thead .near-even')).to_have_count(0)

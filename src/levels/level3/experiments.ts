@@ -1,6 +1,6 @@
 import { metricDefinition, type MetricId } from '../../shared/data/metrics';
 import { joinNames, type TrialIntent, type WeightRun } from './data';
-import { effortAt, isNearEven, validWeights, type Weights } from './weights';
+import { effortAt, validWeights, type Weights } from './weights';
 
 export const TRIAL_INTENTS: { id: TrialIntent; label: string; shortLabel: string }[] = [
   { id: 'attention', label: 'Give all three attention', shortLabel: 'Share attention' },
@@ -47,7 +47,7 @@ export function experimentHint() { return 'This split was already tested. Reset 
 export function trialFinding(run: WeightRun, previous?: WeightRun) {
   if (run.intent === 'attention') {
     const low = run.metricIds.filter((_, i) => effortAt(run.weights, i) === 'low');
-    return low.length ? `${names(low)} still got minimum effort.` : 'All three received attention. What made Alex stop?';
+    return low.length ? `${names(low)} received minimum effort.` : 'All three received attention. What made Alex stop?';
   }
   if (run.intent === 'priority') {
     if (!previous) return 'A starting point. Compare his priority after your next change.';
@@ -61,8 +61,6 @@ export function trialFinding(run: WeightRun, previous?: WeightRun) {
     const moved = current.some(id => !before.includes(id)) || before.some(id => !current.includes(id));
     return `${names(current)} ${moved ? 'now' : 'still'} ${current.length > 1 ? 'draw' : 'draws'} his strongest effort.`;
   }
-  if (run.intent === 'exploration') return isNearEven(run.weights)
-    ? 'All boxes ticked. Alex packed up.'
-    : 'Effort follows the rewards. A new reason to learn is still unproven.';
+  if (run.intent === 'exploration') return 'Alex packed up after collecting the marks. Further learning is still unproven.';
   return '';
 }

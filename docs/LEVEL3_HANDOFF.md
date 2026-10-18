@@ -47,10 +47,14 @@ category. See [visual operations](VISUAL_PLAY.md).
   weight. Qualitative bars are slimmer. The columns retain aligned headings
   and a quiet divider. There are no invented numerical effort percentages.
 
-Near-even means highest minus lowest at most **10 percentage points**, including
-10. Thus 38/33/29 and 40/30/30 qualify; 40/31/29 does not. Near-even produces three
-medium story shots. Among valid weights, 1–33% is low, 34–66% medium and 67–98% high effort.
-These categories are narrative choices, not measured learning gains or losses.
+Every task uses its own weight for effort: **1–24% low, 25–66% medium and
+67–98% high**. Near-even means highest minus lowest at most **10 percentage
+points**, including 10. It only describes the allocation and never changes
+effort or selects a separate criticism. Thus 38/33/29 and 40/30/30 qualify;
+40/31/29 does not, but all three allocations still produce three medium shots.
+Changed weights within the same bands are valid unchanged observations. These
+categories are narrative choices, not measured learning gains or losses. See
+[effort rules](EFFORT_RULES.md).
 
 ## Explore, Adjust and Verify
 
@@ -72,6 +76,10 @@ First/Second/Third test, each `kind: 'player'`, with no system reference.
 After comparing, the player judges whether to keep the latest split or rethink
 the setup. Both choices are accepted and the final response acknowledges that
 judgment. See [player-led experiments](PLAYER_EXPERIMENTS.md).
+
+These required aims, three attempts and final judgment are the retained v16
+flow. Their educational purpose and player path remain under review. The v17
+effort correction does not remove these gates or claim that the path is fixed.
 
 ## First-use weight guide
 
@@ -102,20 +110,30 @@ the final response cinematic develops the scoring-system conclusion once.
 Questions follow actual effort changes, including an unchanged routine when the
 weights changed within the same bands.
 
-Near-even effort stays medium on all three metrics. It also shows a visible-time
-sequence: checking criteria, collecting ticks and packing up. The student card
-reads “Stops when the criteria are met.” The first near-even review asks about
-exploring further; Alex asks whether that earns extra points and says he is done
-if it does not. The risk concerns the stopping rule, not a claimed learning loss.
-The sequence holds while hidden or off-screen; reduced motion removes movement.
+Any all-medium allocation shows a visible-time sequence: checking criteria,
+collecting ticks and packing up. This includes uneven splits such as 40/31/29;
+the split label does not select the sequence. The student card describes the
+scoring stopping rule, while actual effort bands determine its contextual
+wording. An uneven or low-effort run still exposes score-directed stopping,
+without claiming that all tasks received attention or all requirements were
+met. Neglected low-effort tasks receive no completion tick. The risk concerns
+stopping at scoring requirements, not a claimed learning loss or a special
+penalty for balancing. The sequence holds while hidden or off-screen; reduced
+motion removes movement.
 
 `weightedSceneReply(request, shotIndex)` keeps repeat observations fresh and
 replays deterministic. `weightedSceneAction(request, shotIndex)` supplies the
-near-even task/criterion/stop behaviour for each metric. Custom animation hosts
-can use both helpers. Existing scene IDs and effort thresholds are unchanged; the contract below includes trial aims and the final judgment. The partner's finished videos remain separate.
+task/criterion/stop behaviour for each metric. Medium-shot criteria actions and
+replies apply to every all-medium run, independently of near-even classification.
+Custom animation hosts can use both helpers. Existing scene IDs and prop shapes
+are unchanged; the per-item effort threshold changed in v17. The contract below
+retains trial aims and the final judgment. The partner's finished videos and
+authored scripts remain separate and unchanged.
 
 `comparisonDialogue(playerName, runs, decision)` has three brief lines and describes the
-player’s keep/rethink judgment without treating it as a correctness test. Comparison trial headings and weight-pattern labels are larger: 12px on
+player’s keep/rethink judgment without treating it as a correctness test. Its
+summary follows the observed effort bands: a history with unchanged bands must
+not claim that Alex's effort moved with each new split. Comparison trial headings and weight-pattern labels are larger: 12px on
 desktop and 11px at phone widths. All authored emoji remain distinct. `tests/dialogue_narrative.mjs` checks 8,640 complete combination paths
 for repeated lines/emoji; Replay scene intentionally preserves its established
 lines. See [Level 3 focus revision](LEVEL3_FOCUS.md) for the saved baseline and
@@ -179,7 +197,7 @@ across all three chapters; Reset weights is retained.
 `play/Level3-and-Full-game-play.zip`, containing standalone Level 3 and connected
 Levels 1–3. `play/LATEST.json` records source, build, ZIP and bundle hashes.
 `tests/release.py` verifies the actual downloads and their complete flows.
-Current checks are recorded in `LEVEL3_VALIDATION-v16.json`; v15/v14 retain the preceding broader checks; older reports and
+Current checks are recorded in [LEVEL3_VALIDATION-v17.json](LEVEL3_VALIDATION-v17.json); v16 retains the preceding player-led-flow checks, and v15/v14 retain their broader checks; older reports and
 versioned ZIPs are historical. Managed Chromium tests exact offline HTML bytes
 through an in-memory HTTPS origin; direct file opening in the user browser and
 classroom load capacity are not claimed as tested.

@@ -4,7 +4,7 @@ import { allocateWeight, canRun, confirmWeight, effortAt, goalMet, isNearEven, m
 
 const checks = [];
 const check = (name, run) => { run(); checks.push(name); console.log('PASS', name); };
-check('Every possible integer split preserves total 100, range 1–98 and deterministic effort', () => {
+check('Every possible integer split preserves total 100, range 1–98 and deterministic allocation', () => {
   for (let a = 1; a <= 98; a++) for (let b = 1; b < 100 - a; b++) {
     const weights = [a, b, 100 - a - b];
     assert.ok(validWeights(weights));
@@ -18,6 +18,46 @@ check('Every possible integer split preserves total 100, range 1–98 and determ
       assert.deepEqual(allocateWeight(weights, [false, false, false], index, requested), next);
     }
   }
+});
+check('The 24/25 and 66/67 boundaries apply independently to the same task in every card position', () => {
+  for (const [weight, expected] of [[1,'low'],[24,'low'],[25,'medium'],[33,'medium'],[66,'medium'],[67,'high'],[98,'high']]) {
+    for (let index = 0; index < 3; index++) {
+      const weights = [1,1,1];
+      weights[index] = weight;
+      weights[(index+1)%3] = 99-weight;
+      assert.ok(validWeights(weights));
+      assert.equal(effortAt(weights,index),expected,JSON.stringify({weights,index}));
+    }
+  }
+});
+check('Across all 4,851 positive splits, increasing a task share never lowers its effort and other shares cannot change its effort', () => {
+  const ranks = {low:0,medium:1,high:2};
+  const effortByShare = new Map();
+  let splits = 0;
+  for (let a=1;a<=98;a++) for (let b=1;b<100-a;b++) {
+    const weights=[a,b,100-a-b];
+    splits++;
+    for (let index=0;index<3;index++) {
+      const current=effortAt(weights,index), share=weights[index];
+      if(effortByShare.has(share)) assert.equal(current,effortByShare.get(share),JSON.stringify({weights,index,share}));
+      else effortByShare.set(share,current);
+      for(let donor=0;donor<3;donor++) {
+        if(donor===index||weights[donor]===1)continue;
+        const next=[...weights];next[index]++;next[donor]--;
+        assert.ok(validWeights(next));
+        assert.ok(ranks[effortAt(next,index)]>=ranks[current],JSON.stringify({weights,next,index}));
+      }
+    }
+  }
+  assert.equal(splits,4851);assert.equal(effortByShare.size,98);
+  for(let share=1;share<98;share++) assert.ok(ranks[effortByShare.get(share+1)]>=ranks[effortByShare.get(share)]);
+});
+check('Crossing the near-even description boundary cannot reduce effort when a share rises', () => {
+  assert.ok(isNearEven([40,30,30]));assert.ok(!isNearEven([40,31,29]));
+  assert.deepEqual([0,1,2].map(i=>effortAt([40,30,30],i)),['medium','medium','medium']);
+  assert.deepEqual([0,1,2].map(i=>effortAt([40,31,29],i)),['medium','medium','medium']);
+  assert.ok(!isNearEven([50,25,25]));
+  assert.deepEqual([0,1,2].map(i=>effortAt([50,25,25],i)),['medium','medium','medium']);
 });
 check('Either remaining card confirms the pair after any first-card choice', () => {
   for (let first = 0; first < 3; first++) for (const second of [0,1,2].filter(i=>i!==first)) {
@@ -63,7 +103,7 @@ check('Near-even accepts gaps through 10 points inclusively, rejects 11, and pro
   assert.ok(!isNearEven([40,31,29]));
   assert.ok(!isNearEven([29,40,31]));
   assert.deepEqual([0,1,2].map(i=>effortAt([34,33,33],i)), ['medium','medium','medium']);
-  for (const [weights, expected] of [[[33,57,10],'low'], [[34,56,10],'medium'], [[66,24,10],'medium'], [[67,23,10],'high']]) assert.equal(effortAt(weights,0), expected);
+  for (const [weights, expected] of [[[24,66,10],'low'], [[25,65,10],'medium'], [[66,24,10],'medium'], [[67,23,10],'high']]) assert.equal(effortAt(weights,0), expected);
 });
 check('Run requires all three confirmed weights (including the linked pair) and a valid complete allocation', () => {
   for (const confirmed of [[false,false,false], [true,true,false], [true,false,true], [false,true,true]]) assert.ok(!canRun([34,33,33], confirmed, [34,33,33], 'first'));

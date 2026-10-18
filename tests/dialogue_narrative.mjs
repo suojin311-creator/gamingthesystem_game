@@ -6,8 +6,8 @@ const server = await createServer({ server: { middlewareMode: true, hmr: false }
 const checks = [];
 const check = (name, run) => { run(); checks.push(name); console.log('PASS', name); };
 try {
-  const { workbenchDialogue: talk, weightPattern, weightedSceneReply, comparisonDialogue } = await server.ssrLoadModule('/src/levels/level3/dialogue.ts');
-  const { cinematicRequest, compareRuns } = await server.ssrLoadModule('/src/levels/level3/data.ts');
+  const { workbenchDialogue: talk, weightPattern, weightedSceneAction, weightedSceneReply, comparisonDialogue } = await server.ssrLoadModule('/src/levels/level3/dialogue.ts');
+  const { cinematicRequest, compareRuns, comparisonSummary } = await server.ssrLoadModule('/src/levels/level3/data.ts');
   const { observationDialogue, classroomDialogue } = await server.ssrLoadModule('/src/levels/level2/dialogue.ts');
   const { sceneRequest } = await server.ssrLoadModule('/src/levels/level2/data.ts');
   const { METRICS } = await server.ssrLoadModule('/src/levels/level1/metrics.ts');
@@ -17,7 +17,7 @@ try {
   const trios = ids.flatMap((a, i) => ids.slice(i + 1).flatMap((b, j) => ids.slice(i + j + 2).map(c => [a, b, c])));
   assert.equal(trios.length, 20);
   const makeRun = (metricIds, weights, round = 1, kind = 'player') => ({ round, kind, metricIds, weights });
-  const splitCases = [[80,10,10],[70,20,10],[20,70,10],[45,45,10],[45,10,45],[46,43,11],[34,33,33],[40,30,30],[31,35,34]];
+  const splitCases = [[80,10,10],[70,20,10],[20,70,10],[45,45,10],[45,10,45],[46,43,11],[34,33,33],[40,30,30],[31,35,34],[50,25,25],[24,25,51]];
   check('Every valid integer split uses the 10-point near-even boundary and the correct one/two higher-reward family', () => {
     for (let a = 1; a <= 98; a++) for (let b = 1; b < 100-a; b++) {
       const w = [a,b,100-a-b];
@@ -25,7 +25,7 @@ try {
       assert.equal(weightPattern(makeRun(ids.slice(0,3), w)), expected);
     }
   });
-  check('All 20 trios have concise pattern-specific reviews; near-even exposes the scoring stopping rule', () => {
+  check('All 20 trios have concise reviews naming actual low-effort tasks; covered tasks expose the scoring stopping rule', () => {
     const reviews = new Set();
     for (const trio of trios) {
       const families = [[70,20,10],[45,45,10],[34,33,33]].map(weights => {
@@ -36,8 +36,8 @@ try {
         assert.equal(review.filter(line=>line.speaker==='Alex').length,2);
         assert.ok(review.every(line=>line.text.length && !line.text.includes('undefined')));
         assert.ok(review.every(line=>line.text.split(/\s+/).length<=18));
-        if (weightPattern(run) !== 'near-even') {
-          const lower = trio.filter((_,i)=>weights[i]<34).map(id=>METRICS.find(m=>m.id===id).shortName);
+        if (weights.some(weight=>weight<25)) {
+          const lower = trio.filter((_,i)=>weights[i]<25).map(id=>METRICS.find(m=>m.id===id).shortName);
           lower.forEach(name=>assert.ok(review.some(line=>line.text.includes(name))));
         } else {
           assert.match(review[1].text,/extra points/);assert.match(review[2].text,/I’m done/);
@@ -48,6 +48,23 @@ try {
     }
     assert.ok(reviews.size>=41);
   });
+  check('Medium scene actions and score-based stopping replies depend on the task effort, including uneven covered splits', () => {
+    for(const trio of trios)for(let index=0;index<3;index++) {
+      const actionByShare=[];
+      for(const share of [25,33,50,66]) {
+        const weights=[1,1,1];weights[index]=share;weights[(index+1)%3]=99-share;
+        const request=cinematicRequest('weights','Riley',[makeRun(trio,weights)]);
+        assert.equal(request.shots[index].effort,'medium');
+        actionByShare.push(weightedSceneAction(request,index));
+        assert.match(weightedSceneReply(request,index),/requirement|criteri|mark|point|tick|box|checklist|required|format|rubric|count/i);
+      }
+      assert.equal(new Set(actionByShare).size,1);
+      const runs=[[34,33,33],[50,25,25],[40,31,29]].map((weights,i)=>makeRun(trio,weights,i+1));
+      const replies=runs.map((_,i)=>weightedSceneReply(cinematicRequest('weights','Riley',runs.slice(0,i+1)),index));
+      assert.equal(new Set(replies).size,3);
+      assert.equal(weightedSceneAction(cinematicRequest('weights','Riley',runs),index),actionByShare[0]);
+    }
+  });
   check('Second-result questions describe actual increases, decreases and unchanged effort bands', () => {
     const trio=ids.slice(0,3);
     const question=(a,b)=>talk('result','Riley','different',[makeRun(trio,a),makeRun(trio,b,2)])[0].text;
@@ -57,19 +74,25 @@ try {
     assert.match(question([70,20,10],[34,33,33]),/What made you stop/);
     assert.match(question([45,45,10],[70,20,10]),/from Participation to Preparation/);
   });
-  check('All verification routes and both comparison orders describe the latest actual pattern without assuming an improvement', () => {
+  check('All verification routes and comparison orders describe actual effort without assuming an improvement or a shift', () => {
     for (const sequence of [[[70,20,10],[34,33,33]],[[34,33,33],[70,20,10]],[[70,20,10],[80,10,10]],[[34,33,33],[40,30,30]]]) {
       const runs=sequence.map((weights,i)=>makeRun(ids.slice(0,3),weights,i+1));
       const plan=nextExperiment(runs,'attention');
       runs.push(makeRun(ids.slice(0,3),plan.suggestion,3));
       assert.equal(!!compareRuns(runs),runs.some(run=>isNearEven(run.weights))&&runs.some(run=>!isNearEven(run.weights)));
-      const text=comparisonDialogue('Riley',runs)[0].text;
-      assert.match(text,isNearEven(runs.at(-1).weights)?/Your time is shared/:/You moved your effort/);
+      const same=runs.slice(1).every(run=>run.metricIds.every((id,i)=>effortAt(run.weights,i)===effortAt(runs[0].weights,runs[0].metricIds.indexOf(id))));
+      assert.match(comparisonSummary(runs),same?/same effort pattern/:/shifts effort/);
       assert.ok(!JSON.stringify(comparisonDialogue('Riley',runs)).includes('Balancing the weights helped'));
     }
+    const fixed=[[34,33,33],[40,31,29],[50,25,25]].map((weights,i)=>makeRun(ids.slice(0,3),weights,i+1));
+    const shifted=[[70,20,10],[34,33,33],[10,70,20]].map((weights,i)=>makeRun(ids.slice(0,3),weights,i+1));
+    assert.notEqual(comparisonSummary(fixed),comparisonSummary(shifted));
+    for(const decision of [undefined,'keep','revise'])assert.doesNotMatch(JSON.stringify(comparisonDialogue('Riley',fixed,decision)),/\b(?:moved|shifted|switched)\b.*\beffort\b/i);
+    const reordered=[makeRun(['prep','part','focus'],[70,20,10]),makeRun(['part','focus','prep'],[10,20,70],2),makeRun(['focus','prep','part'],[15,75,10],3)];
+    assert.match(comparisonSummary(reordered),/same effort pattern/);
   });
   let paths=0;
-  check('No dialogue or emoji repeats within 8,640 complete trial paths, including repeated patterns and unchanged scene intensity', () => {
+  check('No dialogue or emoji repeats across complete trial paths, including uneven covered splits and unchanged scene intensity', () => {
     for (const trio of trios) for (const first of splitCases) for (const second of splitCases) {
       if(JSON.stringify(first)===JSON.stringify(second))continue;
       const runs=[]; const story=[];
@@ -112,7 +135,7 @@ try {
       });
       assert.equal(JSON.stringify(request),snapshot);
     }
-    assert.equal(paths,8640);
+    assert.equal(paths,trios.length*splitCases.length*(splitCases.length-1)*METRICS.length);
   });
   check('Six Level 1 review questions and all 20 Level 2 trio exchanges differ; player names remain supplied text', () => {
     assert.equal(new Set(METRICS.map(m=>m.reviewQuestion)).size,6);

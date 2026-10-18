@@ -41,14 +41,29 @@ try {
  });
  check('Goal feedback acknowledges shared attention, unchanged effort and shifted priorities without equating any with learning',()=>{
   assert.match(trialFinding(run([34,33,33])),/All three received attention/);
-  const low=trialFinding(run([70,20,10]));assert.match(low,/Participation and Focus still got minimum effort/);
+  assert.match(trialFinding(run([50,25,25])),/All three received attention/);
+  const low=trialFinding(run([70,20,10]));assert.match(low,/Participation and Focus.*minimum effort/);assert.ok(!low.includes('still'));
+  assert.match(trialFinding(run([24,25,51])),/Preparation.*minimum effort/);
+  assert.ok(!trialFinding(run([24,25,51])).includes('Participation'));
   assert.match(trialFinding(run([34,33,33],2,ids.slice(0,3),'exploration')),/packed up/);
+  assert.match(trialFinding(run([50,25,25],2,ids.slice(0,3),'exploration')),/packed up/);
   assert.match(trialFinding(run([70,20,10],2,ids.slice(0,3),'exploration')),/unproven/);
   assert.match(trialFinding(run([80,10,10],2,ids.slice(0,3),'priority'),run([70,20,10])),/Preparation still draws/);
   assert.match(trialFinding(run([10,70,20],2,ids.slice(0,3),'priority'),run([70,20,10])),/Participation now draws/);
   assert.equal(compareRuns([run([70,20,10]),run([80,10,10],2),run([10,70,20],3)]),null);
   assert.equal(compareRuns([run([34,33,33]),run([40,30,30],2),run([31,35,34],3)]),null);
   assert.ok(compareRuns([run([70,20,10]),run([34,33,33],2),run([10,70,20],3)]));
+ });
+ check('Findings describe actual low-effort tasks across all integer splits, including uncovered and all-covered uneven distributions',()=>{
+  for(let a=1;a<=98;a++)for(let b=1;b<100-a;b++){
+   const weights=[a,b,100-a-b],record=run(weights),finding=trialFinding(record);
+   const expected=record.metricIds.filter((_,i)=>weights[i]<25);
+   if(!expected.length)assert.match(finding,/All three received attention/);
+   else {
+    for(const [index,name] of ['Preparation','Participation','Focus'].entries()) assert.equal(finding.includes(name),weights[index]<25,JSON.stringify({weights,finding,name}));
+    assert.match(finding,/minimum effort/);
+   }
+  }
  });
  mkdirSync('test-results',{recursive:true});writeFileSync('test-results/experiment-rules-results.json',JSON.stringify({passed:checks.length,checks},null,2)+'\n');
 } finally {await server.close()}

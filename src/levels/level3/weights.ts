@@ -51,6 +51,8 @@ export function canRun(weights: Weights, confirmed: Confirmed, baseline: Weights
 }
 
 export function effortAt(weights: Weights, index: number): Effort {
-  // Narrative V2: near-even overrides the absolute thresholds for all three shots.
-  return isNearEven(weights) ? 'medium' : weights[index] < 34 ? 'low' : weights[index] < 67 ? 'medium' : 'high';
+  // The same share always yields the same effort band, regardless of its neighbours.
+  return weights[index] < 25 ? 'low' : weights[index] < 67 ? 'medium' : 'high';
 }
+
+export const hasLowEffort = (weights: Weights) => weights.some((_, index) => effortAt(weights, index) === 'low');

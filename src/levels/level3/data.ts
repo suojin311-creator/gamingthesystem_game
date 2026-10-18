@@ -57,6 +57,17 @@ export function compareRuns(runs: WeightRun[]) {
   return nearEven && uneven ? { nearEven: copyRun(nearEven), uneven: copyRun(uneven) } : null;
 }
 
+export function comparisonSummary(runs: WeightRun[]) {
+  const changed = runs.some((run, index) => index > 0 && run.metricIds.some((id, metricIndex) => {
+    const previous = runs[index - 1];
+    const previousIndex = previous.metricIds.indexOf(id);
+    return previousIndex >= 0 && effortAt(run.weights, metricIndex) !== effortAt(previous.weights, previousIndex);
+  }));
+  return changed
+    ? 'Across the tests, Alex shifts effort between tasks. He still stops when he has the marks he wants.'
+    : 'These weights produced the same effort pattern. Alex still stops when the scoring requirements are covered.';
+}
+
 export function joinNames(names: string[]) {
   return new Intl.ListFormat('en', { style: 'long', type: 'conjunction' }).format(names);
 }

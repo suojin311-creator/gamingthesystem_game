@@ -11,7 +11,7 @@ try {
  const {sceneRequest}=await server.ssrLoadModule('/src/levels/level2/data.ts');
  const ids=METRICS.map(m=>m.id),intents=['attention','priority','exploration'];
  const trios=ids.flatMap((a,i)=>ids.slice(i+1).flatMap((b,j)=>ids.slice(i+j+2).map(c=>[a,b,c])));
- const histories=[[[34,33,33],[40,30,30],[31,35,34]],[[70,20,10],[80,10,10],[90,5,5]],[[70,20,10],[10,70,20],[20,10,70]],[[45,45,10],[10,45,45],[45,10,45]],[[70,20,10],[34,33,33],[10,70,20]],[[34,33,33],[70,20,10],[40,30,30]]];
+ const histories=[[[34,33,33],[40,30,30],[31,35,34]],[[70,20,10],[80,10,10],[90,5,5]],[[70,20,10],[10,70,20],[20,10,70]],[[45,45,10],[10,45,45],[45,10,45]],[[70,20,10],[34,33,33],[10,70,20]],[[34,33,33],[70,20,10],[40,30,30]],[[40,30,30],[40,31,29],[50,25,25]],[[24,25,51],[25,24,51],[25,50,25]]];
  const normalize=line=>`${line.speaker==='Maya'||line.speaker==='Riley'?'teacher':line.speaker}:${line.text.toLowerCase().replace(/[^\p{L}\p{N}]/gu,'')}`;
  let paths=0;
  check('Player-purpose dialogue and all three scene readings stay fresh across uniform and mixed patterns, every trio and all purpose combinations',()=>{
@@ -41,7 +41,7 @@ try {
    }
    paths++;
   }
-  assert.equal(paths,3240);
+  assert.equal(paths,trios.length*histories.length*intents.length**3);
  });
  mkdirSync('test-results',{recursive:true});writeFileSync('test-results/player-dialogue-results.json',JSON.stringify({passed:checks.length,checks,trialPurposePaths:paths},null,2)+'\n');
 }finally{await server.close()}
