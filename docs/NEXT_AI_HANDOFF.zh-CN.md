@@ -232,7 +232,7 @@ Reset：第一次尚无观察时回未分配；之后回上一次实际观察，
 
 - Go 标准库本地服务，内嵌 React 页面和图片，Windows 单 EXE；运行时不依赖外部字体／CDN／付费服务。
 - 当前 `/` 学生、`/host` 老师、`/display` 投影。未来接游戏要明确路径方案，防止根路径把游戏覆盖；`/game`、`/lab` 只是可选设计，尚未确认最终路径。
-- 核心：`design-lab/main.go`、`session.go`、`src/App.tsx`、`src/useClassroom.ts`；API 见源码。投票和阶段时钟由服务端管理，不靠每台电脑各自决定排名。
+- 核心：`design-lab/main.go`、`design-lab/session.go`、`design-lab/src/App.tsx`、`design-lab/src/useClassroom.ts`；API 见源码。投票和阶段时钟由服务端管理，不靠每台电脑各自决定排名。
 - 当前已做服务端测试、21 个独立浏览器上下文流程、Windows 交叉编译检查。**还没在真实 Windows 机器双击运行，也没验证学校实际网络与 21 台实体电脑。** 不能把浏览器模拟说成课堂实测。
 - 最终合并应保留免费、本地和匿名规则；同时处理退出游戏不保存、游戏结束进 Lab、老师等待全班的实际衔接。不应为了方便把游戏记录提交到 Lab。
 
