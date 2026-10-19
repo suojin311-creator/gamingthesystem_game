@@ -1,0 +1,36 @@
+{
+  "sourceRepository": "https://github.com/Mg614/gaming-the-system/tree/main",
+  "source": "User-uploaded gaming-the-system-main (1).zip; upstream repository was inaccessible",
+  "sourceArchiveSha256": "47f743de944f21a6c7f830f5accfd1f2db4999ad0e2489918dcf6a6928e413e3",
+  "unchangedUploadedFiles": 36,
+  "archive": "Opening-animation-preview.zip",
+  "zipSha256": "5d704a5fb457bf54781bcdd1095c4a07da88c4b764b2b02e6bff4b59304eee4d",
+  "html": "Opening.html",
+  "htmlSha256": "08548b75aa4ee2447baff54646fe320aeb48c48b43cb0644703f5a01ce6cdd7b",
+  "runtimeVersions": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "framer-motion": "12.43.0",
+    "vite": "7.3.7"
+  },
+  "previewScope": "Unmodified uploaded opening, packaged as self-contained HTML; review before integration",
+  "gameplayBaselineCommit": "2271e97c0a9c17e6e5cf9295e8b94cafb47a6689",
+  "build": {
+    "typescript": "passed",
+    "packaging": "Vite single-file, external configuration; original source and lockfile unchanged"
+  },
+  "verification": {
+    "passed": 5,
+    "checks": [
+      "The opening preview ZIP is intact and its self-contained HTML matches the recorded build hash",
+      "The normal-motion title, name entry with Enter and personalised office email run from the actual ZIP offline",
+      "All three original student interactions complete and unlock Return to Office only after all are inspected",
+      "The original ending and Replay Opening work and replay clears the entered name",
+      "The standalone preview makes no external asset requests and has no browser runtime errors"
+    ],
+    "runtimeErrors": [],
+    "externalRequests": [],
+    "playback": "Normal motion and real elapsed playback; no clock acceleration",
+    "browser": "Chromium; actual packaged offline HTML bytes served by an in-memory HTTPS route"
+  }
+}

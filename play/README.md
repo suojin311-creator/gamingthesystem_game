@@ -1,5 +1,9 @@
 # 最新试玩下载 / Latest downloads
 
+## 同伴开场动画预览
+
+[Opening-animation-preview.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Opening-animation-preview.zip?raw=true)：解压后用 Chrome 或 Edge 打开 **Opening.html**，建议电脑横屏。按本次上传的原版源码打包，供合并前观看；校验信息见 [OPENING_PREVIEW.json](OPENING_PREVIEW.json)。
+
 ## 推荐：一个 ZIP 包含所有版本
 
 **[Gaming-the-System-complete.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Gaming-the-System-complete.zip?raw=true)**
