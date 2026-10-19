@@ -6,7 +6,7 @@ import Icon from '../../shared/components/Icon';
 import LearningRisk from '../../shared/components/LearningRisk';
 import MetricSelection from '../../shared/components/MetricSelection';
 import ObservationContent from '../../shared/components/ObservationContent';
-import ManagementSatisfaction, { MANAGEMENT_PROGRESS } from '../../shared/components/ManagementSatisfaction';
+import ManagementSatisfaction, { MANAGEMENT_PROGRESS, type ManagementReplay } from '../../shared/components/ManagementSatisfaction';
 import Dialogue from './components/Dialogue';
 import CinematicPlaceholder, { type CinematicRequest } from './components/CinematicPlaceholder';
 import { useFeedback } from '../../shared/hooks/useFeedback';
@@ -51,19 +51,20 @@ function ResultChart({ metric, ready, score }: { metric: Metric; ready: boolean;
   </div>;
 }
 
-export function PerspectivePanel({ metric, evaluated, observed, highlight }: {
+export function PerspectivePanel({ metric, evaluated, observed, highlight, managementReplay, studentIllustration }: {
   metric?: Metric; evaluated: boolean; observed: boolean; highlight: 'university' | null;
+  managementReplay?: ManagementReplay; studentIllustration?: ReactNode;
 }) {
   return <aside className="perspectives" aria-label="Two perspectives">
     <section className={`perspective university ${evaluated ? 'has-result' : ''} ${highlight === 'university' ? 'just-updated' : ''}`} aria-labelledby="university-title" data-management-panel data-updated={highlight === 'university'} tabIndex={-1}>
       <div className="perspective-heading"><Icon name="school" /><h3 id="university-title">Management’s view</h3>{highlight === 'university' && <span className="new-badge">NEW</span>}</div>
-      <ManagementSatisfaction value={evaluated ? MANAGEMENT_PROGRESS.targetMet : MANAGEMENT_PROGRESS.awaiting}>
+      <ManagementSatisfaction value={evaluated ? MANAGEMENT_PROGRESS.targetMet : MANAGEMENT_PROGRESS.awaiting} replay={managementReplay}>
         {evaluated && metric ? <><span className="university-value">Reported score {metric.after}</span> · target met</> : 'Run an evaluation'}
       </ManagementSatisfaction>
     </section>
     <section className={`perspective student ${observed ? 'has-evidence' : ''}`} aria-labelledby="student-title" tabIndex={-1}>
       <div className="perspective-heading"><Icon name="student" /><h3 id="student-title">Students</h3></div>
-      {observed && metric ? <LearningRisk behaviour={metric.studentBehaviour} /> : <><span className="perspective-label">Classroom response</span><div className="student-signal waiting-signal"><Icon name="eye" /></div><p className="pending-title">Not observed yet</p></>}
+      {observed && metric ? <><LearningRisk behaviour={metric.studentBehaviour} />{studentIllustration}</> : <><span className="perspective-label">Classroom response</span><div className="student-signal waiting-signal"><Icon name="eye" /></div><p className="pending-title">Not observed yet</p></>}
     </section>
   </aside>;
 }

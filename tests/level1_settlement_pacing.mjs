@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { createPacing } from '../scripts/level1-settlement/pacing.mjs';
+import { clockAtSource, sceneCoverOpacity } from '../scripts/level1-settlement/transitions.mjs';
 // Authored dialogue from the pinned partner delivery, not the game-side recap.
 const samples = [
  ['prep','I finished everything on the list!','What was the main idea in the reading?','Uh... I finished the checklist.'],
@@ -32,5 +33,19 @@ for (const [id, boast, question, reveal] of samples) {
   assert(clockAt(pacing,26.35)-clockAt(pacing,24.25) >= 2.4, id+': clear first thought');
   assert(clockAt(pacing,29.95)-clockAt(pacing,28.3) >= 1.7, id+': clear second thought');
   assert(clockAt(pacing,27.7)-clockAt(pacing,26.8) <= .11, id+': removed memory no longer causes a lingering empty beat');
+  for (const cut of [12.6, 16.6]) {
+    const middle = clockAtSource(pacing, cut);
+    for (const reduced of [false, true]) {
+      for (let frame = Math.floor(middle * 30); frame <= Math.ceil(middle * 30); frame++) {
+        assert.equal(sceneCoverOpacity(pacing, frame / 30, reduced), 1, id+': a solid cover hides the scene swap');
+      }
+      assert.equal(sceneCoverOpacity(pacing, middle - .2, reduced), 0, id+': previous shot remains clear outside transition');
+      assert.equal(sceneCoverOpacity(pacing, middle + .2, reduced), 0, id+': next shot clears promptly');
+    }
+  }
+  for (const reduced of [false, true]) {
+    const lastFrame = (Math.ceil(pacing.duration * 30) - 1) / 30;
+    assert.equal(sceneCoverOpacity(pacing,lastFrame,reduced),1,id+': fully covered before recap handoff');
+  }
   console.log('PASS',id,pacing.duration.toFixed(2)+'s: full source coverage, readable lines and target result');
 }

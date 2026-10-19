@@ -107,3 +107,73 @@
   .l1-settlement .perspective { min-height: 220px; padding: 20px; }
   .l1-settlement .l1-settlement-actions { gap: 12px; }
 }
+
+.l1-settlement { position: relative; }
+.l1-settlement .l1-settlement-handoff {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: #111710;
+  pointer-events: none;
+  animation: l1-settlement-uncover .15s ease-out both;
+}
+@keyframes l1-settlement-uncover { from { opacity: 1; } to { opacity: 0; } }
+
+.l1-settlement .student { position: relative; }
+.l1-settlement .student-behaviour { max-width: calc(100% - 145px); order: 1; }
+.l1-settlement .learning-risk { order: 3; }
+.l1-settlement .settlement-student-visual {
+  position: absolute;
+  top: 80px;
+  right: 27px;
+  width: 120px;
+  height: 110px;
+  pointer-events: none;
+}
+.l1-settlement .settlement-student-portrait {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 35px;
+  height: 35px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid #aeba97;
+  border-radius: 50%;
+  background: #dbe3cc;
+  color: #65794e;
+}
+.l1-settlement .settlement-student-notebook {
+  position: absolute;
+  top: 20px;
+  left: 25px;
+  width: 80px;
+  height: 84px;
+  padding: 19px 10px 10px 18px;
+  border: 1px solid #c5b48f;
+  border-radius: 3px;
+  background: #fffaf0;
+  box-shadow: 3px 4px 0 #dbcaa9;
+  transform: rotate(-5deg);
+}
+.l1-settlement .settlement-notebook-binding { position: absolute; inset: 5px auto 5px 6px; border-left: 2px dotted #cbb992; }
+.l1-settlement .settlement-notebook-task { display: flex; align-items: center; gap: 9px; color: #9d8a64; }
+.l1-settlement .settlement-notebook-task > .icon { width: 24px; height: 24px; }
+.l1-settlement .settlement-notebook-task > .icon:last-child { width: 10px; height: 10px; color: #8c896d; }
+.l1-settlement .settlement-notebook-line { display: block; height: 1px; background: #d8ccb4; margin-top: 8px; }
+.l1-settlement .settlement-notebook-line:last-child { width: 65%; }
+.l1-settlement .has-evidence > .student-behaviour,
+.l1-settlement .has-evidence > .learning-risk,
+.l1-settlement .settlement-student-visual { animation: l1-student-reveal .18s ease-out both; }
+@keyframes l1-student-reveal { from { opacity: 0; transform: translateY(2px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 650px) {
+  .l1-settlement .student-behaviour { max-width: calc(100% - 110px); }
+  .l1-settlement .settlement-student-visual { right: 17px; top: 81px; width: 96px; transform-origin: top right; scale: .85; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .l1-settlement .l1-settlement-handoff { display: none; }
+  .l1-settlement .has-evidence > .student-behaviour,
+  .l1-settlement .has-evidence > .learning-risk,
+  .l1-settlement .settlement-student-visual { animation: none; }
+}

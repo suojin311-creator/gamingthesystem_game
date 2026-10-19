@@ -7,15 +7,16 @@ import { branches, isMetricId } from '@partner/cinematics/level1/level1Content';
 import { createPacing } from '@preview-pacing';
 
 const CHANNEL = 'level1-settlement-review';
-function PacedComposition({ selectedMetric, playerName, reducedMotion }) {
+function PacedComposition({ selectedMetric, playerName, reducedMotion, finished }) {
   const frame = useCurrentFrame();
   const pacing = useMemo(() => createPacing(branches[selectedMetric]), [selectedMetric]);
-  const sourceFrame = Math.min(1001, Math.max(0, Math.round(pacing.sourceSeconds(frame / 30) * 30)));
-  return <LevelOneFilm selectedMetric={selectedMetric} playerName={playerName} reducedMotion={reducedMotion} seconds={sourceFrame / 30} />;
+  const seconds = Math.min(33.4, Math.max(0, pacing.sourceSeconds(frame / 30)));
+  return <LevelOneFilm selectedMetric={selectedMetric} playerName={playerName} reducedMotion={reducedMotion} seconds={seconds} elapsed={frame / 30} pacing={pacing} finished={finished} />;
 }
 function Film({ config }) {
   const player = useRef(null);
   const complete = useRef(false);
+  const [finished, setFinished] = useState(false);
   const pacing = useMemo(() => createPacing(branches[config.metric]), [config.metric]);
   useEffect(() => {
     const instance = player.current;
@@ -23,7 +24,7 @@ function Film({ config }) {
     const end = () => {
       if (complete.current) return;
       complete.current = true;
-      window.parent.postMessage({ channel: CHANNEL, type: 'complete', runId: config.runId }, '*');
+      setFinished(true);
     };
     instance?.addEventListener('ended', end);
     const visibility = () => {
@@ -39,8 +40,17 @@ function Film({ config }) {
     if (document.hidden) visibility();
     return () => { instance?.removeEventListener('ended', end); document.removeEventListener('visibilitychange', visibility); };
   }, []);
+  useEffect(() => {
+    if (!finished) return;
+    let second = 0;
+    // Commit an opaque frame before replacing the movie with the matching cover.
+    const first = requestAnimationFrame(() => { second = requestAnimationFrame(() => {
+      window.parent.postMessage({ channel: CHANNEL, type: 'complete', runId: config.runId }, '*');
+    }); });
+    return () => { cancelAnimationFrame(first); cancelAnimationFrame(second); };
+  }, [finished, config.runId]);
   return <main className="settlement-film" data-duration={pacing.duration.toFixed(2)}>
-    <Player ref={player} component={PacedComposition} inputProps={{ selectedMetric: config.metric, playerName: config.playerName, reducedMotion: config.reducedMotion }}
+    <Player ref={player} component={PacedComposition} inputProps={{ selectedMetric: config.metric, playerName: config.playerName, reducedMotion: config.reducedMotion, finished }}
       compositionWidth={1280} compositionHeight={720} durationInFrames={Math.ceil(pacing.duration * 30)} fps={30}
       autoPlay controls={false} clickToPlay={false} spaceKeyToPlayOrPause={false} doubleClickToFullscreen={false} showVolumeControls={false} acknowledgeRemotionLicense moveToBeginningWhenEnded={false}
       style={{ width: '100%', aspectRatio: '16 / 9' }} />

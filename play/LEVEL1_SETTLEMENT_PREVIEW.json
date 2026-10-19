@@ -2,44 +2,46 @@
   "branch": "preview/level1-settlement",
   "baselineCommit": "32a91fe4bfb1cb193040410c846ebc165f8b9d5d",
   "partnerSourceCommit": "1bdd0c442c4b345b3bd37d6f541742d4e55c732f",
-  "sourceSha256": "f3662b05427c3847b6e70b9fc36948e7d1427bc8588852940aa7e72ddfe1b0df",
+  "sourceSha256": "dd9208efd5c21353ca05210a50c926ca21d306fb9a949a6d33eb86ed680783ed",
   "archive": "Level1-settlement-preview.zip",
-  "zipSha256": "bd81f39cc3f91024c8cb68353094e5d895c99413c17e6c925c17bfd35bd7f8a6",
+  "zipSha256": "3b97cf8fb6d7d70d747a8eb3bd3fb594f640a55b395f76f2b2a1e69ea9f1482a",
   "entries": {
-    "START-HERE.html": "097acae12310d8c38b7c5409921c02cb3bd2b491c5d07e1f8b340922298272d3",
-    "Level1-settlement.html": "c1473593444ded6a20d7b609205499d050b2054592587b18734213bf7799a05c",
+    "START-HERE.html": "4c0cef0995ac51303692c26981de786e6c68c5a9c08438bec61361ff2fab8a26",
+    "Level1-settlement.html": "2861e95051e26561476254191fc1a1b71cd9ebf60300ca05ffabe2c69012b2dc",
     "Current-Level1.html": "21d84902a6ad564e7bcb87803e494bb32ec68239c05a6392b8ec80cc209b0d56",
     "START-HERE.txt": "5ed6474cdf1396247950ecafc6d42c3e950720acfe4b5714499ec8083fe46fbe"
   },
   "scope": "Independent Level 1 experiment only; previous releases and upstream repository are unchanged",
   "flow": "Choose → Predict → Evaluate (original score animation) → Observe (full selected cinematic, then dialogue-free settlement)",
-  "pacing": "Per-line English reading holds, fixed framing and single-scene cuts; no memory overlay, metric-name montage, playback controls or replay button",
-  "validatedAtUtc": "2026-10-19T15:53:58.846775+00:00",
+  "pacing": "Per-line English reading holds, fixed framing and brief covered scene changes; no subtitle shading, memory overlay, metric montage or playback controls; recap bar finishes before student outcome",
+  "validatedAtUtc": "2026-10-19T16:50:59.412207+00:00",
   "verification": {
     "typecheck": "passed",
     "pacing": {
       "command": "node tests/level1_settlement_pacing.mjs",
       "passed": 6,
       "branchDurationsSeconds": {
-        "peer": 24.87,
-        "prep": 25.33,
-        "part": 24.87,
-        "focus": 25.33,
-        "discuss": 26.06,
-        "reflect": 24.87
-      }
+        "peer": 25.82,
+        "prep": 26.28,
+        "part": 25.82,
+        "focus": 26.28,
+        "discuss": 27.01,
+        "reflect": 25.82
+      },
+      "coveredBoundariesAndFinalHandoff": "passed for normal and reduced motion"
     },
     "browser": {
-      "passed": 11,
+      "passed": 12,
       "checks": [
         "Archive CRC, ZIP hash and every entry hash match; Current-Level1.html is byte-identical to the original Level1-play.zip",
         "The offline launcher opens the actual new HTML and its six-choice Level 1 form",
-        "peer: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, no Alex memory, metric montage, playback controls or replay button; correct original result cards",
-        "prep: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, no Alex memory, metric montage, playback controls or replay button; correct original result cards",
-        "part: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, no Alex memory, metric montage, playback controls or replay button; correct original result cards",
-        "focus: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, no Alex memory, metric montage, playback controls or replay button; correct original result cards",
-        "discuss: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, no Alex memory, metric montage, playback controls or replay button; correct original result cards",
-        "reflect: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, no Alex memory, metric montage, playback controls or replay button; correct original result cards",
+        "Reduced motion completes the recap sequence without waiting for a missing width transition event; fixed shots and complete readable dialogue remain",
+        "peer: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, covered scene swaps without subtitle shading, no memory/montage/controls/replay; actual bar rise finishes before the matching illustrated student outcome",
+        "prep: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, covered scene swaps without subtitle shading, no memory/montage/controls/replay; actual bar rise finishes before the matching illustrated student outcome",
+        "part: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, covered scene swaps without subtitle shading, no memory/montage/controls/replay; actual bar rise finishes before the matching illustrated student outcome",
+        "focus: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, covered scene swaps without subtitle shading, no memory/montage/controls/replay; actual bar rise finishes before the matching illustrated student outcome",
+        "discuss: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, covered scene swaps without subtitle shading, no memory/montage/controls/replay; actual bar rise finishes before the matching illustrated student outcome",
+        "reflect: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, covered scene swaps without subtitle shading, no memory/montage/controls/replay; actual bar rise finishes before the matching illustrated student outcome",
         "At 390px the choice form, automatic movie and two-card settlement fit without horizontal overflow; Try another resets all six choices",
         "The launcher also fits 390px and opens the unchanged original HTML at its original metric-choice screen",
         "The actual archive runs offline with zero external requests and zero browser runtime errors"
@@ -47,56 +49,56 @@
       "runtimeErrors": [],
       "externalRequests": [],
       "archive": "Level1-settlement-preview.zip",
-      "zipSha256": "bd81f39cc3f91024c8cb68353094e5d895c99413c17e6c925c17bfd35bd7f8a6",
+      "zipSha256": "3b97cf8fb6d7d70d747a8eb3bd3fb594f640a55b395f76f2b2a1e69ea9f1482a",
       "branchDurationsSeconds": {
-        "peer": 24.87,
-        "prep": 25.33,
-        "part": 24.87,
-        "focus": 25.33,
-        "discuss": 26.06,
-        "reflect": 24.87
+        "peer": 25.82,
+        "prep": 26.28,
+        "part": 25.82,
+        "focus": 26.28,
+        "discuss": 27.01,
+        "reflect": 25.82
       },
       "realTimePlayback": {
         "peer": {
-          "realTimeSeconds": 27.06,
-          "displayedDurationSeconds": 24.87,
+          "realTimeSeconds": 27.84,
+          "displayedDurationSeconds": 25.82,
           "clockAccelerated": false,
-          "observedFrames": 120,
+          "observedFrames": 134,
           "issues": []
         },
         "prep": {
-          "realTimeSeconds": 27.18,
-          "displayedDurationSeconds": 25.33,
+          "realTimeSeconds": 28.13,
+          "displayedDurationSeconds": 26.28,
           "clockAccelerated": false,
-          "observedFrames": 125,
+          "observedFrames": 142,
           "issues": []
         },
         "part": {
-          "realTimeSeconds": 26.5,
-          "displayedDurationSeconds": 24.87,
+          "realTimeSeconds": 27.61,
+          "displayedDurationSeconds": 25.82,
           "clockAccelerated": false,
-          "observedFrames": 123,
+          "observedFrames": 136,
           "issues": []
         },
         "focus": {
-          "realTimeSeconds": 27.5,
-          "displayedDurationSeconds": 25.33,
+          "realTimeSeconds": 28.16,
+          "displayedDurationSeconds": 26.28,
           "clockAccelerated": false,
-          "observedFrames": 126,
+          "observedFrames": 143,
           "issues": []
         },
         "discuss": {
-          "realTimeSeconds": 27.9,
-          "displayedDurationSeconds": 26.06,
+          "realTimeSeconds": 29.22,
+          "displayedDurationSeconds": 27.01,
           "clockAccelerated": false,
-          "observedFrames": 128,
+          "observedFrames": 144,
           "issues": []
         },
         "reflect": {
-          "realTimeSeconds": 27.09,
-          "displayedDurationSeconds": 24.87,
+          "realTimeSeconds": 27.8,
+          "displayedDurationSeconds": 25.82,
           "clockAccelerated": false,
-          "observedFrames": 124,
+          "observedFrames": 136,
           "issues": []
         }
       },
@@ -110,13 +112,14 @@
     },
     "unchangedPartnerFiles": 94,
     "unchangedPublishedGameArchives": 6,
-    "cinematicHtmlSha256": "9e4d8b160e00cfcb5ced75f31f44b6a6df1ff151249ca490de155851382965ca"
+    "cinematicHtmlSha256": "21d46b0f13f734760895dd6e3de1528eb773582ed0633013b6a1d752855ca44f"
   },
   "notes": [
-    "The previous UI revision is preserved at 3a262f4ced2468ddc1baedb84845a6602d3553e8. Only the independent preview branch and its own ZIP are updated.",
-    "Six endings use the original artwork, prop animations and dialogue with fixed framing and one opaque scene at a time. The office memory and six-metric text montage are never mounted.",
-    "Playback controls, timecode, timeline and the settlement replay button are removed. Hover, click and space do not reveal controls or interrupt playback.",
-    "Original score evaluation, four-step navigation and Management’s view / Students copy remain intact. Partner files and the six approved game archives retain their previous bytes.",
-    "Browser checks play all six endings at normal speed and observe live scene, caption and camera changes. Nominal timeline duration and observed wall time are recorded separately; no test clock or seek control is used."
+    "The preceding preview is preserved at 56f97e7ddd9726c303baf841ceb8c25b785c2036. Only preview/level1-settlement and its own ZIP are updated.",
+    "Recap presentation replays the bar from its initial awaiting position to the unchanged report value. The native width completion precedes a 250ms visible pause and the illustrated student outcome. Students waits until then; other levels retain their default status component behaviour.",
+    "Normal playback uses short flat scene covers with fixed framing. Fully covered frames protect scene swaps and the final handoff; subtitle gradients and extra shading are removed. No memory/montage, playback controls or replay button return.",
+    "Live browser checks observe actual bar widths and event/reveal order, each branch and complete dialogue, camera poses, covers and absence of subtitle-shade layers. Reduced-motion and 390px cases complete without a missing animation or transition end event.",
+    "Original score evaluation, four-step navigation and Management’s view / Students copy remain intact. Partner source files and the six approved game archives keep their original bytes.",
+    "Playback runs at normal speed. Nominal timeline duration and observed wall time are recorded separately."
   ]
 }

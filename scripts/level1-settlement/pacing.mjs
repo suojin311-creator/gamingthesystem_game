@@ -11,10 +11,10 @@ export function createPacing(branch) {
     [5.5, 8.2, readingSeconds(branch.question)],
     [8.2, 8.9, .30],
     [8.9, 12.1, readingSeconds(branch.reveal)],
-    [12.1, 12.6, .20],
-    [12.6, 12.75, .15],
+    [12.1, 12.6, .35],
+    [12.6, 12.75, .35],
     [12.75, 16.5, readingSeconds('Professor! I figured out exactly what you were looking for!')],
-    [16.5, 16.6, .10],
+    [16.5, 16.6, .35],
     [16.6, 18.0, .65],
     [18.0, 18.9, .60],
     [18.9, 19.85, .65],
@@ -34,6 +34,7 @@ export function createPacing(branch) {
     [30.3, 30.4, .10],
     [30.4, 31.1, .15],
     [31.1, 33.4, readingSeconds('What if we measured more than one?')],
+    [33.4, 33.4, .35], // Hold the final thought, then cover for the recap handoff.
   ];
   let duration = 0;
   const timeline = segments.map(([from, to, hold]) => {

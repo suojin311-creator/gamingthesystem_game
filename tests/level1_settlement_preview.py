@@ -94,8 +94,36 @@ def begin(page, metric):
     expect(observe).to_be_enabled()
     page.evaluate('''() => {
       window.__filmAudit = {samples: [], issues: []};
+      window.__settlementAudit = {samples: [], barEnd: null};
+      window.__settlementProbe?.disconnect();
+      cancelAnimationFrame(window.__settlementRaf);
+      let sampling = false;
+      const sampleSettlement = () => {
+        const recap = document.querySelector('.l1-settlement');
+        if (!recap) { sampling = false; return; }
+        const track = recap.querySelector('.management-satisfaction-track');
+        const fill = track.firstElementChild;
+        window.__settlementAudit.samples.push({time: performance.now(),
+          stage: recap.dataset.stage,
+          replay: recap.querySelector('.management-satisfaction').dataset.replayState,
+          width: fill.getBoundingClientRect().width / track.getBoundingClientRect().width,
+          student: !!recap.querySelector('.student-behaviour'),
+          waiting: !!recap.querySelector('.pending-title')});
+        if (recap.dataset.stage !== 'observed') window.__settlementRaf = requestAnimationFrame(sampleSettlement);
+        else sampling = false;
+      };
+      window.__settlementProbe = new MutationObserver(() => {
+        if (!sampling && document.querySelector('.l1-settlement')) {
+          sampling = true;
+          window.__settlementRaf = requestAnimationFrame(sampleSettlement);
+        }
+      });
+      window.__settlementProbe.observe(document.getElementById('root'), {childList: true, subtree: true});
       if (!window.__filmListener) {
         window.__filmListener = true;
+        addEventListener('transitionend', event => {
+          if (event.propertyName === 'width' && event.target.matches('.l1-settlement .management-satisfaction-track > span')) window.__settlementAudit.barEnd = performance.now();
+        }, true);
         addEventListener('message', event => {
           if (event.source !== document.querySelector('iframe')?.contentWindow || event.data?.channel !== 'test-film-probe') return;
           window.__filmAudit.samples.push(event.data.sample);
@@ -117,7 +145,7 @@ def begin(page, metric):
     expect(frame.locator('.l1-film')).to_have_attribute('data-metric', cinematic_id, timeout=15000)
     expect(frame.locator('.l1-film')).to_have_attribute('data-phase', 'branch')
     duration = float(frame.locator('.settlement-film').get_attribute('data-duration'))
-    assert 24.8 <= duration <= 26.2, (id, duration)
+    assert 25.7 <= duration <= 27.1, (id, duration)
     durations[id] = duration
     frame.locator('.settlement-film').evaluate(PROBE)
     return frame, started
@@ -127,12 +155,20 @@ def begin(page, metric):
 PROBE = r"""film => {
   let priorKey = '';
   const poses = new Map();
+  let priorPhase = null;
+  let priorCover = 0;
   const sample = () => {
     const root = film.querySelector('.l1-film');
     if (!root) return;
     const phase = root.dataset.phase;
     const source = Number(root.dataset.sourceSeconds);
     const issues = [];
+    const cover = Number(getComputedStyle(root.querySelector('.l1-scene-cover')).opacity);
+    // Under frame drops, a fully covered last old frame also protects the cut.
+    if (priorPhase && phase !== priorPhase && cover < .99 && priorCover < .99) issues.push(`Uncovered scene swap ${priorPhase} -> ${phase}, source ${source}, cover ${priorCover} -> ${cover}`);
+    priorPhase = phase;
+    priorCover = cover;
+    if (root.querySelector('.l1-dialogue-shade, .l1-office-thought-shade, .l1-scene-shading, .l1-office .vignette')) issues.push('Removed subtitle shadow layer returned');
     const shots = root.querySelectorAll('.l1-scene');
     if (shots.length !== 1) issues.push('Overlapping scene layers: ' + shots.length);
     if (shots[0] && getComputedStyle(shots[0]).opacity !== '1') issues.push('Scene dissolve at ' + source);
@@ -146,10 +182,10 @@ PROBE = r"""film => {
       poses.set(phase, pose);
     }
     const caption = root.querySelector('.l1-spoken [role="status"], .l1-office > [role="status"]')?.textContent ?? '';
-    const key = [phase, caption, Math.floor(source * 4)].join('|');
+    const key = [phase, caption, Math.floor(source * 4), Math.round(cover * 10)].join('|');
     if (key !== priorKey || issues.length) {
       priorKey = key;
-      parent.postMessage({channel: 'test-film-probe', sample: {phase, source, caption, pose}, issues}, '*');
+      parent.postMessage({channel: 'test-film-probe', sample: {phase, source, caption, pose, cover}, issues}, '*');
     }
   };
   new MutationObserver(sample).observe(film, {subtree: true, childList: true, attributes: true, characterData: true});
@@ -182,10 +218,12 @@ def watch_movie(page, frame, metric, started, capture=False):
     elapsed = time.monotonic() - started
     assert elapsed >= durations[metric[0]] - .5
     audit = page.evaluate('window.__filmAudit')
+    if audit['issues']: diagnostics.append(audit)
     assert not audit['issues'], audit['issues']
     phases = list(dict.fromkeys(sample['phase'] for sample in audit['samples']))
     assert phases == ['branch', 'common', 'office'], phases
-    captions = [sample['caption'] for sample in audit['samples']]
+    assert audit['samples'][-1]['cover'] >= .99, audit['samples'][-1]
+    captions = [sample['caption'] for sample in audit['samples'] if sample['cover'] < .01]
     for text in [metric[-1], *branch_tail[metric[0]], common, *thoughts]:
         assert text in captions, (metric[0], text, captions)
     assert captions.index(thoughts[0]) < captions.index(thoughts[1]) < captions.index(thoughts[2])
@@ -208,6 +246,24 @@ def check_settlement(page, metric):
     expect(settlement.get_by_role('progressbar', name='Management satisfaction')).to_have_attribute('aria-valuenow', '44')
     expect(settlement.locator('.management-satisfaction-evidence')).to_have_text(f'Reported score {after} · target met')
     expect(settlement.locator('.student-behaviour')).to_have_text(behaviour)
+    expect(settlement).to_have_attribute('data-stage', 'observed')
+    page.wait_for_function('window.__settlementAudit.samples.some(sample => sample.student)')
+    audit = page.evaluate('window.__settlementAudit')
+    samples = audit['samples']
+    assert any(sample['waiting'] and not sample['student'] for sample in samples), samples
+    assert all(not sample['student'] for sample in samples if sample['replay'] != 'complete'), samples
+    assert abs(samples[-1]['width'] - .44) < .005, samples[-1]
+    reduced = page.evaluate('matchMedia("(prefers-reduced-motion: reduce)").matches')
+    if not reduced:
+        assert any(.14 < sample['width'] < .42 for sample in samples), samples
+        assert audit['barEnd'] is not None
+        firstStudent = next(sample['time'] for sample in samples if sample['student'])
+        assert firstStudent - audit['barEnd'] >= 200, (firstStudent, audit['barEnd'])
+    expect(settlement.locator('.settlement-student-visual')).to_have_attribute('data-metric', id)
+    expect(settlement.locator('.observation-outside')).to_have_count(0)
+    words = settlement.locator('.student-behaviour').bounding_box()
+    picture = settlement.locator('.settlement-student-visual').bounding_box()
+    assert words['x'] + words['width'] <= picture['x'], (words, picture)
     expect(settlement.locator('.learning-risk')).to_have_text('Learning at risk')
     expect(settlement.locator('.management-attention')).to_have_count(0)
     expect(page.locator('.dialogue-strip, .alex-bubble, .score-paper, .classroom-observation, .observation-recap')).to_have_count(0)
@@ -280,6 +336,17 @@ try:
         page.get_by_role('button', name='Skip guide', exact=True).click()
         record('The offline launcher opens the actual new HTML and its six-choice Level 1 form')
 
+        page.set_viewport_size({'width': 390, 'height': 900})
+        page.emulate_media(reduced_motion='reduce')
+        frame, started = begin(page, metrics[0])
+        watch_movie(page, frame, metrics[0], started)
+        check_settlement(page, metrics[0])
+        record('Reduced motion completes the recap sequence without waiting for a missing width transition event; fixed shots and complete readable dialogue remain')
+
+        page.emulate_media(reduced_motion='no-preference')
+        page.set_viewport_size({'width': 1366, 'height': 1000})
+        page.get_by_role('button', name='Try another metric', exact=True).click()
+
         # Every ending uses actual normal-speed playback; there are no seek controls.
         for index, metric in enumerate(metrics):
             if index:
@@ -289,7 +356,7 @@ try:
             check_settlement(page, metric)
             if index == 0:
                 screenshot(page, 'level1-settlement-preview-desktop.png')
-            record(metric[0] + ': normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, no Alex memory, metric montage, playback controls or replay button; correct original result cards')
+            record(metric[0] + ': normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, covered scene swaps without subtitle shading, no memory/montage/controls/replay; actual bar rise finishes before the matching illustrated student outcome')
 
         page.set_viewport_size({'width': 390, 'height': 900})
         no_horizontal_overflow(page)

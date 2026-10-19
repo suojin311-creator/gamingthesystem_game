@@ -21,11 +21,20 @@ original game.
 
 The settlement reuses the original Level 1 PerspectivePanel: Management’s view,
 Satisfaction, Satisfied, the satisfaction bar and Reported score / target met;
-Students, its existing branch-specific behaviour and Learning at risk. Only the
-arrangement changes to two wide, equally weighted cards under the selected metric.
-Original state values, styles and update animations remain. The former large IN THE CLASSROOM evidence panel
-and review chat are absent. The metric ribbon, coloured card borders and paired
-layout retain visual weight without adding a second explanation of the movie.
+Students, its existing branch-specific behaviour and Learning at risk. The two
+wide, equally weighted cards sit under the selected metric.
+Original final values and copy remain. The recap opt-in replays the satisfaction
+bar from its initial awaiting position to the same final value. The game value is
+never incremented again. Students initially keeps its original waiting view.
+The actual width-transition completion starts a 250ms visible pause, then reveals
+the branch's student behaviour, risk and compact portrait/notebook illustration.
+There are no unselected-metric icons; the small neutral check denotes completing
+a checklist. Text and picture sit beside each other without changing card height.
+The shared status component's default behaviour in other levels is unchanged.
+Reduced motion completes the sequence without relying on a transitionend event.
+The former large IN THE CLASSROOM evidence panel and review chat are absent.
+The metric ribbon, coloured card borders, paired layout and compact student
+illustration retain visual weight without adding a second explanation of the movie.
 Predictions remain available in a collapsed, ungraded reference.
 
 The replay button is removed. Try another metric starts a fresh Level 1 run.
@@ -49,24 +58,29 @@ The original partner source is pinned at
 The external cinematic build imports the partner's original artwork, content
 constants and ConsequenceScene prop animation into an isolated iframe. Styles do
 not leak into the workbench. `presentation.jsx` assembles one fully opaque shot at
-a time: branch → shared Alex line → office. Camera poses are fixed within each
-shot. A build-only adapter freezes ConsequenceScene's framing without changing
+a time: branch → shared Alex line → office. A 320ms flat cover, including a fully
+opaque middle, buffers each scene change. The previous line gets a brief stable
+hold, and the next line starts after the new shot is clear. Photos never dissolve
+through one another. A final cover hands off to the same-colour recap uncover.
+Camera poses are fixed within each shot. A build-only adapter freezes ConsequenceScene's framing without changing
 the partner checkout. The office retains its original laptop geometry, email,
 selected result and three thought/bridge lines. There are no overlapping scene
 dissolves, repeated zooms, Alex memory overlay or six-metric text montage.
+Subtitle gradient/shade layers and the extra vignette are removed. Captions sit
+directly on the original art, using the opening's light text-shadow style.
 
 The monotonic presentation clock still covers the full authored script. Per-line
 English reading holds remain (roughly 220 words/minute plus a settling margin),
 including 2.4 seconds of clear target-result display. The removed memory gap is
 shortened so it does not leave a lingering empty beat. The six timelines span
-about 24.9–26.1 seconds instead of 33.4 seconds; no global playback multiplier is
+about 25.8–27.0 seconds instead of 33.4 seconds; no global playback multiplier is
 used. The three required images are decoded before playback so cuts do not expose
 an unloaded next shot. Predictions stay on the settlement, without competing
 with the thought captions.
 
 The player starts automatically and has no visible controls, timeline, timecode,
-click-to-pause or spacebar playback shortcut. There is no closing fade. The parent
-validates the iframe source and current run token; only the actual player `ended`
+click-to-pause or spacebar playback shortcut. The actual ended event commits a
+fully covered frame before handing off. The parent validates the iframe source and current run token; only the actual player `ended`
 event completes the scene, once. Playback pauses when the page becomes hidden
 and resumes on return, so removing controls cannot strand a hidden-tab pause.
 Reduced motion retains readable holds and the same fixed framing. No new music

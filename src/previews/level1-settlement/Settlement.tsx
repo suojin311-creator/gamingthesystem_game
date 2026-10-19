@@ -1,8 +1,11 @@
-import { useEffect, useId, useRef } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import type { LevelOneResult } from '../../levels/level1/LevelOne';
 import { PerspectivePanel } from '../../levels/level1/LevelOne';
 import { getMetric } from '../../levels/level1/metrics';
 import Icon from '../../shared/components/Icon';
+import CharacterPortrait from '../../shared/components/CharacterPortrait';
+import { MANAGEMENT_PROGRESS } from '../../shared/components/ManagementSatisfaction';
+import { useVisibleDelay } from '../../shared/hooks/useVisibleDelay';
 import './settlement.css';
 
 export type SettlementProps = {
@@ -15,12 +18,31 @@ export default function Settlement({ result, onTryAnother }: SettlementProps) {
   const title = useRef<HTMLHeadingElement>(null);
   const id = useId();
   const prediction = result.prediction.trim();
+  const handoff = useRef<HTMLDivElement>(null);
+  const [uncovered, setUncovered] = useState(false);
+  const [stage, setStage] = useState<'management' | 'pause' | 'observed'>('management');
+  const observed = stage === 'observed';
+  useVisibleDelay('settlement-student-reveal', '.l1-settlement [data-management-panel]', 250, stage === 'pause', () => setStage('observed'));
 
   useEffect(() => {
     title.current?.focus({ preventScroll: true });
   }, []);
+  useEffect(() => {
+    if (uncovered || !handoff.current) return;
+    const style = getComputedStyle(handoff.current);
+    // The shared reduced-motion rule disables animations, so no end event fires.
+    if (style.animationName === 'none' || style.animationDuration.split(',').every(part => parseFloat(part) === 0)) setUncovered(true);
+  }, [uncovered]);
+  useEffect(() => {
+    if (!observed) return;
+    const student = document.querySelector('.l1-settlement .student');
+    if (student && student.getBoundingClientRect().top > innerHeight * .85) student.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+  }, [observed]);
 
-  return <section className="l1-settlement" aria-labelledby={`${id}-title`}>
+  return <section className="l1-settlement" aria-labelledby={`${id}-title`} data-stage={stage}>
+    {!uncovered && <div ref={handoff} className="l1-settlement-handoff" aria-hidden="true" onAnimationEnd={event => {
+      if (event.target === event.currentTarget) setUncovered(true);
+    }} />}
     <header className="l1-settlement-heading">
       <p className="l1-settlement-eyebrow">Level 1 results</p>
       <h1 id={`${id}-title`} ref={title} tabIndex={-1}>What changed?</h1>
@@ -34,7 +56,15 @@ export default function Settlement({ result, onTryAnother }: SettlementProps) {
       </div>
     </div>
 
-    <PerspectivePanel metric={metric} evaluated observed highlight={null} />
+    <PerspectivePanel metric={metric} evaluated observed={observed} highlight={null}
+      managementReplay={{ from: MANAGEMENT_PROGRESS.awaiting, enabled: uncovered, onComplete: () => setStage('pause') }}
+      studentIllustration={<div className="settlement-student-visual" data-metric={metric.id} aria-hidden="true">
+        <span className="settlement-student-portrait"><CharacterPortrait role="student" /></span>
+        <div className="settlement-student-notebook"><i className="settlement-notebook-binding" />
+          <span className="settlement-notebook-task"><Icon name={metric.id} /><Icon name="check" /></span>
+          <i className="settlement-notebook-line" /><i className="settlement-notebook-line" />
+        </div>
+      </div>} />
 
     {prediction && <details className="l1-settlement-prediction">
       <summary>Your prediction</summary>

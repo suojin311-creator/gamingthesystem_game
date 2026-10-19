@@ -1,4 +1,5 @@
 import React from 'react';
+import { sceneCoverOpacity } from '@preview-transitions';
 import { AbsoluteFill, Img } from 'remotion';
 import { ConsequenceScene } from '@partner/cinematics/level1/ConsequenceScene';
 import { DialogueLayer } from '@partner/cinematics/shared/engine/DialogueLayer/DialogueLayer';
@@ -16,9 +17,8 @@ export function filmImages(metric) {
 // player-facing shot assembly: one opaque scene at a time, with fixed framing.
 function SpokenLine({ text, player = false }) {
   return <div className="l1-spoken" data-speaker={player ? 'player' : 'alex'}>
-    <div className="l1-dialogue-shade" aria-hidden="true" />
     <p className="l1-speaker">{player ? 'You' : 'Alex'}</p>
-    <DialogueLayer style={{ bottom: '7%', left: '10%', right: '10%', fontSize: '2.15cqw', lineHeight: 1.5, fontStyle: player ? 'italic' : 'normal' }}>{text}</DialogueLayer>
+    <DialogueLayer style={{ bottom: '7%', left: '10%', right: '10%', fontSize: '2.15cqw', lineHeight: 1.5, fontStyle: player ? 'italic' : 'normal', textShadow: '0 2px 10px #000' }}>{text}</DialogueLayer>
   </div>;
 }
 
@@ -50,13 +50,11 @@ function OfficeEnding({ metric, seconds, playerName }) {
         </article>}
       </div>
     </div>
-    <div className="vignette" aria-hidden="true" />
-    <div className="l1-office-thought-shade" aria-hidden="true" style={{ opacity: .65 }} />
-    {thought && <DialogueLayer style={{ fontSize: '2.05cqw', lineHeight: 1.6, fontStyle: 'italic', bottom: '8.2%', left: '10%', right: '10%' }}>{thought}</DialogueLayer>}
+    {thought && <DialogueLayer style={{ fontSize: '2.05cqw', lineHeight: 1.6, fontStyle: 'italic', bottom: '8.2%', left: '10%', right: '10%', textShadow: '0 2px 10px #000' }}>{thought}</DialogueLayer>}
   </div>;
 }
 
-export function LevelOneFilm({ selectedMetric, playerName, seconds, reducedMotion }) {
+export function LevelOneFilm({ selectedMetric, playerName, seconds, reducedMotion, elapsed, pacing, finished }) {
   const branch = branches[selectedMetric];
   const officeStart = LEVEL1.branch + LEVEL1.common;
   const phase = seconds < LEVEL1.branch ? 'branch' : seconds < officeStart ? 'common' : 'office';
@@ -73,5 +71,6 @@ export function LevelOneFilm({ selectedMetric, playerName, seconds, reducedMotio
         {seconds >= LEVEL1.branch + .15 && seconds < officeStart - .1 && <SpokenLine text={COMMON_LINE} />}
       </> : <OfficeEnding metric={selectedMetric} seconds={seconds - officeStart} playerName={playerName} />}
     </div>
+    <div className="l1-scene-cover" aria-hidden="true" style={{ position: 'absolute', inset: 0, background: '#111710', opacity: finished ? 1 : sceneCoverOpacity(pacing, elapsed, reducedMotion), pointerEvents: 'none' }} />
   </AbsoluteFill>;
 }
