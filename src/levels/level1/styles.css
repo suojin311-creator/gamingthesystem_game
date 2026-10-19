@@ -81,6 +81,13 @@
 :where(.level-one) .score-numbers { display: flex; align-items: center; justify-content: center; gap: 37px; margin: 30px 0; }
 :where(.level-one) .score-numbers > span { font: 70px/1 var(--serif); letter-spacing: -.04em; }
 :where(.level-one) .score-numbers small { font: 9px/1.5 'Trebuchet MS',sans-serif; letter-spacing: .13em; display: block; text-align: center; margin-top: 7px; }
+:where(.level-one) .score-unit { font-size: .4em; letter-spacing: 0; margin-left: .06em; }
+:where(.level-one) .assessment-context { margin-top: 10px; color: #817b68; font-size: 13px; line-height: 1.6; }
+:where(.level-one) .assessment-period { margin-bottom: 9px; color: #a27649; }
+:where(.level-one) .assessment-criteria { margin: -6px 0 18px; color: #726a56; font-size: 13px; line-height: 1.6; }
+:where(.level-one) .assessment-criteria strong { color: #575845; }
+:where(.level-one) .assessment-prediction-label { margin-bottom: 11px; color: #6d6c59; font-size: 13px; line-height: 1.6; }
+:where(.level-one) .assessment-report-label { margin-top: 18px; color: #706d58; font-size: 13px; line-height: 1.5; }
 :where(.level-one) .before-score { color: #aaa58e; }
 :where(.level-one) .after-score { color: #5e764f; }
 :where(.level-one) .score-numbers .score-arrow { width: 35px; height: 35px; color: #beb8a3; }

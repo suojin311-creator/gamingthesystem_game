@@ -48,7 +48,7 @@ export default function Settlement({ result, onTryAnother }: SettlementProps) {
       </div>
     </div>
 
-    <PerspectivePanel metric={metric} evaluated observed={observed} highlight={null}
+    <PerspectivePanel metric={metric} evaluated observed={observed} highlight={null} assessmentReport
       studentIllustration={<div className="settlement-student-visual" data-metric={metric.id} aria-hidden="true">
         <span className="settlement-student-portrait"><CharacterPortrait role="student" /></span>
         <div className="settlement-student-notebook"><i className="settlement-notebook-binding" />

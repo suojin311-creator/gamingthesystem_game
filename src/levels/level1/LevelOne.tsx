@@ -37,29 +37,31 @@ const steps = ['Choose', 'Predict', 'Evaluate', 'Observe'];
 const phaseStep: Record<Phase, number> = { choose: 0, predict: 1, result: 2, cinematic: 3, review: 3 };
 const TARGET = 70;
 
-function ResultChart({ metric, ready, score }: { metric: Metric; ready: boolean; score: number }) {
+function ResultChart({ metric, ready, score, assessmentReport = false }: { metric: Metric; ready: boolean; score: number; assessmentReport?: boolean }) {
   return <div className="score-paper" data-ready={ready}>
     <div className="score-paper-top"><span className="eyebrow">{metric.shortName}</span><span className="score-state">{ready ? 'Evaluation complete' : 'Evaluating…'}</span></div>
-    <div className="score-numbers" aria-label={`Reported score: ${metric.before} before, ${metric.after} after`}>
-      <span className="before-score">{metric.before}<small>BEFORE</small></span>
+    {assessmentReport && <p className="assessment-report-label">Students meeting the criteria</p>}
+    <div className="score-numbers" aria-label={assessmentReport ? `Students meeting the criteria: ${metric.before}% at the first assessment, ${metric.after}% at the second assessment` : `Reported score: ${metric.before} before, ${metric.after} after`}>
+      <span className="before-score">{metric.before}{assessmentReport && <span className="score-unit">%</span>}<small>{assessmentReport ? 'First assessment' : 'BEFORE'}</small></span>
       <Icon name="arrow" className="score-arrow" />
-      <span className="after-score">{score}<small>AFTER</small></span>
+      <span className="after-score">{score}{assessmentReport && <span className="score-unit">%</span>}<small>{assessmentReport ? 'Second assessment' : 'AFTER'}</small></span>
     </div>
-    <div className="score-track" aria-hidden="true"><span className="score-track-before" style={{ width: `${metric.before}%` }} /><span className="score-track-after" style={{ width: `${score}%` }} /><i style={{ left: `${TARGET}%` }} /></div>
-    <div className="score-track-labels"><span>0</span><span className="target-label" style={{ left: `${TARGET}%` }}>Target {TARGET}</span><span>100</span></div>
-    <p className="data-note">Illustrative score</p>
+    <div className="score-track" aria-hidden="true"><span className="score-track-before" style={{ width: `${metric.before}%` }} /><span className="score-track-after" style={{ width: `${score}%` }} />{!assessmentReport && <i style={{ left: `${TARGET}%` }} />}</div>
+    <div className="score-track-labels"><span>{assessmentReport ? '0%' : '0'}</span>{!assessmentReport && <span className="target-label" style={{ left: `${TARGET}%` }}>Target {TARGET}</span>}<span>{assessmentReport ? '100%' : '100'}</span></div>
+    <p className="data-note">{assessmentReport ? 'Illustrative class data' : 'Illustrative score'}</p>
   </div>;
 }
 
-export function PerspectivePanel({ metric, evaluated, observed, highlight, managementReplay, studentIllustration }: {
+export function PerspectivePanel({ metric, evaluated, observed, highlight, managementReplay, studentIllustration, assessmentReport = false }: {
   metric?: Metric; evaluated: boolean; observed: boolean; highlight: 'university' | null;
   managementReplay?: ManagementReplay; studentIllustration?: ReactNode;
+  assessmentReport?: boolean;
 }) {
   return <aside className="perspectives" aria-label="Two perspectives">
     <section className={`perspective university ${evaluated ? 'has-result' : ''} ${highlight === 'university' ? 'just-updated' : ''}`} aria-labelledby="university-title" data-management-panel data-updated={highlight === 'university'} tabIndex={-1}>
       <div className="perspective-heading"><Icon name="school" /><h3 id="university-title">Management’s view</h3>{highlight === 'university' && <span className="new-badge">NEW</span>}</div>
       <ManagementSatisfaction value={evaluated ? MANAGEMENT_PROGRESS.targetMet : MANAGEMENT_PROGRESS.awaiting} replay={managementReplay}>
-        {evaluated && metric ? <><span className="university-value">Reported score {metric.after}</span> · target met</> : 'Run an evaluation'}
+        {assessmentReport ? null : evaluated && metric ? <><span className="university-value">Reported score {metric.after}</span> · target met</> : 'Run an evaluation'}
       </ManagementSatisfaction>
     </section>
     <section className={`perspective student ${observed ? 'has-evidence' : ''}`} aria-labelledby="student-title" tabIndex={-1}>
@@ -70,6 +72,7 @@ export function PerspectivePanel({ metric, evaluated, observed, highlight, manag
 }
 
 export default function LevelOne({ playerName: suppliedName, renderCinematic, onComplete, onContinue, showIntro = true, renderSettlement }: LevelOneProps) {
+  const assessmentReport = Boolean(renderSettlement);
   const playerName = resolvePlayerName(suppliedName);
   const [session, setSession] = useState(() => ({ ...INITIAL_SESSION }));
   const [guideOpen, setGuideOpen] = useState(showIntro);
@@ -209,7 +212,7 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
     });
   }
 
-  const dialogue = <Dialogue key={`${runId}:${phase}`} phase={phase} playerName={playerName} studentReplies={metric?.studentReplies} reviewQuestion={metric?.reviewQuestion} enabled={dialogueEnabled} paused={paused} play={feedback.play} onSettled={settleDialogue} />;
+  const dialogue = <Dialogue key={`${runId}:${phase}`} phase={phase} playerName={playerName} studentReplies={metric?.studentReplies} reviewQuestion={metric?.reviewQuestion} enabled={dialogueEnabled} paused={paused} play={feedback.play} onSettled={settleDialogue} assessmentReport={assessmentReport} />;
   const request: CinematicRequest | null = phase === 'cinematic' && metric ? { sceneId: `level1.${metric.id}`, metricId: metric.id, playerName } : null;
 
   return <div className="game-page level-one" onPointerDownCapture={feedback.unlock} onKeyDownCapture={feedback.unlock}>
@@ -223,7 +226,7 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
         <div className={`workbench-body phase-${phase}`}>
           <section className="decision-area" aria-label="Current decision">
             {phase === 'choose' && <>
-              <div className="section-intro"><h2 ref={title} tabIndex={-1}>What will you measure?</h2></div>
+              <div className="section-intro"><h2 ref={title} tabIndex={-1}>{assessmentReport ? 'What will count in the next assessment?' : 'What will you measure?'}</h2>{assessmentReport && <p className="assessment-context">Choose one metric. Students will earn marks for meeting its criteria.</p>}</div>
               <MetricSelection level={1} capacity={1} selected={metricId ? [metricId] : []} onToggle={choose} />
               <div className="action-row only-action"><button className="button primary-button" disabled={!metric} onClick={() => go('predict')}>Make a prediction<Icon name="arrow" /></button></div>
             </>}
@@ -231,22 +234,23 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
             {phase === 'predict' && metric && <>
               <div className="section-intro"><h2 ref={title} tabIndex={-1}>What do you expect?</h2></div>
               <div className="selected-focus"><span className="metric-illustration"><Icon name={metric.id} /></span><h3>{metric.name}</h3><button className="text-button" onClick={() => go('choose')}>Change</button></div>
+              {assessmentReport && <p className="assessment-criteria" id="assessment-criteria"><strong>Assessment criteria:</strong> {metric.assessmentCriteria}</p>}
               <form className="prediction-form" onSubmit={event => { event.preventDefault(); if (prediction.trim()) setSession(value => ({ ...value, prediction: value.prediction.trim(), phase: 'result', resultReported: false })); }}>
-                <label htmlFor="prediction" className="sr-only">What do you expect students to do?</label>
-                <div className="prediction-paper"><span className="paper-corner" aria-hidden="true" /><textarea ref={predictionField} id="prediction" maxLength={100} value={prediction} placeholder={`e.g. ${metric.example}`} aria-describedby="prediction-count" onKeyDown={event => {
+                <label htmlFor="prediction" className={assessmentReport ? 'assessment-prediction-label' : 'sr-only'}>{assessmentReport ? 'How will students respond when this counts towards their marks?' : 'What do you expect students to do?'}</label>
+                <div className="prediction-paper"><span className="paper-corner" aria-hidden="true" /><textarea ref={predictionField} id="prediction" maxLength={100} value={prediction} placeholder={`e.g. ${metric.example}`} aria-describedby={assessmentReport ? 'assessment-criteria prediction-count' : 'prediction-count'} onKeyDown={event => {
                   if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing && event.nativeEvent.keyCode !== 229) {
                     event.preventDefault();
                     if (prediction.trim() && !event.repeat) event.currentTarget.form?.requestSubmit();
                   }
                 }} onChange={event => setSession(value => ({ ...value, prediction: event.target.value }))} /><div id="prediction-count" className="character-counter">{prediction.length}<span> / 100</span></div></div>
-                <div className="action-row prediction-actions"><button type="submit" className="button primary-button" disabled={!prediction.trim()}>Run evaluation<Icon name="arrow" /></button></div>
+                <div className="action-row prediction-actions"><button type="submit" className="button primary-button" disabled={!prediction.trim()}>{assessmentReport ? 'View assessment results' : 'Run evaluation'}<Icon name="arrow" /></button></div>
               </form>
             </>}
 
             {phase === 'result' && metric && <>
-              <div className="section-intro"><h2 ref={title} tabIndex={-1}>{resultReported ? 'Target achieved.' : 'Watch the score.'}</h2></div>
-              <ResultChart metric={metric} ready={resultReady} score={animatedScore} />
-              <div className="action-row only-action"><button className="button primary-button" disabled={!resultReported} onClick={() => go('cinematic')}><Icon name="play" />Observe the class</button></div>
+              <div className="section-intro">{assessmentReport && <p className="eyebrow assessment-period">At the second assessment</p>}<h2 ref={title} tabIndex={-1}>{assessmentReport ? 'Assessment results.' : resultReported ? 'Target achieved.' : 'Watch the score.'}</h2>{assessmentReport && <p className="assessment-context">This metric now counts towards students’ marks.</p>}</div>
+              <ResultChart metric={metric} ready={resultReady} score={animatedScore} assessmentReport={assessmentReport} />
+              <div className="action-row only-action"><button className="button primary-button" disabled={!resultReported} onClick={() => go('cinematic')}><Icon name="play" />{assessmentReport ? 'Look behind the result' : 'Observe the class'}</button></div>
             </>}
 
             {phase === 'review' && metric && <>
@@ -258,13 +262,13 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
               <div className="action-row"><button className="text-button" onClick={() => go('cinematic')}>Replay scene</button>{dialogueSettled ? <button className="button primary-button level-finished" disabled={!onContinue} onClick={onContinue}>Continue to Level 2<Icon name="arrow" /></button> : <span className="next-action-space" aria-hidden="true" />}</div>
             </>}
           </section>
-          <PerspectivePanel metric={metric} evaluated={evaluated} observed={observed} highlight={highlight} />
+          <PerspectivePanel metric={metric} evaluated={evaluated} observed={observed} highlight={highlight} assessmentReport={assessmentReport} />
         </div>
         {phase !== 'review' && dialogue}
       </>}
     </main>
     <footer className="page-footer">GAMING THE SYSTEM · LEVEL 01</footer>
-    {guideOpen && <WorkbenchGuide key={runId} onClose={closeGuide} />}
+    {guideOpen && <WorkbenchGuide key={runId} onClose={closeGuide} assessmentReport={assessmentReport} />}
 
   </div>;
 }

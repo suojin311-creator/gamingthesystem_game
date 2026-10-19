@@ -71,6 +71,6 @@ export default function ManagementSatisfaction({ value, children, replay }: { va
         if (replayStarted && event.target === fill.current && event.propertyName === 'width') setReplayEnded(true);
       }} />
     </div>
-    <div className="management-satisfaction-evidence">{children}</div>
+    {children != null && <div className="management-satisfaction-evidence">{children}</div>}
   </div>;
 }

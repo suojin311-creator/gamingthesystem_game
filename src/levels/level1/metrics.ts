@@ -7,6 +7,7 @@ export type Metric = {
   shortName: string;
   description: string;
   example: string;
+  assessmentCriteria: string;
   before: number;
   after: number;
   improvement: string;
@@ -25,6 +26,7 @@ export const METRICS: Metric[] = [
   {
     ...metricDefinition('prep'),
     example: 'Students will arrive ready to discuss the reading.', before: 34, after: 88,
+    assessmentCriteria: 'Complete the preparation checklist.',
     improvement: 'More preparation tasks completed', uncertainty: 'Understanding still unclear',
     evidence: 'Students complete the preparation, but some skim just enough to meet the requirement.',
     studentReplies: ['I finished the whole list! 📋', 'The reading? I mostly skimmed it 😬'],
@@ -40,6 +42,7 @@ export const METRICS: Metric[] = [
   {
     ...metricDefinition('part'),
     example: 'Students will contribute more thoughtful ideas.', before: 29, after: 85,
+    assessmentCriteria: 'Make at least one contribution in class.',
     improvement: 'More visible contributions', uncertainty: 'Depth still unclear',
     evidence: 'Students speak more often, but some contributions are brief or repetitive.',
     studentReplies: ['I put my hand up! 🙋', 'I… didn’t really have an explanation 🤷'],
@@ -55,6 +58,7 @@ export const METRICS: Metric[] = [
   {
     ...metricDefinition('focus'),
     example: 'Students will think more deeply about the task.', before: 41, after: 91,
+    assessmentCriteria: 'Be recorded as on task during classroom checks.',
     improvement: 'More visible time on task', uncertainty: 'Thinking still unclear',
     evidence: 'Students stay visibly on task, but some focus on looking busy rather than thinking deeply.',
     studentReplies: ['I kept the page open! 💻', 'That counts as staying focused… right? 👀'],
@@ -70,6 +74,7 @@ export const METRICS: Metric[] = [
   {
     ...metricDefinition('discuss'),
     example: 'Students will explore and develop ideas together.', before: 32, after: 84,
+    assessmentCriteria: 'Ask a follow-up question and build on a classmate’s point.',
     improvement: 'More discussion criteria met', uncertainty: 'New ideas still unclear',
     evidence: 'Students use the discussion behaviours that earn credit, but some contributions become formulaic.',
     studentReplies: ['I used all the right phrases! 💬', 'A new idea? Umm… 🤔'],
@@ -85,6 +90,7 @@ export const METRICS: Metric[] = [
   {
     ...metricDefinition('reflect'),
     example: 'Students will reflect on what changed their thinking.', before: 38, after: 89,
+    assessmentCriteria: 'Use the reflection format: describe your thinking before and after.',
     improvement: 'More structured reflections', uncertainty: 'Changed thinking still unclear',
     evidence: 'Reflections match the expected structure, but some students repeat the same safe patterns.',
     studentReplies: ['I followed the example! 📝', 'I just used the same pattern again 🔁'],
@@ -100,6 +106,7 @@ export const METRICS: Metric[] = [
   {
     ...metricDefinition('peer'),
     example: 'Students will engage with their classmates’ ideas.', before: 27, after: 86,
+    assessmentCriteria: 'Include a specific suggestion and a follow-up question in your response.',
     improvement: 'More response criteria met', uncertainty: 'Exchange of ideas still unclear',
     evidence: 'Online replies become more specific, but some students learn a repeatable response formula.',
     studentReplies: ['A suggestion and a question! 🎯', 'I use that pattern every time 🤭'],

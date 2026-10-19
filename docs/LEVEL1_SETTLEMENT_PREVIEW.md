@@ -7,21 +7,45 @@ not a replacement for the approved complete game.
 
 ## Preview flow
 
-Choose one of the existing six metrics → write a prediction → Run evaluation →
-watch the original before/after score animation and Target achieved report →
-Observe the class → play that metric's own consequence → transition directly to
-the congratulatory email and Something Feels Wrong thoughts → show the results
-settlement. The shared Common Ending / Alex line is omitted, as requested.
+Choose the metric that will count towards students’ marks → read its assessment
+criteria and predict students’ response → View assessment results → watch the
+before/after class percentages → Look behind the result → play the selected
+consequence, office email and teacher thoughts → show the results settlement.
+The shared Common Ending / Alex line is omitted, as requested.
+
+The numbers represent the illustrative percentage of students meeting the chosen
+metric’s assessment criteria, not individual grades or a measured learning score.
+They remain the same fixed story values for each branch. The prediction page
+shows a criterion for each of the six metrics, matching the retained scene:
+
+| Metric | Assessment criteria |
+| --- | --- |
+| Preparation | Complete the preparation checklist. |
+| Participation | Make at least one contribution in class. |
+| Focus | Be recorded as on task during classroom checks. |
+| Discussion | Ask a follow-up question and build on a classmate’s point. |
+| Reflection | Use the reflection format: describe your thinking before and after. |
+| Peer response | Include a specific suggestion and a follow-up question in your response. |
+
+The report says **At the second assessment**. Its two columns are **First
+assessment** (the recorded baseline) and **Second assessment** (after the metric
+counts towards students’ marks), making the numbering explicit without a new
+page. Its label is **Students meeting the criteria**; values and scale endpoints
+carry percentages. The numerical target, threshold marker and target-met
+heading are absent. The original increasing bars and button alignment remain.
+The report and the classroom show the same assessment period; the classroom
+reveals how students attained the reported result.
 
 The original four steps stay Choose / Predict / Evaluate / Observe. Both the
 animation and the final settlement belong to Observe; there is no Results step.
 The animation occupies the former classroom placeholder, below the visible
-workbench heading and stepper. Run evaluation stays on the right, as in the
+workbench heading and stepper. View assessment results stays on the right, as in the
 original game.
 
 The settlement reuses the original Level 1 PerspectivePanel: Management’s view,
-Satisfaction, Satisfied, the satisfaction bar and Reported score / target met;
-Students, its existing branch-specific behaviour and Learning at risk. The two
+Satisfaction, Satisfied and the satisfaction bar; Students, its existing
+branch-specific behaviour and Learning at risk. Management’s view has no bottom
+evidence text in this preview, including its choose, predict and report pages. The two
 wide, equally weighted cards sit under the selected metric.
 Original final values and copy remain. Management’s view is static at its final
 report value, without a second bar rise or attention animation. Students keeps
@@ -47,8 +71,10 @@ navigating onward.
 original selection → prediction → score result → observe path. Without the seam,
 the legacy review chat follows the cinematic. With it, the actual cinematic
 completion callback opens the settlement and reports the existing result once.
-The existing completion guard remains. The shared component and rules are
-reused; there is no copied gameplay implementation.
+The existing completion guard remains. The optional settlement path enables
+the assessment-report wording and percentages; legacy callers keep their original
+copy and target display. Shared components and values are reused; there is no
+copied gameplay implementation. The existing completion payload is unchanged.
 
 ## Animation and pacing
 

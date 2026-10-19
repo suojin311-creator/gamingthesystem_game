@@ -10,13 +10,18 @@ const steps = [
 
 type Box = { top: number; left: number; width: number; height: number };
 
-export default function WorkbenchGuide({ onClose }: { onClose: () => void }) {
+export default function WorkbenchGuide({ onClose, assessmentReport = false }: { onClose: () => void; assessmentReport?: boolean }) {
   const [step, setStep] = useState(0);
   const [box, setBox] = useState<Box | null>(null);
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const dialog = useRef<HTMLDialogElement>(null);
   const card = useRef<HTMLDivElement>(null);
   const next = useRef<HTMLButtonElement>(null);
+  const text = assessmentReport && step === 0
+    ? 'Choose what earns marks, predict how students will respond, then view the assessment report.'
+    : assessmentReport && step === 3
+    ? 'Look behind the report to see how students responded in class.'
+    : steps[step].text;
 
   useEffect(() => {
     const modal = dialog.current;
@@ -80,7 +85,7 @@ export default function WorkbenchGuide({ onClose }: { onClose: () => void }) {
     <div ref={card} className="guide-card" style={position}>
       <div className="guide-top"><span className="eyebrow">QUICK GUIDE · {step + 1} / {steps.length}</span><button className="text-button" onClick={onClose}>Skip guide</button></div>
       <h2>{steps[step].title}</h2>
-      <p>{steps[step].text}</p>
+      <p>{text}</p>
       <div className="guide-actions"><div className="guide-dots" aria-hidden="true">{steps.map((_, index) => <i key={index} className={index === step ? 'active' : ''} />)}</div>{step > 0 && <button className="back-button" onClick={() => setStep(value => value - 1)}>Back</button>}<button ref={next} className="button primary-button" onClick={() => step === steps.length - 1 ? onClose() : setStep(value => value + 1)}>{step === steps.length - 1 ? 'Start Level 1' : 'Next'}<Icon name="arrow" /></button></div>
     </div>
   </dialog>;
