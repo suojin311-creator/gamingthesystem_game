@@ -80,8 +80,10 @@ for readability on the artwork, without a subtitle background layer.
 The presentation clock skips the removed common ending and office approach,
 retaining source timings for the selected branch and office thoughts. Per-line
 English reading holds remain (roughly 220 words/minute plus a settling margin).
-The complete email gets 4.1 seconds, including the short uncover, before the
-teacher's first thought. The six timelines span about 20.1–21.3 seconds; no global
+The teacher's first thought appears two seconds after the email uncover actually
+finishes, using the visible playback clock so hidden tabs do not consume the wait.
+The remaining dialogue holds stay unchanged; the bridge reads “What if I measured
+more than one?” The six timelines span about 20.1–21.3 seconds; no global
 playback multiplier is used. Both required images are decoded before playback
 so the transition does not expose an unloaded shot. Predictions stay on the
 settlement, without competing with the thought captions.

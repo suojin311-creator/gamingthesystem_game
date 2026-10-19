@@ -31,7 +31,7 @@ for (const [id, boast, question, reveal] of samples) {
   for (const [start, end, text] of [[2.2,5.3,boast],[5.5,8.2,question],[8.9,12.1,reveal]]) {
     assert(clockAt(pacing,end)-clockAt(pacing,start) >= wordCount(text)*.25+.25, id+': reading time for '+text);
   }
-  assert(clockAt(pacing,23.7)-clockAt(pacing,18.9) >= 4.1-1e-8, id+': complete email has its own reading hold');
+  assert(clockAt(pacing,23.7)-clockAt(pacing,18.9) >= 4.1-1e-8, id+': original office timeline stays intact as the first thought appears earlier');
   assert.equal(FIRST_THOUGHT, 'The number looks great... but something still feels wrong.');
   assert(clockAt(pacing,26.35)-clockAt(pacing,24.25) >= 2.4, id+': clear first thought');
   assert(clockAt(pacing,29.95)-clockAt(pacing,28.3) >= 1.7, id+': clear second thought');

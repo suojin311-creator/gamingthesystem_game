@@ -3,8 +3,8 @@ import { finalCoverOpacity, SCENE_COVER_SECONDS, SOURCE_TRANSITION_START } from 
 import { AbsoluteFill, Img } from 'remotion';
 import { ConsequenceScene } from '@partner/cinematics/level1/ConsequenceScene';
 import { DialogueLayer } from '@partner/cinematics/shared/engine/DialogueLayer/DialogueLayer';
-import { branches, SECOND_THOUGHT, BRIDGE_LINE, LEVEL1 } from '@partner/cinematics/level1/level1Content';
-import { FIRST_THOUGHT, SPEAKER_COLORS, CAPTION_SHADOW } from './content.mjs';
+import { branches, SECOND_THOUGHT, LEVEL1 } from '@partner/cinematics/level1/level1Content';
+import { FIRST_THOUGHT, BRIDGE_LINE, EMAIL_THOUGHT_DELAY, SPEAKER_COLORS, CAPTION_SHADOW } from './content.mjs';
 import officeBackground from '@partner-assets/backgrounds/BG_Office_FirstPerson_v01.png';
 import '@partner/styles.css';
 import '@partner/cinematics/level1/level1.css';
@@ -24,9 +24,9 @@ function SpokenLine({ text, player = false }) {
   </div>;
 }
 
-function OfficeEnding({ seconds, playerName }) {
+function OfficeEnding({ seconds, playerName, thoughtReady }) {
   const name = playerName?.trim();
-  const thought = seconds >= 7.1 && seconds < 10.1 ? FIRST_THOUGHT
+  const thought = thoughtReady && seconds < 10.1 ? FIRST_THOUGHT
     : seconds >= 11.2 && seconds < 13.7 ? SECOND_THOUGHT
     : seconds >= 13.8 ? BRIDGE_LINE : null;
   return <div className="l1-office" aria-label="Your sunlit office">
@@ -53,6 +53,9 @@ export function LevelOneFilm({ selectedMetric, playerName, seconds, reducedMotio
   const officeStart = LEVEL1.branch + LEVEL1.common;
   const [phase, setPhase] = useState('branch');
   const [handoff, setHandoff] = useState('idle');
+  const [emailReadyAt, setEmailReadyAt] = useState(null);
+  const currentElapsed = useRef(elapsed);
+  currentElapsed.current = elapsed;
   const cover = useRef(null);
   const revealOffice = () => { setPhase('office'); setHandoff('covered'); };
   useEffect(() => {
@@ -62,6 +65,11 @@ export function LevelOneFilm({ selectedMetric, playerName, seconds, reducedMotio
     // A real transition end protects the swap even if composition frames drop.
     // With reduced motion there is no transition event; paint the solid cover first.
     const noTransition = cover.current && getComputedStyle(cover.current).transitionDuration.split(',').every(part => parseFloat(part) === 0);
+    if (handoff === 'opening' && noTransition) {
+      setEmailReadyAt(currentElapsed.current);
+      setHandoff('done');
+      return;
+    }
     if (handoff !== 'covered' && !(handoff === 'closing' && noTransition)) return;
     let second = 0;
     const first = requestAnimationFrame(() => { second = requestAnimationFrame(() => {
@@ -78,12 +86,12 @@ export function LevelOneFilm({ selectedMetric, playerName, seconds, reducedMotio
       {phase === 'branch' ? <>
         <ConsequenceScene metric={selectedMetric} seconds={Math.min(seconds, LEVEL1.branch)} reducedMotion={reducedMotion} />
         {text && <SpokenLine text={text} player={seconds >= 5.5 && seconds < 8.2} />}
-      </> : <OfficeEnding seconds={seconds - officeStart} playerName={playerName} />}
+      </> : <OfficeEnding seconds={seconds - officeStart} playerName={playerName} thoughtReady={emailReadyAt !== null && elapsed - emailReadyAt >= EMAIL_THOUGHT_DELAY} />}
     </div>
     <div ref={cover} className="l1-scene-cover" aria-hidden="true" onTransitionEnd={event => {
       if (event.target !== event.currentTarget || event.propertyName !== 'opacity') return;
       if (handoff === 'closing') revealOffice();
-      else if (handoff === 'opening') setHandoff('done');
+      else if (handoff === 'opening') { setEmailReadyAt(currentElapsed.current); setHandoff('done'); }
     }} style={{ position: 'absolute', inset: 0, background: '#111710', opacity: finished || handoff === 'closing' || handoff === 'covered' ? 1 : finalCoverOpacity(pacing, elapsed, reducedMotion), transition: `opacity ${!reducedMotion && (handoff === 'closing' || handoff === 'opening') ? SCENE_COVER_SECONDS : 0}s ease-in-out`, pointerEvents: 'none' }} />
   </AbsoluteFill>;
 }

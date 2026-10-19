@@ -1,4 +1,4 @@
-import { FIRST_THOUGHT } from './content.mjs';
+import { FIRST_THOUGHT, BRIDGE_LINE } from './content.mjs';
 
 /** English reading holds at about 220 words/minute, plus a short settling margin. */
 export function readingSeconds(text, minimum = 2.1) {
@@ -28,7 +28,7 @@ export function createPacing(branch) {
     [29.95, 30.3, .15],
     [30.3, 30.4, .10],
     [30.4, 31.1, .15],
-    [31.1, 33.4, readingSeconds('What if we measured more than one?')],
+    [31.1, 33.4, readingSeconds(BRIDGE_LINE)],
     [33.4, 33.4, .35], // Hold the final thought, then cover for the recap handoff.
   ];
   let duration = 0;

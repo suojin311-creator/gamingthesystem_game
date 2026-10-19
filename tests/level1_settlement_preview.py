@@ -211,7 +211,7 @@ branch_tail = {
     'discuss': ['What new idea came out of the discussion?', 'I followed the discussion checklist.'],
     'reflect': ['What actually changed your mind?', 'That’s the format on the rubric.'],
 }
-thoughts = ['The number looks great... but something still feels wrong.', 'Maybe one metric is too narrow.', 'What if we measured more than one?']
+thoughts = ['The number looks great... but something still feels wrong.', 'Maybe one metric is too narrow.', 'What if I measured more than one?']
 
 
 def watch_movie(page, frame, metric, started, capture=False):
