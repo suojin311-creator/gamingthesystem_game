@@ -105,7 +105,7 @@ export default function ClassroomScene({ active, onReturn, play, startClassroom,
         ))}
         </div>
         <AnimatePresence>
-          {phase === 'exitCue' && <motion.button key="exit" ref={returnButton} className="classroom-exit" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} onClick={() => {
+          {phase === 'exitCue' && <motion.button key="exit" ref={returnButton} className="opening-action classroom-exit" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} onClick={() => {
             if (interactionLock.current) return;
             interactionLock.current = true; play('transition'); setPhase('exitFocus');
           }}>BACK TO OFFICE <span aria-hidden="true">→</span></motion.button>}

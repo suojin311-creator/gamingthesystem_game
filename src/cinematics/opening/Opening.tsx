@@ -141,9 +141,8 @@ export default function Opening({ onComplete }: { onComplete: (playerName: strin
             }}>
               <h1>This desk is yours now.</h1>
               <label htmlFor="player-name">What name should we put on it?</label>
-              <p>You'll be making the decisions from here.</p>
               <input ref={nameInput} id="player-name" autoComplete="off" maxLength={40} value={draftName} onChange={(event) => setDraftName(event.target.value)} placeholder="Name on the desk..." required />
-              <button className="cinematic-button" disabled={!draftName.trim()}>TAKE YOUR SEAT</button>
+              <button className="opening-action" disabled={!draftName.trim()}>TAKE YOUR SEAT <span aria-hidden="true">→</span></button>
             </motion.form>
           )}
           {beat === 'seating' && <motion.p key="time" className="time-caption" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={fade}>Monday, 9:12 AM</motion.p>}

@@ -18,10 +18,14 @@
 .opening-scene .subtitle { font-size: 1.35cqw; line-height: 1.7; color: #c2b6a5; margin-bottom: 2.4cqw; }
 .opening-scene .cinematic-button { display: inline-block; border: 0; border-bottom: 1px solid #ed8068a0; background: transparent; color: #edb39c; font-size: 1.1cqw; letter-spacing: .18em; padding: .9cqw .2cqw; transition: color .2s, border-color .2s; }
 .opening-scene .cinematic-button:not(:disabled):hover { color: #fff1db; border-color: #fff1db; }
+.opening-scene .opening-action { display: inline-flex; align-items: center; justify-content: center; gap: .8em; min-height: 44px; padding: clamp(12px, 1cqw, 16px) clamp(16px, 1.6cqw, 24px); border: 1px solid #f1d9b5; border-radius: 4px; background: #ad5840; color: #fff9ef; font-size: clamp(14px, 1.1cqw, 18px); font-weight: 600; line-height: 1.25; letter-spacing: .06em; white-space: nowrap; text-shadow: none; box-shadow: 0 3px 0 #713b2d, 0 5px 14px #100d0b66; transition: background-color .18s, box-shadow .18s; }
+.opening-scene .opening-action > span { font-size: 1.2em; line-height: 1; }
+.opening-scene .opening-action:not(:disabled):hover { background: #bd674c; box-shadow: 0 3px 0 #713b2d, 0 5px 18px #100d0b80; }
+.opening-scene .opening-action:focus-visible { outline: 3px solid #fff0c4; outline-offset: 3px; }
+.opening-scene .opening-action:not(:disabled):active { background: #914631; box-shadow: 0 1px 0 #713b2d, 0 3px 8px #100d0b66; }
 .opening-scene .identity-overlay { position: absolute; left: 49%; top: 25%; width: 43%; text-align: left; text-shadow: 0 2px 18px #000; }
 .opening-scene .identity-overlay h1 { font-family: Georgia, serif; font-weight: 400; font-size: 2.9cqw; margin-bottom: 1.2cqw; }
-.opening-scene .identity-overlay label { display: block; font-size: 1.55cqw; }
-.opening-scene .identity-overlay p { font-size: 1.15cqw; color: #eee1cd; margin: 1cqw 0 2.4cqw; }
+.opening-scene .identity-overlay label { display: block; font-size: 1.55cqw; margin-bottom: .9cqw; }
 .opening-scene .identity-overlay input { display: block; width: 85%; border: 0; border-bottom: 1px solid #f6e2be99; border-radius: 0; background: #100f0c50; color: #fff7e7; padding: .8cqw .4cqw; font-size: 1.6cqw; margin-bottom: 1.3cqw; }
 .opening-scene .identity-overlay input::placeholder { color: #d8c8af; }
 .opening-scene .primary { color: var(--ink); background: var(--coral); border: 1px solid var(--ink); padding: .7cqw 2cqw; }
@@ -91,8 +95,7 @@
 .opening-scene .classroom-thought { font-family: Georgia, serif; font-style: italic; }
 .opening-scene .sleeping-response { font-family: Georgia, serif; font-style: italic; }
 .opening-scene .classroom-look { position: absolute; bottom: 5%; width: 100%; text-align: center; color: #fff5e3; font-family: Georgia, serif; font-size: 1.1cqw; text-shadow: 0 2px 5px #000; pointer-events: none; }
-.opening-scene .classroom-exit { position: absolute; left: 84%; top: 42%; width: 13%; padding: .7cqw .4cqw; background: #211f1980; border: 0; border-bottom: 1px solid #ed8068a0; color: #ffe9cf; font-size: .85cqw; line-height: 1.5; letter-spacing: .08em; text-shadow: 0 2px 4px #000; cursor: pointer; }
-.opening-scene .classroom-exit:hover { color: #ffbea0; }
+.opening-scene .classroom-exit { position: absolute; right: 3%; top: 42%; }
 @media (prefers-reduced-motion: reduce) { .opening-scene *, .opening-scene *::before, .opening-scene *::after { scroll-behavior: auto !important; transition-duration: 0s !important; } }
 
 .opening-scene h1, .opening-scene h2, .opening-scene p { margin: 0 0 1em; }
