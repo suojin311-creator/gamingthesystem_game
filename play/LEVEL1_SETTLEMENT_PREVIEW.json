@@ -1,0 +1,82 @@
+{
+  "branch": "preview/level1-settlement",
+  "baselineCommit": "32a91fe4bfb1cb193040410c846ebc165f8b9d5d",
+  "partnerSourceCommit": "1bdd0c442c4b345b3bd37d6f541742d4e55c732f",
+  "sourceSha256": "92137b63a846d515f1b20ac1a861cda5f1dc1574b06c7511f846fd67bd5a9524",
+  "archive": "Level1-settlement-preview.zip",
+  "zipSha256": "7d3ee023a1982884ec65568abaaf36feeea1dec8b0cac1cb00da63d5e1c0f61a",
+  "entries": {
+    "START-HERE.html": "3d03180d69eeda099dc7372dbc352b6d48070c7d0daffd9fa9cab17a5f2535ff",
+    "Level1-settlement.html": "d655519089e6ca57f5270e36678c8ce4fa88e8616c79e5934aa55561a2d726f7",
+    "Current-Level1.html": "21d84902a6ad564e7bcb87803e494bb32ec68239c05a6392b8ec80cc209b0d56",
+    "START-HERE.txt": "bdf5a35dcbbd51c50c75866fce6a8d7fc40c969a2aa8a5f752dc32c2affb9fcc"
+  },
+  "scope": "Independent Level 1 experiment only; previous releases and upstream repository are unchanged",
+  "flow": "Choose → Predict → full selected cinematic (including common and office ending) → dialogue-free result settlement",
+  "pacing": "Per-line English reading holds; shorter empty shots/transitions, and 2.4 seconds of clear target-result display",
+  "validatedAtUtc": "2026-10-19T13:48:43.172474+00:00",
+  "verification": {
+    "typecheck": "passed",
+    "browser": {
+      "passed": 12,
+      "checks": [
+        "Archive CRC, ZIP hash and every entry hash match; Current-Level1.html is byte-identical to the original Level1-play.zip",
+        "The offline launcher opens the actual new HTML and its six-choice Level 1 form",
+        "Peer response plays branch → common → office with both thoughts and the final bridge in real time, then opens the correct dialogue-free settlement (34.11 seconds)",
+        "Replay starts the same branch in a fresh iframe and returns to the same result without legacy review UI",
+        "prep: correct branch, common/office, scores, behaviour and unscored verbatim prediction through real player controls",
+        "part: correct branch, common/office, scores, behaviour and unscored verbatim prediction through real player controls",
+        "focus: correct branch, common/office, scores, behaviour and unscored verbatim prediction through real player controls",
+        "discuss: correct branch, common/office, scores, behaviour and unscored verbatim prediction through real player controls",
+        "reflect: correct branch, common/office, scores, behaviour and unscored verbatim prediction through real player controls",
+        "At 390px the choice form, iframe and two-card settlement fit without horizontal overflow; Try another resets all six choices",
+        "The launcher also fits 390px and opens the unchanged original HTML at its original metric-choice screen",
+        "The actual archive runs offline with zero external requests and zero browser runtime errors"
+      ],
+      "runtimeErrors": [],
+      "externalRequests": [],
+      "archive": "Level1-settlement-preview.zip",
+      "zipSha256": "7d3ee023a1982884ec65568abaaf36feeea1dec8b0cac1cb00da63d5e1c0f61a",
+      "branchDurationsSeconds": {
+        "peer": 25.42,
+        "prep": 25.88,
+        "part": 25.42,
+        "focus": 25.88,
+        "discuss": 26.61,
+        "reflect": 25.42
+      },
+      "realTimePlayback": {
+        "metric": "peer",
+        "realTimeSeconds": 34.11,
+        "displayedDurationSeconds": 25.42,
+        "clockAccelerated": false
+      },
+      "screenshots": [
+        "test-results/level1-settlement-preview-desktop.png",
+        "test-results/level1-settlement-preview-mobile.png"
+      ],
+      "failureDiagnostics": [],
+      "failure": null
+    },
+    "pacing": {
+      "command": "node tests/level1_settlement_pacing.mjs",
+      "passed": 6,
+      "durationsSeconds": {
+        "peer": 25.42,
+        "prep": 25.88,
+        "part": 25.42,
+        "focus": 25.88,
+        "discuss": 26.61,
+        "reflect": 25.42
+      }
+    },
+    "legacySourceRegression": "Current default Level1 source retains choose → predict → numerical result → placeholder → legacy review; sound toggles and original continuation remain, no settlement; zero runtime errors",
+    "unchangedPartnerFiles": 94,
+    "unchangedPublishedGameArchives": 6
+  },
+  "notes": [
+    "Only this independent preview ZIP is published on preview/level1-settlement; no approved release archive or upstream repository is overwritten.",
+    "Player timelines are 25.42–26.61 seconds. The recorded wall time includes iframe preparation and browser rendering; it is retained separately rather than presented as playback duration.",
+    "The original composition receives a build-only mapped source frame directly. Full real-time playback verifies the second thought and final bridge, preventing a shorter player duration from truncating the old source clock."
+  ]
+}

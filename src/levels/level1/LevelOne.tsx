@@ -19,12 +19,18 @@ export type LevelOneResult = {
   metricId: MetricId; prediction: string;
   reportedScore: { before: number; after: number; target: number };
 };
+export type LevelOneSettlement = {
+  result: LevelOneResult;
+  onReplay: () => void;
+};
 export type LevelOneProps = {
   playerName?: string;
   renderCinematic?: (request: CinematicRequest, onComplete: () => void) => ReactNode;
   onComplete?: (result: LevelOneResult) => void;
   onContinue?: () => void;
   showIntro?: boolean;
+  /** Opt-in experiment: run the cinematic before a dialogue-free settlement. */
+  renderSettlement?: (context: LevelOneSettlement) => ReactNode;
 };
 
 const steps = ['Choose', 'Predict', 'Evaluate', 'Observe'];
@@ -62,7 +68,7 @@ function PerspectivePanel({ metric, evaluated, observed, highlight }: {
   </aside>;
 }
 
-export default function LevelOne({ playerName: suppliedName, renderCinematic, onComplete, onContinue, showIntro = true }: LevelOneProps) {
+export default function LevelOne({ playerName: suppliedName, renderCinematic, onComplete, onContinue, showIntro = true, renderSettlement }: LevelOneProps) {
   const playerName = resolvePlayerName(suppliedName);
   const [session, setSession] = useState(() => ({ ...INITIAL_SESSION }));
   const [guideOpen, setGuideOpen] = useState(showIntro);
@@ -86,17 +92,18 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
   const observed = phase === 'review' && reviewStep === 1;
   const evaluated = (phase === 'result' && resultReported) || ['cinematic', 'review'].includes(phase);
   const dialogueEnabled = phase === 'result' ? resultReported : phase === 'review' ? reviewTalkReady : true;
-  const currentStep = phase === 'review' && dialogueSettled ? steps.length : phaseStep[phase];
+  const progressSteps = renderSettlement ? ['Choose', 'Predict', 'Observe', 'Results'] : steps;
+  const currentStep = phase === 'review' && (dialogueSettled || renderSettlement) ? steps.length : renderSettlement && phase === 'cinematic' ? 2 : phaseStep[phase];
 
   useVisibleDelay(`report:${runId}:${phase}:${metricId}:${resultReported}`, '.score-paper', 900,
     phase === 'result' && resultReady && !resultReported && !paused, showReport);
   useVisibleDelay(`report-emphasis:${runId}:${phase}:${metricId}:${resultReported}`, '.perspective.university', 1600,
     phase === 'result' && highlight === 'university' && !paused, () => setHighlight(null));
   useVisibleDelay(`evidence:${runId}:${phase}:${metricId}:${reviewStep}`, '.prediction-recap', 1000,
-    phase === 'review' && reviewStep === 0 && !paused, showObservation);
+    phase === 'review' && !renderSettlement && reviewStep === 0 && !paused, showObservation);
   // Match Level 2’s evidence-to-conversation rhythm.
   useVisibleDelay(`conversation:${runId}:${phase}:${metricId}:${reviewStep}`, '.observation-recap', findingReadingTime(metric?.evidence || ''),
-    phase === 'review' && reviewStep === 1 && !paused && !reviewTalkReady, () => {
+    phase === 'review' && !renderSettlement && reviewStep === 1 && !paused && !reviewTalkReady, () => {
       setReviewTalkReady(true);
       bringIntoView('.dialogue-strip');
     });
@@ -140,6 +147,14 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
   }, [phase, metric, resultReported, feedback.play]);
+
+  // The settlement path completes on the actual full-cinematic callback. It does
+  // not wait for the legacy review chat, and replay cannot report completion twice.
+  useEffect(() => {
+    if (!renderSettlement || phase !== 'review' || !metric || completionReported.current) return;
+    completionReported.current = true;
+    onComplete?.({ metricId: metric.id, prediction: prediction.trim(), reportedScore: { before: metric.before, after: metric.after, target: TARGET } });
+  }, [renderSettlement, phase, metric, prediction, onComplete]);
 
   function go(next: Phase) {
     feedback.stop();
@@ -198,13 +213,13 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
   const request: CinematicRequest | null = phase === 'cinematic' && metric ? { sceneId: `level1.${metric.id}`, metricId: metric.id, playerName } : null;
 
   return <div className="game-page level-one" onPointerDownCapture={feedback.unlock} onKeyDownCapture={feedback.unlock}>
-    <header className="masthead"><a className="wordmark" href="#main-content" aria-label="Gaming the System, skip to game"><span className="brand-emblem" aria-hidden="true">g<span>s</span><i /></span><span>GAMING<br /><b>THE SYSTEM</b></span></a><div className="header-controls">{phase !== 'cinematic' && <button ref={guideButton} className="guide-button" aria-label="Guide" onClick={openGuide}><Icon name="question" /><span>Guide</span></button>}<button className="sound-button" aria-pressed={!feedback.muted} disabled={!feedback.available} onClick={feedback.toggle} title={feedback.available ? 'Toggle feedback sounds' : 'Audio is unavailable in this browser'}><Icon name={feedback.muted || !feedback.available ? 'muted' : 'sound'} /><span>{!feedback.available ? 'No audio' : feedback.muted ? 'Sound off' : 'Sound on'}</span></button></div></header>
+    <header className="masthead"><a className="wordmark" href="#main-content" aria-label="Gaming the System, skip to game"><span className="brand-emblem" aria-hidden="true">g<span>s</span><i /></span><span>GAMING<br /><b>THE SYSTEM</b></span></a><div className="header-controls">{phase !== 'cinematic' && !(phase === 'review' && renderSettlement) && <button ref={guideButton} className="guide-button" aria-label="Guide" onClick={openGuide}><Icon name="question" /><span>Guide</span></button>}<button className="sound-button" aria-pressed={!feedback.muted} disabled={!feedback.available} onClick={feedback.toggle} title={feedback.available ? 'Toggle feedback sounds' : 'Audio is unavailable in this browser'}><Icon name={feedback.muted || !feedback.available ? 'muted' : 'sound'} /><span>{!feedback.available ? 'No audio' : feedback.muted ? 'Sound off' : 'Sound on'}</span></button></div></header>
 
     <main className="workbench" id="main-content">
       <div className="workbench-heading"><div className="chapter-heading"><span className="chapter-number">01</span><h1>One metric.</h1></div><span className="office-location"><span /> THE OFFICE</span></div>
-      <nav className="stepper" aria-label="Level 1 progress"><ol>{steps.map((step, index) => <li key={step} className={`${currentStep === index ? 'current' : ''} ${currentStep > index ? 'done' : ''}`} aria-current={currentStep === index ? 'step' : undefined}><span className="step-number">{currentStep > index ? <Icon name="check" /> : `0${index + 1}`}</span><span>{step}</span></li>)}</ol></nav>
+      <nav className="stepper" aria-label="Level 1 progress"><ol>{progressSteps.map((step, index) => <li key={step} className={`${currentStep === index ? 'current' : ''} ${currentStep > index ? 'done' : ''}`} aria-current={currentStep === index ? 'step' : undefined}><span className="step-number">{currentStep > index ? <Icon name="check" /> : `0${index + 1}`}</span><span>{step}</span></li>)}</ol></nav>
 
-      {request ? (renderCinematic ? renderCinematic(request, () => go('review')) : <CinematicPlaceholder request={request} onComplete={() => go('review')} />) : <>
+      {request ? (renderCinematic ? renderCinematic(request, () => go('review')) : <CinematicPlaceholder request={request} onComplete={() => go('review')} />) : phase === 'review' && metric && renderSettlement ? renderSettlement({ result: { metricId: metric.id, prediction: prediction.trim(), reportedScore: { before: metric.before, after: metric.after, target: TARGET } }, onReplay: () => go('cinematic') }) : <>
         <div className={`workbench-body phase-${phase}`}>
           <section className="decision-area" aria-label="Current decision">
             {phase === 'choose' && <>
@@ -216,7 +231,7 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
             {phase === 'predict' && metric && <>
               <div className="section-intro"><h2 ref={title} tabIndex={-1}>What do you expect?</h2></div>
               <div className="selected-focus"><span className="metric-illustration"><Icon name={metric.id} /></span><h3>{metric.name}</h3><button className="text-button" onClick={() => go('choose')}>Change</button></div>
-              <form className="prediction-form" onSubmit={event => { event.preventDefault(); if (prediction.trim()) setSession(value => ({ ...value, prediction: value.prediction.trim(), phase: 'result', resultReported: false })); }}>
+              <form className="prediction-form" onSubmit={event => { event.preventDefault(); if (prediction.trim()) setSession(value => ({ ...value, prediction: value.prediction.trim(), phase: renderSettlement ? 'cinematic' : 'result', resultReported: false })); }}>
                 <label htmlFor="prediction" className="sr-only">What do you expect students to do?</label>
                 <div className="prediction-paper"><span className="paper-corner" aria-hidden="true" /><textarea ref={predictionField} id="prediction" maxLength={100} value={prediction} placeholder={`e.g. ${metric.example}`} aria-describedby="prediction-count" onKeyDown={event => {
                   if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing && event.nativeEvent.keyCode !== 229) {

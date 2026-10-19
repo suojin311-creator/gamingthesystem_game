@@ -1,5 +1,20 @@
 # Working on this game
 
+## Current independent Level 1 experiment
+
+- The user asked to preview a new Level 1 results page without overwriting the
+  existing version. This experiment belongs on `preview/level1-settlement`; push
+  only that branch. Keep `animation/opening-integration`, stable game branches
+  and their existing ZIPs unchanged. The saved baseline is `32a91fe`.
+- Follow `docs/LEVEL1_SETTLEMENT_PREVIEW.md` for this experiment. Its separate
+  entry uses the shared LevelOne with an opt-in `renderSettlement` callback;
+  defaults preserve the existing game. Partner source is read-only.
+- Build only this experiment through `scripts/level1-settlement/` and package
+  `play/Level1-settlement-preview.zip`. Do not run the normal six-ZIP publishing
+  pipeline for this experiment: the user explicitly requested preserving them.
+- The original rules below still govern the stable game and opening integration.
+
+
 - The user requested separate animation development. Current opening integration
   work belongs on `animation/opening-integration` in this checkout. Keep the
   approved game branch `level3-dev` unchanged; do not create a worktree unless asked.
