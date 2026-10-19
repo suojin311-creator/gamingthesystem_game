@@ -1,0 +1,114 @@
+{
+  "validatedAtUtc": "2026-10-19T20:56:52.857624+00:00",
+  "branch": "feature/design-lab-local",
+  "gameBaselineCommit": "63856491e62c52d5a9bdb176ea738abbe6c6c9c7",
+  "gameIntegrated": false,
+  "gameSourcesAndExistingArchivesChanged": false,
+  "domainTests": {
+    "command": "go test -race -v ./...",
+    "passed": 8,
+    "raceDetector": true,
+    "productionWritingSeconds": 90,
+    "productionCardSeconds": 10,
+    "twentyOneReflectionLimitSeconds": 210,
+    "checks": [
+      "Closed or idle browser cannot extend sharing deadlines",
+      "Timeouts create no votes and late choices cannot attach to the next reflection",
+      "Submitted choices are immutable; duplicate delivery counts once",
+      "Early finishers wait; the last finisher can end sharing early",
+      "Flower-only ranking freezes with stable adjacent competition ties",
+      "Public snapshots contain no author identities or live vote totals",
+      "The two questions and host-triggered closing follow in order; empty submissions end gracefully",
+      "21 concurrent participants produce exactly 420 non-self votes"
+    ]
+  },
+  "browserSuites": {
+    "threeParticipants": {
+      "passed": 7,
+      "checks": [
+        "The local host and three independent participant browsers join without accounts or names; the anonymous showcase and ranking are announced",
+        "The writing form has the agreed question without a helper line, accepts one reflection per person and starts the anonymous review automatically",
+        "Each real card expires after ten seconds; unanswered cards advance without a vote while early finishers wait independently",
+        "Votes lock after one choice, authors skip their own reflection, and the frozen read-only ranking counts flowers only",
+        "Both exact questions follow the ranking; the host reveals the embedded Goodhart illustration and original quotation with no external assets",
+        "Host shutdown closes the classroom cleanly; state lives only in the running process",
+        "No browser runtime errors or requests to external services"
+      ],
+      "runtimeErrors": [],
+      "externalRequests": [],
+      "scenario": "ui",
+      "platform": "Linux server binary and Chromium; Windows PE cross-build is validated separately"
+    },
+    "twentyOneParticipants": {
+      "passed": 2,
+      "checks": [
+        "21 simultaneous independent browsers submit and complete 441 card views / 420 votes in 21.5s, receiving the same exact tied ranking",
+        "No browser runtime errors or requests to external services"
+      ],
+      "runtimeErrors": [],
+      "externalRequests": [],
+      "scenario": "class",
+      "platform": "Linux server binary and Chromium; Windows PE cross-build is validated separately"
+    }
+  },
+  "interfaceReview": {
+    "desktopScreenshots": "design-lab/docs/",
+    "productionHostAndWritingScreenshots": true,
+    "submitVisibleAt1366x768": true,
+    "horizontalOverflowCheckedAt": [
+      [
+        1366,
+        768
+      ],
+      [
+        1024,
+        768
+      ],
+      [
+        390,
+        844
+      ]
+    ],
+    "portrait": "Generated editorial illustration, not a historical photograph"
+  },
+  "network": {
+    "nonLoopbackParticipantHTTP": 200,
+    "nonLoopbackHostHTTP": 403,
+    "externalBrowserRequests": [],
+    "campusLANTested": false
+  },
+  "artifact": {
+    "branch": "feature/design-lab-local",
+    "archive": "Design-Lab-local.zip",
+    "zipSha256": "0be3fa41a7095e19a56f58595f7df2367aa8a0d3c30694196a0ab3115cd152f4",
+    "sourceSha256": "49f80990a8d648d5e190a22ce02e761d7a2424b8da54bb64f71419882c8f143b",
+    "toolchain": "go version go1.27.2 linux/amd64",
+    "target": "windows/amd64",
+    "selfContained": true,
+    "embeddedWebSha256": {
+      "assets/index-CJLYeu5m.js": "ab19ba492c53d10cef6c9d41109654d33c548af998753a0e16ea8980dc4b7145",
+      "assets/index-Dna2XC8a.css": "9304a959f99e6b148a758d94eafa2023a59ce679ce8c78e9e0211731a65f2f3a",
+      "goodhart.png": "ea248ed8ba4c7ad5ab3435baff908fc72eef8d23191c0831fc42f6ebc586079a",
+      "index.html": "cbfd6d55a5660f24157f44019917a7fce3f35a1ca00cb78460ecc53697687f5a"
+    },
+    "files": {
+      "Start-Design-Lab.exe": "e44dadcdafe440cde6d5e84419a1ac8dc2aed82dd3f669ecfecc88c3c020f459",
+      "START-HERE.html": "4e708101e80be6a94eab00a8cc7943928001faf1e2f15cdcd72c3e8984afce82",
+      "README.txt": "fd1f09218748048f7323db3373c75dd86d2523c9738fee762a04a53038d7757e",
+      "THIRD-PARTY-NOTICES.txt": "677dc1f3e6a3d6d925dd865ad48c306fcc265fca5ebd80d83a62ffb3f0c1fa5a",
+      "SHA256SUMS.txt": "1e09b7646769341a1a254799e5c2745535355fa4db4c4cfc0541edec78e9ff19"
+    },
+    "windowsBinaryChecks": [
+      "PE x64 header verified",
+      "All built web assets and illustration embedded byte-for-byte",
+      "CGO disabled; no Python/Node.js runtime or paid service required"
+    ],
+    "nativeWindowsExecutionTested": false
+  },
+  "limitations": [
+    "Windows x64 executable is cross-compiled and PE/resource-verified; native Windows execution is not available in this Linux environment.",
+    "21-browser testing shares one test machine and does not replace a classroom Wi-Fi/firewall test.",
+    "Writing is shortened for browser tests; formal 90/210-second rules use the deterministic Go clock tests.",
+    "The local session is in memory and is cleared when the program exits."
+  ]
+}

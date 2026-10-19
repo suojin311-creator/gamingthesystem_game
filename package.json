@@ -18,7 +18,11 @@
     "test:integration": "python3 tests/level3_integration.py",
     "test:release": "python3 tests/release.py",
     "preview": "vite preview --host 0.0.0.0",
-    "cinematic:prepare": "node scripts/level1-film.mjs"
+    "cinematic:prepare": "node scripts/level1-film.mjs",
+    "lab:dev": "vite --config design-lab/vite.config.ts",
+    "lab:check": "tsc --project design-lab/tsconfig.json --noEmit",
+    "lab:build": "npm run lab:check && vite build --config design-lab/vite.config.ts",
+    "lab:package": "npm run lab:build && python3 design-lab/package.py"
   },
   "dependencies": {
     "framer-motion": "12.43.0",

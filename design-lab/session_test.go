@@ -1,0 +1,303 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"strings"
+	"sync"
+	"testing"
+)
+
+func fixture(t *testing.T, count int) (*Session, *int64, []string) {
+	t.Helper()
+	now := int64(1000000)
+	s := newSession(standardConfig, func() int64 { return now })
+	ids := []string{}
+	for i := 0; i < count; i++ {
+		id, err := s.join("")
+		if err != nil {
+			t.Fatal(err)
+		}
+		ids = append(ids, id)
+	}
+	if err := s.start(); err != nil {
+		t.Fatal(err)
+	}
+	return s, &now, ids
+}
+func share(t *testing.T, s *Session, ids []string) {
+	t.Helper()
+	for i, id := range ids {
+		if err := s.submit(id, fmt.Sprintf("Claim %d: reward understanding, not appearances.", i), false); err != nil {
+			t.Fatal(err)
+		}
+	}
+}
+func TestProductionTimingAndTwentyOneParticipantDeadline(t *testing.T) {
+	s, now, ids := fixture(t, 21)
+	share(t, s, ids)
+	*now = s.Deadline - 1
+	s.tick()
+	if s.Phase != "writing" {
+		t.Fatal("writing ended early")
+	}
+	*now++
+	s.tick()
+	if s.Phase != "review" {
+		t.Fatal(s.Phase)
+	}
+	if s.Deadline-s.StartedAt != 210000 {
+		t.Fatal("the 21-reflection cap must be 210 seconds")
+	}
+	// One sleeping/closed browser must not hold up the class or add deadline drift.
+	*now = s.Deadline
+	s.tick()
+	if s.Phase != "ranking" {
+		t.Fatal(s.Phase)
+	}
+	for _, p := range s.Participants {
+		if !p.Finished || p.Cursor != 21 {
+			t.Fatal("all cursors must reach the end")
+		}
+	}
+	for _, r := range s.Ranking {
+		if r.Flowers != 0 || r.Rank != 1 {
+			t.Fatal("unanswered choices are not votes")
+		}
+	}
+}
+func TestTimeoutDoesNotInventAVoteAndRejectsLateVote(t *testing.T) {
+	s, now, ids := fixture(t, 3)
+	share(t, s, ids)
+	*now = s.Deadline
+	s.tick()
+	id := ids[0]
+	first := s.snapshot(id).Card
+	*now = first.Deadline
+	s.tick()
+	next := s.snapshot(id).Card
+	if next == nil || next.ID == first.ID {
+		t.Fatal("timeout must move to the next card")
+	}
+	if len(s.Votes[id]) != 0 {
+		t.Fatal("timeout created a vote")
+	}
+	if err := s.vote(id, first.ID, "flower"); err == nil {
+		t.Fatal("late request voted on an expired card")
+	}
+}
+func TestVoteLocksAndNextIsPersonal(t *testing.T) {
+	s, now, ids := fixture(t, 3)
+	share(t, s, ids)
+	*now = s.Deadline
+	s.tick()
+	id := ids[0]
+	card := s.snapshot(id).Card
+	if card.Own {
+		if err := s.advance(id, card.ID); err != nil {
+			t.Fatal(err)
+		}
+		card = s.snapshot(id).Card
+	}
+	if err := s.advance(id, card.ID); err == nil {
+		t.Fatal("early Next without a choice must not submit a skip")
+	}
+	if err := s.vote(id, card.ID, "flower"); err != nil {
+		t.Fatal(err)
+	}
+	if err := s.vote(id, card.ID, "bomb"); err == nil {
+		t.Fatal("a submitted choice changed")
+	}
+	if err := s.vote(id, card.ID, "flower"); err != nil {
+		t.Fatal("same-choice network retry should be harmless")
+	}
+	other := s.Participants[ids[1]].Cursor
+	if err := s.advance(id, card.ID); err != nil {
+		t.Fatal(err)
+	}
+	if s.Participants[ids[1]].Cursor != other {
+		t.Fatal("one person's Next moved another person")
+	}
+	if s.Votes[id][card.ID] != "flower" {
+		t.Fatal("choice was not retained")
+	}
+}
+func TestEarlyFinisherWaitsUntilOthersOrDeadline(t *testing.T) {
+	s, now, ids := fixture(t, 3)
+	share(t, s, ids)
+	*now = s.Deadline
+	s.tick()
+	id := ids[0]
+	for !s.Participants[id].Finished {
+		c := s.snapshot(id).Card
+		if !c.Own {
+			if err := s.vote(id, c.ID, "flower"); err != nil {
+				t.Fatal(err)
+			}
+		}
+		if err := s.advance(id, c.ID); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if s.Phase != "review" || !s.snapshot(id).Finished {
+		t.Fatal("early finisher did not enter waiting")
+	}
+	for _, other := range ids[1:] {
+		for !s.Participants[other].Finished {
+			c := s.snapshot(other).Card
+			if !c.Own {
+				_ = s.vote(other, c.ID, "bomb")
+			}
+			if err := s.advance(other, c.ID); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
+	if s.Phase != "ranking" || s.StartedAt >= s.Deadline {
+		t.Fatal("all finished should end sharing early")
+	}
+}
+func TestRankingUsesFlowersOnlyAndStableCompetitionTies(t *testing.T) {
+	s, now, ids := fixture(t, 4)
+	share(t, s, ids)
+	*now = s.Deadline
+	s.tick()
+	a, b, c, d := s.Reflections[0].ID, s.Reflections[1].ID, s.Reflections[2].ID, s.Reflections[3].ID
+	s.Votes = map[string]map[string]string{"v1": {a: "flower", b: "flower", c: "bomb", d: "bomb"}, "v2": {a: "flower", b: "flower", c: "flower", d: "bomb"}}
+	s.finishReview(*now)
+	wantRanks := []int{1, 1, 3, 4}
+	wantCounts := []int{2, 2, 1, 0}
+	for i, r := range s.Ranking {
+		if r.Rank != wantRanks[i] || r.Flowers != wantCounts[i] {
+			t.Fatalf("unexpected ranking: %+v", s.Ranking)
+		}
+	}
+	if s.Ranking[0].ID != a || s.Ranking[1].ID != b {
+		t.Fatal("tied reflections reordered")
+	}
+	frozen, _ := json.Marshal(s.Ranking)
+	for i := 0; i < 5; i++ {
+		s.tick()
+		s.snapshot(ids[0])
+	}
+	after, _ := json.Marshal(s.Ranking)
+	if string(frozen) != string(after) {
+		t.Fatal("ranking changed during presentation")
+	}
+	if err := s.vote(ids[0], a, "flower"); err == nil {
+		t.Fatal("votes reopened after ranking")
+	}
+}
+func TestSnapshotNeverPublishesAuthorsOrVotesBeforeRanking(t *testing.T) {
+	s, now, ids := fixture(t, 2)
+	share(t, s, ids)
+	before, _ := json.Marshal(s.snapshot(ids[0]))
+	if strings.Contains(string(before), "Claim 0") || strings.Contains(string(before), "Claim 1") {
+		t.Fatal("writing leaked other work")
+	}
+	*now = s.Deadline
+	s.tick()
+	b, _ := json.Marshal(s.snapshot(ids[0]))
+	for _, id := range ids[1:] {
+		if strings.Contains(string(b), id) {
+			t.Fatal("another participant's identity was published")
+		}
+	}
+	if len(s.snapshot(ids[0]).Ranking) != 0 {
+		t.Fatal("live ranking exposed during voting")
+	}
+}
+func TestClosingSequenceAndEmptyClass(t *testing.T) {
+	s, now, ids := fixture(t, 1)
+	share(t, s, ids)
+	*now = s.Deadline
+	s.tick()
+	c := s.snapshot(ids[0]).Card
+	if !c.Own {
+		t.Fatal("self reflection not identified")
+	}
+	if err := s.vote(ids[0], c.ID, "flower"); err == nil {
+		t.Fatal("self vote accepted")
+	}
+	_ = s.advance(ids[0], c.ID)
+	if s.Phase != "ranking" {
+		t.Fatal(s.Phase)
+	}
+	*now = s.Deadline
+	s.tick()
+	if s.Phase != "question1" {
+		t.Fatal(s.Phase)
+	}
+	*now = s.Deadline
+	s.tick()
+	if s.Phase != "question2" {
+		t.Fatal(s.Phase)
+	}
+	*now += 1000000
+	s.tick()
+	if s.Phase != "question2" {
+		t.Fatal("second question must wait for host")
+	}
+	if err := s.closeQuestions(); err != nil || s.Phase != "ending" {
+		t.Fatal(err)
+	}
+	empty, clock, _ := fixture(t, 2)
+	*clock = empty.Deadline
+	empty.tick()
+	if empty.Phase != "empty" {
+		t.Fatal("empty class tried to rank nonexistent work")
+	}
+	if err := empty.closeQuestions(); err != nil {
+		t.Fatal(err)
+	}
+}
+func TestConcurrentClassSubmissionsAndVotes(t *testing.T) {
+	s, now, ids := fixture(t, 21)
+	var wg sync.WaitGroup
+	for i, id := range ids {
+		wg.Add(1)
+		go func(i int, id string) {
+			defer wg.Done()
+			s.mu.Lock()
+			defer s.mu.Unlock()
+			if err := s.submit(id, fmt.Sprintf("Class contribution %d", i), false); err != nil {
+				t.Error(err)
+			}
+		}(i, id)
+	}
+	wg.Wait()
+	*now = s.Deadline
+	s.tick()
+	for _, id := range ids {
+		wg.Add(1)
+		go func(id string) {
+			defer wg.Done()
+			for {
+				s.mu.Lock()
+				if s.Participants[id].Finished {
+					s.mu.Unlock()
+					return
+				}
+				c := s.snapshot(id).Card
+				if !c.Own {
+					if err := s.vote(id, c.ID, "flower"); err != nil {
+						t.Error(err)
+					}
+				}
+				if err := s.advance(id, c.ID); err != nil {
+					t.Error(err)
+				}
+				s.mu.Unlock()
+			}
+		}(id)
+	}
+	wg.Wait()
+	if s.Phase != "ranking" || len(s.Ranking) != 21 {
+		t.Fatal("class did not finish")
+	}
+	for _, r := range s.Ranking {
+		if r.Flowers != 20 || r.Rank != 1 {
+			t.Fatalf("lost or duplicated votes: %+v", r)
+		}
+	}
+}

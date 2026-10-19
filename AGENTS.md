@@ -1,3 +1,11 @@
+# Current standalone Design Lab work
+
+The user now explicitly requests a separate local Design Lab on its own branch.
+Work only on `feature/design-lab-local`, following `design-lab/AGENTS.md`.
+Keep the saved game and animation branches and their ZIPs unchanged.
+This feature uses its own build, tests and `play/Design-Lab-local.zip`; the
+older full-game release rules below apply only when publishing the game.
+
 # Working on this game
 
 ## Current opening + Level 1 integration
