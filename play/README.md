@@ -2,7 +2,7 @@
 
 ## 独立试验：Level 1 动画与结果核算页
 
-[Level1-settlement-preview.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/preview/level1-settlement/play/Level1-settlement-preview.zip?raw=true)：解压后打开 **START-HERE.html**，选择新版或原版对照。新版包含完整六选一操作、按阅读速度调整的完整动画，以及无重复对白的结果核算页。结果页可以重播或换一个指标。
+[Level1-settlement-preview.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/preview/level1-settlement/play/Level1-settlement-preview.zip?raw=true)：解压后打开 **START-HERE.html**，选择新版或原版对照。新版包含完整六选一操作、原版分数上涨页、按阅读速度调整的完整动画，以及沿用原状态卡文案的结果核算页。结果页可以重播或换一个指标。
 
 这是独立预览，未覆盖下面的游戏版本或同伴仓库。说明见 [LEVEL1_SETTLEMENT_PREVIEW.md](../docs/LEVEL1_SETTLEMENT_PREVIEW.md)，校验见 [LEVEL1_SETTLEMENT_PREVIEW.json](LEVEL1_SETTLEMENT_PREVIEW.json)。
 

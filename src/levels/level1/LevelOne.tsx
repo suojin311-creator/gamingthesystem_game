@@ -51,7 +51,7 @@ function ResultChart({ metric, ready, score }: { metric: Metric; ready: boolean;
   </div>;
 }
 
-function PerspectivePanel({ metric, evaluated, observed, highlight }: {
+export function PerspectivePanel({ metric, evaluated, observed, highlight }: {
   metric?: Metric; evaluated: boolean; observed: boolean; highlight: 'university' | null;
 }) {
   return <aside className="perspectives" aria-label="Two perspectives">
@@ -92,8 +92,7 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
   const observed = phase === 'review' && reviewStep === 1;
   const evaluated = (phase === 'result' && resultReported) || ['cinematic', 'review'].includes(phase);
   const dialogueEnabled = phase === 'result' ? resultReported : phase === 'review' ? reviewTalkReady : true;
-  const progressSteps = renderSettlement ? ['Choose', 'Predict', 'Observe', 'Results'] : steps;
-  const currentStep = phase === 'review' && (dialogueSettled || renderSettlement) ? steps.length : renderSettlement && phase === 'cinematic' ? 2 : phaseStep[phase];
+  const currentStep = phase === 'review' && (dialogueSettled || renderSettlement) ? steps.length : phaseStep[phase];
 
   useVisibleDelay(`report:${runId}:${phase}:${metricId}:${resultReported}`, '.score-paper', 900,
     phase === 'result' && resultReady && !resultReported && !paused, showReport);
@@ -217,7 +216,7 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
 
     <main className="workbench" id="main-content">
       <div className="workbench-heading"><div className="chapter-heading"><span className="chapter-number">01</span><h1>One metric.</h1></div><span className="office-location"><span /> THE OFFICE</span></div>
-      <nav className="stepper" aria-label="Level 1 progress"><ol>{progressSteps.map((step, index) => <li key={step} className={`${currentStep === index ? 'current' : ''} ${currentStep > index ? 'done' : ''}`} aria-current={currentStep === index ? 'step' : undefined}><span className="step-number">{currentStep > index ? <Icon name="check" /> : `0${index + 1}`}</span><span>{step}</span></li>)}</ol></nav>
+      <nav className="stepper" aria-label="Level 1 progress"><ol>{steps.map((step, index) => <li key={step} className={`${currentStep === index ? 'current' : ''} ${currentStep > index ? 'done' : ''}`} aria-current={currentStep === index ? 'step' : undefined}><span className="step-number">{currentStep > index ? <Icon name="check" /> : `0${index + 1}`}</span><span>{step}</span></li>)}</ol></nav>
 
       {request ? (renderCinematic ? renderCinematic(request, () => go('review')) : <CinematicPlaceholder request={request} onComplete={() => go('review')} />) : phase === 'review' && metric && renderSettlement ? renderSettlement({ result: { metricId: metric.id, prediction: prediction.trim(), reportedScore: { before: metric.before, after: metric.after, target: TARGET } }, onReplay: () => go('cinematic') }) : <>
         <div className={`workbench-body phase-${phase}`}>
@@ -231,7 +230,7 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
             {phase === 'predict' && metric && <>
               <div className="section-intro"><h2 ref={title} tabIndex={-1}>What do you expect?</h2></div>
               <div className="selected-focus"><span className="metric-illustration"><Icon name={metric.id} /></span><h3>{metric.name}</h3><button className="text-button" onClick={() => go('choose')}>Change</button></div>
-              <form className="prediction-form" onSubmit={event => { event.preventDefault(); if (prediction.trim()) setSession(value => ({ ...value, prediction: value.prediction.trim(), phase: renderSettlement ? 'cinematic' : 'result', resultReported: false })); }}>
+              <form className="prediction-form" onSubmit={event => { event.preventDefault(); if (prediction.trim()) setSession(value => ({ ...value, prediction: value.prediction.trim(), phase: 'result', resultReported: false })); }}>
                 <label htmlFor="prediction" className="sr-only">What do you expect students to do?</label>
                 <div className="prediction-paper"><span className="paper-corner" aria-hidden="true" /><textarea ref={predictionField} id="prediction" maxLength={100} value={prediction} placeholder={`e.g. ${metric.example}`} aria-describedby="prediction-count" onKeyDown={event => {
                   if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing && event.nativeEvent.keyCode !== 229) {

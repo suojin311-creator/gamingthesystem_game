@@ -8,25 +8,37 @@ not a replacement for the approved complete game.
 ## Preview flow
 
 Choose one of the existing six metrics → write a prediction → Run evaluation →
-play that metric's complete authored animation → show the results settlement.
-The full animation includes both the common ending and Something Feels Wrong.
-It finishes before the settlement appears. There is no separate pre-animation
-score dashboard in this preview.
+watch the original before/after score animation and Target achieved report →
+Observe the class → play that metric's complete authored animation → show the
+results settlement. The full animation includes both the common ending and
+Something Feels Wrong. It finishes before the settlement appears.
 
-The settlement records the selected metric, its existing illustrative before and
-after scores and target, and the matching qualitative classroom consequence.
-Measured results and classroom results sit beside each other. Predictions remain
-available in a collapsed reference; they are not graded. There is no new learning
-percentage or claim that a score measures real learning. The former review chat,
-long evidence panel and duplicate sidebars do not appear. Replay keeps the actual
-choice and prediction; Try another metric starts a fresh Level 1 run. The preview
-stops at Level 1 and provides these review controls instead of navigating onward.
+The original four steps stay Choose / Predict / Evaluate / Observe. Both the
+animation and the final settlement belong to Observe; there is no Results step.
+The animation occupies the former classroom placeholder, below the visible
+workbench heading and stepper. Run evaluation stays on the right, as in the
+original game.
 
-`LevelOne` has one optional `renderSettlement` seam. Without it the existing
-selection → prediction → score result → observe → review-chat path stays intact.
-With it, the actual cinematic completion callback opens the settlement and reports
-the existing result once. Replay does not report the result again. The shared
-component and rules are reused; there is no copied gameplay implementation.
+The settlement reuses the original Level 1 PerspectivePanel: Management’s view,
+Satisfaction, Satisfied, the satisfaction bar and Reported score / target met;
+Students, its existing branch-specific behaviour and Learning at risk. Only the
+arrangement changes to two wide, equally weighted cards under the selected metric.
+Original state values, styles and update animations remain; replay adds no new
+report or satisfaction reward. The former large IN THE CLASSROOM evidence panel
+and review chat are absent. The metric ribbon, coloured card borders and paired
+layout retain visual weight without adding a second explanation of the movie.
+Predictions remain available in a collapsed, ungraded reference.
+
+Replay keeps the actual choice and prediction; Try another metric starts a fresh
+Level 1 run. The preview stops at Level 1 and provides these review controls
+instead of navigating onward.
+
+`LevelOne` has one optional `renderSettlement` seam. Both modes preserve the
+original selection → prediction → score result → observe path. Without the seam,
+the legacy review chat follows the cinematic. With it, the actual cinematic
+completion callback opens the settlement and reports the existing result once.
+Replay does not report the result again. The shared component and rules are
+reused; there is no copied gameplay implementation.
 
 ## Animation and pacing
 

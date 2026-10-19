@@ -1,9 +1,9 @@
 import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import '../../shared/styles/base.css';
 import LevelOne from '../../levels/level1/LevelOne';
 import Settlement from './Settlement';
 import Cinematic from './Cinematic';
-import '../../shared/styles/base.css';
 import './preview.css';
 
 function Preview() {
