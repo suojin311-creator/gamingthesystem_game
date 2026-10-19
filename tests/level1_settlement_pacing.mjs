@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
+import { FIRST_THOUGHT } from '../scripts/level1-settlement/content.mjs';
 import { createPacing } from '../scripts/level1-settlement/pacing.mjs';
-import { clockAtSource, sceneCoverOpacity } from '../scripts/level1-settlement/transitions.mjs';
+import { clockAtSource, finalCoverOpacity, SOURCE_TRANSITION_START } from '../scripts/level1-settlement/transitions.mjs';
 // Authored dialogue from the pinned partner delivery, not the game-side recap.
 const samples = [
  ['prep','I finished everything on the list!','What was the main idea in the reading?','Uh... I finished the checklist.'],
@@ -17,35 +18,28 @@ function clockAt(pacing, source) {
 const wordCount = text => text.trim().split(/\s+/).length;
 for (const [id, boast, question, reveal] of samples) {
   const pacing = createPacing({boast, question, reveal});
-  assert(pacing.duration > 24 && pacing.duration < 28, id + ': useful overall reduction');
+  assert(pacing.duration > 19 && pacing.duration < 22, id + ': useful overall reduction');
   assert.equal(pacing.sourceSeconds(0), 0);
   assert.equal(pacing.sourceSeconds(pacing.duration), 33.4);
   let prior = -1;
   for (let frame = 0; frame <= Math.ceil(pacing.duration * 30); frame++) {
     const source = pacing.sourceSeconds(frame / 30);
     assert(source >= prior && source <= 33.4, id + ': uninterrupted monotonic source clock');
+    assert(source <= 12.6 || source >= 18.9, id + ': removed common ending and office approach never play');
     prior = source;
   }
-  for (const [start, end, text] of [[2.2,5.3,boast],[5.5,8.2,question],[8.9,12.1,reveal],[12.75,16.5,'Professor! I figured out exactly what you were looking for!']]) {
+  for (const [start, end, text] of [[2.2,5.3,boast],[5.5,8.2,question],[8.9,12.1,reveal]]) {
     assert(clockAt(pacing,end)-clockAt(pacing,start) >= wordCount(text)*.25+.25, id+': reading time for '+text);
   }
-  assert(clockAt(pacing,23.7)-clockAt(pacing,23.2) >= 2.4-1e-8, id+': fully visible target result');
+  assert(clockAt(pacing,23.7)-clockAt(pacing,18.9) >= 4.1-1e-8, id+': complete email has its own reading hold');
+  assert.equal(FIRST_THOUGHT, 'The number looks great... but something still feels wrong.');
   assert(clockAt(pacing,26.35)-clockAt(pacing,24.25) >= 2.4, id+': clear first thought');
   assert(clockAt(pacing,29.95)-clockAt(pacing,28.3) >= 1.7, id+': clear second thought');
   assert(clockAt(pacing,27.7)-clockAt(pacing,26.8) <= .11, id+': removed memory no longer causes a lingering empty beat');
-  for (const cut of [12.6, 16.6]) {
-    const middle = clockAtSource(pacing, cut);
-    for (const reduced of [false, true]) {
-      for (let frame = Math.floor(middle * 30); frame <= Math.ceil(middle * 30); frame++) {
-        assert.equal(sceneCoverOpacity(pacing, frame / 30, reduced), 1, id+': a solid cover hides the scene swap');
-      }
-      assert.equal(sceneCoverOpacity(pacing, middle - .2, reduced), 0, id+': previous shot remains clear outside transition');
-      assert.equal(sceneCoverOpacity(pacing, middle + .2, reduced), 0, id+': next shot clears promptly');
-    }
-  }
+  assert(clockAtSource(pacing,SOURCE_TRANSITION_START) > clockAtSource(pacing,12.1) + .1, id+': last line finishes before the cover starts');
   for (const reduced of [false, true]) {
     const lastFrame = (Math.ceil(pacing.duration * 30) - 1) / 30;
-    assert.equal(sceneCoverOpacity(pacing,lastFrame,reduced),1,id+': fully covered before recap handoff');
+    assert.equal(finalCoverOpacity(pacing,lastFrame,reduced),1,id+': fully covered before recap handoff');
   }
-  console.log('PASS',id,pacing.duration.toFixed(2)+'s: full source coverage, readable lines and target result');
+  console.log('PASS',id,pacing.duration.toFixed(2)+'s: common ending skipped, readable branch/email/thoughts and covered handoff');
 }

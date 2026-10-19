@@ -34,7 +34,7 @@ metrics = [
     ('reflect', 'learning-reflection-quality', 'Learning Reflection Quality', 38, 89,
      'Repeating safe reflection patterns.', 'Before, I thought... Now, I think...'),
 ]
-common = 'Professor! I figured out exactly what you were looking for!'
+removed_common = 'Professor! I figured out exactly what you were looking for!'
 prediction = 'I expect better ideas — keep my prediction exactly as written.'
 
 
@@ -94,7 +94,7 @@ def begin(page, metric):
     expect(observe).to_be_enabled()
     page.evaluate('''() => {
       window.__filmAudit = {samples: [], issues: []};
-      window.__settlementAudit = {samples: [], barEnd: null};
+      window.__settlementAudit = {samples: []};
       window.__settlementProbe?.disconnect();
       cancelAnimationFrame(window.__settlementRaf);
       let sampling = false;
@@ -105,10 +105,12 @@ def begin(page, metric):
         const fill = track.firstElementChild;
         window.__settlementAudit.samples.push({time: performance.now(),
           stage: recap.dataset.stage,
-          replay: recap.querySelector('.management-satisfaction').dataset.replayState,
+          managementAttention: !!recap.querySelector('.management-attention'),
           width: fill.getBoundingClientRect().width / track.getBoundingClientRect().width,
           student: !!recap.querySelector('.student-behaviour'),
-          waiting: !!recap.querySelector('.pending-title')});
+          waiting: !!recap.querySelector('.pending-title'),
+          warningAnimation: getComputedStyle(recap.querySelector('.student'), '::after').animationName,
+          warningOpacity: getComputedStyle(recap.querySelector('.student'), '::after').opacity});
         if (recap.dataset.stage !== 'observed') window.__settlementRaf = requestAnimationFrame(sampleSettlement);
         else sampling = false;
       };
@@ -121,9 +123,6 @@ def begin(page, metric):
       window.__settlementProbe.observe(document.getElementById('root'), {childList: true, subtree: true});
       if (!window.__filmListener) {
         window.__filmListener = true;
-        addEventListener('transitionend', event => {
-          if (event.propertyName === 'width' && event.target.matches('.l1-settlement .management-satisfaction-track > span')) window.__settlementAudit.barEnd = performance.now();
-        }, true);
         addEventListener('message', event => {
           if (event.source !== document.querySelector('iframe')?.contentWindow || event.data?.channel !== 'test-film-probe') return;
           window.__filmAudit.samples.push(event.data.sample);
@@ -145,7 +144,7 @@ def begin(page, metric):
     expect(frame.locator('.l1-film')).to_have_attribute('data-metric', cinematic_id, timeout=15000)
     expect(frame.locator('.l1-film')).to_have_attribute('data-phase', 'branch')
     duration = float(frame.locator('.settlement-film').get_attribute('data-duration'))
-    assert 25.7 <= duration <= 27.1, (id, duration)
+    assert 20 <= duration <= 21.3, (id, duration)
     durations[id] = duration
     frame.locator('.settlement-film').evaluate(PROBE)
     return frame, started
@@ -173,7 +172,8 @@ PROBE = r"""film => {
     if (shots.length !== 1) issues.push('Overlapping scene layers: ' + shots.length);
     if (shots[0] && getComputedStyle(shots[0]).opacity !== '1') issues.push('Scene dissolve at ' + source);
     if (root.querySelector('.l1-office-memory, .l1-office-concepts')) issues.push('Removed montage/memory mounted at ' + source);
-    if (phase === 'office' && root.querySelector('.l1-branch-world, .l1-common-plate')) issues.push('Alex reappeared in the office at ' + source);
+    if (phase === 'common' || root.querySelector('.l1-common-plate')) issues.push('Removed common ending returned');
+    if (phase === 'office' && root.querySelector('.l1-branch-world')) issues.push('Alex reappeared in the office at ' + source);
     if (film.querySelector('button, [role="slider"], [role="progressbar"]')) issues.push('Player controls became visible');
     const camera = phase === 'branch' ? root.querySelector('.l1-branch-world > div:first-child > div:first-child') : root.querySelector('.office-camera');
     const pose = camera ? [getComputedStyle(camera).scale, getComputedStyle(camera).translate].join('|') : null;
@@ -181,11 +181,22 @@ PROBE = r"""film => {
       if (poses.has(phase) && poses.get(phase) !== pose) issues.push('Camera moved within ' + phase + ': ' + pose);
       poses.set(phase, pose);
     }
-    const caption = root.querySelector('.l1-spoken [role="status"], .l1-office > [role="status"]')?.textContent ?? '';
-    const key = [phase, caption, Math.floor(source * 4), Math.round(cover * 10)].join('|');
+    const dialogue = root.querySelector('.l1-spoken [role="status"], .l1-office > [role="status"]');
+    const caption = dialogue?.textContent ?? '';
+    const speaker = root.querySelector('.l1-spoken')?.dataset.speaker ?? (dialogue ? 'player' : '');
+    const color = dialogue ? getComputedStyle(dialogue).color : '';
+    const stroke = dialogue ? getComputedStyle(dialogue).webkitTextStrokeWidth : '';
+    const shadow = dialogue ? getComputedStyle(dialogue).textShadow : '';
+    const label = root.querySelector('.l1-speaker');
+    if (label && getComputedStyle(label).color !== color) issues.push('Speaker label and caption colour differ');
+    const email = root.querySelector('.email');
+    if (phase === 'office' && (!email || !email.querySelector('h2')?.textContent.startsWith('Great work') || !email.textContent.includes('Student engagement has improved significantly!') || !email.querySelector('.l1-office-signature'))) issues.push('Email did not appear as one complete message');
+    if (root.querySelector('.l1-office-result')) issues.push('Removed green metric/target block returned');
+    const emailText = email?.textContent ?? '';
+    const key = [phase, caption, Math.floor(source * 4), Math.round(cover * 10), cover === 1].join('|');
     if (key !== priorKey || issues.length) {
       priorKey = key;
-      parent.postMessage({channel: 'test-film-probe', sample: {phase, source, caption, pose, cover}, issues}, '*');
+      parent.postMessage({channel: 'test-film-probe', sample: {phase, source, caption, speaker, color, stroke, shadow, pose, cover, emailText}, issues}, '*');
     }
   };
   new MutationObserver(sample).observe(film, {subtree: true, childList: true, attributes: true, characterData: true});
@@ -200,32 +211,38 @@ branch_tail = {
     'discuss': ['What new idea came out of the discussion?', 'I followed the discussion checklist.'],
     'reflect': ['What actually changed your mind?', 'That’s the format on the rubric.'],
 }
-thoughts = ['The numbers look great... but something still feels wrong.', 'Maybe one metric is too narrow.', 'What if we measured more than one?']
+thoughts = ['The number looks great... but something still feels wrong.', 'Maybe one metric is too narrow.', 'What if we measured more than one?']
 
 
 def watch_movie(page, frame, metric, started, capture=False):
     if capture:
+        expect(frame.locator('.email')).to_be_visible(timeout=40000)
+        expect(frame.locator('.email')).to_contain_text('Student engagement has improved significantly!')
+        expect(frame.locator('.l1-office-result')).to_have_count(0)
         # Hover/click/space must not reveal controls or accidentally pause the movie.
         frame.locator('.settlement-film').hover()
         frame.locator('.settlement-film').click()
         page.keyboard.press('Space')
         expect(frame.locator('button, [role="slider"], [role="progressbar"]')).to_have_count(0)
-        expect(frame.locator('.l1-office-result')).to_be_visible(timeout=40000)
-        expect(frame.locator('.l1-office-result')).to_contain_text(metric[2])
         assert frame.locator('.l1-office img').evaluate_all('images => images.length > 0 && images.every(image => image.complete && image.naturalWidth > 0)')
         screenshot(page, 'level1-settlement-preview-film.png')
-    expect(page.get_by_role('heading', name='What changed?', exact=True)).to_be_visible(timeout=50000)
+    expect(page.get_by_role('region', name='Level 1 results', exact=True)).to_be_visible(timeout=50000)
     elapsed = time.monotonic() - started
     assert elapsed >= durations[metric[0]] - .5
     audit = page.evaluate('window.__filmAudit')
     if audit['issues']: diagnostics.append(audit)
     assert not audit['issues'], audit['issues']
     phases = list(dict.fromkeys(sample['phase'] for sample in audit['samples']))
-    assert phases == ['branch', 'common', 'office'], phases
+    assert phases == ['branch', 'office'], phases
     assert audit['samples'][-1]['cover'] >= .99, audit['samples'][-1]
     captions = [sample['caption'] for sample in audit['samples'] if sample['cover'] < .01]
-    for text in [metric[-1], *branch_tail[metric[0]], common, *thoughts]:
+    for text in [metric[-1], *branch_tail[metric[0]], *thoughts]:
         assert text in captions, (metric[0], text, captions)
+    assert removed_common not in captions
+    assert len({sample['emailText'] for sample in audit['samples'] if sample['phase'] == 'office'}) == 1
+    colors = {speaker: {sample['color'] for sample in audit['samples'] if sample['speaker'] == speaker and sample['caption']} for speaker in ('player', 'alex')}
+    assert colors['player'] == {'rgb(255, 226, 163)'} and colors['alex'] == {'rgb(204, 238, 255)'}, colors
+    assert all(float(sample['stroke'].removesuffix('px')) > 0 and sample['shadow'] != 'none' for sample in audit['samples'] if sample['caption'])
     assert captions.index(thoughts[0]) < captions.index(thoughts[1]) < captions.index(thoughts[2])
     for phase, expected in [('branch', '1.025|0% 0%'), ('office', '2.65|62.275% -1.325%')]:
         values = {sample['pose'] for sample in audit['samples'] if sample['phase'] == phase and sample['pose']}
@@ -251,14 +268,16 @@ def check_settlement(page, metric):
     audit = page.evaluate('window.__settlementAudit')
     samples = audit['samples']
     assert any(sample['waiting'] and not sample['student'] for sample in samples), samples
-    assert all(not sample['student'] for sample in samples if sample['replay'] != 'complete'), samples
-    assert abs(samples[-1]['width'] - .44) < .005, samples[-1]
+    assert all(abs(sample['width'] - .44) < .005 for sample in samples), samples
+    assert not any(sample['managementAttention'] for sample in samples), samples
     reduced = page.evaluate('matchMedia("(prefers-reduced-motion: reduce)").matches')
     if not reduced:
-        assert any(.14 < sample['width'] < .42 for sample in samples), samples
-        assert audit['barEnd'] is not None
-        firstStudent = next(sample['time'] for sample in samples if sample['student'])
-        assert firstStudent - audit['barEnd'] >= 200, (firstStudent, audit['barEnd'])
+        assert any(sample['warningAnimation'] == 'l1-student-warning' for sample in samples if sample['student']), samples
+        warning = settlement.locator('.student').evaluate("element => ({iterations: getComputedStyle(element, '::after').animationIterationCount, duration: getComputedStyle(element, '::after').animationDuration})")
+        assert warning == {'iterations': '3', 'duration': '0.75s'}, warning
+    else:
+        assert samples[-1]['warningAnimation'] == 'none' and samples[-1]['warningOpacity'] == '1'
+    expect(page.get_by_text('What changed?', exact=True)).to_have_count(0)
     expect(settlement.locator('.settlement-student-visual')).to_have_attribute('data-metric', id)
     expect(settlement.locator('.observation-outside')).to_have_count(0)
     words = settlement.locator('.student-behaviour').bounding_box()
@@ -341,7 +360,7 @@ try:
         frame, started = begin(page, metrics[0])
         watch_movie(page, frame, metrics[0], started)
         check_settlement(page, metrics[0])
-        record('Reduced motion completes the recap sequence without waiting for a missing width transition event; fixed shots and complete readable dialogue remain')
+        record('Reduced motion completes the reveal without animation events; management stays static, Students has a steady warning outline, dialogue stays readable')
 
         page.emulate_media(reduced_motion='no-preference')
         page.set_viewport_size({'width': 1366, 'height': 1000})
@@ -356,7 +375,7 @@ try:
             check_settlement(page, metric)
             if index == 0:
                 screenshot(page, 'level1-settlement-preview-desktop.png')
-            record(metric[0] + ': normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, covered scene swaps without subtitle shading, no memory/montage/controls/replay; actual bar rise finishes before the matching illustrated student outcome')
+            record(metric[0] + ': normal-speed branch directly to complete email, common ending omitted, singular teacher thought and distinct readable speaker colours; covered fixed shots, no shade/memory/controls; static management and matching student warning')
 
         page.set_viewport_size({'width': 390, 'height': 900})
         no_horizontal_overflow(page)

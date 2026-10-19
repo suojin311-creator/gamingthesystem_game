@@ -5,22 +5,8 @@
   background: var(--paper);
 }
 
-.l1-settlement .l1-settlement-eyebrow {
-  color: #9a7347;
-  font-size: 9px;
-  letter-spacing: .13em;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-
-.l1-settlement .l1-settlement-heading h1 {
-  width: fit-content;
-  font: var(--chapter-title-size)/1.12 var(--serif);
-  letter-spacing: -.04em;
-}
-
-.l1-settlement .l1-settlement-heading h1:focus { outline: none; }
-.l1-settlement .l1-settlement-heading h1:focus-visible {
+.l1-settlement:focus { outline: none; }
+.l1-settlement:focus-visible {
   outline: 2px solid var(--coral);
   outline-offset: 6px;
 }
@@ -29,7 +15,7 @@
   display: flex;
   align-items: center;
   gap: 13px;
-  margin-block: 23px;
+  margin-block: 0 23px;
 }
 
 .l1-settlement .l1-settlement-metric-icon {
@@ -120,6 +106,20 @@
 @keyframes l1-settlement-uncover { from { opacity: 1; } to { opacity: 0; } }
 
 .l1-settlement .student { position: relative; }
+.l1-settlement .student.has-evidence::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border: 2px solid #ad6037;
+  border-radius: inherit;
+  box-shadow: 0 0 0 3px #ad603719;
+  pointer-events: none;
+  animation: l1-student-warning .75s ease-in-out 3 both;
+}
+@keyframes l1-student-warning {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
 .l1-settlement .student-behaviour { max-width: calc(100% - 145px); order: 1; }
 .l1-settlement .learning-risk { order: 3; }
 .l1-settlement .settlement-student-visual {
@@ -173,6 +173,7 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .l1-settlement .l1-settlement-handoff { display: none; }
+  .l1-settlement .student.has-evidence::after { animation: none; opacity: 1; box-shadow: none; }
   .l1-settlement .has-evidence > .student-behaviour,
   .l1-settlement .has-evidence > .learning-risk,
   .l1-settlement .settlement-student-visual { animation: none; }

@@ -1,8 +1,10 @@
+import { FIRST_THOUGHT } from './content.mjs';
+
 /** English reading holds at about 220 words/minute, plus a short settling margin. */
 export function readingSeconds(text, minimum = 2.1) {
   return Math.max(minimum, (text.trim().match(/\S+/g)?.length ?? 0) * .27 + .4);
 }
-/** Map a shorter review clock onto the original unmodified composition clock. */
+/** Keep source timings for retained shots; skip the common ending and office approach. */
 export function createPacing(branch) {
   const segments = [
     [0, 2.2, .65],
@@ -11,19 +13,12 @@ export function createPacing(branch) {
     [5.5, 8.2, readingSeconds(branch.question)],
     [8.2, 8.9, .30],
     [8.9, 12.1, readingSeconds(branch.reveal)],
-    [12.1, 12.6, .35],
-    [12.6, 12.75, .35],
-    [12.75, 16.5, readingSeconds('Professor! I figured out exactly what you were looking for!')],
-    [16.5, 16.6, .35],
-    [16.6, 18.0, .65],
-    [18.0, 18.9, .60],
-    [18.9, 19.85, .65],
-    [19.85, 22.6, 1.65],
-    [22.6, 23.2, .20],
-    [23.2, 23.7, 2.40],
+    [12.1, 12.6, .45],
+    // The complete email is present on the first office frame, under the cover.
+    [18.9, 23.7, 4.10],
     // Keep reading holds; the presentation uses cuts instead of opacity ramps.
     [23.7, 24.25, .15],
-    [24.25, 26.35, readingSeconds('The numbers look great... but something still feels wrong.') - .3],
+    [24.25, 26.35, readingSeconds(FIRST_THOUGHT) - .3],
     [26.35, 26.7, .15],
     [26.7, 26.8, .10],
     [26.8, 27.7, .10],

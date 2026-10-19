@@ -9,9 +9,9 @@ not a replacement for the approved complete game.
 
 Choose one of the existing six metrics → write a prediction → Run evaluation →
 watch the original before/after score animation and Target achieved report →
-Observe the class → play that metric's complete authored animation → show the
-results settlement. The full animation includes both the common ending and
-Something Feels Wrong. It finishes before the settlement appears.
+Observe the class → play that metric's own consequence → transition directly to
+the congratulatory email and Something Feels Wrong thoughts → show the results
+settlement. The shared Common Ending / Alex line is omitted, as requested.
 
 The original four steps stay Choose / Predict / Evaluate / Observe. Both the
 animation and the final settlement belong to Observe; there is no Results step.
@@ -23,15 +23,17 @@ The settlement reuses the original Level 1 PerspectivePanel: Management’s view
 Satisfaction, Satisfied, the satisfaction bar and Reported score / target met;
 Students, its existing branch-specific behaviour and Learning at risk. The two
 wide, equally weighted cards sit under the selected metric.
-Original final values and copy remain. The recap opt-in replays the satisfaction
-bar from its initial awaiting position to the same final value. The game value is
-never incremented again. Students initially keeps its original waiting view.
-The actual width-transition completion starts a 250ms visible pause, then reveals
-the branch's student behaviour, risk and compact portrait/notebook illustration.
+Original final values and copy remain. Management’s view is static at its final
+report value, without a second bar rise or attention animation. Students keeps
+its waiting view during the brief recap uncover and a 250ms visible pause, then
+reveals the branch's behaviour, risk and compact portrait/notebook illustration.
+Only the Students border pulses, three slow amber/rust pulses over 2.25 seconds,
+to emphasize the negative outcome. Reduced motion uses a steady outline instead.
 There are no unselected-metric icons; the small neutral check denotes completing
 a checklist. Text and picture sit beside each other without changing card height.
 The shared status component's default behaviour in other levels is unchanged.
-Reduced motion completes the sequence without relying on a transitionend event.
+The redundant “What changed?” heading is removed; the selected metric leads the
+page and the region retains an accessible name and focus target.
 The former large IN THE CLASSROOM evidence panel and review chat are absent.
 The metric ribbon, coloured card borders, paired layout and compact student
 illustration retain visual weight without adding a second explanation of the movie.
@@ -58,25 +60,31 @@ The original partner source is pinned at
 The external cinematic build imports the partner's original artwork, content
 constants and ConsequenceScene prop animation into an isolated iframe. Styles do
 not leak into the workbench. `presentation.jsx` assembles one fully opaque shot at
-a time: branch → shared Alex line → office. A 320ms flat cover, including a fully
-opaque middle, buffers each scene change. The previous line gets a brief stable
-hold, and the next line starts after the new shot is clear. Photos never dissolve
-through one another. A final cover hands off to the same-colour recap uncover.
-Camera poses are fixed within each shot. A build-only adapter freezes ConsequenceScene's framing without changing
-the partner checkout. The office retains its original laptop geometry, email,
-selected result and three thought/bridge lines. There are no overlapping scene
-dissolves, repeated zooms, Alex memory overlay or six-metric text montage.
-Subtitle gradient/shade layers and the extra vignette are removed. Captions sit
-directly on the original art, using the opening's light text-shadow style.
+a time: selected branch → office email. The last branch line gets its normal
+reading hold and a short settling beat. An eased flat cover (about 640ms) buffers the scene change. The office
+mounts only after the cover’s real transitionend, followed by two painted frames
+before uncovering; dropped composition frames cannot bypass the protected swap. The email is already complete when the
+cover lifts; its sender, greeting, body and signature appear together. The green
+Selected metric / TARGET ACHIEVED block is removed. Photos never dissolve through
+one another. A final cover hands off to the same-colour recap uncover.
+Camera poses are fixed within each shot. A build-only adapter freezes
+ConsequenceScene's framing without changing the partner checkout. The office
+retains its original laptop geometry and three thought/bridge lines. The first
+thought is singular: “The number looks great... but something still feels wrong.”
+There are no overlapping scene dissolves, repeated zooms, Alex memory overlay or
+six-metric text montage. Subtitle gradient/shade layers and the extra vignette
+are removed. Teacher dialogue and thoughts use warm gold; Alex uses pale blue.
+Speaker labels match their captions, with a dark text outline and small shadow
+for readability on the artwork, without a subtitle background layer.
 
-The monotonic presentation clock still covers the full authored script. Per-line
-English reading holds remain (roughly 220 words/minute plus a settling margin),
-including 2.4 seconds of clear target-result display. The removed memory gap is
-shortened so it does not leave a lingering empty beat. The six timelines span
-about 25.8–27.0 seconds instead of 33.4 seconds; no global playback multiplier is
-used. The three required images are decoded before playback so cuts do not expose
-an unloaded next shot. Predictions stay on the settlement, without competing
-with the thought captions.
+The presentation clock skips the removed common ending and office approach,
+retaining source timings for the selected branch and office thoughts. Per-line
+English reading holds remain (roughly 220 words/minute plus a settling margin).
+The complete email gets 4.1 seconds, including the short uncover, before the
+teacher's first thought. The six timelines span about 20.1–21.3 seconds; no global
+playback multiplier is used. Both required images are decoded before playback
+so the transition does not expose an unloaded shot. Predictions stay on the
+settlement, without competing with the thought captions.
 
 The player starts automatically and has no visible controls, timeline, timecode,
 click-to-pause or spacebar playback shortcut. The actual ended event commits a
