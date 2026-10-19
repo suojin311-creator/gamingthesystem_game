@@ -40,8 +40,8 @@ const TARGET = 70;
 function ResultChart({ metric, ready, score, assessmentReport = false }: { metric: Metric; ready: boolean; score: number; assessmentReport?: boolean }) {
   return <div className="score-paper" data-ready={ready}>
     <div className="score-paper-top"><span className="eyebrow">{metric.shortName}</span><span className="score-state">{ready ? 'Evaluation complete' : 'Evaluating…'}</span></div>
-    {assessmentReport && <p className="assessment-report-label">Students meeting the criteria</p>}
-    <div className="score-numbers" aria-label={assessmentReport ? `Students meeting the criteria: ${metric.before}% at the first assessment, ${metric.after}% at the second assessment` : `Reported score: ${metric.before} before, ${metric.after} after`}>
+    {assessmentReport && <p className="assessment-report-label">Percentage of students meeting the criteria</p>}
+    <div className="score-numbers" aria-label={assessmentReport ? `Percentage of students meeting the criteria: ${metric.before}% at the first assessment, ${metric.after}% at the second assessment` : `Reported score: ${metric.before} before, ${metric.after} after`}>
       <span className="before-score">{metric.before}{assessmentReport && <span className="score-unit">%</span>}<small>{assessmentReport ? 'First assessment' : 'BEFORE'}</small></span>
       <Icon name="arrow" className="score-arrow" />
       <span className="after-score">{score}{assessmentReport && <span className="score-unit">%</span>}<small>{assessmentReport ? 'Second assessment' : 'AFTER'}</small></span>
@@ -236,7 +236,7 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
               <div className="selected-focus"><span className="metric-illustration"><Icon name={metric.id} /></span><h3>{metric.name}</h3><button className="text-button" onClick={() => go('choose')}>Change</button></div>
               {assessmentReport && <p className="assessment-criteria" id="assessment-criteria"><strong>Assessment criteria:</strong> {metric.assessmentCriteria}</p>}
               <form className="prediction-form" onSubmit={event => { event.preventDefault(); if (prediction.trim()) setSession(value => ({ ...value, prediction: value.prediction.trim(), phase: 'result', resultReported: false })); }}>
-                <label htmlFor="prediction" className={assessmentReport ? 'assessment-prediction-label' : 'sr-only'}>{assessmentReport ? 'How will students respond when this counts towards their marks?' : 'What do you expect students to do?'}</label>
+                <label htmlFor="prediction" className="sr-only">{assessmentReport ? 'How will students respond when this counts towards their marks?' : 'What do you expect students to do?'}</label>
                 <div className="prediction-paper"><span className="paper-corner" aria-hidden="true" /><textarea ref={predictionField} id="prediction" maxLength={100} value={prediction} placeholder={`e.g. ${metric.example}`} aria-describedby={assessmentReport ? 'assessment-criteria prediction-count' : 'prediction-count'} onKeyDown={event => {
                   if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing && event.nativeEvent.keyCode !== 229) {
                     event.preventDefault();
@@ -248,7 +248,7 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
             </>}
 
             {phase === 'result' && metric && <>
-              <div className="section-intro">{assessmentReport && <p className="eyebrow assessment-period">At the second assessment</p>}<h2 ref={title} tabIndex={-1}>{assessmentReport ? 'Assessment results.' : resultReported ? 'Target achieved.' : 'Watch the score.'}</h2>{assessmentReport && <p className="assessment-context">This metric now counts towards students’ marks.</p>}</div>
+              <div className="section-intro"><h2 ref={title} tabIndex={-1}>{assessmentReport ? 'Assessment results.' : resultReported ? 'Target achieved.' : 'Watch the score.'}</h2></div>
               <ResultChart metric={metric} ready={resultReady} score={animatedScore} assessmentReport={assessmentReport} />
               <div className="action-row only-action"><button className="button primary-button" disabled={!resultReported} onClick={() => go('cinematic')}><Icon name="play" />{assessmentReport ? 'Look behind the result' : 'Observe the class'}</button></div>
             </>}

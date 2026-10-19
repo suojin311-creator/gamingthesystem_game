@@ -27,10 +27,12 @@ shows a criterion for each of the six metrics, matching the retained scene:
 | Reflection | Use the reflection format: describe your thinking before and after. |
 | Peer response | Include a specific suggestion and a follow-up question in your response. |
 
-The report says **At the second assessment**. Its two columns are **First
-assessment** (the recorded baseline) and **Second assessment** (after the metric
-counts towards students’ marks), making the numbering explicit without a new
-page. Its label is **Students meeting the criteria**; values and scale endpoints
+The report's two columns are **First assessment** (the recorded baseline) and
+**Second assessment** (after the metric counts towards students’ marks), making
+the numbering explicit without a new page. There is no extra assessment-period
+eyebrow or marks explanation above the report. The prediction question stays
+screen-reader-only; its visible criteria and existing page heading remain.
+The report label is **Percentage of students meeting the criteria**; values and scale endpoints
 carry percentages. The numerical target, threshold marker and target-met
 heading are absent. The original increasing bars and button alignment remain.
 The report and the classroom show the same assessment period; the classroom
