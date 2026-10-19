@@ -4,6 +4,8 @@
 
 ## 下一步：动画合并
 
+- **先读：[下一位 AI 最新交接说明](NEXT_AI_HANDOFF.zh-CN.md)（[Word](NEXT_AI_HANDOFF.zh-CN.docx)）**：汇总开头、三关、动画与 Design Lab 最新要求，并标明已作废方案、已接入／待接入和固定版本基线。
+
 - [Level 3 narration 制作稿](LEVEL3_NARRATION.md)（[Word 下载](LEVEL3_NARRATION.docx)）：给动画组的画面与英文对白，涵盖所有任务档位、重复观察及两种结尾。
 - [动画接入说明](ANIMATION_INTEGRATION.md)：开场、场景 ID、真实结束回调和已有玩法边界。
 - [开发流程](DEVELOPMENT_WORKFLOW.md)：日常预览、相关检查、正式发包分开。
