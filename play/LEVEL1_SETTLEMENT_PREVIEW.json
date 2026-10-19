@@ -2,53 +2,44 @@
   "branch": "preview/level1-settlement",
   "baselineCommit": "32a91fe4bfb1cb193040410c846ebc165f8b9d5d",
   "partnerSourceCommit": "1bdd0c442c4b345b3bd37d6f541742d4e55c732f",
-  "sourceSha256": "7ee164a1f9ffe88d2ee64e94bc0641a0f95e480254d53a13d8fc5cf605801062",
+  "sourceSha256": "ac20e96a77b72c21c587a0d8ac5b0f5a0792c75b276d0d64b599219d687c2ccd",
   "archive": "Level1-settlement-preview.zip",
-  "zipSha256": "71db60bd8bc35ee374feb78809ebf531b40c34c92b009dd5c0a1fbb9a614e18a",
+  "zipSha256": "47119c4a0cca3a631b2de38a646854c837271adcae2563a39d5afad15ec793a9",
   "entries": {
     "START-HERE.html": "7374b6f057180c0ed74377e5219187c28d1f0a32fdbdc47442d9c9fa6226611d",
-    "Level1-settlement.html": "3ed9bb8224572aa03a143d5f27e93e06b0befc8b92e453bc6567133d523f9b32",
+    "Level1-settlement.html": "7818f3c3a7bab8f3fab25e2789a003ec51d1fd26a0c9a0c57c68d69bbc4e49f6",
     "Current-Level1.html": "21d84902a6ad564e7bcb87803e494bb32ec68239c05a6392b8ec80cc209b0d56",
     "START-HERE.txt": "fd087e43677faa376ee051d8efaec6578b75404cfc1cb7925815639deada68d9"
   },
   "scope": "Independent Level 1 experiment only; previous releases and upstream repository are unchanged",
   "flow": "Choose → Predict → Evaluate (first/second assessment class attainment percentages, no target) → Observe (selected branch → complete email and teacher thoughts → dialogue-free settlement)",
   "pacing": "Readable retained dialogue, fixed shots and a 640ms covered branch-to-email transition; common ending and green email result removed; distinct speaker colours; first teacher thought two seconds after email uncover, singular I bridge; static management without footer text and a student-only warning outline",
-  "validatedAtUtc": "2026-10-19T18:19:56.007678+00:00",
+  "validatedAtUtc": "2026-10-19T18:34:31.243017+00:00",
   "verification": {
     "typecheck": "passed",
-    "pacing": {
-      "command": "node tests/level1_settlement_pacing.mjs",
-      "passed": 6,
-      "branchDurationsSeconds": {
-        "peer": 20.07,
-        "prep": 20.53,
-        "part": 20.07,
-        "focus": 20.53,
-        "discuss": 21.26,
-        "reflect": 20.07
-      }
-    },
     "browser": {
-      "passed": 12,
+      "scope": "Targeted current-ZIP verification after three visible-copy removals and a report-label edit; unchanged cinematic content reuses preceding full verification",
+      "passed": 6,
       "checks": [
-        "Archive CRC, ZIP hash and every entry hash match; Current-Level1.html is byte-identical to the original Level1-play.zip",
-        "The offline launcher opens the actual new HTML and its six-choice Level 1 form",
-        "Reduced motion completes the reveal without animation events; management stays static, Students has a steady warning outline, dialogue stays readable",
-        "peer: normal-speed branch directly to complete email, common ending omitted, singular teacher thought and distinct readable speaker colours; covered fixed shots, no shade/memory/controls; static management and matching student warning",
-        "prep: normal-speed branch directly to complete email, common ending omitted, singular teacher thought and distinct readable speaker colours; covered fixed shots, no shade/memory/controls; static management and matching student warning",
-        "part: normal-speed branch directly to complete email, common ending omitted, singular teacher thought and distinct readable speaker colours; covered fixed shots, no shade/memory/controls; static management and matching student warning",
-        "focus: normal-speed branch directly to complete email, common ending omitted, singular teacher thought and distinct readable speaker colours; covered fixed shots, no shade/memory/controls; static management and matching student warning",
-        "discuss: normal-speed branch directly to complete email, common ending omitted, singular teacher thought and distinct readable speaker colours; covered fixed shots, no shade/memory/controls; static management and matching student warning",
-        "reflect: normal-speed branch directly to complete email, common ending omitted, singular teacher thought and distinct readable speaker colours; covered fixed shots, no shade/memory/controls; static management and matching student warning",
-        "At 390px the choice form, automatic movie and two-card settlement fit without horizontal overflow; Try another resets all six choices",
-        "The launcher also fits 390px and opens the unchanged original HTML at its original metric-choice screen",
-        "The actual archive runs offline with zero external requests and zero browser runtime errors"
+        "Current archive CRC and hashes match; original comparison HTML is byte-identical",
+        "All six choices remain available; requested prediction sentence is screen-reader-only",
+        "The exact ZIP removes both report helper lines, uses the requested percentage label and retains assessment values/labels",
+        "One actual normal-speed cinematic completes and opens the correct settlement in the new archive",
+        "The new archive resets correctly and its 390px prediction, report and settlement layouts fit",
+        "Actual archive runs offline without external requests or browser runtime errors"
       ],
+      "zipSha256": "47119c4a0cca3a631b2de38a646854c837271adcae2563a39d5afad15ec793a9",
+      "archive": "Level1-settlement-preview.zip",
       "runtimeErrors": [],
       "externalRequests": [],
-      "archive": "Level1-settlement-preview.zip",
-      "zipSha256": "71db60bd8bc35ee374feb78809ebf531b40c34c92b009dd5c0a1fbb9a614e18a",
+      "failure": null
+    },
+    "cinematicHtmlSha256": "84fc9b18cb658df4baac0a4546f84d0b5941d480dc52cdff303b84b80116969b",
+    "reusedCinematicVerification": {
+      "reason": "Only visible interface text and two unused CSS rules changed; the cinematic HTML is byte-identical to the preceding verified package.",
+      "priorPackageCommit": "cfc151789fd10b804f44b5e57b128388cf823300",
+      "priorZipSha256": "71db60bd8bc35ee374feb78809ebf531b40c34c92b009dd5c0a1fbb9a614e18a",
+      "priorValidatedAtUtc": "2026-10-19T18:19:56.007678+00:00",
       "branchDurationsSeconds": {
         "peer": 20.07,
         "prep": 20.53,
@@ -57,7 +48,7 @@
         "discuss": 21.26,
         "reflect": 20.07
       },
-      "realTimePlayback": {
+      "perBranchPlayback": {
         "peer": {
           "realTimeSeconds": 22.2,
           "displayedDurationSeconds": 20.07,
@@ -106,26 +97,19 @@
           "observedFrames": 114,
           "issues": []
         }
-      },
-      "screenshots": [
-        "test-results/level1-settlement-preview-film.png",
-        "test-results/level1-settlement-preview-desktop.png",
-        "test-results/level1-settlement-preview-mobile.png"
-      ],
-      "failureDiagnostics": [],
-      "failure": null
+      }
     },
-    "unchangedPartnerFiles": 94,
     "unchangedPublishedGameArchives": 6,
-    "cinematicHtmlSha256": "84fc9b18cb658df4baac0a4546f84d0b5941d480dc52cdff303b84b80116969b",
-    "cinematicReuse": "Verified cinematic from bb36bd3 reused; no cinematic source changes through ccf05de. Assessment-report game rebuilt from current source."
+    "partnerSource": "Unchanged; preceding verification of all 94 files remains applicable. No partner files were written.",
+    "screenshots": [
+      "test-results/level1-updated-package-result.png",
+      "test-results/level1-updated-package-mobile.png"
+    ]
   },
   "notes": [
-    "Includes the confirmed source updates through ccf05de: assessment criteria for all six metrics, class attainment percentages and explicitly named first/second assessments. The previous packaged preview remains saved at d9a38588c5bf4d6e3009b03053cded82b96ad9d4.",
-    "Result-page target text, target threshold marker and target-met heading are removed. Management’s view has no bottom evidence text throughout this preview. Numeric animation, four-step navigation and button positions are retained.",
-    "The complete email appears together without its former green metric/target block. The first teacher thought is triggered two seconds after the uncover completes on the playback clock, with normal and reduced-motion browser verification. The final thought reads What if I measured more than one?",
-    "Common ending is omitted; the selected branch transitions directly to the email under an actual completed cover. Cameras stay fixed, photos never overlap, and teacher/Alex captions retain distinct readable colours without subtitle-shade layers.",
-    "All six branches ran at normal speed in the actual offline archive; 390px, reduced motion, matching student outcomes, student warning outlines, static recap management and absence of playback controls/replay also passed. Wall-clock timing measurements include rendering latency and are recorded in the browser report.",
-    "All 94 partner source files and the six published game archives remain byte-identical. Current-Level1.html inside this package is byte-identical to the saved original release for comparison."
+    "Includes the copy cleanup from 0de733b: removed the assessment-period eyebrow and marks explanation above the report; the prediction question is screen-reader-only; the report label is Percentage of students meeting the criteria.",
+    "The current ZIP was checked offline at desktop and 390px, including selection, prediction, percentage report, one actual normal-speed ending and its matching settlement. Unchanged cinematic branches reuse the preceding full verification, linked by identical cinematic HTML hash.",
+    "The first/second assessment columns, six choices, assessment criteria, animated percentages, no-target display, empty management footer, two-second first office thought, singular I bridge and prior animation presentation are retained.",
+    "Other published game ZIPs remain unchanged. Current-Level1.html inside this package is byte-identical to the saved original release for comparison."
   ]
 }

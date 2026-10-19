@@ -12,6 +12,9 @@
 - Build only this experiment through `scripts/level1-settlement/` and package
   `play/Level1-settlement-preview.zip`. Do not run the normal six-ZIP publishing
   pipeline for this experiment: the user explicitly requested preserving them.
+- The user reviews this preview through downloaded ZIPs. Visible UI changes must
+  include an updated independent ZIP in the same delivery, rather than requiring
+  a separate packaging request after source changes.
 - The original rules below still govern the stable game and opening integration.
 
 
