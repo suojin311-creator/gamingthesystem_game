@@ -16,7 +16,7 @@ function clockAt(pacing, source) {
 const wordCount = text => text.trim().split(/\s+/).length;
 for (const [id, boast, question, reveal] of samples) {
   const pacing = createPacing({boast, question, reveal});
-  assert(pacing.duration > 25 && pacing.duration < 28, id + ': useful overall reduction');
+  assert(pacing.duration > 24 && pacing.duration < 28, id + ': useful overall reduction');
   assert.equal(pacing.sourceSeconds(0), 0);
   assert.equal(pacing.sourceSeconds(pacing.duration), 33.4);
   let prior = -1;
@@ -31,5 +31,6 @@ for (const [id, boast, question, reveal] of samples) {
   assert(clockAt(pacing,23.7)-clockAt(pacing,23.2) >= 2.4-1e-8, id+': fully visible target result');
   assert(clockAt(pacing,26.35)-clockAt(pacing,24.25) >= 2.4, id+': clear first thought');
   assert(clockAt(pacing,29.95)-clockAt(pacing,28.3) >= 1.7, id+': clear second thought');
+  assert(clockAt(pacing,27.7)-clockAt(pacing,26.8) <= .11, id+': removed memory no longer causes a lingering empty beat');
   console.log('PASS',id,pacing.duration.toFixed(2)+'s: full source coverage, readable lines and target result');
 }

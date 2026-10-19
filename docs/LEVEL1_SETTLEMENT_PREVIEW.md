@@ -23,21 +23,20 @@ The settlement reuses the original Level 1 PerspectivePanel: Management’s view
 Satisfaction, Satisfied, the satisfaction bar and Reported score / target met;
 Students, its existing branch-specific behaviour and Learning at risk. Only the
 arrangement changes to two wide, equally weighted cards under the selected metric.
-Original state values, styles and update animations remain; replay adds no new
-report or satisfaction reward. The former large IN THE CLASSROOM evidence panel
+Original state values, styles and update animations remain. The former large IN THE CLASSROOM evidence panel
 and review chat are absent. The metric ribbon, coloured card borders and paired
 layout retain visual weight without adding a second explanation of the movie.
 Predictions remain available in a collapsed, ungraded reference.
 
-Replay keeps the actual choice and prediction; Try another metric starts a fresh
-Level 1 run. The preview stops at Level 1 and provides these review controls
-instead of navigating onward.
+The replay button is removed. Try another metric starts a fresh Level 1 run.
+The preview stops at Level 1 and provides that review control instead of
+navigating onward.
 
 `LevelOne` has one optional `renderSettlement` seam. Both modes preserve the
 original selection → prediction → score result → observe path. Without the seam,
 the legacy review chat follows the cinematic. With it, the actual cinematic
 completion callback opens the settlement and reports the existing result once.
-Replay does not report the result again. The shared component and rules are
+The existing completion guard remains. The shared component and rules are
 reused; there is no copied gameplay implementation.
 
 ## Animation and pacing
@@ -47,23 +46,31 @@ The original partner source is pinned at
 (`feature/cinematic-level1-consequences`). No upstream writes are made. The
 94 files from the downloaded archive retain their exact bytes.
 
-The external cinematic build imports the original composition and artwork into
-an isolated iframe. Its styles do not leak into the workbench. A build-only clock prop supplies a monotonic source frame directly to the
-authored composition (without Remotion Freeze clamping the longer source clock).
-The mapping preserves the entire original branch/common/office sequence, while
-shortening empty shots and transitions. Speech holds depend on each English
-line's length (roughly 220 words/minute plus a settling margin). The target
-result has 0.2 seconds of fade-in followed by 2.4 seconds fully visible. Thought
-fades are shortened to keep their words clear. The six authored playback timelines now
-span about 25.4–26.6 seconds instead of 33.4 seconds; no global playback multiplier
-is used. Predictions are kept on the settlement rather than competing with the
-animation's thought captions. Player controls allow pause and scrubbing.
+The external cinematic build imports the partner's original artwork, content
+constants and ConsequenceScene prop animation into an isolated iframe. Styles do
+not leak into the workbench. `presentation.jsx` assembles one fully opaque shot at
+a time: branch → shared Alex line → office. Camera poses are fixed within each
+shot. A build-only adapter freezes ConsequenceScene's framing without changing
+the partner checkout. The office retains its original laptop geometry, email,
+selected result and three thought/bridge lines. There are no overlapping scene
+dissolves, repeated zooms, Alex memory overlay or six-metric text montage.
 
-The parent validates the iframe source and the current run token. Only the real
-player `ended` event and its closing fade complete the scene. Hidden-page playback
-pauses; returning leaves the player paused for the viewer to resume. Reduced
-motion uses the original composition's motion option and retains reading holds.
-No new music or voice recording is added to this review.
+The monotonic presentation clock still covers the full authored script. Per-line
+English reading holds remain (roughly 220 words/minute plus a settling margin),
+including 2.4 seconds of clear target-result display. The removed memory gap is
+shortened so it does not leave a lingering empty beat. The six timelines span
+about 24.9–26.1 seconds instead of 33.4 seconds; no global playback multiplier is
+used. The three required images are decoded before playback so cuts do not expose
+an unloaded next shot. Predictions stay on the settlement, without competing
+with the thought captions.
+
+The player starts automatically and has no visible controls, timeline, timecode,
+click-to-pause or spacebar playback shortcut. There is no closing fade. The parent
+validates the iframe source and current run token; only the actual player `ended`
+event completes the scene, once. Playback pauses when the page becomes hidden
+and resumes on return, so removing controls cannot strand a hidden-tab pause.
+Reduced motion retains readable holds and the same fixed framing. No new music
+or voice recording is added.
 
 ## Build and check
 
@@ -82,5 +89,5 @@ python3 tests/level1_settlement_preview.py
 
 The separate ZIP contains `START-HERE.html`, `Level1-settlement.html` and
 `Current-Level1.html`. The latter is byte-identical to the previously published
-standalone Level 1. Review hashes and browser verification belong in
+standalone Level 1. Archive hashes and matching browser verification belong in
 `play/LEVEL1_SETTLEMENT_PREVIEW.json`, not the approved game's release report.

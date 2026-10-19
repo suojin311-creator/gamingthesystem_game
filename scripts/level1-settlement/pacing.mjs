@@ -21,12 +21,12 @@ export function createPacing(branch) {
     [19.85, 22.6, 1.65],
     [22.6, 23.2, .20],
     [23.2, 23.7, 2.40],
-    // Faster opacity ramps preserve time with fully visible thought text.
+    // Keep reading holds; the presentation uses cuts instead of opacity ramps.
     [23.7, 24.25, .15],
     [24.25, 26.35, readingSeconds('The numbers look great... but something still feels wrong.') - .3],
     [26.35, 26.7, .15],
     [26.7, 26.8, .10],
-    [26.8, 27.7, .65],
+    [26.8, 27.7, .10],
     [27.7, 27.8, .10],
     [27.8, 28.3, .15],
     [28.3, 29.95, readingSeconds('Maybe one metric is too narrow.') - .3],

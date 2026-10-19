@@ -11,7 +11,7 @@ function Preview() {
   const name = new URLSearchParams(window.location.search).get('name')?.trim() || 'Maya';
   return <div className="l1-settlement-preview"><LevelOne key={run} playerName={name} showIntro={run === 0}
     renderCinematic={(request, complete) => <Cinematic request={request} onComplete={complete} />}
-    renderSettlement={({ result, onReplay }) => <Settlement result={result} onReplay={onReplay} onTryAnother={() => setRun(value => value + 1)} />} />
+    renderSettlement={({ result }) => <Settlement result={result} onTryAnother={() => setRun(value => value + 1)} />} />
   </div>;
 }
 createRoot(document.getElementById('root')!).render(<StrictMode><Preview /></StrictMode>);

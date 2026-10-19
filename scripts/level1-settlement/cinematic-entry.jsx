@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Player } from '@remotion/player';
 import { useCurrentFrame } from 'remotion';
-import { Level1Composition } from '@partner/cinematics/level1/Level1Composition';
+import { LevelOneFilm, filmImages } from '@preview-presentation';
 import { branches, isMetricId } from '@partner/cinematics/level1/level1Content';
 import { createPacing } from '@preview-pacing';
 
@@ -11,46 +11,64 @@ function PacedComposition({ selectedMetric, playerName, reducedMotion }) {
   const frame = useCurrentFrame();
   const pacing = useMemo(() => createPacing(branches[selectedMetric]), [selectedMetric]);
   const sourceFrame = Math.min(1001, Math.max(0, Math.round(pacing.sourceSeconds(frame / 30) * 30)));
-  return <Level1Composition selectedMetric={selectedMetric} playerName={playerName} reducedMotion={reducedMotion} previewSourceFrame={sourceFrame} />;
+  return <LevelOneFilm selectedMetric={selectedMetric} playerName={playerName} reducedMotion={reducedMotion} seconds={sourceFrame / 30} />;
 }
 function Film({ config }) {
   const player = useRef(null);
   const complete = useRef(false);
-  const [finished, setFinished] = useState(false);
   const pacing = useMemo(() => createPacing(branches[config.metric]), [config.metric]);
   useEffect(() => {
     const instance = player.current;
-    const end = () => { if (!complete.current) { complete.current = true; setFinished(true); } };
+    let resumeOnReturn = document.hidden;
+    const end = () => {
+      if (complete.current) return;
+      complete.current = true;
+      window.parent.postMessage({ channel: CHANNEL, type: 'complete', runId: config.runId }, '*');
+    };
     instance?.addEventListener('ended', end);
-    const visibility = () => { if (document.hidden) instance?.pause(); };
+    const visibility = () => {
+      if (document.hidden) {
+        resumeOnReturn ||= instance?.isPlaying() ?? false;
+        instance?.pause();
+      } else if (resumeOnReturn && !complete.current) {
+        resumeOnReturn = false;
+        instance?.play();
+      }
+    };
     document.addEventListener('visibilitychange', visibility);
+    if (document.hidden) visibility();
     return () => { instance?.removeEventListener('ended', end); document.removeEventListener('visibilitychange', visibility); };
   }, []);
-  return <main className={`settlement-film ${finished ? 'finished' : ''}`} data-duration={pacing.duration.toFixed(2)}>
+  return <main className="settlement-film" data-duration={pacing.duration.toFixed(2)}>
     <Player ref={player} component={PacedComposition} inputProps={{ selectedMetric: config.metric, playerName: config.playerName, reducedMotion: config.reducedMotion }}
       compositionWidth={1280} compositionHeight={720} durationInFrames={Math.ceil(pacing.duration * 30)} fps={30}
-      autoPlay controls showVolumeControls={false} acknowledgeRemotionLicense moveToBeginningWhenEnded={false}
+      autoPlay controls={false} clickToPlay={false} spaceKeyToPlayOrPause={false} doubleClickToFullscreen={false} showVolumeControls={false} acknowledgeRemotionLicense moveToBeginningWhenEnded={false}
       style={{ width: '100%', aspectRatio: '16 / 9' }} />
-    {finished && <div className="settlement-film-fade" onAnimationEnd={() => window.parent.postMessage({ channel: CHANNEL, type: 'complete', runId: config.runId }, '*')} />}
   </main>;
 }
 function Entry() {
   const [config, setConfig] = useState(null);
+  const [loadError, setLoadError] = useState(false);
   const started = useRef(false);
   useEffect(() => {
     const receive = (event) => {
       const data = event.data;
       if (event.source !== window.parent || data?.channel !== CHANNEL || data.type !== 'start' || !isMetricId(data.metric) || typeof data.runId !== 'string' || started.current) return;
       started.current = true;
-      setConfig(data);
+      // Decode the next shots before playback so cuts do not expose loading frames.
+      Promise.all(filmImages(data.metric).map(src => {
+        const image = new window.Image();
+        image.src = src;
+        return image.decode();
+      })).then(() => setConfig(data), () => setLoadError(true));
     };
     window.addEventListener('message', receive);
     window.parent.postMessage({ channel: CHANNEL, type: 'ready' }, '*');
     return () => window.removeEventListener('message', receive);
   }, []);
-  return config ? <Film config={config} /> : <p className="settlement-loading" role="status">Preparing the classroom…</p>;
+  return config ? <Film config={config} /> : <p className="settlement-loading" role="status">{loadError ? 'The classroom could not load. Please reopen the game.' : 'Preparing the classroom…'}</p>;
 }
 const style = document.createElement('style');
-style.textContent = `html,body,#root{margin:0;width:100%;height:100%;background:#111710}body{overflow:hidden}.settlement-film{display:grid;place-items:center;width:100%;height:100%;position:relative}.settlement-loading{position:absolute;top:45%;width:100%;text-align:center;color:#eee1c9;font:16px Georgia,serif}.settlement-film-fade{position:absolute;inset:0;background:#111710;animation:settlement-film-out .35s both}@keyframes settlement-film-out{from{opacity:0}to{opacity:1}}@media(prefers-reduced-motion:reduce){.settlement-film-fade{animation-duration:.1s}}`;
+style.textContent = `html,body,#root{margin:0;width:100%;height:100%;background:#111710}body{overflow:hidden}.settlement-film{display:grid;place-items:center;width:100%;height:100%;position:relative}.settlement-loading{position:absolute;top:45%;width:100%;text-align:center;color:#eee1c9;font:16px Georgia,serif}`;
 document.head.append(style);
 createRoot(document.getElementById('root')).render(<Entry />);

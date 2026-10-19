@@ -1,4 +1,4 @@
-"""Exercise the exact independent settlement ZIP offline through its real controls."""
+"""Play the exact player-facing ZIP offline, without test clocks or hidden seek controls."""
 import hashlib
 import json
 import time
@@ -92,6 +92,17 @@ def begin(page, metric):
     expect(page.locator('iframe')).to_have_count(0)
     observe = page.get_by_role('button', name='Observe the class', exact=True)
     expect(observe).to_be_enabled()
+    page.evaluate('''() => {
+      window.__filmAudit = {samples: [], issues: []};
+      if (!window.__filmListener) {
+        window.__filmListener = true;
+        addEventListener('message', event => {
+          if (event.source !== document.querySelector('iframe')?.contentWindow || event.data?.channel !== 'test-film-probe') return;
+          window.__filmAudit.samples.push(event.data.sample);
+          window.__filmAudit.issues.push(...event.data.issues);
+        });
+      }
+    }''')
     started = time.monotonic()
     observe.click()
     expect(page.locator('.score-paper')).to_have_count(0)
@@ -106,27 +117,83 @@ def begin(page, metric):
     expect(frame.locator('.l1-film')).to_have_attribute('data-metric', cinematic_id, timeout=15000)
     expect(frame.locator('.l1-film')).to_have_attribute('data-phase', 'branch')
     duration = float(frame.locator('.settlement-film').get_attribute('data-duration'))
-    assert 25.3 <= duration <= 26.7, (id, duration)
+    assert 24.8 <= duration <= 26.2, (id, duration)
     durations[id] = duration
+    frame.locator('.settlement-film').evaluate(PROBE)
     return frame, started
 
 
-def seek(frame, fraction):
-    """Use the visible Remotion player controls; never change application state."""
-    pause = frame.get_by_role('button', name='Pause video', exact=True)
-    if pause.count():
-        pause.click()
-    expect(frame.get_by_role('button', name='Play video', exact=True)).to_be_visible()
-    progress = frame.locator('div[style*="touch-action: none"]').first
-    bounds = progress.bounding_box()
-    assert bounds and bounds['width'] > 0, bounds
-    progress.click(position={'x': bounds['width'] * fraction, 'y': 6})
+# Observation only: samples the actual rendered frames, without changing playback.
+PROBE = r"""film => {
+  let priorKey = '';
+  const poses = new Map();
+  const sample = () => {
+    const root = film.querySelector('.l1-film');
+    if (!root) return;
+    const phase = root.dataset.phase;
+    const source = Number(root.dataset.sourceSeconds);
+    const issues = [];
+    const shots = root.querySelectorAll('.l1-scene');
+    if (shots.length !== 1) issues.push('Overlapping scene layers: ' + shots.length);
+    if (shots[0] && getComputedStyle(shots[0]).opacity !== '1') issues.push('Scene dissolve at ' + source);
+    if (root.querySelector('.l1-office-memory, .l1-office-concepts')) issues.push('Removed montage/memory mounted at ' + source);
+    if (phase === 'office' && root.querySelector('.l1-branch-world, .l1-common-plate')) issues.push('Alex reappeared in the office at ' + source);
+    if (film.querySelector('button, [role="slider"], [role="progressbar"]')) issues.push('Player controls became visible');
+    const camera = phase === 'branch' ? root.querySelector('.l1-branch-world > div:first-child > div:first-child') : root.querySelector('.office-camera');
+    const pose = camera ? [getComputedStyle(camera).scale, getComputedStyle(camera).translate].join('|') : null;
+    if (pose) {
+      if (poses.has(phase) && poses.get(phase) !== pose) issues.push('Camera moved within ' + phase + ': ' + pose);
+      poses.set(phase, pose);
+    }
+    const caption = root.querySelector('.l1-spoken [role="status"], .l1-office > [role="status"]')?.textContent ?? '';
+    const key = [phase, caption, Math.floor(source * 4)].join('|');
+    if (key !== priorKey || issues.length) {
+      priorKey = key;
+      parent.postMessage({channel: 'test-film-probe', sample: {phase, source, caption, pose}, issues}, '*');
+    }
+  };
+  new MutationObserver(sample).observe(film, {subtree: true, childList: true, attributes: true, characterData: true});
+  sample();
+}"""
+
+branch_tail = {
+    'peer': ['Did you really discuss their ideas?', 'I met every response criterion.'],
+    'prep': ['What was the main idea in the reading?', 'Uh... I finished the checklist.'],
+    'part': ['Can you explain why?', 'I just wanted to participate.'],
+    'focus': ['What did you discover?', 'I... kept the page open.'],
+    'discuss': ['What new idea came out of the discussion?', 'I followed the discussion checklist.'],
+    'reflect': ['What actually changed your mind?', 'That’s the format on the rubric.'],
+}
+thoughts = ['The numbers look great... but something still feels wrong.', 'Maybe one metric is too narrow.', 'What if we measured more than one?']
 
 
-def finish_from_controls(page, frame):
-    seek(frame, .97)
-    frame.get_by_role('button', name='Play video', exact=True).click()
-    expect(page.get_by_role('heading', name='What changed?', exact=True)).to_be_visible(timeout=8000)
+def watch_movie(page, frame, metric, started, capture=False):
+    if capture:
+        # Hover/click/space must not reveal controls or accidentally pause the movie.
+        frame.locator('.settlement-film').hover()
+        frame.locator('.settlement-film').click()
+        page.keyboard.press('Space')
+        expect(frame.locator('button, [role="slider"], [role="progressbar"]')).to_have_count(0)
+        expect(frame.locator('.l1-office-result')).to_be_visible(timeout=40000)
+        expect(frame.locator('.l1-office-result')).to_contain_text(metric[2])
+        assert frame.locator('.l1-office img').evaluate_all('images => images.length > 0 && images.every(image => image.complete && image.naturalWidth > 0)')
+        screenshot(page, 'level1-settlement-preview-film.png')
+    expect(page.get_by_role('heading', name='What changed?', exact=True)).to_be_visible(timeout=50000)
+    elapsed = time.monotonic() - started
+    assert elapsed >= durations[metric[0]] - .5
+    audit = page.evaluate('window.__filmAudit')
+    assert not audit['issues'], audit['issues']
+    phases = list(dict.fromkeys(sample['phase'] for sample in audit['samples']))
+    assert phases == ['branch', 'common', 'office'], phases
+    captions = [sample['caption'] for sample in audit['samples']]
+    for text in [metric[-1], *branch_tail[metric[0]], common, *thoughts]:
+        assert text in captions, (metric[0], text, captions)
+    assert captions.index(thoughts[0]) < captions.index(thoughts[1]) < captions.index(thoughts[2])
+    for phase, expected in [('branch', '1.025|0% 0%'), ('office', '2.65|62.275% -1.325%')]:
+        values = {sample['pose'] for sample in audit['samples'] if sample['phase'] == phase and sample['pose']}
+        assert values == {expected}, (phase, values)
+    playback[metric[0]] = {'realTimeSeconds': round(elapsed, 2), 'displayedDurationSeconds': durations[metric[0]],
+                           'clockAccelerated': False, 'observedFrames': len(audit['samples']), 'issues': []}
 
 
 def check_settlement(page, metric):
@@ -163,7 +230,7 @@ def check_settlement(page, metric):
     # Results describe the selected metric, without rating the player's free text.
     assert not settlement.locator('[data-prediction-score], .prediction-score').count()
     assert not any(term in details.inner_text().lower() for term in ('correct', 'incorrect', 'points', 'score'))
-    expect(page.get_by_role('button', name='Replay animation', exact=True)).to_be_enabled()
+    expect(page.get_by_role('button', name='Replay animation', exact=True)).to_have_count(0)
     expect(page.get_by_role('button', name='Try another metric', exact=True)).to_be_enabled()
     no_horizontal_overflow(page)
 
@@ -213,70 +280,29 @@ try:
         page.get_by_role('button', name='Skip guide', exact=True).click()
         record('The offline launcher opens the actual new HTML and its six-choice Level 1 form')
 
-        # One full, normal-motion, real-time run: no clock installation or seeking.
-        frame, started = begin(page, metrics[0])
-        observe_text(page, frame, metrics[0][-1])
-        assert frame.locator('.l1-film img').evaluate_all('images => images.length > 0 && images.every(image => image.complete && image.naturalWidth > 0)')
-        expect(frame.locator('.l1-film')).to_have_attribute('data-phase', 'common', timeout=15000)
-        observe_text(page, frame, common)
-        expect(frame.locator('.l1-film')).to_have_attribute('data-phase', 'office', timeout=10000)
-        expect(frame.locator('.l1-office-result')).to_contain_text(metrics[0][2], timeout=8000)
-        observe_text(page, frame, 'The numbers look great... but something still feels wrong.', timeout=8000)
-        observe_text(page, frame, 'Maybe one metric is too narrow.')
-        observe_text(page, frame, 'What if we measured more than one?')
-        expect(page.get_by_role('heading', name='What changed?', exact=True)).to_be_visible(timeout=8000)
-        elapsed = time.monotonic() - started
-        assert elapsed >= durations['peer'] - .5, (elapsed, durations['peer'])
-        playback = {'metric': 'peer', 'realTimeSeconds': round(elapsed, 2), 'displayedDurationSeconds': durations['peer'], 'clockAccelerated': False}
-        check_settlement(page, metrics[0])
-        screenshot(page, 'level1-settlement-preview-desktop.png')
-        record('Peer response plays branch → common → office with both thoughts and the final bridge in real time, then opens the correct dialogue-free settlement (' + str(round(elapsed, 2)) + ' seconds)')
-
-        page.get_by_role('button', name='Replay animation', exact=True).click()
-        replay = page.frame_locator('iframe')
-        expect(replay.locator('.l1-film')).to_have_attribute('data-metric', metrics[0][1], timeout=15000)
-        expect(replay.locator('.l1-film')).to_have_attribute('data-phase', 'branch')
-        expect(page.locator('.l1-settlement')).to_have_count(0)
-        seek(replay, .10)
-        screenshot(page, 'level1-settlement-preview-film.png')
-        finish_from_controls(page, replay)
-        check_settlement(page, metrics[0])
-        record('Replay starts the same branch in a fresh iframe and returns to the same result without legacy review UI')
-
-        for metric in metrics[1:]:
-            page.get_by_role('button', name='Try another metric', exact=True).click()
-            frame, _ = begin(page, metric)
-            seek(frame, .10)
-            expect(frame.locator('.l1-film')).to_contain_text(metric[-1])
-            assert frame.locator('.l1-film img').evaluate_all('images => images.length > 0 && images.every(image => image.complete && image.naturalWidth > 0)')
-            seek(frame, .40)
-            expect(frame.locator('.l1-film')).to_have_attribute('data-phase', 'common')
-            expect(frame.locator('.l1-film')).to_contain_text(common)
-            seek(frame, .60)
-            expect(frame.locator('.l1-film')).to_have_attribute('data-phase', 'office')
-            expect(frame.locator('.l1-office-result')).to_contain_text(metric[2])
-            seek(frame, .72)
-            observe_text(page, frame, 'The numbers look great... but something still feels wrong.')
-            seek(frame, .85)
-            observe_text(page, frame, 'Maybe one metric is too narrow.')
-            seek(frame, .94)
-            observe_text(page, frame, 'What if we measured more than one?')
-            finish_from_controls(page, frame)
+        # Every ending uses actual normal-speed playback; there are no seek controls.
+        for index, metric in enumerate(metrics):
+            if index:
+                page.get_by_role('button', name='Try another metric', exact=True).click()
+            frame, started = begin(page, metric)
+            watch_movie(page, frame, metric, started, capture=index == 0)
             check_settlement(page, metric)
-            record(metric[0] + ': original score screen and four-step navigation, correct branch/common/office, original status-card copy and unscored verbatim prediction through real player controls')
+            if index == 0:
+                screenshot(page, 'level1-settlement-preview-desktop.png')
+            record(metric[0] + ': normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, no Alex memory, metric montage, playback controls or replay button; correct original result cards')
 
         page.set_viewport_size({'width': 390, 'height': 900})
         no_horizontal_overflow(page)
         screenshot(page, 'level1-settlement-preview-mobile.png')
         page.get_by_role('button', name='Try another metric', exact=True).click()
         no_horizontal_overflow(page)
-        frame, _ = begin(page, metrics[0])
+        frame, started = begin(page, metrics[0])
         no_horizontal_overflow(page)
         assert frame.locator('html').evaluate('element => element.scrollWidth <= innerWidth')
-        finish_from_controls(page, frame)
+        watch_movie(page, frame, metrics[0], started)
         check_settlement(page, metrics[0])
         no_horizontal_overflow(page)
-        record('At 390px the choice form, iframe and two-card settlement fit without horizontal overflow; Try another resets all six choices')
+        record('At 390px the choice form, automatic movie and two-card settlement fit without horizontal overflow; Try another resets all six choices')
 
         page.goto(origin + '/START-HERE.html', wait_until='networkidle')
         no_horizontal_overflow(page)

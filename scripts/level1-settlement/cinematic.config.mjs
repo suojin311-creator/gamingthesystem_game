@@ -7,18 +7,18 @@ const root = resolve(process.env.LEVEL1_ANIMATION_SOURCE);
 const here = fileURLToPath(new URL('.', import.meta.url));
 export default {
   root, base: './',
-  resolve: { alias: { '@partner': root + '/src', '@preview-pacing': here + 'pacing.mjs' } },
+  resolve: {
+    dedupe: ['react', 'react-dom', 'remotion', '@remotion/player'],
+    alias: { '@partner': root + '/src', '@partner-assets': root + '/assets', '@preview-pacing': here + 'pacing.mjs', '@preview-presentation': here + 'presentation.jsx' },
+  },
   plugins: [{ name: 'independent-level1-film', enforce: 'pre', transform(code, id) {
     if (id === root + '/src/main.tsx') return readFileSync(here + 'cinematic-entry.jsx', 'utf8');
-    if (id === root + '/src/cinematics/level1/Level1Composition.tsx') {
-      // Supply the authored clock directly. Remotion Freeze would clamp the old
-      // 33.4-second clock to the shorter player's duration and truncate the ending.
-      const updated = code
-        .replace('readonly reducedMotion?: boolean;', 'readonly reducedMotion?: boolean; readonly previewSourceFrame?: number;')
-        .replace('reducedMotion = false }: Level1CompositionProps)', 'reducedMotion = false, previewSourceFrame }: Level1CompositionProps)')
-        .replace('const frame = useCurrentFrame();', 'const liveFrame = useCurrentFrame(); const frame = previewSourceFrame ?? liveFrame;');
-      if (updated === code || !updated.includes('previewSourceFrame ?? liveFrame')) throw new Error('The partner composition signature changed; review the preview adapter.');
-      return updated;
+    if (id === root + '/src/cinematics/level1/ConsequenceScene.tsx') {
+      // Freeze framing in this review build only; keep original prop animations.
+      const start = code.indexOf('  const cameraPose = {');
+      const end = code.indexOf('\n  };', start);
+      if (start < 0 || end < start) throw new Error('Review the partner camera adapter: source structure changed.');
+      return code.slice(0, start) + '  const cameraPose = { scale: 1.025, x: 0, y: 0, vignette: 0.24 };' + code.slice(end + '\n  };'.length);
     }
   } }, viteSingleFile()],
 };

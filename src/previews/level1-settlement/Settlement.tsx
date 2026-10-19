@@ -7,11 +7,10 @@ import './settlement.css';
 
 export type SettlementProps = {
   result: LevelOneResult;
-  onReplay: () => void;
   onTryAnother: () => void;
 };
 
-export default function Settlement({ result, onReplay, onTryAnother }: SettlementProps) {
+export default function Settlement({ result, onTryAnother }: SettlementProps) {
   const metric = getMetric(result.metricId)!;
   const title = useRef<HTMLHeadingElement>(null);
   const id = useId();
@@ -42,8 +41,7 @@ export default function Settlement({ result, onReplay, onTryAnother }: Settlemen
       <blockquote>{prediction}</blockquote>
     </details>}
 
-    <footer className="action-row l1-settlement-actions">
-      <button className="text-button" type="button" onClick={onReplay}>Replay animation</button>
+    <footer className="action-row only-action l1-settlement-actions">
       <button className="button primary-button" type="button" onClick={onTryAnother}>Try another metric<Icon name="arrow" /></button>
     </footer>
   </section>;

@@ -2,58 +2,107 @@
   "branch": "preview/level1-settlement",
   "baselineCommit": "32a91fe4bfb1cb193040410c846ebc165f8b9d5d",
   "partnerSourceCommit": "1bdd0c442c4b345b3bd37d6f541742d4e55c732f",
-  "sourceSha256": "2295dbc91ae97ea0911de858451d960594545decb5d50bd78136561b353a860c",
+  "sourceSha256": "f3662b05427c3847b6e70b9fc36948e7d1427bc8588852940aa7e72ddfe1b0df",
   "archive": "Level1-settlement-preview.zip",
-  "zipSha256": "e948fbd3fcd2015d54d1dbc2c24cd3e0d9ea72559c067dee97442519e1634c17",
+  "zipSha256": "bd81f39cc3f91024c8cb68353094e5d895c99413c17e6c925c17bfd35bd7f8a6",
   "entries": {
-    "START-HERE.html": "9e1a6f63a9bdafe7f75a63fde52dd92dd83c530d85fe1722e91cfc50b0b45c8a",
-    "Level1-settlement.html": "714bfc7af93c20f71ee0e38efdf4ff96cb4c5eccd9b29f1401ac329407938b94",
+    "START-HERE.html": "097acae12310d8c38b7c5409921c02cb3bd2b491c5d07e1f8b340922298272d3",
+    "Level1-settlement.html": "c1473593444ded6a20d7b609205499d050b2054592587b18734213bf7799a05c",
     "Current-Level1.html": "21d84902a6ad564e7bcb87803e494bb32ec68239c05a6392b8ec80cc209b0d56",
-    "START-HERE.txt": "09070e95d5e30634dff8320edc969e18287beb6379cff3097e32f7dbce812610"
+    "START-HERE.txt": "5ed6474cdf1396247950ecafc6d42c3e950720acfe4b5714499ec8083fe46fbe"
   },
   "scope": "Independent Level 1 experiment only; previous releases and upstream repository are unchanged",
   "flow": "Choose → Predict → Evaluate (original score animation) → Observe (full selected cinematic, then dialogue-free settlement)",
-  "pacing": "Per-line English reading holds; shorter empty shots/transitions, and 2.4 seconds of clear target-result display",
-  "validatedAtUtc": "2026-10-19T15:40:04.133407+00:00",
+  "pacing": "Per-line English reading holds, fixed framing and single-scene cuts; no memory overlay, metric-name montage, playback controls or replay button",
+  "validatedAtUtc": "2026-10-19T15:53:58.846775+00:00",
   "verification": {
     "typecheck": "passed",
+    "pacing": {
+      "command": "node tests/level1_settlement_pacing.mjs",
+      "passed": 6,
+      "branchDurationsSeconds": {
+        "peer": 24.87,
+        "prep": 25.33,
+        "part": 24.87,
+        "focus": 25.33,
+        "discuss": 26.06,
+        "reflect": 24.87
+      }
+    },
     "browser": {
-      "passed": 12,
+      "passed": 11,
       "checks": [
         "Archive CRC, ZIP hash and every entry hash match; Current-Level1.html is byte-identical to the original Level1-play.zip",
         "The offline launcher opens the actual new HTML and its six-choice Level 1 form",
-        "Peer response plays branch → common → office with both thoughts and the final bridge in real time, then opens the correct dialogue-free settlement (33.6 seconds)",
-        "Replay starts the same branch in a fresh iframe and returns to the same result without legacy review UI",
-        "prep: original score screen and four-step navigation, correct branch/common/office, original status-card copy and unscored verbatim prediction through real player controls",
-        "part: original score screen and four-step navigation, correct branch/common/office, original status-card copy and unscored verbatim prediction through real player controls",
-        "focus: original score screen and four-step navigation, correct branch/common/office, original status-card copy and unscored verbatim prediction through real player controls",
-        "discuss: original score screen and four-step navigation, correct branch/common/office, original status-card copy and unscored verbatim prediction through real player controls",
-        "reflect: original score screen and four-step navigation, correct branch/common/office, original status-card copy and unscored verbatim prediction through real player controls",
-        "At 390px the choice form, iframe and two-card settlement fit without horizontal overflow; Try another resets all six choices",
+        "peer: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, no Alex memory, metric montage, playback controls or replay button; correct original result cards",
+        "prep: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, no Alex memory, metric montage, playback controls or replay button; correct original result cards",
+        "part: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, no Alex memory, metric montage, playback controls or replay button; correct original result cards",
+        "focus: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, no Alex memory, metric montage, playback controls or replay button; correct original result cards",
+        "discuss: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, no Alex memory, metric montage, playback controls or replay button; correct original result cards",
+        "reflect: normal-speed full branch/common/office, every authored line, single opaque shots, fixed cameras, no Alex memory, metric montage, playback controls or replay button; correct original result cards",
+        "At 390px the choice form, automatic movie and two-card settlement fit without horizontal overflow; Try another resets all six choices",
         "The launcher also fits 390px and opens the unchanged original HTML at its original metric-choice screen",
         "The actual archive runs offline with zero external requests and zero browser runtime errors"
       ],
       "runtimeErrors": [],
       "externalRequests": [],
       "archive": "Level1-settlement-preview.zip",
-      "zipSha256": "e948fbd3fcd2015d54d1dbc2c24cd3e0d9ea72559c067dee97442519e1634c17",
+      "zipSha256": "bd81f39cc3f91024c8cb68353094e5d895c99413c17e6c925c17bfd35bd7f8a6",
       "branchDurationsSeconds": {
-        "peer": 25.42,
-        "prep": 25.88,
-        "part": 25.42,
-        "focus": 25.88,
-        "discuss": 26.61,
-        "reflect": 25.42
+        "peer": 24.87,
+        "prep": 25.33,
+        "part": 24.87,
+        "focus": 25.33,
+        "discuss": 26.06,
+        "reflect": 24.87
       },
       "realTimePlayback": {
-        "metric": "peer",
-        "realTimeSeconds": 33.6,
-        "displayedDurationSeconds": 25.42,
-        "clockAccelerated": false
+        "peer": {
+          "realTimeSeconds": 27.06,
+          "displayedDurationSeconds": 24.87,
+          "clockAccelerated": false,
+          "observedFrames": 120,
+          "issues": []
+        },
+        "prep": {
+          "realTimeSeconds": 27.18,
+          "displayedDurationSeconds": 25.33,
+          "clockAccelerated": false,
+          "observedFrames": 125,
+          "issues": []
+        },
+        "part": {
+          "realTimeSeconds": 26.5,
+          "displayedDurationSeconds": 24.87,
+          "clockAccelerated": false,
+          "observedFrames": 123,
+          "issues": []
+        },
+        "focus": {
+          "realTimeSeconds": 27.5,
+          "displayedDurationSeconds": 25.33,
+          "clockAccelerated": false,
+          "observedFrames": 126,
+          "issues": []
+        },
+        "discuss": {
+          "realTimeSeconds": 27.9,
+          "displayedDurationSeconds": 26.06,
+          "clockAccelerated": false,
+          "observedFrames": 128,
+          "issues": []
+        },
+        "reflect": {
+          "realTimeSeconds": 27.09,
+          "displayedDurationSeconds": 24.87,
+          "clockAccelerated": false,
+          "observedFrames": 124,
+          "issues": []
+        }
       },
       "screenshots": [
-        "test-results/level1-settlement-preview-desktop.png",
         "test-results/level1-settlement-preview-film.png",
+        "test-results/level1-settlement-preview-desktop.png",
         "test-results/level1-settlement-preview-mobile.png"
       ],
       "failureDiagnostics": [],
@@ -61,16 +110,13 @@
     },
     "unchangedPartnerFiles": 94,
     "unchangedPublishedGameArchives": 6,
-    "cinematicBuildReused": {
-      "path": "/workspace/level1-settlement-review/cinematic/index.html",
-      "sha256": "3703736b893395d052cdc03ecef2e3b4b7b05efa0d96a9faabd56b86515b0bbb",
-      "pacing": "Unchanged from c713844; the six branch playback timelines and complete endings are exercised by this browser run."
-    }
+    "cinematicHtmlSha256": "9e4d8b160e00cfcb5ced75f31f44b6a6df1ff151249ca490de155851382965ca"
   },
   "notes": [
-    "Restores the original Evaluate score screen and right-aligned Run evaluation button. Choose / Predict / Evaluate / Observe remain visible; there is no Results step.",
-    "The cinematic stays in the former placeholder below the original heading and stepper. The settlement reuses the original Management’s view / Students components and copy, arranged as two wide cards, without the evidence illustration or review chat.",
-    "Only the independent preview branch is updated. Approved game archives and partner sources remain unchanged.",
-    "Nominal playback duration and observed wall time are recorded separately. The latter includes iframe preparation and browser rendering."
+    "The previous UI revision is preserved at 3a262f4ced2468ddc1baedb84845a6602d3553e8. Only the independent preview branch and its own ZIP are updated.",
+    "Six endings use the original artwork, prop animations and dialogue with fixed framing and one opaque scene at a time. The office memory and six-metric text montage are never mounted.",
+    "Playback controls, timecode, timeline and the settlement replay button are removed. Hover, click and space do not reveal controls or interrupt playback.",
+    "Original score evaluation, four-step navigation and Management’s view / Students copy remain intact. Partner files and the six approved game archives retain their previous bytes.",
+    "Browser checks play all six endings at normal speed and observe live scene, caption and camera changes. Nominal timeline duration and observed wall time are recorded separately; no test clock or seek control is used."
   ]
 }
