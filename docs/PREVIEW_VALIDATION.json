@@ -1,11 +1,11 @@
 {
-  "validatedAtUtc": "2026-10-19T11:45:13.143653+00:00",
-  "version": "Opening continuity: arrival-driven camera flow, sequential plain glowing arrows and full Level 1 narrative transition",
+  "validatedAtUtc": "2026-10-19T12:21:46.140476+00:00",
+  "version": "Opening: learning question, motivated first metric choice and fixed-camera mail reader",
   "branch": "animation/opening-integration",
-  "animationBaselineCommit": "0d6a59b079055ff34be0a6ac2e812e9181440dd4",
+  "animationBaselineCommit": "90e8f7cb6b253902baf50b946277d44c443eca61",
   "gameBaselineCommit": "00c311682268ab8593d0733a4163b50ee41cd663",
-  "sourceCommit": "3edc1c85cf06b3908e0d8a35c9421c59dabff115",
-  "passed": 24,
+  "sourceCommit": "05cb174679ed8f6bf9ce1d7a8532ebd884b8b796",
+  "passed": 26,
   "build": {
     "command": "npm run package:previews",
     "exitCode": 0,
@@ -14,8 +14,9 @@
   },
   "suites": {
     "opening-integration-results.json": {
-      "passed": 6,
+      "passed": 7,
       "checks": [
+        "The title asks about numbers versus learning; the email fades in at a fixed readable size without a second camera zoom, and Visit Classroom is bright and usable immediately",
         "Email and one unseen student have plain glowing arrows, without circle frames or student outlines; the larger invitation and three completion slots are visible",
         "The camera moves continuously and settles before each reply; inspections take about 3.5 seconds and unlock input only after returning, with the arrow advancing to the next unseen student",
         "A settled office shows the teacher’s two reflections, then a full Level 1 chapter transition leads to real Gameplay with the same name and unchanged button style",
@@ -26,13 +27,14 @@
       "runtimeErrors": [],
       "externalRequests": [],
       "normalInspectionSeconds": [
-        3.9431526380067226,
-        3.9447200510039693
+        3.951060994004365,
+        3.9408066109899664
       ]
     },
     "opening-integrated-package-results.json": {
-      "passed": 6,
+      "passed": 7,
       "checks": [
+        "The title asks about numbers versus learning; the email fades in at a fixed readable size without a second camera zoom, and Visit Classroom is bright and usable immediately",
         "Email and one unseen student have plain glowing arrows, without circle frames or student outlines; the larger invitation and three completion slots are visible",
         "The camera moves continuously and settles before each reply; inspections take about 3.5 seconds and unlock input only after returning, with the arrow advancing to the next unseen student",
         "A settled office shows the teacher’s two reflections, then a full Level 1 chapter transition leads to real Gameplay with the same name and unchanged button style",
@@ -43,8 +45,8 @@
       "runtimeErrors": [],
       "externalRequests": [],
       "normalInspectionSeconds": [
-        3.9569789779925486,
-        3.980687039991608
+        4.003764452994801,
+        3.924453646002803
       ]
     },
     "release-results.json": {
@@ -67,54 +69,54 @@
     }
   },
   "artifacts": {
-    "sourceSha256": "451802f7e13e674615d0264f65e2ad3832dc9ee39f745af8a824f08567289abb",
+    "sourceSha256": "c2b9d5cc68c9ffe47dfc43d9892755bc35c7839f5af7c1eee0980bfa5790340d",
     "entries": [
       {
         "archive": "Level1-play.zip",
         "html": "Level1.html",
         "build": "dist-level1/index.html",
-        "htmlSha256": "a547d57f887da7fd6cb3c9b237cc45cbecdf88bd3b48e26c6ba7fcff0f11faf7",
-        "zipSha256": "517b33c2bd95ed62a4f0f595ac663a605a6299dc4bc38290fe3f6bdb65c6ad72"
+        "htmlSha256": "21d84902a6ad564e7bcb87803e494bb32ec68239c05a6392b8ec80cc209b0d56",
+        "zipSha256": "9b5ab817e30d88ce4f7436ad7672a26c80fec5e17b4ef7d9a4051cfb99765db5"
       },
       {
         "archive": "Level2-play.zip",
         "html": "Level2.html",
         "build": "dist-level2/index.html",
-        "htmlSha256": "cc4215269a80b85c823ce7835547b3f213d41a50f2ab757ce53d919af68520ec",
-        "zipSha256": "371dd753159483ba84a368623499ffd23528c37e446faa1273b4957c40a19542"
+        "htmlSha256": "9c5e23791cfd0db257e91fbdf8a48bb89db28fa6d67c24eb5054dfd3f08c2bd7",
+        "zipSha256": "86af16b6f0a4f2fb3406a329fa0972207db470e749fa9f8b3bcbc7b880d793a4"
       },
       {
         "archive": "Level3-play.zip",
         "html": "Level3.html",
         "build": "dist-level3/index.html",
-        "htmlSha256": "a5043540d5f8f428fb1cf4272c6de67c15d8711e26869b89e4eb12c1ed64a2b6",
-        "zipSha256": "408c51c25fb66da6818aec39c579e954d1efd52b21fcb5749888454adfa6975e"
+        "htmlSha256": "c50ed882d90e22c0d69e3e0997cf62b56084abad16bab9b058cd8e2e3617dd35",
+        "zipSha256": "078bb1a61060b5d56b66e5fcca0a45bf13e4515d9b8b05ba31e84f165f0c9478"
       },
       {
         "archive": "Full-game-play.zip",
         "html": "Gaming-the-System.html",
         "build": "dist/index.html",
-        "htmlSha256": "87df3c26abe39e431a9f0a9c4e819456819763881b2c8c9f47476c72f96304b9",
-        "zipSha256": "0246ce917df1848474ec7ba08b8959d1e8e6710e2261846786735536198bbae7"
+        "htmlSha256": "1fa27252bb3d71eb641d931bcf89ae6bcf2b14b4437cc6ab02829e7dbb55c6bb",
+        "zipSha256": "2373dbb2c633d905f71be235f1dc3b9721b1ca59fe7063830cd9989f980cca33"
       }
     ],
     "reviewBundle": {
       "archive": "Level3-and-Full-game-play.zip",
-      "zipSha256": "2f0e71ec29099ce3069bc337901567db68d71d4480eec5dd332daa1c0667bf85",
+      "zipSha256": "02c77d810a3233c3594990f9ba3822d9a3ed44e74b6c5b84f5b3342393c01601",
       "htmlSha256": {
-        "Level3/Level3.html": "a5043540d5f8f428fb1cf4272c6de67c15d8711e26869b89e4eb12c1ed64a2b6",
-        "Full-game/Gaming-the-System.html": "87df3c26abe39e431a9f0a9c4e819456819763881b2c8c9f47476c72f96304b9"
+        "Level3/Level3.html": "c50ed882d90e22c0d69e3e0997cf62b56084abad16bab9b058cd8e2e3617dd35",
+        "Full-game/Gaming-the-System.html": "1fa27252bb3d71eb641d931bcf89ae6bcf2b14b4437cc6ab02829e7dbb55c6bb"
       }
     },
     "completeBundle": {
       "archive": "Gaming-the-System-complete.zip",
-      "zipSha256": "f0d5a970004029ac04a8d97250be7de095a8109fdd8c6eb8affb5e2fb404ec1f",
+      "zipSha256": "5a74aa5429b17af8090d9bdc8113cb900dfe5c03d0021d9cd23accf2bf8961ed",
       "htmlSha256": {
         "START-HERE.html": "8696f4f200fa9b456aafa3242c1a0bf3adc235c974e6e2fec9b0b92a66d63506",
-        "Full-game/Gaming-the-System.html": "87df3c26abe39e431a9f0a9c4e819456819763881b2c8c9f47476c72f96304b9",
-        "Level1/Level1.html": "a547d57f887da7fd6cb3c9b237cc45cbecdf88bd3b48e26c6ba7fcff0f11faf7",
-        "Level2/Level2.html": "cc4215269a80b85c823ce7835547b3f213d41a50f2ab757ce53d919af68520ec",
-        "Level3/Level3.html": "a5043540d5f8f428fb1cf4272c6de67c15d8711e26869b89e4eb12c1ed64a2b6"
+        "Full-game/Gaming-the-System.html": "1fa27252bb3d71eb641d931bcf89ae6bcf2b14b4437cc6ab02829e7dbb55c6bb",
+        "Level1/Level1.html": "21d84902a6ad564e7bcb87803e494bb32ec68239c05a6392b8ec80cc209b0d56",
+        "Level2/Level2.html": "9c5e23791cfd0db257e91fbdf8a48bb89db28fa6d67c24eb5054dfd3f08c2bd7",
+        "Level3/Level3.html": "c50ed882d90e22c0d69e3e0997cf62b56084abad16bab9b058cd8e2e3617dd35"
       }
     }
   },
@@ -141,20 +143,16 @@
         "path": "assets/characters/CHAR-005 — Unprepared Student Idle.png",
         "sha256": "b72e89309cc51a91faa2c3ff179b352b7691fd8d8609a74722d18e35027665b3"
       }
-    ],
-    "localDocumentationLinksChecked": 28
+    ]
   },
-  "currentDocumentationLinksChecked": 12,
+  "currentDocumentationLinksChecked": 15,
   "notes": [
-    "Camera arrival and opacity completion callbacks now advance moving stages. Reading holds start after arrival, and input remains locked until the return camera has arrived. Office pullback and door movement are no longer cut short by independent timers.",
-    "Student zoom is reduced from 1.45x to1.28x. Normal authored approach is900ms, reading hold1700ms and return850ms. Actual click-to-return times are retained in both browser reports and are about four seconds including browser actionability and rendering.",
-    "The classroom fades fully opaque before returning. The office camera resets while the opaque classroom remains mounted, then the office fades in before the teacher reflection. The reset is not exposed as a visible camera jump.",
-    "Email and student cues are plain glowing arrow strokes, with no circle frame. One unseen student is suggested at a time; arbitrary selection and keyboard focus remain supported. Student outline/halo rings are removed. Unframed portraits/checks retain all-three progress.",
-    "The enlarged invitation reads Come closer to take a look at the students. After Back to Office the two thoughts are They’re here, but they’re not really engaged. and What should I measure first? Successive captions exit before the next enters.",
-    "A complete Level1 chapter introduction now follows the office reflection, using the same ChapterTransition component and paper visual language as Levels2and3. A faint office backdrop bridges the change of presentation, one empty metric slot represents the upcoming choice, and the player name carries into Gameplay only after Choose a metric.",
-    "Level rules, metric text and Gameplay source are unchanged. Shared ChapterTransition adds a level1 variant without changing the level2/3 paths; those paths, standalone entries and the complete opening→Levels1→2→3 route pass the release suite.",
-    "The opening suite checks intermediate camera movement and stable arrival before dialogue, normal measured inspection times, sequential arrows, all-three gating, both office thoughts, Level1 introduction, name/button style, restored pages, touch and reduced motion. It passes against live source and actual offline full-game ZIP bytes.",
-    "All24checks passed with no runtime errors. Six current archives were generated together from the verified source fingerprint. All five partner PNGs retain their original hashes. No later authored cinematic was replaced and no Design Lab navigation was added.",
-    "Only animation/opening-integration is published. level3-dev and stable preview aliases remain at their preceding commits. Managed Chromium offline verification uses exact packaged HTML through an in-memory HTTPS route; direct local-file behaviour in a particular user browser and subjective smoothness are not established by automated checks."
+    "The title now asks Do better numbers mean better learning? On office return, the teacher notices disengagement, recalls the demand for measurable results and seeks a trackable sign. The longer second reflection holds four seconds before Level 1 asks Which sign would tell me the most?",
+    "Clicking the urgent email no longer changes the office camera. A separate unscaled reader fades in over 300ms, or 100ms with reduced motion. Text is laid out at its final size rather than magnified along with the office. The initial approach to the laptop is retained.",
+    "VISIT CLASSROOM is enabled and fully bright from its appearance. Reading and the optional thought do not lock the action. A separate footer keeps the action visible while body copy scrolls on small screens. Leaving cancels the reading hold; the departing reader is inert, ignores pointer events and is unmounted after pullback.",
+    "Both live and actual packaged opening suites verify the camera stays unchanged during mail opening, bright immediately usable actions, normal and early departure, desktop and touch sizes, reduced motion, all-three student gating, both revised office reflections and the Level 1 name handoff.",
+    "Normal student timing, sequential glowing arrow cues, classroom scripts and the existing Level 1 chapter introduction remain. Level rules, Gameplay and shared source are unchanged from the animation baseline.",
+    "All 26 checks passed without runtime errors. All six latest archives were built together and the actual complete-game and standalone entries pass the release suite. The five partner PNGs retain their original hashes.",
+    "Only animation/opening-integration is published. Stable game and preview branches retain their preceding commits. Offline Chromium checks use exact packaged HTML through an in-memory HTTPS route; they do not establish device-specific frame rates or subjective smoothness."
   ]
 }
