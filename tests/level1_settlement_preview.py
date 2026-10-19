@@ -164,6 +164,8 @@ PROBE = r"""film => {
   const poses = new Map();
   let priorPhase = null;
   let priorCover = 0;
+  let emailVisibleAt = null;
+  let firstThoughtAt = null;
   const sample = () => {
     const root = film.querySelector('.l1-film');
     if (!root) return;
@@ -201,10 +203,12 @@ PROBE = r"""film => {
     if (phase === 'office' && (!email || !email.querySelector('h2')?.textContent.startsWith('Great work') || !email.textContent.includes('Student engagement has improved significantly!') || !email.querySelector('.l1-office-signature'))) issues.push('Email did not appear as one complete message');
     if (root.querySelector('.l1-office-result')) issues.push('Removed green metric/target block returned');
     const emailText = email?.textContent ?? '';
+    if (email && cover <= .001 && emailVisibleAt === null) emailVisibleAt = performance.now();
+    if (caption.startsWith('The number looks great') && firstThoughtAt === null) firstThoughtAt = performance.now();
     const key = [phase, caption, Math.floor(source * 4), Math.round(cover * 10), cover === 1].join('|');
     if (key !== priorKey || issues.length) {
       priorKey = key;
-      parent.postMessage({channel: 'test-film-probe', sample: {phase, source, caption, speaker, color, stroke, shadow, pose, cover, emailText}, issues}, '*');
+      parent.postMessage({channel: 'test-film-probe', sample: {phase, source, caption, speaker, color, stroke, shadow, pose, cover, emailText, emailVisibleAt, firstThoughtAt}, issues}, '*');
     }
   };
   new MutationObserver(sample).observe(film, {subtree: true, childList: true, attributes: true, characterData: true});
@@ -243,6 +247,11 @@ def watch_movie(page, frame, metric, started, capture=False):
     phases = list(dict.fromkeys(sample['phase'] for sample in audit['samples']))
     assert phases == ['branch', 'office'], phases
     assert audit['samples'][-1]['cover'] >= .99, audit['samples'][-1]
+    timing = audit['samples'][-1]
+    thought_delay = timing['firstThoughtAt'] - timing['emailVisibleAt']
+    # The player clock pauses/slips under VM frame drops; allow render latency
+    # while still rejecting the previous nearly four-second wait.
+    assert 1800 <= thought_delay <= 3000, (metric[0], thought_delay)
     captions = [sample['caption'] for sample in audit['samples'] if sample['cover'] < .01]
     for text in [metric[-1], *branch_tail[metric[0]], *thoughts]:
         assert text in captions, (metric[0], text, captions)
@@ -256,7 +265,7 @@ def watch_movie(page, frame, metric, started, capture=False):
         values = {sample['pose'] for sample in audit['samples'] if sample['phase'] == phase and sample['pose']}
         assert values == {expected}, (phase, values)
     playback[metric[0]] = {'realTimeSeconds': round(elapsed, 2), 'displayedDurationSeconds': durations[metric[0]],
-                           'clockAccelerated': False, 'observedFrames': len(audit['samples']), 'issues': []}
+                           'clockAccelerated': False, 'emailToFirstThoughtMs': round(thought_delay), 'observedFrames': len(audit['samples']), 'issues': []}
 
 
 def check_settlement(page, metric):

@@ -2,7 +2,7 @@
 
 ## 独立试验：Level 1 动画与结果核算页
 
-[Level1-settlement-preview.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/preview/level1-settlement/play/Level1-settlement-preview.zip?raw=true)：解压后打开 **START-HERE.html**，选择新版或原版对照。新版包含完整六选一操作、原版分数上涨页、按阅读速度调整的对应结局动画（直接衔接完整邮件，移除 common ending），以及沿用原状态卡文案的结果核算页。动画自动播放，隐藏播放条和时间显示；核算页保持管理方结果静态，只强调学生负面结局；结果页可换一个指标。
+[Level1-settlement-preview.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/preview/level1-settlement/play/Level1-settlement-preview.zip?raw=true)：解压后打开 **START-HERE.html**，选择新版或原版对照。新版包含完整六选一操作、考核标准及第一次／第二次考核的班级达标百分比、按阅读速度调整的对应结局动画（直接衔接完整邮件，移除 common ending），以及沿用原状态卡文案的结果核算页。动画自动播放，隐藏播放条和时间显示；结果页已去掉 Target 和管理方底部文字。邮件完整显示后 2 秒出现老师首句，最后一句使用 I；核算页保持管理方结果静态，只强调学生负面结局。结果页可换一个指标。
 
 这是独立预览，未覆盖下面的游戏版本或同伴仓库。说明见 [LEVEL1_SETTLEMENT_PREVIEW.md](../docs/LEVEL1_SETTLEMENT_PREVIEW.md)，校验见 [LEVEL1_SETTLEMENT_PREVIEW.json](LEVEL1_SETTLEMENT_PREVIEW.json)。
 

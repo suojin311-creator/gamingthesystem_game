@@ -2,19 +2,19 @@
   "branch": "preview/level1-settlement",
   "baselineCommit": "32a91fe4bfb1cb193040410c846ebc165f8b9d5d",
   "partnerSourceCommit": "1bdd0c442c4b345b3bd37d6f541742d4e55c732f",
-  "sourceSha256": "8557422993e4c95c14747980fc9aa5848d86fa2c2ae1fb6899e50baa687ed652",
+  "sourceSha256": "7ee164a1f9ffe88d2ee64e94bc0641a0f95e480254d53a13d8fc5cf605801062",
   "archive": "Level1-settlement-preview.zip",
-  "zipSha256": "1960df8a2d569b0267fea88ab3e85b866b62a3cdae6003c4060ebbf2f961dafa",
+  "zipSha256": "71db60bd8bc35ee374feb78809ebf531b40c34c92b009dd5c0a1fbb9a614e18a",
   "entries": {
-    "START-HERE.html": "fbf04fa14b248c3e6f23caf573f99057c7b6df5cbfca53e06fc0888f9f0076bf",
-    "Level1-settlement.html": "4408ff4d847081178c02adbff50698c3e28c75ba57ce83f206db2f903282992f",
+    "START-HERE.html": "7374b6f057180c0ed74377e5219187c28d1f0a32fdbdc47442d9c9fa6226611d",
+    "Level1-settlement.html": "3ed9bb8224572aa03a143d5f27e93e06b0befc8b92e453bc6567133d523f9b32",
     "Current-Level1.html": "21d84902a6ad564e7bcb87803e494bb32ec68239c05a6392b8ec80cc209b0d56",
-    "START-HERE.txt": "5ed6474cdf1396247950ecafc6d42c3e950720acfe4b5714499ec8083fe46fbe"
+    "START-HERE.txt": "fd087e43677faa376ee051d8efaec6578b75404cfc1cb7925815639deada68d9"
   },
   "scope": "Independent Level 1 experiment only; previous releases and upstream repository are unchanged",
-  "flow": "Choose → Predict → Evaluate (original score animation) → Observe (selected branch → complete email and teacher thoughts → dialogue-free settlement)",
-  "pacing": "Readable retained dialogue, fixed shots and a 640ms covered branch-to-email transition; common ending and green email result removed; distinct speaker colours; static management with a student-only warning outline",
-  "validatedAtUtc": "2026-10-19T17:34:04.140458+00:00",
+  "flow": "Choose → Predict → Evaluate (first/second assessment class attainment percentages, no target) → Observe (selected branch → complete email and teacher thoughts → dialogue-free settlement)",
+  "pacing": "Readable retained dialogue, fixed shots and a 640ms covered branch-to-email transition; common ending and green email result removed; distinct speaker colours; first teacher thought two seconds after email uncover, singular I bridge; static management without footer text and a student-only warning outline",
+  "validatedAtUtc": "2026-10-19T18:19:56.007678+00:00",
   "verification": {
     "typecheck": "passed",
     "pacing": {
@@ -27,8 +27,7 @@
         "focus": 20.53,
         "discuss": 21.26,
         "reflect": 20.07
-      },
-      "coveredBoundariesAndFinalHandoff": "Live normal/reduced-motion checks passed; source clock skips the common ending; retained dialogue reading holds passed"
+      }
     },
     "browser": {
       "passed": 12,
@@ -49,7 +48,7 @@
       "runtimeErrors": [],
       "externalRequests": [],
       "archive": "Level1-settlement-preview.zip",
-      "zipSha256": "1960df8a2d569b0267fea88ab3e85b866b62a3cdae6003c4060ebbf2f961dafa",
+      "zipSha256": "71db60bd8bc35ee374feb78809ebf531b40c34c92b009dd5c0a1fbb9a614e18a",
       "branchDurationsSeconds": {
         "peer": 20.07,
         "prep": 20.53,
@@ -60,45 +59,51 @@
       },
       "realTimePlayback": {
         "peer": {
-          "realTimeSeconds": 22.44,
+          "realTimeSeconds": 22.2,
           "displayedDurationSeconds": 20.07,
           "clockAccelerated": false,
-          "observedFrames": 111,
+          "emailToFirstThoughtMs": 1966,
+          "observedFrames": 114,
           "issues": []
         },
         "prep": {
-          "realTimeSeconds": 22.43,
+          "realTimeSeconds": 22.48,
           "displayedDurationSeconds": 20.53,
           "clockAccelerated": false,
-          "observedFrames": 113,
-          "issues": []
-        },
-        "part": {
-          "realTimeSeconds": 21.98,
-          "displayedDurationSeconds": 20.07,
-          "clockAccelerated": false,
-          "observedFrames": 114,
-          "issues": []
-        },
-        "focus": {
-          "realTimeSeconds": 22.45,
-          "displayedDurationSeconds": 20.53,
-          "clockAccelerated": false,
-          "observedFrames": 114,
-          "issues": []
-        },
-        "discuss": {
-          "realTimeSeconds": 23.18,
-          "displayedDurationSeconds": 21.26,
-          "clockAccelerated": false,
+          "emailToFirstThoughtMs": 1967,
           "observedFrames": 115,
           "issues": []
         },
-        "reflect": {
-          "realTimeSeconds": 22.09,
+        "part": {
+          "realTimeSeconds": 22.16,
           "displayedDurationSeconds": 20.07,
           "clockAccelerated": false,
+          "emailToFirstThoughtMs": 1966,
           "observedFrames": 113,
+          "issues": []
+        },
+        "focus": {
+          "realTimeSeconds": 22.36,
+          "displayedDurationSeconds": 20.53,
+          "clockAccelerated": false,
+          "emailToFirstThoughtMs": 1966,
+          "observedFrames": 115,
+          "issues": []
+        },
+        "discuss": {
+          "realTimeSeconds": 22.99,
+          "displayedDurationSeconds": 21.26,
+          "clockAccelerated": false,
+          "emailToFirstThoughtMs": 1967,
+          "observedFrames": 117,
+          "issues": []
+        },
+        "reflect": {
+          "realTimeSeconds": 21.91,
+          "displayedDurationSeconds": 20.07,
+          "clockAccelerated": false,
+          "emailToFirstThoughtMs": 1966,
+          "observedFrames": 114,
           "issues": []
         }
       },
@@ -112,14 +117,15 @@
     },
     "unchangedPartnerFiles": 94,
     "unchangedPublishedGameArchives": 6,
-    "cinematicHtmlSha256": "b1fb7c5391a1cb848d0d67bf7c769c61e3cf6b056ebf7f25d694fdf514e7a549"
+    "cinematicHtmlSha256": "84fc9b18cb658df4baac0a4546f84d0b5941d480dc52cdff303b84b80116969b",
+    "cinematicReuse": "Verified cinematic from bb36bd3 reused; no cinematic source changes through ccf05de. Assessment-report game rebuilt from current source."
   },
   "notes": [
-    "Previous preview saved at 9b6068a712b62b3d6b0b2398f94e37b89940a14a. Only preview/level1-settlement and its independent archive are updated.",
-    "The common ending is omitted. Each selected branch transitions directly to the complete office email. The actual cover transitionend protects the scene swap; two animation frames precede uncovering, including a reduced-motion fallback. Cameras remain fixed and photos never overlap.",
-    "Email sender, greeting, body and signature appear together. The green selected-metric and target-achieved block is removed. The first teacher thought uses the singular number. Teacher captions use warm gold and Alex captions pale blue, with matching labels and readable text outlines.",
-    "Management’s view stays at its final report value without replay or attention effects. After the brief recap uncover and 250ms visible pause, Students shows the matching outcome and three amber/rust border pulses. Reduced motion uses a steady outline. The What changed? heading is removed.",
-    "All six actual ZIP branches passed normal-speed offline browser playback, with full retained dialogue, protected cuts, distinct speaker colours, static management and matching student outcomes. The 390px and reduced-motion paths also passed. No playback controls, memory overlays, metric montage, subtitle-shade layers or replay button returned.",
-    "The original score evaluation, four-step navigation and Management’s view / Students copy are retained. All 94 partner files and six published game archives remain byte-identical. The original Level 1 HTML is preserved inside the new archive for comparison."
+    "Includes the confirmed source updates through ccf05de: assessment criteria for all six metrics, class attainment percentages and explicitly named first/second assessments. The previous packaged preview remains saved at d9a38588c5bf4d6e3009b03053cded82b96ad9d4.",
+    "Result-page target text, target threshold marker and target-met heading are removed. Management’s view has no bottom evidence text throughout this preview. Numeric animation, four-step navigation and button positions are retained.",
+    "The complete email appears together without its former green metric/target block. The first teacher thought is triggered two seconds after the uncover completes on the playback clock, with normal and reduced-motion browser verification. The final thought reads What if I measured more than one?",
+    "Common ending is omitted; the selected branch transitions directly to the email under an actual completed cover. Cameras stay fixed, photos never overlap, and teacher/Alex captions retain distinct readable colours without subtitle-shade layers.",
+    "All six branches ran at normal speed in the actual offline archive; 390px, reduced motion, matching student outcomes, student warning outlines, static recap management and absence of playback controls/replay also passed. Wall-clock timing measurements include rendering latency and are recorded in the browser report.",
+    "All 94 partner source files and the six published game archives remain byte-identical. Current-Level1.html inside this package is byte-identical to the saved original release for comparison."
   ]
 }
