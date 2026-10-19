@@ -2,6 +2,8 @@
 
 本说明汇总用户多轮修改后的最终要求，并对照当前已确认源码核验。用途是继续合并游戏与动画，不是重新设计已通过的玩法。最新明确要求优先于旧文档；下文特别标出的待接入内容，不代表已经完成。
 
+配套文档：**[分支与文档地图](BRANCH_DOCUMENT_MAP.zh-CN.md)**列出每个现存分支的文档；**[游戏概念与界面元素词典](GAME_CONCEPTS.zh-CN.md)**统一数字、标准、权重、投入与观察证据的含义。
+
 ## 1. 先认准版本，避免从旧版本继续
 
 仓库：<https://github.com/suojin311-creator/gamingthesystem_game>
@@ -69,7 +71,7 @@
 
 **分数表示：班级中符合玩家所选指标评价标准的学生比例。** 比较第一次和第二次 assessment。它不是实际学习质量分数，不是老师得分，也不是 Alex 学会了多少。分数提高与教室里学生追逐得分行为可以同时发生，后续 Observe 正是检查这种差别。
 
-每项具体标准读取 `src/shared/data/metrics.ts` 的 `assessmentCriteria`，不要只给模糊数值。
+每项具体标准读取 `src/levels/level1/metrics.ts` 的 `assessmentCriteria`，不要只给模糊数值。
 
 ### 4.2 最新操作文案和布局
 
@@ -127,7 +129,7 @@
 - 推进标题 **Testing more metrics.**，最终观察标题 **More metrics. Still chasing marks.**
 - 已确认节奏：可见停留约 3.5 秒、提前约 0.7 秒翻纸；页面隐藏暂停推进。计数、清单与纸张持续挂载，避免闪烁重置。到 100 等玩家 Observe the class。
 - 指标多了不等于真实学习更好；不能新增虚构学习得分或声称“所有多指标都无效”。
-- Students 核心反馈 **Stops when the criteria are met.**。进入 Level 3 后，符合情形的学生状态和提示应接续这一点。
+- Level 2 各阶段的 Students 文案以该关 data.ts 为准（详见概念词典）。进入 Level 3 后，无低投入项时显示 **Stops when the criteria are met.**，承接“达标成为目标”的问题；不要把这句话强行替换第二关全部阶段。
 - Continue to Level 3 保持统一陶土红色主按钮。不要恢复截图里的浅色次级按钮。
 - **Level 2 正式动画仍待接入**。接入前读 `src/levels/level2/` 与场景请求接口，不用旧故事覆盖上述已确认流程。
 
@@ -246,7 +248,7 @@ Reset：第一次尚无观察时回未分配；之后回上一次实际观察，
 | 三关连接及动画注入 | `src/Gameplay.tsx` |
 | Level 1 共用流程／电影 | `src/levels/level1/LevelOneExperience.tsx`、`src/cinematics/level1/LevelOneCinematic.tsx` |
 | Level 1 自有覆盖／组装 | `scripts/level1-settlement/` |
-| 六项与评价标准 | `src/shared/data/metrics.ts` |
+| 六项共用名称／Level 1 评价标准与数值 | `src/shared/data/metrics.ts`、`src/levels/level1/metrics.ts` |
 | Level 2 场景与请求 | `src/levels/level2/` |
 | Level 3 规则、提示、电影请求 | `src/levels/level3/weights.ts`、`experiments.ts`、`data.ts` |
 | Level 3 制作对白 | `docs/LEVEL3_NARRATION.md`、`docs/LEVEL3_NARRATION.docx` |

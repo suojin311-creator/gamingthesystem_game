@@ -4,6 +4,9 @@
 
 ## 下一步：动画合并
 
+- [分支与文档地图](BRANCH_DOCUMENT_MAP.zh-CN.md)：17 个现存分支的用途、文档清单和阅读次序。
+- [游戏概念与界面元素词典](GAME_CONCEPTS.zh-CN.md)（[Word](GAME_CONCEPTS.zh-CN.docx)）：评分数字、criteria、权重、effort、管理层／学生反馈和 Lab 元素的定义。
+
 - **先读：[下一位 AI 最新交接说明](NEXT_AI_HANDOFF.zh-CN.md)（[Word](NEXT_AI_HANDOFF.zh-CN.docx)）**：汇总开头、三关、动画与 Design Lab 最新要求，并标明已作废方案、已接入／待接入和固定版本基线。
 
 - [Level 3 narration 制作稿](LEVEL3_NARRATION.md)（[Word 下载](LEVEL3_NARRATION.docx)）：给动画组的画面与英文对白，涵盖所有任务档位、重复观察及两种结尾。
