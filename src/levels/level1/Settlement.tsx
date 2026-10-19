@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import type { LevelOneResult } from '../../levels/level1/LevelOne';
-import { PerspectivePanel } from '../../levels/level1/LevelOne';
-import { getMetric } from '../../levels/level1/metrics';
+import type { LevelOneResult } from './LevelOne';
+import { PerspectivePanel } from './LevelOne';
+import { getMetric } from './metrics';
 import Icon from '../../shared/components/Icon';
 import CharacterPortrait from '../../shared/components/CharacterPortrait';
 import { useVisibleDelay } from '../../shared/hooks/useVisibleDelay';
@@ -9,10 +9,11 @@ import './settlement.css';
 
 export type SettlementProps = {
   result: LevelOneResult;
-  onTryAnother: () => void;
+  onTryAnother?: () => void;
+  onContinue?: () => void;
 };
 
-export default function Settlement({ result, onTryAnother }: SettlementProps) {
+export default function Settlement({ result, onTryAnother, onContinue }: SettlementProps) {
   const metric = getMetric(result.metricId)!;
   const recap = useRef<HTMLElement>(null);
   const prediction = result.prediction.trim();
@@ -63,7 +64,7 @@ export default function Settlement({ result, onTryAnother }: SettlementProps) {
     </details>}
 
     <footer className="action-row only-action l1-settlement-actions">
-      <button className="button primary-button" type="button" onClick={onTryAnother}>Try another metric<Icon name="arrow" /></button>
+      <button className="button primary-button" type="button" onClick={onContinue || onTryAnother} disabled={!onContinue && !onTryAnother}>{onContinue ? 'Continue to Level 2' : 'Try another metric'}<Icon name="arrow" /></button>
     </footer>
   </section>;
 }

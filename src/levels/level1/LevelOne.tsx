@@ -22,6 +22,7 @@ export type LevelOneResult = {
 export type LevelOneSettlement = {
   result: LevelOneResult;
   onReplay: () => void;
+  onContinue?: () => void;
 };
 export type LevelOneProps = {
   playerName?: string;
@@ -29,7 +30,7 @@ export type LevelOneProps = {
   onComplete?: (result: LevelOneResult) => void;
   onContinue?: () => void;
   showIntro?: boolean;
-  /** Opt-in experiment: run the cinematic before a dialogue-free settlement. */
+  /** Run the cinematic before a dialogue-free assessment settlement. */
   renderSettlement?: (context: LevelOneSettlement) => ReactNode;
 };
 
@@ -222,7 +223,7 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
       <div className="workbench-heading"><div className="chapter-heading"><span className="chapter-number">01</span><h1>One metric.</h1></div><span className="office-location"><span /> THE OFFICE</span></div>
       <nav className="stepper" aria-label="Level 1 progress"><ol>{steps.map((step, index) => <li key={step} className={`${currentStep === index ? 'current' : ''} ${currentStep > index ? 'done' : ''}`} aria-current={currentStep === index ? 'step' : undefined}><span className="step-number">{currentStep > index ? <Icon name="check" /> : `0${index + 1}`}</span><span>{step}</span></li>)}</ol></nav>
 
-      {request ? (renderCinematic ? renderCinematic(request, () => go('review')) : <CinematicPlaceholder request={request} onComplete={() => go('review')} />) : phase === 'review' && metric && renderSettlement ? renderSettlement({ result: { metricId: metric.id, prediction: prediction.trim(), reportedScore: { before: metric.before, after: metric.after, target: TARGET } }, onReplay: () => go('cinematic') }) : <>
+      {request ? (renderCinematic ? renderCinematic(request, () => go('review')) : <CinematicPlaceholder request={request} onComplete={() => go('review')} />) : phase === 'review' && metric && renderSettlement ? renderSettlement({ result: { metricId: metric.id, prediction: prediction.trim(), reportedScore: { before: metric.before, after: metric.after, target: TARGET } }, onReplay: () => go('cinematic'), onContinue }) : <>
         <div className={`workbench-body phase-${phase}`}>
           <section className="decision-area" aria-label="Current decision">
             {phase === 'choose' && <>

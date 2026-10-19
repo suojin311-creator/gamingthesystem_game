@@ -16,10 +16,10 @@ export function filmImages(metric) {
 
 // The partner's artwork, prop animation and script stay shared. This adapter owns
 // player-facing shot assembly: one opaque scene at a time, with fixed framing.
-function SpokenLine({ text, player = false }) {
+function SpokenLine({ text, player = false, playerName }) {
   const color = SPEAKER_COLORS[player ? 'player' : 'alex'];
   return <div className="l1-spoken" data-speaker={player ? 'player' : 'alex'}>
-    <p className="l1-speaker" style={{ color, textShadow: CAPTION_SHADOW }}>{player ? 'You' : 'Alex'}</p>
+    <p className="l1-speaker" style={{ color, textShadow: CAPTION_SHADOW }}>{player ? playerName?.trim() || 'You' : 'Alex'}</p>
     <DialogueLayer style={{ bottom: '7%', left: '10%', right: '10%', fontSize: '2.15cqw', lineHeight: 1.5, fontStyle: player ? 'italic' : 'normal', color, WebkitTextStroke: '.035em #172019', paintOrder: 'stroke fill', textShadow: CAPTION_SHADOW }}>{text}</DialogueLayer>
   </div>;
 }
@@ -85,7 +85,7 @@ export function LevelOneFilm({ selectedMetric, playerName, seconds, reducedMotio
     <div className="l1-scene" key={phase} data-shot={phase}>
       {phase === 'branch' ? <>
         <ConsequenceScene metric={selectedMetric} seconds={Math.min(seconds, LEVEL1.branch)} reducedMotion={reducedMotion} />
-        {text && <SpokenLine text={text} player={seconds >= 5.5 && seconds < 8.2} />}
+        {text && <SpokenLine text={text} player={seconds >= 5.5 && seconds < 8.2} playerName={playerName} />}
       </> : <OfficeEnding seconds={seconds - officeStart} playerName={playerName} thoughtReady={emailReadyAt !== null && elapsed - emailReadyAt >= EMAIL_THOUGHT_DELAY} />}
     </div>
     <div ref={cover} className="l1-scene-cover" aria-hidden="true" onTransitionEnd={event => {

@@ -1,5 +1,13 @@
 # Independent Level 1 result-settlement preview
 
+The approved independent review remains saved on preview/level1-settlement at
+411353d. The user subsequently authorised integrating it into
+animation/opening-integration after backing up that line at
+archive/opening-before-level1-merge-20261020. Shared presentation now lives in
+src/levels/level1/LevelOneExperience.tsx, Settlement.tsx and
+src/cinematics/level1/LevelOneCinematic.tsx. The full game continues into Level 2;
+standalone reviews retain Try another metric. See ANIMATION_INTEGRATION.md.
+
 The user's requested experiment lives on `preview/level1-settlement`, based on
 `32a91fe4bfb1cb193040410c846ebc165f8b9d5d`. The opening integration and stable game
 branches and all their existing playable ZIPs remain unchanged. This review is

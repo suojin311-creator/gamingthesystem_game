@@ -67,7 +67,7 @@ def advance(page, seconds=24):
 def opening(page):
     page.get_by_role('button', name='START GAME', exact=True).click()
     expect(page.locator('.stage')).to_have_attribute('data-beat','identity')
-    page.get_by_label('What name should we put on it?').fill('Riley')
+    page.get_by_label('What name should we put on it?').fill('Riley Chen & 李')
     page.get_by_label('What name should we put on it?').press('Enter')
     page.get_by_role('button', name='Open urgent email from University Management', exact=True).click(timeout=7000)
     visit=page.get_by_role('button', name='VISIT CLASSROOM', exact=True)
@@ -97,13 +97,41 @@ def level_one(page):
     page.get_by_role('button', name='Skip guide').click()
     page.get_by_test_id('metric-prep').click()
     page.get_by_role('button', name='Make a prediction', exact=True).click()
-    page.get_by_label('What do you expect students to do?').fill('Students will explain the reading.')
-    page.get_by_role('button', name='Run evaluation', exact=True).click()
-    advance(page, 8)
-    scene(page)
+    page.get_by_label('How will students respond when this counts towards their marks?').fill('Students will explain the reading.')
+    page.get_by_role('button', name='View assessment results', exact=True).click()
+    observe = page.get_by_role('button', name='Look behind the result', exact=True)
+    expect(observe).to_be_enabled(timeout=10000)
+    expect(page.locator('.assessment-report-label')).to_have_text('Percentage of students meeting the criteria')
+    expect(page.locator('.target-label, .management-satisfaction-evidence')).to_have_count(0)
+    observe.click()
+    frame = page.frame_locator('iframe')
+    expect(frame.locator('.l1-film')).to_have_attribute('data-metric', 'pre-class-preparation', timeout=15000)
+    frame.locator('.l1-film').evaluate('''root => {
+      window.identityAudit = {teachers: [], students: [], emails: [], errors: []};
+      const sample = () => {
+        const speaker = root.querySelector('.l1-spoken');
+        const label = speaker?.querySelector('.l1-speaker');
+        const text = speaker?.querySelector('[role="status"]');
+        if (label) {
+          const teacher = speaker.dataset.speaker === 'player';
+          const target = teacher ? window.identityAudit.teachers : window.identityAudit.students;
+          if (!target.includes(label.textContent)) target.push(label.textContent);
+          if (getComputedStyle(label).color !== (teacher ? 'rgb(255, 226, 163)' : 'rgb(204, 238, 255)')) window.identityAudit.errors.push('Incorrect speaker label colour');
+          if (text && getComputedStyle(text).color !== getComputedStyle(label).color) window.identityAudit.errors.push('Caption and label colours differ');
+        }
+        const greeting = root.querySelector('.email h2');
+        if (greeting && !window.identityAudit.emails.includes(greeting.textContent)) window.identityAudit.emails.push(greeting.textContent);
+        parent.postMessage({channel: 'release-identity-audit', audit: window.identityAudit}, '*');
+      };
+      new MutationObserver(sample).observe(root, {subtree:true,childList:true,attributes:true}); sample();
+    }''')
+    expect(page.locator('.l1-settlement .student-behaviour')).to_have_text('Skimming just to finish.', timeout=35000)
     expect(page.locator('.student .student-behaviour')).to_have_text('Skimming just to finish.')
-    expect(page.locator('.alex-bubble p')).to_have_text(['I finished the whole list! 📋', 'The reading? I mostly skimmed it 😬'])
-    expect(page.get_by_role('button', name='Continue to Level 2', exact=True)).to_be_visible()
+    expect(page.locator('.dialogue-strip, .alex-bubble')).to_have_count(0)
+    expected_name = 'Riley Chen & 李' if page.locator('.l1-settlement button').inner_text().startswith('Continue') else 'Maya'
+    audit = page.evaluate('window.releaseIdentityAudit')
+    assert audit['teachers'] == [expected_name] and audit['students'] == ['Alex'], audit
+    assert audit['emails'] == [f'Great work, {expected_name}!'] and not audit['errors'], audit
 
 
 def finish_two(page):
@@ -244,14 +272,15 @@ with sync_playwright() as playwright:
     context.route('https://release.test/**', lambda route: route.fulfill(status=200, content_type='text/html', body=artifacts['Level1.html']))
     page = context.new_page()
     page.on('pageerror', lambda error: errors.append(str(error)))
-    page.clock.install()
     page.goto('https://release.test/', wait_until='networkidle')
+    page.add_init_script("addEventListener('message',event=>{if(event.source===document.querySelector('iframe')?.contentWindow&&event.data?.channel==='release-identity-audit')window.releaseIdentityAudit=event.data.audit})")
+    page.reload(wait_until='networkidle')
     level_one(page)
-    expect(page.get_by_role('button', name='Continue to Level 2', exact=True)).to_be_disabled()
+    expect(page.get_by_role('button', name='Continue to Level 2', exact=True)).to_have_count(0)
     expect(page.locator('.level-two')).to_have_count(0)
-    page.get_by_role('button', name='Replay scene', exact=True).click()
-    expect(page.get_by_test_id('cinematic-placeholder')).to_be_visible()
-    checks.append('Packaged Level1.html includes the latest behaviour and two replies, stops after Level 1 and permits replay')
+    page.get_by_role('button', name='Try another metric', exact=True).click()
+    expect(page.get_by_role('heading', name='What will count in the next assessment?', exact=True)).to_be_visible()
+    checks.append('Packaged Level1.html uses the approved report, normal-speed cinematic, matching name/colours and settlement; Try another resets it without entering Level 2')
     page.reload(wait_until='networkidle')
     expect(page.get_by_role('dialog', name='Workbench guide')).to_be_visible()
     expect(page.locator('.level-one')).to_be_visible()
@@ -262,14 +291,15 @@ with sync_playwright() as playwright:
     context.route('https://release.test/**', lambda route: route.fulfill(status=200, content_type='text/html', body=artifacts['Gaming-the-System.html']))
     page = context.new_page()
     page.on('pageerror', lambda error: errors.append(str(error)))
+    page.add_init_script("addEventListener('message',event=>{if(event.source===document.querySelector('iframe')?.contentWindow&&event.data?.channel==='release-identity-audit')window.releaseIdentityAudit=event.data.audit})")
     page.goto('https://release.test/', wait_until='networkidle')
     opening(page)
-    page.clock.install()
-    expect(page.locator('.maya-bubble .speaker-name')).to_have_text('Riley')
+    expect(page.locator('.maya-bubble .speaker-name')).to_have_text('Riley Chen & 李')
     level_one(page)
     page.get_by_role('button', name='Sound on', exact=True).click()
     page.get_by_role('button', name='Continue to Level 2', exact=True).click()
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
+    page.clock.install()
     expect(page.get_by_role('button', name='Sound off', exact=True)).to_be_visible()
     advance(page, 8)
     page.get_by_role('button', name='Choose three metrics', exact=True).click()
@@ -284,7 +314,8 @@ with sync_playwright() as playwright:
     expect(page.get_by_role('button',name='Sound off',exact=True)).to_be_visible()
     choose_three(page);weights_three(page,[70,20,10])
     expect(page.get_by_role('button',name='Try another split',exact=True)).to_be_visible()
-    checks.append('Packaged combined game connects Level 1 → Level 2 → playable Level 3 in one open run')
+    expect(page.locator('.level-three .maya-bubble .speaker-name').first).to_have_text('Riley Chen & 李')
+    checks.append('Packaged combined game carries the opening name, including ampersand and Chinese, through Level 1 UI, teacher/Alex captions, email and playable Levels 2–3')
     page.reload(wait_until='networkidle')
     expect(page.locator('.opening-scene .stage')).to_have_attribute('data-beat','title')
     expect(page.locator('.level-one')).to_have_count(0)

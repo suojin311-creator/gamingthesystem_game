@@ -17,7 +17,7 @@ files={'START-HERE.html':launcher.encode(),'Level1-settlement.html':current,'Cur
 archive=root/'play/Level1-settlement-preview.zip'
 with ZipFile(archive,'w',compression=ZIP_DEFLATED,compresslevel=9) as z:
     for name,data in files.items():z.writestr(name,data)
-paths=sorted(p for p in (root/'src').rglob('*') if p.is_file() and p.suffix in {'.ts','.tsx','.css','.png'})
+paths=sorted(p for p in (root/'src').rglob('*') if p.is_file() and p.suffix in {'.ts','.tsx','.js','.css','.png'})
 paths+=sorted(p for p in (root/'scripts/level1-settlement').rglob('*') if p.is_file())
 paths+=[root/'package.json',root/'package-lock.json']
 fingerprint=hashlib.sha256()

@@ -110,6 +110,7 @@ with sync_playwright() as p:
         assert camera.evaluate('e=>getComputedStyle(e).transform')==arrived
         text={'phone':'Just one more message...','unprepared':"I don't know where to start.",'sleeping':'Zzz...'}[student]
         expect(page.locator('.student-dialogue').filter(has_text=text)).to_be_visible()
+        assert page.locator('.student-dialogue').filter(has_text=text).evaluate('e=>getComputedStyle(e).color') == 'rgb(204, 238, 255)'
         expect(page.locator('.student-hotspot:enabled')).to_have_count(0)
         if index<2:
             expect(world).to_have_attribute('data-phase','explore',timeout=4000)
@@ -127,6 +128,7 @@ with sync_playwright() as p:
     page.get_by_role('button',name='BACK TO OFFICE').press('Enter')
     expect(page.locator('.stage')).to_have_attribute('data-beat','officeReflect',timeout=5000)
     expect(page.locator('.office-reflection')).to_contain_text('not really engaged')
+    assert page.locator('.office-reflection').evaluate('e=>getComputedStyle(e).color') == 'rgb(255, 226, 163)'
     office=page.locator('.office-camera')
     stable=office.evaluate('e=>getComputedStyle(e).transform')
     page.wait_for_timeout(100)

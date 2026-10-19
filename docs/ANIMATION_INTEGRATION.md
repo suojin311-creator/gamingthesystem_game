@@ -10,6 +10,29 @@ Level 1 过渡页。Choose a metric 后，用已确认姓名挂载 Gameplay。�
 改为独立阅读窗淡入，按钮出现即可使用；标题与办公室思考衔接到第一关的指标选择。开场样式限于 `.opening-scene`，不覆盖关卡按钮和字体。
 稳定 `level3-dev` 与预览分支保留原游戏版；本分支的包供动画衔接审阅。
 
+Level 1 已按用户确认的独立预览合入默认 Gameplay：`LevelOneExperience`
+复用唯一的 LevelOne、正式 iframe 动画及结果核算页。完整游戏核算页进入
+Level 2；单独 Level 1 保留 Try another metric。开场、关卡操作对话、动画
+老师标签和祝贺邮件均读取开场确认的同一个姓名。开场与 Level 1 共用
+`src/shared/data/cinematicPalette.js`：老师暖金色，Alex／学生浅蓝色。
+合并前的完整源码及试玩包保存于 `archive/opening-before-level1-merge-20261020`
+（`32a91fe4bfb1cb193040410c846ebc165f8b9d5d`）。
+
+### Level 1 动画构建
+
+同伴原文件保持只读。首次或动画源码变化后，使用已固定的
+`Mg614/gaming-the-system@1bdd0c442c4b345b3bd37d6f541742d4e55c732f`
+交付目录，先在该目录按其 lockfile 安装依赖，再运行：
+
+```sh
+LEVEL1_ANIMATION_SOURCE=/absolute/path/to/partner-checkout npm run cinematic:prepare
+```
+
+产物仅写入本仓库被忽略的 `node_modules/.cache/level1-cinematic/`。
+后续 dev/build/package 命令自动校验并复用缓存；相关脚本或字幕配色变化时
+要求重新构建，避免旧影片混入新版本。也可用 LEVEL1_CINEMATIC_HTML 指向
+由当前脚本刚生成的影片 HTML。最终所有游戏 HTML 都内嵌影片，可离线运行。
+
 ## 先接真实交付，再接已有接口
 
 接到成片源码时，先确认其入口、素材引用、依赖以及真正的结束事件，再做适配。保留同伴已经完成的脚本和同伴互动，不另外编写一套剧情、重复开场或新增操作页。
@@ -33,7 +56,7 @@ Level 1 过渡页。Choose a metric 后，用已确认姓名挂载 Gameplay。�
 />
 ```
 
-上面是现有接口的用法；三个 Animation 名称代表交付源码的适配组件，尚未创建替代成片。renderer 得到真实 `request` 和当前场景的 `complete`。只在场景实际结束时调用 `complete()`；不要用猜测时长推进，也不要在动画外再播放一份 placeholder。
+上面是接口的用法示例。默认 Level 1 已通过 `LevelOneCinematic` 接入真实成片，`renderLevelOneCinematic` 仍可用于覆盖；`LevelTwoAnimation` 和 `LevelThreeAnimation` 仍代表后续交付的适配组件。renderer 得到真实 `request` 和当前场景的 `complete`。只在场景实际结束时调用 `complete()`；不要用猜测时长推进，也不要在动画外再播放一份 placeholder。
 
 ## 场景对照
 

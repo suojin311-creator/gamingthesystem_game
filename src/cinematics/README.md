@@ -1,8 +1,11 @@
 # Finished animation integration
 
-This folder contains the imported opening on animation/opening-integration;
-see [opening](opening/README.md). Other scene families remain destinations for
-the partner’s actual delivery. Their authored scripts are not rewritten here.
+This folder contains the imported opening and the integrated Level 1 iframe
+adapter on animation/opening-integration. LevelOneExperience shares the approved
+Level 1 report, film and settlement between full-game and standalone entries.
+The partner source remains read-only; the film is prepared from its pinned
+checkout using scripts/level1-film.mjs. Other scene families remain destinations
+for the partner’s actual delivery. Their authored scripts are not rewritten here.
 
 Add the corresponding folders when their actual source is imported:
 

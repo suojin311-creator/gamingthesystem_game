@@ -29,6 +29,13 @@ office backdrop. Choose a metric then mounts Gameplay once for the three levels.
 Opening styles/variables are scoped to `.opening-scene`; shared feedback owns
 the mute preference. Restoring a closed page starts at title with a fresh name.
 
+Teacher thoughts now use the same warm gold as Level 1; student replies use its
+pale blue. Both obtain their colours and readable text shadow from
+`src/shared/data/cinematicPalette.js`. Opening timing and authored lines remain
+unchanged. The confirmed name is passed through Gameplay to Level 1's operating
+dialogue, cinematic teacher label and office-email greeting, then onward to the
+remaining levels without a second name input.
+
 Use `npm run dev` for the opening and connected game. The `dev:level1`,
 `dev:level2`, `dev:level3` entries remain direct standalone levels.
 All work stays on `animation/opening-integration` until the user requests merging.

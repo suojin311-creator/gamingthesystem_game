@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import cinematicHtml from 'virtual:level1-settlement-film';
 import type { CinematicRequest } from '../../levels/level1/components/CinematicPlaceholder';
+import './styles.css';
 
 const METRIC_MAP = {
   prep: 'pre-class-preparation', part: 'in-class-participation', focus: 'on-task-focus',

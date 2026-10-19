@@ -1,15 +1,28 @@
 # Working on this game
 
-## Current independent Level 1 experiment
+## Current opening + Level 1 integration
+
+- The user approved merging the Level 1 preview into the opening + three-level
+  version. Work and publish only on `animation/opening-integration`; preserve
+  `preview/level1-settlement` at its approved saved version.
+- Before merging, the original source and all original playable archives were
+  backed up on `archive/opening-before-level1-merge-20261020` at `32a91fe`.
+- Integrated releases use the regular four-entry/six-ZIP pipeline on this branch.
+  Keep stable game branches and their aliases unchanged. Every visible playable
+  change must include an updated downloadable ZIP for the user's review.
+- Reuse the approved iframe cinematic through the shared LevelOneExperience.
+  Keep partner source read-only, and carry the opening's confirmed playerName
+  through Gameplay, the operating UI and cinematic request without re-entry.
+
+## Saved independent Level 1 experiment
 
 - The user asked to preview a new Level 1 results page without overwriting the
-  existing version. This experiment belongs on `preview/level1-settlement`; push
-  only that branch. Keep `animation/opening-integration`, stable game branches
-  and their existing ZIPs unchanged. The saved baseline is `32a91fe`.
+  existing version. That approved experiment is saved on
+  `preview/level1-settlement`; its saved baseline is `32a91fe`.
 - Follow `docs/LEVEL1_SETTLEMENT_PREVIEW.md` for this experiment. Its separate
   entry uses the shared LevelOne with an opt-in `renderSettlement` callback;
   defaults preserve the existing game. Partner source is read-only.
-- Build only this experiment through `scripts/level1-settlement/` and package
+- When working on that independent experiment, build through `scripts/level1-settlement/` and package
   `play/Level1-settlement-preview.zip`. Do not run the normal six-ZIP publishing
   pipeline for this experiment: the user explicitly requested preserving them.
 - The user reviews this preview through downloaded ZIPs. Visible UI changes must

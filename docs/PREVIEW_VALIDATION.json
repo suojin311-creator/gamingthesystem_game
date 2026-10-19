@@ -1,11 +1,16 @@
 {
-  "validatedAtUtc": "2026-10-19T12:21:46.140476+00:00",
-  "version": "Opening: learning question, motivated first metric choice and fixed-camera mail reader",
+  "validatedAtUtc": "2026-10-19T18:57:01.611403+00:00",
+  "version": "Approved Level 1 integrated into opening + three levels; shared caption palette and player identity",
   "branch": "animation/opening-integration",
-  "animationBaselineCommit": "90e8f7cb6b253902baf50b946277d44c443eca61",
+  "approvedLevelOneCommit": "411353dd3ef6103b20faa4debe9075b94f46e199",
   "gameBaselineCommit": "00c311682268ab8593d0733a4163b50ee41cd663",
-  "sourceCommit": "05cb174679ed8f6bf9ce1d7a8532ebd884b8b796",
-  "passed": 26,
+  "backup": {
+    "branch": "archive/opening-before-level1-merge-20261020",
+    "commit": "32a91fe4bfb1cb193040410c846ebc165f8b9d5d",
+    "completeZipSha256": "5a74aa5429b17af8090d9bdc8113cb900dfe5c03d0021d9cd23accf2bf8961ed",
+    "createdAndPushedBeforeMerge": true
+  },
+  "passed": 25,
   "build": {
     "command": "npm run package:previews",
     "exitCode": 0,
@@ -27,26 +32,8 @@
       "runtimeErrors": [],
       "externalRequests": [],
       "normalInspectionSeconds": [
-        3.951060994004365,
-        3.9408066109899664
-      ]
-    },
-    "opening-integrated-package-results.json": {
-      "passed": 7,
-      "checks": [
-        "The title asks about numbers versus learning; the email fades in at a fixed readable size without a second camera zoom, and Visit Classroom is bright and usable immediately",
-        "Email and one unseen student have plain glowing arrows, without circle frames or student outlines; the larger invitation and three completion slots are visible",
-        "The camera moves continuously and settles before each reply; inspections take about 3.5 seconds and unlock input only after returning, with the arrow advancing to the next unseen student",
-        "A settled office shows the teacher’s two reflections, then a full Level 1 chapter transition leads to real Gameplay with the same name and unchanged button style",
-        "Restoring a closed combined page resets to the opening and clears the prior player identity",
-        "Touch can inspect a different student from the suggested one; static reduced-motion arrows still guide the remaining observations without overflow or early progression",
-        "Opening integration has no browser runtime errors or external asset requests in the actual offline ZIP"
-      ],
-      "runtimeErrors": [],
-      "externalRequests": [],
-      "normalInspectionSeconds": [
-        4.003764452994801,
-        3.924453646002803
+        3.9462602529965807,
+        3.9454156319989124
       ]
     },
     "release-results.json": {
@@ -58,65 +45,75 @@
         "The actual complete-ZIP launcher fits desktop/phone, starts the full game at the opening and opens each standalone level directly offline",
         "Packaged Level2.html completes 3 → 6 → 10 → 25 → 100 offline with normal motion",
         "Packaged standalone Level3.html compares after two tests and can add an optional third, keeping all actual results offline",
-        "Packaged Level1.html includes the latest behaviour and two replies, stops after Level 1 and permits replay",
+        "Packaged Level1.html uses the approved report, normal-speed cinematic, matching name/colours and settlement; Try another resets it without entering Level 2",
         "Standalone Level 1 reload starts a fresh Level 1 run",
         "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
-        "Packaged combined game connects Level 1 → Level 2 → playable Level 3 in one open run",
+        "Packaged combined game carries the opening name, including ampersand and Chinese, through Level 1 UI, teacher/Alex captions, email and playable Levels 2–3",
         "Combined preview reload starts at the opening rather than restoring a level or player identity",
         "Packaged entries have no browser runtime errors"
       ],
       "runtimeErrors": []
     }
   },
+  "cinematicPacing": {
+    "command": "node tests/level1_settlement_pacing.mjs",
+    "passed": 6,
+    "checks": "All six branches retain readable captions, skip common ending and use a covered handoff."
+  },
   "artifacts": {
-    "sourceSha256": "c2b9d5cc68c9ffe47dfc43d9892755bc35c7839f5af7c1eee0980bfa5790340d",
+    "sourceSha256": "1d4c4eed2df020eefdd16bbda8cdf487644fc2109d8f582282b10936b4353bf6",
+    "cinematic": {
+      "sourceSha256": "c7cac2c0dbf10fb696863c02d95752972cb2dd23a3243417d1209dda1a39c74a",
+      "htmlSha256": "5a9a8f9536894aff12a953b69bdd19cb4518a64d7c9e331d81a8e2dcb05a42c1",
+      "partnerSourceCommit": "1bdd0c442c4b345b3bd37d6f541742d4e55c732f"
+    },
     "entries": [
       {
         "archive": "Level1-play.zip",
         "html": "Level1.html",
         "build": "dist-level1/index.html",
-        "htmlSha256": "21d84902a6ad564e7bcb87803e494bb32ec68239c05a6392b8ec80cc209b0d56",
-        "zipSha256": "9b5ab817e30d88ce4f7436ad7672a26c80fec5e17b4ef7d9a4051cfb99765db5"
+        "htmlSha256": "dce67f668c3f6b3451f6483b6ecba7bb43817abbb783ef1b177826e2fca093fb",
+        "zipSha256": "526265d9b3f3fd4fd2357ce095bdf2bce6a069d28f8ad3e044a5ed42d0433342"
       },
       {
         "archive": "Level2-play.zip",
         "html": "Level2.html",
         "build": "dist-level2/index.html",
-        "htmlSha256": "9c5e23791cfd0db257e91fbdf8a48bb89db28fa6d67c24eb5054dfd3f08c2bd7",
-        "zipSha256": "86af16b6f0a4f2fb3406a329fa0972207db470e749fa9f8b3bcbc7b880d793a4"
+        "htmlSha256": "6bf08eeec3c23c441b50ddfc89f47dfef50ac92fba5a4b5b7310477dc437955b",
+        "zipSha256": "df1ef4012aef8b22aeb45ae8c5f2b3f261090b5baca4c60871d66ca68199736e"
       },
       {
         "archive": "Level3-play.zip",
         "html": "Level3.html",
         "build": "dist-level3/index.html",
-        "htmlSha256": "c50ed882d90e22c0d69e3e0997cf62b56084abad16bab9b058cd8e2e3617dd35",
-        "zipSha256": "078bb1a61060b5d56b66e5fcca0a45bf13e4515d9b8b05ba31e84f165f0c9478"
+        "htmlSha256": "a82755f82f7247eab3c4d74925c9d1889918e439c23418fa1b04299cc36c1480",
+        "zipSha256": "c11ca7c45ddbc6fc2273aaf55b946dbc6e1fd840c800b7c45a0dc08aa60bf6d5"
       },
       {
         "archive": "Full-game-play.zip",
         "html": "Gaming-the-System.html",
         "build": "dist/index.html",
-        "htmlSha256": "1fa27252bb3d71eb641d931bcf89ae6bcf2b14b4437cc6ab02829e7dbb55c6bb",
-        "zipSha256": "2373dbb2c633d905f71be235f1dc3b9721b1ca59fe7063830cd9989f980cca33"
+        "htmlSha256": "05e47ccb2ba9e668daf9b729813f4a031cce4b0fa42f715bb00cb1fba96702e2",
+        "zipSha256": "3c1459aecf8e2984826c4d3dc5c66410bc89d9e85ee3c368174ea18223241e5f"
       }
     ],
     "reviewBundle": {
       "archive": "Level3-and-Full-game-play.zip",
-      "zipSha256": "02c77d810a3233c3594990f9ba3822d9a3ed44e74b6c5b84f5b3342393c01601",
+      "zipSha256": "aafdafa16e437da5ab9efdeeeff43662d937b26bbd761af4b2452c4c67b658e5",
       "htmlSha256": {
-        "Level3/Level3.html": "c50ed882d90e22c0d69e3e0997cf62b56084abad16bab9b058cd8e2e3617dd35",
-        "Full-game/Gaming-the-System.html": "1fa27252bb3d71eb641d931bcf89ae6bcf2b14b4437cc6ab02829e7dbb55c6bb"
+        "Level3/Level3.html": "a82755f82f7247eab3c4d74925c9d1889918e439c23418fa1b04299cc36c1480",
+        "Full-game/Gaming-the-System.html": "05e47ccb2ba9e668daf9b729813f4a031cce4b0fa42f715bb00cb1fba96702e2"
       }
     },
     "completeBundle": {
       "archive": "Gaming-the-System-complete.zip",
-      "zipSha256": "5a74aa5429b17af8090d9bdc8113cb900dfe5c03d0021d9cd23accf2bf8961ed",
+      "zipSha256": "0f2768da50cd61788141725177a30f2b08191e1f9e7d548d6a4269f9b16d0fc0",
       "htmlSha256": {
         "START-HERE.html": "8696f4f200fa9b456aafa3242c1a0bf3adc235c974e6e2fec9b0b92a66d63506",
-        "Full-game/Gaming-the-System.html": "1fa27252bb3d71eb641d931bcf89ae6bcf2b14b4437cc6ab02829e7dbb55c6bb",
-        "Level1/Level1.html": "21d84902a6ad564e7bcb87803e494bb32ec68239c05a6392b8ec80cc209b0d56",
-        "Level2/Level2.html": "9c5e23791cfd0db257e91fbdf8a48bb89db28fa6d67c24eb5054dfd3f08c2bd7",
-        "Level3/Level3.html": "c50ed882d90e22c0d69e3e0997cf62b56084abad16bab9b058cd8e2e3617dd35"
+        "Full-game/Gaming-the-System.html": "05e47ccb2ba9e668daf9b729813f4a031cce4b0fa42f715bb00cb1fba96702e2",
+        "Level1/Level1.html": "dce67f668c3f6b3451f6483b6ecba7bb43817abbb783ef1b177826e2fca093fb",
+        "Level2/Level2.html": "6bf08eeec3c23c441b50ddfc89f47dfef50ac92fba5a4b5b7310477dc437955b",
+        "Level3/Level3.html": "a82755f82f7247eab3c4d74925c9d1889918e439c23418fa1b04299cc36c1480"
       }
     }
   },
@@ -145,14 +142,35 @@
       }
     ]
   },
-  "currentDocumentationLinksChecked": 15,
+  "partnerDelivery": {
+    "commit": "1bdd0c442c4b345b3bd37d6f541742d4e55c732f",
+    "byteIdenticalOriginalFiles": 94,
+    "sourceModified": false
+  },
+  "identity": {
+    "openingSuiteName": "Chen Li",
+    "offlineFullGameName": "Riley Chen & 李",
+    "verifiedLocations": [
+      "Level 1 operating dialogue",
+      "Level 1 cinematic teacher label",
+      "Level 1 cinematic email greeting",
+      "Level 3 teacher label"
+    ],
+    "standaloneFallback": "Maya"
+  },
+  "captionPalette": {
+    "teacher": "#ffe2a3",
+    "alexAndOpeningStudents": "#cceeff",
+    "sharedSource": "src/shared/data/cinematicPalette.js",
+    "openingComputedColoursChecked": true,
+    "levelOneComputedColoursChecked": true
+  },
   "notes": [
-    "The title now asks Do better numbers mean better learning? On office return, the teacher notices disengagement, recalls the demand for measurable results and seeks a trackable sign. The longer second reflection holds four seconds before Level 1 asks Which sign would tell me the most?",
-    "Clicking the urgent email no longer changes the office camera. A separate unscaled reader fades in over 300ms, or 100ms with reduced motion. Text is laid out at its final size rather than magnified along with the office. The initial approach to the laptop is retained.",
-    "VISIT CLASSROOM is enabled and fully bright from its appearance. Reading and the optional thought do not lock the action. A separate footer keeps the action visible while body copy scrolls on small screens. Leaving cancels the reading hold; the departing reader is inert, ignores pointer events and is unmounted after pullback.",
-    "Both live and actual packaged opening suites verify the camera stays unchanged during mail opening, bright immediately usable actions, normal and early departure, desktop and touch sizes, reduced motion, all-three student gating, both revised office reflections and the Level 1 name handoff.",
-    "Normal student timing, sequential glowing arrow cues, classroom scripts and the existing Level 1 chapter introduction remain. Level rules, Gameplay and shared source are unchanged from the animation baseline.",
-    "All 26 checks passed without runtime errors. All six latest archives were built together and the actual complete-game and standalone entries pass the release suite. The five partner PNGs retain their original hashes.",
-    "Only animation/opening-integration is published. Stable game and preview branches retain their preceding commits. Offline Chromium checks use exact packaged HTML through an in-memory HTTPS route; they do not establish device-specific frame rates or subjective smoothness."
+    "All four entries share the same LevelOneExperience. Full game continues from settlement to Level 2; standalone offers Try another metric.",
+    "The approved Level 1 metric criteria, two-assessment class percentages, six selected cinematics and settlement are preserved. Level 2 and Level 3 gameplay source is unchanged.",
+    "Actual packaged Level 1 playback and the full opening run at normal speed during release validation; later unchanged Level 2/3 reading intervals use the browser clock.",
+    "Only animation/opening-integration is updated. The backup, approved independent preview and stable game references are preserved.",
+    "All downloadable game HTMLs embed the cinematic. A source/content-hashed ignored cache avoids rebuilding the film for routine development.",
+    "Offline browser checks do not establish device-specific frame rates or subjective smoothness."
   ]
 }

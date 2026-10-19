@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import officeBackground from './assets/backgrounds/BG_Office_FirstPerson_v01.png';
 import { useSceneAudio } from './useSceneAudio';
@@ -6,6 +6,7 @@ import ClassroomScene from './ClassroomScene';
 import InteractionCue from './InteractionCue';
 import './styles.css';
 import { useVisibleDelay } from '../../shared/hooks/useVisibleDelay';
+import { SPEAKER_COLORS, CAPTION_SHADOW } from '../../shared/data/cinematicPalette';
 
 type Beat = 'title' | 'reveal' | 'identity' | 'seating' | 'quiet' | 'cue' | 'laptopFocus' | 'notification' | 'emailFocus' | 'reading' | 'thought' | 'ready' | 'pullback' | 'door' | 'depart' | 'classroom' | 'returnArrival' | 'returnReveal' | 'officeReflect' | 'officeQuestion' | 'handoff';
 // WATCH beats advance automatically; ACT beats wait indefinitely.
@@ -86,7 +87,7 @@ export default function Opening({ onComplete }: { onComplete: (playerName: strin
 
   const fade = { duration: reducedMotion ? 0.1 : 0.45 };
   return (
-    <main className="opening-scene game-shell" onPointerDown={audio.unlock} onKeyDown={audio.unlock}>
+    <main className="opening-scene game-shell" style={{ '--teacher-caption': SPEAKER_COLORS.player, '--student-caption': SPEAKER_COLORS.alex, '--caption-shadow': CAPTION_SHADOW } as CSSProperties} onPointerDown={audio.unlock} onKeyDown={audio.unlock}>
       <div className="stage" aria-label="First-person cinematic opening" data-beat={beat}>
         {/* Keep the world still while reading; the email is a separate unscaled layer. */}
         <motion.div className="office-camera" aria-hidden={classroomActive} inert={classroomActive} initial={CAMERAS.opening} animate={camera} transition={{ duration: reducedMotion || beat === 'returnArrival' ? 0 : beat === 'door' ? 1.25 : beat === 'pullback' ? 1.15 : 1.05, ease: [0.4, 0, 0.2, 1] }} onAnimationComplete={cameraArrived}>

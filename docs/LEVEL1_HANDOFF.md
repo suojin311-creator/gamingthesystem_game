@@ -1,5 +1,13 @@
 # Level 1 handoff and narrative boundaries
 
+> Current integrated presentation: `animation/opening-integration` now uses
+> `LevelOneExperience` for the opening + three-level game and the standalone
+> entry. It plays the selected real cinematic and then the approved settlement,
+> with the opening's confirmed name throughout. The original placeholder,
+> target labels and review chat described below are historical; use
+> [the current integration guide](ANIMATION_INTEGRATION.md) and
+> [approved presentation](LEVEL1_SETTLEMENT_PREVIEW.md) for current UI details.
+
 ## Selected workflow
 
 Opening returns to office → mount Level 1 → select one metric → predict → run evaluation → see dashboard success → explicitly observe classroom → play exactly one selected cinematic → return to the same in-memory workbench → compare prediction with observed behaviour → finish Level 1 on the same observation page.

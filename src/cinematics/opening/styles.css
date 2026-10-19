@@ -118,4 +118,7 @@
 @keyframes opening-email-attention { 0%, 100% { box-shadow: 0 0 0 0 #ed806800; border-color: #b7795f; } 50% { box-shadow: 0 0 0 2px #ed806877, 0 0 .8cqw #ed806866; border-color: #ad5840; } }
 
 .opening-scene .office-reflection { position: absolute; left: 10%; right: 10%; bottom: 10%; margin: 0; text-align: center; font: italic clamp(17px, 2cqw, 30px)/1.5 Georgia, serif; color: #fff5e3; text-shadow: 0 2px 8px #151a12, 0 0 28px #151a12; }
+.opening-scene :is(.thought-caption, .office-reflection, .classroom-thought) { color: var(--teacher-caption); }
+.opening-scene .student-dialogue { color: var(--student-caption); }
+.opening-scene :is(.thought-caption, .office-reflection, .classroom-thought, .student-dialogue) { -webkit-text-stroke: .035em #172019; paint-order: stroke fill; text-shadow: var(--caption-shadow); }
 @keyframes opening-arrow-glow { 0%, 100% { opacity: .65; translate: 0 -2px; filter: drop-shadow(0 0 2px #ffca70) drop-shadow(0 2px 2px #222); } 50% { opacity: 1; translate: 0 2px; filter: drop-shadow(0 0 8px #ffd886) drop-shadow(0 1px 2px #222); } }
