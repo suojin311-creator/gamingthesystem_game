@@ -1,5 +1,11 @@
 # 最新试玩下载 / Latest downloads
 
+## 合并前 Level 1 原版动画预览
+
+[Level1-animation-preview.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/animation/opening-integration/play/Level1-animation-preview.zip?raw=true)：解压整个 ZIP，打开 **START-HERE.html** 选择六种 metric 结局，进入后点击播放器的 **▶**。页面上方 **Branch** 可以切换结局，**Sequence** 可以单独查看片段。无需安装或联网。
+
+这是同伴 `feature/cinematic-level1-consequences` 分支的独立预览。只在外部打包配置中开启现有预览入口，没有改动同伴仓库或源码，也没有接入游戏。校验信息见 [LEVEL1_ANIMATION_PREVIEW.json](LEVEL1_ANIMATION_PREVIEW.json)。
+
 ## 合并前原版开场存档
 
 [Opening-animation-preview.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/animation/opening-integration/play/Opening-animation-preview.zip?raw=true)：解压后用 Chrome 或 Edge 打开 **Opening.html**，建议电脑横屏。按本次上传的原版源码打包，供合并前观看；校验信息见 [OPENING_PREVIEW.json](OPENING_PREVIEW.json)。
