@@ -12,11 +12,15 @@ levels. Its default full-game entry renders `src/FullGame.tsx`, which starts wit
 `src/cinematics/opening/Opening.tsx`. The opening keeps its original identity
 form, office email, classroom observations and return to the office.
 
-After all three students are observed and RETURN TO OFFICE completes, officeEnd
-shows LEVEL 01 / One metric. Choose a metric calls `onComplete(playerName)` once
-with the trimmed, confirmed name. FullGame mounts `<Gameplay playerName={name} />`;
-Gameplay stays mounted across Levels 1, 2 and 3. The existing Level 1 workbench
-guide teaches controls without adding another story opening or name form.
+After all three students are observed, BACK TO OFFICE waits for the exit camera
+and classroom fade to complete. The hidden office camera resets behind an
+opaque cover before the office fades in. Two successive thoughts appear:
+“They’re here, but they’re not really engaged.” and “What should I measure first?”
+After the last thought and fade, `onComplete(playerName)` fires once with the
+trimmed confirmed name. FullGame shows the shared Level 1 ChapterTransition,
+with the office image fading into the paper presentation. Only Choose a metric
+mounts `<Gameplay playerName={name} />`; Gameplay stays mounted across all three
+levels. The existing workbench guide teaches controls after this chapter entry.
 
 Closing/reloading starts at the title. A restored page (`pageshow.persisted`)
 clears the current name and game and returns to the opening. No identity, choices
@@ -26,17 +30,22 @@ or sound preference are stored in browser storage or sent to a service.
 
 - The urgent email has a pointing arrow and gentle card emphasis until clicked.
   It never opens automatically; screen-reader text identifies the email button.
-- Each unobserved student has a pointing arrow. On return to the wide view,
-  completed students have checks and outstanding arrows remain. Three connected
-  portrait indicators show the group’s completion without written instructions.
-- Look around remains visible between observations and is larger. Existing
-  student lines are retained. Every normal-motion inspection takes 450ms approach,
-  1500ms response and 450ms return (about 2.4s); overlapping input is locked.
+- One unobserved student at a time has a plain glowing arrow, without a circle
+  frame or an outline around the student. The arrow moves to the next unseen
+  student after an observation. Players may still choose a different student;
+  keyboard focus can move the cue. Three unframed portraits become checks as
+  observations complete, showing progress without a written checklist.
+- The invitation reads Come closer to take a look at the students. Existing
+  student lines are retained. The normal camera uses a smaller 1.28x zoom over
+  900ms, then a 1700ms reading hold and an 850ms return. Phase changes and input
+  unlocking wait for actual animation completion rather than an independent
+  timer. Duplicate input remains locked during movement and reading.
 - All three distinct students are required before leaving. Revisiting one does
-  not replace observing another. The final thought and return action remain.
-- Other automatic camera holds and transitions are shorter. Email reading and
-  every decision still wait indefinitely for the player. Reduced motion keeps
-  static arrows/checks and removes camera movement.
+  not replace observing another. The final classroom thought and back action
+  remain, followed by the office reflection and a complete Level 1 chapter entry.
+- Camera motion, opaque fades, reading holds and action waits have separate
+  responsibilities. Visible reading time pauses on a hidden page. Reduced motion
+  keeps static arrows and removes camera movement while preserving the sequence.
 
 ## Assets, styles and sound
 

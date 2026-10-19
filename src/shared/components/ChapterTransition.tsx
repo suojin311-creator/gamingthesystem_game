@@ -8,7 +8,8 @@ import '../styles/conversation.css';
 import '../styles/chapter-transition.css';
 
 type Props = {
-  level: 2 | 3;
+  level: 1 | 2 | 3;
+  backdrop?: string;
   playerName: string;
   previousMetricId?: MetricId;
   previousObservation?: string;
@@ -19,18 +20,19 @@ type Props = {
 type Beat = 'hold' | 'turn' | 'chapter' | 'ready';
 
 /** A chapter break, not a reward: carry the unresolved consequence into a new experiment. */
-export default function ChapterTransition({ level, playerName, previousMetricId, previousObservation, initialMetricIds, play, onStart }: Props) {
+export default function ChapterTransition({ level, backdrop, playerName, previousMetricId, previousObservation, initialMetricIds, play, onStart }: Props) {
   const [beat, setBeat] = useState<Beat>('hold');
   const [visible, setVisible] = useState(false);
   const [pageVisible, setPageVisible] = useState(!document.hidden);
   const root = useRef<HTMLElement>(null);
   const title = useRef<HTMLHeadingElement>(null);
   const weights = level === 3;
+  const first = level === 1;
   const carried = weights && initialMetricIds?.length === 3 ? initialMetricIds : [];
   const ready = beat === 'ready';
   const chapterVisible = beat === 'chapter' || ready;
-  const titleText = weights ? 'The weighting trap.' : 'More metrics.';
-  const question = weights ? 'Alex, I’ll change how much each one counts.' : 'Alex, what if I checked three areas?';
+  const titleText = first ? 'One metric.' : weights ? 'The weighting trap.' : 'More metrics.';
+  const question = first ? 'Which sign would tell me the most?' : weights ? 'Alex, I’ll change how much each one counts.' : 'Alex, what if I checked three areas?';
 
   useVisibleDelay(`chapter:${level}:${beat}`, '.chapter-transition', beat === 'hold' ? 900 : beat === 'turn' ? 1000 : 1100, !ready, () => {
     if (beat === 'hold') { setBeat('turn'); play('paper'); }
@@ -48,10 +50,11 @@ export default function ChapterTransition({ level, playerName, previousMetricId,
   useEffect(() => { if (chapterVisible) title.current?.focus({ preventScroll: true }); }, [chapterVisible]);
 
   return <section ref={root} className="chapter-transition" data-level={level} data-beat={beat} aria-label={`Level ${level} introduction`} style={{ '--chapter-play-state': visible && pageVisible ? 'running' : 'paused' } as CSSProperties}>
+    {backdrop && <img className="chapter-origin-backdrop" src={backdrop} alt="" aria-hidden="true" />}
     <div className="chapter-recap" aria-label="Previous experiment">
-      <span className="chapter-last-level">LEVEL 0{level - 1}</span>
-      <span className="chapter-report"><Icon name="check" />{weights ? '100 requirements tracked' : 'Target met'}</span>
-      <span className="chapter-consequence"><Icon name="student" />{weights ? 'Chasing ticks.' : previousObservation || 'Learning still unclear.'}</span>
+      <span className="chapter-last-level">{first ? 'THE MISSION' : `LEVEL 0${level - 1}`}</span>
+      <span className="chapter-report"><Icon name={first ? 'eye' : 'check'} />{first ? 'Improve engagement' : weights ? '100 requirements tracked' : 'Target met'}</span>
+      <span className="chapter-consequence"><Icon name="student" />{first ? 'What will I measure?' : weights ? 'Chasing ticks.' : previousObservation || 'Learning still unclear.'}</span>
     </div>
     <div className="chapter-heading" aria-hidden={!chapterVisible}>
       <span className="chapter-label">LEVEL <b>0{level}</b></span>
@@ -61,10 +64,10 @@ export default function ChapterTransition({ level, playerName, previousMetricId,
     <div className="chapter-stage">
       <div className={`chapter-outgoing ${weights ? 'chapter-checklist' : 'chapter-single'}`} aria-hidden={beat !== 'hold'}>
         {weights ? <><span className="chapter-checklist-binding" /><span className="chapter-paper-label">ALEX’S CHECKLIST</span><strong>100<span> / 100</span></strong><div className="chapter-checklist-lines" aria-hidden="true">{Array.from({ length: 5 }, (_, index) => <span key={index}><Icon name="check" /><i /></span>)}</div></>
-          : <><Icon name={previousMetricId || 'eye'} /><span>{previousMetricId ? metricDefinition(previousMetricId).shortName : 'One metric'}</span><span className="chapter-card-check"><Icon name="check" /></span></>}
+          : <><Icon name={previousMetricId || 'eye'} /><span>{first ? 'Engagement' : previousMetricId ? metricDefinition(previousMetricId).shortName : 'One metric'}</span>{!first && <span className="chapter-card-check"><Icon name="check" /></span>}</>}
       </div>
-      <div className={`chapter-incoming ${weights ? 'chapter-priorities' : 'chapter-empty-slots'}`} role="group" aria-hidden={beat === 'hold'} aria-label={weights ? carried.length === 3 ? 'Your three priorities, ready to weight' : 'Three priorities to choose and weight' : 'Three empty metric slots'}>
-        {Array.from({ length: 3 }, (_, index) => {
+      <div className={`chapter-incoming ${weights ? 'chapter-priorities' : 'chapter-empty-slots'}`} role="group" aria-hidden={beat === 'hold'} aria-label={first ? 'One metric to choose' : weights ? carried.length === 3 ? 'Your three priorities, ready to weight' : 'Three priorities to choose and weight' : 'Three empty metric slots'}>
+        {Array.from({ length: first ? 1 : 3 }, (_, index) => {
           const id = carried[index];
           return <div className="chapter-new-card" key={index} data-metric={id} style={{ '--chapter-card': index } as CSSProperties}>
             {weights ? <><Icon name={id || 'question'} /><span>{id ? metricDefinition(id).shortName : `Priority ${index + 1}`}</span><div className="chapter-slider" aria-hidden="true"><i /></div></>
@@ -76,7 +79,7 @@ export default function ChapterTransition({ level, playerName, previousMetricId,
     <div className="chapter-entry">
       {ready && <>
         <div className="conversation chapter-bridge" aria-label="Character dialogue"><div className="dialogue-character maya-character"><span className="avatar maya-avatar" aria-hidden="true"><CharacterPortrait role="teacher" /></span><div className="speech-bubble maya-bubble"><span className="speaker-name">{playerName}</span><p>{question}</p></div></div></div>
-        <div className="chapter-actions"><button className="button primary-button" onClick={onStart}>{weights ? carried.length === 3 ? 'Review priorities' : 'Choose priorities' : 'Choose three metrics'}<Icon name="arrow" /></button></div>
+        <div className="chapter-actions"><button className="button primary-button" onClick={onStart}>{first ? 'Choose a metric' : weights ? carried.length === 3 ? 'Review priorities' : 'Choose priorities' : 'Choose three metrics'}<Icon name="arrow" /></button></div>
       </>}
     </div>
   </section>;

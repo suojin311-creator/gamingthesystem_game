@@ -90,26 +90,24 @@
 .opening-scene h1, .opening-scene h2, .opening-scene p { margin: 0 0 1em; }
 .opening-scene .opening-interaction-cue { display: block; width: 100%; aspect-ratio: 1; filter: drop-shadow(0 2px 5px #1b1a16aa); pointer-events: none; }
 .opening-scene .opening-interaction-cue svg { display: block; width: 100%; height: 100%; overflow: visible; }
-.opening-scene .opening-interaction-cue circle { fill: #fff8e8; stroke: #ad5840; stroke-width: 2; }
-.opening-scene .opening-interaction-cue path { stroke: #ad5840; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-.opening-scene .opening-interaction-cue[data-complete='false'] svg { animation: opening-target-point 1.15s ease-in-out infinite; }
-.opening-scene .opening-interaction-cue[data-complete='true'] circle { fill: #657c51; stroke: #f4edda; }
-.opening-scene .opening-interaction-cue[data-complete='true'] path { stroke: #fff8e8; }
+.opening-scene .opening-interaction-cue path { stroke: #fff0c4; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.opening-scene .opening-interaction-cue svg { animation: opening-arrow-glow 1.6s ease-in-out infinite; }
 .opening-scene .notification { padding-right: 1.9cqw; animation: opening-email-attention 1.6s ease-in-out infinite; }
 .opening-scene .opening-email-cue { position: absolute; right: .45cqw; top: 50%; width: .95cqw; transform: translateY(-50%) rotate(90deg); }
 .opening-scene .opening-student-marker { position: absolute; left: 50%; bottom: calc(100% + 6px); width: clamp(30px, 3.2cqw, 46px); transform: translateX(-50%); pointer-events: none; }
 .opening-scene .opening-student-marker[hidden] { display: none; }
-.opening-scene .student-hotspot:focus-visible { outline: 2px solid #fff4d8; outline-offset: 4px; border-radius: 45%; }
-.opening-scene .classroom-look { margin: 0; bottom: max(42px, 7.5%); font-size: clamp(16px, 1.8cqw, 28px); line-height: 1.25; }
+.opening-scene .student-hotspot:focus-visible { outline: none; }
+.opening-scene .student-hotspot::after { background: none !important; }
+.opening-scene .student-hotspot:focus-visible .opening-interaction-cue path { stroke-width: 3.8; }
+.opening-scene .classroom-look { margin: 0; left: 7%; width: 86%; bottom: max(42px, 7.5%); font-size: clamp(14px, 1.65cqw, 25px); line-height: 1.3; }
 .opening-scene .student-dialogue, .opening-scene .classroom-thought { margin: 0; bottom: max(42px, 7.5%); font-size: clamp(15px, 1.8cqw, 28px); }
 .opening-scene .opening-observation-progress { position: absolute; left: 50%; bottom: max(10px, 2.5%); display: flex; align-items: center; gap: clamp(9px, 1.3cqw, 20px); transform: translateX(-50%); pointer-events: none; }
-.opening-scene .opening-observation-progress::before { content: ''; position: absolute; left: 10px; right: 10px; height: 1px; background: #f2e8d1aa; }
-.opening-scene .opening-observation-progress > span { position: relative; width: clamp(22px, 2.1cqw, 32px); aspect-ratio: 1; display: grid; place-items: center; border: 1px solid #ead9bc; border-radius: 50%; background: #403d32e8; }
-.opening-scene .opening-observation-progress > span[data-complete='true'] { background: #657c51; border-color: #edf1df; }
+
+.opening-scene .opening-observation-progress > span { position: relative; width: clamp(22px, 2.1cqw, 32px); aspect-ratio: 1; display: grid; place-items: center; border: 0; background: transparent; }
+.opening-scene .opening-observation-progress > span[data-complete='true'] svg { stroke: #d6e0b5; filter: drop-shadow(0 0 3px #20331d); }
 .opening-scene .opening-observation-progress svg { width: 75%; height: 75%; stroke: #fff4d8; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.opening-scene .opening-handoff { position: absolute; left: 6%; bottom: 9%; padding: clamp(14px, 2.2cqw, 32px); border-left: 3px solid #c5976d; background: #fcf9f1f2; color: #34382e; box-shadow: 0 6px 28px #181a1533; }
-.opening-scene .opening-handoff > span { font-size: clamp(11px, 1cqw, 15px); letter-spacing: .18em; color: #9b6848; }
-.opening-scene .opening-handoff h1 { margin: .35em 0 .6em; font: 400 clamp(26px, 3.3cqw, 48px)/1.1 Georgia, serif; }
-.opening-scene .opening-handoff .primary-button { color: #fff9ef; background: #ad5840; border-color: #9f4f39; font-size: clamp(12px, 1.1cqw, 16px); min-height: 42px; }
 @keyframes opening-target-point { 0%, 100% { translate: 0 -3px; } 55% { translate: 0 3px; } }
 @keyframes opening-email-attention { 0%, 100% { box-shadow: 0 0 0 0 #ed806800; border-color: #b7795f; } 50% { box-shadow: 0 0 0 2px #ed806877, 0 0 .8cqw #ed806866; border-color: #ad5840; } }
+
+.opening-scene .office-reflection { position: absolute; left: 10%; right: 10%; bottom: 10%; margin: 0; text-align: center; font: italic clamp(17px, 2cqw, 30px)/1.5 Georgia, serif; color: #fff5e3; text-shadow: 0 2px 8px #151a12, 0 0 28px #151a12; }
+@keyframes opening-arrow-glow { 0%, 100% { opacity: .65; translate: 0 -2px; filter: drop-shadow(0 0 2px #ffca70) drop-shadow(0 2px 2px #222); } 50% { opacity: 1; translate: 0 2px; filter: drop-shadow(0 0 8px #ffd886) drop-shadow(0 1px 2px #222); } }

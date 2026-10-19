@@ -8,12 +8,18 @@ unmodified review ZIP remains `play/Opening-animation-preview.zip`.
 
 The user's approved integration changes add visual email/student targets,
 three-person completion feedback, larger Look around text and shorter waits.
-Each normal-motion inspection is 450ms approach + 1500ms response + 450ms return.
-Unseen students keep arrows; inspected students have checks; leaving unlocks
-after all three. Reading the email and choosing actions still wait for input.
+Normal inspections use a smaller 1.28x zoom: 900ms approach, a 1700ms reading
+hold after arrival, and 850ms return (about 3.45s). Motion completion callbacks
+advance phases and unlock input; movement is not timed out mid-flight. One plain
+glowing arrow points to the next unseen student. Three unframed portrait/check
+indicators show progress. Leaving unlocks after all three. Reading the email
+and choosing actions still wait for input.
 
-At officeEnd, a short LEVEL 01 / One metric handoff calls onComplete with the
-confirmed player name. `FullGame` mounts Gameplay once for the three levels.
+The classroom fades out before the office camera is reset behind an opaque
+cover. The office fades in fully, then shows two brief teacher reflections.
+After the final fade, onComplete passes the confirmed name to FullGame. The
+shared ChapterTransition first introduces LEVEL 01 / One metric against a faint
+office backdrop. Choose a metric then mounts Gameplay once for the three levels.
 Opening styles/variables are scoped to `.opening-scene`; shared feedback owns
 the mute preference. Restoring a closed page starts at title with a fresh name.
 

@@ -16,7 +16,7 @@ export const classroomMedia: { mode: 'auto' | 'static' | 'video'; videoUrl?: str
 
 // Percentages refer to a fixed 16:9 composition. Calibrate after reviewing a real clip.
 export const STUDENTS = [
-  { id: 'sleeping', label: 'Inspect sleeping student', image: sleeping, dialogue: 'Zzz...', camera: { scale: 1.45, x: '20%', y: '-5%' }, hotspot: { left: '8%', top: '47%', width: '22%', height: '24%' } },
-  { id: 'phone', label: 'Inspect phone student', image: phone, dialogue: 'Just one more message...', camera: { scale: 1.45, x: '0%', y: '-5%' }, hotspot: { left: '39%', top: '42%', width: '23%', height: '30%' } },
-  { id: 'unprepared', label: 'Inspect unprepared student', image: unprepared, dialogue: "I don't know where to start.", camera: { scale: 1.45, x: '-20%', y: '-5%' }, hotspot: { left: '73%', top: '46%', width: '24%', height: '28%' } },
+  { id: 'sleeping', label: 'Inspect sleeping student', image: sleeping, dialogue: 'Zzz...', camera: { scale: 1.28, x: '14%', y: '-3%' }, hotspot: { left: '8%', top: '47%', width: '22%', height: '24%' } },
+  { id: 'phone', label: 'Inspect phone student', image: phone, dialogue: 'Just one more message...', camera: { scale: 1.28, x: '0%', y: '-3%' }, hotspot: { left: '39%', top: '42%', width: '23%', height: '30%' } },
+  { id: 'unprepared', label: 'Inspect unprepared student', image: unprepared, dialogue: "I don't know where to start.", camera: { scale: 1.28, x: '-14%', y: '-3%' }, hotspot: { left: '73%', top: '46%', width: '24%', height: '28%' } },
 ] as const;

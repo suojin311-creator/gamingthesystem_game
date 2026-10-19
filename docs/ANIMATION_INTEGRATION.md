@@ -3,9 +3,10 @@
 本页是接下来动画合并的起点。已确认的玩法保留在 `src/levels/`；完成的动画代码和所需素材放入 [src/cinematics/](../src/cinematics/README.md)。日常预览与正式发包使用 [开发流程](DEVELOPMENT_WORKFLOW.md)。
 
 当前 `animation/opening-integration` 分支已接入开场：`FullGame` 先显示
-`src/cinematics/opening/Opening.tsx`，完成三名学生观察并在办公室选择
-Choose a metric 后，用已确认姓名挂载 Gameplay。邮件和未观察学生用箭头引导，
-三个人像图标显示完成状态。开场样式限于 `.opening-scene`，不覆盖关卡按钮和字体。
+`src/cinematics/opening/Opening.tsx`，完成三名学生观察后，返回办公室显示两句思考，再进入与后续关卡共用样式的
+Level 1 过渡页。Choose a metric 后，用已确认姓名挂载 Gameplay。邮件和下一名
+未观察学生用无圆框的发光箭头引导，三个人像图标显示完成状态。镜头和场景切换
+等待实际动画完成，办公室镜头在黑场遮罩下复位。开场样式限于 `.opening-scene`，不覆盖关卡按钮和字体。
 稳定 `level3-dev` 与预览分支保留原游戏版；本分支的包供动画衔接审阅。
 
 ## 先接真实交付，再接已有接口

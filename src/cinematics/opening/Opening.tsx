@@ -5,17 +5,16 @@ import { useSceneAudio } from './useSceneAudio';
 import ClassroomScene from './ClassroomScene';
 import InteractionCue from './InteractionCue';
 import './styles.css';
+import { useVisibleDelay } from '../../shared/hooks/useVisibleDelay';
 
-type Beat = 'title' | 'reveal' | 'identity' | 'seating' | 'quiet' | 'cue' | 'laptopFocus' | 'notification' | 'emailFocus' | 'reading' | 'thought' | 'ready' | 'pullback' | 'door' | 'depart' | 'classroom' | 'returnArrival' | 'officeEnd';
+type Beat = 'title' | 'reveal' | 'identity' | 'seating' | 'quiet' | 'cue' | 'laptopFocus' | 'notification' | 'emailFocus' | 'reading' | 'thought' | 'ready' | 'pullback' | 'door' | 'depart' | 'classroom' | 'returnArrival' | 'returnReveal' | 'officeReflect' | 'officeQuestion' | 'handoff';
 // WATCH beats advance automatically; ACT beats wait indefinitely.
 const TIMELINE: Partial<Record<Beat, { next: Beat; ms: number }>> = {
-  reveal: { next: 'identity', ms: 900 }, seating: { next: 'quiet', ms: 1000 },
-  quiet: { next: 'cue', ms: 700 }, cue: { next: 'laptopFocus', ms: 350 },
-  laptopFocus: { next: 'notification', ms: 1000 }, emailFocus: { next: 'reading', ms: 750 },
-  reading: { next: 'thought', ms: 600 }, thought: { next: 'ready', ms: 900 },
-  pullback: { next: 'door', ms: 700 }, door: { next: 'depart', ms: 850 },
-  depart: { next: 'classroom', ms: 500 },
-  returnArrival: { next: 'officeEnd', ms: 200 },
+  reveal: { next: 'identity', ms: 1100 },
+  quiet: { next: 'cue', ms: 650 }, cue: { next: 'laptopFocus', ms: 450 },
+  reading: { next: 'thought', ms: 750 }, thought: { next: 'ready', ms: 1400 },
+  officeReflect: { next: 'officeQuestion', ms: 2500 },
+  officeQuestion: { next: 'handoff', ms: 2700 },
 };
 // A fixed centre origin: x = (50 - targetX) * scale, likewise for y.
 const CAMERAS = {
@@ -38,12 +37,12 @@ export default function Opening({ onComplete }: { onComplete: (playerName: strin
   const notification = useRef<HTMLButtonElement>(null);
   const subject = useRef<HTMLHeadingElement>(null);
   const visit = useRef<HTMLButtonElement>(null);
-  const continueButton = useRef<HTMLButtonElement>(null);
   const completed = useRef(false);
   const audio = useSceneAudio();
   const returnToOffice = useCallback(() => setBeat('returnArrival'), []);
   const emailOpen = ['emailFocus', 'reading', 'thought', 'ready'].includes(beat);
   const leaving = ['pullback', 'door', 'depart', 'classroom'].includes(beat);
+  const classroomActive = beat === 'classroom' || beat === 'returnArrival';
   const laptopCue = ['cue', 'laptopFocus', 'notification'].includes(beat);
   const camera = emailOpen ? CAMERAS.email
     : ['laptopFocus', 'notification'].includes(beat) ? CAMERAS.laptop
@@ -51,29 +50,50 @@ export default function Opening({ onComplete }: { onComplete: (playerName: strin
     : ['door', 'depart', 'classroom'].includes(beat) ? CAMERAS.door
     : ['title', 'reveal', 'identity'].includes(beat) ? CAMERAS.opening : CAMERAS.seated;
 
+  const step = TIMELINE[beat];
+  useVisibleDelay(`opening:${beat}`, '.opening-scene .stage', step?.ms ?? 0, loaded && !!step, () => {
+    if (step) setBeat(step.next);
+  });
   useEffect(() => {
-    if (!loaded) return;
-    const step = TIMELINE[beat];
-    if (!step) return;
-    const timer = window.setTimeout(() => setBeat(step.next), step.ms);
-    return () => window.clearTimeout(timer);
-  }, [beat, loaded]);
+    if (beat !== 'returnArrival') return;
+    // Keep the opaque classroom mounted while resetting the hidden office camera.
+    let second = 0;
+    const first = requestAnimationFrame(() => { second = requestAnimationFrame(() => setBeat('returnReveal')); });
+    return () => { cancelAnimationFrame(first); cancelAnimationFrame(second); };
+  }, [beat]);
   useEffect(() => {
     if (beat === 'identity') nameInput.current?.focus({ preventScroll: true });
     if (beat === 'notification') notification.current?.focus({ preventScroll: true });
     if (beat === 'reading') subject.current?.focus({ preventScroll: true });
     if (beat === 'ready') visit.current?.focus({ preventScroll: true });
-    if (beat === 'officeEnd') { audio.startOffice(); continueButton.current?.focus({ preventScroll: true }); }
+    if (beat === 'returnReveal') audio.startOffice();
     if (beat === 'cue') audio.play('notification');
     if (beat === 'depart') audio.fadeOfficeOut();
   }, [beat, audio.play, audio.fadeOfficeOut, audio.startOffice]);
+
+  const cameraArrived = () => {
+    if (beat === 'seating') setBeat('quiet');
+    else if (beat === 'laptopFocus') setBeat('notification');
+    else if (beat === 'emailFocus') setBeat('reading');
+    else if (beat === 'pullback') setBeat('door');
+    else if (beat === 'door') setBeat('depart');
+  };
+  const exposureArrived = () => {
+    if (beat === 'depart') setBeat('classroom');
+    else if (beat === 'returnReveal') setBeat('officeReflect');
+    else if (beat === 'handoff' && !completed.current) {
+      completed.current = true;
+      audio.reset();
+      onComplete(playerName);
+    }
+  };
 
   const fade = { duration: reducedMotion ? 0.1 : 0.45 };
   return (
     <main className="opening-scene game-shell" onPointerDown={audio.unlock} onKeyDown={audio.unlock}>
       <div className="stage" aria-label="First-person cinematic opening" data-beat={beat}>
         {/* One persistent world. All laptop content inherits the same camera transform. */}
-        <motion.div className="office-camera" aria-hidden={beat === 'classroom'} inert={beat === 'classroom'} initial={CAMERAS.opening} animate={camera} transition={{ duration: reducedMotion ? 0 : beat === 'door' ? 0.85 : 0.75, ease: 'easeInOut' }}>
+        <motion.div className="office-camera" aria-hidden={classroomActive} inert={classroomActive} initial={CAMERAS.opening} animate={camera} transition={{ duration: reducedMotion || beat === 'returnArrival' ? 0 : beat === 'door' ? 1.25 : beat === 'pullback' ? 1.15 : 1.05, ease: [0.4, 0, 0.2, 1] }} onAnimationComplete={cameraArrived}>
           <img className="office-background" src={officeBackground} alt="Your desk in a sunlit office, with a laptop to the left and an office door to the right." onLoad={() => setLoaded(true)} onError={() => setLoadError(true)} />
           <div className="laptop-screen">
             <motion.div className="screen-cue" aria-hidden="true" animate={{ opacity: laptopCue ? 0.35 : 0 }} transition={{ duration: 0.65 }} />
@@ -103,10 +123,10 @@ export default function Opening({ onComplete }: { onComplete: (playerName: strin
             )}
           </div>
         </motion.div>
-        <ClassroomScene active={beat === 'classroom'} onReturn={returnToOffice} play={audio.play} startClassroom={audio.startClassroom} fadeClassroomOut={audio.fadeClassroomOut} />
+        <ClassroomScene active={classroomActive} onReturn={returnToOffice} play={audio.play} startClassroom={audio.startClassroom} fadeClassroomOut={audio.fadeClassroomOut} />
         <div className="vignette" aria-hidden="true" />
-        <motion.div className="exposure" aria-hidden="true" initial={{ opacity: 1 }} animate={{ opacity: beat === 'title' ? 0.97 : ['reveal', 'identity'].includes(beat) ? 0.45 : ['depart', 'returnArrival'].includes(beat) ? 1 : 0 }} transition={{ duration: beat === 'returnArrival' ? 0 : reducedMotion ? 0.1 : beat === 'reveal' ? 0.9 : 0.5 }} />
-        <AnimatePresence>
+        <motion.div className="exposure" aria-hidden="true" initial={{ opacity: 1 }} animate={{ opacity: beat === 'title' ? 0.97 : ['reveal', 'identity'].includes(beat) ? 0.45 : ['depart', 'returnArrival','handoff'].includes(beat) ? 1 : 0 }} transition={{ duration: beat === 'returnArrival' ? 0 : reducedMotion ? 0.1 : beat === 'reveal' ? 1.05 : 0.75 }} onAnimationComplete={exposureArrived} />
+        <AnimatePresence mode="wait">
           {beat === 'title' && (
             <motion.div key="title" className="title-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.7, delay: 0.1 }}>
               <h1>GAMING<br /><span>THE SYSTEM</span></h1>
@@ -129,12 +149,7 @@ export default function Opening({ onComplete }: { onComplete: (playerName: strin
           )}
           {beat === 'seating' && <motion.p key="time" className="time-caption" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={fade}>Monday, 9:12 AM</motion.p>}
           {beat === 'thought' && <motion.p key="thought" className="thought-caption" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>Sounds simple enough.</motion.p>}
-          {beat === 'officeEnd' && <motion.section key="end" className="opening-handoff" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={fade} aria-labelledby="opening-level-title"><span>LEVEL 01</span><h1 id="opening-level-title">One metric.</h1><button ref={continueButton} className="button primary-button" onClick={() => {
-            if (completed.current) return;
-            completed.current = true;
-            audio.reset();
-            onComplete(playerName);
-          }}>Choose a metric <span aria-hidden="true">→</span></button></motion.section>}
+          {(beat === 'officeReflect' || beat === 'officeQuestion') && <motion.p key={beat} className="office-reflection" role="status" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={fade}>{beat === 'officeReflect' ? 'They’re here, but they’re not really engaged.' : 'What should I measure first?'}</motion.p>}
         </AnimatePresence>
         {loadError && <p className="load-status" role="alert">The office background could not load. Please refresh to try again.</p>}
         {!loaded && !loadError && <p className="load-status" role="status">Preparing your desk…</p>}
