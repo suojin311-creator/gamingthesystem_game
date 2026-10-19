@@ -1,4 +1,4 @@
-import Gameplay from './Gameplay';
+import FullGame from './FullGame';
 import LevelOne from './levels/level1/LevelOne';
 import LevelTwo from './levels/level2/LevelTwo';
 import LevelThree from './levels/level3/LevelThree';
@@ -11,5 +11,5 @@ export default function App() {
   }
   if (import.meta.env.MODE === 'level2') return <LevelTwo playerName={PREVIEW_PLAYER_NAME} />;
   if (import.meta.env.MODE === 'level3') return <LevelThree playerName={PREVIEW_PLAYER_NAME} />;
-  return <Gameplay playerName={PREVIEW_PLAYER_NAME} />;
+  return <FullGame />;
 }

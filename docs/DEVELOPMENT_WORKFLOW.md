@@ -4,9 +4,12 @@
 
 统一在 **level3-dev** 开发。已经推送的提交可作为合并前基线，不必为每次小改动另建存档标签。
 
+本次按用户要求，动画修改和衔接单独放在 **animation/opening-integration**。
+动画审阅包也在该分支生成、验证和发布，只推送该分支，不同步稳定游戏分支。
+
 | 工作 | 命令或检查 |
 | --- | --- |
-| 三关连玩，之后衔接开场 | `npm run dev` |
+| 动画分支：开场后接三关；游戏分支：直接三关 | `npm run dev` |
 | 单独调试某一关 | `npm run dev:level1`、`dev:level2` 或 `dev:level3` |
 | TypeScript 检查 | `npm run check` |
 | 关卡、姓名、场景结束回调的既有接入契约 | 先启动 Vite，再运行 `npm run test:integration` |

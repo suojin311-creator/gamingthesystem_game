@@ -1,10 +1,14 @@
+# 动画合并审阅分支
+
+当前分支 **animation/opening-integration**：完整游戏从开场开始，完成三名学生观察后接入 Level 1。`level3-dev` 保留已确认的游戏版本。
+
 # Gaming the System
 
 三个关卡均可试玩。完整三关版与各关独立版复用同一套已确认玩法。
 
 ## 一次下载全部版本
 
-**[下载完整试玩 ZIP：完整三关＋三个单独关卡](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Gaming-the-System-complete.zip?raw=true)**
+**[下载完整试玩 ZIP：完整三关＋三个单独关卡](https://github.com/suojin311-creator/gamingthesystem_game/blob/animation/opening-integration/play/Gaming-the-System-complete.zip?raw=true)**
 
 解压整个 ZIP，用 Chrome 或 Edge 打开 **START-HERE.html**，再选择要玩的版本。下载后可离线运行，不需要安装软件。
 
@@ -24,7 +28,7 @@
 - Level 2 包含六项指标后的实验问题、Test more metrics、连续 10 → 25 → 100 增长，以及追分行为的结果呼应。
 - Level 3 首次权重从 **— / — / —** 开始，由玩家操作生成分配；两次后可比较，第三次可选，不要求平均。
 - 完整版保留关卡衔接、姓名和声音设置，以及 Level 2 选择到 Level 3 的可修改预选。
-- 正式开场及成片尚未合并，剧情使用 placeholder；预览停在理论揭示，Design Lab 仍预留。刷新或重新打开会开始新游戏。
+- 开场已接入完整版，后续课堂与结尾剧情仍使用 placeholder；预览停在理论揭示，Design Lab 仍预留。刷新或重新打开会开始新游戏。
 
 ## 查找项目内容
 

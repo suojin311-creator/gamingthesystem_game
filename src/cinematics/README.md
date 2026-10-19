@@ -1,7 +1,8 @@
 # Finished animation integration
 
-This folder is the destination for the partner's finished animation components
-and their scene-local assets. No new animation script or placeholder is added.
+This folder contains the imported opening on animation/opening-integration;
+see [opening](opening/README.md). Other scene families remain destinations for
+the partner’s actual delivery. Their authored scripts are not rewritten here.
 
 Add the corresponding folders when their actual source is imported:
 

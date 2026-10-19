@@ -5,7 +5,7 @@ levels, use [the download guide](../play/README.md). This page retains the detai
 gameplay and development explanation from the preceding repository home.
 For the current daily/release commands, follow [Development workflow](DEVELOPMENT_WORKFLOW.md).
 
-An English-language game about measuring engagement. Levels 1, 2 and 3 are playable. The partner’s opening and finished cinematics remain separate; story slots use replaceable placeholders.
+An English-language game about measuring engagement. Levels 1, 2 and 3 are playable. On animation/opening-integration, the partner’s opening now precedes real Gameplay with visual click cues and shorter interactions. Later story slots still use replaceable placeholders; the approved game branches remain separate.
 
 Download the [Level 3 + full-game review ZIP](https://github.com/suojin311-creator/gamingthesystem_game/blob/level3-dev/play/Level3-and-Full-game-play.zip?raw=true) for both requested versions in one archive: `Level3/Level3.html` and `Full-game/Gaming-the-System.html`.
 
@@ -113,7 +113,7 @@ Offline browser tests serve exact production HTML through an in-memory HTTPS ori
 
 The current Level 3 task is a prominent short-question card with three visible-time pulses (one steady outline with reduced motion), paired on later tests with the preceding observation. Strategy hints are optional verbal help. The comparison uses explicit More/Less/Same effort labels with a named prior-test reference, replacing ambiguous whole-cell fills. [Task clarity](TASK_CLARITY.md) documents the earlier presentation revision; its old numerical suggestion control is no longer present.
 
-See [player-led experiments](PLAYER_EXPERIMENTS.md) for the current flow and compatibility contract; the compared near-even/uneven pair can be null for uniform-pattern histories. The relative rules are documented in [effort rules](EFFORT_RULES.md). Level 2’s additional growth framing is now complete; opening integration remains separate work.
+See [player-led experiments](PLAYER_EXPERIMENTS.md) for the current flow and compatibility contract; the compared near-even/uneven pair can be null for uniform-pattern histories. The relative rules are documented in [effort rules](EFFORT_RULES.md). Level 2’s additional growth framing is now complete; opening integration is reviewed separately on animation/opening-integration.
 
 The v19 editor simplifies the all-covered question to “Can new weights make Alex go further?”, removes the small prompt headings and the redundant 100% allocation strip, and keeps hints on one line where space permits. Last observation retains the honest effort bands alongside an amber reminder that Alex stopped after earning the marks he wanted. The subsequent v20 revision replaces the old 25%/67% cutoffs with whole-allocation relative effort. See [v19 details](LEVEL3_FEEDBACK-v19.md).
 

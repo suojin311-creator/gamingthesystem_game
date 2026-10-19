@@ -2,6 +2,12 @@
 
 本页是接下来动画合并的起点。已确认的玩法保留在 `src/levels/`；完成的动画代码和所需素材放入 [src/cinematics/](../src/cinematics/README.md)。日常预览与正式发包使用 [开发流程](DEVELOPMENT_WORKFLOW.md)。
 
+当前 `animation/opening-integration` 分支已接入开场：`FullGame` 先显示
+`src/cinematics/opening/Opening.tsx`，完成三名学生观察并在办公室选择
+Choose a metric 后，用已确认姓名挂载 Gameplay。邮件和未观察学生用箭头引导，
+三个人像图标显示完成状态。开场样式限于 `.opening-scene`，不覆盖关卡按钮和字体。
+稳定 `level3-dev` 与预览分支保留原游戏版；本分支的包供动画衔接审阅。
+
 ## 先接真实交付，再接已有接口
 
 接到成片源码时，先确认其入口、素材引用、依赖以及真正的结束事件，再做适配。保留同伴已经完成的脚本和同伴互动，不另外编写一套剧情、重复开场或新增操作页。

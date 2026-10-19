@@ -18,7 +18,7 @@ ENTRIES = [
     ('Level3-play.zip', 'Level3.html', 'dist-level3/index.html',
      'Level 3 only. Choose priorities, set weights and compare Alex’s responses. Design Lab is reserved.'),
     ('Full-game-play.zip', 'Gaming-the-System.html', 'dist/index.html',
-     'Start at Level 1, then continue to Level 2 and Level 3 in the same open game.'),
+     'Start with the opening animation and your name, then play Levels 1, 2 and 3 in one open game.'),
 ]
 
 
@@ -43,7 +43,7 @@ for archive, html, build, description in ENTRIES:
         f'Extract this ZIP, then open {html} in Chrome or Edge.\n'
         'No installation or internet connection is needed after download.\n'
         'Closing or reloading starts a fresh game.\n'
-        'The opening and final cinematics remain separate; scenes are placeholders.\n'
+        'The full-game entry includes the opening; standalone levels start directly. Later story scenes remain placeholders.\n'
     )
     with zipfile.ZipFile(PLAY / archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:
         for name, data in [(html, builds[build]), ('START-HERE.txt', instruction.encode())]:
@@ -67,7 +67,7 @@ review_files = {
 review_instruction = (
     'Gaming the System — latest review package\n\n'
     '1. Level 3 only: open Level3/Level3.html\n'
-    '2. Levels 1 -> 2 -> 3: open Full-game/Gaming-the-System.html\n\n'
+    '2. Opening -> Levels 1 -> 2 -> 3: open Full-game/Gaming-the-System.html\n\n'
     'Extract the entire ZIP first, then open either HTML in Chrome or Edge.\n'
     'Both entries use the same latest gameplay. No installation or internet is needed.\n'
     'The combined game carries your Level 2 choices into Level 3; you can change them.\n'
@@ -99,7 +99,7 @@ complete_instruction = (
     'Gaming the System — complete playable package / 完整试玩包\n\n'
     '先解压整个 ZIP，再用 Chrome 或 Edge 打开 START-HERE.html 选择版本。\n'
     'Extract the entire ZIP, then open START-HERE.html in Chrome or Edge.\n\n'
-    '完整三关 / Full game: Full-game/Gaming-the-System.html\n'
+    '开场及完整三关 / Opening and full game: Full-game/Gaming-the-System.html\n'
     '单独第一关 / Level 1: Level1/Level1.html\n'
     '单独第二关 / Level 2: Level2/Level2.html\n'
     '单独第三关 / Level 3: Level3/Level3.html\n\n'
@@ -108,7 +108,7 @@ complete_instruction = (
     'The full game carries your choices from Level 2 into editable Level 3 priorities.\n'
     'Closing or reloading starts fresh; standalone levels stop at their own endings.\n'
     'The latest Level 2 framing and unassigned first Level 3 weights are included.\n'
-    'Opening/final cinematics remain placeholders; Design Lab is not included.\n'
+    'The opening is integrated; later classroom and final cinematics remain placeholders. Design Lab is not included.\n'
 )
 with zipfile.ZipFile(PLAY / complete_archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:
     for name, data in [*complete_files.items(), ('START-HERE.txt', complete_instruction.encode())]:

@@ -64,6 +64,25 @@ def advance(page, seconds=24):
         page.wait_for_timeout(12)
 
 
+def opening(page):
+    page.get_by_role('button', name='START GAME', exact=True).click()
+    advance(page, 2)
+    page.get_by_label('What name should we put on it?').fill('Riley')
+    page.get_by_label('What name should we put on it?').press('Enter')
+    advance(page, 5)
+    page.get_by_role('button', name='Open urgent email from University Management', exact=True).click()
+    advance(page, 3)
+    page.get_by_role('button', name='VISIT CLASSROOM', exact=True).click()
+    advance(page, 4)
+    for student in ['sleeping','phone','unprepared']:
+        page.locator('.hotspot-'+student).click()
+        advance(page, 3)
+    advance(page, 3)
+    page.get_by_role('button', name='RETURN TO OFFICE').click()
+    advance(page, 2)
+    page.get_by_role('button', name='Choose a metric', exact=True).click()
+
+
 def scene(page, lines=3):
     page.get_by_role('button', name='Observe the class', exact=True).click()
     for _ in range(lines - 1): page.get_by_role('button', name='Continue scene', exact=True).click()
@@ -154,10 +173,12 @@ with sync_playwright() as playwright:
             expect(page.locator('.level-two')).to_have_attribute('data-phase','intro')
         elif name.startswith('Level3/'):
             expect(page.locator('.level-three')).to_have_attribute('data-phase','intro')
+        elif name.startswith('Full-game/'):
+            expect(page.locator('.opening-scene .stage')).to_have_attribute('data-beat','title')
         else:
             expect(page.get_by_role('heading',name='One metric.',exact=True)).to_be_visible()
     context.close()
-    checks.append('The actual complete-ZIP launcher fits desktop/phone and opens the full game and all three standalone levels offline')
+    checks.append('The actual complete-ZIP launcher fits desktop/phone, starts the full game at the opening and opens each standalone level directly offline')
     context = browser.new_context(viewport={'width': 1366, 'height': 768})
     context.set_offline(True)
     context.route('https://release.test/**', lambda route: route.fulfill(status=200, content_type='text/html', body=artifacts['Level2.html']))
@@ -241,6 +262,8 @@ with sync_playwright() as playwright:
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.clock.install()
     page.goto('https://release.test/', wait_until='networkidle')
+    opening(page)
+    expect(page.locator('.maya-bubble .speaker-name')).to_have_text('Riley')
     level_one(page)
     page.get_by_role('button', name='Sound on', exact=True).click()
     page.get_by_role('button', name='Continue to Level 2', exact=True).click()
@@ -261,9 +284,9 @@ with sync_playwright() as playwright:
     expect(page.get_by_role('button',name='Try another split',exact=True)).to_be_visible()
     checks.append('Packaged combined game connects Level 1 → Level 2 → playable Level 3 in one open run')
     page.reload(wait_until='networkidle')
-    expect(page.get_by_role('dialog', name='Workbench guide')).to_be_visible()
-    expect(page.locator('.level-one')).to_be_visible()
-    checks.append('Combined preview reload starts from Level 1 rather than restoring Level 2')
+    expect(page.locator('.opening-scene .stage')).to_have_attribute('data-beat','title')
+    expect(page.locator('.level-one')).to_have_count(0)
+    checks.append('Combined preview reload starts at the opening rather than restoring a level or player identity')
     context.close()
     browser.close()
 assert not errors, errors

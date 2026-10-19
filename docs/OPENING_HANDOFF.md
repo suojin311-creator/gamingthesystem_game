@@ -1,149 +1,82 @@
-# Opening → gameplay: one player identity
+# Opening → gameplay: current animation branch
 
-The supplied `gaming-the-system-main.zip` already collects a name in
-`src/App.tsx`. It stores the trimmed value in `playerName` when the identity form
-submits. Its last beat is `officeEnd`, currently offering REPLAY OPENING. It has
-no gameplay completion callback yet. This revision prepares the gameplay side;
-the partner's opening is still separate and has not been merged or deployed.
+The user requested separate animation development. `animation/opening-integration`
+contains the opening and its real Level 1 handoff; `level3-dev` retains the approved
+game version. Review bundles are built and published only on the animation branch
+until the user requests merging. See [animation integration](ANIMATION_INTEGRATION.md).
 
-## Integration point in the supplied opening
+## Actual entry and completion
 
-Copy this repository's `src/Gameplay.tsx`, `src/levels`, `src/shared` and
-`src/assets` together into the final project. Keep the gameplay artwork imports
-relative to those folders. Import the base stylesheet once in the host entry:
+`src/App.tsx` routes the three standalone modes directly to their respective
+levels. Its default full-game entry renders `src/FullGame.tsx`, which starts with
+`src/cinematics/opening/Opening.tsx`. The opening keeps its original identity
+form, office email, classroom observations and return to the office.
 
-```tsx
-import './shared/styles/base.css';
-```
+After all three students are observed and RETURN TO OFFICE completes, officeEnd
+shows LEVEL 01 / One metric. Choose a metric calls `onComplete(playerName)` once
+with the trimmed, confirmed name. FullGame mounts `<Gameplay playerName={name} />`;
+Gameplay stays mounted across Levels 1, 2 and 3. The existing Level 1 workbench
+guide teaches controls without adding another story opening or name form.
 
-In the opening's App, import Gameplay, extend its Beat union with `'gameplay'`,
-and add this return **after all hooks and before its existing return**:
+Closing/reloading starts at the title. A restored page (`pageshow.persisted`)
+clears the current name and game and returns to the opening. No identity, choices
+or sound preference are stored in browser storage or sent to a service.
 
-```tsx
-import Gameplay from './Gameplay';
+## Requested opening adjustments
 
-// Inside the opening App, after every hook:
-if (beat === 'gameplay') {
-  return <Gameplay playerName={playerName} />;
-}
-```
+- The urgent email has a pointing arrow and gentle card emphasis until clicked.
+  It never opens automatically; screen-reader text identifies the email button.
+- Each unobserved student has a pointing arrow. On return to the wide view,
+  completed students have checks and outstanding arrows remain. Three connected
+  portrait indicators show the group’s completion without written instructions.
+- Look around remains visible between observations and is larger. Existing
+  student lines are retained. Every normal-motion inspection takes 450ms approach,
+  1500ms response and 450ms return (about 2.4s); overlapping input is locked.
+- All three distinct students are required before leaving. Revisiting one does
+  not replace observing another. The final thought and return action remain.
+- Other automatic camera holds and transitions are shorter. Email reading and
+  every decision still wait indefinitely for the player. Reduced motion keeps
+  static arrows/checks and removes camera movement.
 
-At the existing `officeEnd` beat, the final handoff action can be:
+## Assets, styles and sound
 
-```tsx
-<button
-  className="cinematic-button"
-  onClick={() => {
-    audio.fadeOfficeOut();
-    setBeat('gameplay');
-  }}
->
-  CONTINUE TO LEVEL 1
-</button>
-```
+Source is the uploaded `gaming-the-system-main (1).zip` from Mg614’s repository;
+archive SHA-256 is recorded in [the opening README](../src/cinematics/opening/README.md).
+Five runtime PNGs retain their original bytes. The original review download is
+kept as `play/Opening-animation-preview.zip`, with its original source manifest.
+Imported runtime code lives together under `src/cinematics/opening/`.
 
-The handoff can also run automatically at the actual final animation's end.
-Use the already confirmed `playerName`, not the temporary `draftName`. Do not
-add a second name form or put the name in URLs/browser storage. A differently
-structured opening can mount `<Gameplay playerName={playerName} />` in its own
-end-of-opening callback. Restarting the full game means unmounting Gameplay and
-returning the opening to its initial title/name state.
+Every opening selector and its colour variables are scoped to `.opening-scene`.
+The game’s fonts, primary buttons and level styles retain their own values after
+handoff. The office handoff button uses the game’s coral style.
 
-The full host also owns a restored-page reset. Add this hook alongside the
-opening's existing hooks so restoring a closed page from the browser's
-back-forward cache returns to the title/name entry as well:
+The partner’s optional audio-file hook shares the in-memory mute preference with
+`useFeedback`. Existing audio is stopped on handoff/unmount. No missing audio is
+requested and no replacement soundtrack was invented. Start/name/click gestures
+unlock the shared audio context for the later game. Newly supplied audio can use
+the partner’s existing file names inside the opening’s `assets/audio/` folder.
 
-```tsx
-useEffect(() => {
-  const fresh = (event: PageTransitionEvent) => {
-    if (!event.persisted) return;
-    audio.reset();
-    setDraftName('');
-    setPlayerName('');
-    setBeat('title');
-  };
-  window.addEventListener('pageshow', fresh);
-  return () => window.removeEventListener('pageshow', fresh);
-}, [audio.reset]);
-```
+## Later scenes and player identity
 
-## Contract and presentation
+The same confirmed playerName reaches all three levels, teacher labels and
+cinematic requests; Alex remains Alex. Role portraits are independent of names.
+Standalone entries retain their default preview name and omit the opening.
 
-`GameplayProps.playerName` is required. The same value is passed to Levels 1, 2
-and 3 across their in-page transitions. Each level trims outer whitespace and
-uses the name for the player speaker label, typing label and temporary
-cinematic captions. Teacher and student have distinct, role-based portrait
-icons; neither avatar depends on a name or initial. React renders names as text. Names are not
-translated or inserted as HTML. Alex remains Alex. Player-facing Restart controls have been removed from all levels; a new page runs the host opening again.
+Later classroom and final cinematics still use their existing renderer slots;
+this opening work does not replace them or alter the approved level rules.
+`Gameplay` accepts `renderLevelOneCinematic`, `renderLevelTwoCinematic` and
+`renderLevelThreeCinematic`. Renderers receive the actual request/playerName and
+complete callback. Keep Gameplay mounted and call complete only when that scene
+ends. See [Level 1](LEVEL1_HANDOFF.md), [Level 2](LEVEL2_HANDOFF.md) and
+[Level 3](LEVEL3_HANDOFF.md). The final endpoint remains the theory reveal; no
+Design Lab navigation or administrator Restart control was added.
 
-The source role ID `Maya` identifies the player character internally, including
-left-side styling. It is never a fixed display name when a custom name is
-supplied. Future scenes should resolve that role using `request.playerName`.
+## Verification and previews
 
-All three cinematic renderers receive a `playerName` field:
-
-```tsx
-<Gameplay
-  playerName={playerName}
-  renderLevelOneCinematic={(request, complete) => (
-    <PartnerScene
-      sceneId={request.sceneId}
-      playerName={request.playerName}
-      onComplete={complete}
-    />
-  )}
-  renderLevelTwoCinematic={(request, complete) => (
-    <PartnerScene
-      sceneId={request.sceneId}
-      playerName={request.playerName}
-      onComplete={complete}
-    />
-  )}
-  renderLevelThreeCinematic={(request, complete) => (
-    <PartnerScene request={request} onComplete={complete} />
-  )}
-/>
-```
-
-`onLevelOneComplete`, `onLevelTwoComplete` and `onLevelThreeComplete` are optional
-result callbacks; the earlier two shapes are unchanged. Level 3's request and
-comparison result are documented in [Level 3 handoff](LEVEL3_HANDOFF.md).
-Keep Gameplay mounted throughout each scene
-and call `complete()` only at its end. Branches/scores never depend on the name.
-
-`src/App.tsx` is the standalone preview entry. It intentionally uses **Maya**
-because these downloadable previews exclude the opening. It is not the final
-host integration entry. `initialLevel={2}` or `{3}` is available for direct work;
-the real opening hands off at the default Level 1. Empty names in standalone
-level usage also fall back to Maya; the opening itself requires a nonempty name.
-
-Player decisions use the first person: “What if I tracked three?” and
-“What am I still missing?” Spoken exchanges address Alex and respond to his
-actions. This supersedes the older narrative's collective wording.
-Management speaking for itself and dialogue referring to students as a group
-can still use the plural where its meaning requires it.
-
-The browser integration check `tests/player_identity.py` exercises an opening
-name-form harness, Levels 1 and 2, both placeholder and custom scene routes,
-restart/reload and names with punctuation/long text. It does not claim that the
-separate Netlify opening has already been connected.
-
-`tests/level3_integration.py` additionally checks the same name through Level 2
-→ Level 3, weighted shot requests, comparison/theory renderers and the optional
-reserved, unused Design Lab callback. The combined preview connects all three gameplay levels;
-individual App modes mount only their selected level.
-
-Level 2 → Level 3 also carries the three chosen metric IDs in page memory. The
-Level 3 selector starts with those cards checked and allows replacement; direct
-standalone Level 3 has no inherited choices. Custom hosts can pass
-`initialMetricIds` directly to `LevelThree`. The final scene chain is
-`level3.compare` → `theory.reveal`. This preview stops in the theory placeholder.
-The reserved `onDesignLab` prop is not invoked; even a duplicate final cinematic
-callback cannot advance into Design Lab. Administrator access is deferred.
-
-Level 3 now completes on Watch Alex's response after two observed tests or an
-optional third. No aim selection or keep/rethink judgment is required. The
-legacy optional trial `intent` and cinematic/result `decision` fields remain
-accepted but are not populated by the current UI. `compared` can be `null` when
-the actual tests do not include both near-even and uneven allocations. All
-copied actual trials remain in `runs`. See [Level 3 contracts](LEVEL3_HANDOFF.md).
+Use `npm run dev` for the complete opening and game, or `dev:level1/2/3` for a
+standalone level. `tests/opening_integration.py` exercises real-time desktop
+visual cues, actual inspection timing, all-three gating, name handoff, styles,
+restored-page reset, touch and reduced motion. With `--packaged` it exercises the
+actual full-game ZIP bytes offline. The release suite also completes the
+opening → Levels 1 → 2 → 3 route and verifies all standalone entries. Current
+results and hashes belong in [PREVIEW_VALIDATION.json](PREVIEW_VALIDATION.json).

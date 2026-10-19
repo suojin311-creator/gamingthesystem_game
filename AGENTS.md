@@ -1,6 +1,8 @@
 # Working on this game
 
-- Work in this checkout on `level3-dev`; do not create a worktree unless asked.
+- The user requested separate animation development. Current opening integration
+  work belongs on `animation/opening-integration` in this checkout. Keep the
+  approved game branch `level3-dev` unchanged; do not create a worktree unless asked.
 - Keep one implementation per level under `src/levels/`. All playable entries
   reuse these components. Existing gameplay and authored animation scripts are
   approved; integrate finished scenes through `Gameplay` renderer props.
@@ -20,6 +22,9 @@
 - Documentation-only changes need relevant link/content checks, not builds.
 - Commit and push daily work to `level3-dev`. Do not routinely synchronize all
   preview branches, rebuild ZIPs or create numbered reports for minor edits.
+- For the current animation task, commit/push only `animation/opening-integration`.
+  Review packages on that branch include the integrated opening. Do not merge
+  into `level3-dev` or update stable preview aliases until the user requests it.
 - Keep a concrete baseline before a substantial gameplay change or animation
   merge; an already-pushed commit is a saved baseline. Extra archive tags are
   not required for every small change.
@@ -39,6 +44,8 @@
   and `level2-dev` to the same tested release as `level3-dev`. Never force-push.
   The repository’s current default branch is the `level1-preview` release alias;
   daily development may be ahead on `level3-dev` until the next release.
+- The animation branch is a separate review line: build and check its ZIPs there,
+  then push only that branch. Its artifacts do not replace the stable game release.
 - Reuse a verified build/package until relevant source changes. Do not repeat
   broad testing after it passes unless a change or unresolved failure warrants it.
 - Preserve history, tags and existing download links. Do not rewrite Git history
