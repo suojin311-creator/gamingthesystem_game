@@ -13,10 +13,16 @@ hold after arrival, and 850ms return (about 3.45s). Motion completion callbacks
 advance phases and unlock input; movement is not timed out mid-flight. One plain
 glowing arrow points to the next unseen student. Three unframed portrait/check
 indicators show progress. Leaving unlocks after all three. Reading the email
-and choosing actions still wait for input.
+and choosing actions still wait for input. Opening the email keeps the office
+camera fixed: only a separate, readable panel fades in (300ms). VISIT CLASSROOM
+is bright and enabled immediately; its footer stays visible on small screens.
 
 The classroom fades out before the office camera is reset behind an opaque
 cover. The office fades in fully, then shows two brief teacher reflections.
+The title asks “Do better numbers mean better learning?” The return thoughts
+connect disengagement to management’s request for measurable results and the
+need for a trackable sign, followed by Level 1’s question about which sign tells
+most. The longer second thought holds four seconds.
 After the final fade, onComplete passes the confirmed name to FullGame. The
 shared ChapterTransition first introduces LEVEL 01 / One metric against a faint
 office backdrop. Choose a metric then mounts Gameplay once for the three levels.

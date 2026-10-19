@@ -14,8 +14,12 @@ form, office email, classroom observations and return to the office.
 
 After all three students are observed, BACK TO OFFICE waits for the exit camera
 and classroom fade to complete. The hidden office camera resets behind an
-opaque cover before the office fades in. Two successive thoughts appear:
-“They’re here, but they’re not really engaged.” and “What should I measure first?”
+opaque cover before the office fades in.
+
+The title asks “Do better numbers mean better learning?” On return, the teacher
+thinks “They’re here, but they’re not really engaged.”, followed by “Management
+wants measurable results. I need a sign I can track.” The second thought stays
+for four seconds and connects to Level 1’s “Which sign would tell me the most?”
 After the last thought and fade, `onComplete(playerName)` fires once with the
 trimmed confirmed name. FullGame shows the shared Level 1 ChapterTransition,
 with the office image fading into the paper presentation. Only Choose a metric
@@ -28,6 +32,12 @@ or sound preference are stored in browser storage or sent to a service.
 
 ## Requested opening adjustments
 
+- Clicking the urgent email keeps the office camera still. A separate, unscaled
+  reading panel fades in over 300ms (100ms with reduced motion); body copy scrolls
+  on small screens while its action footer stays visible. VISIT CLASSROOM is
+  bright and enabled from appearance, including during the optional thought.
+  Mail fade completion starts the reading hold; leaving early cancels that hold.
+  Exiting mail is inert and cannot block later classroom interactions.
 - The urgent email has a pointing arrow and gentle card emphasis until clicked.
   It never opens automatically; screen-reader text identifies the email button.
 - One unobserved student at a time has a plain glowing arrow, without a circle

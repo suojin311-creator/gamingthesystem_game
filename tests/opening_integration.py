@@ -39,6 +39,7 @@ def start(browser, width=1366, *, motion='no-preference', touch=False):
     return context,page
 
 def enter_classroom(page, name, *, touch=False):
+    expect(page.locator('.subtitle')).to_have_text('Do better numbers mean better learning?')
     page.get_by_role('button',name='START GAME',exact=True).click()
     expect(page.locator('.stage')).to_have_attribute('data-beat','identity')
     page.get_by_label('What name should we put on it?').fill(name)
@@ -47,11 +48,30 @@ def enter_classroom(page, name, *, touch=False):
     expect(mail).to_be_visible(timeout=7000)
     expect(mail.locator('.opening-email-cue')).to_be_visible()
     expect(mail.locator('.opening-email-cue circle')).to_have_count(0)
+    office=page.locator('.office-camera')
+    camera_before=office.evaluate('e=>getComputedStyle(e).transform')
     if touch: mail.tap()
     else: mail.click()
     expect(page.locator('.salutation')).to_have_text('Dear '+name.strip()+',')
     visit=page.get_by_role('button',name='VISIT CLASSROOM',exact=True)
-    expect(visit).to_be_enabled(timeout=4000)
+    expect(visit).to_be_enabled(timeout=1000)
+    assert visit.evaluate('e=>getComputedStyle(e).opacity')=='1'
+    # Opening the email never rescales the office or its text, even mid-fade.
+    for delay in [100,250,200]:
+        page.wait_for_timeout(delay)
+        assert office.evaluate('e=>getComputedStyle(e).transform')==camera_before
+    reader=page.locator('.email-reader')
+    assert reader.evaluate('e=>getComputedStyle(e).transform')=='none'
+    assert reader.evaluate('e=>getComputedStyle(e).opacity')=='1'
+    box=visit.bounding_box()
+    assert box and box['x']>=0 and box['x']+box['width']<=page.viewport_size['width']
+    page.screenshot(path=str(out/('opening-email-touch.png' if touch else 'opening-email-desktop.png')))
+    if not touch:
+        expect(page.locator('.stage')).to_have_attribute('data-beat','ready',timeout=3000)
+        expect(visit).to_be_enabled()
+        assert visit.evaluate('e=>getComputedStyle(e).opacity')=='1'
+    # Touch deliberately leaves before the thought completes: no delayed callback
+    # may reopen the email or its transparent exiting layer block the students.
     visit.click()
     world=page.locator('.classroom-world')
     expect(world).to_have_attribute('data-phase','explore',timeout=7000)
@@ -61,6 +81,7 @@ with sync_playwright() as p:
     browser=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox'])
     context,page=start(browser)
     world=enter_classroom(page,'  Chen Li  ')
+    record('The title asks about numbers versus learning; the email fades in at a fixed readable size without a second camera zoom, and Visit Classroom is bright and usable immediately')
     markers=page.locator('.opening-student-marker .opening-interaction-cue')
     expect(markers).to_have_count(1)
     for marker in markers.all(): expect(marker).to_be_visible()
@@ -111,15 +132,17 @@ with sync_playwright() as p:
     page.wait_for_timeout(100)
     assert office.evaluate('e=>getComputedStyle(e).transform')==stable
     page.screenshot(path=str(out/'opening-office-reflection.png'))
-    expect(page.locator('.office-reflection').filter(has_text='What should I measure first?')).to_be_visible(timeout=3500)
+    expect(page.locator('.office-reflection').filter(has_text='I need a sign I can track.')).to_be_visible(timeout=3500)
+    expect(page.locator('.office-reflection')).to_contain_text('Management wants measurable results.')
     chapter=page.get_by_role('region',name='Level 1 introduction')
-    expect(chapter).to_be_visible(timeout=5000)
+    expect(chapter).to_be_visible(timeout=6000)
     expect(chapter).to_have_attribute('data-beat','ready',timeout=4500)
     expect(page.locator('.level-one')).to_have_count(0)
     expect(chapter.locator('h1')).to_have_text('One metric.')
     expect(chapter.get_by_role('group',name='One metric to choose')).to_be_visible()
     expect(chapter.locator('.chapter-new-card')).to_have_count(1)
     expect(chapter.locator('.speaker-name')).to_have_text('Chen Li')
+    expect(chapter).to_contain_text('Which sign would tell me the most?')
     page.wait_for_timeout(350)
     page.screenshot(path=str(out/'opening-integrated-handoff.png'))
     page.get_by_role('button',name='Choose a metric',exact=True).click()
@@ -154,6 +177,7 @@ with sync_playwright() as p:
     expect(page.locator('.opening-student-marker .opening-interaction-cue')).to_have_count(1)
     expect(page.locator('.hotspot-sleeping .opening-student-marker')).to_be_visible()
     expect(page.get_by_role('button',name='BACK TO OFFICE')).to_have_count(0)
+    expect(page.locator('.email-reader')).to_have_count(0)
     record('Touch can inspect a different student from the suggested one; static reduced-motion arrows still guide the remaining observations without overflow or early progression')
     context.close();browser.close()
 assert not errors,errors
