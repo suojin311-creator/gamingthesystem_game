@@ -1,24 +1,24 @@
 {
   "branch": "animation/opening-integration",
   "archive": "Gaming-the-System-classroom.zip",
-  "zipSha256": "925fa3bd49174c940bce81dfe07ddb6edf99d90f2462d9f843bb6b09b6546d0a",
-  "sourceSha256": "13e2f208b4e6a2498fa815235745a7d37d77c230445f3c29094c4a6f4b310340",
+  "zipSha256": "13f2d8d115203ca3ad1fef346c7c2ef7e12117c3f32f843c35c22ae7301733c7",
+  "sourceSha256": "9c86dfa87bdaba9015ebe2f923f03e45a3d53ef6d12a80cdfcffb173b0ce6749",
   "toolchain": "go version go1.27.3 linux/amd64",
   "target": "windows/amd64",
   "selfContained": true,
   "embeddedWebSha256": {
+    "assets/index-Cm_fJ1UI.js": "4230e05789ddefc5e002c2015b4a484327c12cffff01dc4a467dce147b5e481b",
     "assets/index-D_EsfkK3.css": "4373b7dc5f17aa5d2d4dcddfffecdae2fca2b70482bd455f40c1baa95566282d",
-    "assets/index-DptYgvB_.js": "a651528ae6be78f00989bf2cf94a7632abb7b873ee18062ee77b9681f79c6b67",
-    "game.html.gz": "ae6454b9597764e9e42601fd22837be0f88df9a0c8ca992b9fbd299779967d9c",
+    "game.html.gz": "084c31925685b5ab5fd284fef5005aad0ee1f3c046fc9b1a99eff48246d5b515",
     "goodhart.png": "ea248ed8ba4c7ad5ab3435baff908fc72eef8d23191c0831fc42f6ebc586079a",
-    "index.html": "25317015a254e950488def6a94c05afb3bd31a274601fc4bfc7a610d7755e91e"
+    "index.html": "ad40ecc4155f5ec127dd6fbe16ba80495a05ae292b31ad792c3bea13630e99c0"
   },
   "files": {
-    "Start-Gaming-the-System.exe": "221a6939d7b52bf9d5356045f94e79c7bbb35059100a7be60010580fb985d458",
+    "Start-Gaming-the-System.exe": "05cceae79e71097f303aa6806667ca3f4a31cc64d551e92392c5ffa9d123da1b",
     "START-HERE.html": "d363694cf1478167d5b1bfe451981d564096ebf4f5e376ea3575a4b9dfddf77f",
     "README.txt": "218ffe27e5849eef58ea0ac72836c74910c31c720a6f9aa21f36f7aeab24b973",
     "THIRD-PARTY-NOTICES.txt": "677dc1f3e6a3d6d925dd865ad48c306fcc265fca5ebd80d83a62ffb3f0c1fa5a",
-    "SHA256SUMS.txt": "60c5c9ce709ead38b826fca286583e7718b5a36c5567ca3ba702c4eb6f422f47"
+    "SHA256SUMS.txt": "ef747809053db251b6256d59908517b7af07ae9a1e6422a464191ac9187bf2ff"
   },
   "windowsBinaryChecks": [
     "PE x64 header verified",

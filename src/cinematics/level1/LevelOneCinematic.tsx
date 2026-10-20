@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import cinematicHtml from 'virtual:level1-settlement-film';
 import type { CinematicRequest } from '../../levels/level1/components/CinematicPlaceholder';
 import './styles.css';
+import { cinematicRunId } from '../../shared/utils/cinematicRunId';
 
 const METRIC_MAP = {
   prep: 'pre-class-preparation', part: 'in-class-participation', focus: 'on-task-focus',
@@ -11,7 +12,7 @@ const CHANNEL = 'level1-settlement-review';
 
 export default function Cinematic({ request, onComplete }: { request: CinematicRequest; onComplete: () => void }) {
   const frame = useRef<HTMLIFrameElement>(null);
-  const runId = useRef(crypto.randomUUID());
+  const runId = useRef(cinematicRunId());
   const completed = useRef(false);
   const callback = useRef(onComplete);
   callback.current = onComplete;

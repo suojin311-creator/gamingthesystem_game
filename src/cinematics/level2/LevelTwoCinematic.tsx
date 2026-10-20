@@ -2,11 +2,12 @@ import { useEffect, useRef } from 'react';
 import film from 'virtual:level2-cinematic-film';
 import type { LevelTwoCinematicRequest } from '../../levels/level2/data';
 import './styles.css';
+import { cinematicRunId } from '../../shared/utils/cinematicRunId';
 
 const CHANNEL = 'level2-cinematic';
 export default function LevelTwoCinematic({ request, onComplete }: { request: LevelTwoCinematicRequest; onComplete: () => void }) {
   const frame = useRef<HTMLIFrameElement>(null);
-  const runId = useRef(crypto.randomUUID());
+  const runId = useRef(cinematicRunId());
   const sent = useRef(false);
   const callback = useRef(onComplete);
   callback.current = onComplete;

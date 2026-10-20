@@ -6,10 +6,11 @@ import type { WeightRun } from '../../levels/level3/data';
 import { endingInputFromRuns } from './input';
 import './styles.css';
 import { audioDirector } from '../../audio/director';
+import { cinematicRunId } from '../../shared/utils/cinematicRunId';
 
 /** The approved film holds its final page; it never opens the old theory slot. */
 export default function EndingCinematic({ levelOneMetricId, runs }: { levelOneMetricId: MetricId; runs: WeightRun[] }) {
-  const frame=useRef<HTMLIFrameElement>(null),runId=useRef(crypto.randomUUID());
+  const frame=useRef<HTMLIFrameElement>(null),runId=useRef(cinematicRunId());
   const [input]=useState(()=>endingInputFromRuns(levelOneMetricId,runs));
   const [finished,setFinished]=useState(false);
   const [labNote,setLabNote]=useState(false),[leaving,setLeaving]=useState(false);

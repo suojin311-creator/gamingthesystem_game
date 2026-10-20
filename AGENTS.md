@@ -1,5 +1,13 @@
 # Current integrated audio and classroom review
 
+- Classroom LAN compatibility: HTTP addresses other than localhost do not expose
+  `crypto.randomUUID`. All four film adapters use `cinematicRunId()` with
+  `crypto.getRandomValues`, while preserving iframe-source/run-token validation.
+  The user's two-client blank-screen report supersedes the reuse-only note below:
+  refresh the six game ZIPs and integrated classroom ZIP for this fix. Do not
+  rebuild the unaffected standalone Lab. Run `tests/classroom_lan.py --base-url`
+  against an actual non-loopback HTTP address; localhost does not cover this bug.
+
 - Three requested deliverables are documented in `play/DELIVERY_GUIDE.zh-CN.md`.
   The game and combined classroom ZIPs at d5d26fb are already built, verified and
   pushed. Reuse them. Build the current independent Lab with

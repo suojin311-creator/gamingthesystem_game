@@ -6,7 +6,8 @@
 | 2 | [Design-Lab-local.zip](Design-Lab-local.zip?raw=true) | `Start-Design-Lab.exe` | 独立 Design Lab，直接分享 Lab 参与链接 |
 | 3 | [Gaming-the-System-classroom.zip](Gaming-the-System-classroom.zip?raw=true) | `Start-Gaming-the-System.exe` | 同一个本地服务提供完整游戏和 Design Lab，ending 按钮直接进入本次课堂 |
 
-第 1 和第 3 份复用已验证、已上传的音频整合版本 `d5d26fb`，不重复重建游戏。
+第 1 和第 3 份已更新局域网 HTTP 动画切换修复，替代先前 `d5d26fb` 的文件。
+更新时先关闭旧启动程序，再完整解压新版并运行，从新主持页重新复制玩家链接。
 第 2 份使用同一套最新 Lab 流程、文案和音效，另外构建主持页入口；不包含游戏素材。
 
 两个启动程序适用于 Windows 10/11 x64。参与者使用浏览器，不需安装程序。

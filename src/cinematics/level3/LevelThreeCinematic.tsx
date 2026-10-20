@@ -4,9 +4,10 @@ import type { LevelThreeCinematicRequest } from '../../levels/level3/data';
 import { weightedSceneReply } from '../../levels/level3/dialogue';
 import CinematicPlaceholder from '../../levels/level3/CinematicPlaceholder';
 import './styles.css';
+import { cinematicRunId } from '../../shared/utils/cinematicRunId';
 
 function WeightedFilm({ request,onComplete }:{request:LevelThreeCinematicRequest;onComplete:()=>void}){
-  const frame=useRef<HTMLIFrameElement>(null),runId=useRef(crypto.randomUUID()),sent=useRef(false),callback=useRef(onComplete);
+  const frame=useRef<HTMLIFrameElement>(null),runId=useRef(cinematicRunId()),sent=useRef(false),callback=useRef(onComplete);
   callback.current=onComplete;
   useEffect(()=>{
     frame.current?.scrollIntoView({block:'center',behavior:'instant'});

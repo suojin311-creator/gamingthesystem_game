@@ -1,5 +1,13 @@
 # 最新接力：整合音频与课堂预览（2026-10-20）
 
+当前修复（2026-10-21）：用户报告两台浏览器/手机经分享链接玩游戏时动画切换变背景色。
+真实局域网 HTTP 复现为 `crypto.randomUUID is not a function`；localhost 没有此问题。
+四个电影适配器现在使用 `shared/utils/cinematicRunId.ts` 的 getRandomValues 随机标识，
+保持发送窗口与 run token 双重校验。六个常规游戏包及合并课堂包随修复更新，独立 Lab 无变化。
+回归脚本 `tests/classroom_lan.py` 必须传非回环 HTTP 地址，启动两个独立 Chromium 进程，
+一套桌面、一套手机触控视口，实际完成开头、三关、ending 与同一 Lab 的加入。
+不能将手机模拟或 Linux 服务验证描述为在真实手机/Safari/Windows 上测试。
+
 恢复连接后已确认 `d5d26fb9b99ae5d16c980d65540f2b902a63b863` 已上传到 GitHub。
 按用户顺序，先交付 `Full-game-play.zip`；其次独立 `Design-Lab-local.zip`；
 最后 `Gaming-the-System-classroom.zip`。第 1 和第 3 份复用已校验的 d5d26fb 文件。

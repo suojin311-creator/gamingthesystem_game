@@ -1,87 +1,93 @@
 {
-  "validatedAtUtc": "2026-10-20T18:20:15.209479+00:00",
+  "validatedAtUtc": "2026-10-20T22:00:38.518962+00:00",
   "branch": "animation/opening-integration",
-  "backups": {
-    "approvedEnding": "archive/full-game-approved-ending-before-audio-20261020",
-    "preMergeGame": "archive/full-game-before-audio-20261020"
-  },
-  "gameSourceSha256": "01ca43baca1ccf089f62b48ac443f1a7039541820696fc2f11b8e79849509ec6",
-  "classroomZipSha256": "925fa3bd49174c940bce81dfe07ddb6edf99d90f2462d9f843bb6b09b6546d0a",
-  "classroomEmbeddedGameHtmlSha256": "f6dc9ea9fbbfeb4c4ab56ec36b928a1bf0194c1e2a1b619d13d6893f48d73c4a",
+  "gameSourceSha256": "059cc0b6180b3136dc3ee60bdc7bc31c7cb4062c30b9ab6be84f5af094d09e62",
+  "classroomZipSha256": "13f2d8d115203ca3ad1fef346c7c2ef7e12117c3f32f843c35c22ae7301733c7",
+  "classroomEmbeddedGameHtmlSha256": "e7f2f94174b78a5027c621c7be7b73956ecb94e4a1706b383b4a2fff36bf3e73",
   "classroomArchive": "Gaming-the-System-classroom.zip",
   "nativeWindowsExecutionTested": false,
+  "physicalPhoneTested": false,
   "checks": {
-    "actualAudioOutput": {
-      "passed": 6,
-      "checks": [
-        "Packaged original score decodes and produces measurable audio through one context under the real classroom CSP",
-        "All five original score cues produce output; changes retain one shared audio context",
-        "Pause silences music and resume restores it",
-        "Master mute silences both buses and unmutes correctly",
-        "Music/effects sliders independently control actual output, including zero-volume silence",
-        "Browser visibility events silence the hidden page and restore playback on return"
+    "classroomLan": {
+      "passed": 11,
+      "baseUrl": "http://172.26.91.252:3016",
+      "clients": [
+        {
+          "client": "desktop-chromium",
+          "capabilities": {
+            "secure": false,
+            "randomUUID": "undefined",
+            "getRandomValues": "function"
+          },
+          "checks": [
+            "Actual LAN HTTP is an insecure context without crypto.randomUUID",
+            "Opening, chosen Level 1 film and its results complete without a blank interface",
+            "Level 2 films at 3, 6 and 100 metrics finish and reach their result interfaces",
+            "Two Level 3 films and comparison retain this player\u2019s distinct weight choices",
+            "Ending completes, enters the same Lab and receives its own participant identity; no runtime errors"
+          ],
+          "runtimeErrors": [],
+          "completionTokens": [
+            "ebcfebaa13c135b23a4523144b4ea833",
+            "8bae5f40ae41adaefa9f2345f235e0f4",
+            "f995431fc8800c1b8401696f4bf9af10",
+            "d1cf503fe87aad7bdfbd44aade6d459c",
+            "3edc71a982de181797a4fe235b23aa9f",
+            "db80142e5f9dc1136d13f8ca9d60ea16",
+            "c84c352504657b6e9283ee15a9864d83"
+          ],
+          "participantId": "e0a9b1a5007403e3e03e1f0a93cd6121"
+        },
+        {
+          "client": "phone-chromium",
+          "capabilities": {
+            "secure": false,
+            "randomUUID": "undefined",
+            "getRandomValues": "function"
+          },
+          "checks": [
+            "Actual LAN HTTP is an insecure context without crypto.randomUUID",
+            "Opening, chosen Level 1 film and its results complete without a blank interface",
+            "Level 2 films at 3, 6 and 100 metrics finish and reach their result interfaces",
+            "Two Level 3 films and comparison retain this player\u2019s distinct weight choices",
+            "Ending completes, enters the same Lab and receives its own participant identity; no runtime errors"
+          ],
+          "runtimeErrors": [],
+          "completionTokens": [
+            "de2cc28a06dd3670d8de9362f4c4b1c3",
+            "65db4aa3e0f0510db90a6a1eface0019",
+            "5feea05f9d9fba21f3b7edb2a812bddf",
+            "e09d296ddda39818de1059fc66d9bedb",
+            "2946ba48170142bc92af0f1f74cf6435",
+            "951d2f2361d646af3d543f063c7cc3ed",
+            "723fa6a04aa94f37fdd5084b5cbf1e4c"
+          ],
+          "participantId": "584f1012a38fdfd6b586e2450bfdf817"
+        }
       ],
-      "runtimeErrors": [],
-      "cspErrors": []
-    },
-    "endingToClassroom": {
-      "passed": 2,
-      "checks": [
-        "Two real Level 3 trials enter the approved fullscreen ending and its button connects to this classroom Lab",
-        "No runtime errors, CSP violations or external service requests"
-      ],
-      "runtimeErrors": [],
-      "cspErrors": [],
-      "externalRequests": []
-    },
-    "existingGameFunctionalPaths": {
-      "passed": 12,
-      "checks": [
-        "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
-        "The review ZIP contains separate Level 3 and connected Levels 1–3 HTMLs, identical to their tested latest packages",
-        "The complete ZIP shares one verified game build across its four offline entry points without duplicating movie assets",
-        "The actual complete-ZIP launcher fits desktop/phone, starts the full game at the opening and opens each standalone level directly offline",
-        "Packaged Level2.html completes 3 → 6 → 10 → 25 → 100 offline with normal motion",
-        "Packaged standalone Level3.html compares after two tests and can add an optional third, keeping all actual results offline",
-        "Packaged Level1.html uses the approved report, normal-speed cinematic, matching name/colours and settlement; Try another resets it without entering Level 2",
-        "Standalone Level 1 reload starts a fresh Level 1 run",
-        "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
-        "Packaged combined game carries the opening name, including ampersand and Chinese, through Level 1 UI, teacher/Alex captions, email and playable Levels 2–3",
-        "Combined preview reload starts at the opening rather than restoring a level or player identity",
-        "Packaged entries have no browser runtime errors"
-      ],
-      "runtimeErrors": []
+      "isolation": "Independent browser processes, game choices, completion tokens and Lab participants",
+      "physicalPhoneTested": false,
+      "nativeWindowsExecutionTested": false
     },
     "finalSixArchiveIntegrity": {
       "passed": 3,
       "checks": [
         "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
-        "The review ZIP contains separate Level 3 and connected Levels 1–3 HTMLs, identical to their tested latest packages",
+        "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
         "The complete ZIP shares one verified game build across its four offline entry points without duplicating movie assets"
       ],
-      "sourceSha256": "01ca43baca1ccf089f62b48ac443f1a7039541820696fc2f11b8e79849509ec6"
+      "sourceSha256": "059cc0b6180b3136dc3ee60bdc7bc31c7cb4062c30b9ab6be84f5af094d09e62"
     },
-    "classroomAnd21Participants": {
-      "passed": 8,
-      "checks": [
-        "The local host and three independent participant browsers join without accounts or names; the anonymous showcase and ranking are announced",
-        "The writing form has the agreed question without a helper line, accepts one reflection per person and starts the anonymous review automatically",
-        "Unanswered review remains in place beyond ten seconds, has no countdown/Next button, and faster voters wait",
-        "Each author sees exactly two other reflections, choices advance automatically, and the frozen ranking counts flowers only",
-        "Static ranking holds twelve seconds, questions cross-fade without background jumps, and Goodhart/quote reveal progressively without quotation marks",
-        "Host shutdown closes the classroom cleanly; state lives only in the running process",
-        "21 simultaneous independent browsers submit and complete 420 others-only card views / 420 votes in 36.4s, receiving the same exact tied ranking",
-        "No browser runtime errors or requests to external services"
-      ],
-      "runtimeErrors": [],
-      "externalRequests": [],
-      "scenario": "all",
-      "platform": "Linux server binary and Chromium; Windows PE cross-build is validated separately"
-    },
-    "goRaceTests": {
-      "passed": 10,
-      "output": "ok  \tgaming-the-system/design-lab\t1.060s"
-    }
+    "windowsBinaryChecks": [
+      "PE x64 header verified",
+      "All built web assets and illustration embedded byte-for-byte",
+      "CGO disabled; no Python/Node.js runtime or paid service required"
+    ]
   },
-  "validationScope": "Game functional paths passed before the final audio-gain hardening; final audio output, visibility, ending-to-Lab connection and all final archive hashes were checked again. Classroom review logic is unchanged from the tested 21-person flow. Windows PE x64 and embedded resources verified; actual service/browser execution used Linux."
+  "priorValidation": {
+    "commit": "954fb2f574d5b066fb6708536dc5845de7b7abbe",
+    "path": "docs/PREVIEW_VALIDATION.json",
+    "scope": "Existing audio output and 21-person Lab review behavior are unchanged. Those previous checks were not rerun; current checks target actual LAN HTTP, two simultaneous full game paths and rebuilt archive integrity."
+  },
+  "validationScope": "Real embedded Linux classroom service on non-loopback HTTP; independent Chromium processes with desktop and mobile/touch viewports complete the opening, Levels 1\u20133, ending and same-session Lab join. Seven real film completion tokens per player are distinct. Windows PE x64 and all embedded assets verified; no native Windows, physical phone or Safari execution claimed."
 }

@@ -1,0 +1,103 @@
+{
+  "validatedAtUtc": "2026-10-20T22:00:38.518962+00:00",
+  "branch": "animation/opening-integration",
+  "baselineCommit": "954fb2f574d5b066fb6708536dc5845de7b7abbe",
+  "regression": {
+    "loopback": {
+      "secureContext": true,
+      "randomUUID": "function",
+      "runtimeErrors": [],
+      "gamePresentAfterFilmEntry": true
+    },
+    "lan": {
+      "secureContext": false,
+      "randomUUID": "undefined",
+      "runtimeErrors": [
+        "crypto.randomUUID is not a function"
+      ],
+      "gamePresentAfterFilmEntry": false
+    }
+  },
+  "fix": "All four film adapters use HTTP-compatible Web Crypto getRandomValues tokens and retain iframe source/token checks.",
+  "gameSourceSha256": "059cc0b6180b3136dc3ee60bdc7bc31c7cb4062c30b9ab6be84f5af094d09e62",
+  "classroomZipSha256": "13f2d8d115203ca3ad1fef346c7c2ef7e12117c3f32f843c35c22ae7301733c7",
+  "classroomEmbeddedGameHtmlSha256": "e7f2f94174b78a5027c621c7be7b73956ecb94e4a1706b383b4a2fff36bf3e73",
+  "classroomArchive": "Gaming-the-System-classroom.zip",
+  "lanConcurrentBrowsers": {
+    "passed": 11,
+    "baseUrl": "http://172.26.91.252:3016",
+    "clients": [
+      {
+        "client": "desktop-chromium",
+        "capabilities": {
+          "secure": false,
+          "randomUUID": "undefined",
+          "getRandomValues": "function"
+        },
+        "checks": [
+          "Actual LAN HTTP is an insecure context without crypto.randomUUID",
+          "Opening, chosen Level 1 film and its results complete without a blank interface",
+          "Level 2 films at 3, 6 and 100 metrics finish and reach their result interfaces",
+          "Two Level 3 films and comparison retain this player\u2019s distinct weight choices",
+          "Ending completes, enters the same Lab and receives its own participant identity; no runtime errors"
+        ],
+        "runtimeErrors": [],
+        "completionTokens": [
+          "ebcfebaa13c135b23a4523144b4ea833",
+          "8bae5f40ae41adaefa9f2345f235e0f4",
+          "f995431fc8800c1b8401696f4bf9af10",
+          "d1cf503fe87aad7bdfbd44aade6d459c",
+          "3edc71a982de181797a4fe235b23aa9f",
+          "db80142e5f9dc1136d13f8ca9d60ea16",
+          "c84c352504657b6e9283ee15a9864d83"
+        ],
+        "participantId": "e0a9b1a5007403e3e03e1f0a93cd6121"
+      },
+      {
+        "client": "phone-chromium",
+        "capabilities": {
+          "secure": false,
+          "randomUUID": "undefined",
+          "getRandomValues": "function"
+        },
+        "checks": [
+          "Actual LAN HTTP is an insecure context without crypto.randomUUID",
+          "Opening, chosen Level 1 film and its results complete without a blank interface",
+          "Level 2 films at 3, 6 and 100 metrics finish and reach their result interfaces",
+          "Two Level 3 films and comparison retain this player\u2019s distinct weight choices",
+          "Ending completes, enters the same Lab and receives its own participant identity; no runtime errors"
+        ],
+        "runtimeErrors": [],
+        "completionTokens": [
+          "de2cc28a06dd3670d8de9362f4c4b1c3",
+          "65db4aa3e0f0510db90a6a1eface0019",
+          "5feea05f9d9fba21f3b7edb2a812bddf",
+          "e09d296ddda39818de1059fc66d9bedb",
+          "2946ba48170142bc92af0f1f74cf6435",
+          "951d2f2361d646af3d543f063c7cc3ed",
+          "723fa6a04aa94f37fdd5084b5cbf1e4c"
+        ],
+        "participantId": "584f1012a38fdfd6b586e2450bfdf817"
+      }
+    ],
+    "isolation": "Independent browser processes, game choices, completion tokens and Lab participants",
+    "physicalPhoneTested": false,
+    "nativeWindowsExecutionTested": false
+  },
+  "sixArchiveIntegrity": {
+    "passed": 3,
+    "checks": [
+      "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
+      "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
+      "The complete ZIP shares one verified game build across its four offline entry points without duplicating movie assets"
+    ],
+    "sourceSha256": "059cc0b6180b3136dc3ee60bdc7bc31c7cb4062c30b9ab6be84f5af094d09e62"
+  },
+  "windowsBinaryChecks": [
+    "PE x64 header verified",
+    "All built web assets and illustration embedded byte-for-byte",
+    "CGO disabled; no Python/Node.js runtime or paid service required"
+  ],
+  "nativeWindowsExecutionTested": false,
+  "physicalPhoneTested": false
+}
