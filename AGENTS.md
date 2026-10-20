@@ -1,5 +1,15 @@
 # Working on this game
 
+## Level 2 animation review before integration
+
+- The user wants to review the partner's Level 2 animation before merging it.
+  See `docs/LEVEL2_ANIMATION_PREVIEW.md` and `play/README.md` for the latest source
+  pin and download. The independent ZIP is `play/Level2-animation-preview.zip`;
+  its verification belongs in `play/LEVEL2_ANIMATION_PREVIEW.json`.
+- Preserve partner source and the existing game archives. This review uses its
+  independent export scripts, not the regular six-ZIP game release pipeline.
+  Gameplay integration remains a subsequent user-directed task.
+
 ## Current opening + Level 1 integration
 
 - The user approved merging the Level 1 preview into the opening + three-level

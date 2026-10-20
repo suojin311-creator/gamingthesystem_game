@@ -1,0 +1,113 @@
+{
+  "sourceRepository": "https://github.com/Mg614/gaming-the-system",
+  "sourceBranch": "feature/cinematic-level2-consequences",
+  "sourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb",
+  "sourceFilesSha256": "3b1cde4b51f41d41a35cdf18ad5bb718c4e1ba088aa0323e7905fc8a463d99c1",
+  "unchangedUpstreamFiles": 95,
+  "archive": "Level2-animation-preview.zip",
+  "zipSha256": "de31faee28f33871388023a5d2d6e68fefc2ca9bec30bb5a6e21b9b61000a8e5",
+  "html": "Level2-animation.html",
+  "htmlSha256": "83e71a6d200fb14debd626d1c8ede2df0d07561ea5335f0f8aa7dd55413e4727",
+  "fileSha256": {
+    "START-HERE.html": "748531ecb2ecbea00b9b431ed151034581d81a2999661d919d09e80e32142a27",
+    "Level2-animation.html": "83e71a6d200fb14debd626d1c8ede2df0d07561ea5335f0f8aa7dd55413e4727",
+    "START-HERE.txt": "61a53c581884945b77d1b642dcce0f692a81e99341ac12061bd8ac95837d4aea"
+  },
+  "scope": "Independent candidate review; original animation, no gameplay integration or upstream writes",
+  "build": {
+    "config": "scripts/level2-animation-preview.config.mjs",
+    "adaptations": [
+      "Standalone authored Level2DevPreview entry",
+      "Opening link returns to the offline launcher"
+    ],
+    "typecheck": "passed",
+    "productionBuild": "passed"
+  },
+  "entries": [
+    {
+      "label": "完整串联 / Full chain",
+      "state": "full"
+    },
+    {
+      "label": "可见行为指标 / Visible",
+      "state": "visible-heavy"
+    },
+    {
+      "label": "质量深度指标 / Quality",
+      "state": "quality-heavy"
+    },
+    {
+      "label": "混合指标 / Mixed",
+      "state": "mixed-broad"
+    },
+    {
+      "label": "六项指标 / Six",
+      "state": "six"
+    },
+    {
+      "label": "10 项要求",
+      "state": "10"
+    },
+    {
+      "label": "25 项要求",
+      "state": "25"
+    },
+    {
+      "label": "100 项＋结尾",
+      "state": "100"
+    },
+    {
+      "label": "只看结尾 / Final conflict",
+      "state": "final"
+    },
+    {
+      "label": "勾选动作 / Checking",
+      "state": "checking"
+    }
+  ],
+  "audio": "No source audio assets; silent",
+  "validatedAtUtc": "2026-10-20T01:09:19.513866+00:00",
+  "upstreamTests": {
+    "command": "node --experimental-strip-types --test tests/cinematics/level2.test.ts",
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0
+  },
+  "verification": {
+    "passed": 15,
+    "checks": [
+      "The actual independent ZIP passes CRC and all recorded file/ZIP SHA-256 checks",
+      "The offline launcher exposes all ten review entries and fits desktop and phone widths",
+      "visible-heavy: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
+      "quality-heavy: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
+      "mixed-broad: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
+      "six: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
+      "10: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
+      "25: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
+      "100: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
+      "final: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
+      "checking: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
+      "The original time control seeks to completion and back to the starting shot with native keyboard input",
+      "The authored preview controls and 16:9 stage remain available without horizontal overflow on phones",
+      "The launcher opens the full chain offline; 1x playback traverses all five segments and completes each unique request exactly once",
+      "The exact packaged preview produces no browser runtime errors and requests no external assets"
+    ],
+    "runtimeErrors": [],
+    "externalRequests": [],
+    "playback": "Nine independent entries at 4x, pause/replay/keyboard seeking, and one continuous 1x full-chain playback"
+  },
+  "runtimeVersions": {
+    "node": "v24.19.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.534",
+    "@remotion/player": "4.0.534",
+    "framer-motion": "12.43.0",
+    "vite": "7.3.7"
+  },
+  "preservation": {
+    "existingGameSourceAndArchives": "All recorded source files, prior ZIPs, game manifests and dependency files are byte-identical to the pre-review baseline",
+    "sourceBaseCommit": "eb5c3c4570b81830f7604565d7602031aaffdac6",
+    "sourceRepositoryWrites": false
+  }
+}

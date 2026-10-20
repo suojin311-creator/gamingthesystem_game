@@ -1,5 +1,11 @@
 # 最新试玩下载 / Latest downloads
 
+## Level 2 同伴动画：合并前独立预览
+
+[Level2-animation-preview.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/animation/opening-integration/play/Level2-animation-preview.zip?raw=true)：解压后打开 **START-HERE.html**，先选 **完整串联 / Full chain**。也可分别查看三项指标的三种分支、六项、10／25／100 项、结尾及 Alex 勾选动作。
+
+来源为同伴 `Mg614/gaming-the-system` 的 `feature/cinematic-level2-consequences`，固定在最新候选提交 `c8c1c83`。保留原动画和播放控制，当前无音频素材。此包供先行审阅，**尚未合并进下方完整游戏**。详细说明见 [Level 2 动画预览](../docs/LEVEL2_ANIMATION_PREVIEW.md)，来源与校验见 [LEVEL2_ANIMATION_PREVIEW.json](LEVEL2_ANIMATION_PREVIEW.json)。
+
 ## 最新合并版：开头＋三关
 
 [Gaming-the-System-complete.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/animation/opening-integration/play/Gaming-the-System-complete.zip?raw=true)：解压后打开 **START-HERE.html**，选择 **Play the full game**。也包含三个单独关卡。
