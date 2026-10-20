@@ -9,13 +9,13 @@
       "commit": "ba9f81ee619c14b3342104228cdd2a5cc2bc2b3b"
     }
   ],
-  "sourceSha256": "7462c5677bec90c8bb4090f645bc35324003c40c7b60be76fb171056b41d31b6",
-  "htmlSha256": "1ac17f2f7b1a81648fbdf5085ef50378b923a590da3a321efd56b7cf517962fe",
+  "sourceSha256": "483dfe3c3965e362befcf7ec453e668a619139555ab46d0f037df156e1e73352",
+  "htmlSha256": "fec3c181a2b3f2cd9bfa4d449dd342867062fdc9eebf0172c9316fe5ad0366cd",
   "archive": "Ending-animation-preview.zip",
-  "zipSha256": "c81a156bdaa00cab70cc8a6c271e509eb05fb72e0fe5474430684e7076759d9f",
+  "zipSha256": "6f192ac51822bc83c30240a36f2756e415149f83b8720f699aebe06e04937522",
   "fileSha256": {
-    "START-HERE.html": "c242e3fc8e762eb643da436e9e9735ab87475ef50807478e8831e81ed8a4dc68",
-    "Ending-animation.html": "1ac17f2f7b1a81648fbdf5085ef50378b923a590da3a321efd56b7cf517962fe",
+    "START-HERE.html": "f2fc1409b3bacff7b662b25ac545fb6c4f5b76f3e5866f7b804469c4e34095b3",
+    "Ending-animation.html": "fec3c181a2b3f2cd9bfa4d449dd342867062fdc9eebf0172c9316fe5ad0366cd",
     "START-HERE.txt": "dfe1a7677e20597ff3a50b569aaa8d3a0876060db94ff0a1cf3f905c87432aaf"
   },
   "scope": "Independent ending preview only; current game ZIPs are unchanged. No Level 3B, no mandatory near-even result, no early Goodhart reveal or Design Lab handoff.",

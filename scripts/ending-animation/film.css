@@ -1,6 +1,7 @@
 html,body,#root { margin:0; width:100%; height:100%; overflow:hidden; background:#0c1017; }
 .ending-viewport { position:fixed; inset:0; display:grid; place-items:center; background:#0c1017; }
 .ending-screen { position:relative; width:min(100vw,177.777778vh); height:min(100vh,56.25vw); container-type:inline-size; }
+.ending-screen[data-layout=handoff] { width:100%; height:100%; }
 .ending-adapted { position:absolute; inset:0; overflow:hidden; container-type:inline-size; background:#0c1017; color:#fff5e3; }
 .ending-actual-task { position:absolute; inset:0; }
 .ending-adapted .l3a-foreground,.ending-adapted .l3a-warm-light { display:none; }
@@ -13,11 +14,35 @@ html,body,#root { margin:0; width:100%; height:100%; overflow:hidden; background
 .ending-adapted .end-memory-caption span { font-size:.95cqw; }
 .ending-adapted .end-memory-caption p { font-size:2.25cqw; margin-top:.9cqw; }
 .ending-adapted .end-office { opacity:1 !important; }
-.ending-closing { position:absolute; left:9%; right:9%; top:34%; text-align:center; }
-.ending-closing-rule { display:block; width:2.5cqw; height:1px; margin:0 auto 2.5cqw; background:#ed806880; }
-.ending-closing p { font:italic 400 3.5cqw/1.5 Georgia,serif; color:#fff5e3; }
-.ending-closing-line { display:block; white-space:nowrap; }
-.ending-action-frame.opening-scene { position:absolute; z-index:4; left:50%; bottom:15%; translate:-50% 0; background:transparent; }
+.ending-adapted[data-section=closing] { background:#111510; }
+.ending-adapted[data-section=closing] .end-office-night { opacity:var(--handoff-night,.94) !important; background:#111510; }
+.ending-adapted[data-section=closing] .end-film-vignette { background:none; box-shadow:none; }
+.ending-handoff { position:absolute; inset:0; display:grid; grid-template-columns:.95fr 1.05fr; gap:8vw; align-items:center; padding:7vh 8vw 10vh; overflow:auto; }
+.ending-handoff::before { content:''; position:absolute; inset:0; background:linear-gradient(90deg,#11151020 0%,#1115106b 35%,#111510e8 60%,#111510f7 100%); pointer-events:none; }
+.ending-handoff-copy { position:relative; grid-column:2; color:#fff5e3; }
+.ending-handoff .ending-destination { margin:0 0 22px; color:#e4aa8f; font:600 clamp(11px,.85cqw,15px)/1.4 'Trebuchet MS',Arial,sans-serif; letter-spacing:.16em; }
+.ending-handoff h1 { margin:0 0 28px; color:#fff5e3; font:400 clamp(32px,4.2cqw,72px)/1.1 Georgia,serif; letter-spacing:-.025em; }
+.ending-handoff h1 span { display:block; }
+.ending-handoff .ending-game-connection,.ending-handoff .ending-next-task { font:400 clamp(15px,1.35cqw,22px)/1.65 'Trebuchet MS',Arial,sans-serif; }
+.ending-handoff .ending-game-connection { margin:0 0 16px; color:#c7c5b5; }
+.ending-handoff .ending-next-task { margin:0; color:#f0e7d4; }
+.ending-handoff-action.opening-scene { background:transparent; margin-top:32px; }
+@media(max-width:760px) {
+  .ending-handoff { display:flex; align-items:center; padding:32px 24px 60px; }
+  .ending-handoff::before { background:linear-gradient(90deg,#111510d9,#111510ed); }
+  .ending-handoff-copy { width:100%; max-width:580px; margin:auto; }
+  .ending-handoff .ending-destination { margin-bottom:18px; }
+  .ending-handoff h1 { margin-bottom:24px; }
+  .ending-handoff-action.opening-scene { margin-top:28px; }
+}
+@media(max-height:500px) {
+  .ending-handoff { padding:22px 6vw 36px; gap:6vw; grid-template-columns:.7fr 1.3fr; }
+  .ending-handoff .ending-destination { margin-bottom:12px; }
+  .ending-handoff h1 { font-size:34px; margin-bottom:18px; }
+  .ending-handoff .ending-game-connection,.ending-handoff .ending-next-task { font-size:14px; line-height:1.5; }
+  .ending-handoff .ending-game-connection { margin-bottom:10px; }
+  .ending-handoff-action.opening-scene { margin-top:20px; }
+}
 .ending-review-controls { position:fixed; z-index:10; left:12px; right:12px; bottom:10px; color:#eee1ca; font:12px/1.4 Arial,sans-serif; opacity:.3; }
 .ending-review-controls:hover,.ending-review-controls:focus-within,.ending-review-controls[open] { opacity:1; }
 .ending-review-controls summary { cursor:pointer; width:max-content; padding:6px 10px; background:#10151dd9; border-radius:4px; }
@@ -28,4 +53,4 @@ html,body,#root { margin:0; width:100%; height:100%; overflow:hidden; background
 .ending-review-controls .ending-scrub { flex:1; min-width:160px; }
 .ending-scrub input { width:100%; }
 .ending-loading { color:#ffe2a3; text-align:center; font:18px Georgia,serif; margin:40vh 20px; }
-@media(prefers-reduced-motion:reduce) { .ending-action-frame { transform:none !important; } }
+@media(prefers-reduced-motion:reduce) { .ending-handoff-action { transform:none !important; } }

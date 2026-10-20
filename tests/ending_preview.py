@@ -79,7 +79,7 @@ with sync_playwright() as p:
   assert page.locator('.l2-checklist-row-label').count()==6
   assert page.locator('.end-comparison-pair,.l3b-snapshot,.end-convergence').count()==0
   if case=='changed':
-   for name,t in [('opening',1),('level1',4.9),('level2',7.4),('level3',9.8),('question',11.5),('quote',21.5)]:
+   for name,t in [('opening',1),('level1',4.9),('level2',7.4),('level3',9.8),('question',11.5),('handoff',18.4)]:
     seek(t);page.locator('.ending-review-controls').evaluate('e=>e.open=false')
     page.locator('.ending-screen').screenshot(path=str(OUT/f'ending-{name}.png'))
    assert page.locator('.ending-design-button').count()==0
@@ -88,25 +88,40 @@ with sync_playwright() as p:
   page.locator('.ending-screen').screenshot(path=str(OUT/f'ending-{case}-final.png'))
   checks.append(case+': office reflection, centred gold You captions, one moving actual Level 3 task, notebook tick from five to six; no metric headers or repeated montage')
   print('PASS',checks[-1],flush=True)
- # Final composition, line layout and the deliberately unconnected button.
- final=page.locator('.ending-screen').evaluate('''e=>{const b=e.querySelector('.ending-design-button'),quote=e.querySelector('.ending-closing p'),lines=[...quote.children].map(n=>{const r=n.getBoundingClientRect();return {text:n.textContent,x:r.x,y:r.y,width:r.width,height:r.height};}),r=e.getBoundingClientRect(),br=b.getBoundingClientRect();return {lines,font:parseFloat(getComputedStyle(quote).fontSize),height:r.height,width:r.width,buttonTop:br.top,buttonBottom:br.bottom,quoteBottom:quote.getBoundingClientRect().bottom,disabled:b.getAttribute('aria-disabled')};}''')
- assert len(final['lines'])==2 and final['lines'][0]['text'].endswith(',') and final['lines'][1]['y']>final['lines'][0]['y'],final
- assert final['font']>40 and final['buttonTop']>final['quoteBottom'],final
- assert final['disabled']=='true'
- previous=page.url
- assert [line['text'] for line in final['lines']]==['When the number becomes the goal,','learning can get left behind.']
- assert page.locator('.end-theory,.end-recap-memories,.end-handoff-ghost').count()==0
+ # The final screen explains the next activity, rather than ending on a quote.
+ assert page.locator('.ending-closing-rule,.end-theory-rule,.end-theory,.end-convergence').count()==0
+ assert page.locator('.ending-destination').inner_text()=='NEXT · DESIGN LAB'
+ assert page.locator('#ending-next-title').inner_text()=='Share what real\nlearning looks like.'
+ assert page.locator('.ending-game-connection').inner_text()=='You’ve seen how numbers shaped Alex’s choices.'
+ assert page.locator('.ending-next-task').inner_text()=='Now write a short reflection, then read and vote on your classmates’ ideas.'
  assert 'Goodhart' not in page.locator('.ending-screen').inner_text()
+ previous=page.url
+ assert page.locator('.ending-design-button').get_attribute('aria-disabled')=='true'
  page.get_by_role('button',name='ENTER DESIGN LAB').click(force=True)
- assert page.url==previous and page.locator('.ending-closing').is_visible()
- checks.append('Closing uses the accepted number/learning text in two readable lines, has no premature theory title/quote, and the ENTER DESIGN LAB button does not navigate')
- # Mobile landscape and portrait: the entire 16:9 composition is visible.
- for width,height in [(1920,1080),(844,390),(390,844),(320,568)]:
+ assert page.url==previous and page.locator('.ending-handoff').is_visible()
+ checks.append('Destination, connection to Alex, reflection/read/vote task and single entry action are explicit; decorative rule and premature theory reveal are absent')
+ # At small sizes the entry page uses the viewport rather than shrinking prose
+ # into a letterboxed film. All guidance and the action must remain reachable.
+ for width,height in [(1280,720),(1920,1080),(1440,900),(844,390),(640,360),(390,844),(320,568)]:
   page.set_viewport_size({'width':width,'height':height})
-  fit=page.locator('.ending-screen').evaluate('''e=>{const r=e.getBoundingClientRect(),q=e.querySelector('.ending-closing p').getBoundingClientRect(),b=e.querySelector('button').getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height,q:q.bottom,b:b.top,overflow:document.documentElement.scrollWidth>innerWidth};}''')
-  assert fit['x']>=-.1 and fit['y']>=-.1 and fit['w']<=width+.1 and fit['h']<=height+.1 and not fit['overflow'] and fit['q']<fit['b'],fit
- checks.append('Full-viewport presentation retains the entire composition and separated closing/button at desktop, mobile landscape and portrait sizes')
+  fit=page.locator('.ending-handoff').evaluate("""e=>{const r=e.getBoundingClientRect(),copy=e.querySelector('.ending-handoff-copy').getBoundingClientRect(),t=e.querySelector('h1').getBoundingClientRect(),q=e.querySelector('.ending-next-task').getBoundingClientRect(),b=e.querySelector('button').getBoundingClientRect();return {width:r.width,height:r.height,copyLeft:copy.left,copyRight:copy.right,copyTop:copy.top,copyBottom:copy.bottom,clear:t.bottom<q.top&&q.bottom<b.top,font:parseFloat(getComputedStyle(e.querySelector('.ending-next-task')).fontSize),overflow:document.documentElement.scrollWidth>innerWidth};}""")
+  assert abs(fit['width']-width)<1 and abs(fit['height']-height)<1 and not fit['overflow'],fit
+  assert fit['copyLeft']>=0 and fit['copyRight']<=width+.1 and fit['copyTop']>=0 and fit['copyBottom']<=height-20 and fit['clear'] and fit['font']>=14,fit
+  if (width,height) in [(1280,720),(390,844)]:
+   page.screenshot(path=str(OUT/f'ending-handoff-{width}.png'))
+ checks.append('Seven desktop/landscape/portrait sizes retain readable full-viewport guidance and a visible non-overlapping action')
  page.set_viewport_size({'width':1280,'height':720})
+ if closing_only:
+  seek(16.6)
+  before=page.locator('.end-office-night').evaluate('e=>Number(getComputedStyle(e).opacity)')
+  assert page.locator('.ending-design-button').count()==0
+  seek(18.4)
+  after=page.locator('.end-office-night').evaluate('e=>Number(getComputedStyle(e).opacity)')
+  assert after<before and page.locator('.ending-design-button').count()==0
+  seek(19.2);assert page.locator('.ending-design-button').is_visible()
+  page.locator('summary').click();page.get_by_role('button',name='Replay',exact=True).click();page.get_by_role('button',name='Pause',exact=True).click()
+  assert page.locator('.ending-handoff').count()==0 and page.locator('.ending-screen').get_attribute('data-layout')=='film'
+  checks.append('Office lighting/content fade into the task page before its action appears; replay restores the cinematic layout')
  if not closing_only:
   # Live cross-dissolve and once-only ending hold. Accelerate only review time.
   load('changed');seek(.5)

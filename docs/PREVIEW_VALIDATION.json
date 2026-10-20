@@ -322,27 +322,27 @@
     "audio": "No source audio assets; silent"
   },
   "endingPreview": {
-    "validatedAtUtc": "2026-10-20T13:52:11.520179+00:00",
-    "scope": "Independent ending copy revision: negative Level 3 recap, number/learning closing, no early Goodhart title or quotation, ENTER DESIGN LAB button. Design Lab follow-up copy recorded but its independent implementation unchanged.",
-    "sourceBaseCommit": "92b3e774e1655fbea3a2020df2dc0d5901cafbb7",
+    "validatedAtUtc": "2026-10-20T14:12:34.529973+00:00",
+    "scope": "Independent ending handoff redesign: explicit Design Lab destination, invitation to describe real learning, connection to Alex and reflection/read/vote instructions. Scene beside left-aligned task copy, no decorative rule, full-viewport responsive guidance. Actual Design Lab remains unconnected.",
+    "sourceBaseCommit": "ee8900ab8bb3f29d9cfe1d6da9fb8c45860c4cfa",
     "buildCommand": "ENDING_ANIMATION_SOURCE=<pinned-ending> LEVEL3_ANIMATION_SOURCE=<pinned-3a> npm run package:ending-preview",
     "buildExitCode": 0,
     "testCommand": "python3 tests/ending_preview.py --closing-only",
-    "passed": 4,
+    "passed": 5,
     "checks": [
       "Level 3 recap uses the accepted negative consequence and still omits metric headings",
-      "Closing uses the accepted number/learning text in two readable lines, has no premature theory title/quote, and the ENTER DESIGN LAB button does not navigate",
-      "Full-viewport presentation retains the entire composition and separated closing/button at desktop, mobile landscape and portrait sizes",
+      "Destination, connection to Alex, reflection/read/vote task and single entry action are explicit; decorative rule and premature theory reveal are absent",
+      "Seven desktop/landscape/portrait sizes retain readable full-viewport guidance and a visible non-overlapping action",
+      "Office lighting/content fade into the task page before its action appears; replay restores the cinematic layout",
       "ZIP integrity/hashes pass; no runtime errors or external asset requests"
     ],
     "runtimeErrors": [],
     "externalRequests": [],
-    "zipSha256": "c81a156bdaa00cab70cc8a6c271e509eb05fb72e0fe5474430684e7076759d9f",
-    "previousFunctionalValidation": {
-      "reportCommit": "92b3e774e1655fbea3a2020df2dc0d5901cafbb7",
-      "passed": 8,
-      "zipSha256": "b956d7e3bbefd4876f1146360edec242a9a09ed1193f150b042ec0aed8227c38",
-      "scope": "Unchanged office opening, three real-history fixtures, useful short actions, caption styling, live soft joins, replay/hidden-tab clock and once-only completion; not repeated for the closing copy revision."
+    "zipSha256": "6f192ac51822bc83c30240a36f2756e415149f83b8720f699aebe06e04937522",
+    "previousReview": {
+      "reportCommit": "ee8900ab8bb3f29d9cfe1d6da9fb8c45860c4cfa",
+      "zipSha256": "c81a156bdaa00cab70cc8a6c271e509eb05fb72e0fe5474430684e7076759d9f",
+      "passed": 4
     },
     "artifacts": {
       "sources": [
@@ -355,22 +355,22 @@
           "commit": "ba9f81ee619c14b3342104228cdd2a5cc2bc2b3b"
         }
       ],
-      "sourceSha256": "7462c5677bec90c8bb4090f645bc35324003c40c7b60be76fb171056b41d31b6",
-      "htmlSha256": "1ac17f2f7b1a81648fbdf5085ef50378b923a590da3a321efd56b7cf517962fe",
+      "sourceSha256": "483dfe3c3965e362befcf7ec453e668a619139555ab46d0f037df156e1e73352",
+      "htmlSha256": "fec3c181a2b3f2cd9bfa4d449dd342867062fdc9eebf0172c9316fe5ad0366cd",
       "archive": "Ending-animation-preview.zip",
-      "zipSha256": "c81a156bdaa00cab70cc8a6c271e509eb05fb72e0fe5474430684e7076759d9f",
+      "zipSha256": "6f192ac51822bc83c30240a36f2756e415149f83b8720f699aebe06e04937522",
       "fileSha256": {
-        "START-HERE.html": "c242e3fc8e762eb643da436e9e9735ab87475ef50807478e8831e81ed8a4dc68",
-        "Ending-animation.html": "1ac17f2f7b1a81648fbdf5085ef50378b923a590da3a321efd56b7cf517962fe",
+        "START-HERE.html": "f2fc1409b3bacff7b662b25ac545fb6c4f5b76f3e5866f7b804469c4e34095b3",
+        "Ending-animation.html": "fec3c181a2b3f2cd9bfa4d449dd342867062fdc9eebf0172c9316fe5ad0366cd",
         "START-HERE.txt": "dfe1a7677e20597ff3a50b569aaa8d3a0876060db94ff0a1cf3f905c87432aaf"
       },
       "scope": "Independent ending preview only; current game ZIPs are unchanged. No Level 3B, no mandatory near-even result, no early Goodhart reveal or Design Lab handoff.",
       "audio": "No audio supplied; silent"
     },
     "visualReview": [
-      "Level 3 reads The weights changed. Learning still came second. without a metric heading.",
-      "Dark office holds the two-line number/learning reflection, with no Goodhart heading or attribution.",
-      "ENTER DESIGN LAB retains the exact brick-red opening-action style and remains an unconnected display entry."
+      "Desktop: the office remains visible beside a single clear task hierarchy and brick-red action.",
+      "Portrait: instructions retain readable text and use the viewport instead of shrinking into a letterboxed film.",
+      "The destination, connection to gameplay and reflection/read/vote task are all stated; no Goodhart spoiler or purposeless short rule."
     ],
     "fullGamePathsRepeated": false,
     "designLabConnected": false

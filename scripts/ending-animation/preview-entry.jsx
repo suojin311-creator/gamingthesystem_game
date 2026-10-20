@@ -52,7 +52,7 @@ function Preview() {
   const play=()=>{setPlaying(true);transition.current?.play();};
   const reset=()=>{seek(0,true);setCompleted(0);done.current=false;};
   return <>
-    <div className="ending-viewport" data-completions={completed} data-case={caseId}><div className="ending-screen">
+    <div className="ending-viewport" data-completions={completed} data-case={caseId}><div className="ending-screen" data-layout={sectionAt(time).id==='closing'?'handoff':'film'}>
       <Composition {...{input,time,reducedMotion,surface}} />
       {!ready&&<div className="ending-loading" role="status">{error?'The animation could not load. Please reopen the preview.':'Preparing the ending…'}</div>}
     </div></div>

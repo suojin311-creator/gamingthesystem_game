@@ -1,7 +1,8 @@
 # Ending 独立动画预览
 
 下载 `play/Ending-animation-preview.zip`，完整解压后打开 `START-HERE.html`。
-影片进入即占满浏览器视口，保持完整的 16:9 构图；不强制调用浏览器的全屏权限。
+影片保持完整的 16:9 构图，最后的 Design Lab 任务入口页铺满视口并适配窄屏文字；
+不强制调用浏览器的全屏权限。
 左下角「预览控制」可暂停、拖动、重播或跳到理论揭示。
 
 本次仅交付独立动画审阅包，未替换当前完整游戏中的 comparison/theory placeholder，
@@ -29,12 +30,18 @@
   之后逐渐压暗并揭示理论，不保留无对白的建立镜头。
 - Level 3 回忆下方改为「The weights changed. Learning still came second.」，
   明确学习被放到次要位置，不宣称所有真实试验的 effort 都发生改变。
-- 删除办公室里虚构的全绿结果面板。最终停留在两行通俗反思：
-  「When the number becomes the goal, / learning can get left behind.」。
-  Ending 不出现 Goodhart 名称或引文，也不再进入后续 recap / handoff 画面。
+- 删除办公室里虚构的全绿结果面板。最后不再使用孤立的格言式总结和短横线，
+  改成明确的 Design Lab 任务入口：
+  - NEXT · DESIGN LAB
+  - Share what real / learning looks like.
+  - You’ve seen how numbers shaped Alex’s choices.
+  - Now write a short reflection, then read and vote on your classmates’ ideas.
+  Ending 不出现 Goodhart 名称或引文，也不再进入同伴额外的 recap / handoff 画面。
 - 背景恢复较早版本的深色办公室，撤回用户拒绝的全屏灰绿处理。
-  最后两行反思采用开场办公室旁白的 Georgia、暖白 `#fff5e3`，
-  以斜体文字和按钮之间的留白建立层级，不使用理论标题或金色发光。
+  最后一页以办公室场景和渐暗背景承托右侧任务文字，标题使用 Georgia、暖白
+  `#fff5e3`，正文沿用开场 Trebuchet / Arial。通过目的、游戏关联、具体任务和
+  行动按钮建立层级，不增加抽象装饰。移动窄屏使用完整视口及可读字号，
+  不把说明文字缩进横向影片的黑边之间。
 - 用户最新要求覆盖了早先「不制作 Design Lab 按钮」的约定：
   现在直接导入开场 `styles.css`，使用 TAKE YOUR SEAT / BACK TO OFFICE 的同一个
   `opening-action` 砖红色按钮，暂为 `aria-disabled` 的展示入口，
@@ -63,7 +70,7 @@ python3 tests/ending_preview.py
 ```
 
 只调整结尾文案/排版时可运行 `python3 tests/ending_preview.py --closing-only`，
-检查实际 ZIP 的 Level 3 文案、最终两行文字、按钮、不同窗口尺寸和离线资源。
+检查实际 ZIP 的任务说明、按钮、七种窗口布局、背景过渡、重播和离线资源。
 
 交付目录需要安装与 lockfile 一致的依赖。影片、素材和控件都内嵌进单一 HTML，
 无需联网或安装；没有原始音频，保持静音。

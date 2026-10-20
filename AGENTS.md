@@ -11,7 +11,12 @@
   gold; Alex is light blue; labels are centred immediately above transparent captions.
 - Ending never displays the top-left metric heading, including in Level 3 memory.
   Keep that heading in the separate Level 3A task film; do not change its renderer.
-- Stop at "When the number becomes the goal, / learning can get left behind."
+- The user rejected the standalone aphorism/short decorative rule as unclear.
+  End with an explicit Design Lab task page: destination, invitation to share
+  what real learning looks like, connection to Alex, and reflection/read/vote steps.
+  Use the office scene beside left-aligned copy; no decorative short rule.
+  The handoff page fills the viewport with readable responsive type, while the
+  earlier film keeps its complete 16:9 composition.
   Do not reveal the Goodhart name or quote here; the formal reveal belongs after
   Design Lab. Its accepted quote is the short "When a measure becomes a target…"
   version, not the 1975 wording. See `docs/ENDING_DESIGN_LAB_COPY.md`.

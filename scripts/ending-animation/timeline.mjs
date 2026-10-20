@@ -1,5 +1,5 @@
 export const DURATION = 24;
-export const BUTTON_AT = 21.6;
+export const BUTTON_AT = 18.5;
 export const SECTIONS = [
   { id: 'opening', start: 0, end: 3.8, title: 'Office reflection' },
   { id: 'level1', start: 3.8, end: 5.9, title: 'Level 1 memory' },
@@ -7,10 +7,15 @@ export const SECTIONS = [
   { id: 'level3', start: 8, end: 10.1, title: 'Level 3 memory' },
   { id: 'question', start: 10.1, end: 14.5, title: 'The question' },
   { id: 'threshold', start: 14.5, end: 16.5, title: 'Closing transition' },
-  { id: 'closing', start: 16.5, end: DURATION, title: 'Closing reflection' },
+  { id: 'closing', start: 16.5, end: DURATION, title: 'Your next step · Design Lab' },
 ];
 export const RECAP = ['One metric became the target.', 'More metrics became a checklist.', 'The weights changed. Learning still came second.'];
-export const CLOSING_LINES = ['When the number becomes the goal,', 'learning can get left behind.'];
+export const HANDOFF_COPY = {
+  destination: 'NEXT · DESIGN LAB',
+  title: ['Share what real', 'learning looks like.'],
+  context: 'You’ve seen how numbers shaped Alex’s choices.',
+  task: 'Now write a short reflection, then read and vote on your classmates’ ideas.',
+};
 export const LINES = [
   { start: .15, end: 3.8, speaker: 'You', role: 'player', text: 'Maybe it’s not just about finding the perfect weights…' },
   { start: 10.1, end: 14.5, speaker: 'You', role: 'player', text: 'Am I improving learning, or just improving the numbers?' },

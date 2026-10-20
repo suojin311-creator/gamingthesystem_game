@@ -10,7 +10,10 @@
 |LEVEL 2 回忆|More metrics became a checklist.|
 |LEVEL 3 回忆|The weights changed. Learning still came second.|
 |回到办公室 · You|Am I improving learning, or just improving the numbers?|
-|Ending 最后一屏|When the number becomes the goal, / learning can get left behind.|
+|Ending 入口标识|NEXT · DESIGN LAB|
+|Ending 入口主标题|Share what real / learning looks like.|
+|连接游戏经历|You’ve seen how numbers shaped Alex’s choices.|
+|下一步具体任务|Now write a short reflection, then read and vote on your classmates’ ideas.|
 |Ending 按钮|ENTER DESIGN LAB →|
 |Design Lab 写作题|How would you know Alex is really learning?|
 |排名后第一问|Did the most flowers mean the deepest thinking?|
@@ -18,7 +21,9 @@
 |Design Lab 最终标题|Goodhart’s Law|
 |Design Lab 最终引文|When a measure becomes a target, it ceases to be a good measure.|
 
-斜线表示 ending 最后两行的换行位置，不显示斜线字符。中文解释不放进动画。
+斜线表示标题换行，不显示斜线字符。中文解释不放进动画。
+最新入口页替代了用户认为意义不明的「When the number becomes the goal…」总结页，
+用游戏关联和明确任务说明继续前进的目的；移除原来的短横线装饰。
 
 Ending 不显示 Goodhart 名称或上述理论引文，不提前增加一次写作疑问。
 这个疑问直接作为 Design Lab 的写作题，替代旧题

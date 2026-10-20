@@ -4,7 +4,8 @@
 
 Ending 现有[独立动画审阅包](ENDING_ANIMATION_PREVIEW.md)：从办公室反思开始，
 接三关短回忆，不预设平均权重，也不显示 metric 标题。深色办公室的结尾采用
-开场暖白衬线字体与砖红按钮，停留在 number 与 learning 的通俗反思，暂不跳转 Design Lab。
+开场暖白衬线字体与砖红按钮，最后转为明确说明写作、阅读和投票任务的全屏 Design Lab 入口，
+暂不跳转实际活动。
 Goodhart 名称与短句揭示留到 Design Lab 最后，见[确认文案](ENDING_DESIGN_LAB_COPY.md)。
 尚未替换游戏的 comparison/theory placeholder。
 
