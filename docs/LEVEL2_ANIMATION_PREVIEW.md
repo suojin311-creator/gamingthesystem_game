@@ -4,8 +4,8 @@
 
 ## 最新内容在哪里
 
-- 日常动画审阅改用固定网页：`https://suojin311-creator.github.io/gamingthesystem_game/animation-preview/Level2-animation.html?state=100`。需先在仓库 Settings → Pages 选择 **Deploy from a branch → animation/opening-integration → /docs**；该账号设置不能通过当前环境的 GitHub API 访问。网页文件已生成并随源码发布，设置启用前不能视为可访问。
-- 本轮网页已恢复完整 Coverage map，且从 Criterion 66 落笔特写起播。ZIP 仍是上一次 `80a519d` 的交付；审阅调整期间不重打 ZIP，用户确认后再统一发包。网页文件及其校验在 `docs/animation-preview/manifest.json`。
+- 用户因托管要求试用而恢复 **ZIP 交付**；以后直接提供下载包，不再要求开启 Pages 或试用。`docs/animation-preview/` 仅保留未启用的网页快照，不是交付入口。
+- 当前 ZIP 已恢复完整 Coverage map，且从 Criterion 66 落笔特写起播；包含标题、计数、证据便笺、每行证据编号和页脚。
 - 同伴交付：`Mg614/gaming-the-system` 的 `feature/cinematic-level2-consequences`，固定提交 `c8c1c83456c4e67cf627df399bfb67b3a9792adb`。原文件保持只读。
 - 当前完整游戏：本仓库动画分支的 `play/Full-game-play.zip`；全部版本总包为 `play/Gaming-the-System-complete.zip`。包含开头、Level 1／2 动画与三关。
 - 动画单独查看：`play/Level2-animation-preview.zip`；与游戏使用同一个影片 HTML，保留片外暂停／重播／进度工具。
@@ -58,15 +58,8 @@ Level 2 所有页面移除 Illustrative outcomes，不用其他说明文字替�
 
 ## 构建与复现
 
-日常网页审阅只需一个命令，不构建四个游戏入口或重打 ZIP：
-
-```sh
-LEVEL2_ANIMATION_SOURCE=/absolute/path/to/partner-checkout npm run preview:level2:web
-```
-
-该命令校验／更新影片缓存，生成独立审阅页并导出到 `docs/animation-preview/`。
-只推送动画分支；GitHub Pages 首次设置完成后随该分支更新。网页与游戏共用
-同一影片适配器；正式确认后再运行下方 ZIP 流水线。
+使用下方 ZIP 流水线交付，不配置网页托管。影片未变化时复用已有缓存；
+独立审阅包也复用同一影片及审阅页构建，不重复生成相同内容。
 
 已有云任务使用现有 checkout；除非用户要求，不新建 worktree。
 Level 1 缓存仍使用其已固定交付，说明见 ANIMATION_INTEGRATION.md。

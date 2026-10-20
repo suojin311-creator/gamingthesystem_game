@@ -1,8 +1,8 @@
 {
-  "validatedAtUtc": "2026-10-20T10:51:02.777147+00:00",
-  "version": "Restore the complete 100-metric Coverage map, start on the Criterion 66 pen insert, and export a fixed web review instead of rebuilding ZIPs",
+  "validatedAtUtc": "2026-10-20T10:56:17.462514+00:00",
+  "version": "ZIP delivery of the intact 100-metric Coverage map beginning on the Criterion 66 pen insert",
   "branch": "animation/opening-integration",
-  "sourceBaseCommit": "80a519d9295a8c07a795fd0842c89b4639c9ec39",
+  "sourceBaseCommit": "f41b099b85ec5f0dcacad46c618906bae0ed9355",
   "approvedLevelOneCommit": "411353dd3ef6103b20faa4debe9075b94f46e199",
   "gameBaselineCommit": "00c311682268ab8593d0733a4163b50ee41cd663",
   "backup": {
@@ -32,13 +32,14 @@
     "passed": 14,
     "historicalReportCommit": "762ce7edc796a85307bde282e78393e4773e7b10"
   },
-  "passed": 7,
+  "passed": 8,
   "build": {
-    "command": "LEVEL2_ANIMATION_SOURCE=/tmp/gts-level2-source npm run preview:level2:web",
+    "command": "npm run package:previews",
     "exitCode": 0,
-    "productionEntries": 1,
-    "pipelineTypeCheckExecutions": 0,
-    "zipArchivesRebuilt": false
+    "productionEntries": 4,
+    "pipelineTypeCheckExecutions": 1,
+    "zipArchivesRebuilt": true,
+    "reviewBuildReused": true
   },
   "suites": {
     "level2_animation_pacing.mjs": {
@@ -51,7 +52,8 @@
         "each final-reflection covered cut introduces its new caption immediately with the new portrait",
         "100-metric film starts on the Criterion 66 pen insert, then shows completion and a brief reaction"
       ],
-      "command": "LEVEL2_ANIMATION_SOURCE=/tmp/gts-level2-source node --experimental-strip-types --test tests/level2_animation_pacing.mjs"
+      "command": "LEVEL2_ANIMATION_SOURCE=/tmp/gts-level2-source node --experimental-strip-types --test tests/level2_animation_pacing.mjs",
+      "reusedFromCommit": "f41b099b85ec5f0dcacad46c618906bae0ed9355"
     },
     "targetedCoverageMapBrowserReview": {
       "passed": 1,
@@ -63,19 +65,27 @@
         "test-results/level2-coverage-full-map.png"
       ],
       "testedHtmlSha256": "d53933b25426041c332b1ea7cf337155d28d6cdd7931344bc33b499be5f7c688",
-      "runtimeErrors": []
+      "runtimeErrors": [],
+      "reusedFromCommit": "f41b099b85ec5f0dcacad46c618906bae0ed9355"
+    },
+    "currentZipIntegrity": {
+      "passed": 1,
+      "checks": [
+        "All seven ZIPs pass recorded archive/member SHA-256, readable-member CRC and GitHub-size checks; the review HTML/film exactly match the previously visually checked Coverage map and pen start."
+      ],
+      "archiveCount": 7
     }
   },
   "artifacts": {
-    "sourceSha256": "42b5c43fb726a6b7e59306ba2dccd0c0f1d962674a580ff10029a2cfdea1c1d2",
+    "sourceSha256": "36c270749d5928645c3ff5829cfbcbf8f383a6e93e1db9b4355cc3558f9adc5b",
     "cinematic": {
       "sourceSha256": "c7cac2c0dbf10fb696863c02d95752972cb2dd23a3243417d1209dda1a39c74a",
       "htmlSha256": "5a9a8f9536894aff12a953b69bdd19cb4518a64d7c9e331d81a8e2dcb05a42c1",
       "partnerSourceCommit": "1bdd0c442c4b345b3bd37d6f541742d4e55c732f"
     },
     "level2Cinematic": {
-      "sourceSha256": "f626b28e6f5a566df23b16035cd052fe7769f1c740662d54fa3032bf87990270",
-      "htmlSha256": "fc9b3fb815ebe5f0375decd9e712526474f3c3b7f13959f59976a1c00b9dc96c",
+      "sourceSha256": "4a19e4e89b3bd6dc2e33ecb3130c418e3faabc7f9896be44ddcc07b03fd6d28e",
+      "htmlSha256": "52a027a9dfcb92e3545a0c0222cb3eaa495d00943819b269d84a6b52fcc653a8",
       "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb"
     },
     "entries": [
@@ -90,8 +100,8 @@
         "archive": "Level2-play.zip",
         "html": "Level2.html",
         "build": "dist-level2/index.html",
-        "htmlSha256": "7e8dd1f7a4d1479c8d2da34a841085c79775d331690d6f1a2998f6bf25983a04",
-        "zipSha256": "0ff45b6aa1bf3f95e8272a1b5587b6f187d8b8dec25a16f78baff152dda3cd1f"
+        "htmlSha256": "f4accdbb2006962d02f8e806a8b49df447b61443e19171fd293262b67c6ec7a6",
+        "zipSha256": "aaf6b677497273baaceb623f1c59c4ca02d7d9b3b5abcab8acc5378473375135"
       },
       {
         "archive": "Level3-play.zip",
@@ -104,43 +114,43 @@
         "archive": "Full-game-play.zip",
         "html": "Gaming-the-System.html",
         "build": "dist/index.html",
-        "htmlSha256": "a2c3d911ede486774ba69607977da9077a4c20a02e11925e3489f2c278868503",
-        "zipSha256": "8df4cad2362606a02d923fcb54660e50733428fbd1c298d5ac5b332c017f2d36"
+        "htmlSha256": "39b36d80d9fff01bf31967564b995940bb071287f5dd4d2851cfb8fbb6851d84",
+        "zipSha256": "fb4c14f3e8619b24b81d13126247fcc8f56c6564df3c033e787aee47e7dde4fa"
       }
     ],
     "reviewBundle": {
       "archive": "Level3-and-Full-game-play.zip",
-      "zipSha256": "52e51813859f537f84414603ab5e5aa4ff4c4755356492cd6f5bde9d7c4055ed",
+      "zipSha256": "adee1058e344052447239cfed5cf2415391927400839a38245229f8a72351ccf",
       "htmlSha256": {
         "Level3/Level3.html": "fa19f73f82aa9a034d409c6205f7e67763ba8e15ef3a599b811644cc46d6d03d",
-        "Full-game/Gaming-the-System.html": "a2c3d911ede486774ba69607977da9077a4c20a02e11925e3489f2c278868503"
+        "Full-game/Gaming-the-System.html": "39b36d80d9fff01bf31967564b995940bb071287f5dd4d2851cfb8fbb6851d84"
       }
     },
     "completeBundle": {
       "archive": "Gaming-the-System-complete.zip",
-      "zipSha256": "de2cd859df603a13aa5597b2fc009b3261c99eadeea71025e6da2931a51e3b2f",
+      "zipSha256": "1493fb32a370894e82fd5d96e675812e40bece72a11cd1b5260e69b62c05c47e",
       "htmlSha256": {
         "START-HERE.html": "8696f4f200fa9b456aafa3242c1a0bf3adc235c974e6e2fec9b0b92a66d63506",
-        "Full-game/Gaming-the-System.html": "a2c3d911ede486774ba69607977da9077a4c20a02e11925e3489f2c278868503",
+        "Full-game/Gaming-the-System.html": "39b36d80d9fff01bf31967564b995940bb071287f5dd4d2851cfb8fbb6851d84",
         "Level1/Level1.html": "1e966cbc35c364f751d81e0778d8c529b2e454ebcb97a447e803092b82510199",
-        "Level2/Level2.html": "7e8dd1f7a4d1479c8d2da34a841085c79775d331690d6f1a2998f6bf25983a04",
+        "Level2/Level2.html": "f4accdbb2006962d02f8e806a8b49df447b61443e19171fd293262b67c6ec7a6",
         "Level3/Level3.html": "fa19f73f82aa9a034d409c6205f7e67763ba8e15ef3a599b811644cc46d6d03d"
       }
     }
   },
   "adaptedLevelTwoPreview": {
     "archive": "Level2-animation-preview.zip",
-    "zipSha256": "7299af483651db14a2c1c979b14c17af4ddc4e2bf2f5a4f29afb15f731e29d88",
+    "zipSha256": "b2437429ce7918cab2f035c4f9a70332ce9d3e2dea6089112acbd4ff5e3298b4",
     "html": "Level2-animation.html",
-    "htmlSha256": "1106c34f5861cfca616555855fd7fcd362c4a1d3082875979faa4dac3607cef0",
+    "htmlSha256": "d53933b25426041c332b1ea7cf337155d28d6cdd7931344bc33b499be5f7c688",
     "fileSha256": {
-      "START-HERE.html": "cc8d17d76d5cb6af7b4d8ea9b052a2a6a0d222c932c0ad9c8c57a3e430c015d5",
-      "Level2-animation.html": "1106c34f5861cfca616555855fd7fcd362c4a1d3082875979faa4dac3607cef0",
-      "START-HERE.txt": "4a224c731f2f3a44841a3bd3fb8ae736f0257b94d32a668ed22dfb4b6e121983"
+      "START-HERE.html": "966e69d00cad2756ade92ced4a1943ae6f54fcf249741bfef4363f5372ff2f7d",
+      "Level2-animation.html": "d53933b25426041c332b1ea7cf337155d28d6cdd7931344bc33b499be5f7c688",
+      "START-HERE.txt": "a5bb30daadba4fd4ed17fcf4ebac4e83878201c5ad1aa1b84121eedf5399e36a"
     },
     "film": {
-      "sourceSha256": "f626b28e6f5a566df23b16035cd052fe7769f1c740662d54fa3032bf87990270",
-      "htmlSha256": "fc9b3fb815ebe5f0375decd9e712526474f3c3b7f13959f59976a1c00b9dc96c",
+      "sourceSha256": "4a19e4e89b3bd6dc2e33ecb3130c418e3faabc7f9896be44ddcc07b03fd6d28e",
+      "htmlSha256": "52a027a9dfcb92e3545a0c0222cb3eaa495d00943819b269d84a6b52fcc653a8",
       "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb"
     }
   },
@@ -165,27 +175,26 @@
     "chromium": "154.0.8037.57"
   },
   "notes": [
-    "The 100-metric paper is now intact, including working notes, Coverage map title, tally, same-evidence slips, each E1/E2/E3 reference and the gaps/strategy footer. Three/six styling remains unchanged.",
-    "The first frame is the authored Criterion 66 pen insert at hundred source time 0.25s. The preceding world view is omitted. Full-map completion, brief reaction, both reflection captions and the existing opaque cuts remain.",
-    "The active nonverbal prelude is 2.5 seconds, including a 0.4-second reaction. The final priority page remains omitted.",
-    "Six pacing checks and the targeted two-frame browser visual check completed. The exported web HTML is byte-identical to that visual review. Full game paths were not rerun, following the user instruction.",
-    "The user selected a fixed web URL for subsequent review. Only the film/review was built; no game ZIPs were rebuilt or overwritten. The ZIP hashes below describe the last ZIP release at 80a519d.",
-    "Web review files are ready under docs/animation-preview. GitHub Pages needs the repository setting to use animation/opening-integration:/docs; deployment is not claimed as live or verified.",
-    "Partner source, stable branches and the original pre-Level-2 backup remain unchanged."
+    "User reverted to ZIP delivery. Do not request a trial or Pages setup; the unused web snapshot is not the delivery entry.",
+    "All six game ZIPs and the independent animation review ZIP now contain the corrected 100-metric film. It starts at the Criterion 66 pen insert and retains the complete Coverage map title, tally, evidence slips, row references and footer/gaps.",
+    "The film and review HTML are byte-identical to the targeted two-frame visual review at f41b099. Its six pacing checks and browser visual check are reused without rerunning unchanged scenes.",
+    "The current package pipeline completed one TypeScript check and four production builds. All seven archives were checked for recorded SHA-256, member CRC/readability and size.",
+    "Full game-path and browser playback checks were not rerun, following the user instruction. Historical checks are not claimed as newly run.",
+    "Only animation/opening-integration is updated. Partner source, stable branches and the original pre-Level-2 backup remain unchanged."
   ],
   "previousValidation": {
-    "commit": "80a519d9295a8c07a795fd0842c89b4639c9ec39",
-    "version": "Restore the 100-metric overview, checking and completion before reflection; remove the ending priority page and shorten silent holds",
-    "passed": 6,
-    "validatedAtUtc": "2026-10-20T10:27:58.444009+00:00",
+    "commit": "f41b099b85ec5f0dcacad46c618906bae0ed9355",
+    "version": "Restore the complete 100-metric Coverage map, start on the Criterion 66 pen insert, and export a fixed web review instead of rebuilding ZIPs",
+    "passed": 7,
+    "validatedAtUtc": "2026-10-20T10:51:02.777147+00:00",
     "report": "docs/PREVIEW_VALIDATION.json"
   },
   "verificationPolicy": {
-    "userRequestedWebReview": true,
-    "userRequestedDirectPreviewWithoutPathChecks": true,
+    "userRequestedZipDelivery": true,
     "gamePathChecksRun": false,
-    "browserChecksRun": true,
-    "browserCheckScope": "Only the changed 100-metric pen-start and full-map frames, from the byte-identical exported web film",
+    "browserChecksRun": false,
+    "reusedChecksFromCommit": "f41b099b85ec5f0dcacad46c618906bae0ed9355",
+    "reusedVisualFilmAndReviewHtmlAreByteIdentical": true,
     "previousGameChecksAreHistorical": true
   },
   "webPreview": {
@@ -207,13 +216,9 @@
       },
       "updatedZipArchives": false
     },
-    "pagesConfigurationRequired": {
-      "branch": "animation/opening-integration",
-      "path": "/docs",
-      "mode": "Deploy from a branch"
-    },
+    "pagesConfigurationRequired": false,
     "publicDeploymentVerified": false,
-    "reason": "GitHub Pages API and public site access are blocked by the execution environment proxy; repository account must enable Pages once."
-  },
-  "zipArtifactsVersion": "80a519d9295a8c07a795fd0842c89b4639c9ec39; ZIPs deliberately unchanged during web-only review"
+    "reason": "GitHub Pages API and public site access are blocked by the execution environment proxy; repository account must enable Pages once.",
+    "status": "Abandoned: user prefers ZIP delivery because hosting requested a trial. No hosting setup is requested."
+  }
 }

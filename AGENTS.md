@@ -1,12 +1,10 @@
 # Working on this game
 
-## Fast animation review
+## Animation review delivery
 
-- The user now prefers a fixed web preview, refreshed after changes. Build just
-  the affected film/review with `LEVEL2_ANIMATION_SOURCE=... npm run preview:level2:web`.
-  The static site is under `docs/animation-preview/`, published from this branch's
-  `/docs` folder through GitHub Pages. Do not rebuild ZIPs for each review tweak;
-  package them when the user confirms a version or explicitly requests a ZIP.
+- The user reverted to ZIP delivery because the hosting setup requested a trial.
+  Deliver updated animation/game ZIPs for review. Do not ask the user to enable
+  Pages, start a trial or configure hosting. The web export is an unused snapshot.
 - Target visual checks to the changed shots. Do not rerun full game paths for
   these animation tweaks: the user explicitly waived those checks.
 
@@ -52,8 +50,7 @@
   backed up on `archive/opening-before-level1-merge-20261020` at `32a91fe`.
 - Integrated ZIP releases use the regular four-entry/six-ZIP pipeline on this branch.
   Keep stable game branches and their aliases unchanged. Every visible playable
-  change must include the requested review delivery: the fixed web page for
-  animation review, or updated ZIPs when a ZIP release is requested.
+  change must include updated downloadable ZIPs for the user's review.
 - Reuse the approved iframe cinematic through the shared LevelOneExperience.
   Keep partner source read-only, and carry the opening's confirmed playerName
   through Gameplay, the operating UI and cinematic request without re-entry.

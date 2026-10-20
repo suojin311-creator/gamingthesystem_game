@@ -1,13 +1,11 @@
 # 最新试玩下载 / Latest downloads
 
-日常动画审阅已改用固定网页（首次需启用 GitHub Pages）：
-[Level 2 网页预览](https://suojin311-creator.github.io/gamingthesystem_game/animation-preview/Level2-animation.html?state=100)。
-本轮网页从落笔特写开始，并完整恢复 Coverage map 的标题、计数、证据与页脚。
-下方 ZIP 保留上一次 `80a519d` 的交付；网页确认后再统一重打 ZIP。
+按用户最新要求，继续使用 ZIP 交付，无需开通试用或配置托管。
+当前 ZIP 从落笔特写开始，并完整恢复 Coverage map 的标题、计数、证据与页脚。
 
 ## Level 2 调整版动画：已接入游戏 placeholder
 
-[Level2-animation-preview.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/animation/opening-integration/play/Level2-animation-preview.zip?raw=true)：解压后打开 **START-HERE.html**。可查看 Visible／Quality／Mixed、Six 和 100 项最终观察，或连续看这三类 placeholder 片段；100 项清单展示、勾选与完成画面已补回，缩短对话前的空等，仅删掉末尾优先级页；不插入独立 10／25 或 Checking 演示。
+[Level2-animation-preview.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/animation/opening-integration/play/Level2-animation-preview.zip?raw=true)：解压后打开 **START-HERE.html**。可查看 Visible／Quality／Mixed、Six 和 100 项最终观察，或连续看这三类 placeholder 片段；100 项从 Criterion 66 落笔特写起播，后面的 Coverage map 完整保留，缩短对话前的空等，删除末尾优先级页；不插入独立 10／25 或 Checking 演示。
 
 来源为同伴 `Mg614/gaming-the-system` 的 `feature/cinematic-level2-consequences`，固定在 `c8c1c83`；同伴源文件未修改。本包与下方完整版使用同一套裁剪和视觉调整：三项从 Alex 的第一句开始，保留字幕、Alex／You 和 checklist 原有条目／分组文字，沿用 Level 1 的颜色、节奏及转场。当前无音频素材。详见 [Level 2 动画说明](../docs/LEVEL2_ANIMATION_PREVIEW.md) 与 [校验](LEVEL2_ANIMATION_PREVIEW.json)。
 
