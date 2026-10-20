@@ -33,7 +33,8 @@ source_paths = sorted(path for path in (ROOT / 'src').rglob('*')
 source_paths += [ROOT / name for name in ['index.html', 'vite.config.ts', 'package.json', 'package-lock.json']]
 source_paths += [ROOT / 'scripts/level1-film.mjs']
 source_paths += [ROOT / 'scripts/level2-film.mjs']
-source_paths += [ROOT / 'scripts/level3-film.mjs', ROOT / 'scripts/cinematic-dissolve.mjs']
+source_paths += [ROOT / 'scripts/level3-film.mjs', ROOT / 'scripts/ending-film.mjs', ROOT / 'scripts/cinematic-dissolve.mjs']
+source_paths += sorted(path for path in (ROOT / 'scripts/ending-animation').glob('*') if path.suffix in {'.mjs', '.jsx', '.css'})
 source_paths += sorted(path for path in (ROOT / 'scripts/level1-settlement').glob('*') if path.suffix in {'.mjs', '.jsx'})
 source_paths += sorted(path for path in (ROOT / 'scripts/level2-animation').glob('*') if path.suffix in {'.mjs', '.jsx', '.css'})
 source_paths += sorted(path for path in (ROOT / 'scripts/level3-animation').glob('*') if path.suffix in {'.mjs', '.jsx', '.css'})
@@ -41,6 +42,7 @@ source_paths += [ROOT / 'src/cinematics/level3/mapping.mjs']
 cinematic = json.loads((ROOT / 'node_modules/.cache/level1-cinematic/manifest.json').read_text())
 level2_cinematic = json.loads((ROOT / 'node_modules/.cache/level2-cinematic/manifest.json').read_text())
 level3_cinematic = json.loads((ROOT / 'node_modules/.cache/level3-cinematic/manifest.json').read_text())
+ending_cinematic = json.loads((ROOT / 'node_modules/.cache/ending-cinematic/manifest.json').read_text())
 source_hash = hashlib.sha256()
 for path in source_paths:
     source_hash.update(str(path.relative_to(ROOT)).encode() + b'\0')
@@ -49,14 +51,16 @@ source_hash.update(b'level1-cinematic-html\0' + cinematic['htmlSha256'].encode()
 source_hash.update(b'level2-cinematic-html\0' + level2_cinematic['htmlSha256'].encode() + b'\0')
 source_hash.update(b'level3-cinematic-html\0' + level3_cinematic['htmlSha256'].encode() + b'\0')
 
-manifest = {'sourceSha256': source_hash.hexdigest(), 'cinematic': cinematic, 'level2Cinematic': level2_cinematic, 'level3Cinematic': level3_cinematic, 'entries': []}
+source_hash.update(b'ending-cinematic-html\0' + ending_cinematic['htmlSha256'].encode() + b'\0')
+
+manifest = {'endingCinematic': ending_cinematic, 'sourceSha256': source_hash.hexdigest(), 'cinematic': cinematic, 'level2Cinematic': level2_cinematic, 'level3Cinematic': level3_cinematic, 'entries': []}
 for archive, html, build, description in ENTRIES:
     instruction = (
         f'Gaming the System\n\n{description}\n\n'
         f'Extract this ZIP, then open {html} in Chrome or Edge.\n'
         'No installation or internet connection is needed after download.\n'
         'Closing or reloading starts a fresh game.\n'
-        'The full-game entry includes the opening; standalone levels start directly. Levels 1, 2 and Level 3A weighted-task scenes have integrated cinematics; comparison and theory remain placeholders.\n'
+        'The full-game entry includes the opening; standalone levels start directly. Levels 1, 2 and Level 3A weighted-task scenes have integrated cinematics; the approved full-screen ending follows the comparison. Design Lab is a separate classroom program.\n'
     )
     with zipfile.ZipFile(PLAY / archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:
         for name, data in [(html, builds[build]), ('START-HERE.txt', instruction.encode())]:
@@ -73,8 +77,10 @@ for archive, html, build, description in ENTRIES:
 
 # One review download contains both requested entry points from the same builds.
 review_archive = 'Level3-and-Full-game-play.zip'
+review_target = '../Full-game/Gaming-the-System.html?level=3'
+review_launcher = (f'<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url={review_target}"><title>Level 3</title><a href="{review_target}">Open Level 3</a></html>').encode()
 review_files = {
-    'Level3/Level3.html': builds['dist-level3/index.html'],
+    'Level3/Level3.html': review_launcher,
     'Full-game/Gaming-the-System.html': builds['dist/index.html'],
 }
 review_instruction = (
@@ -84,7 +90,8 @@ review_instruction = (
     'Extract the entire ZIP first, then open either HTML in Chrome or Edge.\n'
     'Both entries use the same latest gameplay. No installation or internet is needed.\n'
     'The combined game carries your Level 2 choices into Level 3; you can change them.\n'
-    'Previews stop at the final theory placeholder. Restart is not available.\n'
+    'The approved full-screen ending is integrated. Design Lab is delivered separately.\n'
+    'Keep the extracted folders together; the Level 3 launcher shares the full-game HTML.\n'
 )
 with zipfile.ZipFile(PLAY / review_archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:
     for name, data in [*review_files.items(), ('START-HERE.txt', review_instruction.encode())]:
@@ -93,6 +100,7 @@ with zipfile.ZipFile(PLAY / review_archive, 'w', compression=zipfile.ZIP_DEFLATE
         info.external_attr = 0o644 << 16
         bundle.writestr(info, data, compresslevel=9)
 manifest['reviewBundle'] = {
+    'sharedGameLaunchers': {'Level3/Level3.html': 'Full-game/Gaming-the-System.html?level=3'},
     'archive': review_archive,
     'zipSha256': digest((PLAY / review_archive).read_bytes()),
     'htmlSha256': {name: digest(data) for name, data in review_files.items()},
@@ -126,7 +134,7 @@ complete_instruction = (
     'The full game carries your choices from Level 2 into editable Level 3 priorities.\n'
     'Closing or reloading starts fresh; standalone levels stop at their own endings.\n'
     'The latest Level 2 framing and unassigned first Level 3 weights are included.\n'
-    'The opening, Level 1/2 and Level 3A classroom cinematics are integrated; comparison and final theory remain placeholders. Design Lab is not included.\n'
+    'The opening, Level 1/2 and Level 3A classroom cinematics are integrated; the approved ending follows Level 3. Design Lab is delivered separately.\n'
     'The standalone launchers share the Full-game HTML to avoid duplicating artwork. Keep the extracted folders together.\n'
 )
 with zipfile.ZipFile(PLAY / complete_archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:

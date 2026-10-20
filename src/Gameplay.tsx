@@ -32,5 +32,5 @@ export default function Gameplay({ playerName, initialLevel = 1, renderLevelOneC
   }, [initialLevel]);
   if (level === 1) return <LevelOneExperience playerName={playerName} renderCinematic={renderLevelOneCinematic} onComplete={result => { setPreviousResult(result); onLevelOneComplete?.(result); }} onContinue={() => { setLevel(2); window.scrollTo(0, 0); }} />;
   if (level === 2) return <LevelTwo playerName={playerName} previousMetricId={previousResult?.metricId} previousObservation={previousResult ? getMetric(previousResult.metricId)?.studentBehaviour : undefined} renderCinematic={renderLevelTwoCinematic} onComplete={onLevelTwoComplete} onContinue={result => { setPreviousTwoResult(result); setLevel(3); window.scrollTo(0, 0); }} />;
-  return <LevelThree playerName={playerName} initialMetricIds={previousTwoResult?.selectedMetricIds} renderCinematic={renderLevelThreeCinematic} onComplete={onLevelThreeComplete} onDesignLab={onDesignLab} />;
+  return <LevelThree playerName={playerName} levelOneMetricId={previousResult?.metricId} initialMetricIds={previousTwoResult?.selectedMetricIds} renderCinematic={renderLevelThreeCinematic} onComplete={onLevelThreeComplete} onDesignLab={onDesignLab} />;
 }

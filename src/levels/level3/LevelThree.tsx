@@ -1,4 +1,5 @@
 import './styles.css';
+import EndingCinematic from '../../cinematics/ending/EndingCinematic';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { METRIC_CATALOG, metricDefinition, type MetricId } from '../../shared/data/metrics';
 import Icon from '../../shared/components/Icon';
@@ -25,6 +26,7 @@ type Phase = 'intro' | 'choose' | 'weights' | 'publish' | 'scene' | 'result' | '
 export type LevelThreeProps = {
   playerName?: string;
   initialMetricIds?: readonly MetricId[];
+  levelOneMetricId?: MetricId;
   renderCinematic?: (request: LevelThreeCinematicRequest, onComplete: () => void) => ReactNode;
   onComplete?: (result: LevelThreeResult) => void;
   onDesignLab?: () => void;
@@ -44,7 +46,7 @@ function RunRows({ run, shown = 3 }: { run: WeightRun; shown?: number }) {
   })}</ol></div>;
 }
 
-export default function LevelThree({ playerName: suppliedName, initialMetricIds, renderCinematic, onComplete }: LevelThreeProps) {
+export default function LevelThree({ playerName: suppliedName, initialMetricIds, levelOneMetricId, renderCinematic, onComplete }: LevelThreeProps) {
   const playerName = resolvePlayerName(suppliedName);
   const carried = METRIC_CATALOG.filter(metric => initialMetricIds?.includes(metric.id)).map(metric => metric.id);
   const initialSelection = carried.length === 3 ? carried : [];
@@ -162,6 +164,8 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
   });
 
   const action = current && <button className="button primary-button" onClick={() => runs.length < MIN_TRIALS ? startEditor('different') : move('compare')}>{runs.length < MIN_TRIALS ? 'Try another split' : 'Compare the results'}<Icon name="arrow" /></button>;
+
+  if (phase === 'comparison-scene' && !renderCinematic) return <EndingCinematic levelOneMetricId={levelOneMetricId ?? selected[0]} runs={runs} />;
 
   return <div className="game-page level-three" data-phase={phase} data-round={runs.length} onPointerDown={feedback.unlock} onKeyDown={event => { feedback.unlock(); if (event.key === 'Escape') setGuideOpen(false); }}>
     <header className="l3-masthead"><a className="l3-wordmark" href="#level-three-main" aria-label="Gaming the System, skip to game"><span className="l3-emblem" aria-hidden="true">g<span>s</span><i /></span><span>GAMING<br /><b>THE SYSTEM</b></span></a><div className="l3-header-controls">{phase === 'weights' && <button className="guide-button" onClick={() => setGuideOpen(true)}><Icon name="question" /><span>Guide</span></button>}<button aria-pressed={!feedback.muted} disabled={!feedback.available} onClick={feedback.toggle}><Icon name={feedback.muted || !feedback.available ? 'muted' : 'sound'} /><span>{!feedback.available ? 'No audio' : feedback.muted ? 'Sound off' : 'Sound on'}</span></button></div></header>

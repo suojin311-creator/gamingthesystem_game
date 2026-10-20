@@ -55,7 +55,9 @@ cinematic `decision` or optional result `decision`. Completion fires once on
 Watch Alex's response after two or three observations and copies all runs.
 `compared` remains a near-even/uneven pair or null for uniform-pattern histories.
 Near-even is optional; no final dialogue claims an untested allocation was disproved. The current builds retain Level 2’s explicit six-metric hypothesis and final score-chasing response.
-The scene chain ends at the final theory placeholder. `onDesignLab` is reserved
+The default comparison entry now plays the approved full-viewport ending, using
+actual trial history, then holds the Design Lab invitation. It does not enter the
+old theory placeholder. Injected partner renderers retain their original contract. `onDesignLab` is reserved
 and never called; no player Restart control is present.
 
 Run `npm run dev -- --mode level3` for direct development,

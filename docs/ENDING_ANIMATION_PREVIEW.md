@@ -5,8 +5,11 @@
 不强制调用浏览器的全屏权限。
 左下角「预览控制」可暂停、拖动、重播或跳到 Design Lab 入口。
 
-本次仅交付独立动画审阅包，未替换当前完整游戏中的 comparison/theory placeholder，
-六个正式游戏 ZIP 保持不变。Level 3B 没有导入。
+已确认的 ending 现已接入游戏：点击 Watch Alex’s response 直接全视口播放，
+替换默认 comparison/theory 占位链，最后停留在入口页；不再提前揭示 Goodhart。
+六个正式游戏 ZIP 统一更新。独立审阅 ZIP 保留为已确认版本；Level 3B 没有导入。
+游戏传入实际两次/三次试验，并在完整流程中保留 Level 1 的实际 metric。
+单独进入 Level 3 时，早期关卡回忆只作通用示意，Level 3 使用真实试验。
 
 ## 已确认的适配
 
@@ -84,3 +87,10 @@ python3 tests/ending_preview.py
 包哈希和固定来源记录于 `play/ENDING_ANIMATION_PREVIEW.json`；
 本次定向结果附于 `docs/PREVIEW_VALIDATION.json` 的 `endingPreview`，
 其中原游戏验证仍对应未变化的六个游戏包。
+
+## 游戏接入验证
+
+`npm run package:previews` 统一生成六包；
+`python3 tests/ending_integration_release.py` 验证实际包、两次非平均试验、
+默认 comparison → 全视口 ending、真实任务、无审阅控件及最终停留。
+Design Lab 仍在 `feature/design-lab-local` 单独维护，未连接课堂地址。

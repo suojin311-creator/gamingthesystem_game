@@ -29,7 +29,9 @@ with zipfile.ZipFile(Path('play') / review['archive']) as bundle:
     assert bundle.testzip() is None
     assert set(bundle.namelist()) == {'Level3/Level3.html', 'Full-game/Gaming-the-System.html', 'START-HERE.txt'}
     for name, html in [('Level3/Level3.html', 'Level3.html'), ('Full-game/Gaming-the-System.html', 'Gaming-the-System.html')]:
-        assert bundle.read(name) == artifacts[html]
+        target=review.get('sharedGameLaunchers',{}).get(name)
+        if target: assert '../'+target in bundle.read(name).decode()
+        else: assert bundle.read(name) == artifacts[html]
         assert hashlib.sha256(bundle.read(name)).hexdigest() == review['htmlSha256'][name]
 assert hashlib.sha256((Path('play') / review['archive']).read_bytes()).hexdigest() == review['zipSha256']
 checks.append('The review ZIP contains separate Level 3 and connected Levels 1–3 HTMLs, identical to their tested latest packages')

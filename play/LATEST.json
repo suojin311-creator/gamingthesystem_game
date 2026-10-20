@@ -1,5 +1,19 @@
 {
-  "sourceSha256": "f6370ce5ed85cefa5657c6b6e49038070fd36fc08395ff412a4dd6fdcdc5e133",
+  "endingCinematic": {
+    "sources": [
+      {
+        "source": "ENDING_ANIMATION_SOURCE",
+        "commit": "e467998dfb07abc028e4e0fcb5567006e4eaa07d"
+      },
+      {
+        "source": "LEVEL3_ANIMATION_SOURCE",
+        "commit": "ba9f81ee619c14b3342104228cdd2a5cc2bc2b3b"
+      }
+    ],
+    "sourceSha256": "00467d3f886d05f102f926ddb31b7392b809a9af43d458835c82479c38affaeb",
+    "htmlSha256": "d2b64ca11bd73ffbf94a855589ab994bd8a505b913b2bf90ccd0dc9d56bdb304"
+  },
+  "sourceSha256": "68edd8ff441969a2ebc0600d88e358cc442e2a6bc7879a9b629258f67cf5dd4d",
   "cinematic": {
     "sourceSha256": "6dfc13c21ec845729acf12f236a05f622d5183b0cc25c0bc41abfbd706a10592",
     "htmlSha256": "bc9b53a0a14567b7ef376c7a774c60e54407a2bcc73c9d76807c101f44ced7ef",
@@ -20,45 +34,48 @@
       "archive": "Level1-play.zip",
       "html": "Level1.html",
       "build": "dist-level1/index.html",
-      "htmlSha256": "8b5b03ec23981a4ad9b3cb748d7def54e4cf8c7503dfb78ab007095cbaf79f18",
-      "zipSha256": "c6487c74b768a683946d8f98174f0c65290256dd811218c603df1f7ed3611f3a"
+      "htmlSha256": "2a9c05b7279ef065890a7926741a48bf3e67b523480e74685c8504560d71a397",
+      "zipSha256": "aba51b6267ba9372296b5325239f34ed6aaec59ee91de35370a7843dd8160d38"
     },
     {
       "archive": "Level2-play.zip",
       "html": "Level2.html",
       "build": "dist-level2/index.html",
-      "htmlSha256": "97f7cd64a71731b684e82e121d8961cc31694d33112577c16dbd0d63b3098e7b",
-      "zipSha256": "05a260e99b7ebbdd7407a5147d669546b6cb932435347b21e23b4a1cb5b07e8c"
+      "htmlSha256": "e22bd457708267a49f388b4bde125b25f27f067d63674fdda816b27500dbb0f0",
+      "zipSha256": "d4af8816054be80799904697dc73d41d4c613fef41bbb2be2d9d773b2105930a"
     },
     {
       "archive": "Level3-play.zip",
       "html": "Level3.html",
       "build": "dist-level3/index.html",
-      "htmlSha256": "0b4b577187bda15bd9e1bfd7b46868b10b8d31810a9858a5565b95bbb5b26182",
-      "zipSha256": "d7f289a01047d291f46cce625e0fa0d0e80af126cf65ae53c8c2afe63326d0d7"
+      "htmlSha256": "ec412238e7051cfd4d95f0d45748a519fa7eb14eea71e2f05b6fac9250a2e783",
+      "zipSha256": "3f893e7b7a02a5664c43a80e5a464aed73c4b2af80653cc1b666db5b191b55b1"
     },
     {
       "archive": "Full-game-play.zip",
       "html": "Gaming-the-System.html",
       "build": "dist/index.html",
-      "htmlSha256": "090d4449a4377a9723c525460f73b701e4359360cdfb06e719166cb62c83d380",
-      "zipSha256": "ab12be62b59173e6cfe52ecdccaacd1ec700d6ffd3757c443348306af5e99912"
+      "htmlSha256": "795282d217bebb2c85fe97f26c4ea9b8e8d39e944ab8c82c05111a81a5b8046c",
+      "zipSha256": "713d1c83137665e9793ded46c2a47108973c69463a3663490d9c30e48595a57e"
     }
   ],
   "reviewBundle": {
+    "sharedGameLaunchers": {
+      "Level3/Level3.html": "Full-game/Gaming-the-System.html?level=3"
+    },
     "archive": "Level3-and-Full-game-play.zip",
-    "zipSha256": "8a7d12f36c91a1dd59a64c1fe7dc26eb4cb70bbb84f95420106cbc4b2fc3ce91",
+    "zipSha256": "1c613b72119233ca6693a5c5c14514f5ae419f54075ed2e24ea9fc909a9aa885",
     "htmlSha256": {
-      "Level3/Level3.html": "0b4b577187bda15bd9e1bfd7b46868b10b8d31810a9858a5565b95bbb5b26182",
-      "Full-game/Gaming-the-System.html": "090d4449a4377a9723c525460f73b701e4359360cdfb06e719166cb62c83d380"
+      "Level3/Level3.html": "6145fe8898937d4be596d7d43feaa6dc41025de20bccf10772bd7d1efd25fc7a",
+      "Full-game/Gaming-the-System.html": "795282d217bebb2c85fe97f26c4ea9b8e8d39e944ab8c82c05111a81a5b8046c"
     }
   },
   "completeBundle": {
     "archive": "Gaming-the-System-complete.zip",
-    "zipSha256": "808ed1e38a49153a3c6bd0a5f42e63e0e1919cb6c06bf15cdb402c6f57cd77fd",
+    "zipSha256": "093bd8622c3c5641ae543bc287a60a94ef078d4c317a2cd22368cd6a0166ba94",
     "htmlSha256": {
       "START-HERE.html": "8696f4f200fa9b456aafa3242c1a0bf3adc235c974e6e2fec9b0b92a66d63506",
-      "Full-game/Gaming-the-System.html": "090d4449a4377a9723c525460f73b701e4359360cdfb06e719166cb62c83d380",
+      "Full-game/Gaming-the-System.html": "795282d217bebb2c85fe97f26c4ea9b8e8d39e944ab8c82c05111a81a5b8046c",
       "Level1/Level1.html": "450e033e9f5c5fa486be1cffc1f4b68fe7a0a7b94c7349e1e58349de049ebba4",
       "Level2/Level2.html": "31e95c332a52d200c6e8731f47c3d16535b3d8298bc130da455585e497447b17",
       "Level3/Level3.html": "6145fe8898937d4be596d7d43feaa6dc41025de20bccf10772bd7d1efd25fc7a"
