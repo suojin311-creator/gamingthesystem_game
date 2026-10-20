@@ -3,8 +3,9 @@
 本页是接下来动画合并的起点。已确认的玩法保留在 `src/levels/`；完成的动画代码和所需素材放入 [src/cinematics/](../src/cinematics/README.md)。日常预览与正式发包使用 [开发流程](DEVELOPMENT_WORKFLOW.md)。
 
 Ending 现有[独立动画审阅包](ENDING_ANIMATION_PREVIEW.md)：从办公室反思开始，
-接三关短回忆，不预设平均权重，也不显示 metric 标题。深色办公室的理论揭示采用
-开场暖白衬线字体与砖红按钮，停留后暂不跳转 Design Lab。
+接三关短回忆，不预设平均权重，也不显示 metric 标题。深色办公室的结尾采用
+开场暖白衬线字体与砖红按钮，停留在 number 与 learning 的通俗反思，暂不跳转 Design Lab。
+Goodhart 名称与短句揭示留到 Design Lab 最后，见[确认文案](ENDING_DESIGN_LAB_COPY.md)。
 尚未替换游戏的 comparison/theory placeholder。
 
 当前 `animation/opening-integration` 分支已接入开场：`FullGame` 先显示

@@ -6,10 +6,11 @@ export const SECTIONS = [
   { id: 'level2', start: 5.9, end: 8, title: 'Level 2 memory' },
   { id: 'level3', start: 8, end: 10.1, title: 'Level 3 memory' },
   { id: 'question', start: 10.1, end: 14.5, title: 'The question' },
-  { id: 'threshold', start: 14.5, end: 16.5, title: 'Theory reveal' },
-  { id: 'theory', start: 16.5, end: DURATION, title: 'Goodhart’s Law' },
+  { id: 'threshold', start: 14.5, end: 16.5, title: 'Closing transition' },
+  { id: 'closing', start: 16.5, end: DURATION, title: 'Closing reflection' },
 ];
-export const RECAP = ['One metric became the target.', 'More metrics became a checklist.', 'Scoring still guided the work.'];
+export const RECAP = ['One metric became the target.', 'More metrics became a checklist.', 'The weights changed. Learning still came second.'];
+export const CLOSING_LINES = ['When the number becomes the goal,', 'learning can get left behind.'];
 export const LINES = [
   { start: .15, end: 3.8, speaker: 'You', role: 'player', text: 'Maybe it’s not just about finding the perfect weights…' },
   { start: 10.1, end: 14.5, speaker: 'You', role: 'player', text: 'Am I improving learning, or just improving the numbers?' },

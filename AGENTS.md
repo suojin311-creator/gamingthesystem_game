@@ -2,8 +2,8 @@
 
 ## Current ending preview
 
-- The user approved an office reflection opening, three short memories and the
-  theory reveal. Remove the repeated You/Alex question and the three-window
+- The user approved an office reflection opening, three short memories and a
+  plain-language closing. Remove the repeated You/Alex question and the three-window
   convergence montage. See `docs/ENDING_ANIMATION_PREVIEW.md`.
 - This is an independent animation preview, not yet a replacement for the game
   theory/comparison placeholders. Keep the six current game ZIPs unchanged.
@@ -11,11 +11,16 @@
   gold; Alex is light blue; labels are centred immediately above transparent captions.
 - Ending never displays the top-left metric heading, including in Level 3 memory.
   Keep that heading in the separate Level 3A task film; do not change its renderer.
-- Stop at the two-line Goodhart quote, split after the comma. Restore the earlier
+- Stop at "When the number becomes the goal, / learning can get left behind."
+  Do not reveal the Goodhart name or quote here; the formal reveal belongs after
+  Design Lab. Its accepted quote is the short "When a measure becomes a target…"
+  version, not the 1975 wording. See `docs/ENDING_DESIGN_LAB_COPY.md`.
+  Level 3 recap: "The weights changed. Learning still came second."
+  Restore the earlier
   dark office; the user rejected the olive full-screen treatment. Use the opening
   office's Georgia/warm-white type and directly import its brick-red opening-action
   button style. No oversized uppercase title or glowing gold button.
-  The Design Lab button is display-only and must not launch Design Lab yet.
+  The ENTER DESIGN LAB button is display-only and must not launch Design Lab yet.
 - Pinned ending delivery: `e467998dfb07abc028e4e0fcb5567006e4eaa07d`.
   Keep it read-only and reuse only the approved 3A task renderer, never 3B.
   Build with `npm run package:ending-preview`; deliver `play/Ending-animation-preview.zip`.

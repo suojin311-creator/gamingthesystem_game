@@ -1,5 +1,5 @@
 """Target the actual offline ending ZIP, its real-history shots and final hold."""
-import base64, hashlib, json, threading
+import base64, hashlib, json, sys, threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from zipfile import ZipFile
@@ -28,6 +28,7 @@ server=ThreadingHTTPServer(('127.0.0.1',0),Handler)
 threading.Thread(target=server.serve_forever,daemon=True).start()
 base=f'http://127.0.0.1:{server.server_port}'
 errors=[];external=[];checks=[]
+closing_only='--closing-only' in sys.argv
 cases={
  'changed':['level3.prep.low','level3.discuss.high','level3.peer.medium'],
  'unchanged':['level3.part.high','level3.focus.medium','level3.reflect.low'],
@@ -47,6 +48,16 @@ with sync_playwright() as p:
   page.wait_for_function('!document.querySelector(".ending-loading")')
   page.locator('summary').click();page.get_by_role('button',name='Pause',exact=True).click()
  for case,expected in cases.items():
+  if closing_only:
+   load(case);seek(9.4)
+   assert page.locator('.end-memory-caption p').inner_text()=='The weights changed. Learning still came second.'
+   assert page.locator('.ending-metric-name').count()==0
+   page.locator('details').evaluate('e=>e.open=false')
+   page.locator('.ending-screen').screenshot(path=str(OUT/'ending-level3.png'))
+   seek(24)
+   page.locator('.ending-screen').screenshot(path=str(OUT/'ending-changed-final.png'))
+   checks.append('Level 3 recap uses the accepted negative consequence and still omits metric headings')
+   break
   load(case);seek(1)
   assert page.locator('.end-office').count()==1 and page.locator('.ending-actual-task,.ending-metric-name').count()==0
   assert page.locator('[role=status]').inner_text()=='Maybe it’s not just about finding the perfect weights…'
@@ -72,44 +83,48 @@ with sync_playwright() as p:
     seek(t);page.locator('.ending-review-controls').evaluate('e=>e.open=false')
     page.locator('.ending-screen').screenshot(path=str(OUT/f'ending-{name}.png'))
    assert page.locator('.ending-design-button').count()==0
-  seek(24);assert page.locator('.end-recap-memories,.end-handoff-ghost,.end-dashboard,.ending-metric-name').count()==0
+  seek(24);assert page.locator('.end-recap-memories,.end-handoff-ghost,.end-dashboard,.ending-metric-name,.end-theory').count()==0
   page.locator('.ending-review-controls').evaluate('e=>e.open=false')
   page.locator('.ending-screen').screenshot(path=str(OUT/f'ending-{case}-final.png'))
   checks.append(case+': office reflection, centred gold You captions, one moving actual Level 3 task, notebook tick from five to six; no metric headers or repeated montage')
   print('PASS',checks[-1],flush=True)
  # Final composition, line layout and the deliberately unconnected button.
- final=page.locator('.ending-screen').evaluate('''e=>{const b=e.querySelector('.ending-design-button'),quote=e.querySelector('.end-theory p'),lines=[...quote.children].map(n=>{const r=n.getBoundingClientRect();return {text:n.textContent,x:r.x,y:r.y,width:r.width,height:r.height};}),r=e.getBoundingClientRect(),br=b.getBoundingClientRect();return {lines,font:parseFloat(getComputedStyle(quote).fontSize),height:r.height,width:r.width,buttonTop:br.top,buttonBottom:br.bottom,quoteBottom:quote.getBoundingClientRect().bottom,disabled:b.getAttribute('aria-disabled'),title:e.querySelector('.end-theory h1').getBoundingClientRect().bottom};}''')
+ final=page.locator('.ending-screen').evaluate('''e=>{const b=e.querySelector('.ending-design-button'),quote=e.querySelector('.ending-closing p'),lines=[...quote.children].map(n=>{const r=n.getBoundingClientRect();return {text:n.textContent,x:r.x,y:r.y,width:r.width,height:r.height};}),r=e.getBoundingClientRect(),br=b.getBoundingClientRect();return {lines,font:parseFloat(getComputedStyle(quote).fontSize),height:r.height,width:r.width,buttonTop:br.top,buttonBottom:br.bottom,quoteBottom:quote.getBoundingClientRect().bottom,disabled:b.getAttribute('aria-disabled')};}''')
  assert len(final['lines'])==2 and final['lines'][0]['text'].endswith(',') and final['lines'][1]['y']>final['lines'][0]['y'],final
- assert final['font']>40 and final['buttonTop']>final['quoteBottom'] and final['title']<final['lines'][0]['y'],final
+ assert final['font']>40 and final['buttonTop']>final['quoteBottom'],final
  assert final['disabled']=='true'
  previous=page.url
- page.get_by_role('button',name='Go to Design Lab').click(force=True)
- assert page.url==previous and page.locator('.end-theory h1').inner_text()=='Goodhart’s Law'
- checks.append('Theory quote uses two explicit lines split at the comma, larger than 40px at 1280px; distinct button sits below and does not navigate')
+ assert [line['text'] for line in final['lines']]==['When the number becomes the goal,','learning can get left behind.']
+ assert page.locator('.end-theory,.end-recap-memories,.end-handoff-ghost').count()==0
+ assert 'Goodhart' not in page.locator('.ending-screen').inner_text()
+ page.get_by_role('button',name='ENTER DESIGN LAB').click(force=True)
+ assert page.url==previous and page.locator('.ending-closing').is_visible()
+ checks.append('Closing uses the accepted number/learning text in two readable lines, has no premature theory title/quote, and the ENTER DESIGN LAB button does not navigate')
  # Mobile landscape and portrait: the entire 16:9 composition is visible.
  for width,height in [(1920,1080),(844,390),(390,844),(320,568)]:
   page.set_viewport_size({'width':width,'height':height})
-  fit=page.locator('.ending-screen').evaluate('''e=>{const r=e.getBoundingClientRect(),q=e.querySelector('.end-theory p').getBoundingClientRect(),b=e.querySelector('button').getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height,q:q.bottom,b:b.top,overflow:document.documentElement.scrollWidth>innerWidth};}''')
+  fit=page.locator('.ending-screen').evaluate('''e=>{const r=e.getBoundingClientRect(),q=e.querySelector('.ending-closing p').getBoundingClientRect(),b=e.querySelector('button').getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height,q:q.bottom,b:b.top,overflow:document.documentElement.scrollWidth>innerWidth};}''')
   assert fit['x']>=-.1 and fit['y']>=-.1 and fit['w']<=width+.1 and fit['h']<=height+.1 and not fit['overflow'] and fit['q']<fit['b'],fit
- checks.append('Full-viewport presentation retains the entire composition and separated quote/button at desktop, mobile landscape and portrait sizes')
+ checks.append('Full-viewport presentation retains the entire composition and separated closing/button at desktop, mobile landscape and portrait sizes')
  page.set_viewport_size({'width':1280,'height':720})
- # Live cross-dissolve and once-only ending hold. Accelerate only review time.
- load('changed');seek(.5)
- page.evaluate('''()=>{window.audit={dissolve:false,sections:[]};window.timer=setInterval(()=>{const e=document.querySelector('.end-stage'),h=document.querySelector('[data-cinematic-dissolve]');if(!audit.sections.includes(e.dataset.section))audit.sections.push(e.dataset.section);if(h){const opacity=Number(getComputedStyle(h).opacity);if(opacity>0&&opacity<1)audit.dissolve=true;}},20);}''')
- page.get_by_label('Speed',exact=True).select_option('4');page.get_by_role('button',name='Play',exact=True).click()
- page.wait_for_function('document.querySelector(".ending-viewport").dataset.completions==="1"',timeout=35000)
- page.wait_for_timeout(300)
- assert page.locator('.ending-viewport').get_attribute('data-completions')=='1'
- assert page.locator('.end-stage').get_attribute('data-elapsed')=='24.000'
- audit=page.evaluate('()=>{clearInterval(timer);return audit;}')
- assert audit['dissolve'] and audit['sections']==['opening','level1','level2','level3','question','threshold','theory'],audit
- checks.append('Live joins cross-dissolve; playback ends once and holds the theory/button rather than entering another scene')
- page.get_by_role('button',name='Replay',exact=True).click();page.get_by_role('button',name='Pause',exact=True).click()
- assert page.locator('.end-stage').get_attribute('data-section')=='opening'
- seek(1);page.evaluate("()=>{Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'));}")
- page.get_by_role('button',name='Play',exact=True).click();before=page.locator('.end-stage').get_attribute('data-elapsed');page.wait_for_timeout(250)
- assert page.locator('.end-stage').get_attribute('data-elapsed')==before
- checks.append('Replay resets the opening and hidden tabs hold the reading clock')
+ if not closing_only:
+  # Live cross-dissolve and once-only ending hold. Accelerate only review time.
+  load('changed');seek(.5)
+  page.evaluate('''()=>{window.audit={dissolve:false,sections:[]};window.timer=setInterval(()=>{const e=document.querySelector('.end-stage'),h=document.querySelector('[data-cinematic-dissolve]');if(!audit.sections.includes(e.dataset.section))audit.sections.push(e.dataset.section);if(h){const opacity=Number(getComputedStyle(h).opacity);if(opacity>0&&opacity<1)audit.dissolve=true;}},20);}''')
+  page.get_by_label('Speed',exact=True).select_option('4');page.get_by_role('button',name='Play',exact=True).click()
+  page.wait_for_function('document.querySelector(".ending-viewport").dataset.completions==="1"',timeout=35000)
+  page.wait_for_timeout(300)
+  assert page.locator('.ending-viewport').get_attribute('data-completions')=='1'
+  assert page.locator('.end-stage').get_attribute('data-elapsed')=='24.000'
+  audit=page.evaluate('()=>{clearInterval(timer);return audit;}')
+  assert audit['dissolve'] and audit['sections']==['opening','level1','level2','level3','question','threshold','closing'],audit
+  checks.append('Live joins cross-dissolve; playback ends once and holds the closing/button rather than entering another scene')
+  page.get_by_role('button',name='Replay',exact=True).click();page.get_by_role('button',name='Pause',exact=True).click()
+  assert page.locator('.end-stage').get_attribute('data-section')=='opening'
+  seek(1);page.evaluate("()=>{Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'));}")
+  page.get_by_role('button',name='Play',exact=True).click();before=page.locator('.end-stage').get_attribute('data-elapsed');page.wait_for_timeout(250)
+  assert page.locator('.end-stage').get_attribute('data-elapsed')==before
+  checks.append('Replay resets the opening and hidden tabs hold the reading clock')
  context.close();browser.close()
 server.shutdown()
 assert not errors,errors

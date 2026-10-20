@@ -13,11 +13,10 @@ html,body,#root { margin:0; width:100%; height:100%; overflow:hidden; background
 .ending-adapted .end-memory-caption span { font-size:.95cqw; }
 .ending-adapted .end-memory-caption p { font-size:2.25cqw; margin-top:.9cqw; }
 .ending-adapted .end-office { opacity:1 !important; }
-.ending-adapted .end-theory { left:10%; right:10%; top:23% !important; }
-.ending-adapted .end-theory-rule { width:2.5cqw; height:1px; margin:0 auto 2cqw; background:#ed806880; box-shadow:none; }
-.ending-adapted .end-theory h1 { font:400 4.4cqw/1.2 Georgia,serif; letter-spacing:.01em !important; color:#fff5e3; white-space:nowrap; text-shadow:none; }
-.ending-adapted .end-theory p { max-width:none; margin:2.8cqw auto 0; font:italic 400 3.2cqw/1.5 Georgia,serif; color:#fff5e3; }
-.ending-adapted .end-quote-line { display:block; white-space:nowrap; }
+.ending-closing { position:absolute; left:9%; right:9%; top:34%; text-align:center; }
+.ending-closing-rule { display:block; width:2.5cqw; height:1px; margin:0 auto 2.5cqw; background:#ed806880; }
+.ending-closing p { font:italic 400 3.5cqw/1.5 Georgia,serif; color:#fff5e3; }
+.ending-closing-line { display:block; white-space:nowrap; }
 .ending-action-frame.opening-scene { position:absolute; z-index:4; left:50%; bottom:15%; translate:-50% 0; background:transparent; }
 .ending-review-controls { position:fixed; z-index:10; left:12px; right:12px; bottom:10px; color:#eee1ca; font:12px/1.4 Arial,sans-serif; opacity:.3; }
 .ending-review-controls:hover,.ending-review-controls:focus-within,.ending-review-controls[open] { opacity:1; }

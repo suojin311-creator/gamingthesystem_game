@@ -322,26 +322,28 @@
     "audio": "No source audio assets; silent"
   },
   "endingPreview": {
-    "validatedAtUtc": "2026-10-20T13:13:40.246644+00:00",
-    "scope": "Independent ending revision: office reflection, three short moving memories, return to office question and theory. No top-left metric headings, no repeated You/Alex exchange or convergence montage. Dark office restored; warm-white Georgia type and the directly imported opening-action button style.",
-    "sourceBaseCommit": "d17368b8636b47488de67869a198fd9b57db0fc3",
+    "validatedAtUtc": "2026-10-20T13:52:11.520179+00:00",
+    "scope": "Independent ending copy revision: negative Level 3 recap, number/learning closing, no early Goodhart title or quotation, ENTER DESIGN LAB button. Design Lab follow-up copy recorded but its independent implementation unchanged.",
+    "sourceBaseCommit": "92b3e774e1655fbea3a2020df2dc0d5901cafbb7",
     "buildCommand": "ENDING_ANIMATION_SOURCE=<pinned-ending> LEVEL3_ANIMATION_SOURCE=<pinned-3a> npm run package:ending-preview",
     "buildExitCode": 0,
-    "testCommand": "python3 tests/ending_preview.py",
-    "passed": 8,
+    "testCommand": "python3 tests/ending_preview.py --closing-only",
+    "passed": 4,
     "checks": [
-      "changed: office reflection, centred gold You captions, one moving actual Level 3 task, notebook tick from five to six; no metric headers or repeated montage",
-      "unchanged: office reflection, centred gold You captions, one moving actual Level 3 task, notebook tick from five to six; no metric headers or repeated montage",
-      "three: office reflection, centred gold You captions, one moving actual Level 3 task, notebook tick from five to six; no metric headers or repeated montage",
-      "Theory quote uses two explicit lines split at the comma, larger than 40px at 1280px; distinct button sits below and does not navigate",
-      "Full-viewport presentation retains the entire composition and separated quote/button at desktop, mobile landscape and portrait sizes",
-      "Live joins cross-dissolve; playback ends once and holds the theory/button rather than entering another scene",
-      "Replay resets the opening and hidden tabs hold the reading clock",
+      "Level 3 recap uses the accepted negative consequence and still omits metric headings",
+      "Closing uses the accepted number/learning text in two readable lines, has no premature theory title/quote, and the ENTER DESIGN LAB button does not navigate",
+      "Full-viewport presentation retains the entire composition and separated closing/button at desktop, mobile landscape and portrait sizes",
       "ZIP integrity/hashes pass; no runtime errors or external asset requests"
     ],
     "runtimeErrors": [],
     "externalRequests": [],
-    "zipSha256": "b956d7e3bbefd4876f1146360edec242a9a09ed1193f150b042ec0aed8227c38",
+    "zipSha256": "c81a156bdaa00cab70cc8a6c271e509eb05fb72e0fe5474430684e7076759d9f",
+    "previousFunctionalValidation": {
+      "reportCommit": "92b3e774e1655fbea3a2020df2dc0d5901cafbb7",
+      "passed": 8,
+      "zipSha256": "b956d7e3bbefd4876f1146360edec242a9a09ed1193f150b042ec0aed8227c38",
+      "scope": "Unchanged office opening, three real-history fixtures, useful short actions, caption styling, live soft joins, replay/hidden-tab clock and once-only completion; not repeated for the closing copy revision."
+    },
     "artifacts": {
       "sources": [
         {
@@ -353,23 +355,22 @@
           "commit": "ba9f81ee619c14b3342104228cdd2a5cc2bc2b3b"
         }
       ],
-      "sourceSha256": "55195b6a26ad88e2fe0c9b2088e0b7e04e5d0dff4c3e21c4222bc46cfd4bd296",
-      "htmlSha256": "8a681d3241b16010445f92de7a3f0f737603daf9c9ac5a6d1fa002be70334ccb",
+      "sourceSha256": "7462c5677bec90c8bb4090f645bc35324003c40c7b60be76fb171056b41d31b6",
+      "htmlSha256": "1ac17f2f7b1a81648fbdf5085ef50378b923a590da3a321efd56b7cf517962fe",
       "archive": "Ending-animation-preview.zip",
-      "zipSha256": "b956d7e3bbefd4876f1146360edec242a9a09ed1193f150b042ec0aed8227c38",
+      "zipSha256": "c81a156bdaa00cab70cc8a6c271e509eb05fb72e0fe5474430684e7076759d9f",
       "fileSha256": {
-        "START-HERE.html": "c3798cb4d16301baa27058dc80269e7a45ba331e411d4ae120f1b8717d618d31",
-        "Ending-animation.html": "8a681d3241b16010445f92de7a3f0f737603daf9c9ac5a6d1fa002be70334ccb",
+        "START-HERE.html": "c242e3fc8e762eb643da436e9e9735ab87475ef50807478e8831e81ed8a4dc68",
+        "Ending-animation.html": "1ac17f2f7b1a81648fbdf5085ef50378b923a590da3a321efd56b7cf517962fe",
         "START-HERE.txt": "dfe1a7677e20597ff3a50b569aaa8d3a0876060db94ff0a1cf3f905c87432aaf"
       },
-      "scope": "Independent ending preview only; current game ZIPs are unchanged. No Level 3B, no mandatory near-even result, no Design Lab handoff.",
+      "scope": "Independent ending preview only; current game ZIPs are unchanged. No Level 3B, no mandatory near-even result, no early Goodhart reveal or Design Lab handoff.",
       "audio": "No audio supplied; silent"
     },
     "visualReview": [
-      "Opening starts in the office with You reflection, not a frozen task.",
-      "Level 3 memory animates a real last-trial task without the metric header; Level 2 final check is visible with full labels.",
-      "Dark theory frame uses a clear mixed-case heading and two warm-white italic quote lines.",
-      "Design Lab button uses the exact opening-action CSS imported from opening/styles.css, with brick-red background, warm-white label and existing border/shadow."
+      "Level 3 reads The weights changed. Learning still came second. without a metric heading.",
+      "Dark office holds the two-line number/learning reflection, with no Goodhart heading or attribution.",
+      "ENTER DESIGN LAB retains the exact brick-red opening-action style and remains an unconnected display entry."
     ],
     "fullGamePathsRepeated": false,
     "designLabConnected": false

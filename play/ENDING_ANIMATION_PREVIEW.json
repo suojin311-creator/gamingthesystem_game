@@ -9,15 +9,15 @@
       "commit": "ba9f81ee619c14b3342104228cdd2a5cc2bc2b3b"
     }
   ],
-  "sourceSha256": "55195b6a26ad88e2fe0c9b2088e0b7e04e5d0dff4c3e21c4222bc46cfd4bd296",
-  "htmlSha256": "8a681d3241b16010445f92de7a3f0f737603daf9c9ac5a6d1fa002be70334ccb",
+  "sourceSha256": "7462c5677bec90c8bb4090f645bc35324003c40c7b60be76fb171056b41d31b6",
+  "htmlSha256": "1ac17f2f7b1a81648fbdf5085ef50378b923a590da3a321efd56b7cf517962fe",
   "archive": "Ending-animation-preview.zip",
-  "zipSha256": "b956d7e3bbefd4876f1146360edec242a9a09ed1193f150b042ec0aed8227c38",
+  "zipSha256": "c81a156bdaa00cab70cc8a6c271e509eb05fb72e0fe5474430684e7076759d9f",
   "fileSha256": {
-    "START-HERE.html": "c3798cb4d16301baa27058dc80269e7a45ba331e411d4ae120f1b8717d618d31",
-    "Ending-animation.html": "8a681d3241b16010445f92de7a3f0f737603daf9c9ac5a6d1fa002be70334ccb",
+    "START-HERE.html": "c242e3fc8e762eb643da436e9e9735ab87475ef50807478e8831e81ed8a4dc68",
+    "Ending-animation.html": "1ac17f2f7b1a81648fbdf5085ef50378b923a590da3a321efd56b7cf517962fe",
     "START-HERE.txt": "dfe1a7677e20597ff3a50b569aaa8d3a0876060db94ff0a1cf3f905c87432aaf"
   },
-  "scope": "Independent ending preview only; current game ZIPs are unchanged. No Level 3B, no mandatory near-even result, no Design Lab handoff.",
+  "scope": "Independent ending preview only; current game ZIPs are unchanged. No Level 3B, no mandatory near-even result, no early Goodhart reveal or Design Lab handoff.",
   "audio": "No audio supplied; silent"
 }

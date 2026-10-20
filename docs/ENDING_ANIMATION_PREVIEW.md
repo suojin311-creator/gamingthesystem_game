@@ -27,16 +27,23 @@
 - 镜头共用 `cinematic-dissolve.mjs` 的约半秒叠化，隐藏页面暂停。
   回忆后回到办公室立即显示 You「Am I improving learning, or just improving the numbers?」。
   之后逐渐压暗并揭示理论，不保留无对白的建立镜头。
-- 删除办公室里虚构的全绿结果面板。最终停留在 Goodhart’s Law，
-  引文在逗号后明确换行，字号放大；不再进入后续 recap / handoff 画面。
+- Level 3 回忆下方改为「The weights changed. Learning still came second.」，
+  明确学习被放到次要位置，不宣称所有真实试验的 effort 都发生改变。
+- 删除办公室里虚构的全绿结果面板。最终停留在两行通俗反思：
+  「When the number becomes the goal, / learning can get left behind.」。
+  Ending 不出现 Goodhart 名称或引文，也不再进入后续 recap / handoff 画面。
 - 背景恢复较早版本的深色办公室，撤回用户拒绝的全屏灰绿处理。
-  理论标题与引文采用开场办公室旁白的 Georgia、暖白 `#fff5e3`，
-  以标题、两行斜体引文和按钮之间的留白建立层级；标题为 Goodhart’s Law，
-  不再使用全大写大标题或金色发光。
+  最后两行反思采用开场办公室旁白的 Georgia、暖白 `#fff5e3`，
+  以斜体文字和按钮之间的留白建立层级，不使用理论标题或金色发光。
 - 用户最新要求覆盖了早先「不制作 Design Lab 按钮」的约定：
   现在直接导入开场 `styles.css`，使用 TAKE YOUR SEAT / BACK TO OFFICE 的同一个
   `opening-action` 砖红色按钮，暂为 `aria-disabled` 的展示入口，
   不发送 handoff，不挂载或跳转到现有 Design Lab。
+- 按钮文字为 ENTER DESIGN LAB。已采纳的 Design Lab 后续文案单独记录于
+  [衔接文案](ENDING_DESIGN_LAB_COPY.md)：入口写作题替换为
+  「How would you know Alex is really learning?」，最后才揭示 Goodhart，
+  使用短句「When a measure becomes a target, it ceases to be a good measure.」。
+  本次只修改 ending，未改动独立的 `feature/design-lab-local`。
 
 ## 固定来源与构建
 
@@ -55,11 +62,15 @@ npm run check
 python3 tests/ending_preview.py
 ```
 
+只调整结尾文案/排版时可运行 `python3 tests/ending_preview.py --closing-only`，
+检查实际 ZIP 的 Level 3 文案、最终两行文字、按钮、不同窗口尺寸和离线资源。
+
 交付目录需要安装与 lockfile 一致的依赖。影片、素材和控件都内嵌进单一 HTML，
 无需联网或安装；没有原始音频，保持静音。
 
 验证直接读取实际 ZIP：检查办公室开头、三种历史的真实表现、短动作、无 metric 标题、布局、软转场、
-最终停留和不跳转的按钮、窄屏适配、重播及隐藏页暂停。按用户要求不重复完整游戏路径。
+最终停留和不跳转的按钮、窄屏适配、重播及隐藏页暂停。按改动选择相关检查，
+按用户要求不重复完整游戏路径。
 包哈希和固定来源记录于 `play/ENDING_ANIMATION_PREVIEW.json`；
 本次定向结果附于 `docs/PREVIEW_VALIDATION.json` 的 `endingPreview`，
 其中原游戏验证仍对应未变化的六个游戏包。

@@ -18,13 +18,15 @@ export default {
       code=replace(code,"import { Img } from 'remotion';",`import { Img } from ${JSON.stringify(here+'Still.jsx')};`);
       code=replace(code,"import { RecapMemories } from './EndingMemories';",'');
       code=replace(code,'const recap = seconds >= 48.8;','const recap = false;');
-      code=replace(code,'GOODHART’S LAW','Goodhart’s Law');
       // No invented all-green dashboard for a player who may have low effort.
       const start=code.indexOf('        <svg className="end-office-plane"'),end=code.indexOf('        <EnvironmentMotion',start);
       if(start<0||end<0)throw new Error('Review ending office dashboard.');
       code=code.slice(0,start)+code.slice(end);
       code=code.replace(/^    \{seconds >= 35 && seconds < 43[^\n]+\n/m,'');
-      code=replace(code,'“{QUOTE}”','<span className="end-quote-line">“When a measure becomes a target,</span><span className="end-quote-line">it ceases to be a good measure.”</span>');
+      // The formal theory belongs at the end of Design Lab, not in this film.
+      const revealStart=code.indexOf('    {theory && <div'),revealEnd=code.indexOf('\n    {recap &&',revealStart);
+      if(revealStart<0||revealEnd<0)throw new Error('Review ending theory removal.');
+      code=code.slice(0,revealStart)+code.slice(revealEnd);
       code=code.replace(/^    \{recap && <RecapMemories[^\n]+\n/m,'');
       code=code.replace(/^    \{seconds >= 55\.2[^\n]+\n/m,'');
       return code;
