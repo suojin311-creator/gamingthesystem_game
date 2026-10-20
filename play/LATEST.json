@@ -1,5 +1,5 @@
 {
-  "sourceSha256": "a2cc74fab64b90ccad830a077de6f7951d52a07c1c6b5f4af3bb1ba37acf1665",
+  "sourceSha256": "d329fc92a1cb16fc6a700ae004b7e3cf51e0c9c5087a865ec32bf9e9e7a6c107",
   "cinematic": {
     "sourceSha256": "c7cac2c0dbf10fb696863c02d95752972cb2dd23a3243417d1209dda1a39c74a",
     "htmlSha256": "5a9a8f9536894aff12a953b69bdd19cb4518a64d7c9e331d81a8e2dcb05a42c1",
@@ -31,24 +31,24 @@
       "archive": "Full-game-play.zip",
       "html": "Gaming-the-System.html",
       "build": "dist/index.html",
-      "htmlSha256": "c07dc14fa01cb88136cc16d492f02deca0335c978d9adf6b1bdac35c4bb53718",
-      "zipSha256": "10863a9a9f452bc4e0badc0ce7cf535c3b0a4253c5f5cd6466e8055dc080acc5"
+      "htmlSha256": "8b63d2f2d011286d9796abb311447f5eff2f04331d1117ecafcdba82a0865536",
+      "zipSha256": "74ae3c3a78254ab25bbf458f6fecbac967909725519de85ebbb67b72a8e011a2"
     }
   ],
   "reviewBundle": {
     "archive": "Level3-and-Full-game-play.zip",
-    "zipSha256": "6a007510c6a967a19b3b4355a8161841f9dcee08d3cd781f161325c1e1a1a851",
+    "zipSha256": "c440a3aa6354f2e1863e77ee40df1f9dab7669252f8a396bc5a8ef58d0ed454b",
     "htmlSha256": {
       "Level3/Level3.html": "61f3e814abd92e60f76a6537cd1c2e781356b340e25a6448811bc595481d800a",
-      "Full-game/Gaming-the-System.html": "c07dc14fa01cb88136cc16d492f02deca0335c978d9adf6b1bdac35c4bb53718"
+      "Full-game/Gaming-the-System.html": "8b63d2f2d011286d9796abb311447f5eff2f04331d1117ecafcdba82a0865536"
     }
   },
   "completeBundle": {
     "archive": "Gaming-the-System-complete.zip",
-    "zipSha256": "e9449ed03c8f9b383561738a19090941ce4b4338ffdbccd6731b8fedc9f946f6",
+    "zipSha256": "d5f1125c28fa34752fe904238e0f773e549b16ea8c7c43eb2eb3e0d428abf887",
     "htmlSha256": {
       "START-HERE.html": "8696f4f200fa9b456aafa3242c1a0bf3adc235c974e6e2fec9b0b92a66d63506",
-      "Full-game/Gaming-the-System.html": "c07dc14fa01cb88136cc16d492f02deca0335c978d9adf6b1bdac35c4bb53718",
+      "Full-game/Gaming-the-System.html": "8b63d2f2d011286d9796abb311447f5eff2f04331d1117ecafcdba82a0865536",
       "Level1/Level1.html": "47d78477bbd2b094aa7311d1659ef2c6c454d222a61b426a13bcd04d1a465463",
       "Level2/Level2.html": "5aba22252338335bb9eb09145d886e76afa4e909cd1a547889ad57a6b3231b4e",
       "Level3/Level3.html": "61f3e814abd92e60f76a6537cd1c2e781356b340e25a6448811bc595481d800a"

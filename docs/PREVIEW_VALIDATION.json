@@ -1,7 +1,8 @@
 {
-  "validatedAtUtc": "2026-10-19T19:11:12.866027+00:00",
-  "version": "Clear matching opening action buttons; redundant identity explanation removed",
+  "validatedAtUtc": "2026-10-20T00:55:24.090671+00:00",
+  "version": "Remove Sounds simple enough. caption from the latest opening + Levels 1–3 integration",
   "branch": "animation/opening-integration",
+  "sourceBaseCommit": "63856491e62c52d5a9bdb176ea738abbe6c6c9c7",
   "approvedLevelOneCommit": "411353dd3ef6103b20faa4debe9075b94f46e199",
   "gameBaselineCommit": "00c311682268ab8593d0733a4163b50ee41cd663",
   "backup": {
@@ -10,7 +11,7 @@
     "completeZipSha256": "5a74aa5429b17af8090d9bdc8113cb900dfe5c03d0021d9cd23accf2bf8961ed",
     "createdAndPushedBeforeMerge": true
   },
-  "passed": 20,
+  "passed": 14,
   "build": {
     "command": "npm run package:previews",
     "exitCode": 0,
@@ -18,25 +19,6 @@
     "productionEntries": 4
   },
   "suites": {
-    "opening-integration-results.json": {
-      "passed": 8,
-      "checks": [
-        "The title asks about numbers versus learning; the email fades in at a fixed readable size without a second camera zoom, and Visit Classroom is bright and usable immediately",
-        "Email and one unseen student have plain glowing arrows, without circle frames or student outlines; the larger invitation and three completion slots are visible",
-        "The camera moves continuously and settles before each reply; inspections take about 3.5 seconds and unlock input only after returning, with the arrow advancing to the next unseen student",
-        "A settled office shows the teacher’s two reflections, then a full Level 1 chapter transition leads to real Gameplay with the same name and unchanged button style",
-        "Restoring a closed combined page resets to the opening and clears the prior player identity",
-        "Touch can inspect a different student from the suggested one; static reduced-motion arrows still guide the remaining observations without overflow or early progression",
-        "Both solid opening actions fit desktop and touch screens and remain usable; the redundant identity sentence is absent",
-        "Opening integration has no browser runtime errors"
-      ],
-      "runtimeErrors": [],
-      "externalRequests": [],
-      "normalInspectionSeconds": [
-        3.9638108569924952,
-        3.938926037008059
-      ]
-    },
     "release-results.json": {
       "passed": 12,
       "checks": [
@@ -54,10 +36,18 @@
         "Packaged entries have no browser runtime errors"
       ],
       "runtimeErrors": []
+    },
+    "caption-removal-results.json": {
+      "passed": 2,
+      "checks": [
+        "Actual full-game ZIP at 1366px omits the caption during its original beat and continues into the classroom offline",
+        "Actual full-game ZIP at 390px omits the caption during its original beat and continues into the classroom offline"
+      ],
+      "runtimeErrors": []
     }
   },
   "artifacts": {
-    "sourceSha256": "a2cc74fab64b90ccad830a077de6f7951d52a07c1c6b5f4af3bb1ba37acf1665",
+    "sourceSha256": "d329fc92a1cb16fc6a700ae004b7e3cf51e0c9c5087a865ec32bf9e9e7a6c107",
     "cinematic": {
       "sourceSha256": "c7cac2c0dbf10fb696863c02d95752972cb2dd23a3243417d1209dda1a39c74a",
       "htmlSha256": "5a9a8f9536894aff12a953b69bdd19cb4518a64d7c9e331d81a8e2dcb05a42c1",
@@ -89,117 +79,41 @@
         "archive": "Full-game-play.zip",
         "html": "Gaming-the-System.html",
         "build": "dist/index.html",
-        "htmlSha256": "c07dc14fa01cb88136cc16d492f02deca0335c978d9adf6b1bdac35c4bb53718",
-        "zipSha256": "10863a9a9f452bc4e0badc0ce7cf535c3b0a4253c5f5cd6466e8055dc080acc5"
+        "htmlSha256": "8b63d2f2d011286d9796abb311447f5eff2f04331d1117ecafcdba82a0865536",
+        "zipSha256": "74ae3c3a78254ab25bbf458f6fecbac967909725519de85ebbb67b72a8e011a2"
       }
     ],
     "reviewBundle": {
       "archive": "Level3-and-Full-game-play.zip",
-      "zipSha256": "6a007510c6a967a19b3b4355a8161841f9dcee08d3cd781f161325c1e1a1a851",
+      "zipSha256": "c440a3aa6354f2e1863e77ee40df1f9dab7669252f8a396bc5a8ef58d0ed454b",
       "htmlSha256": {
         "Level3/Level3.html": "61f3e814abd92e60f76a6537cd1c2e781356b340e25a6448811bc595481d800a",
-        "Full-game/Gaming-the-System.html": "c07dc14fa01cb88136cc16d492f02deca0335c978d9adf6b1bdac35c4bb53718"
+        "Full-game/Gaming-the-System.html": "8b63d2f2d011286d9796abb311447f5eff2f04331d1117ecafcdba82a0865536"
       }
     },
     "completeBundle": {
       "archive": "Gaming-the-System-complete.zip",
-      "zipSha256": "e9449ed03c8f9b383561738a19090941ce4b4338ffdbccd6731b8fedc9f946f6",
+      "zipSha256": "d5f1125c28fa34752fe904238e0f773e549b16ea8c7c43eb2eb3e0d428abf887",
       "htmlSha256": {
         "START-HERE.html": "8696f4f200fa9b456aafa3242c1a0bf3adc235c974e6e2fec9b0b92a66d63506",
-        "Full-game/Gaming-the-System.html": "c07dc14fa01cb88136cc16d492f02deca0335c978d9adf6b1bdac35c4bb53718",
+        "Full-game/Gaming-the-System.html": "8b63d2f2d011286d9796abb311447f5eff2f04331d1117ecafcdba82a0865536",
         "Level1/Level1.html": "47d78477bbd2b094aa7311d1659ef2c6c454d222a61b426a13bcd04d1a465463",
         "Level2/Level2.html": "5aba22252338335bb9eb09145d886e76afa4e909cd1a547889ad57a6b3231b4e",
         "Level3/Level3.html": "61f3e814abd92e60f76a6537cd1c2e781356b340e25a6448811bc595481d800a"
       }
     }
   },
-  "originalOpening": {
-    "sourceArchiveSha256": "47f743de944f21a6c7f830f5accfd1f2db4999ad0e2489918dcf6a6928e413e3",
-    "matchedAssets": [
-      {
-        "path": "assets/backgrounds/BG-002 — Classroom First-Person Background.png",
-        "sha256": "11c8569a776655b1d9b23f4fb9ce9e4096f3fda78f5f21974c7a3084a56915d0"
-      },
-      {
-        "path": "assets/backgrounds/BG_Office_FirstPerson_v01.png",
-        "sha256": "ca53d7d185afa74b85a81a753f833bb596d8c85d3d3b7f1d71164c7d35a1adb8"
-      },
-      {
-        "path": "assets/characters/CHAR-001 — Sleeping Student Idle.png",
-        "sha256": "ce6f248c2d55f0a3b41450ab3dc54826e5962bf55d2fcf97b81a352c12911117"
-      },
-      {
-        "path": "assets/characters/CHAR-003 — Phone Student Idle.png",
-        "sha256": "0621cfda5e48b4ec4d39eee2fe194218c6e5f396dba4f3bcb5eacb0895b9c0ac"
-      },
-      {
-        "path": "assets/characters/CHAR-005 — Unprepared Student Idle.png",
-        "sha256": "b72e89309cc51a91faa2c3ff179b352b7691fd8d8609a74722d18e35027665b3"
-      }
-    ]
-  },
   "partnerDelivery": {
     "commit": "1bdd0c442c4b345b3bd37d6f541742d4e55c732f",
     "byteIdenticalOriginalFiles": 94,
     "sourceModified": false
   },
-  "identity": {
-    "openingSuiteName": "Chen Li",
-    "offlineFullGameName": "Riley Chen & 李",
-    "verifiedLocations": [
-      "Level 1 operating dialogue",
-      "Level 1 cinematic teacher label",
-      "Level 1 cinematic email greeting",
-      "Level 3 teacher label"
-    ],
-    "standaloneFallback": "Maya"
-  },
-  "captionPalette": {
-    "teacher": "#ffe2a3",
-    "alexAndOpeningStudents": "#cceeff",
-    "sharedSource": "src/shared/data/cinematicPalette.js",
-    "openingComputedColoursChecked": true,
-    "levelOneComputedColoursChecked": true
-  },
   "notes": [
-    "TAKE YOUR SEAT and BACK TO OFFICE now share one opaque primary-button style, replacing the low-contrast text/transparent presentations. Button text remains on one line and the return action fits small screens.",
-    "Removed the identity helper sentence and retained spacing between the name label and input. Existing identity validation and scene sequencing remain.",
-    "All four entries share the approved LevelOneExperience. Full game continues from settlement to Level 2; standalone offers Try another metric.",
-    "Actual packaged Level 1 playback and the full opening run at normal speed during release validation; later unchanged Level 2/3 reading intervals use the browser clock.",
-    "Only animation/opening-integration is updated. The pre-merge backup, approved independent preview and stable game references are preserved.",
-    "All downloadable game HTMLs embed the cinematic. The existing verified film cache is reused; this opening-only edit does not rebuild the Level 1 film.",
-    "Offline browser checks do not establish device-specific frame rates or subjective smoothness."
-  ],
-  "sourceBaseCommit": "f6bb54693bacf36145c607b75eeb5737481c2d22",
-  "retainedVerification": {
-    "sourceCommit": "f6bb54693bacf36145c607b75eeb5737481c2d22",
-    "cinematicPacing": {
-      "command": "node tests/level1_settlement_pacing.mjs",
-      "passed": 6,
-      "checks": "All six branches retain readable captions, skip common ending and use a covered handoff."
-    },
-    "reason": "Level 1 cinematic source, timing and shared palette were not changed in this presentation update."
-  },
-  "openingActionReview": {
-    "viewports": [
-      1366,
-      390
-    ],
-    "minimumButtonHeightPx": 44,
-    "sharedStyle": "opening-action",
-    "normalButtonBackground": "#ad5840",
-    "checks": [
-      "Both actions use solid terracotta, cream labels/borders and arrows",
-      "The identity helper sentence is absent",
-      "Both actions fit the viewport and remain usable by keyboard or touch",
-      "All-three student gating and the office/Level 1 handoff pass"
-    ],
-    "screenshots": [
-      "test-results/opening-action-identity-1366.png",
-      "test-results/opening-action-return-1366.png",
-      "test-results/opening-action-identity-390.png",
-      "test-results/opening-action-return-390.png"
-    ],
-    "method": "Existing opening suite with temporary visual review captures and an additional complete touch return."
-  }
+    "The only application-source change removes the opening email thought-caption element. Its sentence is absent from every packaged entry.",
+    "Both desktop (1366px) and phone (390px) checks exercised the original thought beat and continued into the classroom using the actual full-game ZIP offline.",
+    "The existing release suite ran unchanged against the actual six archives and covered the integrated opening, approved Level 1 film and settlement, and playable Levels 2–3.",
+    "The large inline HTML exceeded the default 30-second navigation deadline in an initial parallel attempt. Checks were rerun sequentially with browser action/navigation timeouts of 120 seconds using a temporary runner; existing explicit assertion deadlines were unchanged.",
+    "The Level 1 film was recovered from the prior approved Level1-play.zip, verified against the existing SHA-256 manifest, and reused through the supported LEVEL1_CINEMATIC_HTML input. Cinematic bytes and all three standalone ZIP hashes remain identical to the baseline.",
+    "Stable branches, independent previews, partner source and historical archives are unchanged. Only animation/opening-integration receives this review update."
+  ]
 }

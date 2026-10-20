@@ -146,7 +146,6 @@ export default function Opening({ onComplete }: { onComplete: (playerName: strin
             </motion.form>
           )}
           {beat === 'seating' && <motion.p key="time" className="time-caption" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={fade}>Monday, 9:12 AM</motion.p>}
-          {beat === 'thought' && <motion.p key="thought" className="thought-caption" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>Sounds simple enough.</motion.p>}
           {(beat === 'officeReflect' || beat === 'officeQuestion') && <motion.p key={beat} className="office-reflection" role="status" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={fade}>{beat === 'officeReflect' ? 'They’re here, but they’re not really engaged.' : <>Management wants measurable results.<br />I need a sign I can track.</>}</motion.p>}
         </AnimatePresence>
         {loadError && <p className="load-status" role="alert">The office background could not load. Please refresh to try again.</p>}

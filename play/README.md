@@ -8,6 +8,8 @@
 
 开头的 TAKE YOUR SEAT 和 BACK TO OFFICE 已统一为实色陶土红按钮、浅色边框与箭头；姓名页的重复说明句已移除。
 
+开头邮件后的 “Sounds simple enough.” 字幕已移除；上方 ZIP 包含此修改。
+
 [合并前完整版本备份](https://github.com/suojin311-creator/gamingthesystem_game/blob/archive/opening-before-level1-merge-20261020/play/Gaming-the-System-complete.zip?raw=true)保存了旧开头＋三关和各独立关卡；源码保存在同名备份分支，提交为 `32a91fe`。稳定游戏分支和已确认的独立 Level 1 预览分支未被覆盖。
 
 ## 已确认的独立 Level 1 预览（合并前）
