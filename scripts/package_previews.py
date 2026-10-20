@@ -33,25 +33,30 @@ source_paths = sorted(path for path in (ROOT / 'src').rglob('*')
 source_paths += [ROOT / name for name in ['index.html', 'vite.config.ts', 'package.json', 'package-lock.json']]
 source_paths += [ROOT / 'scripts/level1-film.mjs']
 source_paths += [ROOT / 'scripts/level2-film.mjs']
+source_paths += [ROOT / 'scripts/level3-film.mjs', ROOT / 'scripts/cinematic-dissolve.mjs']
 source_paths += sorted(path for path in (ROOT / 'scripts/level1-settlement').glob('*') if path.suffix in {'.mjs', '.jsx'})
 source_paths += sorted(path for path in (ROOT / 'scripts/level2-animation').glob('*') if path.suffix in {'.mjs', '.jsx', '.css'})
+source_paths += sorted(path for path in (ROOT / 'scripts/level3-animation').glob('*') if path.suffix in {'.mjs', '.jsx', '.css'})
+source_paths += [ROOT / 'src/cinematics/level3/mapping.mjs']
 cinematic = json.loads((ROOT / 'node_modules/.cache/level1-cinematic/manifest.json').read_text())
 level2_cinematic = json.loads((ROOT / 'node_modules/.cache/level2-cinematic/manifest.json').read_text())
+level3_cinematic = json.loads((ROOT / 'node_modules/.cache/level3-cinematic/manifest.json').read_text())
 source_hash = hashlib.sha256()
 for path in source_paths:
     source_hash.update(str(path.relative_to(ROOT)).encode() + b'\0')
     source_hash.update(path.read_bytes() + b'\0')
 source_hash.update(b'level1-cinematic-html\0' + cinematic['htmlSha256'].encode() + b'\0')
 source_hash.update(b'level2-cinematic-html\0' + level2_cinematic['htmlSha256'].encode() + b'\0')
+source_hash.update(b'level3-cinematic-html\0' + level3_cinematic['htmlSha256'].encode() + b'\0')
 
-manifest = {'sourceSha256': source_hash.hexdigest(), 'cinematic': cinematic, 'level2Cinematic': level2_cinematic, 'entries': []}
+manifest = {'sourceSha256': source_hash.hexdigest(), 'cinematic': cinematic, 'level2Cinematic': level2_cinematic, 'level3Cinematic': level3_cinematic, 'entries': []}
 for archive, html, build, description in ENTRIES:
     instruction = (
         f'Gaming the System\n\n{description}\n\n'
         f'Extract this ZIP, then open {html} in Chrome or Edge.\n'
         'No installation or internet connection is needed after download.\n'
         'Closing or reloading starts a fresh game.\n'
-        'The full-game entry includes the opening; standalone levels start directly. Levels 1 and 2 include their integrated cinematics; Level 3 story scenes remain placeholders.\n'
+        'The full-game entry includes the opening; standalone levels start directly. Levels 1, 2 and Level 3A weighted-task scenes have integrated cinematics; comparison and theory remain placeholders.\n'
     )
     with zipfile.ZipFile(PLAY / archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:
         for name, data in [(html, builds[build]), ('START-HERE.txt', instruction.encode())]:
@@ -99,10 +104,15 @@ complete_archive = 'Gaming-the-System-complete.zip'
 complete_files = {
     'START-HERE.html': (ROOT / 'scripts/package_start.html').read_bytes(),
     'Full-game/Gaming-the-System.html': builds['dist/index.html'],
-    'Level1/Level1.html': builds['dist-level1/index.html'],
-    'Level2/Level2.html': builds['dist-level2/index.html'],
-    'Level3/Level3.html': builds['dist-level3/index.html'],
 }
+complete_launchers = {}
+# Share the full build's artwork/films once, keeping the familiar entry filenames.
+# Four duplicate embedded films would exceed GitHub's single-file ZIP limit.
+for level in (1, 2, 3):
+    target = f'../Full-game/Gaming-the-System.html?level={level}'
+    name = f'Level{level}/Level{level}.html'
+    complete_files[name] = (f'<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url={target}"><title>Level {level}</title><a href="{target}">Open Level {level}</a></html>').encode()
+    complete_launchers[name] = f'Full-game/Gaming-the-System.html?level={level}'
 complete_instruction = (
     'Gaming the System — complete playable package / 完整试玩包\n\n'
     '先解压整个 ZIP，再用 Chrome 或 Edge 打开 START-HERE.html 选择版本。\n'
@@ -116,7 +126,8 @@ complete_instruction = (
     'The full game carries your choices from Level 2 into editable Level 3 priorities.\n'
     'Closing or reloading starts fresh; standalone levels stop at their own endings.\n'
     'The latest Level 2 framing and unassigned first Level 3 weights are included.\n'
-    'The opening and Level 1/2 cinematics are integrated; Level 3 classroom and final cinematics remain placeholders. Design Lab is not included.\n'
+    'The opening, Level 1/2 and Level 3A classroom cinematics are integrated; comparison and final theory remain placeholders. Design Lab is not included.\n'
+    'The standalone launchers share the Full-game HTML to avoid duplicating artwork. Keep the extracted folders together.\n'
 )
 with zipfile.ZipFile(PLAY / complete_archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:
     for name, data in [*complete_files.items(), ('START-HERE.txt', complete_instruction.encode())]:
@@ -128,6 +139,7 @@ manifest['completeBundle'] = {
     'archive': complete_archive,
     'zipSha256': digest((PLAY / complete_archive).read_bytes()),
     'htmlSha256': {name: digest(data) for name, data in complete_files.items()},
+    'sharedGameLaunchers': complete_launchers,
 }
 print(f'Packaged {complete_archive}: full game, standalone Levels 1–3 and offline launcher')
 (PLAY / 'LATEST.json').write_text(json.dumps(manifest, indent=2) + '\n')

@@ -1,8 +1,8 @@
 {
-  "validatedAtUtc": "2026-10-20T10:56:17.462514+00:00",
-  "version": "ZIP delivery of the intact 100-metric Coverage map beginning on the Criterion 66 pen insert",
+  "validatedAtUtc": "2026-10-20T11:42:33.310364+00:00",
+  "version": "Integrate Level 3A using current game effort, trim numeric/unrelated footage, label metrics and cross-dissolve cinematic joins",
   "branch": "animation/opening-integration",
-  "sourceBaseCommit": "f41b099b85ec5f0dcacad46c618906bae0ed9355",
+  "sourceBaseCommit": "2411baa78192d764d07a8d3952ebb5d4f02a878c",
   "approvedLevelOneCommit": "411353dd3ef6103b20faa4debe9075b94f46e199",
   "gameBaselineCommit": "00c311682268ab8593d0733a4163b50ee41cd663",
   "backup": {
@@ -32,16 +32,79 @@
     "passed": 14,
     "historicalReportCommit": "762ce7edc796a85307bde282e78393e4773e7b10"
   },
-  "passed": 8,
+  "passed": 29,
   "build": {
     "command": "npm run package:previews",
     "exitCode": 0,
-    "productionEntries": 4,
     "pipelineTypeCheckExecutions": 1,
-    "zipArchivesRebuilt": true,
-    "reviewBuildReused": true
+    "productionEntries": 4,
+    "level3AReviewBuildExitCode": 0,
+    "updatedLevel2ReviewBuildExitCode": 0
   },
   "suites": {
+    "level3_animation_mapping.mjs": {
+      "passed": 4,
+      "checks": [
+        "all 4851 valid allocations map each game effort to exactly the supplied Level 3A state",
+        "every trio and order preserve metric identity and explicit supplied states, regardless of numeric weights",
+        "all retained frames exclude peer-only openings, classmate reactions, establishing inserts and number pages",
+        "reading holds cover each complete game-supplied line and end on the last actual task"
+      ],
+      "validAllocationsChecked": 4851,
+      "allTrioOrdersChecked": 120
+    },
+    "level3_animation_preview.py": {
+      "passed": 5,
+      "checks": [
+        "All 18 metric/effort states at start, middle and end retain the correct game-supplied scene/caption/title, Alex blue, transparent captions, no numeric pages or rejected cutaways",
+        "A complete live montage cross-dissolves through the three actual shots without a black internal cut and completes exactly once",
+        "A hidden film holds the reading clock",
+        "The film fits narrow screens without horizontal overflow",
+        "No runtime errors or external requests; the rejected single portrait and numbered reading-sheet bytes are absent"
+      ],
+      "states": [
+        "pre-class-preparation-high",
+        "in-class-discussion-quality-medium",
+        "online-peer-response-quality-low",
+        "pre-class-preparation-low",
+        "in-class-discussion-quality-high",
+        "online-peer-response-quality-medium",
+        "pre-class-preparation-medium",
+        "in-class-discussion-quality-low",
+        "online-peer-response-quality-high",
+        "in-class-participation-high",
+        "on-task-focus-medium",
+        "learning-reflection-quality-low",
+        "in-class-participation-low",
+        "on-task-focus-high",
+        "learning-reflection-quality-medium",
+        "in-class-participation-medium",
+        "on-task-focus-low",
+        "learning-reflection-quality-high"
+      ],
+      "runtimeErrors": [],
+      "externalRequests": []
+    },
+    "cinematic_dissolves.py": {
+      "passed": 3,
+      "checks": [
+        "level1: classroom → office cross-dissolves without an internal black cover; reflection captions and single completion preserved",
+        "level2: three cross-dissolves without an internal black cover; reflection captions and single completion preserved",
+        "level2: checklist cross-dissolves without an internal black cover; reflection captions and single completion preserved"
+      ],
+      "runtimeErrors": []
+    },
+    "level1_settlement_pacing.mjs": {
+      "passed": 6,
+      "checks": [
+        "prep 20.53s: common ending skipped, readable branch/email/thoughts and covered handoff",
+        "part 20.07s: common ending skipped, readable branch/email/thoughts and covered handoff",
+        "focus 20.53s: common ending skipped, readable branch/email/thoughts and covered handoff",
+        "discuss 21.26s: common ending skipped, readable branch/email/thoughts and covered handoff",
+        "reflect 20.07s: common ending skipped, readable branch/email/thoughts and covered handoff",
+        "peer 20.07s: common ending skipped, readable branch/email/thoughts and covered handoff"
+      ]
+    },
     "level2_animation_pacing.mjs": {
       "passed": 6,
       "checks": [
@@ -51,107 +114,123 @@
         "the final covered frame is reached before completion and invalid scene kinds are rejected",
         "each final-reflection covered cut introduces its new caption immediately with the new portrait",
         "100-metric film starts on the Criterion 66 pen insert, then shows completion and a brief reaction"
-      ],
-      "command": "LEVEL2_ANIMATION_SOURCE=/tmp/gts-level2-source node --experimental-strip-types --test tests/level2_animation_pacing.mjs",
-      "reusedFromCommit": "f41b099b85ec5f0dcacad46c618906bae0ed9355"
+      ]
     },
-    "targetedCoverageMapBrowserReview": {
-      "passed": 1,
+    "level3_animation_packaged.py": {
+      "passed": 3,
       "checks": [
-        "Starts on the Criterion 66 pen insert; 94/100 full map retains title/working notes/tally, three evidence slips, all 100 labels and evidence references, 6 gaps / E3 → 84 / new evidence: 0 footer; chapter, stage and candidate overlays stay hidden"
+        "Actual Level3-play.zip uses the default real film for a 60/30/10 trial, plays prep high → discussion medium → peer low and returns to matching results",
+        "Replay mounts a fresh movie at the first actual shot",
+        "All four complete-ZIP entry points open the intended opening or standalone level through the shared offline game HTML"
       ],
-      "screenshots": [
-        "test-results/level2-coverage-pen-start.png",
-        "test-results/level2-coverage-full-map.png"
-      ],
-      "testedHtmlSha256": "d53933b25426041c332b1ea7cf337155d28d6cdd7931344bc33b499be5f7c688",
       "runtimeErrors": [],
-      "reusedFromCommit": "f41b099b85ec5f0dcacad46c618906bae0ed9355"
+      "externalRequests": [],
+      "verifiedCompleteZipSha256": "808ed1e38a49153a3c6bd0a5f42e63e0e1919cb6c06bf15cdb402c6f57cd77fd",
+      "resumedEntryChecks": [
+        2,
+        3
+      ],
+      "earlierSuccessfulEntryChecks": [
+        null,
+        1
+      ],
+      "reasonForResume": "The full game and Level 1 entry checks already passed against these exact ZIP bytes. Large-HTML startup exceeded the default five-second assertion timeout for Level 2; the remaining entries were checked with a 30-second assertion limit."
     },
-    "currentZipIntegrity": {
+    "level3_review_controls": {
       "passed": 1,
       "checks": [
-        "All seven ZIPs pass recorded archive/member SHA-256, readable-member CRC and GitHub-size checks; the review HTML/film exactly match the previously visually checked Coverage map and pen start."
+        "The shipped review controls can rotate the emphasized metric and seek to Peer response High using the actual game-derived state; all eighteen states are accessible."
+      ]
+    },
+    "current_archive_integrity": {
+      "passed": 1,
+      "checks": [
+        "All eight current game/review ZIPs match their recorded SHA-256, contain readable CRC-checked members and stay below the GitHub hard file limit."
       ],
-      "archiveCount": 7
+      "archiveCount": 8
     }
   },
   "artifacts": {
-    "sourceSha256": "36c270749d5928645c3ff5829cfbcbf8f383a6e93e1db9b4355cc3558f9adc5b",
+    "sourceSha256": "f6370ce5ed85cefa5657c6b6e49038070fd36fc08395ff412a4dd6fdcdc5e133",
     "cinematic": {
-      "sourceSha256": "c7cac2c0dbf10fb696863c02d95752972cb2dd23a3243417d1209dda1a39c74a",
-      "htmlSha256": "5a9a8f9536894aff12a953b69bdd19cb4518a64d7c9e331d81a8e2dcb05a42c1",
+      "sourceSha256": "6dfc13c21ec845729acf12f236a05f622d5183b0cc25c0bc41abfbd706a10592",
+      "htmlSha256": "bc9b53a0a14567b7ef376c7a774c60e54407a2bcc73c9d76807c101f44ced7ef",
       "partnerSourceCommit": "1bdd0c442c4b345b3bd37d6f541742d4e55c732f"
     },
     "level2Cinematic": {
-      "sourceSha256": "4a19e4e89b3bd6dc2e33ecb3130c418e3faabc7f9896be44ddcc07b03fd6d28e",
-      "htmlSha256": "52a027a9dfcb92e3545a0c0222cb3eaa495d00943819b269d84a6b52fcc653a8",
+      "sourceSha256": "47c155aca006933db53b2af88619e937240f3aef2adf7b12589106d5b8466760",
+      "htmlSha256": "909e6a635b23906645c40fb022531b4c7cd5c1d83fff19cab10a5758c5e21baa",
       "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb"
+    },
+    "level3Cinematic": {
+      "sourceSha256": "228b308f78791ec168a4565b6973a6d0a6858eb4c1a7b6f224a8cfdccb91fdd6",
+      "htmlSha256": "a59b2ed201ff264249ffb2c415bdde55224ee52af895fbd4e0e0ce4b18390fb1",
+      "partnerSourceCommit": "ba9f81ee619c14b3342104228cdd2a5cc2bc2b3b"
     },
     "entries": [
       {
         "archive": "Level1-play.zip",
         "html": "Level1.html",
         "build": "dist-level1/index.html",
-        "htmlSha256": "1e966cbc35c364f751d81e0778d8c529b2e454ebcb97a447e803092b82510199",
-        "zipSha256": "16b77cd419c58e3ae352d551b380e2d2c076ce82e4a12562157a90587f2b7b4f"
+        "htmlSha256": "8b5b03ec23981a4ad9b3cb748d7def54e4cf8c7503dfb78ab007095cbaf79f18",
+        "zipSha256": "c6487c74b768a683946d8f98174f0c65290256dd811218c603df1f7ed3611f3a"
       },
       {
         "archive": "Level2-play.zip",
         "html": "Level2.html",
         "build": "dist-level2/index.html",
-        "htmlSha256": "f4accdbb2006962d02f8e806a8b49df447b61443e19171fd293262b67c6ec7a6",
-        "zipSha256": "aaf6b677497273baaceb623f1c59c4ca02d7d9b3b5abcab8acc5378473375135"
+        "htmlSha256": "97f7cd64a71731b684e82e121d8961cc31694d33112577c16dbd0d63b3098e7b",
+        "zipSha256": "05a260e99b7ebbdd7407a5147d669546b6cb932435347b21e23b4a1cb5b07e8c"
       },
       {
         "archive": "Level3-play.zip",
         "html": "Level3.html",
         "build": "dist-level3/index.html",
-        "htmlSha256": "fa19f73f82aa9a034d409c6205f7e67763ba8e15ef3a599b811644cc46d6d03d",
-        "zipSha256": "f8e8112e89a30c46355b3b16a474a94c8baf120579715712e3b9edbfd58b0ce5"
+        "htmlSha256": "0b4b577187bda15bd9e1bfd7b46868b10b8d31810a9858a5565b95bbb5b26182",
+        "zipSha256": "d7f289a01047d291f46cce625e0fa0d0e80af126cf65ae53c8c2afe63326d0d7"
       },
       {
         "archive": "Full-game-play.zip",
         "html": "Gaming-the-System.html",
         "build": "dist/index.html",
-        "htmlSha256": "39b36d80d9fff01bf31967564b995940bb071287f5dd4d2851cfb8fbb6851d84",
-        "zipSha256": "fb4c14f3e8619b24b81d13126247fcc8f56c6564df3c033e787aee47e7dde4fa"
+        "htmlSha256": "090d4449a4377a9723c525460f73b701e4359360cdfb06e719166cb62c83d380",
+        "zipSha256": "ab12be62b59173e6cfe52ecdccaacd1ec700d6ffd3757c443348306af5e99912"
       }
     ],
     "reviewBundle": {
       "archive": "Level3-and-Full-game-play.zip",
-      "zipSha256": "adee1058e344052447239cfed5cf2415391927400839a38245229f8a72351ccf",
+      "zipSha256": "8a7d12f36c91a1dd59a64c1fe7dc26eb4cb70bbb84f95420106cbc4b2fc3ce91",
       "htmlSha256": {
-        "Level3/Level3.html": "fa19f73f82aa9a034d409c6205f7e67763ba8e15ef3a599b811644cc46d6d03d",
-        "Full-game/Gaming-the-System.html": "39b36d80d9fff01bf31967564b995940bb071287f5dd4d2851cfb8fbb6851d84"
+        "Level3/Level3.html": "0b4b577187bda15bd9e1bfd7b46868b10b8d31810a9858a5565b95bbb5b26182",
+        "Full-game/Gaming-the-System.html": "090d4449a4377a9723c525460f73b701e4359360cdfb06e719166cb62c83d380"
       }
     },
     "completeBundle": {
       "archive": "Gaming-the-System-complete.zip",
-      "zipSha256": "1493fb32a370894e82fd5d96e675812e40bece72a11cd1b5260e69b62c05c47e",
+      "zipSha256": "808ed1e38a49153a3c6bd0a5f42e63e0e1919cb6c06bf15cdb402c6f57cd77fd",
       "htmlSha256": {
         "START-HERE.html": "8696f4f200fa9b456aafa3242c1a0bf3adc235c974e6e2fec9b0b92a66d63506",
-        "Full-game/Gaming-the-System.html": "39b36d80d9fff01bf31967564b995940bb071287f5dd4d2851cfb8fbb6851d84",
-        "Level1/Level1.html": "1e966cbc35c364f751d81e0778d8c529b2e454ebcb97a447e803092b82510199",
-        "Level2/Level2.html": "f4accdbb2006962d02f8e806a8b49df447b61443e19171fd293262b67c6ec7a6",
-        "Level3/Level3.html": "fa19f73f82aa9a034d409c6205f7e67763ba8e15ef3a599b811644cc46d6d03d"
+        "Full-game/Gaming-the-System.html": "090d4449a4377a9723c525460f73b701e4359360cdfb06e719166cb62c83d380",
+        "Level1/Level1.html": "450e033e9f5c5fa486be1cffc1f4b68fe7a0a7b94c7349e1e58349de049ebba4",
+        "Level2/Level2.html": "31e95c332a52d200c6e8731f47c3d16535b3d8298bc130da455585e497447b17",
+        "Level3/Level3.html": "6145fe8898937d4be596d7d43feaa6dc41025de20bccf10772bd7d1efd25fc7a"
+      },
+      "sharedGameLaunchers": {
+        "Level1/Level1.html": "Full-game/Gaming-the-System.html?level=1",
+        "Level2/Level2.html": "Full-game/Gaming-the-System.html?level=2",
+        "Level3/Level3.html": "Full-game/Gaming-the-System.html?level=3"
       }
     }
   },
   "adaptedLevelTwoPreview": {
     "archive": "Level2-animation-preview.zip",
-    "zipSha256": "b2437429ce7918cab2f035c4f9a70332ce9d3e2dea6089112acbd4ff5e3298b4",
+    "zipSha256": "1d3458786eaf7df109770351c320d0fcb9acbe7b9afe7e419280af1b4faa9ab4",
     "html": "Level2-animation.html",
-    "htmlSha256": "d53933b25426041c332b1ea7cf337155d28d6cdd7931344bc33b499be5f7c688",
+    "htmlSha256": "382a8d3efbc9024a1f7295d3c8402f583db43cbd2d100c4632fb3c55703595d8",
     "fileSha256": {
       "START-HERE.html": "966e69d00cad2756ade92ced4a1943ae6f54fcf249741bfef4363f5372ff2f7d",
-      "Level2-animation.html": "d53933b25426041c332b1ea7cf337155d28d6cdd7931344bc33b499be5f7c688",
-      "START-HERE.txt": "a5bb30daadba4fd4ed17fcf4ebac4e83878201c5ad1aa1b84121eedf5399e36a"
-    },
-    "film": {
-      "sourceSha256": "4a19e4e89b3bd6dc2e33ecb3130c418e3faabc7f9896be44ddcc07b03fd6d28e",
-      "htmlSha256": "52a027a9dfcb92e3545a0c0222cb3eaa495d00943819b269d84a6b52fcc653a8",
-      "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb"
+      "Level2-animation.html": "382a8d3efbc9024a1f7295d3c8402f583db43cbd2d100c4632fb3c55703595d8",
+      "START-HERE.txt": "2297aaa88f07c3f03fbbf444bd3b9c88da146c6a86004a27005d941541422a27"
     }
   },
   "partnerDelivery": {
@@ -167,6 +246,12 @@
       "sourceFilesSha256": "3b1cde4b51f41d41a35cdf18ad5bb718c4e1ba088aa0323e7905fc8a463d99c1",
       "unchangedUpstreamFiles": 95,
       "sourceModified": false
+    },
+    "levelThreeA": {
+      "sourceRepository": "https://github.com/Mg614/gaming-the-system",
+      "sourceBranch": "feature/cinematic-level3-metric-adaptations",
+      "sourceCommit": "ba9f81ee619c14b3342104228cdd2a5cc2bc2b3b",
+      "sourceModified": false
     }
   },
   "runtime": {
@@ -175,50 +260,65 @@
     "chromium": "154.0.8037.57"
   },
   "notes": [
-    "User reverted to ZIP delivery. Do not request a trial or Pages setup; the unused web snapshot is not the delivery entry.",
-    "All six game ZIPs and the independent animation review ZIP now contain the corrected 100-metric film. It starts at the Criterion 66 pen insert and retains the complete Coverage map title, tally, evidence slips, row references and footer/gaps.",
-    "The film and review HTML are byte-identical to the targeted two-frame visual review at f41b099. Its six pacing checks and browser visual check are reused without rerunning unchanged scenes.",
-    "The current package pipeline completed one TypeScript check and four production builds. All seven archives were checked for recorded SHA-256, member CRC/readability and size.",
-    "Full game-path and browser playback checks were not rerun, following the user instruction. Historical checks are not claimed as newly run.",
-    "Only animation/opening-integration is updated. Partner source, stable branches and the original pre-Level-2 backup remain unchanged."
+    "The pre-Level-3A game (including the latest Level 2 integration) was backed up and its six ZIP hashes verified before edits, at archive/before-level3a-integration-20261020 / 2411baa.",
+    "Only the Level 3A metric-adaptations delivery at ba9f81e is used. Each shot reads the game-supplied effort, selected metric identity/order and current weightedSceneReply. The cinematic never classifies weights independently.",
+    "The 4851 valid weight splits and every trio/order map to the supplied Low/Medium/High state. Eighteen states were inspected at beginning, middle and end with real game-derived requests.",
+    "Numeric entry/exit sheets, the rejected standalone Alex portrait, peer-only discussion openings, classmate reaction shots, empty establishing inserts and hand-only cuts are omitted. Useful task/criteria actions remain.",
+    "The current full metric name appears top-left. Alex label/caption share the blue palette and transparent background. Teacher/player captions use the shared gold/You convention when present; no extra teacher narration was added.",
+    "Level 1 classroom-to-office and Level 2/3A internal joins cross-dissolve frozen outgoing pictures into decoded new scenes; direct browser tests confirmed no internal black cover and synchronized Level 2 reflection captions.",
+    "Comparison and theory keep their existing game placeholders; Level 3B is not imported. Existing experiments, weights, results, comparison logic, original selections and names remain owned by the game.",
+    "All six game archives and both Level 2/3A review ZIPs were generated with current films. The complete archive now shares one full-game HTML behind the four entry launchers, avoiding duplicated embedded artwork; individual ZIPs remain self-contained HTML.",
+    "The actual Level3-play.zip default host played prep high, discussion medium and peer low for a 60/30/10 observation, returned to matching results, and replayed from the first shot.",
+    "All four complete-ZIP entries were checked from extracted bytes through a loopback server. Managed Chromium blocks file URLs. Large inline HTML required extended assertion limits; completed checks were reused and only the remaining entry assertions resumed.",
+    "The full opening-to-all-levels path was not rerun, following the user instruction. Stable branches, partner tracked files and historical archives remain unchanged. Delivery is ZIP only."
   ],
   "previousValidation": {
-    "commit": "f41b099b85ec5f0dcacad46c618906bae0ed9355",
-    "version": "Restore the complete 100-metric Coverage map, start on the Criterion 66 pen insert, and export a fixed web review instead of rebuilding ZIPs",
-    "passed": 7,
-    "validatedAtUtc": "2026-10-20T10:51:02.777147+00:00",
+    "commit": "2411baa78192d764d07a8d3952ebb5d4f02a878c",
+    "version": "ZIP delivery of the intact 100-metric Coverage map beginning on the Criterion 66 pen insert",
+    "passed": 8,
+    "validatedAtUtc": "2026-10-20T10:56:17.462514+00:00",
     "report": "docs/PREVIEW_VALIDATION.json"
   },
   "verificationPolicy": {
     "userRequestedZipDelivery": true,
-    "gamePathChecksRun": false,
-    "browserChecksRun": false,
-    "reusedChecksFromCommit": "f41b099b85ec5f0dcacad46c618906bae0ed9355",
-    "reusedVisualFilmAndReviewHtmlAreByteIdentical": true,
-    "previousGameChecksAreHistorical": true
+    "fullOpeningThroughAllLevelsPathRun": false,
+    "targetedDefaultLevel3HostRun": true,
+    "targetedCinematicChecksRun": true,
+    "completeZipEntryPointsChecked": 4,
+    "previousFullGameChecksAreHistorical": true
   },
-  "webPreview": {
-    "url": "https://suojin311-creator.github.io/gamingthesystem_game/animation-preview/Level2-animation.html?state=100",
-    "manifest": {
-      "generatedAtUtc": "2026-10-20T10:50:38.707385+00:00",
-      "sourceRepository": "https://github.com/Mg614/gaming-the-system",
-      "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb",
-      "partnerSourceFilesSha256": "3b1cde4b51f41d41a35cdf18ad5bb718c4e1ba088aa0323e7905fc8a463d99c1",
-      "film": {
-        "sourceSha256": "4a19e4e89b3bd6dc2e33ecb3130c418e3faabc7f9896be44ddcc07b03fd6d28e",
-        "htmlSha256": "52a027a9dfcb92e3545a0c0222cb3eaa495d00943819b269d84a6b52fcc653a8",
-        "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb"
-      },
-      "fileSha256": {
-        "START-HERE.html": "37ef97cf07b0906d9c60090c701d3c220ddbca87917dd93d1a433bbe46978b7f",
-        "Level2-animation.html": "d53933b25426041c332b1ea7cf337155d28d6cdd7931344bc33b499be5f7c688",
-        "START-HERE.txt": "a5bb30daadba4fd4ed17fcf4ebac4e83878201c5ad1aa1b84121eedf5399e36a"
-      },
-      "updatedZipArchives": false
+  "backupBeforeLevel3A": {
+    "branch": "archive/before-level3a-integration-20261020",
+    "commit": "2411baa78192d764d07a8d3952ebb5d4f02a878c",
+    "createdAndPushedBeforeChanges": true,
+    "sixGameArchiveSha256VerifiedBeforeChanges": {
+      "Level1-play.zip": "16b77cd419c58e3ae352d551b380e2d2c076ce82e4a12562157a90587f2b7b4f",
+      "Level2-play.zip": "aaf6b677497273baaceb623f1c59c4ca02d7d9b3b5abcab8acc5378473375135",
+      "Level3-play.zip": "f8e8112e89a30c46355b3b16a474a94c8baf120579715712e3b9edbfd58b0ce5",
+      "Full-game-play.zip": "fb4c14f3e8619b24b81d13126247fcc8f56c6564df3c033e787aee47e7dde4fa",
+      "Level3-and-Full-game-play.zip": "adee1058e344052447239cfed5cf2415391927400839a38245229f8a72351ccf",
+      "Gaming-the-System-complete.zip": "1493fb32a370894e82fd5d96e675812e40bece72a11cd1b5260e69b62c05c47e"
+    }
+  },
+  "adaptedLevelThreeAPreview": {
+    "sourceRepository": "https://github.com/Mg614/gaming-the-system",
+    "sourceBranch": "feature/cinematic-level3-metric-adaptations",
+    "sourceCommit": "ba9f81ee619c14b3342104228cdd2a5cc2bc2b3b",
+    "archive": "Level3A-animation-preview.zip",
+    "zipSha256": "fd861260201f0bbfc62c22ad5b428aecab3e7962ef04d7827632b43ac9e6b8ac",
+    "html": "Level3A-animation.html",
+    "htmlSha256": "3c9fa28d1783eb130ec33fea2eb0022a4af0aad67c9b969627d43e265384d839",
+    "fileSha256": {
+      "START-HERE.html": "704ed9688957b5a03be50e42c4156bfe218bccbc9c42a1d1e58fa36f0821a3e3",
+      "Level3A-animation.html": "3c9fa28d1783eb130ec33fea2eb0022a4af0aad67c9b969627d43e265384d839",
+      "START-HERE.txt": "2363f10f64281e58c69f67040731fb64527e7fc6643f6acd6ccf802a663df80f"
     },
-    "pagesConfigurationRequired": false,
-    "publicDeploymentVerified": false,
-    "reason": "GitHub Pages API and public site access are blocked by the execution environment proxy; repository account must enable Pages once.",
-    "status": "Abandoned: user prefers ZIP delivery because hosting requested a trial. No hosting setup is requested."
+    "film": {
+      "sourceSha256": "228b308f78791ec168a4565b6973a6d0a6858eb4c1a7b6f224a8cfdccb91fdd6",
+      "htmlSha256": "a59b2ed201ff264249ffb2c415bdde55224ee52af895fbd4e0e0ce4b18390fb1",
+      "partnerSourceCommit": "ba9f81ee619c14b3342104228cdd2a5cc2bc2b3b"
+    },
+    "scope": "Only Level 3A weighted-task scenes; comparison/theory remain their existing game placeholders. No Level 3B.",
+    "audio": "No source audio assets; silent"
   }
 }

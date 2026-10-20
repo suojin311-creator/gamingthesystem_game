@@ -1,5 +1,10 @@
 # Level 3 — The Weighting Trap
 
+On `animation/opening-integration`, `level3.weights` now uses the adapted real
+Level 3A film. Its eighteen states read this game's supplied effort and captions;
+numeric pages and unrelated cutaways are omitted. Comparison/theory remain their
+existing placeholders; Level 3B is not used. See [Level 3A](LEVEL3A_ANIMATION.md).
+
 The connected host preselects Level 2's original three choices with the same
 opening-confirmed player name. Players may swap those choices before weighting;
 standalone Level 3 starts empty. The chapter transition closes the long

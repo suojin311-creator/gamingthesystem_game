@@ -1,6 +1,6 @@
 // The approved Level 1 English-reading rule, applied only to retained dialogue.
 export const readingSeconds = text => Math.max(2.1, text.trim().split(/\s+/).length * .27 + .4);
-export const COVER_SECONDS = .28;
+export const COVER_SECONDS = .48;
 
 export function createPacing(kind, shots) {
   const timeline = [];
@@ -51,6 +51,6 @@ export function sampleAt(pacing, elapsed) {
 }
 
 export function finalCover(pacing, elapsed) {
-  const t = Math.max(0, Math.min(1, (elapsed - (pacing.duration - .15)) / .1));
+  const t = Math.max(0, Math.min(1, (elapsed - (pacing.duration - .45)) / .4));
   return t * t * (3 - 2 * t);
 }

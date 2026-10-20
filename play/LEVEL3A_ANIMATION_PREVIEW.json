@@ -1,0 +1,95 @@
+{
+  "sourceRepository": "https://github.com/Mg614/gaming-the-system",
+  "sourceBranch": "feature/cinematic-level3-metric-adaptations",
+  "sourceCommit": "ba9f81ee619c14b3342104228cdd2a5cc2bc2b3b",
+  "archive": "Level3A-animation-preview.zip",
+  "zipSha256": "fd861260201f0bbfc62c22ad5b428aecab3e7962ef04d7827632b43ac9e6b8ac",
+  "html": "Level3A-animation.html",
+  "htmlSha256": "3c9fa28d1783eb130ec33fea2eb0022a4af0aad67c9b969627d43e265384d839",
+  "fileSha256": {
+    "START-HERE.html": "704ed9688957b5a03be50e42c4156bfe218bccbc9c42a1d1e58fa36f0821a3e3",
+    "Level3A-animation.html": "3c9fa28d1783eb130ec33fea2eb0022a4af0aad67c9b969627d43e265384d839",
+    "START-HERE.txt": "2363f10f64281e58c69f67040731fb64527e7fc6643f6acd6ccf802a663df80f"
+  },
+  "film": {
+    "sourceSha256": "228b308f78791ec168a4565b6973a6d0a6858eb4c1a7b6f224a8cfdccb91fdd6",
+    "htmlSha256": "a59b2ed201ff264249ffb2c415bdde55224ee52af895fbd4e0e0ce4b18390fb1",
+    "partnerSourceCommit": "ba9f81ee619c14b3342104228cdd2a5cc2bc2b3b"
+  },
+  "scope": "Only Level 3A weighted-task scenes; comparison/theory remain their existing game placeholders. No Level 3B.",
+  "audio": "No source audio assets; silent",
+  "verification": {
+    "validatedAtUtc": "2026-10-20T11:42:33.310364+00:00",
+    "mapping": {
+      "passed": 4,
+      "checks": [
+        "all 4851 valid allocations map each game effort to exactly the supplied Level 3A state",
+        "every trio and order preserve metric identity and explicit supplied states, regardless of numeric weights",
+        "all retained frames exclude peer-only openings, classmate reactions, establishing inserts and number pages",
+        "reading holds cover each complete game-supplied line and end on the last actual task"
+      ],
+      "validAllocationsChecked": 4851,
+      "allTrioOrdersChecked": 120
+    },
+    "visual": {
+      "passed": 5,
+      "checks": [
+        "All 18 metric/effort states at start, middle and end retain the correct game-supplied scene/caption/title, Alex blue, transparent captions, no numeric pages or rejected cutaways",
+        "A complete live montage cross-dissolves through the three actual shots without a black internal cut and completes exactly once",
+        "A hidden film holds the reading clock",
+        "The film fits narrow screens without horizontal overflow",
+        "No runtime errors or external requests; the rejected single portrait and numbered reading-sheet bytes are absent"
+      ],
+      "states": [
+        "pre-class-preparation-high",
+        "in-class-discussion-quality-medium",
+        "online-peer-response-quality-low",
+        "pre-class-preparation-low",
+        "in-class-discussion-quality-high",
+        "online-peer-response-quality-medium",
+        "pre-class-preparation-medium",
+        "in-class-discussion-quality-low",
+        "online-peer-response-quality-high",
+        "in-class-participation-high",
+        "on-task-focus-medium",
+        "learning-reflection-quality-low",
+        "in-class-participation-low",
+        "on-task-focus-high",
+        "learning-reflection-quality-medium",
+        "in-class-participation-medium",
+        "on-task-focus-low",
+        "learning-reflection-quality-high"
+      ],
+      "runtimeErrors": [],
+      "externalRequests": []
+    },
+    "reviewControls": {
+      "passed": 1,
+      "checks": [
+        "The shipped review controls can rotate the emphasized metric and seek to Peer response High using the actual game-derived state; all eighteen states are accessible."
+      ]
+    },
+    "defaultGameHost": {
+      "passed": 3,
+      "checks": [
+        "Actual Level3-play.zip uses the default real film for a 60/30/10 trial, plays prep high → discussion medium → peer low and returns to matching results",
+        "Replay mounts a fresh movie at the first actual shot",
+        "All four complete-ZIP entry points open the intended opening or standalone level through the shared offline game HTML"
+      ],
+      "runtimeErrors": [],
+      "externalRequests": [],
+      "verifiedCompleteZipSha256": "808ed1e38a49153a3c6bd0a5f42e63e0e1919cb6c06bf15cdb402c6f57cd77fd",
+      "resumedEntryChecks": [
+        2,
+        3
+      ],
+      "earlierSuccessfulEntryChecks": [
+        null,
+        1
+      ],
+      "reasonForResume": "The full game and Level 1 entry checks already passed against these exact ZIP bytes. Large-HTML startup exceeded the default five-second assertion timeout for Level 2; the remaining entries were checked with a 30-second assertion limit."
+    },
+    "sourceModified": false,
+    "fullGamePathChecksRun": false
+  }
+}

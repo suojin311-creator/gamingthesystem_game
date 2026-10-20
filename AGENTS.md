@@ -8,6 +8,31 @@
 - Target visual checks to the changed shots. Do not rerun full game paths for
   these animation tweaks: the user explicitly waived those checks.
 
+## Current Level 3A integration
+
+- Before this merge, the complete Level 2 integration and six game ZIPs were
+  verified and saved at `archive/before-level3a-integration-20261020`, commit
+  `2411baa78192d764d07a8d3952ebb5d4f02a878c`.
+- Use only the partner's Level 3A metric-adaptations delivery at `ba9f81e`.
+  Replace `level3.weights`; comparison and theory keep their existing placeholders.
+  Do not import Level 3B or impose its conclusion/branching logic.
+- Game `request.shots[].effort` chooses Low/Medium/High. Never classify from a
+  percentage in film code. Keep actual metric order and use the game's current
+  `weightedSceneReply` captions, including medium criteria/stopping behaviour.
+- Omit numeric entry/exit sheets, the rejected standalone Alex portrait, peer-only
+  opening crops, classmate reactions, empty establishing views and hand-only cuts.
+  Keep useful task/criteria actions. Show the current full metric name top-left.
+  Alex captions/label are blue; player/teacher labels are You and warm gold when
+  present. Captions are transparent and use the shared Level 1 palette.
+- Internal Level 1/2/3 joins now cross-dissolve a frozen outgoing frame into the
+  decoded live scene via `scripts/cinematic-dissolve.mjs`; no internal black cover.
+  Level 2 content is otherwise paused at the backed-up version.
+- Build with `LEVEL3_ANIMATION_SOURCE` pointing to the pinned read-only delivery.
+  Review ZIP: `play/Level3A-animation-preview.zip`. See `docs/LEVEL3A_ANIMATION.md`.
+- The complete ZIP shares its full-game HTML across the standalone launchers to
+  keep duplicated artwork below the GitHub file limit. Individual ZIPs retain
+  their self-contained single-HTML format and existing entry behaviour.
+
 ## Current Level 2 animation integration
 
 - The user requested direct integration after trimming/review. Before changes,
@@ -25,9 +50,9 @@
   The 100-metric paper must stay intact: working-notes/title/tally, evidence
   slips, E1/E2/E3 row references, gaps and footer all remain visible.
   Reuse the Level 1 palette,
-  reading holds, transparent captions, fixed framing and opaque scene covers.
+  reading holds, transparent captions, fixed framing and soft scene dissolves.
 - Final 100-metric reflection cuts must commit the new caption and portrait
-  together under the cover; never reopen on the preceding sentence.
+  together during the dissolve; never reveal the new portrait with stale dialogue.
 - Level 2 post-film pages have no teacher/Alex chat: existing observation above
   two equal perspective cards, with existing copy/actions and no added text.
   Students uses the Level 1 red outline: three 0.75-second pulses on observation,

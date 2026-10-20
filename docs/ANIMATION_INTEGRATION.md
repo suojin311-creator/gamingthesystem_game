@@ -10,6 +10,12 @@ Level 1 过渡页。Choose a metric 后，用已确认姓名挂载 Gameplay。�
 改为独立阅读窗淡入，按钮出现即可使用；标题与办公室思考衔接到第一关的指标选择。开场样式限于 `.opening-scene`，不覆盖关卡按钮和字体。
 稳定 `level3-dev` 与预览分支保留原游戏版；本分支的包供动画衔接审阅。
 
+Level 3A 已接入每次 `level3.weights` 的三项实际表现，严格读取当前游戏给出的
+effort，不采用同伴可能不同的权重阈值；不使用 Level 3B。数字页、无关切镜与
+独立人像已裁剪，当前指标名显示在左上角。合并前的 Level 2 版本备份于
+`archive/before-level3a-integration-20261020`（`2411baa`）。见 [Level 3A](LEVEL3A_ANIMATION.md)。
+Level 1／2／3A 内部换景现共用短叠化，替代反复的黑幕切换。
+
 Level 2 也已按用户要求接入原有三项、六项和最终清单 placeholder。
 只保留所需片段，不插入同伴额外的增长或优先级页；三项从 Alex 完成要求的
 第一句开始。字幕身份统一为 Alex／You，并保留 checklist 原有条目文字；颜色、阅读时间及遮罩转场沿用 Level 1。

@@ -5,13 +5,13 @@
   "sourceFilesSha256": "3b1cde4b51f41d41a35cdf18ad5bb718c4e1ba088aa0323e7905fc8a463d99c1",
   "unchangedUpstreamFiles": 95,
   "archive": "Level2-animation-preview.zip",
-  "zipSha256": "b2437429ce7918cab2f035c4f9a70332ce9d3e2dea6089112acbd4ff5e3298b4",
+  "zipSha256": "1d3458786eaf7df109770351c320d0fcb9acbe7b9afe7e419280af1b4faa9ab4",
   "html": "Level2-animation.html",
-  "htmlSha256": "d53933b25426041c332b1ea7cf337155d28d6cdd7931344bc33b499be5f7c688",
+  "htmlSha256": "382a8d3efbc9024a1f7295d3c8402f583db43cbd2d100c4632fb3c55703595d8",
   "fileSha256": {
     "START-HERE.html": "966e69d00cad2756ade92ced4a1943ae6f54fcf249741bfef4363f5372ff2f7d",
-    "Level2-animation.html": "d53933b25426041c332b1ea7cf337155d28d6cdd7931344bc33b499be5f7c688",
-    "START-HERE.txt": "a5bb30daadba4fd4ed17fcf4ebac4e83878201c5ad1aa1b84121eedf5399e36a"
+    "Level2-animation.html": "382a8d3efbc9024a1f7295d3c8402f583db43cbd2d100c4632fb3c55703595d8",
+    "START-HERE.txt": "2297aaa88f07c3f03fbbf444bd3b9c88da146c6a86004a27005d941541422a27"
   },
   "scope": "Review of the exact adapted film integrated into existing Level 2 placeholders; partner source unchanged",
   "build": {
@@ -20,7 +20,7 @@
       "Only three, six and checklist game slots",
       "Three-metric scenes start at the requested first line",
       "100-metric film starts on the Criterion 66 pen insert, then shows the intact Coverage map and completion; shorten idle holds; remove overlay labels and the ending priority screen",
-      "Level 1 reading holds, colours and opaque scene covers"
+      "Shared reading holds, colours and soft scene dissolves"
     ]
   },
   "entries": [
@@ -51,25 +51,24 @@
   ],
   "audio": "No source audio assets; silent",
   "film": {
-    "sourceSha256": "4a19e4e89b3bd6dc2e33ecb3130c418e3faabc7f9896be44ddcc07b03fd6d28e",
-    "htmlSha256": "52a027a9dfcb92e3545a0c0222cb3eaa495d00943819b269d84a6b52fcc653a8",
+    "sourceSha256": "47c155aca006933db53b2af88619e937240f3aef2adf7b12589106d5b8466760",
+    "htmlSha256": "909e6a635b23906645c40fb022531b4c7cd5c1d83fff19cab10a5758c5e21baa",
     "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb"
   },
   "verification": {
-    "validatedAtUtc": "2026-10-20T10:56:17.462514+00:00",
+    "validatedAtUtc": "2026-10-20T11:42:33.310364+00:00",
     "buildCompleted": true,
-    "zipIntegrity": {
-      "passed": 1,
+    "sceneDissolveChecks": {
+      "passed": 3,
       "checks": [
-        "All seven ZIPs pass recorded archive/member SHA-256, readable-member CRC and GitHub-size checks; the review HTML/film exactly match the previously visually checked Coverage map and pen start."
+        "level1: classroom → office cross-dissolves without an internal black cover; reflection captions and single completion preserved",
+        "level2: three cross-dissolves without an internal black cover; reflection captions and single completion preserved",
+        "level2: checklist cross-dissolves without an internal black cover; reflection captions and single completion preserved"
       ],
-      "archiveCount": 7
+      "runtimeErrors": []
     },
-    "reusedVisualAndPacingChecksFromCommit": "f41b099b85ec5f0dcacad46c618906bae0ed9355",
-    "reviewHtmlByteIdenticalToVisualCheck": true,
-    "browserChecksRun": false,
-    "gamePathChecksRun": false,
-    "userRequestedDirectZipWithoutPathChecks": true,
+    "pacingPassed": 6,
+    "fullGamePathChecksRun": false,
     "sourceModified": false
   }
 }

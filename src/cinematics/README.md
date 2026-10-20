@@ -6,8 +6,9 @@ Level 1 report, film and settlement between full-game and standalone entries.
 The partner source remains read-only; the film is prepared from its pinned
 checkout using scripts/level1-film.mjs. Level 2 uses scripts/level2-film.mjs and
 only its existing three/six/final placeholder slots. Its post-film results retain
-the observation and two perspective cards without review chat. Level 3 remains a destination
-for the partner’s actual delivery. Their authored scripts are not rewritten here.
+the observation and two perspective cards without review chat. Level 3A now
+presents the three game-supplied task/effort states, with no Level 3B import.
+Comparison/theory retain the existing placeholders. See docs/LEVEL3A_ANIMATION.md.
 
 Add the corresponding folders when their actual source is imported:
 

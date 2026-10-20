@@ -92,16 +92,16 @@ with sync_playwright() as p:
             const phase=root.dataset.handoff;
             const caption=spoken?.querySelector('[role=status]')?.textContent??null;
             if(root.dataset.kind==='checklist'&&shot==='reflection'){
-              if(phase==='closing')closingText=caption;
-              if(phase==='covered'&&cutPhase!=='covered'){
+              if(phase==='dissolving'&&cutPhase!=='dissolving'){
                 a.cutCaptions.push(caption);
-                if(!caption||caption===closingText)a.errors.push('Final reflection reopened with a stale or missing caption');
+                if(!caption||caption===closingText)a.errors.push('Final reflection dissolved with a stale or missing caption');
+                closingText=caption;
               }
               cutPhase=phase;
             }
-            if(phase==='covered'){
+            if(phase==='dissolving'){
               const opacity=Number(getComputedStyle(root.querySelector('.l2-film-cover')).opacity);
-              a.swaps.push(opacity);if(opacity<.999)a.errors.push('Uncovered scene swap');
+              a.swaps.push(opacity);if(opacity>.001)a.errors.push('Black internal scene swap');
             }
           };
           new MutationObserver(sample).observe(root,{subtree:true,childList:true,attributes:true});sample();
@@ -123,7 +123,7 @@ with sync_playwright() as p:
             assert audit['shots']==['hundred','perfect','reflection'],audit
             assert audit['cutCaptions']==['Maybe adding more metrics isn’t the answer...', 'What if some metrics mattered more than others?'],audit
         assert set(audit['speakers'])==({'You','Alex'} if kind!='checklist' else {'You'}),audit
-        assert audit['swaps'] and min(audit['swaps'])>=.999,audit
+        assert audit['swaps'] and max(audit['swaps'])<=.001,audit
         expect(film).to_have_attribute('data-finished','true')
         assert float(f.locator('.l2-film-cover').evaluate('e=>getComputedStyle(e).opacity'))==1
         page.wait_for_timeout(200);expect(page.locator('footer')).to_have_attribute('data-completion-count','1')
@@ -131,7 +131,7 @@ with sync_playwright() as p:
         expect(page.locator('footer')).to_have_attribute('data-completion-count','0')
         expect(f.locator('.l2-film')).to_be_visible()
         page.get_by_role('button',name='Pause',exact=True).click()
-        record(state+': authored checklist text restored, correct trim, You/Alex colours, opaque swaps, completion and fresh replay')
+        record(state+': authored checklist text restored, correct trim, You/Alex colours, soft scene dissolves, completion and fresh replay')
     # Visible-time hold and reduced-motion coverage use the same shipped film.
     page.goto(origin+'Level2-animation.html?state=six&reduced=1',wait_until='networkidle')
     f=page.frame_locator('iframe');expect(f.locator('.l2-film')).to_be_visible()

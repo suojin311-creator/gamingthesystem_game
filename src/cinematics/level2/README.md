@@ -18,7 +18,8 @@ The earlier establishing view, separate 10/25 clips and ending priority page are
 not played; nonverbal holds are shortened.
 Dialogue, Alex/You labels and authored checklist item/group text remain;
 checklist text is an explicit exception to overlay removal. Palette, reading time, fixed camera
-and opaque covers follow the approved Level 1 presentation.
+follow the shared Level 1 presentation. Internal joins now use the shared soft
+cross-dissolve, preserving the caption/portrait synchronization.
 
 Source-window/run-token checks accept the real film's final covered completion
 once. The existing game instance remains mounted; its name, selection, sound

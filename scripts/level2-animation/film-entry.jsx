@@ -13,6 +13,7 @@ import look from '@partner-assets/characters/alex-rig/production/actions/checkin
 import classroom from '@partner-scenes/REF-L2-003 — Mixed : Broad Classroom.png?inline';
 import { SPEAKER_COLORS, CAPTION_SHADOW } from '../../src/shared/data/cinematicPalette.js';
 import { COVER_SECONDS, createPacing, sampleAt, finalCover } from './pacing.mjs';
+import { dissolveFrame } from '../cinematic-dissolve.mjs';
 import './film.css';
 
 const CHANNEL = 'level2-cinematic';
@@ -48,6 +49,8 @@ function Film({ config }) {
   const phase = useRef('idle');
   const pending = useRef(0);
   const complete = useRef(false);
+  const surface = useRef(null);
+  const transition = useRef(null);
   const visible = useRef(!document.hidden);
   const lastKey = useRef(keyAt(shots, sampleAt(pacing, 0)));
   const speed = useRef(1);
@@ -56,8 +59,8 @@ function Film({ config }) {
     clock.current = pending.current;
     lastKey.current = keyAt(shots, sampleAt(pacing, clock.current));
     setElapsed(clock.current);
-    move('covered');
   };
+  useEffect(() => () => transition.current?.cancel(), []);
   useEffect(() => {
     const visibility = () => { visible.current = !document.hidden; };
     document.addEventListener('visibilitychange', visibility);
@@ -68,10 +71,11 @@ function Film({ config }) {
     const control = event => {
       const data = event.data;
       if (event.source !== window.parent || data?.channel !== CHANNEL || data.runId !== config.runId || data.type !== 'control') return;
-      if (data.action === 'play') setPlaying(true);
-      if (data.action === 'pause') setPlaying(false);
+      if (data.action === 'play') { setPlaying(true); transition.current?.play(); }
+      if (data.action === 'pause') { setPlaying(false); transition.current?.pause(); }
       if (data.action === 'speed' && [1, 2, 4].includes(data.value)) speed.current = data.value;
       if (data.action === 'seek' && Number.isFinite(data.value) && !complete.current) {
+        transition.current?.cancel();
         clock.current = Math.max(0, Math.min(pacing.duration - .001, data.value));
         lastKey.current = keyAt(shots, sampleAt(pacing, clock.current));
         setElapsed(clock.current); setPlaying(false); move('idle');
@@ -81,15 +85,6 @@ function Film({ config }) {
     return () => window.removeEventListener('message', control);
   }, [config, pacing, shots]);
   useEffect(() => {
-    if (handoff !== 'covered' && !(config.reducedMotion && (handoff === 'closing' || handoff === 'opening'))) return;
-    let second = 0;
-    const first = requestAnimationFrame(() => { second = requestAnimationFrame(() => {
-      if (handoff === 'closing') commit();
-      else move(handoff === 'covered' ? 'opening' : 'idle');
-    }); });
-    return () => { cancelAnimationFrame(first); cancelAnimationFrame(second); };
-  }, [handoff, config.reducedMotion]);
-  useEffect(() => {
     if (!playing || finished) return;
     let frame = 0;
     let previous = performance.now();
@@ -98,7 +93,11 @@ function Film({ config }) {
       if (visible.current && phase.current === 'idle') {
         const next = Math.min(pacing.duration, clock.current + Math.min(now - previous, 100) / 1000 * speed.current);
         const nextKey = keyAt(shots, sampleAt(pacing, next));
-        if (nextKey !== lastKey.current) { pending.current = next; move('closing'); }
+        if (nextKey !== lastKey.current) {
+          pending.current = next; move('dissolving');
+          transition.current = dissolveFrame(surface.current, commit, { duration: COVER_SECONDS * 1000, reducedMotion: config.reducedMotion });
+          transition.current.finished.then(() => move('idle'));
+        }
         else { clock.current = next; setElapsed(next); }
       }
       previous = now;
@@ -126,17 +125,13 @@ function Film({ config }) {
   const player = line?.speaker === 'You';
   const color = SPEAKER_COLORS[player ? 'player' : 'alex'];
   const captionStyle = { color, WebkitTextStroke: '.035em #172019', paintOrder: 'stroke fill', textShadow: CAPTION_SHADOW, fontStyle: player ? 'italic' : 'normal' };
-  return <main className="l2-film" data-kind={config.request.kind} data-scene-id={config.request.sceneId} data-shot={current.shot.id} data-elapsed={elapsed.toFixed(3)} data-duration={pacing.duration.toFixed(3)} data-handoff={handoff} data-finished={finished} data-player-name={config.request.playerName}>
+  return <main ref={surface} className="l2-film" data-kind={config.request.kind} data-scene-id={config.request.sceneId} data-shot={current.shot.id} data-elapsed={elapsed.toFixed(3)} data-duration={pacing.duration.toFixed(3)} data-handoff={handoff} data-finished={finished} data-player-name={config.request.playerName}>
     <Level2ConsequencesSequence request={request} elapsed={sample.sourceSeconds} active={playing && !finished && visible.current} reducedMotion={config.reducedMotion} onComplete={IGNORE} />
     {line && <div className="l2-spoken" data-speaker={player ? 'player' : 'alex'} style={captionStyle}>
       <p className="l2-speaker" style={{ ...captionStyle, fontStyle: 'normal' }}>{player ? 'You' : 'Alex'}</p>
       <DialogueLayer style={captionStyle}>{line.text}</DialogueLayer>
     </div>}
-    <div className="l2-film-cover" aria-hidden="true" onTransitionEnd={event => {
-      if (event.target !== event.currentTarget || event.propertyName !== 'opacity') return;
-      if (phase.current === 'closing') commit();
-      else if (phase.current === 'opening') move('idle');
-    }} style={{ opacity: finished || handoff === 'closing' || handoff === 'covered' ? 1 : finalCover(pacing, elapsed), transition: `opacity ${config.reducedMotion || handoff === 'idle' ? 0 : COVER_SECONDS}s ease-in-out` }} />
+    <div className="l2-film-cover" aria-hidden="true" style={{ opacity: finished ? 1 : finalCover(pacing, elapsed) }} />
   </main>;
 }
 

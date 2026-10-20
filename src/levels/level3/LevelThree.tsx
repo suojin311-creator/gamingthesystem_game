@@ -16,7 +16,7 @@ import ManagementSatisfaction, { MANAGEMENT_PROGRESS } from '../../shared/compon
 import { useFeedback } from '../../shared/hooks/useFeedback';
 import { useVisibleDelay } from '../../shared/hooks/useVisibleDelay';
 import { resolvePlayerName } from '../../shared/utils/playerName';
-import CinematicPlaceholder from './CinematicPlaceholder';
+import LevelThreeCinematic from '../../cinematics/level3/LevelThreeCinematic';
 import { workbenchDialogue } from './dialogue';
 import { EFFORT_LABELS, observedStudentBehaviour, cinematicRequest, compareRuns, copyRun, type LevelThreeCinematicRequest, type LevelThreeResult, type WeightRun } from './data';
 import { MIN_WEIGHT, MAX_WEIGHT, startAllocation, allocateWeight, canRun, confirmWeight, effortAt, maximumWeight, type Confirmed, type WeightGoal, type Weights } from './weights';
@@ -168,7 +168,7 @@ export default function LevelThree({ playerName: suppliedName, initialMetricIds,
     <main className="l3-workbench" id="level-three-main">
       {phase !== 'intro' && <><div className="l3-heading"><div><span className="chapter-number">03</span><h1>The weighting trap.</h1></div><span className="l3-location"><i />THE OFFICE</span></div>
       <nav className="l3-stepper" aria-label="Level 3 progress"><ol>{STAGES.map((label, index) => <li key={label} className={stage === index ? 'current' : stage > index ? 'done' : ''} aria-current={stage === index ? 'step' : undefined}><span>{stage > index ? <Icon name="check" /> : `0${index + 1}`}</span>{label}</li>)}</ol></nav></>}
-      {request ? (renderCinematic ? renderCinematic(request, finishScene) : <CinematicPlaceholder key={`${key}:${request.sceneId}`} request={request} onComplete={finishScene} />)
+      {request ? (renderCinematic ? renderCinematic(request, finishScene) : <LevelThreeCinematic key={`${key}:${request.sceneId}`} request={request} onComplete={finishScene} />)
         : phase === 'intro' ? <ChapterTransition key={`intro:${runId}`} level={3} playerName={playerName} initialMetricIds={initialSelection} play={feedback.play} onStart={() => move('choose')} />
         : <div className={`l3-body ${showPerspectives ? 'l3-with-perspectives' : ''}`}><section className="l3-decision">
           <div className="section-intro"><span className="eyebrow l3-round-label">{phase === 'weights' ? runs.length === MAX_TRIALS - 1 ? 'OPTIONAL TEST' : `TEST ${runs.length + 1}` : current && phase !== 'choose' ? `TEST ${current.round}` : 'CHOOSE EXACTLY THREE'}</span><h2 ref={title} tabIndex={-1}>{phase === 'choose' ? 'Which three would I prioritize?' : phase === 'weights' ? runs.length === 0 ? 'Set your first split.' : runs.length === 1 ? 'Follow what you observed.' : 'Test another idea.' : phase === 'publish' ? reportReady ? 'Weights published.' : 'Sharing the new weights…' : phase === 'result' ? 'Where did Alex’s effort go?' : 'What changed—and what stayed the same?'}</h2></div>

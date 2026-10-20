@@ -13,6 +13,7 @@ const sourceFiles = [
   'scripts/level1-settlement/presentation.jsx', 'scripts/level1-settlement/content.mjs',
   'scripts/level1-settlement/pacing.mjs', 'scripts/level1-settlement/transitions.mjs',
   'src/shared/data/cinematicPalette.js',
+  'scripts/cinematic-dissolve.mjs',
 ];
 const sha = data => createHash('sha256').update(data).digest('hex');
 const fingerprint = () => sha(Buffer.concat(sourceFiles.map(path => Buffer.concat([Buffer.from(path + '\0'), readFileSync(resolve(root, path)), Buffer.from('\0')]))));

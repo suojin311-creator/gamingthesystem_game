@@ -47,7 +47,11 @@ with zipfile.ZipFile(Path('play') / complete['archive']) as bundle:
     assert set(bundle.namelist()) == {*complete_entries, 'START-HERE.html', 'START-HERE.txt'}
     for name, html in complete_entries.items():
         complete_html[name] = bundle.read(name)
-        assert complete_html[name] == artifacts[html]
+        target = complete.get('sharedGameLaunchers', {}).get(name)
+        if target:
+            assert '../' + target in complete_html[name].decode()
+        else:
+            assert complete_html[name] == artifacts[html]
         assert name in bundle.read('START-HERE.txt').decode()
     complete_html['START-HERE.html'] = bundle.read('START-HERE.html')
     assert complete_html['START-HERE.html'] == Path('scripts/package_start.html').read_bytes()
@@ -55,7 +59,7 @@ with zipfile.ZipFile(Path('play') / complete['archive']) as bundle:
     for name, data in complete_html.items():
         assert hashlib.sha256(data).hexdigest() == complete['htmlSha256'][name]
 assert hashlib.sha256((Path('play') / complete['archive']).read_bytes()).hexdigest() == complete['zipSha256']
-checks.append('The complete ZIP contains all four byte-identical playable versions, an offline launcher and bilingual instructions with verified hashes')
+checks.append('The complete ZIP shares one verified game build across its four offline entry points without duplicating movie assets')
 
 
 def advance(page, seconds=24):
@@ -193,8 +197,11 @@ def weights_three(page, values):
     page.get_by_role('button',name='Run evaluation',exact=True).click()
     page.locator('.l3-publish').scroll_into_view_if_needed();advance(page,5)
     page.get_by_role('button',name='Observe the class',exact=True).click()
-    for _ in range(2):page.get_by_role('button',name='Continue scene',exact=True).click()
-    page.get_by_role('button',name='Return to dashboard',exact=True).click()
+    expect(page.locator('.level3-cinematic iframe')).to_be_visible(timeout=30000)
+    for _ in range(45):
+        if not page.locator('.level3-cinematic').count(): break
+        page.clock.run_for(1000);page.wait_for_timeout(60)
+    expect(page.locator('.level3-cinematic')).to_have_count(0,timeout=30000)
     page.locator('.l3-results').scroll_into_view_if_needed();advance(page,12)
     if page.locator('.l3-criteria-stop').count():
         page.locator('.l3-criteria-stop').scroll_into_view_if_needed();advance(page,4)
@@ -223,7 +230,7 @@ with sync_playwright() as playwright:
             if name.startswith('Full-game/'):
                 page.screenshot(path=f'test-results/complete-launcher-{width}.png',full_page=True)
         page.locator(f'a[href="{name}"]').click()
-        expect(page).to_have_url('https://complete.test/'+name)
+        expect(page).to_have_url('https://complete.test/'+complete.get('sharedGameLaunchers',{}).get(name,name))
         if name.startswith('Level2/'):
             expect(page.locator('.level-two')).to_have_attribute('data-phase','intro')
         elif name.startswith('Level3/'):

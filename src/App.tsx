@@ -11,5 +11,11 @@ export default function App() {
   }
   if (import.meta.env.MODE === 'level2') return <LevelTwo playerName={PREVIEW_PLAYER_NAME} />;
   if (import.meta.env.MODE === 'level3') return <LevelThree playerName={PREVIEW_PLAYER_NAME} />;
+  // The complete offline bundle shares one game HTML across its four launchers.
+  // Standalone builds above keep their existing entry/continuation behaviour.
+  const direct = new URLSearchParams(window.location.search).get('level');
+  if (direct === '1') return <LevelOneExperience playerName={PREVIEW_PLAYER_NAME} />;
+  if (direct === '2') return <LevelTwo playerName={PREVIEW_PLAYER_NAME} />;
+  if (direct === '3') return <LevelThree playerName={PREVIEW_PLAYER_NAME} />;
   return <FullGame />;
 }

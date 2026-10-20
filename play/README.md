@@ -1,5 +1,16 @@
 # 最新试玩下载 / Latest downloads
 
+## Level 3A 动画已接入
+
+[Level3A-animation-preview.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/animation/opening-integration/play/Level3A-animation-preview.zip?raw=true)：解压打开 **START-HERE.html**。
+每组连续播放三项实际游戏状态，左上角显示当前指标名；只使用 Level 3A。
+按当前游戏的相对权重结果匹配 18 种表现，移除数值页、无关侧脸、反应切镜与独立人像。
+Alex 字幕及名字使用浅蓝色，内部转场改用短叠化；Level 1／2 的内部换景也同步平顺化。
+比较回应与理论仍保留原占位内容，没有引入 Level 3B。详见 [接入说明](../docs/LEVEL3A_ANIMATION.md)。
+
+[合并 Level 3A 前的完整备份](https://github.com/suojin311-creator/gamingthesystem_game/blob/archive/before-level3a-integration-20261020/play/Gaming-the-System-complete.zip?raw=true)
+保存当前 Level 2 合并版，源码位于同名分支，提交 `2411baa`。
+
 按用户最新要求，继续使用 ZIP 交付，无需开通试用或配置托管。
 当前 ZIP 从落笔特写开始，并完整恢复 Coverage map 的标题、计数、证据与页脚。
 
@@ -80,4 +91,7 @@ Level3/Level3.html                  单独 Level 3
 
 `npm run package:previews` 一次更新全部六个 ZIP；`python3 tests/release.py` 验证实际文件、版本选择入口和三关衔接。校验值在 [LATEST.json](LATEST.json)。
 
-关闭或刷新会开始新游戏；完整版已接入开场与 Level 1／2 动画；Level 3 课堂与结尾成片仍为 placeholder。
+关闭或刷新会开始新游戏；完整版已接入开场、Level 1／2 和 Level 3A 任务动画；比较回应与结尾理论仍为 placeholder。
+
+全部版本总包将影片集中保存在 Full-game HTML，各关入口跳转到同一份内容。
+请保持解压后的文件夹在一起；独立关卡 ZIP 仍为各自可离线运行的单一 HTML。

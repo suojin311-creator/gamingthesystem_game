@@ -5,6 +5,7 @@ import { ConsequenceScene } from '@partner/cinematics/level1/ConsequenceScene';
 import { DialogueLayer } from '@partner/cinematics/shared/engine/DialogueLayer/DialogueLayer';
 import { branches, SECOND_THOUGHT, LEVEL1 } from '@partner/cinematics/level1/level1Content';
 import { FIRST_THOUGHT, BRIDGE_LINE, EMAIL_THOUGHT_DELAY, SPEAKER_COLORS, CAPTION_SHADOW } from './content.mjs';
+import { dissolveFrame } from '../cinematic-dissolve.mjs';
 import officeBackground from '@partner-assets/backgrounds/BG_Office_FirstPerson_v01.png';
 import '@partner/styles.css';
 import '@partner/cinematics/level1/level1.css';
@@ -56,42 +57,27 @@ export function LevelOneFilm({ selectedMetric, playerName, seconds, reducedMotio
   const [emailReadyAt, setEmailReadyAt] = useState(null);
   const currentElapsed = useRef(elapsed);
   currentElapsed.current = elapsed;
-  const cover = useRef(null);
-  const revealOffice = () => { setPhase('office'); setHandoff('covered'); };
+  const surface = useRef(null);
+  const transition = useRef(null);
+  const started = useRef(false);
   useEffect(() => {
-    if (handoff === 'idle' && seconds >= SOURCE_TRANSITION_START) setHandoff('closing');
-  }, [seconds, handoff]);
-  useEffect(() => {
-    // A real transition end protects the swap even if composition frames drop.
-    // With reduced motion there is no transition event; paint the solid cover first.
-    const noTransition = cover.current && getComputedStyle(cover.current).transitionDuration.split(',').every(part => parseFloat(part) === 0);
-    if (handoff === 'opening' && noTransition) {
-      setEmailReadyAt(currentElapsed.current);
-      setHandoff('done');
-      return;
-    }
-    if (handoff !== 'covered' && !(handoff === 'closing' && noTransition)) return;
-    let second = 0;
-    const first = requestAnimationFrame(() => { second = requestAnimationFrame(() => {
-      if (handoff === 'closing') revealOffice();
-      else setHandoff('opening');
-    }); });
-    return () => { cancelAnimationFrame(first); cancelAnimationFrame(second); };
-  }, [handoff]);
+    if (seconds < SOURCE_TRANSITION_START || started.current) return;
+    started.current = true;
+    setHandoff('dissolving');
+    transition.current = dissolveFrame(surface.current, () => setPhase('office'), { duration: SCENE_COVER_SECONDS * 1000, reducedMotion });
+    transition.current.finished.then(() => { setEmailReadyAt(currentElapsed.current); setHandoff('done'); });
+  }, [seconds, reducedMotion]);
+  useEffect(() => () => transition.current?.cancel(), []);
   const text = seconds >= 2.2 && seconds < 5.3 ? branch.boast
     : seconds >= 5.5 && seconds < 8.2 ? branch.question
     : seconds >= 8.9 && seconds < 12.1 ? branch.reveal : null;
-  return <AbsoluteFill className="l1-film" data-metric={selectedMetric} data-phase={phase} data-source-seconds={seconds.toFixed(3)}>
+  return <AbsoluteFill ref={surface} className="l1-film" data-metric={selectedMetric} data-phase={phase} data-handoff={handoff} data-source-seconds={seconds.toFixed(3)}>
     <div className="l1-scene" key={phase} data-shot={phase}>
       {phase === 'branch' ? <>
         <ConsequenceScene metric={selectedMetric} seconds={Math.min(seconds, LEVEL1.branch)} reducedMotion={reducedMotion} />
         {text && <SpokenLine text={text} player={seconds >= 5.5 && seconds < 8.2} playerName={playerName} />}
       </> : <OfficeEnding seconds={seconds - officeStart} playerName={playerName} thoughtReady={emailReadyAt !== null && elapsed - emailReadyAt >= EMAIL_THOUGHT_DELAY} />}
     </div>
-    <div ref={cover} className="l1-scene-cover" aria-hidden="true" onTransitionEnd={event => {
-      if (event.target !== event.currentTarget || event.propertyName !== 'opacity') return;
-      if (handoff === 'closing') revealOffice();
-      else if (handoff === 'opening') { setEmailReadyAt(currentElapsed.current); setHandoff('done'); }
-    }} style={{ position: 'absolute', inset: 0, background: '#111710', opacity: finished || handoff === 'closing' || handoff === 'covered' ? 1 : finalCoverOpacity(pacing, elapsed, reducedMotion), transition: `opacity ${!reducedMotion && (handoff === 'closing' || handoff === 'opening') ? SCENE_COVER_SECONDS : 0}s ease-in-out`, pointerEvents: 'none' }} />
+    <div className="l1-scene-cover" aria-hidden="true" style={{ position: 'absolute', inset: 0, background: '#111710', opacity: finished ? 1 : finalCoverOpacity(pacing, elapsed, reducedMotion), pointerEvents: 'none' }} />
   </AbsoluteFill>;
 }

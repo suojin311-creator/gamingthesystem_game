@@ -67,7 +67,7 @@ No audio assets were supplied; this preview is silent.
 This review contains the same adapted film used by the game placeholders.
 Only the three-metric, six-metric and final observation scenes are retained.
 The 100-metric film starts on the Criterion 66 pen insert, followed by the intact Coverage map and completion with shorter nonverbal holds; the earlier establishing view, separate 10/25 clips and SET PRIORITIES are omitted. Dialogue reading holds,
-speaker colours and opaque scene covers match the approved Level 1 treatment.
+speaker colours and soft scene dissolves match the shared Level 1 treatment.
 The full playable game is supplied separately in Full-game-play.zip.
 Source: Mg614/gaming-the-system
 Branch: feature/cinematic-level2-consequences
@@ -108,7 +108,7 @@ report = {
     'html': 'Level2-animation.html', 'htmlSha256': hashlib.sha256(files['Level2-animation.html']).hexdigest(),
     'fileSha256': {name: hashlib.sha256(data).hexdigest() for name, data in files.items()},
     'scope': 'Review of the exact adapted film integrated into existing Level 2 placeholders; partner source unchanged',
-    'build': {'config': 'scripts/level2-animation-preview.config.mjs', 'adaptations': ['Only three, six and checklist game slots', 'Three-metric scenes start at the requested first line', '100-metric film starts on the Criterion 66 pen insert, then shows the intact Coverage map and completion; shorten idle holds; remove overlay labels and the ending priority screen', 'Level 1 reading holds, colours and opaque scene covers']},
+    'build': {'config': 'scripts/level2-animation-preview.config.mjs', 'adaptations': ['Only three, six and checklist game slots', 'Three-metric scenes start at the requested first line', '100-metric film starts on the Criterion 66 pen insert, then shows the intact Coverage map and completion; shorten idle holds; remove overlay labels and the ending priority screen', 'Shared reading holds, colours and soft scene dissolves']},
     'entries': [{'label': label, 'state': state} for label, state, _ in entries],
     'audio': 'No source audio assets; silent',
 }
