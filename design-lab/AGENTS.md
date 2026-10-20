@@ -18,7 +18,7 @@
   the portrait, respect reduced motion and keep the question/ending layers mounted
   across transitions. No surrounding quotation marks on the final quote.
   No host reveal button after question 2; empty-class fallback may reveal manually.
-- Writing prompt: "How would you know Alex is really learning?". Remove the
+- Writing prompt: "What is one change you would make to help Alex learn more deeply?". Remove the
   Join the audience button. First question: "Did the most flowers mean the deepest
   thinking?"; second question remains unchanged. Use only the short accepted quote:
   "When a measure becomes a target, it ceases to be a good measure."

@@ -39,7 +39,7 @@
 ## 已确认的规则
 
 - 最多按 20 位学生＋1 位老师使用设计；主持页面不额外算人。
-- 写作题目：**How would you know Alex is really learning?** 无题目下方小字。
+- 写作题目：**What is one change you would make to help Alex learn more deeply?** 无题目下方小字。
 - 最多 240 字符，支持中文与英文。
 - 开始前说明匿名展示、投票及最终排名，不说明计分细节。
 - 只有 **Agree（鲜花）／Disagree（炸弹）**；只接受第一次选择。

@@ -210,7 +210,7 @@ Reset：第一次尚无观察时回未分配；之后回上一次实际观察，
 ### 7.2 环节、文字与时间
 
 1. 等待老师开始。提前告知：**Your reflection will be shared anonymously.** / **Everyone will vote, and a ranking will follow.** 需要让玩家知道之后会展示和排名，最终反问才成立。
-2. 写作 **90 秒固定**，不延长。最终题目：**How would you know Alex is really learning?**（最新确认文案，覆盖旧题）。去掉 Join the audience 按钮。 题目下不要小字提示、长模板或额外写作任务。当前认可原型限制 240 字符。
+2. 写作 **90 秒固定**，不延长。最终题目：**What is one change you would make to help Alex learn more deeply?**（最新确认文案，覆盖旧题）。去掉 Join the audience 按钮。 题目下不要小字提示、长模板或额外写作任务。当前认可原型限制 240 字符。
 3. 匿名展示 Reflection 01…；编号随机一次后固定，不公开姓名。
 4. 仅两个反应：鲜花 **Agree**、炸弹 **Disagree**。只说明二选一；不加泼水或其他反应，不解释“选择后不能改”，实现上单次不可修改。
 5. 每位参与者只看其他作者的作品；展示**没有倒计时**，未选择就留在当前作品，选择后短暂反馈并自动进入下一份，不再有 Next 按钮。

@@ -109,7 +109,7 @@ async def ui_case(browser, binary):
         ]
         for i,page in enumerate(pages):
             await page.evaluate('text=>window.ownReflection=text',texts[i])
-            await page.get_by_role('textbox',name='How would you know Alex is really learning?',exact=True).fill(texts[i])
+            await page.get_by_role('textbox',name='What is one change you would make to help Alex learn more deeply?',exact=True).fill(texts[i])
             if i==0: await page.screenshot(path=str(SCREEN/'02-writing.png'),full_page=True)
             await page.get_by_role('button',name='Submit',exact=True).click()
             await expect(page.get_by_role('heading',name='Submitted.',exact=True)).to_be_visible()
@@ -195,7 +195,7 @@ async def class_case(browser,binary):
         await host.get_by_role('button',name='Start writing',exact=True).click()
         async def write(i,page):
             await page.evaluate('text=>window.ownReflection=text',f'Perspective {i+1}: reward thoughtful questions more than the number of answers.')
-            await page.get_by_role('textbox',name='How would you know Alex is really learning?',exact=True).fill(f'Perspective {i+1}: reward thoughtful questions more than the number of answers.')
+            await page.get_by_role('textbox',name='What is one change you would make to help Alex learn more deeply?',exact=True).fill(f'Perspective {i+1}: reward thoughtful questions more than the number of answers.')
             await page.get_by_role('button',name='Submit',exact=True).click()
         await asyncio.gather(*(write(i,p) for i,p in enumerate(pages)))
         await wait_api(pages[0],lambda s:s['phase']=='review',timeout=30)

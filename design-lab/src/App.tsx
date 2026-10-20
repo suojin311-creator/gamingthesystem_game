@@ -4,7 +4,7 @@ import useClassroom, { type View } from './useClassroom';
 import type { Choice, Snapshot } from './types';
 import { Arrow, Bomb, Check, Clock, Flower } from './Icons';
 
-const PROMPT = 'How would you know Alex is really learning?';
+const PROMPT = 'What is one change you would make to help Alex learn more deeply?';
 const QUESTIONS = {
   question1: 'Did the most flowers mean the deepest thinking?',
   question2: 'Did knowing there would be a ranking change what you wrote?',
