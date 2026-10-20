@@ -24,7 +24,7 @@ with sync_playwright() as p:
  print('Checking second actual trial',flush=True)
  page.get_by_role('button',name='Try another split',exact=True).click();weights_three(page,[10,60,30])
  page.get_by_role('button',name='Compare the results',exact=True).click()
- page.get_by_role('button',name='Watch Alex’s response',exact=True).click()
+ page.get_by_role('button',name='Step back and reflect',exact=True).click()
  print('Checking integrated ending',flush=True)
  expect(page.get_by_test_id('ending-cinematic')).to_be_visible(timeout=30000)
  frame=page.frame_locator('iframe[title="Ending animation"]')

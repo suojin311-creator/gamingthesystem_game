@@ -5,7 +5,7 @@
 不强制调用浏览器的全屏权限。
 左下角「预览控制」可暂停、拖动、重播或跳到 Design Lab 入口。
 
-已确认的 ending 现已接入游戏：点击 Watch Alex’s response 直接全视口播放，
+已确认的 ending 现已接入游戏：点击 Step back and reflect 直接全视口播放，
 替换默认 comparison/theory 占位链，最后停留在入口页；不再提前揭示 Goodhart。
 六个正式游戏 ZIP 统一更新。独立审阅 ZIP 保留为已确认版本；Level 3B 没有导入。
 游戏传入实际两次/三次试验，并在完整流程中保留 Level 1 的实际 metric。

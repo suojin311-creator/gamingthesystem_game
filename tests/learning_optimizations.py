@@ -79,7 +79,7 @@ with sync_playwright() as p:
   split(page,third);run(page);page.get_by_role('button',name='Compare the patterns',exact=True).click()
   expect(page.locator('.l3-compare-table thead th[data-kind="player"]')).to_have_count(3);expect(page.locator('.l3-compare-table thead th[data-run="3"]')).to_contain_text('Third test')
   for round,values in enumerate([first,second,third],1):expect(page.locator(f'.l3-compare-table td[data-run="{round}"] .l3-row-weight')).to_have_text([str(v)+'%' for v in values])
-  page.get_by_role('button',name='Watch Alex’s response',exact=True).click()
+  page.get_by_role('button',name='Step back and reflect',exact=True).click()
   page.get_by_role('button',name='Continue scene',exact=True).click();page.get_by_role('button',name='Continue scene',exact=True).click();page.get_by_role('button',name='Reveal Goodhart’s Law',exact=True).click()
   expect(page.locator('.level-three')).to_have_attribute('data-phase','theory')
   record(f'{name}: three distinct player-confirmed tests use the {purpose} verification, retain every actual trial and reach the existing theory placeholder')

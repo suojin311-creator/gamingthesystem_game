@@ -72,7 +72,7 @@ def compare(page):
     page.get_by_role('button', name='Compare the results', exact=True).click()
 
 def finish_theory(page, closing_text=None):
-    page.get_by_role('button', name='Watch Alex’s response', exact=True).click()
+    page.get_by_role('button', name='Step back and reflect', exact=True).click()
     if closing_text:
         expect(page.locator('.l3-scene-copy > p')).to_contain_text(closing_text)
     for _ in range(2):
@@ -155,7 +155,7 @@ with sync_playwright() as p:
     compare(page)
     expect(page.locator('.l3-compare-table thead th[data-kind=player]')).to_have_count(2)
     expect(page.get_by_role('radio')).to_have_count(0)
-    expect(page.get_by_role('button', name='Watch Alex’s response', exact=True)).to_be_enabled()
+    expect(page.get_by_role('button', name='Step back and reflect', exact=True)).to_be_enabled()
     expect(page.get_by_role('button', name='Test another idea', exact=True)).to_be_visible()
     page.screenshot(path='test-results/player-experiments-two-tests-1366.png', full_page=True)
     finish_theory(page)
@@ -190,7 +190,7 @@ with sync_playwright() as p:
     page.get_by_role('button', name='Try your weights', exact=True).click()
     page.get_by_role('button', name='Back to comparison', exact=True).click()
     expect(page.locator('.l3-compare-table thead th[data-kind=player]')).to_have_count(2)
-    expect(page.get_by_role('button', name='Watch Alex’s response', exact=True)).to_be_enabled()
+    expect(page.get_by_role('button', name='Step back and reflect', exact=True)).to_be_enabled()
     next_trial(page, optional=True)
     expect(page.locator('.l3-weight-value')).to_have_text(['36%', '32%', '32%'])
     expect(page.locator('.l3-weight-card[data-confirmed=true]')).to_have_count(0)

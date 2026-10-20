@@ -158,7 +158,7 @@ with sync_playwright() as p:
     page.screenshot(path=str(OUT / 'level3-compare-desktop.png'), full_page=True, animations='disabled')
     record('The second test requires a different split and compares the actual two tested results')
     assert 'Goodhart' not in page.locator('body').inner_text()
-    page.get_by_role('button', name='Watch Alex’s response', exact=True).click()
+    page.get_by_role('button', name='Step back and reflect', exact=True).click()
     while page.get_by_role('button', name='Continue scene', exact=True).count(): page.get_by_role('button', name='Continue scene', exact=True).click()
     page.get_by_role('button', name='Reveal Goodhart’s Law', exact=True).click()
     assert 'Goodhart' not in page.locator('.l3-scene-copy').inner_text()

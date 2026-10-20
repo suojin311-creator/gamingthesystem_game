@@ -21,7 +21,7 @@ while allowing the player to reach the comparison after two tests.
    short question based on its actual bands. Need a hint? gives verbal help,
    never an automatic split. The player decides the values.
 5. **Compare.** After the second observation, show both actual trials side by
-   side. The primary Watch Alex's response action continues directly.
+   side. The primary Step back and reflect action continues directly.
 6. **Optional verification.** Test another idea returns from comparison to a
    third editor. Back to comparison cancels this optional test without adding a result. After a third observation, comparison includes all three real
    tests. It does not add a system reference or allow a fourth trial.
@@ -63,7 +63,7 @@ neither observation measures learning gain or loss.
 
 ## Compatibility and boundaries
 
-Completion fires once when Watch Alex's response is chosen after two or three
+Completion fires once when Step back and reflect is chosen after two or three
 observed tests. Actual runs and the compared near-even/uneven pair are copied;
 that pair is null if both classes are not present. Optional legacy intent and
 decision fields remain accepted but the current UI does not populate them.

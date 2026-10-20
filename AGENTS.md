@@ -22,6 +22,8 @@
 - The user approved an office reflection opening, three short memories and a
   plain-language closing. Remove the repeated You/Alex question and the three-window
   convergence montage. See `docs/ENDING_ANIMATION_PREVIEW.md`.
+- The Level 3 comparison action reads "Step back and reflect" with the arrow
+  icon, shared by standalone Level 3 and the complete game.
 - The user approved this ending for the game. The default comparison entry now
   plays the full-screen film and holds its accepted Design Lab entry page, replacing
   the comparison/theory placeholders. Custom partner renderers retain their contract.

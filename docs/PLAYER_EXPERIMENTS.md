@@ -32,7 +32,7 @@ practice, move sliders or confirm values. Guide reopens it during editing.
 
 After the first result, the next action returns to the editor to try a change.
 After the second observed result, Compare the results opens a table containing
-both real experiments. Its primary Watch Alex's response action continues
+both real experiments. Its primary Step back and reflect action continues
 without a judgment question. Test another idea optionally opens a third editor.
 Back to comparison abandons unsubmitted edits without adding a trial.
 After a third observation the comparison retains all three tests and offers the
@@ -67,7 +67,7 @@ Design Lab navigation, additional ending page or player Restart control.
   `WeightRun.intent`. Older host fixtures may still provide that field.
 - The optional `LevelThreeCinematicRequest.decision` remains accepted for older
   hosts, but the current game has no decision gate and does not populate it.
-- Completion fires once on Watch Alex's response after two or three observed
+- Completion fires once on Step back and reflect after two or three observed
   tests. It returns copied `selectedMetricIds`, copied actual `runs` and
   `compared: { nearEven, uneven } | null`. `LevelThreeResult.decision` is optional
   and omitted by this UI.

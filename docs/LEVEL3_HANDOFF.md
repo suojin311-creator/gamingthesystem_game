@@ -26,7 +26,7 @@ actual qualitative effort. See [visual operations](VISUAL_PLAY.md).
    with all three actual task/effort pairs. Its short question follows neglected
    tasks, shared attention or unchanged effort, not a required aim.
 5. After the second observation, Compare the results shows both actual trials.
-   Watch Alex's response continues directly without a keep/rethink question.
+   Step back and reflect continues directly without a keep/rethink question.
 6. Test another idea optionally returns from comparison for a third experiment.
    After its observation, comparison retains all three tests. No fourth is added.
 7. Alex's response leads to the theory reveal. The preview stops there.
@@ -178,7 +178,7 @@ scenes and is empty for comparison/theory. Keep LevelThree mounted during a
 scene. Complete callbacks return weight scenes to results, comparison to theory
 and leave theory at its endpoint.
 
-`onComplete` / `onLevelThreeComplete` fires once on Watch Alex's response after
+`onComplete` / `onLevelThreeComplete` fires once on Step back and reflect after
 **two or three observed tests**, without a judgment gate. It returns:
 
 ```ts

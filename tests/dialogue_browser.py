@@ -103,7 +103,7 @@ with sync_playwright() as p:
     page.get_by_role('button',name='Try another split',exact=True).click();split(page,[20,70,10]);publish(page);observe(page)
     page.get_by_role('button',name='Compare the patterns',exact=True).click();advance(page,2)
     fit_comparison(page,[[34,33,33],[20,70,10]])
-    page.get_by_role('button',name='Watch Alex’s response',exact=True).click()
+    page.get_by_role('button',name='Step back and reflect',exact=True).click()
     expect(page.locator('.l3-scene-caption p')).to_contain_text('You moved your effort.')
     record('Near-even-first and concentrated-second trials retain their actual order and enter the brief response/theory sequence directly')
     context.close()

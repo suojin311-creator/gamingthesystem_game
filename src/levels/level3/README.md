@@ -30,7 +30,7 @@ The first editor is unassigned (three dashes), with Confirm and Run disabled. Mo
 The first allocation is free. The second editor keeps the last observation in
 view and asks a question based on its actual effort bands. Every new valid
 split is accepted, even when the bands remain unchanged. After two observed
-tests the player can compare and Watch Alex's response, or optionally Test
+tests the player can compare and Step back and reflect, or optionally Test
 another idea. The latter adds one third test, not a reference or a compulsory
 pattern. No aim radios or keep/rethink judgment gate remain.
 
@@ -52,7 +52,7 @@ does not display a system reference or aim headings.
 
 The current UI does not populate the legacy optional `WeightRun.intent`,
 cinematic `decision` or optional result `decision`. Completion fires once on
-Watch Alex's response after two or three observations and copies all runs.
+Step back and reflect after two or three observations and copies all runs.
 `compared` remains a near-even/uneven pair or null for uniform-pattern histories.
 Near-even is optional; no final dialogue claims an untested allocation was disproved. The current builds retain Level 2’s explicit six-metric hypothesis and final score-chasing response.
 The default comparison entry now plays the approved full-viewport ending, using

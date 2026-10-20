@@ -88,7 +88,7 @@ with sync_playwright() as p:
     page.get_by_role('button',name='Compare the results',exact=True).click();advance(page,3)
     assert page.evaluate('window.results.length')==0
     expect(page.get_by_role('radio')).to_have_count(0)
-    page.get_by_role('button',name='Watch Alex’s response',exact=True).click()
+    page.get_by_role('button',name='Step back and reflect',exact=True).click()
     results=page.evaluate('window.results')
     assert len(results)==1 and results[0]['level']==3
     result=results[0]['result'];assert result['runs'][0]['weights']==[70,20,10]
@@ -174,7 +174,7 @@ with sync_playwright() as p:
         page.get_by_role('button',name='Compare the results',exact=True).click();advance(page,3)
         assert page.evaluate('window.results.length')==0
         expect(page.get_by_role('button',name='Test another idea',exact=True)).to_have_count(0)
-        page.get_by_role('button',name='Watch Alex’s response',exact=True).click()
+        page.get_by_role('button',name='Step back and reflect',exact=True).click()
         result=page.evaluate('window.results.at(-1).result')
         assert result['compared'] is None and 'decision' not in result
         assert [run['weights'] for run in result['runs']]==sequence
