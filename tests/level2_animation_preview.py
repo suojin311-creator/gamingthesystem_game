@@ -50,7 +50,7 @@ with sync_playwright() as p:
           const sample=()=>{
             const a=window.filmAudit,shot=root.dataset.shot;
             if(!a.shots.includes(shot))a.shots.push(shot);
-            if(['entry','pattern','expand','ten','twenty-five','hundred','priority','checking'].includes(shot))a.errors.push('Extra shot '+shot);
+            if(['entry','pattern','expand','ten','twenty-five','priority','checking'].includes(shot))a.errors.push('Extra shot '+shot);
             const scene=root.querySelector('.l2-scene');
             const visible=e=>getComputedStyle(e).visibility==='visible'&&e.getClientRects().length>0;
             const walker=document.createTreeWalker(scene,NodeFilter.SHOW_TEXT);
@@ -81,7 +81,7 @@ with sync_playwright() as p:
             }
             const phase=root.dataset.handoff;
             const caption=spoken?.querySelector('[role=status]')?.textContent??null;
-            if(root.dataset.kind==='checklist'){
+            if(root.dataset.kind==='checklist'&&shot==='reflection'){
               if(phase==='closing')closingText=caption;
               if(phase==='covered'&&cutPhase!=='covered'){
                 a.cutCaptions.push(caption);
@@ -109,7 +109,9 @@ with sync_playwright() as p:
         audit=film.evaluate('window.filmAudit')
         assert not audit['errors'],audit
         if kind!='three':assert (6 if kind=='six' else 100) in audit['checklists'],audit
-        if kind=='checklist':assert audit['cutCaptions']==['Maybe adding more metrics isn’t the answer...', 'What if some metrics mattered more than others?'],audit
+        if kind=='checklist':
+            assert audit['shots']==['hundred','perfect','reflection'],audit
+            assert audit['cutCaptions']==['Maybe adding more metrics isn’t the answer...', 'What if some metrics mattered more than others?'],audit
         assert set(audit['speakers'])==({'You','Alex'} if kind!='checklist' else {'You'}),audit
         assert audit['swaps'] and min(audit['swaps'])>=.999,audit
         expect(film).to_have_attribute('data-finished','true')
@@ -136,7 +138,7 @@ with sync_playwright() as p:
     page.goto(origin+'Level2-animation.html?state=full',wait_until='networkidle')
     expect(page.get_by_label('Speed',exact=True)).to_have_value('1')
     expect(page.locator('footer')).to_have_attribute('data-completion-count','3',timeout=90000)
-    record('All three placeholder scenes play once each at normal speed; no 10/25/100 growth or priority page is inserted')
+    record('All three placeholder scenes play once each at normal speed; the 100-metric prelude is retained and no separate 10/25 or priority page is inserted')
     c.close();b.close()
 assert not errors,errors
 assert not external,external

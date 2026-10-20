@@ -1,8 +1,8 @@
 {
-  "validatedAtUtc": "2026-10-20T02:52:33.843895+00:00",
-  "version": "Restore Level 2 checklist text, synchronize final caption cuts, highlight Students and require manual gap checks",
+  "validatedAtUtc": "2026-10-20T10:27:58.444009+00:00",
+  "version": "Restore the 100-metric overview, checking and completion before reflection; remove the ending priority page and shorten silent holds",
   "branch": "animation/opening-integration",
-  "sourceBaseCommit": "0b3d9177a2d537a78406cf17c74ba8d2fc56c76d",
+  "sourceBaseCommit": "5f03bae1b7846851707ceec9e18afa82bf4146e5",
   "approvedLevelOneCommit": "411353dd3ef6103b20faa4debe9075b94f46e199",
   "gameBaselineCommit": "00c311682268ab8593d0733a4163b50ee41cd663",
   "backup": {
@@ -32,7 +32,7 @@
     "passed": 14,
     "historicalReportCommit": "762ce7edc796a85307bde282e78393e4773e7b10"
   },
-  "passed": 47,
+  "passed": 6,
   "build": {
     "command": "npm run package:previews",
     "exitCode": 0,
@@ -41,95 +41,29 @@
     "adaptedReviewBuildExitCode": 0
   },
   "suites": {
-    "release-results.json": {
-      "passed": 12,
-      "checks": [
-        "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
-        "The review ZIP contains separate Level 3 and connected Levels 1–3 HTMLs, identical to their tested latest packages",
-        "The complete ZIP contains all four byte-identical playable versions, an offline launcher and bilingual instructions with verified hashes",
-        "The actual complete-ZIP launcher fits desktop/phone, starts the full game at the opening and opens each standalone level directly offline",
-        "Packaged Level2.html completes 3 → 6 → 10 → 25 → 100 offline with normal motion",
-        "Packaged standalone Level3.html compares after two tests and can add an optional third, keeping all actual results offline",
-        "Packaged Level1.html uses the approved report, normal-speed cinematic, matching name/colours and settlement; Try another resets it without entering Level 2",
-        "Standalone Level 1 reload starts a fresh Level 1 run",
-        "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
-        "Packaged combined game carries the opening name, including ampersand and Chinese, through Level 1 UI, teacher/Alex captions, email and playable Levels 2–3",
-        "Combined preview reload starts at the opening rather than restoring a level or player identity",
-        "Packaged entries have no browser runtime errors"
-      ],
-      "runtimeErrors": []
-    },
-    "level2-animation-preview-results.json": {
-      "passed": 10,
-      "checks": [
-        "Actual adapted review ZIP passes CRC and all recorded SHA-256 checks",
-        "Launcher contains only the five existing placeholder variants and their short continuous review",
-        "visible-heavy: authored checklist text restored, correct trim, You/Alex colours, opaque swaps, completion and fresh replay",
-        "quality-heavy: authored checklist text restored, correct trim, You/Alex colours, opaque swaps, completion and fresh replay",
-        "mixed-broad: authored checklist text restored, correct trim, You/Alex colours, opaque swaps, completion and fresh replay",
-        "six: authored checklist text restored, correct trim, You/Alex colours, opaque swaps, completion and fresh replay",
-        "100: authored checklist text restored, correct trim, You/Alex colours, opaque swaps, completion and fresh replay",
-        "Hidden-page reading time holds and reduced-motion scenes resume to a real completion",
-        "All three placeholder scenes play once each at normal speed; no 10/25/100 growth or priority page is inserted",
-        "Adapted offline preview has no browser runtime errors or external asset requests"
-      ],
-      "runtimeErrors": [],
-      "externalRequests": []
-    },
     "level2_animation_pacing.mjs": {
-      "passed": 5,
-      "command": "LEVEL2_ANIMATION_SOURCE=/tmp/gts-level2-source node --experimental-strip-types --test tests/level2_animation_pacing.mjs",
+      "passed": 6,
       "checks": [
-        "Requested three-metric first line and exact source trim are preserved",
-        "All sampled frames remain within existing placeholders and exclude extra growth/priority clips",
-        "All retained authored lines keep their full approved reading holds",
-        "Final cover is opaque before completion and unsupported scene kinds are rejected",
-        "Every final-reflection covered cut introduces a different, nonempty caption with its new portrait"
-      ]
-    },
-    "level2-animation-results-layout.json": {
-      "passed": 10,
-      "checks": [
-        "3-metric Students warning visibly pulses three times and stops; offscreen/hidden time is held",
-        "3-metric result has the existing observation and two equal cards, no chat, safe callbacks and no overflow at 1366/768/390/320px",
-        "Cover the gaps directly opens six cards; the original three stay checked, only player input checks the rest, and all three are required to enable Observe",
-        "6-metric Students warning visibly pulses three times and stops",
-        "6-metric result has the existing observation and two equal cards, no chat, safe callbacks and no overflow at 1366/768/390/320px",
-        "The original game alone performs continuous 10/25/100 growth without inserting any extra movie",
-        "100-metric Students warning visibly pulses three times and stops",
-        "100-metric result has the existing observation and two equal cards, no chat, safe callbacks and no overflow at 1366/768/390/320px",
-        "Reduced motion retains a steady Students outline without flashing",
-        "The actual standalone ZIP retains its ending and produces no browser errors"
+        "three-metric films start exactly on the requested first line, after all establishing/checking shots",
+        "every frame stays inside requested placeholder material and excludes expansion, priority and extra 10/25 animations",
+        "all retained authored lines get the approved English-reading hold without added narration",
+        "the final covered frame is reached before completion and invalid scene kinds are rejected",
+        "each final-reflection covered cut introduces its new caption immediately with the new portrait",
+        "100-metric overview, pen insert, completion and reaction precede dialogue without a long idle hold"
       ],
-      "runtimeErrors": []
-    },
-    "level3-integration-results.json": {
-      "passed": 10,
-      "checks": [
-        "Opening-supplied player name reaches Level 3 labels, avatar and the three weighted partner shots",
-        "Level 3 completes once on Watch after two immutable player tests, without intent or verdict data, and preserves a real near-even/uneven comparison",
-        "Comparison leads to theory; even duplicate final callbacks stay in the placeholder and never invoke Design Lab",
-        "Real Gameplay host carries the opening name and sound preference from Level 2 into the new Level 3 chapter",
-        "Level 3 preselects the actual Level 2 trio, permits swapping, and has no player Restart control",
-        "Reloading the connected host starts fresh from its configured entry level",
-        "Hidden-page publication holds its visible-time sequence and resumes without skipping the three weights",
-        "Optional third tests preserve all actual uneven or near-even records, allow compared=null, and emit completion once with no synthetic reference or choice fields",
-        "Real-time publication and evidence arrive one at a time; Web Audio cues play and Sound off silences later updates",
-        "No browser errors in partner, chapter handoff or real-time audio checks"
-      ],
-      "runtimeErrors": []
+      "command": "LEVEL2_ANIMATION_SOURCE=/tmp/gts-level2-source node --experimental-strip-types --test tests/level2_animation_pacing.mjs"
     }
   },
   "artifacts": {
-    "sourceSha256": "6a66fd8d846bee0f36e9c354b553d11d266438ba5f603c8bc1bc46024ae3ae4b",
+    "sourceSha256": "42b5c43fb726a6b7e59306ba2dccd0c0f1d962674a580ff10029a2cfdea1c1d2",
     "cinematic": {
       "sourceSha256": "c7cac2c0dbf10fb696863c02d95752972cb2dd23a3243417d1209dda1a39c74a",
       "htmlSha256": "5a9a8f9536894aff12a953b69bdd19cb4518a64d7c9e331d81a8e2dcb05a42c1",
       "partnerSourceCommit": "1bdd0c442c4b345b3bd37d6f541742d4e55c732f"
     },
     "level2Cinematic": {
-      "sourceSha256": "240dd476574659e556121ae363f6528de24890c341dbdf390cb5564354d9349b",
-      "htmlSha256": "4c7b761d86c85d8314cae1a7499aba6c49c4562b2d58e6b454a9b0de75da850b",
+      "sourceSha256": "f626b28e6f5a566df23b16035cd052fe7769f1c740662d54fa3032bf87990270",
+      "htmlSha256": "fc9b3fb815ebe5f0375decd9e712526474f3c3b7f13959f59976a1c00b9dc96c",
       "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb"
     },
     "entries": [
@@ -144,8 +78,8 @@
         "archive": "Level2-play.zip",
         "html": "Level2.html",
         "build": "dist-level2/index.html",
-        "htmlSha256": "24e36ba243d2819f1ecd4a60583376b2a72a938b5b3b73747def906f8b405fe0",
-        "zipSha256": "c0fd2f0e47c27dd977bf7934c85da6f72ff9cc8c5ae0c16621609a4d31054347"
+        "htmlSha256": "7e8dd1f7a4d1479c8d2da34a841085c79775d331690d6f1a2998f6bf25983a04",
+        "zipSha256": "0ff45b6aa1bf3f95e8272a1b5587b6f187d8b8dec25a16f78baff152dda3cd1f"
       },
       {
         "archive": "Level3-play.zip",
@@ -158,43 +92,43 @@
         "archive": "Full-game-play.zip",
         "html": "Gaming-the-System.html",
         "build": "dist/index.html",
-        "htmlSha256": "632f8bae139071f8ab91a3738c0f261728578b1c2601f02308b34c39f624d279",
-        "zipSha256": "5909f3cbabf42f05f5fb044d997e56ca4e8c90a84cc86bf971f0726721c007ca"
+        "htmlSha256": "a2c3d911ede486774ba69607977da9077a4c20a02e11925e3489f2c278868503",
+        "zipSha256": "8df4cad2362606a02d923fcb54660e50733428fbd1c298d5ac5b332c017f2d36"
       }
     ],
     "reviewBundle": {
       "archive": "Level3-and-Full-game-play.zip",
-      "zipSha256": "ffd94c64ef5d4b445ad600bb219fcf84bb63580f9bdc5922e69da58cbdcec366",
+      "zipSha256": "52e51813859f537f84414603ab5e5aa4ff4c4755356492cd6f5bde9d7c4055ed",
       "htmlSha256": {
         "Level3/Level3.html": "fa19f73f82aa9a034d409c6205f7e67763ba8e15ef3a599b811644cc46d6d03d",
-        "Full-game/Gaming-the-System.html": "632f8bae139071f8ab91a3738c0f261728578b1c2601f02308b34c39f624d279"
+        "Full-game/Gaming-the-System.html": "a2c3d911ede486774ba69607977da9077a4c20a02e11925e3489f2c278868503"
       }
     },
     "completeBundle": {
       "archive": "Gaming-the-System-complete.zip",
-      "zipSha256": "d544d1fc01230be599b3e8f0bdcded6a056f136c58d2b29bcfd8de0f245c370a",
+      "zipSha256": "de2cd859df603a13aa5597b2fc009b3261c99eadeea71025e6da2931a51e3b2f",
       "htmlSha256": {
         "START-HERE.html": "8696f4f200fa9b456aafa3242c1a0bf3adc235c974e6e2fec9b0b92a66d63506",
-        "Full-game/Gaming-the-System.html": "632f8bae139071f8ab91a3738c0f261728578b1c2601f02308b34c39f624d279",
+        "Full-game/Gaming-the-System.html": "a2c3d911ede486774ba69607977da9077a4c20a02e11925e3489f2c278868503",
         "Level1/Level1.html": "1e966cbc35c364f751d81e0778d8c529b2e454ebcb97a447e803092b82510199",
-        "Level2/Level2.html": "24e36ba243d2819f1ecd4a60583376b2a72a938b5b3b73747def906f8b405fe0",
+        "Level2/Level2.html": "7e8dd1f7a4d1479c8d2da34a841085c79775d331690d6f1a2998f6bf25983a04",
         "Level3/Level3.html": "fa19f73f82aa9a034d409c6205f7e67763ba8e15ef3a599b811644cc46d6d03d"
       }
     }
   },
   "adaptedLevelTwoPreview": {
     "archive": "Level2-animation-preview.zip",
-    "zipSha256": "0b048eaaa5dbfd1009f99b425434136fbaa1400a947f801347e589dbcbd38fd9",
+    "zipSha256": "7299af483651db14a2c1c979b14c17af4ddc4e2bf2f5a4f29afb15f731e29d88",
     "html": "Level2-animation.html",
-    "htmlSha256": "66c199d3938b6761f9376ee2b319ea7288b8149099aa53492bf866916cbca3e7",
+    "htmlSha256": "1106c34f5861cfca616555855fd7fcd362c4a1d3082875979faa4dac3607cef0",
     "fileSha256": {
-      "START-HERE.html": "e60e98edb64fe3af0bccbeec03ddcc92a17cb67bc7cf97c0f12399b9be7401c5",
-      "Level2-animation.html": "66c199d3938b6761f9376ee2b319ea7288b8149099aa53492bf866916cbca3e7",
-      "START-HERE.txt": "6c7cb97523aa5c7a56ff3c03cefd12b153165c1ad6a17b6a69bc71c9ab4b5b06"
+      "START-HERE.html": "cc8d17d76d5cb6af7b4d8ea9b052a2a6a0d222c932c0ad9c8c57a3e430c015d5",
+      "Level2-animation.html": "1106c34f5861cfca616555855fd7fcd362c4a1d3082875979faa4dac3607cef0",
+      "START-HERE.txt": "4a224c731f2f3a44841a3bd3fb8ae736f0257b94d32a668ed22dfb4b6e121983"
     },
     "film": {
-      "sourceSha256": "240dd476574659e556121ae363f6528de24890c341dbdf390cb5564354d9349b",
-      "htmlSha256": "4c7b761d86c85d8314cae1a7499aba6c49c4562b2d58e6b454a9b0de75da850b",
+      "sourceSha256": "f626b28e6f5a566df23b16035cd052fe7769f1c740662d54fa3032bf87990270",
+      "htmlSha256": "fc9b3fb815ebe5f0375decd9e712526474f3c3b7f13959f59976a1c00b9dc96c",
       "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb"
     }
   },
@@ -219,21 +153,25 @@
     "chromium": "154.0.8037.57"
   },
   "notes": [
-    "Authored checklist row labels and dense-list group headings are restored. Surrounding chapter/candidate labels, paper header/footer copy, evidence annotations and removed overlay screens stay hidden.",
-    "Six-metric and final 100-metric checklist text is checked throughout the actual shipped review film. All 100 Criterion labels and five original group headings remain visible.",
-    "The final reflection holds the first sentence and preceding portrait for its full reading interval. The last portrait change and second caption commit together under the opaque cover, without a blank interval or reopening on the old caption.",
-    "The browser audit verifies both covered final-reflection cuts already contain their new nonempty captions. All five variants, opaque swaps, completion/replay, hidden-page hold and normal-speed continuous review pass.",
-    "All six game archives were regenerated together and the real offline release suite passes from the opening through all three levels. The actual game and review use the same corrected film.",
-    "Cover the gaps opens the six-card evaluation directly. The original trio stays checked/locked; only player clicks check the remaining three, and Observe enables only when all are checked. Unchecking a new item disables it again; no Illustrative outcomes label remains in Level 2.",
-    "Students uses the Level 1 red outline for three 0.75-second pulses, held offscreen or on a hidden page. All three result rounds stop after three pulses; reduced motion uses a steady outline.",
-    "The large inline HTML release checks use the existing temporary runner with 120-second action/navigation deadlines. Metric classification, authored outcomes, result copy/layout, the original trio handoff to Level 3, iframe completion contract and partner files are preserved.",
-    "The pushed correction baseline is 0b3d917; the original pre-Level-2 source and six-ZIP backup remains at archive/before-level2-animation-integration-20261020 (762ce7e). Only animation/opening-integration is updated."
+    "The final existing placeholder now uses the authored hundred, perfect and reflection shots, restoring the original classroom overview, checking insert and completed 100-metric checklist. Only the final priority screen is omitted.",
+    "The 100-metric nonverbal prelude totals 2.8 seconds of visible action time, plus the existing short opaque cuts. The pleased reaction holds 0.4 seconds before the first teacher line; long idle holds are removed.",
+    "Original classroom artwork is restored and decoded before playback. Chapter/stage labels and the cinematic-candidate watermark remain hidden; checklist labels remain visible.",
+    "Both reflection lines retain the approved reading time. The last portrait/caption change remains synchronized under the opaque cover.",
+    "All six game ZIPs and the independent review ZIP were rebuilt using the same corrected film. The previous 47-check game report is preserved at 5f03bae.",
+    "Per the user instruction, no game-path or browser-playback checks were run this round. The build/type check and six pacing unit checks completed; earlier game-path results are historical and are not claimed for this version.",
+    "Only animation/opening-integration is updated. Partner source, stable branches and the original pre-Level-2 backup at 762ce7e remain unchanged."
   ],
   "previousValidation": {
-    "commit": "0b3d9177a2d537a78406cf17c74ba8d2fc56c76d",
-    "version": "Integrate trimmed Level 2 films into the existing placeholders and remove post-film result conversations",
-    "validatedAtUtc": "2026-10-20T02:15:54.090909+00:00",
-    "passed": 41,
+    "commit": "5f03bae1b7846851707ceec9e18afa82bf4146e5",
+    "version": "Restore Level 2 checklist text, synchronize final caption cuts, highlight Students and require manual gap checks",
+    "passed": 47,
+    "validatedAtUtc": "2026-10-20T02:52:33.843895+00:00",
     "report": "docs/PREVIEW_VALIDATION.json"
+  },
+  "verificationPolicy": {
+    "userRequestedDirectZipWithoutPathChecks": true,
+    "gamePathChecksRun": false,
+    "browserChecksRun": false,
+    "previousGameChecksAreHistorical": true
   }
 }

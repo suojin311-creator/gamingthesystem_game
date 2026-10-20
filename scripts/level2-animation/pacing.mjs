@@ -17,7 +17,17 @@ export function createPacing(kind, shots) {
   if (!shot?.dialogue?.length) throw new Error('A supported placeholder scene with authored dialogue is required.');
   if (kind === 'three' && shot.dialogue[0].text !== 'I’ve completed all three requirements!') throw new Error('Review the partner three-metric opening before trimming.');
   if (kind === 'six') add(0, shot.dialogue[0].start, .25);
-  if (kind === 'checklist') add(1.6, 5.25, 1.2); // Brief satisfied reaction, after the game's 100-item growth.
+  if (kind === 'checklist') {
+    const hundred = shots.find(item => item.id === 'hundred');
+    if (!hundred) throw new Error('The final placeholder must include the authored 100-metric prelude.');
+    const start = offsets.get('hundred');
+    // Retain the overview, pen insert and completed checklist. Shorten only
+    // their nonverbal holds, then give the pleased reaction a brief beat.
+    add(start, start + .249, .3);
+    add(start + .25, start + 1.49, .85);
+    add(start + 1.5, start + hundred.duration - .01, 1.25);
+    add(offsets.get('perfect') + 1.6, offsets.get('perfect') + 5.25, .4);
+  }
   const offset = offsets.get(id);
   for (let i = 0; i < shot.dialogue.length; i++) {
     const line = shot.dialogue[i];

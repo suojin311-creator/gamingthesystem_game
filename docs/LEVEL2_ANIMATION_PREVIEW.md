@@ -23,9 +23,9 @@
 | --- | --- | --- |
 | level2.three.visible／quality／mixed | 从 Alex 的 “I’ve completed all three requirements!” 起，保留后面的原对白和表演 | 原开场、全景、指标展示、开头勾选动作 |
 | level2.six | 六项观察的原四句对白与所需表演 | expand 横线／点／方框叠加，以及额外扩展提问页 |
-| level2.checklist | 短暂满意反应、最终两句老师反思 | 100 项增长动画、SET PRIORITIES／What matters most 页面与三张优先级占位卡 |
+| level2.checklist | 100 项全景、勾选特写、完成展示、短暂满意反应与最终两句老师反思 | 仅删除最后一句之后的 SET PRIORITIES／What matters most 页面与三张优先级占位卡 |
 
-不插入独立 10／25／100 增长片、Checking 演示或额外操作页。
+不插入独立 10／25 片段、Checking 演示或额外操作页。按用户最新纠正，100 项原有画面保留在最终 placeholder 中，非对白部分压缩节奏，满意反应只停留 0.4 秒，随后衔接老师台词。
 现有连续 10 → 25 → 100 仍是游戏流程，最终观察结束后回到原结果页，再由原按钮进入第三关过渡。
 电影不计算分支、权重或结果；读取游戏提供的真实请求。
 

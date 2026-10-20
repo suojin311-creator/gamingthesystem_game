@@ -2,7 +2,7 @@
 
 ## Level 2 调整版动画：已接入游戏 placeholder
 
-[Level2-animation-preview.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/animation/opening-integration/play/Level2-animation-preview.zip?raw=true)：解压后打开 **START-HERE.html**。可查看 Visible／Quality／Mixed、Six 和 100 项最终观察，或连续看这三类 placeholder 片段；不再播放多余增长、勾选演示或优先级页。
+[Level2-animation-preview.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/animation/opening-integration/play/Level2-animation-preview.zip?raw=true)：解压后打开 **START-HERE.html**。可查看 Visible／Quality／Mixed、Six 和 100 项最终观察，或连续看这三类 placeholder 片段；100 项清单展示、勾选与完成画面已补回，缩短对话前的空等，仅删掉末尾优先级页；不插入独立 10／25 或 Checking 演示。
 
 来源为同伴 `Mg614/gaming-the-system` 的 `feature/cinematic-level2-consequences`，固定在 `c8c1c83`；同伴源文件未修改。本包与下方完整版使用同一套裁剪和视觉调整：三项从 Alex 的第一句开始，保留字幕、Alex／You 和 checklist 原有条目／分组文字，沿用 Level 1 的颜色、节奏及转场。当前无音频素材。详见 [Level 2 动画说明](../docs/LEVEL2_ANIMATION_PREVIEW.md) 与 [校验](LEVEL2_ANIMATION_PREVIEW.json)。
 
@@ -16,7 +16,7 @@
 
 Level 2 已接入三项／六项／最终观察动画，片内老师身份按要求显示 You。动画后的页面移除师生聊天，原观察内容置于上方、Management’s view 与 Students 并排放在下方；继续使用原有文字和按钮。10 → 25 → 100 的游戏增长与第三关过渡保持原流程。
 
-checklist 勾选项旁的原有文字已恢复，100 项清单也保留条目和分组标题；最终反思的字幕与表情在黑幕下同步更新，揭幕后立即显示下一句。动画后 Students 卡片沿用 Level 1 的红框，闪烁三次后停止。
+checklist 勾选项旁的原有文字已恢复，100 项清单也保留条目和分组标题；100 项前面的展示／勾选画面已补回并加快节奏，最后优先级页移除；最终反思的字幕与表情在黑幕下同步更新，揭幕后立即显示下一句。动画后 Students 卡片沿用 Level 1 的红框，闪烁三次后停止。
 
 Cover the gaps 直接进入六项指标卡：原三项保留勾选，其余三项由玩家补齐，全部勾选后才能 Observe the class。Level 2 已移除 Illustrative outcomes。
 

@@ -10,6 +10,7 @@ import pleased from '@partner-assets/characters/alex-rig/production/expressions/
 import uncertain from '@partner-assets/characters/alex-rig/production/expressions/ALEX-PROD-004 — Uncertain.png';
 import hand from '@partner-assets/characters/alex-rig/production/actions/checking/ALEX-HAND-CHECKING.png';
 import look from '@partner-assets/characters/alex-rig/production/actions/checking/ALEX-PROD-005-CLEAN.png';
+import classroom from '@partner-scenes/REF-L2-003 — Mixed : Broad Classroom.png?inline';
 import { SPEAKER_COLORS, CAPTION_SHADOW } from '../../src/shared/data/cinematicPalette.js';
 import { COVER_SECONDS, createPacing, sampleAt, finalCover } from './pacing.mjs';
 import './film.css';
@@ -24,7 +25,7 @@ const IGNORE = () => {};
 function makeRequest(config) {
   const input = config.request;
   return { requestId: config.runId, cinematicId: 'level2', level: 2, input: {
-    phase: input.kind === 'checklist' ? 'final' : input.kind,
+    phase: input.kind === 'checklist' ? '100' : input.kind,
     selectedMetrics: input.kind === 'three' ? input.selectedMetricIds.map(id => METRICS[id]) : Object.values(METRICS),
     ...(input.kind === 'three' ? { resultCategory: CATEGORIES[input.branch] } : {}),
   } };
@@ -150,7 +151,8 @@ function Entry() {
       if (event.source !== window.parent || data?.channel !== CHANNEL || data.type !== 'start' || started.current || typeof data.runId !== 'string') return;
       if (!request || !['three', 'six', 'checklist'].includes(request.kind) || !CATEGORIES[request.branch] || request.selectedMetricIds?.length !== 3 || new Set(request.selectedMetricIds).size !== 3 || request.selectedMetricIds.some(id => !METRICS[id]) || typeof request.playerName !== 'string') return;
       started.current = true;
-      Promise.all([neutral, blink, pleased, uncertain, hand, look].map(src => { const image = new Image(); image.src = src; return image.decode(); }))
+      const plates = [neutral, blink, pleased, uncertain, hand, look, ...(request.kind === 'checklist' ? [classroom] : [])];
+      Promise.all(plates.map(src => { const image = new Image(); image.src = src; return image.decode(); }))
         .then(() => setConfig(data), () => setFailed(true));
     };
     window.addEventListener('message', receive);

@@ -11,7 +11,9 @@ LEVEL2_ANIMATION_SOURCE on the first build. Verified cache is retained under
 ignored node_modules/.cache/level2-cinematic and embedded in offline game HTML.
 
 Only three/six/final scene requests are supported. Three begins on Alex's first
-completed-requirements line. Extra growth and priority pages are never played.
+completed-requirements line. The final slot retains the authored 100-metric
+overview, pen insert and completion before a short reaction/reflection. Separate
+10/25 clips and the ending priority page are not played; nonverbal holds are shortened.
 Dialogue, Alex/You labels and authored checklist item/group text remain;
 checklist text is an explicit exception to overlay removal. Palette, reading time, fixed camera
 and opaque covers follow the approved Level 1 presentation.

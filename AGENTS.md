@@ -6,8 +6,10 @@
   source and all six game ZIPs were backed up and verified on
   `archive/before-level2-animation-integration-20261020` at `762ce7e`.
 - Replace only the existing three-metric, six-metric and final checklist
-  placeholders. Ignore extra 10/25/100 growth, checking studies and priority
-  screens; the game continues to own growth and Level 3 entry.
+  placeholders. The final placeholder retains the 100-metric overview, pen
+  insert, completion and reaction before reflection; only its final priority
+  page is omitted. Shorten nonverbal holds (the reaction is 0.4 seconds).
+  Ignore separate 10/25 clips and checking studies; the game owns growth and Level 3 entry.
 - Visible/Quality/Mixed start at "I’ve completed all three requirements!".
   Films retain dialogue, Alex/You labels and authored checklist item/group text.
   Checklist text is an explicit exception to the overlay-text removal rule.

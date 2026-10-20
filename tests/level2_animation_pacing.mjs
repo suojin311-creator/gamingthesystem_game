@@ -8,7 +8,7 @@ if (!process.env.LEVEL2_ANIMATION_SOURCE) throw new Error('Set LEVEL2_ANIMATION_
 const { getLevel2Shots, shotAt } = await import(pathToFileURL(resolve(process.env.LEVEL2_ANIMATION_SOURCE, 'src/cinematics/level2/level2Timeline.ts')));
 const { level2Performance } = await import(pathToFileURL(resolve(process.env.LEVEL2_ANIMATION_SOURCE, 'src/cinematics/level2/level2Performance.ts')));
 const scenes = ['three', 'six', 'checklist'].map(kind => {
-  const shots = getLevel2Shots({ input: { phase: kind === 'checklist' ? 'final' : kind, resultCategory: 'mixed-broad' } });
+  const shots = getLevel2Shots({ input: { phase: kind === 'checklist' ? '100' : kind, resultCategory: 'mixed-broad' } });
   return { kind, shots, pacing: createPacing(kind, shots) };
 });
 test('three-metric films start exactly on the requested first line, after all establishing/checking shots', () => {
@@ -18,8 +18,8 @@ test('three-metric films start exactly on the requested first line, after all es
   assert.equal(shotAt(shots, first.sourceSeconds).shot.id, 'three-checklist');
   assert.ok(Math.abs(first.sourceSeconds - 9.2) < 1e-9);
 });
-test('every frame stays inside existing placeholder material and excludes expansion, priority and extra count animations', () => {
-  const allowed = { three: ['three-checklist'], six: ['six-checklist'], checklist: ['perfect', 'reflection'] };
+test('every frame stays inside requested placeholder material and excludes expansion, priority and extra 10/25 animations', () => {
+  const allowed = { three: ['three-checklist'], six: ['six-checklist'], checklist: ['hundred', 'perfect', 'reflection'] };
   for (const { kind, shots, pacing } of scenes) {
     for (let time = 0; time <= pacing.duration; time += .005) {
       assert.ok(allowed[kind].includes(shotAt(shots, sampleAt(pacing, time).sourceSeconds).shot.id));
@@ -52,7 +52,7 @@ test('each final-reflection covered cut introduces its new caption immediately w
     const { shot, time: sourceTime } = shotAt(shots, sample.sourceSeconds);
     const acting = level2Performance(shot.id, sourceTime);
     const frame = { key: `${shot.id}:${acting.view}:${acting.expression === 'uncertain'}`, text: sample.dialogue?.text ?? null };
-    if (previous && frame.key !== previous.key) {
+    if (previous && frame.key !== previous.key && shot.id === 'reflection') {
       assert.ok(frame.text, 'The new scene must already have a caption.');
       assert.notEqual(frame.text, previous.text, 'The cover must not reopen on the old sentence.');
       cuts.push(frame.text);
@@ -60,4 +60,19 @@ test('each final-reflection covered cut introduces its new caption immediately w
     previous = frame;
   }
   assert.deepEqual(cuts, shots.find(shot => shot.id === 'reflection').dialogue.map(line => line.text));
+});
+test('100-metric overview, pen insert, completion and reaction precede dialogue without a long idle hold', () => {
+  const { shots, pacing } = scenes.find(scene => scene.kind === 'checklist');
+  const views = new Set();
+  let firstCaption = null;
+  for (let time = 0; time < pacing.duration; time += .005) {
+    const sample = sampleAt(pacing, time);
+    const { shot, time: sourceTime } = shotAt(shots, sample.sourceSeconds);
+    if (shot.id === 'hundred') views.add(level2Performance(shot.id, sourceTime).view);
+    if (sample.dialogue && firstCaption === null) firstCaption = time;
+  }
+  assert.deepEqual([...views], ['world', 'insert']);
+  assert.ok(firstCaption <= 2.81, 'Active prelude excludes long silent holds.');
+  const reaction = pacing.timeline.find(part => shotAt(shots, part.from).shot.id === 'perfect');
+  assert.ok(reaction.end - reaction.start <= .401);
 });
