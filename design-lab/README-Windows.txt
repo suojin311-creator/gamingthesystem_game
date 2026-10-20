@@ -14,19 +14,19 @@ This preview contains Design Lab only, not the three-level game.
    To participate too, use Join as a participant in a separate tab.
 5. 到齐后点 Start writing。写作 90 秒，随后自动进入匿名展示。
    Start writing when everyone has arrived. Writing lasts 90 seconds.
-6. 展示每份最多 10 秒；鲜花/炸弹二选一后可点 Next 提前继续。
-   Choose Agree or Disagree, then use Next if ready. Unanswered cards time out without a vote.
-7. 所有人完成或展示期限到达后统一排名；21 份最长 210 秒。
-   Early finishers wait. With 21 reflections, sharing lasts at most 210 seconds.
-8. 排名高光滚动配有音效，两个反问各展示 4 秒后自动进入 Goodhart's Law。
-   Ranking ticks follow the highlight. Each closing question lasts 4 seconds; Goodhart's Law follows automatically.
-   顶部 Sound on/off 可控制声音；在投影页点击该按钮即可启用浏览器声音。
+6. 展示只看别人写的内容；没有倒计时，鲜花/炸弹二选一后自动进入下一份。
+   See only other authors. Choose Agree or Disagree to advance; there is no review timer.
+7. 提前完成的人等候；所有人选择完成后统一显示静态排行榜 12 秒。
+   Early finishers wait; when everyone finishes, the static ranking stays for 12 seconds.
+8. 两个反问各展示 4 秒，柔和切换后分层揭示 Goodhart's Law；引文没有双引号。
+   Questions fade in sequence for 4 seconds each, followed by a gradual Goodhart reveal.
 9. 结束时点 Close classroom；本次投稿和投票不写入文件，随程序关闭清空。
    Close the classroom when finished. Session data stays in memory and is cleared on exit.
 
 先自己试玩 / TRY IT YOURSELF
 主持页点击 Join as a participant。用其他浏览器或隐私窗口可模拟另一位参与者。
-Use Join as a participant; another browser or private window can simulate another person.
+Use another browser or private window to submit a second reflection and try voting.
+只有一个投稿者时会跳过展示自己的作品，直接进入排名。
 
 网络 / NETWORK
 老师与同学电脑需要连接可互通的网络。上课前用另一台电脑打开分享网址自测。

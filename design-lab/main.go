@@ -214,11 +214,10 @@ func run() error {
 	port := flag.Int("port", 3000, "Classroom port (0 chooses an available port)")
 	noBrowser := flag.Bool("no-browser", false, "Do not open the host page automatically")
 	writing := flag.Float64("writing-seconds", 90, "Writing duration; classroom default: 90 seconds")
-	card := flag.Float64("card-seconds", 10, "Review duration per reflection; classroom default: 10 seconds")
-	ranking := flag.Float64("ranking-seconds", 5, "Ranking scan duration")
+	ranking := flag.Float64("ranking-seconds", 12, "Static ranking duration")
 	question := flag.Float64("question-seconds", 4, "Duration of each closing question")
 	flag.Parse()
-	if *writing <= 0 || *card <= 0 || *ranking <= 0 || *question <= 0 {
+	if *writing <= 0 || *ranking <= 0 || *question <= 0 {
 		return errors.New("All durations must be positive.")
 	}
 	var listener net.Listener
@@ -240,8 +239,8 @@ func run() error {
 		return fmt.Errorf("cannot start the classroom: %w", err)
 	}
 	actualPort := listener.Addr().(*net.TCPAddr).Port
-	config := Config{int64(*writing * 1000), int64(*card * 1000), int64(*ranking * 1000), int64(*question * 1000)}
-	for _, ms := range []int64{config.WritingMS, config.CardMS, config.RankingMS, config.QuestionMS} {
+	config := Config{int64(*writing * 1000), int64(*ranking * 1000), int64(*question * 1000)}
+	for _, ms := range []int64{config.WritingMS, config.RankingMS, config.QuestionMS} {
 		if ms < 1 {
 			return errors.New("Durations must be at least one millisecond.")
 		}

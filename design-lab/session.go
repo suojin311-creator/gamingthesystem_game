@@ -12,15 +12,14 @@ import (
 	"unicode/utf8"
 )
 
-type Config struct{ WritingMS, CardMS, RankingMS, QuestionMS int64 }
+type Config struct{ WritingMS, RankingMS, QuestionMS int64 }
 
-var standardConfig = Config{90000, 10000, 5000, 4000}
+var standardConfig = Config{90000, 12000, 4000}
 
 type Participant struct {
 	ID                            string
 	Submitted, Audience, Finished bool
 	Cursor                        int
-	CardStart                     int64
 }
 type Reflection struct{ ID, Owner, Text, Label string }
 type Ranked struct {
@@ -31,12 +30,10 @@ type Ranked struct {
 	Rank    int    `json:"rank"`
 }
 type Card struct {
-	ID       string `json:"id"`
-	Label    string `json:"label"`
-	Text     string `json:"text"`
-	Own      bool   `json:"own"`
-	Deadline int64  `json:"deadline"`
-	Vote     string `json:"vote"`
+	ID    string `json:"id"`
+	Label string `json:"label"`
+	Text  string `json:"text"`
+	Vote  string `json:"vote"`
 }
 type Snapshot struct {
 	Revision        uint64   `json:"revision"`
@@ -51,12 +48,12 @@ type Snapshot struct {
 	ReflectionCount int      `json:"reflectionCount"`
 	FinishedCount   int      `json:"finishedCount"`
 	WritingMS       int64    `json:"writingMs"`
-	CardMS          int64    `json:"cardMs"`
 	RankingMS       int64    `json:"rankingMs"`
 	ParticipantID   string   `json:"participantId,omitempty"`
 	HasSubmitted    bool     `json:"hasSubmitted"`
 	IsAudience      bool     `json:"isAudience"`
 	Cursor          int      `json:"cursor"`
+	ReviewTotal     int      `json:"reviewTotal"`
 	Finished        bool     `json:"finished"`
 	Card            *Card    `json:"card"`
 	Ranking         []Ranked `json:"ranking"`
@@ -108,14 +105,7 @@ func (s *Session) tick() {
 		case "review":
 			all := true
 			for _, p := range s.Participants {
-				for p.Cursor < len(s.Reflections) && now >= p.CardStart+s.Config.CardMS {
-					p.Cursor++
-					p.CardStart += s.Config.CardMS
-				}
-				if now >= s.Deadline {
-					p.Cursor = len(s.Reflections)
-				}
-				p.Finished = p.Cursor >= len(s.Reflections)
+				s.skipOwn(p)
 				if !p.Finished {
 					all = false
 				}
@@ -210,10 +200,18 @@ func (s *Session) beginReview(at int64) {
 	}
 	for _, p := range s.Participants {
 		p.Cursor = 0
-		p.CardStart = at
 		p.Finished = false
+		s.skipOwn(p)
 	}
-	s.phase("review", at, int64(len(s.Reflections))*s.Config.CardMS)
+	s.phase("review", at, 0)
+}
+
+// Each participant reviews only other authors. No clock may skip an unanswered card.
+func (s *Session) skipOwn(p *Participant) {
+	for p.Cursor < len(s.Reflections) && s.Reflections[p.Cursor].Owner == p.ID {
+		p.Cursor++
+	}
+	p.Finished = p.Cursor >= len(s.Reflections)
 }
 func (s *Session) current(id, expected string) (*Participant, *Reflection, error) {
 	s.tick()
@@ -255,12 +253,11 @@ func (s *Session) advance(id, expected string) error {
 	if err != nil {
 		return err
 	}
-	if r.Owner != id && s.Votes[id][r.ID] == "" {
+	if s.Votes[id][r.ID] == "" {
 		return errors.New("Choose one before continuing.")
 	}
 	p.Cursor++
-	p.CardStart = s.now()
-	p.Finished = p.Cursor >= len(s.Reflections)
+	s.skipOwn(p)
 	s.tick()
 	return nil
 }
@@ -298,7 +295,7 @@ func (s *Session) closeQuestions() error {
 func (s *Session) snapshot(id string) Snapshot {
 	s.tick()
 	s.serial++
-	v := Snapshot{SessionID: s.ID, Phase: s.Phase, Now: s.now(), StartedAt: s.StartedAt, Deadline: s.Deadline, Joined: len(s.Participants), ReflectionCount: len(s.Reflections), WritingMS: s.Config.WritingMS, CardMS: s.Config.CardMS, RankingMS: s.Config.RankingMS, Ranking: []Ranked{}}
+	v := Snapshot{SessionID: s.ID, Phase: s.Phase, Now: s.now(), StartedAt: s.StartedAt, Deadline: s.Deadline, Joined: len(s.Participants), ReflectionCount: len(s.Reflections), WritingMS: s.Config.WritingMS, RankingMS: s.Config.RankingMS, Ranking: []Ranked{}}
 	v.Revision = s.serial
 	for _, p := range s.Participants {
 		if p.Submitted {
@@ -315,11 +312,19 @@ func (s *Session) snapshot(id string) Snapshot {
 		v.ParticipantID = id
 		v.HasSubmitted = p.Submitted
 		v.IsAudience = p.Audience
-		v.Cursor = p.Cursor
+		v.Cursor = 0
+		for i, r := range s.Reflections {
+			if r.Owner != id {
+				v.ReviewTotal++
+				if i < p.Cursor {
+					v.Cursor++
+				}
+			}
+		}
 		v.Finished = p.Finished
 		if s.Phase == "review" && !p.Finished && p.Cursor < len(s.Reflections) {
 			r := s.Reflections[p.Cursor]
-			v.Card = &Card{ID: r.ID, Label: r.Label, Text: r.Text, Own: r.Owner == id, Deadline: p.CardStart + s.Config.CardMS, Vote: s.Votes[id][r.ID]}
+			v.Card = &Card{ID: r.ID, Label: r.Label, Text: r.Text, Vote: s.Votes[id][r.ID]}
 		}
 	}
 	if s.Phase == "ranking" || s.Phase == "question1" || s.Phase == "question2" || s.Phase == "ending" {

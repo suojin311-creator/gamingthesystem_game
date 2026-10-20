@@ -33,7 +33,7 @@ func share(t *testing.T, s *Session, ids []string) {
 		}
 	}
 }
-func TestProductionTimingAndTwentyOneParticipantDeadline(t *testing.T) {
+func TestProductionWritingAndUntimedReview(t *testing.T) {
 	s, now, ids := fixture(t, 21)
 	share(t, s, ids)
 	*now = s.Deadline - 1
@@ -43,47 +43,58 @@ func TestProductionTimingAndTwentyOneParticipantDeadline(t *testing.T) {
 	}
 	*now++
 	s.tick()
-	if s.Phase != "review" {
-		t.Fatal(s.Phase)
+	if s.Phase != "review" || s.Deadline != 0 {
+		t.Fatal("review must have no deadline")
 	}
-	if s.Deadline-s.StartedAt != 210000 {
-		t.Fatal("the 21-reflection cap must be 210 seconds")
-	}
-	// One sleeping/closed browser must not hold up the class or add deadline drift.
-	*now = s.Deadline
+	card := s.snapshot(ids[0]).Card
+	*now += 3600000
 	s.tick()
-	if s.Phase != "ranking" {
-		t.Fatal(s.Phase)
+	next := s.snapshot(ids[0]).Card
+	if s.Phase != "review" || card == nil || next == nil || card.ID != next.ID {
+		t.Fatal("an unanswered card advanced with time")
 	}
-	for _, p := range s.Participants {
-		if !p.Finished || p.Cursor != 21 {
-			t.Fatal("all cursors must reach the end")
-		}
+	if len(s.Votes[ids[0]]) != 0 {
+		t.Fatal("waiting must not create a vote")
 	}
-	for _, r := range s.Ranking {
-		if r.Flowers != 0 || r.Rank != 1 {
-			t.Fatal("unanswered choices are not votes")
-		}
+	if s.Config.RankingMS != 12000 || s.Config.WritingMS != 90000 {
+		t.Fatal("production timing changed")
 	}
 }
-func TestTimeoutDoesNotInventAVoteAndRejectsLateVote(t *testing.T) {
-	s, now, ids := fixture(t, 3)
+func TestEachAuthorSeesOnlyOthersExactlyOnce(t *testing.T) {
+	s, now, ids := fixture(t, 21)
 	share(t, s, ids)
 	*now = s.Deadline
 	s.tick()
-	id := ids[0]
-	first := s.snapshot(id).Card
-	*now = first.Deadline
-	s.tick()
-	next := s.snapshot(id).Card
-	if next == nil || next.ID == first.ID {
-		t.Fatal("timeout must move to the next card")
+	for _, id := range ids {
+		seen := map[string]bool{}
+		for !s.Participants[id].Finished {
+			view := s.snapshot(id)
+			c := view.Card
+			if c == nil || view.ReviewTotal != 20 || view.Cursor != len(seen) {
+				t.Fatal("incorrect personal queue")
+			}
+			for _, r := range s.Reflections {
+				if r.ID == c.ID && r.Owner == id {
+					t.Fatal("author received their own card")
+				}
+			}
+			if seen[c.ID] {
+				t.Fatal("duplicate reflection")
+			}
+			seen[c.ID] = true
+			if err := s.vote(id, c.ID, "flower"); err != nil {
+				t.Fatal(err)
+			}
+			if err := s.advance(id, c.ID); err != nil {
+				t.Fatal(err)
+			}
+		}
+		if len(seen) != 20 {
+			t.Fatal("missing other authors")
+		}
 	}
-	if len(s.Votes[id]) != 0 {
-		t.Fatal("timeout created a vote")
-	}
-	if err := s.vote(id, first.ID, "flower"); err == nil {
-		t.Fatal("late request voted on an expired card")
+	if s.Phase != "ranking" {
+		t.Fatal(s.Phase)
 	}
 }
 func TestVoteLocksAndNextIsPersonal(t *testing.T) {
@@ -93,12 +104,6 @@ func TestVoteLocksAndNextIsPersonal(t *testing.T) {
 	s.tick()
 	id := ids[0]
 	card := s.snapshot(id).Card
-	if card.Own {
-		if err := s.advance(id, card.ID); err != nil {
-			t.Fatal(err)
-		}
-		card = s.snapshot(id).Card
-	}
 	if err := s.advance(id, card.ID); err == nil {
 		t.Fatal("early Next without a choice must not submit a skip")
 	}
@@ -122,7 +127,7 @@ func TestVoteLocksAndNextIsPersonal(t *testing.T) {
 		t.Fatal("choice was not retained")
 	}
 }
-func TestEarlyFinisherWaitsUntilOthersOrDeadline(t *testing.T) {
+func TestEarlyFinisherWaitsUntilAllChoicesAreMade(t *testing.T) {
 	s, now, ids := fixture(t, 3)
 	share(t, s, ids)
 	*now = s.Deadline
@@ -130,10 +135,8 @@ func TestEarlyFinisherWaitsUntilOthersOrDeadline(t *testing.T) {
 	id := ids[0]
 	for !s.Participants[id].Finished {
 		c := s.snapshot(id).Card
-		if !c.Own {
-			if err := s.vote(id, c.ID, "flower"); err != nil {
-				t.Fatal(err)
-			}
+		if err := s.vote(id, c.ID, "flower"); err != nil {
+			t.Fatal(err)
 		}
 		if err := s.advance(id, c.ID); err != nil {
 			t.Fatal(err)
@@ -145,9 +148,7 @@ func TestEarlyFinisherWaitsUntilOthersOrDeadline(t *testing.T) {
 	for _, other := range ids[1:] {
 		for !s.Participants[other].Finished {
 			c := s.snapshot(other).Card
-			if !c.Own {
-				_ = s.vote(other, c.ID, "bomb")
-			}
+			_ = s.vote(other, c.ID, "bomb")
 			if err := s.advance(other, c.ID); err != nil {
 				t.Fatal(err)
 			}
@@ -212,14 +213,9 @@ func TestClosingSequenceAndEmptyClass(t *testing.T) {
 	share(t, s, ids)
 	*now = s.Deadline
 	s.tick()
-	c := s.snapshot(ids[0]).Card
-	if !c.Own {
-		t.Fatal("self reflection not identified")
+	if s.snapshot(ids[0]).Card != nil {
+		t.Fatal("the only author must not review their own work")
 	}
-	if err := s.vote(ids[0], c.ID, "flower"); err == nil {
-		t.Fatal("self vote accepted")
-	}
-	_ = s.advance(ids[0], c.ID)
 	if s.Phase != "ranking" {
 		t.Fatal(s.Phase)
 	}
@@ -293,10 +289,8 @@ func TestConcurrentClassSubmissionsAndVotes(t *testing.T) {
 					return
 				}
 				c := s.snapshot(id).Card
-				if !c.Own {
-					if err := s.vote(id, c.ID, "flower"); err != nil {
-						t.Error(err)
-					}
+				if err := s.vote(id, c.ID, "flower"); err != nil {
+					t.Error(err)
 				}
 				if err := s.advance(id, c.ID); err != nil {
 					t.Error(err)
@@ -321,14 +315,38 @@ func TestSleepingBrowserCatchesUpThroughBothQuestions(t *testing.T) {
 	share(t, s, ids)
 	*now = s.Deadline
 	s.tick()
-	c := s.snapshot(ids[0]).Card
-	if err := s.advance(ids[0], c.ID); err != nil {
-		t.Fatal(err)
-	}
 	rankingEnd := s.Deadline
 	*now = rankingEnd + 2*s.Config.QuestionMS
 	s.tick()
 	if s.Phase != "ending" || s.StartedAt != rankingEnd+8000 {
 		t.Fatal("closing deadlines drifted after a sleeping browser")
+	}
+}
+
+func TestUnsubmittedParticipantReviewsEveryAuthor(t *testing.T) {
+	s, now, ids := fixture(t, 2)
+	if err := s.submit(ids[0], "A single reflection", false); err != nil {
+		t.Fatal(err)
+	}
+	*now = s.Deadline
+	s.tick()
+	if !s.snapshot(ids[0]).Finished || s.snapshot(ids[0]).Card != nil {
+		t.Fatal("author saw their own work")
+	}
+	v := s.snapshot(ids[1])
+	if v.ReviewTotal != 1 || v.Card == nil {
+		t.Fatal("non-author must see the available reflection")
+	}
+	if err := s.advance(ids[1], v.Card.ID); err == nil {
+		t.Fatal("an unanswered card was skipped")
+	}
+	if err := s.vote(ids[1], v.Card.ID, "flower"); err != nil {
+		t.Fatal(err)
+	}
+	if err := s.advance(ids[1], v.Card.ID); err != nil {
+		t.Fatal(err)
+	}
+	if s.Phase != "ranking" || s.Ranking[0].Flowers != 1 {
+		t.Fatal("class did not finish after its final choice")
 	}
 }
