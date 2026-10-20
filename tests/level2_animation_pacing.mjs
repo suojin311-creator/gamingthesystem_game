@@ -61,8 +61,12 @@ test('each final-reflection covered cut introduces its new caption immediately w
   }
   assert.deepEqual(cuts, shots.find(shot => shot.id === 'reflection').dialogue.map(line => line.text));
 });
-test('100-metric overview, pen insert, completion and reaction precede dialogue without a long idle hold', () => {
+test('100-metric film starts on the Criterion 66 pen insert, then shows completion and a brief reaction', () => {
   const { shots, pacing } = scenes.find(scene => scene.kind === 'checklist');
+  const first = shotAt(shots, sampleAt(pacing, 0).sourceSeconds);
+  assert.equal(first.shot.id, 'hundred');
+  assert.equal(first.time, .25);
+  assert.equal(level2Performance(first.shot.id, first.time).view, 'insert');
   const views = new Set();
   let firstCaption = null;
   for (let time = 0; time < pacing.duration; time += .005) {
@@ -71,8 +75,8 @@ test('100-metric overview, pen insert, completion and reaction precede dialogue 
     if (shot.id === 'hundred') views.add(level2Performance(shot.id, sourceTime).view);
     if (sample.dialogue && firstCaption === null) firstCaption = time;
   }
-  assert.deepEqual([...views], ['world', 'insert']);
-  assert.ok(firstCaption <= 2.81, 'Active prelude excludes long silent holds.');
+  assert.deepEqual([...views], ['insert', 'world']);
+  assert.ok(firstCaption <= 2.51, 'Active prelude excludes long silent holds.');
   const reaction = pacing.timeline.find(part => shotAt(shots, part.from).shot.id === 'perfect');
   assert.ok(reaction.end - reaction.start <= .401);
 });

@@ -1,5 +1,10 @@
 # 最新试玩下载 / Latest downloads
 
+日常动画审阅已改用固定网页（首次需启用 GitHub Pages）：
+[Level 2 网页预览](https://suojin311-creator.github.io/gamingthesystem_game/animation-preview/Level2-animation.html?state=100)。
+本轮网页从落笔特写开始，并完整恢复 Coverage map 的标题、计数、证据与页脚。
+下方 ZIP 保留上一次 `80a519d` 的交付；网页确认后再统一重打 ZIP。
+
 ## Level 2 调整版动画：已接入游戏 placeholder
 
 [Level2-animation-preview.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/animation/opening-integration/play/Level2-animation-preview.zip?raw=true)：解压后打开 **START-HERE.html**。可查看 Visible／Quality／Mixed、Six 和 100 项最终观察，或连续看这三类 placeholder 片段；100 项清单展示、勾选与完成画面已补回，缩短对话前的空等，仅删掉末尾优先级页；不插入独立 10／25 或 Checking 演示。

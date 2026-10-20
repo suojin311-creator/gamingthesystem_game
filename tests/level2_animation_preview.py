@@ -44,6 +44,9 @@ with sync_playwright() as p:
         slider=page.get_by_label('Preview time',exact=True);slider.press('Home')
         expect(film).to_have_attribute('data-kind',kind)
         if kind=='three':expect(f.locator('.l2-spoken [role=status]')).to_have_text('I’ve completed all three requirements!')
+        if kind=='checklist':
+            expect(f.locator('.l2-scene')).to_have_attribute('data-performance','insert')
+            expect(f.locator('[data-criterion="66"] .l2-checking-pen-anchor')).to_have_count(1)
         # Audit every displayed caption and each scene swap, not just a final screenshot.
         film.evaluate("""root=>{
           window.filmAudit={errors:[],speakers:[],shots:[],swaps:[],checklists:[],cutCaptions:[]};let closingText=null,cutPhase='';
@@ -56,7 +59,7 @@ with sync_playwright() as p:
             const walker=document.createTreeWalker(scene,NodeFilter.SHOW_TEXT);
             while(walker.nextNode()){
               const node=walker.currentNode,el=node.parentElement;
-              if(node.textContent.trim()&&visible(el)&&!el.closest('.l2-checklist-row-label, .l2-checklist-group h4'))a.errors.push('Unexpected overlay text: '+node.textContent);
+              if(node.textContent.trim()&&visible(el)&&!el.closest('.l2-checklist--100, .l2-checklist-row-label, .l2-checklist-group h4'))a.errors.push('Unexpected overlay text: '+node.textContent);
             }
             for(const list of scene.querySelectorAll('.l2-checklist')){
               const labels=[...list.querySelectorAll('.l2-checklist-row-label')];
@@ -67,6 +70,13 @@ with sync_playwright() as p:
                 if(labels.some((e,i)=>e.textContent!=='Criterion '+String(i+1).padStart(2,'0')))a.errors.push('Incorrect 100-metric text');
                 const groups=[...list.querySelectorAll('h4')];
                 if(groups.length!==5||groups.some(e=>!visible(e)))a.errors.push('Missing checklist group headings');
+                const paperText=['.l2-checklist-header','.l2-checklist-header h3','.l2-checklist-tally','.l2-checklist-margin-note','.l2-checklist-evidence-slip','.l2-checklist-evidence-ref'];
+                for(const selector of paperText){
+                  const nodes=[...list.querySelectorAll(selector)];
+                  if(!nodes.length||nodes.some(e=>!visible(e)||!e.textContent.trim()))a.errors.push('Missing Coverage map content: '+selector);
+                }
+                if(list.querySelector('h3').textContent!=='Coverage map')a.errors.push('Missing Coverage map title');
+                if(!list.closest('.l2-checking-notebook')&&!visible(list.querySelector('.l2-checklist-footer')))a.errors.push('Missing Coverage map footer');
               }
               if(!a.checklists.includes(count))a.checklists.push(count);
             }

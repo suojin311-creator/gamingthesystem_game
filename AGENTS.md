@@ -1,18 +1,31 @@
 # Working on this game
 
+## Fast animation review
+
+- The user now prefers a fixed web preview, refreshed after changes. Build just
+  the affected film/review with `LEVEL2_ANIMATION_SOURCE=... npm run preview:level2:web`.
+  The static site is under `docs/animation-preview/`, published from this branch's
+  `/docs` folder through GitHub Pages. Do not rebuild ZIPs for each review tweak;
+  package them when the user confirms a version or explicitly requests a ZIP.
+- Target visual checks to the changed shots. Do not rerun full game paths for
+  these animation tweaks: the user explicitly waived those checks.
+
 ## Current Level 2 animation integration
 
 - The user requested direct integration after trimming/review. Before changes,
   source and all six game ZIPs were backed up and verified on
   `archive/before-level2-animation-integration-20261020` at `762ce7e`.
 - Replace only the existing three-metric, six-metric and final checklist
-  placeholders. The final placeholder retains the 100-metric overview, pen
-  insert, completion and reaction before reflection; only its final priority
-  page is omitted. Shorten nonverbal holds (the reaction is 0.4 seconds).
+  placeholders. The final placeholder starts on the Criterion 66 pen insert,
+  then retains the full Coverage map, completion and reaction before reflection.
+  Omit the earlier establishing view and final priority page.
+  Shorten nonverbal holds (the reaction is 0.4 seconds).
   Ignore separate 10/25 clips and checking studies; the game owns growth and Level 3 entry.
 - Visible/Quality/Mixed start at "I’ve completed all three requirements!".
   Films retain dialogue, Alex/You labels and authored checklist item/group text.
   Checklist text is an explicit exception to the overlay-text removal rule.
+  The 100-metric paper must stay intact: working-notes/title/tally, evidence
+  slips, E1/E2/E3 row references, gaps and footer all remain visible.
   Reuse the Level 1 palette,
   reading holds, transparent captions, fixed framing and opaque scene covers.
 - Final 100-metric reflection cuts must commit the new caption and portrait
@@ -37,9 +50,10 @@
   `preview/level1-settlement` at its approved saved version.
 - Before merging, the original source and all original playable archives were
   backed up on `archive/opening-before-level1-merge-20261020` at `32a91fe`.
-- Integrated releases use the regular four-entry/six-ZIP pipeline on this branch.
+- Integrated ZIP releases use the regular four-entry/six-ZIP pipeline on this branch.
   Keep stable game branches and their aliases unchanged. Every visible playable
-  change must include an updated downloadable ZIP for the user's review.
+  change must include the requested review delivery: the fixed web page for
+  animation review, or updated ZIPs when a ZIP release is requested.
 - Reuse the approved iframe cinematic through the shared LevelOneExperience.
   Keep partner source read-only, and carry the opening's confirmed playerName
   through Gameplay, the operating UI and cinematic request without re-entry.

@@ -1,8 +1,8 @@
 {
-  "validatedAtUtc": "2026-10-20T10:27:58.444009+00:00",
-  "version": "Restore the 100-metric overview, checking and completion before reflection; remove the ending priority page and shorten silent holds",
+  "validatedAtUtc": "2026-10-20T10:51:02.777147+00:00",
+  "version": "Restore the complete 100-metric Coverage map, start on the Criterion 66 pen insert, and export a fixed web review instead of rebuilding ZIPs",
   "branch": "animation/opening-integration",
-  "sourceBaseCommit": "5f03bae1b7846851707ceec9e18afa82bf4146e5",
+  "sourceBaseCommit": "80a519d9295a8c07a795fd0842c89b4639c9ec39",
   "approvedLevelOneCommit": "411353dd3ef6103b20faa4debe9075b94f46e199",
   "gameBaselineCommit": "00c311682268ab8593d0733a4163b50ee41cd663",
   "backup": {
@@ -32,13 +32,13 @@
     "passed": 14,
     "historicalReportCommit": "762ce7edc796a85307bde282e78393e4773e7b10"
   },
-  "passed": 6,
+  "passed": 7,
   "build": {
-    "command": "npm run package:previews",
+    "command": "LEVEL2_ANIMATION_SOURCE=/tmp/gts-level2-source npm run preview:level2:web",
     "exitCode": 0,
-    "pipelineTypeCheckExecutions": 1,
-    "productionEntries": 4,
-    "adaptedReviewBuildExitCode": 0
+    "productionEntries": 1,
+    "pipelineTypeCheckExecutions": 0,
+    "zipArchivesRebuilt": false
   },
   "suites": {
     "level2_animation_pacing.mjs": {
@@ -49,9 +49,21 @@
         "all retained authored lines get the approved English-reading hold without added narration",
         "the final covered frame is reached before completion and invalid scene kinds are rejected",
         "each final-reflection covered cut introduces its new caption immediately with the new portrait",
-        "100-metric overview, pen insert, completion and reaction precede dialogue without a long idle hold"
+        "100-metric film starts on the Criterion 66 pen insert, then shows completion and a brief reaction"
       ],
       "command": "LEVEL2_ANIMATION_SOURCE=/tmp/gts-level2-source node --experimental-strip-types --test tests/level2_animation_pacing.mjs"
+    },
+    "targetedCoverageMapBrowserReview": {
+      "passed": 1,
+      "checks": [
+        "Starts on the Criterion 66 pen insert; 94/100 full map retains title/working notes/tally, three evidence slips, all 100 labels and evidence references, 6 gaps / E3 → 84 / new evidence: 0 footer; chapter, stage and candidate overlays stay hidden"
+      ],
+      "screenshots": [
+        "test-results/level2-coverage-pen-start.png",
+        "test-results/level2-coverage-full-map.png"
+      ],
+      "testedHtmlSha256": "d53933b25426041c332b1ea7cf337155d28d6cdd7931344bc33b499be5f7c688",
+      "runtimeErrors": []
     }
   },
   "artifacts": {
@@ -153,25 +165,55 @@
     "chromium": "154.0.8037.57"
   },
   "notes": [
-    "The final existing placeholder now uses the authored hundred, perfect and reflection shots, restoring the original classroom overview, checking insert and completed 100-metric checklist. Only the final priority screen is omitted.",
-    "The 100-metric nonverbal prelude totals 2.8 seconds of visible action time, plus the existing short opaque cuts. The pleased reaction holds 0.4 seconds before the first teacher line; long idle holds are removed.",
-    "Original classroom artwork is restored and decoded before playback. Chapter/stage labels and the cinematic-candidate watermark remain hidden; checklist labels remain visible.",
-    "Both reflection lines retain the approved reading time. The last portrait/caption change remains synchronized under the opaque cover.",
-    "All six game ZIPs and the independent review ZIP were rebuilt using the same corrected film. The previous 47-check game report is preserved at 5f03bae.",
-    "Per the user instruction, no game-path or browser-playback checks were run this round. The build/type check and six pacing unit checks completed; earlier game-path results are historical and are not claimed for this version.",
-    "Only animation/opening-integration is updated. Partner source, stable branches and the original pre-Level-2 backup at 762ce7e remain unchanged."
+    "The 100-metric paper is now intact, including working notes, Coverage map title, tally, same-evidence slips, each E1/E2/E3 reference and the gaps/strategy footer. Three/six styling remains unchanged.",
+    "The first frame is the authored Criterion 66 pen insert at hundred source time 0.25s. The preceding world view is omitted. Full-map completion, brief reaction, both reflection captions and the existing opaque cuts remain.",
+    "The active nonverbal prelude is 2.5 seconds, including a 0.4-second reaction. The final priority page remains omitted.",
+    "Six pacing checks and the targeted two-frame browser visual check completed. The exported web HTML is byte-identical to that visual review. Full game paths were not rerun, following the user instruction.",
+    "The user selected a fixed web URL for subsequent review. Only the film/review was built; no game ZIPs were rebuilt or overwritten. The ZIP hashes below describe the last ZIP release at 80a519d.",
+    "Web review files are ready under docs/animation-preview. GitHub Pages needs the repository setting to use animation/opening-integration:/docs; deployment is not claimed as live or verified.",
+    "Partner source, stable branches and the original pre-Level-2 backup remain unchanged."
   ],
   "previousValidation": {
-    "commit": "5f03bae1b7846851707ceec9e18afa82bf4146e5",
-    "version": "Restore Level 2 checklist text, synchronize final caption cuts, highlight Students and require manual gap checks",
-    "passed": 47,
-    "validatedAtUtc": "2026-10-20T02:52:33.843895+00:00",
+    "commit": "80a519d9295a8c07a795fd0842c89b4639c9ec39",
+    "version": "Restore the 100-metric overview, checking and completion before reflection; remove the ending priority page and shorten silent holds",
+    "passed": 6,
+    "validatedAtUtc": "2026-10-20T10:27:58.444009+00:00",
     "report": "docs/PREVIEW_VALIDATION.json"
   },
   "verificationPolicy": {
-    "userRequestedDirectZipWithoutPathChecks": true,
+    "userRequestedWebReview": true,
+    "userRequestedDirectPreviewWithoutPathChecks": true,
     "gamePathChecksRun": false,
-    "browserChecksRun": false,
+    "browserChecksRun": true,
+    "browserCheckScope": "Only the changed 100-metric pen-start and full-map frames, from the byte-identical exported web film",
     "previousGameChecksAreHistorical": true
-  }
+  },
+  "webPreview": {
+    "url": "https://suojin311-creator.github.io/gamingthesystem_game/animation-preview/Level2-animation.html?state=100",
+    "manifest": {
+      "generatedAtUtc": "2026-10-20T10:50:38.707385+00:00",
+      "sourceRepository": "https://github.com/Mg614/gaming-the-system",
+      "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb",
+      "partnerSourceFilesSha256": "3b1cde4b51f41d41a35cdf18ad5bb718c4e1ba088aa0323e7905fc8a463d99c1",
+      "film": {
+        "sourceSha256": "4a19e4e89b3bd6dc2e33ecb3130c418e3faabc7f9896be44ddcc07b03fd6d28e",
+        "htmlSha256": "52a027a9dfcb92e3545a0c0222cb3eaa495d00943819b269d84a6b52fcc653a8",
+        "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb"
+      },
+      "fileSha256": {
+        "START-HERE.html": "37ef97cf07b0906d9c60090c701d3c220ddbca87917dd93d1a433bbe46978b7f",
+        "Level2-animation.html": "d53933b25426041c332b1ea7cf337155d28d6cdd7931344bc33b499be5f7c688",
+        "START-HERE.txt": "a5bb30daadba4fd4ed17fcf4ebac4e83878201c5ad1aa1b84121eedf5399e36a"
+      },
+      "updatedZipArchives": false
+    },
+    "pagesConfigurationRequired": {
+      "branch": "animation/opening-integration",
+      "path": "/docs",
+      "mode": "Deploy from a branch"
+    },
+    "publicDeploymentVerified": false,
+    "reason": "GitHub Pages API and public site access are blocked by the execution environment proxy; repository account must enable Pages once."
+  },
+  "zipArtifactsVersion": "80a519d9295a8c07a795fd0842c89b4639c9ec39; ZIPs deliberately unchanged during web-only review"
 }

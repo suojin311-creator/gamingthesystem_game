@@ -4,6 +4,8 @@
 
 ## 最新内容在哪里
 
+- 日常动画审阅改用固定网页：`https://suojin311-creator.github.io/gamingthesystem_game/animation-preview/Level2-animation.html?state=100`。需先在仓库 Settings → Pages 选择 **Deploy from a branch → animation/opening-integration → /docs**；该账号设置不能通过当前环境的 GitHub API 访问。网页文件已生成并随源码发布，设置启用前不能视为可访问。
+- 本轮网页已恢复完整 Coverage map，且从 Criterion 66 落笔特写起播。ZIP 仍是上一次 `80a519d` 的交付；审阅调整期间不重打 ZIP，用户确认后再统一发包。网页文件及其校验在 `docs/animation-preview/manifest.json`。
 - 同伴交付：`Mg614/gaming-the-system` 的 `feature/cinematic-level2-consequences`，固定提交 `c8c1c83456c4e67cf627df399bfb67b3a9792adb`。原文件保持只读。
 - 当前完整游戏：本仓库动画分支的 `play/Full-game-play.zip`；全部版本总包为 `play/Gaming-the-System-complete.zip`。包含开头、Level 1／2 动画与三关。
 - 动画单独查看：`play/Level2-animation-preview.zip`；与游戏使用同一个影片 HTML，保留片外暂停／重播／进度工具。
@@ -23,15 +25,15 @@
 | --- | --- | --- |
 | level2.three.visible／quality／mixed | 从 Alex 的 “I’ve completed all three requirements!” 起，保留后面的原对白和表演 | 原开场、全景、指标展示、开头勾选动作 |
 | level2.six | 六项观察的原四句对白与所需表演 | expand 横线／点／方框叠加，以及额外扩展提问页 |
-| level2.checklist | 100 项全景、勾选特写、完成展示、短暂满意反应与最终两句老师反思 | 仅删除最后一句之后的 SET PRIORITIES／What matters most 页面与三张优先级占位卡 |
+| level2.checklist | 从 Criterion 66 落笔特写开始，随后保留完整 Coverage map、完成展示、短暂满意反应与最终两句老师反思 | 起播特写之前的镜头，以及最后一句之后的 SET PRIORITIES／What matters most 页面与三张优先级占位卡 |
 
-不插入独立 10／25 片段、Checking 演示或额外操作页。按用户最新纠正，100 项原有画面保留在最终 placeholder 中，非对白部分压缩节奏，满意反应只停留 0.4 秒，随后衔接老师台词。
+不插入独立 10／25 片段、Checking 演示或额外操作页。按用户最新纠正，100 项从落笔特写起播，之后原有画面保留在最终 placeholder 中，非对白部分压缩节奏，满意反应只停留 0.4 秒，随后衔接老师台词。
 现有连续 10 → 25 → 100 仍是游戏流程，最终观察结束后回到原结果页，再由原按钮进入第三关过渡。
 电影不计算分支、权重或结果；读取游戏提供的真实请求。
 
 ## 与已确认视觉一致
 
-- 片内保留字幕及说话身份（老师统一 **You**、学生 **Alex**），以及 checklist 原有条目文字与分组标题。按用户后续纠正，清单中的文字不属于要删除的叠加说明；三项、六项和 100 项清单均保留。章节角标、候选标识、纸面页眉／页脚、系统报告、优先级文字和扩展横线继续移除。
+- 片内保留字幕及说话身份（老师统一 **You**、学生 **Alex**），以及 checklist 原有条目文字与分组标题。100 项 Coverage map 整张纸面完整保留：Alex · working notes、标题、计数、same evidence、三张证据便笺、每项 E1／E2／E3、gaps／当前证据关联及页脚说明均不隐藏。只继续移除纸面之外的章节角标、候选标识、阶段叠字、系统报告、优先级文字和扩展横线；三项／六项纸面沿用已确认的样式。
 - 共用 `src/shared/data/cinematicPalette.js`：You 为 `#ffe2a3`，Alex 为 `#cceeff`，标签与字幕同色。老师字幕保留斜体，身份标签正常字形。
 - 字幕无底板、无暗色渐变遮罩，用与 Level 1 相同的细描边和阴影；字号 2.15cqw、行高 1.5。
 - 英文阅读时间沿用 Level 1 的约 220 词／分钟加停顿，每句至少 2.1 秒。隐藏页面不消耗阅读时间。
@@ -55,6 +57,16 @@ Students 卡片出现观察结果时，使用与 Level 1 相同的红色描边�
 Level 2 所有页面移除 Illustrative outcomes，不用其他说明文字替代。
 
 ## 构建与复现
+
+日常网页审阅只需一个命令，不构建四个游戏入口或重打 ZIP：
+
+```sh
+LEVEL2_ANIMATION_SOURCE=/absolute/path/to/partner-checkout npm run preview:level2:web
+```
+
+该命令校验／更新影片缓存，生成独立审阅页并导出到 `docs/animation-preview/`。
+只推送动画分支；GitHub Pages 首次设置完成后随该分支更新。网页与游戏共用
+同一影片适配器；正式确认后再运行下方 ZIP 流水线。
 
 已有云任务使用现有 checkout；除非用户要求，不新建 worktree。
 Level 1 缓存仍使用其已固定交付，说明见 ANIMATION_INTEGRATION.md。

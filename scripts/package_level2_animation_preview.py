@@ -1,4 +1,5 @@
 """Package a review of the same adapted Level 2 film used in game placeholders."""
+import argparse
 import hashlib
 import html
 import json
@@ -9,7 +10,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PIN = 'c8c1c83456c4e67cf627df399bfb67b3a9792adb'
-build, source = (Path(arg).resolve() for arg in sys.argv[1:])
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('build', type=Path)
+parser.add_argument('source', type=Path)
+parser.add_argument('--web-dir', type=Path, help='Export web review files without rebuilding any ZIP.')
+args = parser.parse_args()
+build, source = args.build.resolve(), args.source.resolve()
 commit = subprocess.check_output(['git', '-C', str(source), 'rev-parse', 'HEAD'], text=True).strip()
 assert commit == PIN, 'Review and pin the new delivery before packaging it.'
 subprocess.run(['git', '-C', str(source), 'diff', '--exit-code', 'HEAD'], check=True)
@@ -24,12 +30,15 @@ entries = [
     ('质量深度指标 / Quality', 'quality-heavy', 'Discussion、Reflection、Peer response 三项分支。'),
     ('混合指标 / Mixed', 'mixed-broad', 'Preparation、Discussion、Peer response 三项分支。'),
     ('六项指标 / Six', 'six', '六项指标观察片段，不含额外扩展页。'),
-    ('100 项最终观察 / Final', '100', '100 项清单展示、勾选与反思；没有 SET PRIORITIES 页面。'),
+    ('100 项最终观察 / Final', '100', '从落笔特写开始，保留完整 Coverage map 与反思；没有 SET PRIORITIES 页面。'),
 ]
 links = '\n'.join(
     f'<a href="Level2-animation.html?cinematic=level2&amp;state={state}"><strong>{html.escape(label)}</strong><span>{html.escape(description)}</span></a>'
     for label, state, description in entries
 )
+usage = ('直接点击片段即可观看；修改后刷新网页。电脑横屏更适合观看原 16:9 画面。'
+         if args.web_dir else
+         '解压整个 ZIP 后，用 Chrome 或 Edge 打开本页；下载后无需联网。电脑横屏更适合观看原 16:9 画面。')
 launcher = f'''<!doctype html>
 <html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Level 2 动画预览</title>
@@ -42,9 +51,9 @@ a:first-child{{background:#934f43;color:#fff7e6}}a:focus-visible{{outline:3px so
 strong,span{{display:block}}span{{font-size:14px;margin-top:8px}}small{{color:#61574a}}code{{overflow-wrap:anywhere}}
 </style><main><h1>Level 2 动画预览</h1>
 <p>这里播放与游戏 placeholder 相同的调整版动画。可单独查看各片段、暂停、重播和拖动进度；建议先用 1× 观看。</p>
-<p>三项分支从 I’ve completed all three requirements! 开始，保留字幕、说话身份和 checklist 原有条目文字。100 项展示与勾选画面保留并加快节奏，结尾优先级页面已去掉。当前没有音频素材，播放为静音。</p>
+<p>三项分支从 I’ve completed all three requirements! 开始。100 项从落笔勾选特写开始，随后完整保留 Coverage map 的标题、计数、证据标签、条目及页脚；结尾优先级页面已去掉。当前没有音频素材，播放为静音。</p>
 <nav aria-label="Level 2 animation previews">{links}</nav>
-<p>解压整个 ZIP 后，用 Chrome 或 Edge 打开本页；下载后无需联网。电脑横屏更适合观看原 16:9 画面。</p>
+<p>{usage}</p>
 <small>来源：Mg614/gaming-the-system · feature/cinematic-level2-consequences · <code>{PIN[:7]}</code></small>
 </main></html>'''.encode()
 instructions = '''Level 2 动画独立预览 / Independent animation review
@@ -57,7 +66,7 @@ No audio assets were supplied; this preview is silent.
 
 This review contains the same adapted film used by the game placeholders.
 Only the three-metric, six-metric and final observation scenes are retained.
-The original 100-metric prelude is retained with shorter nonverbal holds; separate 10/25 clips and SET PRIORITIES are omitted. Dialogue reading holds,
+The 100-metric film starts on the Criterion 66 pen insert, followed by the intact Coverage map and completion with shorter nonverbal holds; the earlier establishing view, separate 10/25 clips and SET PRIORITIES are omitted. Dialogue reading holds,
 speaker colours and opaque scene covers match the approved Level 1 treatment.
 The full playable game is supplied separately in Full-game-play.zip.
 Source: Mg614/gaming-the-system
@@ -65,6 +74,25 @@ Branch: feature/cinematic-level2-consequences
 Commit: c8c1c83456c4e67cf627df399bfb67b3a9792adb
 '''.encode()
 files = {'START-HERE.html': launcher, 'Level2-animation.html': (build / 'index.html').read_bytes(), 'START-HERE.txt': instructions}
+if args.web_dir:
+    from datetime import datetime, timezone
+    web = args.web_dir.resolve()
+    web.mkdir(parents=True, exist_ok=True)
+    for name, data in files.items():
+        (web / name).write_bytes(data)
+    (web / 'index.html').write_bytes(launcher)
+    report = {
+        'generatedAtUtc': datetime.now(timezone.utc).isoformat(),
+        'sourceRepository': 'https://github.com/Mg614/gaming-the-system',
+        'partnerSourceCommit': commit,
+        'partnerSourceFilesSha256': source_hash.hexdigest(),
+        'film': json.loads((ROOT / 'node_modules/.cache/level2-cinematic/manifest.json').read_text()),
+        'fileSha256': {name: hashlib.sha256(data).hexdigest() for name, data in files.items()},
+        'updatedZipArchives': False,
+    }
+    (web / 'manifest.json').write_text(json.dumps(report, indent=2) + '\n')
+    print(f'Exported web-only animation review to {web}; ZIPs unchanged.')
+    sys.exit(0)
 archive = ROOT / 'play/Level2-animation-preview.zip'
 with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:
     for name, data in files.items():
@@ -80,7 +108,7 @@ report = {
     'html': 'Level2-animation.html', 'htmlSha256': hashlib.sha256(files['Level2-animation.html']).hexdigest(),
     'fileSha256': {name: hashlib.sha256(data).hexdigest() for name, data in files.items()},
     'scope': 'Review of the exact adapted film integrated into existing Level 2 placeholders; partner source unchanged',
-    'build': {'config': 'scripts/level2-animation-preview.config.mjs', 'adaptations': ['Only three, six and checklist game slots', 'Three-metric scenes start at the requested first line', 'Restore the 100-metric overview, pen insert and completion; shorten idle holds; remove overlay labels and the ending priority screen', 'Level 1 reading holds, colours and opaque scene covers']},
+    'build': {'config': 'scripts/level2-animation-preview.config.mjs', 'adaptations': ['Only three, six and checklist game slots', 'Three-metric scenes start at the requested first line', '100-metric film starts on the Criterion 66 pen insert, then shows the intact Coverage map and completion; shorten idle holds; remove overlay labels and the ending priority screen', 'Level 1 reading holds, colours and opaque scene covers']},
     'entries': [{'label': label, 'state': state} for label, state, _ in entries],
     'audio': 'No source audio assets; silent',
 }

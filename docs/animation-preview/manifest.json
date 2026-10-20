@@ -1,0 +1,17 @@
+{
+  "generatedAtUtc": "2026-10-20T10:50:38.707385+00:00",
+  "sourceRepository": "https://github.com/Mg614/gaming-the-system",
+  "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb",
+  "partnerSourceFilesSha256": "3b1cde4b51f41d41a35cdf18ad5bb718c4e1ba088aa0323e7905fc8a463d99c1",
+  "film": {
+    "sourceSha256": "4a19e4e89b3bd6dc2e33ecb3130c418e3faabc7f9896be44ddcc07b03fd6d28e",
+    "htmlSha256": "52a027a9dfcb92e3545a0c0222cb3eaa495d00943819b269d84a6b52fcc653a8",
+    "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb"
+  },
+  "fileSha256": {
+    "START-HERE.html": "37ef97cf07b0906d9c60090c701d3c220ddbca87917dd93d1a433bbe46978b7f",
+    "Level2-animation.html": "d53933b25426041c332b1ea7cf337155d28d6cdd7931344bc33b499be5f7c688",
+    "START-HERE.txt": "a5bb30daadba4fd4ed17fcf4ebac4e83878201c5ad1aa1b84121eedf5399e36a"
+  },
+  "updatedZipArchives": false
+}

@@ -21,9 +21,8 @@ export function createPacing(kind, shots) {
     const hundred = shots.find(item => item.id === 'hundred');
     if (!hundred) throw new Error('The final placeholder must include the authored 100-metric prelude.');
     const start = offsets.get('hundred');
-    // Retain the overview, pen insert and completed checklist. Shorten only
-    // their nonverbal holds, then give the pleased reaction a brief beat.
-    add(start, start + .249, .3);
+    // Begin on the requested Criterion 66 pen insert, without the preceding
+    // establishing view. Keep the full paper/completion and brief reaction.
     add(start + .25, start + 1.49, .85);
     add(start + 1.5, start + hundred.duration - .01, 1.25);
     add(offsets.get('perfect') + 1.6, offsets.get('perfect') + 5.25, .4);

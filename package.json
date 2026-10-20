@@ -18,6 +18,7 @@
     "test:integration": "python3 tests/level3_integration.py",
     "test:release": "python3 tests/release.py",
     "preview": "vite preview --host 0.0.0.0",
+    "preview:level2:web": "node scripts/level2-web-preview.mjs",
     "cinematic:prepare": "node scripts/level1-film.mjs && node scripts/level2-film.mjs"
   },
   "dependencies": {

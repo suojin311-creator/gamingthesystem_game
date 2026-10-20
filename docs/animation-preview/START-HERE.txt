@@ -1,0 +1,16 @@
+Level 2 动画独立预览 / Independent animation review
+
+解压整个 ZIP，用 Chrome 或 Edge 打开 START-HERE.html。
+Extract the entire ZIP and open START-HERE.html in Chrome or Edge.
+Choose a clip or All placeholder clips; use Pause/Replay/Speed/time as needed.
+All animation and artwork are embedded. No installation or Internet is required.
+No audio assets were supplied; this preview is silent.
+
+This review contains the same adapted film used by the game placeholders.
+Only the three-metric, six-metric and final observation scenes are retained.
+The 100-metric film starts on the Criterion 66 pen insert, followed by the intact Coverage map and completion with shorter nonverbal holds; the earlier establishing view, separate 10/25 clips and SET PRIORITIES are omitted. Dialogue reading holds,
+speaker colours and opaque scene covers match the approved Level 1 treatment.
+The full playable game is supplied separately in Full-game-play.zip.
+Source: Mg614/gaming-the-system
+Branch: feature/cinematic-level2-consequences
+Commit: c8c1c83456c4e67cf627df399bfb67b3a9792adb
