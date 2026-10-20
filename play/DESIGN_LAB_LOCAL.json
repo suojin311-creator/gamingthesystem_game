@@ -1,0 +1,28 @@
+{
+  "branch": "animation/opening-integration",
+  "archive": "Design-Lab-local.zip",
+  "zipSha256": "58d5e892449104056c4aadb990ffa68df7f32d68c0017d2a809778c840897c67",
+  "sourceSha256": "9c86dfa87bdaba9015ebe2f923f03e45a3d53ef6d12a80cdfcffb173b0ce6749",
+  "toolchain": "go version go1.27.3 linux/amd64",
+  "target": "windows/amd64",
+  "selfContained": true,
+  "embeddedWebSha256": {
+    "assets/index-D_EsfkK3.css": "4373b7dc5f17aa5d2d4dcddfffecdae2fca2b70482bd455f40c1baa95566282d",
+    "assets/index-firaT0s1.js": "bb28996be2a185abe59d7e9092ad616f82d6db7ea8a7cd059175302999bbe612",
+    "goodhart.png": "ea248ed8ba4c7ad5ab3435baff908fc72eef8d23191c0831fc42f6ebc586079a",
+    "index.html": "48087e22825c32b2f49c44b15d8dd340baaecfb637ceab5cdce771639c136d18"
+  },
+  "files": {
+    "Start-Design-Lab.exe": "f7d4cf3e100ba1edae0d801eda6e1a13fc8afcf0bed5fb4f7e0c5ac404a6007f",
+    "START-HERE.html": "00c663a42b6e8da79f1e08fe1798cc9b6a1e7d93698d78d8e451669676600576",
+    "README.txt": "e78a6cab81f1c48b9b61f46d1befa6f666cbdce939fc8f80f155ce057d7508cf",
+    "THIRD-PARTY-NOTICES.txt": "677dc1f3e6a3d6d925dd865ad48c306fcc265fca5ebd80d83a62ffb3f0c1fa5a",
+    "SHA256SUMS.txt": "f37bb4c1864cdfc22626876d6038f1adb17a591e54d3205602e2f1bfc71bc0fe"
+  },
+  "windowsBinaryChecks": [
+    "PE x64 header verified",
+    "All built web assets and illustration embedded byte-for-byte",
+    "CGO disabled; no Python/Node.js runtime or paid service required"
+  ],
+  "nativeWindowsExecutionTested": false
+}

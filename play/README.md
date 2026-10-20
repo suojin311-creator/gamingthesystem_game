@@ -1,5 +1,10 @@
 # Latest integrated sound / classroom preview
 
+The three current deliverables, launch instructions and classroom handoff are in
+[三份最新预览包](DELIVERY_GUIDE.zh-CN.md). The independent, current Lab is
+[Design-Lab-local.zip](Design-Lab-local.zip?raw=true), launched with
+**Start-Design-Lab.exe**; its host shares the Lab directly.
+
 [Download Gaming-the-System-classroom.zip](Gaming-the-System-classroom.zip?raw=true).
 Extract it and run **Start-Gaming-the-System.exe** (Windows x64). The host page
 has **Open the game** and **Preview music & sounds**. The ending connects to this

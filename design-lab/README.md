@@ -6,7 +6,9 @@
 
 ## 下载与启动（老师）
 
-下载 [Design-Lab-local.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/feature/design-lab-local/play/Design-Lab-local.zip?raw=true)。
+下载最新 [Design-Lab-local.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/animation/opening-integration/play/Design-Lab-local.zip?raw=true)。
+独立包与合并包使用同一套当前 Lab 文案、流程和音效；独立包直接分享 Lab 参与链接。
+三份交付方式见 [交付说明](../play/DELIVERY_GUIDE.zh-CN.md)。原 feature 分支只保留历史基线。
 
 1. **先完整解压**，双击 `Start-Design-Lab.exe`。支持 Windows 10/11 64 位。
 2. 浏览器会自动打开主持页。启动程序的窗口保持打开。
@@ -77,8 +79,8 @@ go build -o build/design-lab-local .
 # 另一终端在仓库根目录运行，按需热更新前端
 npm run lab:dev
 
-# 发布独立 Windows ZIP（在仓库根目录）
-npm run lab:package
+# 发布最新独立 Windows ZIP（在仓库根目录；仅重建 Lab）
+DESIGN_LAB_GO=/path/to/real/go python3 design-lab/package.py --standalone
 ```
 
 如果系统的 `go` 不是 Go 编译器，可通过 `DESIGN_LAB_GO` 指定真实路径。

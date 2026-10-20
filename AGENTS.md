@@ -1,5 +1,13 @@
 # Current integrated audio and classroom review
 
+- Three requested deliverables are documented in `play/DELIVERY_GUIDE.zh-CN.md`.
+  The game and combined classroom ZIPs at d5d26fb are already built, verified and
+  pushed. Reuse them. Build the current independent Lab with
+  `DESIGN_LAB_GO=/workspace/.cache/gts-go/go/bin/go python3 design-lab/package.py --standalone`.
+  This uses an ignored build staging directory, shares `/` directly, and preserves
+  the integrated `design-lab/web/` and all six game archives. Do not change stable
+  aliases or repackage the entire game just to deliver these files.
+
 - User authorized GitHub backup, the approved reflection emphasis, all agreed
   music/feedback, and a review ZIP. Baseline: archive/full-game-before-audio-20261020.
 - Work on animation/opening-integration. Preserve stable aliases and independent

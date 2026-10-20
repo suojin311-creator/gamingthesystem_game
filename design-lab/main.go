@@ -299,7 +299,11 @@ func run() error {
 		}
 	}()
 	hostURL := fmt.Sprintf("http://localhost:%d/host", actualPort)
-	fmt.Println("GAMING THE SYSTEM - GAME + DESIGN LAB")
+	if _, err := embeddedWeb.ReadFile("web/game.html.gz"); err == nil {
+		fmt.Println("GAMING THE SYSTEM - GAME + DESIGN LAB")
+	} else {
+		fmt.Println("GAMING THE SYSTEM - DESIGN LAB")
+	}
 	fmt.Println("Host:", hostURL)
 	fmt.Println("Participant on this computer:", fmt.Sprintf("http://localhost:%d", actualPort))
 	for _, url := range a.urls {

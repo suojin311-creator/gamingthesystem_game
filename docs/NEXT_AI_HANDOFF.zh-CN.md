@@ -1,5 +1,13 @@
 # 最新接力：整合音频与课堂预览（2026-10-20）
 
+恢复连接后已确认 `d5d26fb9b99ae5d16c980d65540f2b902a63b863` 已上传到 GitHub。
+按用户顺序，先交付 `Full-game-play.zip`；其次独立 `Design-Lab-local.zip`；
+最后 `Gaming-the-System-classroom.zip`。第 1 和第 3 份复用已校验的 d5d26fb 文件。
+独立 Lab 用 `python3 design-lab/package.py --standalone` 构建，主持页直接分享 `/`，
+不含游戏，也不显示游戏/游戏试听入口。最新 Go 编译器位于
+`/workspace/.cache/gts-go/go/bin/go`，旧 `/tmp` 工具链已随恢复消失。
+三份使用方式见 `play/DELIVERY_GUIDE.zh-CN.md`。
+
 当前工作分支：`animation/opening-integration`。稳定别名未移动。
 
 - 已合入认可的 ending 问题：两行居中，learning 浅金、numbers 珊瑚橙，关键词放大。

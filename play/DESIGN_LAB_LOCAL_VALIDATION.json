@@ -1,0 +1,30 @@
+{
+  "archive": "Design-Lab-local.zip",
+  "zipSha256": "58d5e892449104056c4aadb990ffa68df7f32d68c0017d2a809778c840897c67",
+  "sourceSha256": "9c86dfa87bdaba9015ebe2f923f03e45a3d53ef6d12a80cdfcffb173b0ce6749",
+  "sourceBaseline": "d5d26fb9b99ae5d16c980d65540f2b902a63b863",
+  "scope": "Current standalone Lab packaging and direct participant entry; full-game and combined archives are reused unchanged from the baseline.",
+  "browser": {
+    "passed": 8,
+    "checks": [
+      "Standalone host shares the Lab directly, includes a participant entry and contains no game route/link",
+      "The local host and three independent participant browsers join without accounts or names; the anonymous showcase and ranking are announced",
+      "The writing form has the agreed question without a helper line, accepts one reflection per person and starts the anonymous review automatically",
+      "Unanswered review remains in place beyond ten seconds, has no countdown/Next button, and faster voters wait",
+      "Each author sees exactly two other reflections, choices advance automatically, and the frozen ranking counts flowers only",
+      "Static ranking holds twelve seconds, questions cross-fade without background jumps, and Goodhart/quote reveal progressively without quotation marks",
+      "Host shutdown closes the classroom cleanly; state lives only in the running process",
+      "No browser runtime errors or requests to external services"
+    ],
+    "runtimeErrors": [],
+    "externalRequests": [],
+    "scenario": "ui",
+    "platform": "Linux server binary and Chromium; Windows PE cross-build is validated separately"
+  },
+  "windowsBinaryChecks": [
+    "PE x64 header verified",
+    "All built web assets and illustration embedded byte-for-byte",
+    "CGO disabled; no Python/Node.js runtime or paid service required"
+  ],
+  "nativeWindowsExecutionTested": false
+}
