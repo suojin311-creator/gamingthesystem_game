@@ -61,7 +61,7 @@ with sync_playwright() as p:
   load(case);seek(1)
   assert page.locator('.end-office').count()==1 and page.locator('.ending-actual-task,.ending-metric-name').count()==0
   assert page.locator('[role=status]').inner_text()=='Maybe it’s not just about finding the perfect weights…'
-  for t in [1,11]:
+  for t in [1]:
    seek(t)
    audit=page.locator('.ending-spoken').evaluate("""e=>{const s=e.querySelector('.ending-speaker'),c=e.querySelector('[role=status]'),sr=s.getBoundingClientRect(),cr=c.getBoundingClientRect();return {name:s.textContent,color:getComputedStyle(c).color,labelColor:getComputedStyle(s).color,background:getComputedStyle(c).backgroundColor,above:sr.bottom<=cr.top+.1,centered:Math.abs(sr.x+sr.width/2-cr.x-cr.width/2)<1,text:c.textContent};}""")
    assert audit['name']=='You' and audit['color']==audit['labelColor']=='rgb(255, 226, 163)',audit
@@ -82,7 +82,7 @@ with sync_playwright() as p:
    for name,t in [('opening',1),('level1',4.9),('level2',7.4),('level3',9.8),('question',11.5),('handoff',18.4)]:
     seek(t);page.locator('.ending-review-controls').evaluate('e=>e.open=false')
     page.locator('.ending-screen').screenshot(path=str(OUT/f'ending-{name}.png'))
-   assert page.locator('.ending-design-button').count()==0
+   assert page.locator('.ending-design-button').count()==1
   seek(24);assert page.locator('.end-recap-memories,.end-handoff-ghost,.end-dashboard,.ending-metric-name,.end-theory').count()==0
   page.locator('.ending-review-controls').evaluate('e=>e.open=false')
   page.locator('.ending-screen').screenshot(path=str(OUT/f'ending-{case}-final.png'))
@@ -92,36 +92,64 @@ with sync_playwright() as p:
  assert page.locator('.ending-closing-rule,.end-theory-rule,.end-theory,.end-convergence').count()==0
  assert page.locator('.ending-destination').inner_text()=='NEXT · DESIGN LAB'
  assert page.locator('#ending-next-title').inner_text()=='Share what real\nlearning looks like.'
- assert page.locator('.ending-game-connection').inner_text()=='You’ve seen how numbers shaped Alex’s choices.'
- assert page.locator('.ending-next-task').inner_text()=='Now write a short reflection, then read and vote on your classmates’ ideas.'
+ assert page.locator('.ending-game-connection,.ending-next-task').count()==0
+ assert 'You’ve seen how numbers shaped Alex’s choices.' not in page.locator('.ending-screen').inner_text()
+ assert 'Now write a short reflection' not in page.locator('.ending-screen').inner_text()
  assert 'Goodhart' not in page.locator('.ending-screen').inner_text()
  previous=page.url
  assert page.locator('.ending-design-button').get_attribute('aria-disabled')=='true'
  page.get_by_role('button',name='ENTER DESIGN LAB').click(force=True)
  assert page.url==previous and page.locator('.ending-handoff').is_visible()
- checks.append('Destination, connection to Alex, reflection/read/vote task and single entry action are explicit; decorative rule and premature theory reveal are absent')
+ checks.append('Only destination, title and single entry action remain; both rejected prose blocks, decorative rule and premature theory reveal are absent')
  # At small sizes the entry page uses the viewport rather than shrinking prose
  # into a letterboxed film. All guidance and the action must remain reachable.
  for width,height in [(1280,720),(1920,1080),(1440,900),(844,390),(640,360),(390,844),(320,568)]:
   page.set_viewport_size({'width':width,'height':height})
-  fit=page.locator('.ending-handoff').evaluate("""e=>{const r=e.getBoundingClientRect(),copy=e.querySelector('.ending-handoff-copy').getBoundingClientRect(),t=e.querySelector('h1').getBoundingClientRect(),q=e.querySelector('.ending-next-task').getBoundingClientRect(),b=e.querySelector('button').getBoundingClientRect();return {width:r.width,height:r.height,copyLeft:copy.left,copyRight:copy.right,copyTop:copy.top,copyBottom:copy.bottom,clear:t.bottom<q.top&&q.bottom<b.top,font:parseFloat(getComputedStyle(e.querySelector('.ending-next-task')).fontSize),overflow:document.documentElement.scrollWidth>innerWidth};}""")
+  fit=page.locator('.ending-handoff').evaluate("""e=>{const r=e.getBoundingClientRect(),copy=e.querySelector('.ending-handoff-copy').getBoundingClientRect(),t=e.querySelector('h1').getBoundingClientRect(),b=e.querySelector('button').getBoundingClientRect();return {width:r.width,height:r.height,copyLeft:copy.left,copyRight:copy.right,copyTop:copy.top,copyBottom:copy.bottom,clear:t.bottom<b.top,font:parseFloat(getComputedStyle(e.querySelector('h1')).fontSize),overflow:document.documentElement.scrollWidth>innerWidth};}""")
   assert abs(fit['width']-width)<1 and abs(fit['height']-height)<1 and not fit['overflow'],fit
   assert fit['copyLeft']>=0 and fit['copyRight']<=width+.1 and fit['copyTop']>=0 and fit['copyBottom']<=height-20 and fit['clear'] and fit['font']>=14,fit
   if (width,height) in [(1280,720),(390,844)]:
    page.screenshot(path=str(OUT/f'ending-handoff-{width}.png'))
  checks.append('Seven desktop/landscape/portrait sizes retain readable full-viewport guidance and a visible non-overlapping action')
+ # Inspect the changed reflection and then play through the actual handoff join.
+ page.set_viewport_size({'width':1280,'height':720})
+ seek(11)
+ reflection=page.locator('.ending-reflection').evaluate("""e=>{const r=e.getBoundingClientRect(),screen=e.closest('.ending-screen').getBoundingClientRect();return {center:r.y+r.height/2,expected:screen.y+screen.height/2,opacity:Number(getComputedStyle(e).opacity),labels:e.querySelectorAll('.ending-speaker').length,color:getComputedStyle(e).color};}""")
+ assert abs(reflection['center']-reflection['expected'])<1 and reflection['labels']==0 and reflection['color']=='rgb(255, 226, 163)',reflection
+ seek(10.2);early=page.locator('.ending-reflection').evaluate('e=>Number(getComputedStyle(e).opacity)')
+ seek(15.5);late=page.locator('.ending-reflection').evaluate('e=>Number(getComputedStyle(e).opacity)')
+ assert 0<early<.2 and 0<late<1, (early,late)
+ seek(11.5);page.screenshot(path=str(OUT/'ending-centered-reflection.png'))
+ checks.append('Reflection is centred without You, fades in gently and fades out during the office transition')
+ for width,height in [(1440,900),(390,844)]:
+  page.set_viewport_size({'width':width,'height':height});seek(16.4)
+  page.evaluate("""()=>{window.joinAudit=[];window.joinTimer=setInterval(()=>{const stage=document.querySelector('.end-stage'),host=document.querySelector('[data-cinematic-dissolve]'),h=document.querySelector('#ending-next-title'),b=document.querySelector('.ending-design-button'),g=document.querySelector('.ending-handoff');if(stage.dataset.section!=='closing')return;const rect=host?.getBoundingClientRect();joinAudit.push({t:Number(stage.dataset.elapsed),snapshot:rect?{x:rect.x,y:rect.y,w:rect.width,h:rect.height,opacity:Number(getComputedStyle(host).opacity)}:null,y:h?.getBoundingClientRect().y,button:!!b,groupOpacity:g?Number(getComputedStyle(g).opacity):null,buttonOpacity:b?Number(getComputedStyle(b).opacity):null,actionOpacity:b?Number(getComputedStyle(b.parentElement).opacity):null});},16);}""")
+  page.locator('details').evaluate('e=>e.open=true')
+  page.get_by_role('button',name='Play',exact=True).click()
+  page.wait_for_function('Number(document.querySelector(".end-stage").dataset.elapsed)>19.3',timeout=15000)
+  page.get_by_role('button',name='Pause',exact=True).click()
+  audit=page.evaluate('()=>{clearInterval(joinTimer);return joinAudit;}')
+  snapshots=[row['snapshot'] for row in audit if row['snapshot']]
+  assert snapshots and any(0<r['opacity']<1 for r in snapshots),audit[:4]
+  assert all(abs(r['x'])<1 and abs(r['y'])<1 and abs(r['w']-width)<1 and abs(r['h']-height)<1 for r in snapshots),snapshots[:2]
+  assert all(r['button'] and r['buttonOpacity']==1 and r['actionOpacity']==1 for r in audit),audit[:4]
+  assert any(0<r['groupOpacity']<1 for r in audit),audit[:4]
+  assert max(r['y'] for r in audit)-min(r['y'] for r in audit)<1, (min(r['y'] for r in audit),max(r['y'] for r in audit))
+  assert page.locator('[data-cinematic-dissolve]').count()==0
+  (OUT/f'ending-handoff-live-{width}.json').write_text(json.dumps(audit,indent=2))
+ checks.append('Live desktop and portrait handoffs dissolve the entire viewport; title/button share one fade with no delayed layout shift')
  page.set_viewport_size({'width':1280,'height':720})
  if closing_only:
   seek(16.6)
   before=page.locator('.end-office-night').evaluate('e=>Number(getComputedStyle(e).opacity)')
-  assert page.locator('.ending-design-button').count()==0
+  assert page.locator('.ending-design-button').count()==1
   seek(18.4)
   after=page.locator('.end-office-night').evaluate('e=>Number(getComputedStyle(e).opacity)')
-  assert after<before and page.locator('.ending-design-button').count()==0
+  assert after<before and page.locator('.ending-design-button').count()==1
   seek(19.2);assert page.locator('.ending-design-button').is_visible()
-  page.locator('summary').click();page.get_by_role('button',name='Replay',exact=True).click();page.get_by_role('button',name='Pause',exact=True).click()
+  page.locator('details').evaluate('e=>e.open=true');page.get_by_role('button',name='Replay',exact=True).click();page.get_by_role('button',name='Pause',exact=True).click()
   assert page.locator('.ending-handoff').count()==0 and page.locator('.ending-screen').get_attribute('data-layout')=='film'
-  checks.append('Office lighting/content fade into the task page before its action appears; replay restores the cinematic layout')
+  checks.append('Office lighting and the complete title/button group fade together; replay restores the cinematic layout')
  if not closing_only:
   # Live cross-dissolve and once-only ending hold. Accelerate only review time.
   load('changed');seek(.5)

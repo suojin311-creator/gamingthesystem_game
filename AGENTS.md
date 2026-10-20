@@ -12,11 +12,16 @@
 - Ending never displays the top-left metric heading, including in Level 3 memory.
   Keep that heading in the separate Level 3A task film; do not change its renderer.
 - The user rejected the standalone aphorism/short decorative rule as unclear.
-  End with an explicit Design Lab task page: destination, invitation to share
-  what real learning looks like, connection to Alex, and reflection/read/vote steps.
+  End with a Design Lab entry: destination, invitation to share what real
+  learning looks like, and button. The user removed the two explanatory prose
+  blocks (connection to Alex and reflection/read/vote steps).
   Use the office scene beside left-aligned copy; no decorative short rule.
   The handoff page fills the viewport with readable responsive type, while the
-  earlier film keeps its complete 16:9 composition.
+  earlier film keeps its complete 16:9 composition. Cover that aspect-ratio
+  change with a full-viewport dissolve, including the outgoing matte. Title and
+  button mount together and share one fade; never delay the action and recenter
+  the text. The reflection question is centred without You, gently fades in,
+  then fades away as the office darkens. The opening still uses the You label.
   Do not reveal the Goodhart name or quote here; the formal reveal belongs after
   Design Lab. Its accepted quote is the short "When a measure becomes a target…"
   version, not the 1975 wording. See `docs/ENDING_DESIGN_LAB_COPY.md`.

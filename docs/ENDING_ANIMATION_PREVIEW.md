@@ -3,7 +3,7 @@
 下载 `play/Ending-animation-preview.zip`，完整解压后打开 `START-HERE.html`。
 影片保持完整的 16:9 构图，最后的 Design Lab 任务入口页铺满视口并适配窄屏文字；
 不强制调用浏览器的全屏权限。
-左下角「预览控制」可暂停、拖动、重播或跳到理论揭示。
+左下角「预览控制」可暂停、拖动、重播或跳到 Design Lab 入口。
 
 本次仅交付独立动画审阅包，未替换当前完整游戏中的 comparison/theory placeholder，
 六个正式游戏 ZIP 保持不变。Level 3B 没有导入。
@@ -24,24 +24,26 @@
 - 复用已有任务、清单和办公室素材，不使用被拒绝的单独 Alex 人像、女孩侧脸、
   同学反应等杂镜头。整个 ending 都不显示左上角 metric 名称；Level 3A 本身仍保留。
 - You 与字幕同为暖金色 `#ffe2a3`。本次 ending 没有 Alex 的重复对白。
-  身份居中放在字幕正上方，透明字幕、描边和阴影沿用现有 Level 3A。
+  开头身份居中放在字幕正上方，透明字幕、描边和阴影沿用现有 Level 3A。
+  回忆后的反思句移至画面中央并去掉 You；0.6 秒淡入，随后配合办公室压暗渐隐。
 - 镜头共用 `cinematic-dissolve.mjs` 的约半秒叠化，隐藏页面暂停。
   回忆后回到办公室立即显示 You「Am I improving learning, or just improving the numbers?」。
-  之后逐渐压暗并揭示理论，不保留无对白的建立镜头。
+  之后逐渐压暗并衔接 Design Lab 入口。入口改为全视口时，对整张旧画面连同黑边
+  做 0.65 秒叠化，避免构图比例直接跳变。
 - Level 3 回忆下方改为「The weights changed. Learning still came second.」，
   明确学习被放到次要位置，不宣称所有真实试验的 effort 都发生改变。
 - 删除办公室里虚构的全绿结果面板。最后不再使用孤立的格言式总结和短横线，
   改成明确的 Design Lab 任务入口：
   - NEXT · DESIGN LAB
   - Share what real / learning looks like.
-  - You’ve seen how numbers shaped Alex’s choices.
-  - Now write a short reflection, then read and vote on your classmates’ ideas.
+  - ENTER DESIGN LAB →
+  用户最新要求删除两段说明文字（游戏经历关联及 reflection/read/vote 步骤）。
   Ending 不出现 Goodhart 名称或引文，也不再进入同伴额外的 recap / handoff 画面。
 - 背景恢复较早版本的深色办公室，撤回用户拒绝的全屏灰绿处理。
   最后一页以办公室场景和渐暗背景承托右侧任务文字，标题使用 Georgia、暖白
-  `#fff5e3`，正文沿用开场 Trebuchet / Arial。通过目的、游戏关联、具体任务和
-  行动按钮建立层级，不增加抽象装饰。移动窄屏使用完整视口及可读字号，
-  不把说明文字缩进横向影片的黑边之间。
+  `#fff5e3`，入口标识和按钮沿用开场字体。保留标题与行动按钮的简洁层级，
+  不增加抽象装饰。移动窄屏使用完整视口及可读字号。
+  标题与按钮同时挂载、共同淡入，避免按钮晚出现使文字重新居中上移。
 - 用户最新要求覆盖了早先「不制作 Design Lab 按钮」的约定：
   现在直接导入开场 `styles.css`，使用 TAKE YOUR SEAT / BACK TO OFFICE 的同一个
   `opening-action` 砖红色按钮，暂为 `aria-disabled` 的展示入口，
@@ -70,7 +72,8 @@ python3 tests/ending_preview.py
 ```
 
 只调整结尾文案/排版时可运行 `python3 tests/ending_preview.py --closing-only`，
-检查实际 ZIP 的任务说明、按钮、七种窗口布局、背景过渡、重播和离线资源。
+检查实际 ZIP 的删减文案、居中反思句、按钮、七种窗口布局、
+桌面/竖屏实时叠化、共同淡入、布局稳定、重播和离线资源。
 
 交付目录需要安装与 lockfile 一致的依赖。影片、素材和控件都内嵌进单一 HTML，
 无需联网或安装；没有原始音频，保持静音。

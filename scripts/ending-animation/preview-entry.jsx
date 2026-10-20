@@ -19,14 +19,14 @@ function Preview() {
   const [caseId,setCaseId] = useState(initialCase), [ready,setReady] = useState(false), [error,setError] = useState(false);
   const [time,setTime] = useState(0), [playing,setPlaying] = useState(true), [speed,setSpeed] = useState(1), [completed,setCompleted] = useState(0);
   const reducedMotion = params.get('reduced') === '1' || matchMedia('(prefers-reduced-motion:reduce)').matches;
-  const surface=useRef(null),clock=useRef(0),changing=useRef(false),transition=useRef(null),done=useRef(false),currentKey=useRef('opening');
+  const viewport=useRef(null),surface=useRef(null),clock=useRef(0),changing=useRef(false),transition=useRef(null),done=useRef(false),currentKey=useRef('opening');
   const input=useMemo(()=>{
     const example=CASES[caseId];
     return endingInputFromRuns(example.metrics[0],example.weights.map((weights,index)=>({round:index+1,kind:'player',metricIds:example.metrics,weights})));
   },[caseId]);
   // Decode every image once, including lazy recollection artwork, before autoplay.
   useEffect(()=>{let live=true;const urls=[office,hand,...Object.values(branches).map(branch=>branch.plate)];Promise.all([preloadAdaptationArt(),...urls.map(url=>{const image=new Image();image.src=url;return image.decode();})]).then(()=>{if(live)setReady(true);},()=>{if(live)setError(true);});return()=>{live=false;};},[]);
-  const keyAt=t=>{const section=sectionAt(t);return ['question','threshold','closing'].includes(section.id)?'office':section.id;};
+  const keyAt=t=>{const section=sectionAt(t);return ['question','threshold'].includes(section.id)?'office':section.id;};
   const seek=(next,resume=false)=>{
     transition.current?.cancel();changing.current=false;
     const t=Math.max(0,Math.min(DURATION,next));clock.current=t;currentKey.current=keyAt(t);setTime(t);setPlaying(resume);
@@ -39,7 +39,14 @@ function Preview() {
       if(!document.hidden&&!changing.current){
         const next=Math.min(DURATION,clock.current+Math.min(100,now-last)/1000*speed),key=keyAt(next);
         const commit=()=>{clock.current=next;currentKey.current=key;setTime(next);};
-        if(key!==currentKey.current){changing.current=true;transition.current=dissolveFrame(surface.current,commit,{duration:520,reducedMotion});transition.current.finished.then(()=>{changing.current=false;});}
+        if(key!==currentKey.current){
+          changing.current=true;
+          // The handoff reframes 16:9 into the viewport. Freeze the surrounding
+          // matte too so the aspect-ratio change is covered by the same dissolve.
+          const handoff=key==='closing';
+          transition.current=dissolveFrame(handoff?viewport.current:surface.current,commit,{duration:handoff?650:520,reducedMotion});
+          transition.current.finished.then(()=>{changing.current=false;});
+        }
         else commit();
         if(next>=DURATION){setPlaying(false);if(!done.current){done.current=true;setCompleted(n=>n+1);}return;}
       }
@@ -52,7 +59,7 @@ function Preview() {
   const play=()=>{setPlaying(true);transition.current?.play();};
   const reset=()=>{seek(0,true);setCompleted(0);done.current=false;};
   return <>
-    <div className="ending-viewport" data-completions={completed} data-case={caseId}><div className="ending-screen" data-layout={sectionAt(time).id==='closing'?'handoff':'film'}>
+    <div ref={viewport} className="ending-viewport" data-completions={completed} data-case={caseId}><div className="ending-screen" data-layout={sectionAt(time).id==='closing'?'handoff':'film'}>
       <Composition {...{input,time,reducedMotion,surface}} />
       {!ready&&<div className="ending-loading" role="status">{error?'The animation could not load. Please reopen the preview.':'Preparing the ending…'}</div>}
     </div></div>

@@ -1,5 +1,4 @@
 export const DURATION = 24;
-export const BUTTON_AT = 18.5;
 export const SECTIONS = [
   { id: 'opening', start: 0, end: 3.8, title: 'Office reflection' },
   { id: 'level1', start: 3.8, end: 5.9, title: 'Level 1 memory' },
@@ -13,12 +12,10 @@ export const RECAP = ['One metric became the target.', 'More metrics became a ch
 export const HANDOFF_COPY = {
   destination: 'NEXT · DESIGN LAB',
   title: ['Share what real', 'learning looks like.'],
-  context: 'You’ve seen how numbers shaped Alex’s choices.',
-  task: 'Now write a short reflection, then read and vote on your classmates’ ideas.',
 };
 export const LINES = [
   { start: .15, end: 3.8, speaker: 'You', role: 'player', text: 'Maybe it’s not just about finding the perfect weights…' },
-  { start: 10.1, end: 14.5, speaker: 'You', role: 'player', text: 'Am I improving learning, or just improving the numbers?' },
+  { id: 'reflection', start: 10.1, end: 16.5, speaker: 'You', role: 'player', text: 'Am I improving learning, or just improving the numbers?' },
 ];
 export const sectionAt = time => SECTIONS.find(s => time < s.end) ?? SECTIONS.at(-1);
 export const lineAt = time => LINES.find(line => time >= line.start && time < line.end);

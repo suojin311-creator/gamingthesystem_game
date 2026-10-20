@@ -322,27 +322,29 @@
     "audio": "No source audio assets; silent"
   },
   "endingPreview": {
-    "validatedAtUtc": "2026-10-20T14:12:34.529973+00:00",
-    "scope": "Independent ending handoff redesign: explicit Design Lab destination, invitation to describe real learning, connection to Alex and reflection/read/vote instructions. Scene beside left-aligned task copy, no decorative rule, full-viewport responsive guidance. Actual Design Lab remains unconnected.",
-    "sourceBaseCommit": "ee8900ab8bb3f29d9cfe1d6da9fb8c45860c4cfa",
+    "validatedAtUtc": "2026-10-20T14:33:38.712300+00:00",
+    "scope": "Independent ending boundary fix: centred reflection without You, gentle entrance/exit, deleted both handoff prose blocks, simultaneous title/button fade and full-viewport dissolve across the film-to-page aspect-ratio change. Design Lab remains unconnected.",
+    "sourceBaseCommit": "9435d7bb21e76aee97d1451eab7d04898ab34c0a",
     "buildCommand": "ENDING_ANIMATION_SOURCE=<pinned-ending> LEVEL3_ANIMATION_SOURCE=<pinned-3a> npm run package:ending-preview",
     "buildExitCode": 0,
     "testCommand": "python3 tests/ending_preview.py --closing-only",
-    "passed": 5,
+    "passed": 7,
     "checks": [
       "Level 3 recap uses the accepted negative consequence and still omits metric headings",
-      "Destination, connection to Alex, reflection/read/vote task and single entry action are explicit; decorative rule and premature theory reveal are absent",
+      "Only destination, title and single entry action remain; both rejected prose blocks, decorative rule and premature theory reveal are absent",
       "Seven desktop/landscape/portrait sizes retain readable full-viewport guidance and a visible non-overlapping action",
-      "Office lighting/content fade into the task page before its action appears; replay restores the cinematic layout",
+      "Reflection is centred without You, fades in gently and fades out during the office transition",
+      "Live desktop and portrait handoffs dissolve the entire viewport; title/button share one fade with no delayed layout shift",
+      "Office lighting and the complete title/button group fade together; replay restores the cinematic layout",
       "ZIP integrity/hashes pass; no runtime errors or external asset requests"
     ],
     "runtimeErrors": [],
     "externalRequests": [],
-    "zipSha256": "6f192ac51822bc83c30240a36f2756e415149f83b8720f699aebe06e04937522",
+    "zipSha256": "975ed33c5da02b25166356ebc054c7f71ae5512741f9de97201b187f1f1a2642",
     "previousReview": {
-      "reportCommit": "ee8900ab8bb3f29d9cfe1d6da9fb8c45860c4cfa",
-      "zipSha256": "c81a156bdaa00cab70cc8a6c271e509eb05fb72e0fe5474430684e7076759d9f",
-      "passed": 4
+      "reportCommit": "9435d7bb21e76aee97d1451eab7d04898ab34c0a",
+      "zipSha256": "6f192ac51822bc83c30240a36f2756e415149f83b8720f699aebe06e04937522",
+      "passed": 5
     },
     "artifacts": {
       "sources": [
@@ -355,22 +357,31 @@
           "commit": "ba9f81ee619c14b3342104228cdd2a5cc2bc2b3b"
         }
       ],
-      "sourceSha256": "483dfe3c3965e362befcf7ec453e668a619139555ab46d0f037df156e1e73352",
-      "htmlSha256": "fec3c181a2b3f2cd9bfa4d449dd342867062fdc9eebf0172c9316fe5ad0366cd",
+      "sourceSha256": "20e62284c422e0f1b266a474dc687c4f3b3d242373f2889110a1cb75ad4a75d0",
+      "htmlSha256": "fb66ac1a9b7772ed828c3b25acdb262876a32856d204f9b91351fe728968094a",
       "archive": "Ending-animation-preview.zip",
-      "zipSha256": "6f192ac51822bc83c30240a36f2756e415149f83b8720f699aebe06e04937522",
+      "zipSha256": "975ed33c5da02b25166356ebc054c7f71ae5512741f9de97201b187f1f1a2642",
       "fileSha256": {
         "START-HERE.html": "f2fc1409b3bacff7b662b25ac545fb6c4f5b76f3e5866f7b804469c4e34095b3",
-        "Ending-animation.html": "fec3c181a2b3f2cd9bfa4d449dd342867062fdc9eebf0172c9316fe5ad0366cd",
+        "Ending-animation.html": "fb66ac1a9b7772ed828c3b25acdb262876a32856d204f9b91351fe728968094a",
         "START-HERE.txt": "dfe1a7677e20597ff3a50b569aaa8d3a0876060db94ff0a1cf3f905c87432aaf"
       },
       "scope": "Independent ending preview only; current game ZIPs are unchanged. No Level 3B, no mandatory near-even result, no early Goodhart reveal or Design Lab handoff.",
       "audio": "No audio supplied; silent"
     },
+    "regressionEvidence": {
+      "before": {
+        "viewport": "1440x900",
+        "filmFrame": "1440x810 at y=45",
+        "handoffFrame": "1440x900 at y=0",
+        "headingYBeforeButton": 319.4375,
+        "headingYAfterButton": 278.140625
+      },
+      "after": "Live desktop and portrait: outgoing snapshot covers the entire viewport, button exists from first handoff frame with no independent opacity, heading vertical drift stays below 1px through former delayed-button time."
+    },
     "visualReview": [
-      "Desktop: the office remains visible beside a single clear task hierarchy and brick-red action.",
-      "Portrait: instructions retain readable text and use the viewport instead of shrinking into a letterboxed film.",
-      "The destination, connection to gameplay and reflection/read/vote task are all stated; no Goodhart spoiler or purposeless short rule."
+      "Desktop reflection is centred over the office with no speaker label.",
+      "Desktop and portrait handoffs retain only the destination, title and opening-style button."
     ],
     "fullGamePathsRepeated": false,
     "designLabConnected": false

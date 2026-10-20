@@ -12,8 +12,6 @@
 |回到办公室 · You|Am I improving learning, or just improving the numbers?|
 |Ending 入口标识|NEXT · DESIGN LAB|
 |Ending 入口主标题|Share what real / learning looks like.|
-|连接游戏经历|You’ve seen how numbers shaped Alex’s choices.|
-|下一步具体任务|Now write a short reflection, then read and vote on your classmates’ ideas.|
 |Ending 按钮|ENTER DESIGN LAB →|
 |Design Lab 写作题|How would you know Alex is really learning?|
 |排名后第一问|Did the most flowers mean the deepest thinking?|
@@ -23,7 +21,9 @@
 
 斜线表示标题换行，不显示斜线字符。中文解释不放进动画。
 最新入口页替代了用户认为意义不明的「When the number becomes the goal…」总结页，
-用游戏关联和明确任务说明继续前进的目的；移除原来的短横线装饰。
+保留入口标识、标题与按钮；用户随后删除游戏经历关联及任务步骤两段说明。
+标题和按钮一起淡入，移除原来的短横线装饰。办公室反思句居中显示，
+不显示 You，缓慢淡入并随办公室压暗淡出。
 
 Ending 不显示 Goodhart 名称或上述理论引文，不提前增加一次写作疑问。
 这个疑问直接作为 Design Lab 的写作题，替代旧题
