@@ -1,0 +1,5 @@
+export function Arrow() { return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" /></svg>; }
+export function Flower() { return <svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 17C12 1 3 15 17 24 1 36 15 45 24 31c12 16 21 2 7-7 16-12 2-21-7-7Z" fill="currentColor" opacity=".18"/><path d="M24 17C12 1 3 15 17 24 1 36 15 45 24 31c12 16 21 2 7-7 16-12 2-21-7-7Z"/><circle cx="24" cy="24" r="6" fill="currentColor"/></svg>; }
+export function Bomb() { return <svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="22" cy="29" r="13" fill="currentColor" opacity=".16"/><circle cx="22" cy="29" r="13"/><path d="m29 18 3-5-7-4-3 6m8-3c7-11 13-5 10-1M39 3V0m6 6h3m-4-3 3-3M15 27c0-3 2-5 4-6"/></svg>; }
+export function Check() { return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>; }
+export function Clock() { return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></svg>; }

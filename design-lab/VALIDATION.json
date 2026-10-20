@@ -1,0 +1,51 @@
+{
+  "validatedAtUtc": "2026-10-20T18:20:15.209479+00:00",
+  "branch": "animation/opening-integration",
+  "gameIntegrated": true,
+  "baselineLabCommit": "4c9217e",
+  "archive": "Gaming-the-System-classroom.zip",
+  "zipSha256": "925fa3bd49174c940bce81dfe07ddb6edf99d90f2462d9f843bb6b09b6546d0a",
+  "sourceSha256": "13e2f208b4e6a2498fa815235745a7d37d77c230445f3c29094c4a6f4b310340",
+  "embeddedGameHtmlSha256": "f6dc9ea9fbbfeb4c4ab56ec36b928a1bf0194c1e2a1b619d13d6893f48d73c4a",
+  "classroomChecks": {
+    "passed": 8,
+    "checks": [
+      "The local host and three independent participant browsers join without accounts or names; the anonymous showcase and ranking are announced",
+      "The writing form has the agreed question without a helper line, accepts one reflection per person and starts the anonymous review automatically",
+      "Unanswered review remains in place beyond ten seconds, has no countdown/Next button, and faster voters wait",
+      "Each author sees exactly two other reflections, choices advance automatically, and the frozen ranking counts flowers only",
+      "Static ranking holds twelve seconds, questions cross-fade without background jumps, and Goodhart/quote reveal progressively without quotation marks",
+      "Host shutdown closes the classroom cleanly; state lives only in the running process",
+      "21 simultaneous independent browsers submit and complete 420 others-only card views / 420 votes in 36.4s, receiving the same exact tied ranking",
+      "No browser runtime errors or requests to external services"
+    ],
+    "runtimeErrors": [],
+    "externalRequests": [],
+    "scenario": "all",
+    "platform": "Linux server binary and Chromium; Windows PE cross-build is validated separately"
+  },
+  "endingConnectionChecks": {
+    "passed": 2,
+    "checks": [
+      "Two real Level 3 trials enter the approved fullscreen ending and its button connects to this classroom Lab",
+      "No runtime errors, CSP violations or external service requests"
+    ],
+    "runtimeErrors": [],
+    "cspErrors": [],
+    "externalRequests": []
+  },
+  "actualAudioChecks": {
+    "passed": 6,
+    "checks": [
+      "Packaged original score decodes and produces measurable audio through one context under the real classroom CSP",
+      "All five original score cues produce output; changes retain one shared audio context",
+      "Pause silences music and resume restores it",
+      "Master mute silences both buses and unmutes correctly",
+      "Music/effects sliders independently control actual output, including zero-volume silence",
+      "Browser visibility events silence the hidden page and restore playback on return"
+    ],
+    "runtimeErrors": [],
+    "cspErrors": []
+  },
+  "nativeWindowsExecutionTested": false
+}

@@ -29,6 +29,7 @@ function Preview() {
     return endingInputFromRuns(example.metrics[0],example.weights.map((weights,index)=>({round:index+1,kind:'player',metricIds:example.metrics,weights})));
   },[caseId]);
   const input=gameInput || exampleInput;
+  useEffect(()=>{if(EMBEDDED)parent.postMessage({channel:'gts-audio',playing:playing&&ready,time},'*');},[playing,ready,Math.floor(time*4)]);
   // Decode every image once, including lazy recollection artwork, before autoplay.
   useEffect(()=>{let live=true;const urls=[office,hand,...Object.values(branches).map(branch=>branch.plate)];Promise.all([preloadAdaptationArt(),...urls.map(url=>{const image=new Image();image.src=url;return image.decode();})]).then(()=>{if(live)setReady(true);},()=>{if(live)setError(true);});return()=>{live=false;};},[]);
   useEffect(()=>{
@@ -76,7 +77,7 @@ function Preview() {
   const reset=()=>{seek(0,true);setCompleted(0);done.current=false;};
   return <>
     <div ref={viewport} className="ending-viewport" data-completions={completed} data-case={caseId}><div className="ending-screen" data-layout={sectionAt(time).id==='closing'?'handoff':'film'}>
-      <Composition {...{input,time,reducedMotion,surface}} />
+      <Composition {...{input,time,reducedMotion,surface}} onEnterLab={EMBEDDED?()=>parent.postMessage({channel:CHANNEL,type:'enter-lab',runId:runId.current},'*'):undefined} />
       {!ready&&<div className="ending-loading" role="status">{error?'The animation could not load. Please reopen the preview.':'Preparing the ending…'}</div>}
     </div></div>
     {!EMBEDDED && <details className="ending-review-controls"><summary>预览控制</summary><div>

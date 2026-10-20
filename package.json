@@ -20,7 +20,10 @@
     "test:release": "python3 tests/release.py",
     "preview": "vite preview --host 0.0.0.0",
     "preview:level2:web": "node scripts/level2-web-preview.mjs",
-    "cinematic:prepare": "node scripts/level1-film.mjs && node scripts/level2-film.mjs && node scripts/level3-film.mjs && node scripts/ending-film.mjs"
+    "cinematic:prepare": "node scripts/level1-film.mjs && node scripts/level2-film.mjs && node scripts/level3-film.mjs && node scripts/ending-film.mjs",
+    "lab:dev": "vite --config design-lab/vite.config.ts",
+    "lab:check": "tsc --project design-lab/tsconfig.json --noEmit",
+    "lab:build": "npm run lab:check && vite build --config design-lab/vite.config.ts"
   },
   "dependencies": {
     "framer-motion": "12.43.0",

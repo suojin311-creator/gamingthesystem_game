@@ -1,3 +1,17 @@
+# Current integrated audio and classroom review
+
+- User authorized GitHub backup, the approved reflection emphasis, all agreed
+  music/feedback, and a review ZIP. Baseline: archive/full-game-before-audio-20261020.
+- Work on animation/opening-integration. Preserve stable aliases and independent
+  Lab/ending branches. The prior standalone-only restrictions are superseded for
+  this merge. Current design is docs/AUDIO_DESIGN.md.
+- Level films share music; don't add per-shot effects. Existing timings and
+  dialogue stay unchanged. All output goes through src/audio/director.ts.
+- Serve the current game at /game and Lab at / in the local classroom executable.
+  Package regular HTML archives together, then build Lab, embed gzip game, verify
+  Linux service/browser and cross-build play/Gaming-the-System-classroom.zip.
+- Never claim native Windows execution on Linux. No hosting/trials required.
+
 # Working on this game
 
 ## Current approved 100-metric integration
@@ -54,7 +68,7 @@
   dark office; the user rejected the olive full-screen treatment. Use the opening
   office's Georgia/warm-white type and directly import its brick-red opening-action
   button style. No oversized uppercase title or glowing gold button.
-  The ENTER DESIGN LAB button is display-only and must not launch Design Lab yet.
+  The user now authorized the game/Lab merge: embedded ending sends enter-lab to its validated parent, which opens the local classroom Lab; independent film previews stay display-only.
 - Pinned ending delivery: `e467998dfb07abc028e4e0fcb5567006e4eaa07d`.
   Keep it read-only and reuse only the approved 3A task renderer, never 3B.
   Game film: `scripts/ending-film.mjs`, prepared with the pinned ending and 3A

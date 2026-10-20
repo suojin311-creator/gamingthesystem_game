@@ -26,7 +26,10 @@ function Film({ config }) {
       complete.current = true;
       setFinished(true);
     };
+    const audioState=()=>window.parent.postMessage({channel:'gts-audio',playing:instance?.isPlaying()??false},'*');
+    instance?.addEventListener('play',audioState);instance?.addEventListener('pause',audioState);
     instance?.addEventListener('ended', end);
+    audioState();
     const visibility = () => {
       if (document.hidden) {
         resumeOnReturn ||= instance?.isPlaying() ?? false;
@@ -38,7 +41,7 @@ function Film({ config }) {
     };
     document.addEventListener('visibilitychange', visibility);
     if (document.hidden) visibility();
-    return () => { instance?.removeEventListener('ended', end); document.removeEventListener('visibilitychange', visibility); };
+    return () => { instance?.removeEventListener('ended', end);instance?.removeEventListener('play',audioState);instance?.removeEventListener('pause',audioState); document.removeEventListener('visibilitychange', visibility); };
   }, []);
   useEffect(() => {
     if (!finished) return;

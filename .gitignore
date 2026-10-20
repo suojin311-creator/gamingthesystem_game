@@ -6,3 +6,7 @@ dist-level3/
 test-results/
 .DS_Store
 *.local
+
+design-lab/build/
+design-lab/web/
+__pycache__/

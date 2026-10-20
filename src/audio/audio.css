@@ -1,0 +1,6 @@
+.gts-audio-controls{position:fixed;z-index:10020;right:14px;bottom:14px;font:13px/1.4 'Trebuchet MS',Arial,sans-serif;color:#fff5e3}
+.gts-audio-controls button{font:inherit;cursor:pointer;color:inherit;border:1px solid #d8c6a44d;background:#1c241feb;border-radius:5px;padding:8px 12px}
+.gts-audio-controls .gts-audio-toggle{display:flex;gap:7px;align-items:center;box-shadow:0 2px 14px #0002}
+.gts-audio-settings{position:absolute;right:0;bottom:46px;width:210px;padding:16px;border:1px solid #d8c6a44d;border-radius:7px;background:#1c241ff7;box-shadow:0 6px 28px #0003}
+.gts-audio-settings label{display:grid;gap:5px;margin-top:14px}.gts-audio-settings input{width:100%;accent-color:#e4aa8f}
+.gts-audio-controls button:focus-visible,.gts-audio-controls input:focus-visible{outline:2px solid #ffe2a3;outline-offset:3px}

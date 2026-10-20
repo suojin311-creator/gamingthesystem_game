@@ -8,5 +8,5 @@ import { levelThreeFilmPlugin } from './scripts/level3-film.mjs';
 export default defineConfig({
   base: './',
   plugins: [levelOneFilmPlugin(), levelTwoFilmPlugin(), levelThreeFilmPlugin(), endingFilmPlugin(), viteSingleFile()],
-  build: { target: 'es2022' },
+  build: { target: 'es2022', reportCompressedSize: false },
 });

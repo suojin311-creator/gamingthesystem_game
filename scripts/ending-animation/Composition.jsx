@@ -7,7 +7,7 @@ import { SoloMemory } from './Memories';
 import { HANDOFF_COPY, ease, lineAt, officeSeconds, sectionAt } from './timeline.mjs';
 import './film.css';
 
-export default function Composition({ input, time, reducedMotion, surface }) {
+export default function Composition({ input, time, reducedMotion, surface, onEnterLab }) {
   const section = sectionAt(time), local = time - section.start, line = lineAt(time);
   const memoryLevel = Number(section.id.slice(-1));
   const reflection = line?.id === 'reflection';
@@ -23,7 +23,7 @@ export default function Composition({ input, time, reducedMotion, surface }) {
       <div className="ending-handoff-copy">
         <p className="ending-destination">{HANDOFF_COPY.destination}</p>
         <h1 id="ending-next-title">{HANDOFF_COPY.title.map(text=><span key={text}>{text}</span>)}</h1>
-        <div className="ending-handoff-action opening-scene"><button type="button" className="opening-action ending-design-button" aria-disabled="true">ENTER DESIGN LAB <span aria-hidden="true">→</span></button></div>
+        <div className="ending-handoff-action opening-scene"><button type="button" className="opening-action ending-design-button" aria-disabled={!onEnterLab} onClick={onEnterLab}>ENTER DESIGN LAB <span aria-hidden="true">→</span></button></div>
       </div>
     </section>}
     <div className="end-film-vignette" aria-hidden="true" />

@@ -1,11 +1,13 @@
 import FullGame from './FullGame';
+import GameAudio from './audio/GameAudio';
+import SoundReview from './audio/SoundReview';
 import LevelOneExperience from './levels/level1/LevelOneExperience';
 import LevelTwo from './levels/level2/LevelTwo';
 import LevelThree from './levels/level3/LevelThree';
 import { PREVIEW_PLAYER_NAME } from './shared/utils/playerName';
 
 // All previews use the same level components. Only their entry/continuation differs.
-export default function App() {
+function GameEntry() {
   if (import.meta.env.MODE === 'level1') {
     return <LevelOneExperience playerName={PREVIEW_PLAYER_NAME} />;
   }
@@ -19,3 +21,5 @@ export default function App() {
   if (direct === '3') return <LevelThree playerName={PREVIEW_PLAYER_NAME} />;
   return <FullGame />;
 }
+
+export default function App(){if(new URLSearchParams(location.search).has('soundcheck'))return <SoundReview/>;return <><GameEntry/><GameAudio/></>;}

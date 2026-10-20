@@ -14,6 +14,7 @@ function Film({ config }) {
   const [elapsed,setElapsed] = useState(0), [playing,setPlaying] = useState(true), [finished,setFinished] = useState(false);
   const surface=useRef(null), clock=useRef(0), changing=useRef(false), transition=useRef(null), speed=useRef(1), complete=useRef(false);
   const key=useRef(poseKey(sampleAt(pacing,0),participationBeat));
+  useEffect(()=>{window.parent.postMessage({channel:'gts-audio',playing:playing&&!finished,time:elapsed},'*');},[playing,finished,Math.floor(elapsed*4)]);
   const advance = next => {
     const nextKey=poseKey(sampleAt(pacing,next),participationBeat);
     const commit=()=>{clock.current=next;key.current=nextKey;setElapsed(next);};

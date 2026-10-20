@@ -1,3 +1,18 @@
+# Latest integrated sound / classroom preview
+
+[Download Gaming-the-System-classroom.zip](Gaming-the-System-classroom.zip?raw=true).
+Extract it and run **Start-Gaming-the-System.exe** (Windows x64). The host page
+has **Open the game** and **Preview music & sounds**. The ending connects to this
+classroom's Design Lab. No paid hosting or external runtime is required.
+
+Three level films share one score; critical interactions have concise feedback.
+The Sound panel independently controls music/effects and master mute. The regular
+six HTML archives below remain available for offline individual play. They use
+the same approved ending; classroom sharing uses the executable package above.
+
+The approved pre-audio ending/game baseline is preserved on GitHub at
+`archive/full-game-approved-ending-before-audio-20261020` (`04445a5`).
+
 # 最新试玩下载 / Latest downloads
 
 ## 100 metric 新剪辑：独立动画预览

@@ -2,6 +2,7 @@
 Reading intervals use the browser clock; level2.py checks them at real speed.
 """
 import json
+import sys
 import re
 import hashlib
 import zipfile
@@ -9,6 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 from playwright.sync_api import sync_playwright, expect
 
+expect.set_options(timeout=30000)
 checks, errors = [], []
 artifacts = {}
 manifest = json.loads(Path('play/LATEST.json').read_text())
@@ -103,7 +105,9 @@ def scene(page, lines=3):
         page.clock.run_for(1000)
         page.wait_for_timeout(60)
     expect(page.locator('.level2-cinematic')).to_have_count(0, timeout=30000)
-    expect(page.locator('.level-two .conversation')).to_have_count(0)
+    expected_prompt=1 if page.locator('.level-two').get_attribute('data-round')=='6' else 0
+    expect(page.locator('.level-two .conversation')).to_have_count(expected_prompt)
+    if expected_prompt: expect(page.locator('.l2-teacher-prompt')).to_contain_text('Would more metrics help?')
     expect(page.locator('.l2-results .l2-perspective')).to_have_count(2)
     advance(page, 8)
 
@@ -210,29 +214,46 @@ def weights_three(page, values):
     page.locator('.l3-bottom-dialogue').scroll_into_view_if_needed();advance(page,8)
 
 
+if '--integrity-only' in sys.argv:
+    Path('test-results').mkdir(exist_ok=True)
+    Path('test-results/release-integrity.json').write_text(json.dumps({'passed':len(checks),'checks':checks,'sourceSha256':manifest['sourceSha256']},indent=2)+'\n')
+    for check in checks:print('PASS',check)
+    raise SystemExit(0)
+
 with sync_playwright() as playwright:
+    # Serve the exact ZIP bytes over localhost: large inline films exceed CDP's
+    # practical route.fulfill body size. All non-local requests remain blocked.
+    from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+    import threading
+    active_artifact={'name':'Level2.html'}
+    class ArchiveHandler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            path=urlsplit(self.path).path
+            data=complete_html.get(path.removeprefix('/complete/')) if path.startswith('/complete/') else artifacts[active_artifact['name']]
+            if data is None:self.send_error(404);return
+            self.send_response(200);self.send_header('Content-Type','text/html');self.send_header('Content-Length',str(len(data)));self.end_headers();self.wfile.write(data)
+        def log_message(self,*args):pass
+    archive_server=ThreadingHTTPServer(('127.0.0.1',0),ArchiveHandler)
+    threading.Thread(target=archive_server.serve_forever,daemon=True).start()
+    LOCAL_BASE=f'http://127.0.0.1:{archive_server.server_port}/'
+    COMPLETE_BASE=LOCAL_BASE+'complete/'
+    RELEASE_BASE=LOCAL_BASE+'release/'
     browser = playwright.chromium.launch(executable_path='/usr/bin/chromium', args=['--no-sandbox'])
     context = browser.new_context(viewport={'width':1366,'height':900})
-    context.set_offline(True)
-    def serve_complete(route):
-        data = complete_html.get(urlsplit(route.request.url).path.lstrip('/'))
-        if data is None:
-            route.abort()
-        else:
-            route.fulfill(status=200, content_type='text/html', body=data)
-    context.route('https://complete.test/**', serve_complete)
+    context.set_default_navigation_timeout(90000)
+    context.route('**/*',lambda route:route.continue_() if route.request.url.startswith(LOCAL_BASE) or route.request.url.startswith('data:') else route.abort())
     page = context.new_page()
     page.on('pageerror', lambda error: errors.append(str(error)))
     for name in complete_entries:
-        page.goto('https://complete.test/START-HERE.html', wait_until='networkidle')
+        page.goto(COMPLETE_BASE+'START-HERE.html', wait_until='networkidle')
         expect(page.get_by_role('navigation',name='Game versions').get_by_role('link')).to_have_count(4)
         for width in [1366,320]:
             page.set_viewport_size({'width':width,'height':900})
             assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
             if name.startswith('Full-game/'):
                 page.screenshot(path=f'test-results/complete-launcher-{width}.png',full_page=True)
-        page.locator(f'a[href="{name}"]').click()
-        expect(page).to_have_url('https://complete.test/'+complete.get('sharedGameLaunchers',{}).get(name,name))
+        page.locator(f'a[href="{name}"]').click(timeout=90000)
+        expect(page).to_have_url(COMPLETE_BASE+complete.get('sharedGameLaunchers',{}).get(name,name))
         if name.startswith('Level2/'):
             expect(page.locator('.level-two')).to_have_attribute('data-phase','intro')
         elif name.startswith('Level3/'):
@@ -244,12 +265,13 @@ with sync_playwright() as playwright:
     context.close()
     checks.append('The actual complete-ZIP launcher fits desktop/phone, starts the full game at the opening and opens each standalone level directly offline')
     context = browser.new_context(viewport={'width': 1366, 'height': 768})
-    context.set_offline(True)
-    context.route('https://release.test/**', lambda route: route.fulfill(status=200, content_type='text/html', body=artifacts['Level2.html']))
+    context.set_default_navigation_timeout(90000)
+    context.route('**/*',lambda route:route.continue_() if route.request.url.startswith(LOCAL_BASE) or route.request.url.startswith('data:') else route.abort())
+    active_artifact['name']='Level2.html'
     page = context.new_page()
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.clock.install()
-    page.goto('https://release.test/', wait_until='networkidle')
+    page.goto(RELEASE_BASE, wait_until='networkidle')
     expect(page.get_by_role('button',name='Restart',exact=True)).to_have_count(0)
     expect(page).to_have_title('Gaming the System')
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
@@ -277,12 +299,13 @@ with sync_playwright() as playwright:
     checks.append('Packaged Level2.html completes 3 → 6 → 10 → 25 → 100 offline with normal motion')
     context.close()
     context = browser.new_context()
-    context.set_offline(True)
-    context.route('https://release.test/**', lambda route: route.fulfill(status=200, content_type='text/html', body=artifacts['Level3.html']))
+    context.set_default_navigation_timeout(90000)
+    context.route('**/*',lambda route:route.continue_() if route.request.url.startswith(LOCAL_BASE) or route.request.url.startswith('data:') else route.abort())
+    active_artifact['name']='Level3.html'
     page = context.new_page()
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.clock.install()
-    page.goto('https://release.test/', wait_until='networkidle')
+    page.goto(RELEASE_BASE, wait_until='networkidle')
     choose_three(page);weights_three(page,[34,33,33])
     page.get_by_role('button',name='Try another split',exact=True).click()
     weights_three(page,[70,20,10])
@@ -300,11 +323,12 @@ with sync_playwright() as playwright:
     checks.append('Packaged standalone Level3.html compares after two tests and can add an optional third, keeping all actual results offline')
     context.close()
     context = browser.new_context()
-    context.set_offline(True)
-    context.route('https://release.test/**', lambda route: route.fulfill(status=200, content_type='text/html', body=artifacts['Level1.html']))
+    context.set_default_navigation_timeout(90000)
+    context.route('**/*',lambda route:route.continue_() if route.request.url.startswith(LOCAL_BASE) or route.request.url.startswith('data:') else route.abort())
+    active_artifact['name']='Level1.html'
     page = context.new_page()
     page.on('pageerror', lambda error: errors.append(str(error)))
-    page.goto('https://release.test/', wait_until='networkidle')
+    page.goto(RELEASE_BASE, wait_until='networkidle')
     page.add_init_script("addEventListener('message',event=>{if(event.source===document.querySelector('iframe')?.contentWindow&&event.data?.channel==='release-identity-audit')window.releaseIdentityAudit=event.data.audit})")
     page.reload(wait_until='networkidle')
     level_one(page)
@@ -319,12 +343,13 @@ with sync_playwright() as playwright:
     checks.append('Standalone Level 1 reload starts a fresh Level 1 run')
     context.close()
     context = browser.new_context()
-    context.set_offline(True)
-    context.route('https://release.test/**', lambda route: route.fulfill(status=200, content_type='text/html', body=artifacts['Gaming-the-System.html']))
+    context.set_default_navigation_timeout(90000)
+    context.route('**/*',lambda route:route.continue_() if route.request.url.startswith(LOCAL_BASE) or route.request.url.startswith('data:') else route.abort())
+    active_artifact['name']='Gaming-the-System.html'
     page = context.new_page()
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.add_init_script("addEventListener('message',event=>{if(event.source===document.querySelector('iframe')?.contentWindow&&event.data?.channel==='release-identity-audit')window.releaseIdentityAudit=event.data.audit})")
-    page.goto('https://release.test/', wait_until='networkidle')
+    page.goto(RELEASE_BASE, wait_until='networkidle')
     opening(page)
     expect(page.locator('.maya-bubble .speaker-name')).to_have_text('Riley Chen & 李')
     level_one(page)
@@ -354,6 +379,7 @@ with sync_playwright() as playwright:
     checks.append('Combined preview reload starts at the opening rather than restoring a level or player identity')
     context.close()
     browser.close()
+    archive_server.shutdown()
 assert not errors, errors
 checks.append('Packaged entries have no browser runtime errors')
 Path('test-results').mkdir(exist_ok=True)

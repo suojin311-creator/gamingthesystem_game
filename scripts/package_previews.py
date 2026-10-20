@@ -29,7 +29,7 @@ def digest(data):
 # Load all builds before replacing any published entry.
 builds = {path: (ROOT / path).read_bytes() for _, _, path, _ in ENTRIES}
 source_paths = sorted(path for path in (ROOT / 'src').rglob('*')
-                      if path.is_file() and path.suffix in {'.ts', '.tsx', '.js', '.css', '.png'})
+                      if path.is_file() and path.suffix in {'.ts', '.tsx', '.js', '.css', '.png', '.ogg', '.json'})
 source_paths += [ROOT / name for name in ['index.html', 'vite.config.ts', 'package.json', 'package-lock.json']]
 source_paths += [ROOT / 'scripts/level1-film.mjs']
 source_paths += [ROOT / 'scripts/level2-film.mjs', ROOT / 'scripts/cinematic-reading.mjs', ROOT / 'scripts/metric100-preview/pacing.mjs']

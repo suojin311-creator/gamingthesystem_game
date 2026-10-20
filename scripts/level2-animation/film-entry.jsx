@@ -46,6 +46,7 @@ function Film({ config }) {
   const [playing, setPlaying] = useState(true);
   const [handoff, setHandoff] = useState('idle');
   const [finished, setFinished] = useState(false);
+  useEffect(()=>{window.parent.postMessage({channel:'gts-audio',playing:playing&&!finished,time:elapsed},'*');},[playing,finished,Math.floor(elapsed*4)]);
   const clock = useRef(0);
   const previousTime = useRef(performance.now());
   const phase = useRef('idle');
