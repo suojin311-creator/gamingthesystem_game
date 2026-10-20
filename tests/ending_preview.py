@@ -77,8 +77,8 @@ with sync_playwright() as p:
  assert final['font']>40 and final['buttonTop']>final['quoteBottom'] and final['title']<final['lines'][0]['y'],final
  assert final['disabled']=='true'
  previous=page.url
- page.get_by_role('button',name='GO TO DESIGN LAB').click(force=True)
- assert page.url==previous and page.locator('.end-theory h1').inner_text()=='GOODHART’S LAW'
+ page.get_by_role('button',name='Go to Design Lab').click(force=True)
+ assert page.url==previous and page.locator('.end-theory h1').inner_text()=='Goodhart’s Law'
  checks.append('Theory quote uses two explicit lines split at the comma, larger than 40px at 1280px; distinct button sits below and does not navigate')
  # Mobile landscape and portrait: the entire 16:9 composition is visible.
  for width,height in [(1920,1080),(844,390),(390,844),(320,568)]:

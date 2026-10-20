@@ -18,6 +18,6 @@ export default function Composition({ input, time, reducedMotion, surface }) {
       <p className="ending-speaker">{line.speaker}</p><p role="status">{line.text}</p>
     </div>}
     <div className="end-film-vignette" aria-hidden="true" />
-    {time >= BUTTON_AT && <button type="button" className="ending-design-button" aria-disabled="true" style={{ opacity: ease(time, BUTTON_AT, .9), transform: `translateY(${(1 - ease(time, BUTTON_AT, .9)) * 10}px)` }}>GO TO DESIGN LAB <span aria-hidden="true">→</span></button>}
+    {time >= BUTTON_AT && <button type="button" className="ending-design-button" aria-disabled="true" style={{ opacity: ease(time, BUTTON_AT, .9), transform: `translateY(${(1 - ease(time, BUTTON_AT, .9)) * 10}px)` }}>Go to Design Lab <span aria-hidden="true">→</span></button>}
   </main>;
 }

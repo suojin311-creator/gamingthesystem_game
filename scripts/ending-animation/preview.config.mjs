@@ -18,6 +18,8 @@ export default {
       code=replace(code,"import { Img } from 'remotion';",`import { Img } from ${JSON.stringify(here+'Still.jsx')};`);
       code=replace(code,"import { RecapMemories } from './EndingMemories';",'');
       code=replace(code,'const recap = seconds >= 48.8;','const recap = false;');
+      code=replace(code,'opacity: .1 + darkness * .84','opacity: .75 + darkness * .25');
+      code=replace(code,'GOODHART’S LAW','Goodhart’s Law');
       // No invented all-green dashboard for a player who may have low effort.
       const start=code.indexOf('        <svg className="end-office-plane"'),end=code.indexOf('        <EnvironmentMotion',start);
       if(start<0||end<0)throw new Error('Review ending office dashboard.');
