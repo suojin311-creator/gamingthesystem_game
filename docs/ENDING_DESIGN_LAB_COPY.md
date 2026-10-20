@@ -1,7 +1,9 @@
 # 已确认的 Ending → Design Lab 文案
 
-本表记录用户确认的跨阶段文案。本次只实现 ending；Design Lab 的写作题、
-第一反问与最终引文尚待在独立的 `feature/design-lab-local` 分支更新。
+本表记录用户确认的跨阶段文案。Ending 已接入游戏；Design Lab 的写作题、
+第一反问与最终引文已在独立的 `feature/design-lab-local` 分支更新。
+该分支同时删除 Join the audience、两问各展示 4 秒后自动揭示理论，
+并加入跟随高光滚动排名的音效。
 
 |位置|确认英文|
 |---|---|
@@ -35,5 +37,5 @@ Design Lab 的匿名展示、投票和最终排名事前说明保留；玩家经
 
 Design Lab 当前实现位于 `feature/design-lab-local` 的
 `design-lab/src/App.tsx`；核对版本为
-`0db8d3d1941d701ae6a3235649f0f83ea028011c`。它仍是独立的本地课堂活动，
-尚未与 ending 按钮连接；此次动画 ZIP 里的按钮保持展示入口。
+`0028f83`。它仍是独立的本地课堂活动，
+尚未与 ending 按钮连接；游戏和动画 ZIP 里的按钮保持展示入口。
