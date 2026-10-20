@@ -94,3 +94,7 @@ python3 tests/ending_preview.py
 `python3 tests/ending_integration_release.py` 验证实际包、两次非平均试验、
 默认 comparison → 全视口 ending、真实任务、无审阅控件及最终停留。
 Design Lab 仍在 `feature/design-lab-local` 单独维护，未连接课堂地址。
+
+## Reflection emphasis preview
+
+On `preview/ending-reflection-emphasis` only: the central question uses two lines, warm white body text, 16% larger pale-gold learning and coral numbers, and a soft darkened office background. Existing reflection fade and the Design Lab handoff stay intact. The full game branch is unchanged. Built only the independent Ending-animation-preview.zip; `python3 tests/ending_preview.py --closing-only` passed seven checks, including keyword sizes/colors and transition continuity.

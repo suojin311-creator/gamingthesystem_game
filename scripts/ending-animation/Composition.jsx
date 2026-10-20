@@ -15,8 +15,9 @@ export default function Composition({ input, time, reducedMotion, surface }) {
     {['level1', 'level2', 'level3'].includes(section.id) && <SoloMemory {...{ input, reducedMotion, time: local }} level={memoryLevel} />}
     {(section.id === 'opening' || time >= 10.1) && <OfficeReveal input={input} reducedMotion={reducedMotion} seconds={officeSeconds(time)} />}
     {time < .45 && <div className="ending-entry-shade" style={{opacity:1-ease(time,0,.45)}} aria-hidden="true" />}
-    {line && <div className={`ending-spoken${reflection ? ' ending-reflection' : ''}`} style={{ color: SPEAKER_COLORS[line.role], textShadow: CAPTION_SHADOW, opacity: ease(time, line.start, reflection ? .6 : .16) * (reflection ? 1-ease(time,14.5,2) : 1) }}>
-      {!reflection && <p className="ending-speaker">{line.speaker}</p>}<p role="status">{line.text}</p>
+    {reflection && <div className="ending-reflection-shade" aria-hidden="true" style={{opacity:ease(time,10.1,.6)*(1-ease(time,14.5,2))}} />}
+    {line && <div className={`ending-spoken${reflection ? ' ending-reflection' : ''}`} style={{ color: reflection ? '#fff5e3' : SPEAKER_COLORS[line.role], textShadow: CAPTION_SHADOW, opacity: ease(time, line.start, reflection ? .6 : .16) * (reflection ? 1-ease(time,14.5,2) : 1) }}>
+      {!reflection && <p className="ending-speaker">{line.speaker}</p>}<p role="status">{reflection ? <><span className="ending-question-line">Am I improving <strong className="ending-learning">learning</strong>,</span><span className="ending-question-line">or just improving the <strong className="ending-numbers">numbers</strong>?</span></> : line.text}</p>
     </div>}
     {section.id === 'closing' && <section className="ending-handoff" aria-labelledby="ending-next-title" style={{opacity:ease(time,16.5,.85)}}>
       <div className="ending-handoff-copy">

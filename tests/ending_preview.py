@@ -115,11 +115,14 @@ with sync_playwright() as p:
  page.set_viewport_size({'width':1280,'height':720})
  seek(11)
  reflection=page.locator('.ending-reflection').evaluate("""e=>{const r=e.getBoundingClientRect(),screen=e.closest('.ending-screen').getBoundingClientRect();return {center:r.y+r.height/2,expected:screen.y+screen.height/2,opacity:Number(getComputedStyle(e).opacity),labels:e.querySelectorAll('.ending-speaker').length,color:getComputedStyle(e).color};}""")
- assert abs(reflection['center']-reflection['expected'])<1 and reflection['labels']==0 and reflection['color']=='rgb(255, 226, 163)',reflection
+ assert abs(reflection['center']-reflection['expected'])<1 and reflection['labels']==0 and reflection['color']=='rgb(255, 245, 227)',reflection
  seek(10.2);early=page.locator('.ending-reflection').evaluate('e=>Number(getComputedStyle(e).opacity)')
  seek(15.5);late=page.locator('.ending-reflection').evaluate('e=>Number(getComputedStyle(e).opacity)')
  assert 0<early<.2 and 0<late<1, (early,late)
- seek(11.5);page.screenshot(path=str(OUT/'ending-centered-reflection.png'))
+ seek(11.5)
+ emphasis=page.locator('.ending-reflection').evaluate("""e=>{const p=e.querySelector('p'),a=e.querySelector('.ending-learning'),b=e.querySelector('.ending-numbers');return {body:parseFloat(getComputedStyle(p).fontSize),learning:parseFloat(getComputedStyle(a).fontSize),numbers:parseFloat(getComputedStyle(b).fontSize),colors:[getComputedStyle(a).color,getComputedStyle(b).color],lines:e.querySelectorAll('.ending-question-line').length};}""")
+ assert emphasis['learning']>emphasis['body'] and emphasis['numbers']>emphasis['body'] and emphasis['lines']==2 and emphasis['colors']==['rgb(255, 226, 163)','rgb(239, 169, 141)'],emphasis
+ page.screenshot(path=str(OUT/'ending-centered-reflection.png'))
  checks.append('Reflection is centred without You, fades in gently and fades out during the office transition')
  for width,height in [(1440,900),(390,844)]:
   page.set_viewport_size({'width':width,'height':height});seek(16.4)
