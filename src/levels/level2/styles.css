@@ -314,3 +314,11 @@ html:has(.l2-growth-sequence), .level-two:has(.l2-growth-sequence) { overflow-an
   .level-two .l2-results-handoff { display: none; }
   .level-two .l2-results .l2-students.l2-has-observation::after { animation: none; opacity: 1; box-shadow: none; }
 }
+
+/* The six-metric result leaves one teacher question before the next test. */
+.level-two .l2-results .l2-teacher-prompt { grid-column: 1 / -1; grid-row: 4; min-height: 0; padding: 4px 0; }
+.level-two .l2-results.l2-more-metrics-prompt .action-row { grid-row: 5; }
+@media (max-width: 600px) {
+  .level-two .l2-results .l2-teacher-prompt { grid-row: 5; }
+  .level-two .l2-results.l2-more-metrics-prompt .action-row { grid-row: 6; }
+}
