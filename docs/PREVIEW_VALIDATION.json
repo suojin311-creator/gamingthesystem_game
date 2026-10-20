@@ -320,5 +320,58 @@
     },
     "scope": "Only Level 3A weighted-task scenes; comparison/theory remain their existing game placeholders. No Level 3B.",
     "audio": "No source audio assets; silent"
+  },
+  "endingPreview": {
+    "validatedAtUtc": "2026-10-20T12:35:44.289093+00:00",
+    "scope": "Independent ending animation screening; six game ZIPs and default game adapters unchanged.",
+    "sourceBaseCommit": "09b2b9615d1a8b8eb328a8e4ec0fc5cb6912f278",
+    "buildCommand": "ENDING_ANIMATION_SOURCE=<pinned-ending> LEVEL3_ANIMATION_SOURCE=<pinned-3a> npm run package:ending-preview",
+    "buildExitCode": 0,
+    "typeCheckExitCode": 0,
+    "testCommand": "python3 tests/ending_preview.py",
+    "passed": 8,
+    "checks": [
+      "changed: actual final-trial states only, universal opening, matching You/Alex positions and colours; no fabricated comparison/all-green dashboard or post-theory shots",
+      "unchanged: actual final-trial states only, universal opening, matching You/Alex positions and colours; no fabricated comparison/all-green dashboard or post-theory shots",
+      "three: actual final-trial states only, universal opening, matching You/Alex positions and colours; no fabricated comparison/all-green dashboard or post-theory shots",
+      "Theory quote uses two explicit lines split at the comma, larger than 40px at 1280px; distinct button sits below and does not navigate",
+      "Full-viewport presentation retains the entire composition and separated quote/button at desktop, mobile landscape and portrait sizes",
+      "Live joins cross-dissolve; playback ends once and holds the theory/button rather than entering another scene",
+      "Replay resets the opening and hidden tabs hold the reading clock",
+      "ZIP integrity/hashes pass; no runtime errors or external asset requests"
+    ],
+    "runtimeErrors": [],
+    "externalRequests": [],
+    "zipSha256": "a6d75c34c35e846bf831b9698d2da67b4d261a205b9d3d7cc3e69774701d503c",
+    "artifacts": {
+      "sources": [
+        {
+          "source": "ENDING_ANIMATION_SOURCE",
+          "commit": "e467998dfb07abc028e4e0fcb5567006e4eaa07d"
+        },
+        {
+          "source": "LEVEL3_ANIMATION_SOURCE",
+          "commit": "ba9f81ee619c14b3342104228cdd2a5cc2bc2b3b"
+        }
+      ],
+      "sourceSha256": "d87bafb41680d48a55c6fef42338a5cac2ef65bc52361618c1aa9d415e84d951",
+      "htmlSha256": "93bc47eb8b51d4ec340b2e5f8f6fb0d7316d7213d595ab2b282733463a3a5076",
+      "archive": "Ending-animation-preview.zip",
+      "zipSha256": "a6d75c34c35e846bf831b9698d2da67b4d261a205b9d3d7cc3e69774701d503c",
+      "fileSha256": {
+        "START-HERE.html": "6ae54d6977960ae6c04881719b134e4ae8d62ded478f3bda5ec885b9d2a746f9",
+        "Ending-animation.html": "93bc47eb8b51d4ec340b2e5f8f6fb0d7316d7213d595ab2b282733463a3a5076",
+        "START-HERE.txt": "dfe1a7677e20597ff3a50b569aaa8d3a0876060db94ff0a1cf3f905c87432aaf"
+      },
+      "scope": "Independent ending preview only; current game ZIPs are unchanged. No Level 3B, no mandatory near-even result, no Design Lab handoff.",
+      "audio": "No audio supplied; silent"
+    },
+    "visualReview": [
+      "Opening: correct final-task label, complete task prop and centred gold You caption.",
+      "Level 2 memory: complete readable notebook heading and all six labels.",
+      "Final theory: comma split, enlarged two-line quote, prominent gold button below without overlap."
+    ],
+    "fullGamePathsRepeated": false,
+    "designLabConnected": false
   }
 }

@@ -1,5 +1,20 @@
 # Working on this game
 
+## Current ending preview
+
+- The user approved a universal opening with no assumed near-even trial; use the
+  three lines and real last-trial shots in `docs/ENDING_ANIMATION_PREVIEW.md`.
+- This is an independent animation preview, not yet a replacement for the game
+  theory/comparison placeholders. Keep the six current game ZIPs unchanged.
+- Entry fills the browser viewport, preserving the full composition. You is warm
+  gold; Alex is light blue; labels are centred immediately above transparent captions.
+- Stop at the enlarged two-line Goodhart quote, split after the comma. Remove
+  later recap/handoff scenes. The user's latest request adds a prominent gold
+  Design Lab button here; it is display-only and must not launch Design Lab yet.
+- Pinned ending delivery: `e467998dfb07abc028e4e0fcb5567006e4eaa07d`.
+  Keep it read-only and reuse only the approved 3A task renderer, never 3B.
+  Build with `npm run package:ending-preview`; deliver `play/Ending-animation-preview.zip`.
+
 ## Animation review delivery
 
 - The user reverted to ZIP delivery because the hosting setup requested a trial.

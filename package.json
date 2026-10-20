@@ -15,6 +15,7 @@
     "build:level3": "npm run cinematic:prepare && tsc --noEmit && vite build --mode level3 --outDir dist-level3",
     "build:previews": "npm run cinematic:prepare && npm run check && vite build && vite build --mode level1 --outDir dist-level1 && vite build --mode level2 --outDir dist-level2 && vite build --mode level3 --outDir dist-level3",
     "package:previews": "npm run build:previews && python3 scripts/package_previews.py",
+    "package:ending-preview": "node scripts/ending-preview.mjs",
     "test:integration": "python3 tests/level3_integration.py",
     "test:release": "python3 tests/release.py",
     "preview": "vite preview --host 0.0.0.0",

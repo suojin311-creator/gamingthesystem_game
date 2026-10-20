@@ -10,6 +10,11 @@ the observation and two perspective cards without review chat. Level 3A now
 presents the three game-supplied task/effort states, with no Level 3B import.
 Comparison/theory retain the existing placeholders. See docs/LEVEL3A_ANIMATION.md.
 
+The separately reviewed ending is built through `scripts/ending-animation/`;
+its actual-history input adapter lives in `ending/input.ts`. It is not yet wired
+into the default game. See `docs/ENDING_ANIMATION_PREVIEW.md` and the independent
+`play/Ending-animation-preview.zip`.
+
 Add the corresponding folders when their actual source is imported:
 
 ```text

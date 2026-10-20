@@ -1,0 +1,23 @@
+{
+  "sources": [
+    {
+      "source": "ENDING_ANIMATION_SOURCE",
+      "commit": "e467998dfb07abc028e4e0fcb5567006e4eaa07d"
+    },
+    {
+      "source": "LEVEL3_ANIMATION_SOURCE",
+      "commit": "ba9f81ee619c14b3342104228cdd2a5cc2bc2b3b"
+    }
+  ],
+  "sourceSha256": "d87bafb41680d48a55c6fef42338a5cac2ef65bc52361618c1aa9d415e84d951",
+  "htmlSha256": "93bc47eb8b51d4ec340b2e5f8f6fb0d7316d7213d595ab2b282733463a3a5076",
+  "archive": "Ending-animation-preview.zip",
+  "zipSha256": "a6d75c34c35e846bf831b9698d2da67b4d261a205b9d3d7cc3e69774701d503c",
+  "fileSha256": {
+    "START-HERE.html": "6ae54d6977960ae6c04881719b134e4ae8d62ded478f3bda5ec885b9d2a746f9",
+    "Ending-animation.html": "93bc47eb8b51d4ec340b2e5f8f6fb0d7316d7213d595ab2b282733463a3a5076",
+    "START-HERE.txt": "dfe1a7677e20597ff3a50b569aaa8d3a0876060db94ff0a1cf3f905c87432aaf"
+  },
+  "scope": "Independent ending preview only; current game ZIPs are unchanged. No Level 3B, no mandatory near-even result, no Design Lab handoff.",
+  "audio": "No audio supplied; silent"
+}

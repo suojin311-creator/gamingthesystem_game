@@ -2,6 +2,10 @@
 
 本页是接下来动画合并的起点。已确认的玩法保留在 `src/levels/`；完成的动画代码和所需素材放入 [src/cinematics/](../src/cinematics/README.md)。日常预览与正式发包使用 [开发流程](DEVELOPMENT_WORKFLOW.md)。
 
+Ending 现有[独立动画审阅包](ENDING_ANIMATION_PREVIEW.md)：通用开头不预设平均权重，
+只回顾真实试验；全屏布局，理论揭示后停留并展示暂不跳转的 Design Lab 按钮。
+尚未替换游戏的 comparison/theory placeholder。
+
 当前 `animation/opening-integration` 分支已接入开场：`FullGame` 先显示
 `src/cinematics/opening/Opening.tsx`，完成三名学生观察后，返回办公室显示两句思考，再进入与后续关卡共用样式的
 Level 1 过渡页。Choose a metric 后，用已确认姓名挂载 Gameplay。邮件和下一名
