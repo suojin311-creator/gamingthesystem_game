@@ -11,27 +11,31 @@
 
 - 开头不再展示固定的 uneven / near-equal 对照，不预设玩家测试过平均分配，
   也不宣称 effort 一定变得平均或发生变化。
-- 通用对白为 You「Did changing the weights change why you were working?」、
-  Alex「I was still working out what earns marks.」、
-  You「Maybe it’s not just about finding the perfect weights…」。
-- 开头复用最后一次实际试验的最后一个任务；Level 3 闪回依次复用该轮三个实际任务。
+- 开头直接淡入办公室，You「Maybe it’s not just about finding the perfect weights…」。
+  移除重复问答，不再冻结单个任务画面约 11 秒。
+- 三关各保留一个短动作：Level 1 的任务操作、Level 2 的最后一次清单勾选、
+  Level 3 最后一次真实试验中的最后一个任务。三段各 2.1 秒，加叠化约 8 秒；
+  移除后面再次叠放三张画面的重复展示。
   `src/cinematics/ending/input.ts` 调用当前游戏的 `cinematicRequest` 和 `weightedSceneReply`，
   影片只读取它提供的 shot，不按同伴的阈值重新推断表现。
 - 预览提供三种示例历史：没有 near-even 且 effort 改变、没有 near-even 且 effort 不变、
   三次真实试验。它们是审阅样例，不会被添加到玩家的游戏历史里。
 - 复用已有任务、清单和办公室素材，不使用被拒绝的单独 Alex 人像、女孩侧脸、
-  同学反应等杂镜头。任务左上角显示实际指标名称。
-- You 与字幕同为暖金色 `#ffe2a3`；Alex 与字幕同为浅蓝色 `#cceeff`。
+  同学反应等杂镜头。整个 ending 都不显示左上角 metric 名称；Level 3A 本身仍保留。
+- You 与字幕同为暖金色 `#ffe2a3`。本次 ending 没有 Alex 的重复对白。
   身份居中放在字幕正上方，透明字幕、描边和阴影沿用现有 Level 3A。
 - 镜头共用 `cinematic-dissolve.mjs` 的约半秒叠化，隐藏页面暂停。
-  办公室切入后立即开始问题，不保留原先四秒的无对白等待。
+  回忆后回到办公室立即显示 You「Am I improving learning, or just improving the numbers?」。
+  之后逐渐压暗并揭示理论，不保留无对白的建立镜头。
 - 删除办公室里虚构的全绿结果面板。最终停留在 Goodhart’s Law，
   引文在逗号后明确换行，字号放大；不再进入后续 recap / handoff 画面。
-- 结尾视觉沿用游戏 comparison 页的灰绿 `#2e3a32`、深橄榄绿 `#243029` 和米白
-  `#fff6e6`。保留淡淡的办公室背景，移除深蓝黑遮罩、金色发光、全大写超大标题。
-  标题改为 Goodhart’s Law；引文仍在逗号后分成两行，保留清晰的字号与留白。
+- 背景恢复较早版本的深色办公室，撤回用户拒绝的全屏灰绿处理。
+  理论标题与引文采用开场办公室旁白的 Georgia、暖白 `#fff5e3`，
+  以标题、两行斜体引文和按钮之间的留白建立层级；标题为 Goodhart’s Law，
+  不再使用全大写大标题或金色发光。
 - 用户最新要求覆盖了早先「不制作 Design Lab 按钮」的约定：
-  现在在理论画面下方浮现与游戏按钮一致的米白按钮，暂为 `aria-disabled` 的展示入口，
+  现在直接导入开场 `styles.css`，使用 TAKE YOUR SEAT / BACK TO OFFICE 的同一个
+  `opening-action` 砖红色按钮，暂为 `aria-disabled` 的展示入口，
   不发送 handoff，不挂载或跳转到现有 Design Lab。
 
 ## 固定来源与构建
@@ -54,7 +58,7 @@ python3 tests/ending_preview.py
 交付目录需要安装与 lockfile 一致的依赖。影片、素材和控件都内嵌进单一 HTML，
 无需联网或安装；没有原始音频，保持静音。
 
-验证直接读取实际 ZIP：检查三种历史的匹配、字幕及身份、布局、软转场、
+验证直接读取实际 ZIP：检查办公室开头、三种历史的真实表现、短动作、无 metric 标题、布局、软转场、
 最终停留和不跳转的按钮、窄屏适配、重播及隐藏页暂停。按用户要求不重复完整游戏路径。
 包哈希和固定来源记录于 `play/ENDING_ANIMATION_PREVIEW.json`；
 本次定向结果附于 `docs/PREVIEW_VALIDATION.json` 的 `endingPreview`，

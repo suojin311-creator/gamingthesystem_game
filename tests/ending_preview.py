@@ -48,28 +48,34 @@ with sync_playwright() as p:
   page.locator('summary').click();page.get_by_role('button',name='Pause',exact=True).click()
  for case,expected in cases.items():
   load(case);seek(1)
-  assert page.locator('.ending-actual-task').get_attribute('data-scene-id')==expected[-1]
-  for t,label,color in [(1,'You','rgb(255, 226, 163)'),(5,'Alex','rgb(204, 238, 255)'),(8.5,'You','rgb(255, 226, 163)'),(27,'You','rgb(255, 226, 163)')]:
+  assert page.locator('.end-office').count()==1 and page.locator('.ending-actual-task,.ending-metric-name').count()==0
+  assert page.locator('[role=status]').inner_text()=='Maybe it’s not just about finding the perfect weights…'
+  for t in [1,11]:
    seek(t)
-   audit=page.locator('.ending-spoken').evaluate('''e=>{const s=e.querySelector('.ending-speaker'),c=e.querySelector('[role=status]'),sr=s.getBoundingClientRect(),cr=c.getBoundingClientRect();return {name:s.textContent,color:getComputedStyle(c).color,labelColor:getComputedStyle(s).color,background:getComputedStyle(c).backgroundColor,above:sr.bottom<=cr.top+.1,centered:Math.abs(sr.x+sr.width/2-cr.x-cr.width/2)<1,text:c.textContent};}''')
-   assert audit['name']==label and audit['color']==audit['labelColor']==color,audit
+   audit=page.locator('.ending-spoken').evaluate("""e=>{const s=e.querySelector('.ending-speaker'),c=e.querySelector('[role=status]'),sr=s.getBoundingClientRect(),cr=c.getBoundingClientRect();return {name:s.textContent,color:getComputedStyle(c).color,labelColor:getComputedStyle(s).color,background:getComputedStyle(c).backgroundColor,above:sr.bottom<=cr.top+.1,centered:Math.abs(sr.x+sr.width/2-cr.x-cr.width/2)<1,text:c.textContent};}""")
+   assert audit['name']=='You' and audit['color']==audit['labelColor']=='rgb(255, 226, 163)',audit
    assert audit['above'] and audit['centered'] and audit['background']=='rgba(0, 0, 0, 0)',audit
-   assert 'Balancing the weights helped' not in audit['text']
-  for index,time in enumerate([18.25,19.45,20.65]):
+  source_times=[]
+  for time in [8.1,9.7]:
    seek(time)
-   assert page.locator('.ending-actual-task').get_attribute('data-scene-id')==expected[index]
-   assert page.locator('.ending-metric-name').inner_text()
+   assert page.locator('.ending-actual-task').get_attribute('data-scene-id')==expected[-1]
+   source_times.append(float(page.locator('.ending-actual-task').get_attribute('data-source-time')))
+   assert page.locator('.ending-metric-name').count()==0
    assert page.locator('.l3a-scene').get_attribute('data-beat') not in ['listen-to-peer','reaction','early-classroom','notes-insert']
-  assert page.locator('.end-comparison-pair,.l3b-snapshot').count()==0
+  assert source_times[1]>source_times[0],source_times
+  seek(6.0);assert page.locator('.l2-checklist').get_attribute('data-completed')=='5'
+  seek(7.5);assert page.locator('.l2-checklist').get_attribute('data-completed')=='6'
+  assert page.locator('.l2-checklist-row-label').count()==6
+  assert page.locator('.end-comparison-pair,.l3b-snapshot,.end-convergence').count()==0
   if case=='changed':
-   for name,t in [('opening',1),('level1',12.5),('level2',16),('level3',19),('convergence',23.2),('question',27.5),('quote',37.5)]:
+   for name,t in [('opening',1),('level1',4.9),('level2',7.4),('level3',9.8),('question',11.5),('quote',21.5)]:
     seek(t);page.locator('.ending-review-controls').evaluate('e=>e.open=false')
     page.locator('.ending-screen').screenshot(path=str(OUT/f'ending-{name}.png'))
    assert page.locator('.ending-design-button').count()==0
-  seek(40.2);assert page.locator('.end-recap-memories,.end-handoff-ghost,.end-dashboard').count()==0
+  seek(24);assert page.locator('.end-recap-memories,.end-handoff-ghost,.end-dashboard,.ending-metric-name').count()==0
   page.locator('.ending-review-controls').evaluate('e=>e.open=false')
   page.locator('.ending-screen').screenshot(path=str(OUT/f'ending-{case}-final.png'))
-  checks.append(case+': actual final-trial states only, universal opening, matching You/Alex positions and colours; no fabricated comparison/all-green dashboard or post-theory shots')
+  checks.append(case+': office reflection, centred gold You captions, one moving actual Level 3 task, notebook tick from five to six; no metric headers or repeated montage')
   print('PASS',checks[-1],flush=True)
  # Final composition, line layout and the deliberately unconnected button.
  final=page.locator('.ending-screen').evaluate('''e=>{const b=e.querySelector('.ending-design-button'),quote=e.querySelector('.end-theory p'),lines=[...quote.children].map(n=>{const r=n.getBoundingClientRect();return {text:n.textContent,x:r.x,y:r.y,width:r.width,height:r.height};}),r=e.getBoundingClientRect(),br=b.getBoundingClientRect();return {lines,font:parseFloat(getComputedStyle(quote).fontSize),height:r.height,width:r.width,buttonTop:br.top,buttonBottom:br.bottom,quoteBottom:quote.getBoundingClientRect().bottom,disabled:b.getAttribute('aria-disabled'),title:e.querySelector('.end-theory h1').getBoundingClientRect().bottom};}''')
@@ -88,19 +94,19 @@ with sync_playwright() as p:
  checks.append('Full-viewport presentation retains the entire composition and separated quote/button at desktop, mobile landscape and portrait sizes')
  page.set_viewport_size({'width':1280,'height':720})
  # Live cross-dissolve and once-only ending hold. Accelerate only review time.
- load('changed');seek(10.9)
+ load('changed');seek(.5)
  page.evaluate('''()=>{window.audit={dissolve:false,sections:[]};window.timer=setInterval(()=>{const e=document.querySelector('.end-stage'),h=document.querySelector('[data-cinematic-dissolve]');if(!audit.sections.includes(e.dataset.section))audit.sections.push(e.dataset.section);if(h){const opacity=Number(getComputedStyle(h).opacity);if(opacity>0&&opacity<1)audit.dissolve=true;}},20);}''')
  page.get_by_label('Speed',exact=True).select_option('4');page.get_by_role('button',name='Play',exact=True).click()
  page.wait_for_function('document.querySelector(".ending-viewport").dataset.completions==="1"',timeout=35000)
  page.wait_for_timeout(300)
  assert page.locator('.ending-viewport').get_attribute('data-completions')=='1'
- assert page.locator('.end-stage').get_attribute('data-elapsed')=='40.200'
+ assert page.locator('.end-stage').get_attribute('data-elapsed')=='24.000'
  audit=page.evaluate('()=>{clearInterval(timer);return audit;}')
- assert audit['dissolve'] and audit['sections'][-1]=='theory',audit
+ assert audit['dissolve'] and audit['sections']==['opening','level1','level2','level3','question','threshold','theory'],audit
  checks.append('Live joins cross-dissolve; playback ends once and holds the theory/button rather than entering another scene')
  page.get_by_role('button',name='Replay',exact=True).click();page.get_by_role('button',name='Pause',exact=True).click()
  assert page.locator('.end-stage').get_attribute('data-section')=='opening'
- seek(5);page.evaluate("()=>{Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'));}")
+ seek(1);page.evaluate("()=>{Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'));}")
  page.get_by_role('button',name='Play',exact=True).click();before=page.locator('.end-stage').get_attribute('data-elapsed');page.wait_for_timeout(250)
  assert page.locator('.end-stage').get_attribute('data-elapsed')==before
  checks.append('Replay resets the opening and hidden tabs hold the reading clock')

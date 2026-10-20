@@ -7,7 +7,7 @@ import hand from '@ending-assets/characters/alex-rig/production/actions/checking
 import { endingInputFromRuns } from '../../src/cinematics/ending/input';
 import { dissolveFrame } from '../cinematic-dissolve.mjs';
 import Composition from './Composition';
-import { DURATION, SECTIONS, actualShotAt, sectionAt } from './timeline.mjs';
+import { DURATION, SECTIONS, sectionAt } from './timeline.mjs';
 
 const CASES = {
   changed: { title:'Effort changes · no near-even trial', metrics:['prep','discuss','peer'], weights:[[60,30,10],[10,60,30]] },
@@ -26,7 +26,7 @@ function Preview() {
   },[caseId]);
   // Decode every image once, including lazy recollection artwork, before autoplay.
   useEffect(()=>{let live=true;const urls=[office,hand,...Object.values(branches).map(branch=>branch.plate)];Promise.all([preloadAdaptationArt(),...urls.map(url=>{const image=new Image();image.src=url;return image.decode();})]).then(()=>{if(live)setReady(true);},()=>{if(live)setError(true);});return()=>{live=false;};},[]);
-  const keyAt=t=>{const section=sectionAt(t);return section.id==='level3'?section.id+':'+actualShotAt(input,t-section.start).sceneId:section.id;};
+  const keyAt=t=>{const section=sectionAt(t);return ['question','threshold','theory'].includes(section.id)?'office':section.id;};
   const seek=(next,resume=false)=>{
     transition.current?.cancel();changing.current=false;
     const t=Math.max(0,Math.min(DURATION,next));clock.current=t;currentKey.current=keyAt(t);setTime(t);setPlaying(resume);

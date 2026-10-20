@@ -9,13 +9,13 @@
       "commit": "ba9f81ee619c14b3342104228cdd2a5cc2bc2b3b"
     }
   ],
-  "sourceSha256": "982a02d52fc998cecf9eae7c9d27951b540c5cbee901afa88c64764a8f8964a3",
-  "htmlSha256": "9113f93fb54672d556c571493c3cc69e54d21560214af809a55465ff2fb9fb28",
+  "sourceSha256": "55195b6a26ad88e2fe0c9b2088e0b7e04e5d0dff4c3e21c4222bc46cfd4bd296",
+  "htmlSha256": "8a681d3241b16010445f92de7a3f0f737603daf9c9ac5a6d1fa002be70334ccb",
   "archive": "Ending-animation-preview.zip",
-  "zipSha256": "d3840612fa52a03c07cf30fda265c00427f07989c37d94d4a80dc8cd8d3be17a",
+  "zipSha256": "b956d7e3bbefd4876f1146360edec242a9a09ed1193f150b042ec0aed8227c38",
   "fileSha256": {
-    "START-HERE.html": "468b48cc5f2638a0b44cc20ccb5147a13178b24c9247e69b4feda490af325c6b",
-    "Ending-animation.html": "9113f93fb54672d556c571493c3cc69e54d21560214af809a55465ff2fb9fb28",
+    "START-HERE.html": "c3798cb4d16301baa27058dc80269e7a45ba331e411d4ae120f1b8717d618d31",
+    "Ending-animation.html": "8a681d3241b16010445f92de7a3f0f737603daf9c9ac5a6d1fa002be70334ccb",
     "START-HERE.txt": "dfe1a7677e20597ff3a50b569aaa8d3a0876060db94ff0a1cf3f905c87432aaf"
   },
   "scope": "Independent ending preview only; current game ZIPs are unchanged. No Level 3B, no mandatory near-even result, no Design Lab handoff.",

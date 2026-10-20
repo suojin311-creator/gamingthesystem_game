@@ -2,16 +2,19 @@
 
 ## Current ending preview
 
-- The user approved a universal opening with no assumed near-even trial; use the
-  three lines and real last-trial shots in `docs/ENDING_ANIMATION_PREVIEW.md`.
+- The user approved an office reflection opening, three short memories and the
+  theory reveal. Remove the repeated You/Alex question and the three-window
+  convergence montage. See `docs/ENDING_ANIMATION_PREVIEW.md`.
 - This is an independent animation preview, not yet a replacement for the game
   theory/comparison placeholders. Keep the six current game ZIPs unchanged.
 - Entry fills the browser viewport, preserving the full composition. You is warm
   gold; Alex is light blue; labels are centred immediately above transparent captions.
-- Stop at the enlarged two-line Goodhart quote, split after the comma. Remove
-  later recap/handoff scenes. Use the game's muted olive background and ivory
-  title/quote, with a cream Design Lab button and restrained type sizes. Avoid
-  the rejected navy-black/gold, oversized uppercase title and glowing gold button.
+- Ending never displays the top-left metric heading, including in Level 3 memory.
+  Keep that heading in the separate Level 3A task film; do not change its renderer.
+- Stop at the two-line Goodhart quote, split after the comma. Restore the earlier
+  dark office; the user rejected the olive full-screen treatment. Use the opening
+  office's Georgia/warm-white type and directly import its brick-red opening-action
+  button style. No oversized uppercase title or glowing gold button.
   The Design Lab button is display-only and must not launch Design Lab yet.
 - Pinned ending delivery: `e467998dfb07abc028e4e0fcb5567006e4eaa07d`.
   Keep it read-only and reuse only the approved 3A task renderer, never 3B.

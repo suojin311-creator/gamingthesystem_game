@@ -6,20 +6,22 @@ import { METRICS, INTENSITIES } from '../../src/cinematics/level3/mapping.mjs';
 import { METRIC_CATALOG } from '../../src/shared/data/metrics';
 import { actualShotAt, RECAP, ease } from './timeline.mjs';
 
-export function ActualTask({ input, time, opening = false, reducedMotion }) {
-  const shot = actualShotAt(input, time, opening);
-  // Stable, already-seen task pose. Never replay the peer-only/reaction inserts.
-  const sourceTime = shot.metricId === 'part' ? 2.8 : shot.metricId === 'focus' && shot.effort === 'low' ? 1.4 : 3.99;
-  return <div className="ending-actual-task" data-scene-id={shot.sceneId} data-round={input.lastRun.runs[0].round}>
+export function ActualTask({ input, time, reducedMotion }) {
+  const shot = actualShotAt(input);
+  // Animate one useful, already-seen action instead of holding its last frame.
+  const [from,to] = shot.metricId === 'part' ? [2.8,3.99]
+    : shot.metricId === 'focus' && shot.effort === 'low' ? [.85,1.7]
+    : shot.metricId === 'discuss' ? [.85,3.99] : [1.75,3.99];
+  const sourceTime = reducedMotion ? to : from + (to-from) * Math.min(1,time/1.8);
+  return <div className="ending-actual-task" data-scene-id={shot.sceneId} data-source-time={sourceTime.toFixed(3)} data-round={input.lastRun.runs[0].round}>
     <MetricAdaptationScene metric={METRICS[shot.metricId]} intensity={INTENSITIES[shot.effort]} time={sourceTime} reducedMotion={reducedMotion} hideDialogue />
-    <h2 className="ending-metric-name">{shot.label}</h2>
   </div>;
 }
 
 export function LevelMemory({ level, time, input, reducedMotion }) {
-  if (level === 1) return <ConsequenceScene metric={METRICS[input.levelOneMetricId]} seconds={2.5} reducedMotion={reducedMotion} />;
-  // A single useful, legible notebook view; omit checking portraits/cutaways.
-  if (level === 2) return <AlexCheckingSequence elapsed={2.2} count={6} labels={METRIC_CATALOG.map(m => m.name)} progress={1} insertOnly reducedMotion={reducedMotion} />;
+  if (level === 1) return <ConsequenceScene metric={METRICS[input.levelOneMetricId]} seconds={reducedMotion ? 3.2 : .65 + time * 1.25} reducedMotion={reducedMotion} />;
+  // Complete the final tick on the existing six-item notebook, without portraits.
+  if (level === 2) return <AlexCheckingSequence elapsed={1.6 + ease(time,.1,1.1)*.6} count={6} labels={METRIC_CATALOG.map(m => m.name)} progress={reducedMotion ? 1 : (5.65 + .35*ease(time,.1,1.1))/6} insertOnly reducedMotion={reducedMotion} />;
   return <ActualTask input={input} time={time} reducedMotion={reducedMotion} />;
 }
 
@@ -27,14 +29,5 @@ export function SoloMemory({ level, time, input, reducedMotion }) {
   return <div className="end-memory-space">
     <div className="end-solo-memory"><LevelMemory {...{ level, time, input, reducedMotion }} /></div>
     <div className="end-memory-caption"><span>LEVEL {level}</span><p>{RECAP[level - 1]}</p></div>
-  </div>;
-}
-
-export function Convergence({ time, input, reducedMotion }) {
-  return <div className="end-memory-space end-convergence">
-    <div className="end-thread-light" style={{ opacity: .2 + ease(time, .1, 1.2) * .3 }} />
-    {[1, 2, 3].map(level => <div key={level} className={`end-floating-memory end-floating-${level}`}>
-      <LevelMemory {...{ level, time: 2.8, input, reducedMotion }} />
-    </div>)}
   </div>;
 }
