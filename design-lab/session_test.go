@@ -225,22 +225,36 @@ func TestClosingSequenceAndEmptyClass(t *testing.T) {
 	}
 	*now = s.Deadline
 	s.tick()
-	if s.Phase != "question1" {
+	if s.Phase != "question1" || s.Deadline-s.StartedAt != 4000 {
 		t.Fatal(s.Phase)
+	}
+	*now = s.Deadline - 1
+	s.tick()
+	if s.Phase != "question1" {
+		t.Fatal("first question ended early")
 	}
 	*now = s.Deadline
 	s.tick()
 	if s.Phase != "question2" {
 		t.Fatal(s.Phase)
 	}
-	*now += 1000000
+	if s.Deadline-s.StartedAt != 4000 {
+		t.Fatal("each closing question must last four seconds")
+	}
+	if err := s.closeQuestions(); err == nil {
+		t.Fatal("a manual reveal must not shorten the closing question")
+	}
+	*now = s.Deadline - 1
 	s.tick()
 	if s.Phase != "question2" {
-		t.Fatal("second question must wait for host")
+		t.Fatal("second question ended early")
 	}
-	if err := s.closeQuestions(); err != nil || s.Phase != "ending" {
-		t.Fatal(err)
+	*now++
+	s.tick()
+	if s.Phase != "ending" || s.Deadline != 0 {
+		t.Fatal("second question must advance automatically to the theory")
 	}
+
 	empty, clock, _ := fixture(t, 2)
 	*clock = empty.Deadline
 	empty.tick()
@@ -299,5 +313,22 @@ func TestConcurrentClassSubmissionsAndVotes(t *testing.T) {
 		if r.Flowers != 20 || r.Rank != 1 {
 			t.Fatalf("lost or duplicated votes: %+v", r)
 		}
+	}
+}
+
+func TestSleepingBrowserCatchesUpThroughBothQuestions(t *testing.T) {
+	s, now, ids := fixture(t, 1)
+	share(t, s, ids)
+	*now = s.Deadline
+	s.tick()
+	c := s.snapshot(ids[0]).Card
+	if err := s.advance(ids[0], c.ID); err != nil {
+		t.Fatal(err)
+	}
+	rankingEnd := s.Deadline
+	*now = rankingEnd + 2*s.Config.QuestionMS
+	s.tick()
+	if s.Phase != "ending" || s.StartedAt != rankingEnd+8000 {
+		t.Fatal("closing deadlines drifted after a sleeping browser")
 	}
 }

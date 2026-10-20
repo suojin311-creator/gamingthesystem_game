@@ -210,23 +210,24 @@ Reset：第一次尚无观察时回未分配；之后回上一次实际观察，
 ### 7.2 环节、文字与时间
 
 1. 等待老师开始。提前告知：**Your reflection will be shared anonymously.** / **Everyone will vote, and a ranking will follow.** 需要让玩家知道之后会展示和排名，最终反问才成立。
-2. 写作 **90 秒固定**，不延长。最终题目：**What do we reward too much—and what deserves more?** 题目下不要小字提示、长模板或额外写作任务。当前认可原型限制 240 字符。
+2. 写作 **90 秒固定**，不延长。最终题目：**How would you know Alex is really learning?**（最新确认文案，覆盖旧题）。去掉 Join the audience 按钮。 题目下不要小字提示、长模板或额外写作任务。当前认可原型限制 240 字符。
 3. 匿名展示 Reflection 01…；编号随机一次后固定，不公开姓名。
 4. 仅两个反应：鲜花 **Agree**、炸弹 **Disagree**。只说明二选一；不加泼水或其他反应，不解释“选择后不能改”，实现上单次不可修改。
 5. 每份作品对每位参与者 **最多 10 秒**，投票后可自己 Next 提前看下一份；超时自动下一份，未选则记**未投票**，不能默认算炸弹。
 6. 自己的作品可以看、可直接 Next，但不自投。各人独立推进；提前看完进入等候。
 7. 最多 21 份，展示总窗口最多 **210 秒**；全体提前结束则可提前统一进入排名。主持大屏此时显示进度，不强迫所有个人卡片同速。
 8. 只按**鲜花数**排名，炸弹不扣分；**写作前不说明仅鲜花计分**。并列相邻，共享名次（当前 1、2、2、4），同分内部顺序随机固定。排名只读，不能点击互动。
-9. 排名高光从第一名到末尾**由慢到快**扫过，当前约 5 秒。
+9. 排名高光从第一名到末尾**由慢到快**扫过，当前约 5 秒，配合逐项短音效；顶部 Sound on/off 控制声音，进入反问后停声。
 10. 排名留在背景，画面中央依次出现：
-   - **Did the reflection with the most flowers have the best thinking?**
+   - **Did the most flowers mean the deepest thinking?**
    - **Did knowing there would be a ranking change what you wrote?**
-11. 当前实现第一问约 7 秒后进入第二问；第二问由老师点击 Show Goodhart’s Law 继续。不是再让学生写一轮。
-12. 最后 Goodhart 半身像＋原话，留思考空间，不加长篇总结、测试或作业。
+11. 两问各展示 **4 秒**，自动依次切换并揭示 Goodhart’s Law，无需老师点击继续；不是再让学生写一轮。
+12. 最后 Goodhart 半身像＋已确认短句，留思考空间，不加长篇总结、测试或作业。
 
-原话：**Any observed statistical regularity will tend to collapse once pressure is placed upon it for control purposes.** —— Charles Goodhart, 1975。
-
-**When a measure becomes a target, it ceases to be a good measure.** 是广为流传的表述，不要将它冒充上面这句原文。现有人像 `design-lab/public/goodhart.png` 是 AI 绘制的编辑插画，不是历史照片。
+最终短句：**When a measure becomes a target, it ceases to be a good measure.**
+用户已确认使用这句通俗表述，覆盖旧版 1975 长引文要求；不将它标成 1975 年原文。
+现有人像 `design-lab/public/goodhart.png` 是 AI 绘制的编辑插画，不是历史照片。
+Ending 已在 `animation/opening-integration` 接入正式游戏，Lab 仍在本分支单独发包，未连接 ending 按钮。
 
 用户明确去掉专门防捣乱设计，不要再加反作弊、审核、复杂账号或惩罚流程。单次投票、不能自投等基本交互保持。
 

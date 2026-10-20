@@ -14,7 +14,7 @@ import (
 
 type Config struct{ WritingMS, CardMS, RankingMS, QuestionMS int64 }
 
-var standardConfig = Config{90000, 10000, 5000, 7000}
+var standardConfig = Config{90000, 10000, 5000, 4000}
 
 type Participant struct {
 	ID                            string
@@ -133,7 +133,12 @@ func (s *Session) tick() {
 			if now < s.Deadline {
 				return
 			}
-			s.phase("question2", s.Deadline, 0)
+			s.phase("question2", s.Deadline, s.Config.QuestionMS)
+		case "question2":
+			if now < s.Deadline {
+				return
+			}
+			s.phase("ending", s.Deadline, 0)
 		default:
 			return
 		}
@@ -284,7 +289,7 @@ func (s *Session) finishReview(at int64) {
 }
 func (s *Session) closeQuestions() error {
 	s.tick()
-	if s.Phase != "question2" && s.Phase != "empty" {
+	if s.Phase != "empty" {
 		return errors.New("The closing is not ready yet.")
 	}
 	s.phase("ending", s.now(), 0)

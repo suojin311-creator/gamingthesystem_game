@@ -18,8 +18,9 @@ This preview contains Design Lab only, not the three-level game.
    Choose Agree or Disagree, then use Next if ready. Unanswered cards time out without a vote.
 7. 所有人完成或展示期限到达后统一排名；21 份最长 210 秒。
    Early finishers wait. With 21 reflections, sharing lasts at most 210 seconds.
-8. 第二个反问后，主持页点 Show Goodhart's Law 显示结尾。
-   After discussing the second question, show Goodhart's Law from the host page.
+8. 排名高光滚动配有音效，两个反问各展示 4 秒后自动进入 Goodhart's Law。
+   Ranking ticks follow the highlight. Each closing question lasts 4 seconds; Goodhart's Law follows automatically.
+   顶部 Sound on/off 可控制声音；在投影页点击该按钮即可启用浏览器声音。
 9. 结束时点 Close classroom；本次投稿和投票不写入文件，随程序关闭清空。
    Close the classroom when finished. Session data stays in memory and is cleared on exit.
 

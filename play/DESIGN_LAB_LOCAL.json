@@ -1,23 +1,23 @@
 {
   "branch": "feature/design-lab-local",
   "archive": "Design-Lab-local.zip",
-  "zipSha256": "0be3fa41a7095e19a56f58595f7df2367aa8a0d3c30694196a0ab3115cd152f4",
-  "sourceSha256": "49f80990a8d648d5e190a22ce02e761d7a2424b8da54bb64f71419882c8f143b",
-  "toolchain": "go version go1.27.2 linux/amd64",
+  "zipSha256": "11398af9d7603c307c7b2c03b1930270ed62687855a264cb2c32bf392ace2913",
+  "sourceSha256": "8af3d4aa34943cd4c367a50bb7e0e74dd7842c1ddb17cab3c72a403a3a0719fb",
+  "toolchain": "go version go1.27.3 linux/amd64",
   "target": "windows/amd64",
   "selfContained": true,
   "embeddedWebSha256": {
-    "assets/index-CJLYeu5m.js": "ab19ba492c53d10cef6c9d41109654d33c548af998753a0e16ea8980dc4b7145",
-    "assets/index-Dna2XC8a.css": "9304a959f99e6b148a758d94eafa2023a59ce679ce8c78e9e0211731a65f2f3a",
+    "assets/index-Co07Y9CT.js": "c7d2d77f21f1940630b2dab1478fea973c99a2c6c0a5e8afac17dd7cde92bbf9",
+    "assets/index-T_EjYmeo.css": "0508eedbc43957181d33a38b6bbe0f716e0836dd20795e32447ff18b332efdd2",
     "goodhart.png": "ea248ed8ba4c7ad5ab3435baff908fc72eef8d23191c0831fc42f6ebc586079a",
-    "index.html": "cbfd6d55a5660f24157f44019917a7fce3f35a1ca00cb78460ecc53697687f5a"
+    "index.html": "6896bedc4540bc27a660b6532a6a33fa861e31fefafd5b4f20337c2ec3f0a57b"
   },
   "files": {
-    "Start-Design-Lab.exe": "e44dadcdafe440cde6d5e84419a1ac8dc2aed82dd3f669ecfecc88c3c020f459",
-    "START-HERE.html": "4e708101e80be6a94eab00a8cc7943928001faf1e2f15cdcd72c3e8984afce82",
-    "README.txt": "fd1f09218748048f7323db3373c75dd86d2523c9738fee762a04a53038d7757e",
+    "Start-Design-Lab.exe": "2b33c6cbcee3e019061192175029ebaea1e32de2a9c79e7caf33f61459e31fe4",
+    "START-HERE.html": "48af112f2f654029be3384b9ca7c53282cd918ab778685e84fd33a4db2a241c3",
+    "README.txt": "ae79022a9d1517c5bdcb4116f29f1da75bdcbcd944ea2de04ca636400904b9ab",
     "THIRD-PARTY-NOTICES.txt": "677dc1f3e6a3d6d925dd865ad48c306fcc265fca5ebd80d83a62ffb3f0c1fa5a",
-    "SHA256SUMS.txt": "1e09b7646769341a1a254799e5c2745535355fa4db4c4cfc0541edec78e9ff19"
+    "SHA256SUMS.txt": "fa06a0f948919e4b4c40b6c53ec9795638ed8f057ce9ca628c8d122b7024df37"
   },
   "windowsBinaryChecks": [
     "PE x64 header verified",

@@ -24,7 +24,7 @@ def record(text):
     checks.append(text)
     print('PASS', text, flush=True)
 
-def start_server(binary, writing=12, question=2):
+def start_server(binary, writing=12, question=4):
     with socket.socket() as sock:
         sock.bind(('127.0.0.1', 0))
         port = sock.getsockname()[1]
@@ -49,6 +49,17 @@ async def wait_api(page, predicate, timeout=15):
 
 async def visit(browser, base, path='/', width=1366):
     context = await browser.new_context(viewport={'width': width, 'height': 900})
+    await context.add_init_script("""(()=>{
+      const Native=window.AudioContext;if(!Native)return;
+      window.soundAudit={ticks:[],peak:0};
+      window.AudioContext=class extends Native{
+        constructor(...args){super(...args);const context=this,analyser=this.createAnalyser();analyser.fftSize=256;
+          const gain=this.createGain.bind(this);this.createGain=()=>{const node=gain(),connect=node.connect.bind(node);node.connect=(destination,...rest)=>{if(destination===context.destination)connect(analyser);return connect(destination,...rest);};return node;};
+          const oscillator=this.createOscillator.bind(this);this.createOscillator=()=>{const node=oscillator(),start=node.start.bind(node);node.start=(...args)=>{soundAudit.ticks.push({at:performance.now(),state:context.state});return start(...args);};return node;};
+          const samples=new Float32Array(analyser.fftSize);setInterval(()=>{analyser.getFloatTimeDomainData(samples);for(const sample of samples)soundAudit.peak=Math.max(soundAudit.peak,Math.abs(sample));},8);
+        }
+      };
+    })();""")
     page = await context.new_page()
     page.on('pageerror', lambda err: errors.append(str(err)))
     page.on('request', lambda req: external.append(req.url) if not req.url.startswith(base) else None)
@@ -96,13 +107,14 @@ async def ui_case(browser, binary):
         await host.screenshot(path=str(SCREEN/'00-host.png'),full_page=True)
         record('The local host and three independent participant browsers join without accounts or names; the anonymous showcase and ranking are announced')
         await host.get_by_role('button',name='Start writing',exact=True).click()
+        await expect(pages[0].get_by_role('button',name='Join the audience',exact=True)).to_have_count(0)
         texts=[
           'Speaking often gets too much credit. Asking a useful question deserves more.',
           'Hours studied get too much credit. I would reward explaining an idea clearly.',
           'Likes reward what is easy to notice. I would give more credit to careful disagreement.',
         ]
         for i,page in enumerate(pages):
-            await page.get_by_role('textbox',name='What do we reward too much—and what deserves more?',exact=True).fill(texts[i])
+            await page.get_by_role('textbox',name='How would you know Alex is really learning?',exact=True).fill(texts[i])
             if i==0: await page.screenshot(path=str(SCREEN/'02-writing.png'),full_page=True)
             await page.get_by_role('button',name='Submit',exact=True).click()
             await expect(page.get_by_role('heading',name='Submitted.',exact=True)).to_be_visible()
@@ -131,12 +143,24 @@ async def ui_case(browser, binary):
         await pages[0].screenshot(path=str(SCREEN/'04-ranking.png'),full_page=True)
         assert await pages[0].locator('.ranking button,.ranking input,.ranking a').count()==0
         record('Votes lock after one choice, authors skip their own reflection, and the frozen read-only ranking counts flowers only')
-        await expect(pages[0].get_by_role('heading',name='Did the reflection with the most flowers have the best thinking?',exact=True)).to_be_visible(timeout=8000)
+        await expect(pages[0].get_by_role('heading',name='Did the most flowers mean the deepest thinking?',exact=True)).to_be_visible(timeout=8000)
+        q1=await api(pages[0]);assert q1['deadline']-q1['startedAt']==4000,q1
+        first_visible=time.monotonic()
         await pages[0].screenshot(path=str(SCREEN/'05-question.png'),full_page=True)
-        await expect(pages[0].get_by_role('heading',name='Did knowing there would be a ranking change what you wrote?',exact=True)).to_be_visible(timeout=5000)
-        await expect(host.get_by_role('button',name='Show Goodhart’s Law',exact=True)).to_be_enabled(timeout=3000)
-        await host.get_by_role('button',name='Show Goodhart’s Law',exact=True).click()
-        await expect(pages[0].get_by_role('heading',name='Goodhart’s Law.',exact=True)).to_be_visible(timeout=3000)
+        sound=await pages[0].evaluate('window.soundAudit')
+        assert len(sound['ticks'])>=2 and sound['peak']>.0001,sound
+        assert all(t['state']=='running' for t in sound['ticks']),sound
+        sound_count=len(sound['ticks'])
+        record('Ranking ticks render nonzero audio while the accelerating highlight scans; the participant gesture unlocks the real AudioContext')
+        await expect(pages[0].get_by_role('heading',name='Did knowing there would be a ranking change what you wrote?',exact=True)).to_be_visible(timeout=5500)
+        q2=await api(pages[0]);assert q2['deadline']-q2['startedAt']==4000,q2
+        assert 3<time.monotonic()-first_visible<5.5
+        second_visible=time.monotonic()
+        await expect(host.get_by_role('button',name='Show Goodhart’s Law',exact=True)).to_have_count(0)
+        await expect(pages[0].get_by_role('heading',name='Goodhart’s Law.',exact=True)).to_be_visible(timeout=5500)
+        assert 3<time.monotonic()-second_visible<5.5
+        await expect(pages[0].locator('.closing blockquote')).to_have_text('“When a measure becomes a target, it ceases to be a good measure.”')
+        assert len((await pages[0].evaluate('window.soundAudit'))['ticks'])==sound_count
         image=pages[0].locator('.closing img')
         await expect(image).to_be_visible()
         assert await image.evaluate('e=>e.complete&&e.naturalWidth>0')
@@ -144,7 +168,7 @@ async def ui_case(browser, binary):
         for width,height in [(1366,768),(1024,768),(390,844)]:
             await pages[0].set_viewport_size({'width':width,'height':height})
             assert await pages[0].evaluate('document.documentElement.scrollWidth<=innerWidth'),(width,height)
-        record('Both exact questions follow the ranking; the host reveals the embedded Goodhart illustration and original quotation with no external assets')
+        record('Both accepted questions each show for four seconds and automatically reveal the accepted short Goodhart quote and illustration; ranking audio stops before the questions')
         await host.get_by_role('button',name='Close classroom',exact=True).click()
         await host.get_by_role('dialog').get_by_role('button',name='Close classroom',exact=True).click()
         await expect(pages[0].get_by_role('heading',name='Thank you for taking part.',exact=True)).to_be_visible(timeout=3000)
@@ -167,7 +191,7 @@ async def class_case(browser,binary):
         state=await api(host,'/api/host/state');assert state['joined']==21,state
         await host.get_by_role('button',name='Start writing',exact=True).click()
         async def write(i,page):
-            await page.get_by_role('textbox',name='What do we reward too much—and what deserves more?',exact=True).fill(f'Perspective {i+1}: reward thoughtful questions more than the number of answers.')
+            await page.get_by_role('textbox',name='How would you know Alex is really learning?',exact=True).fill(f'Perspective {i+1}: reward thoughtful questions more than the number of answers.')
             await page.get_by_role('button',name='Submit',exact=True).click()
         await asyncio.gather(*(write(i,p) for i,p in enumerate(pages)))
         await wait_api(pages[0],lambda s:s['phase']=='review',timeout=30)

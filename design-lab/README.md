@@ -14,8 +14,8 @@
 4. 如老师也参与，点击 **Join as a participant**，在新标签页作答。主持页本身不占参与名额。
 5. 等大家加入后，点击 **Start writing**。
 6. 固定 90 秒写作后自动进入展示。每份最多 10 秒；选择鲜花／炸弹后，可点 Next 提前继续。
-7. 提前完成的人等候。全员完成或展示期限到达后，显示同一份最终排名，然后依次出现两个反问。
-8. 第二个问题停留供讨论。主持页点击 **Show Goodhart’s Law**，显示结束画面。
+7. 提前完成的人等候。全员完成或展示期限到达后，显示同一份最终排名；高光滚动配有短促、逐渐加快的音效。
+8. 随后两个反问各展示 4 秒，自动进入 **Goodhart’s Law**，无需主持人手动揭示。
 9. 下课点击 **Close classroom**。程序退出，本次数据随之清空。
 
 首次启动若 Windows 防火墙询问，请允许该程序在课堂使用的网络上接收连接。
@@ -38,7 +38,7 @@
 ## 已确认的规则
 
 - 最多按 20 位学生＋1 位老师使用设计；主持页面不额外算人。
-- 写作题目：**What do we reward too much—and what deserves more?** 无题目下方小字。
+- 写作题目：**How would you know Alex is really learning?** 无题目下方小字。
 - 最多 240 字符，供 10 秒内阅读；支持中文与英文。
 - 开始前说明匿名展示、投票及最终排名，不说明计分细节。
 - 只有 **Agree（鲜花）／Disagree（炸弹）**；只接受第一次选择。
@@ -47,7 +47,12 @@
 - 21 份作品的全局展示上限为 210 秒；N 份为 N × 10 秒，全员提前完成时立即结束。
 - 鲜花数降序；同分并列相邻，采用 1、2、2、4 这样的名次，组内沿用一次随机顺序。
 - 排名在展示结束时冻结；高光框由慢到快滑向末尾，约 5 秒。
-- 第一个问题自动展示 7 秒；第二个问题等老师结束讨论后再进入 Goodhart 画面。
+- 删除写作页的 Join the audience 按钮。
+- 第一问：Did the most flowers mean the deepest thinking?
+- 第二问：Did knowing there would be a ranking change what you wrote?
+- 两问各 4 秒，自动依次切换并进入 Goodhart；服务统一维护截止时间。
+- 排名高光音效跟随条目位置，逐渐加快；问题出现时停止。顶部 Sound on/off 可静音。
+  写作、提交、投票或主持操作的首次交互会启用浏览器声音；投影页可点 Sound on/off 启用。
 - 不收集姓名、不连接游戏数据，不将活动内容写入文件或第三方服务。进程关闭后清空。
 - 不增加防捣乱、审核或排行榜互动功能。主持操作只在老师电脑上开放。
 
@@ -85,9 +90,11 @@ npm run lab:package
 
 ## 结尾素材
 
-半身像是为本项目生成的插画，非历史照片。引文采用 Goodhart 1975 年的原始表述：
-“Any observed statistical regularity will tend to collapse once pressure is placed upon it for control purposes.”
-出处：Charles A. E. Goodhart, *Problems of Monetary Management: The U.K. Experience* (1975)。
+半身像是为本项目生成的插画，非历史照片。按用户确认使用简短表述：
+“When a measure becomes a target, it ceases to be a good measure.”
+不再展示 1975 年长引文或将该简短表述标为 1975 年原文。
+Ending 的正式游戏接入保存在 `animation/opening-integration`；
+本地课堂程序在本分支单独交付，尚未与 ending 按钮连接。
 
 ## 界面预览
 

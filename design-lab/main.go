@@ -216,7 +216,7 @@ func run() error {
 	writing := flag.Float64("writing-seconds", 90, "Writing duration; classroom default: 90 seconds")
 	card := flag.Float64("card-seconds", 10, "Review duration per reflection; classroom default: 10 seconds")
 	ranking := flag.Float64("ranking-seconds", 5, "Ranking scan duration")
-	question := flag.Float64("question-seconds", 7, "First question duration")
+	question := flag.Float64("question-seconds", 4, "Duration of each closing question")
 	flag.Parse()
 	if *writing <= 0 || *card <= 0 || *ranking <= 0 || *question <= 0 {
 		return errors.New("All durations must be positive.")
