@@ -32,5 +32,62 @@
     "scope": "Independent 100 metric review; current game/Level2 preview archives unchanged."
   },
   "fullGamePathsRepeated": false,
-  "gameIntegrated": false
+  "gameIntegrated": false,
+  "gameIntegration": {
+    "validatedAtUtc": "2026-10-20T16:31:18.962507+00:00",
+    "sourceBaseCommit": "35ebba4",
+    "approvedPreviewCommit": "048576d03ba04df47fe1c9a351d5d4378b4e7a89",
+    "buildCommand": "LEVEL2_ANIMATION_SOURCE=<pinned-original> npm run build",
+    "buildExitCode": 0,
+    "typescriptChecked": true,
+    "pacingTests": {
+      "command": "LEVEL2_ANIMATION_SOURCE=<pinned-original> node --experimental-strip-types --test tests/level2_animation_pacing.mjs",
+      "passed": 6
+    },
+    "browserTestCommand": "python3 tests/metric100_game_integration.py",
+    "passed": 4,
+    "checks": [
+      "Game host begins on the Criterion 66 insert and preserves the complete Coverage map",
+      "Conversation begins captions about one second after entry with the approved You/caption styling",
+      "Only hundred/reflection shots play; final dialogue remains uncovered until completion",
+      "Real LevelTwoCinematic callback fires once and returns control to the game"
+    ],
+    "realSecondsBeforeFirstSubtitle": 1.0788999999985098,
+    "audit": {
+      "shots": [
+        "hundred",
+        "reflection"
+      ],
+      "lines": [
+        "Maybe adding more metrics isn’t the answer...",
+        "What if some metrics mattered more than others?"
+      ],
+      "entered": 7922.89999999851,
+      "captionAt": 9001.79999999702,
+      "start": {
+        "shot": "hundred",
+        "mode": "insert",
+        "criterion": "66",
+        "name": "Riley & 李"
+      },
+      "paper": true,
+      "errors": [],
+      "final": {
+        "time": 11.498,
+        "duration": 11.498,
+        "text": "What if some metrics mattered more than others?",
+        "cover": 0
+      }
+    },
+    "runtimeErrors": [],
+    "zipArchivesUpdated": false,
+    "film": {
+      "sourceSha256": "49537d81b034b792a77008b0a414724539935ca6fed0ee162011e977f42a2707",
+      "htmlSha256": "dbea948b38d355448ea98b0326c4d9666127530e11167b69c9656ddbda21a917",
+      "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb"
+    },
+    "fullGameHtmlSha256": "19965e3a3b874e15c3bce2bcd05b8568eba530c43352549f7ddd97d96f39c763",
+    "gameIntegrated": true,
+    "fullGamePathsRepeated": false
+  }
 }

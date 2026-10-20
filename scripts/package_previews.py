@@ -32,7 +32,7 @@ source_paths = sorted(path for path in (ROOT / 'src').rglob('*')
                       if path.is_file() and path.suffix in {'.ts', '.tsx', '.js', '.css', '.png'})
 source_paths += [ROOT / name for name in ['index.html', 'vite.config.ts', 'package.json', 'package-lock.json']]
 source_paths += [ROOT / 'scripts/level1-film.mjs']
-source_paths += [ROOT / 'scripts/level2-film.mjs']
+source_paths += [ROOT / 'scripts/level2-film.mjs', ROOT / 'scripts/cinematic-reading.mjs', ROOT / 'scripts/metric100-preview/pacing.mjs']
 source_paths += [ROOT / 'scripts/level3-film.mjs', ROOT / 'scripts/ending-film.mjs', ROOT / 'scripts/cinematic-dissolve.mjs']
 source_paths += sorted(path for path in (ROOT / 'scripts/ending-animation').glob('*') if path.suffix in {'.mjs', '.jsx', '.css'})
 source_paths += sorted(path for path in (ROOT / 'scripts/level1-settlement').glob('*') if path.suffix in {'.mjs', '.jsx'})

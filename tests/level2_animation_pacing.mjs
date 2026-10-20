@@ -19,7 +19,7 @@ test('three-metric films start exactly on the requested first line, after all es
   assert.ok(Math.abs(first.sourceSeconds - 9.2) < 1e-9);
 });
 test('every frame stays inside requested placeholder material and excludes expansion, priority and extra 10/25 animations', () => {
-  const allowed = { three: ['three-checklist'], six: ['six-checklist'], checklist: ['hundred', 'perfect', 'reflection'] };
+  const allowed = { three: ['three-checklist'], six: ['six-checklist'], checklist: ['hundred', 'reflection'] };
   for (const { kind, shots, pacing } of scenes) {
     for (let time = 0; time <= pacing.duration; time += .005) {
       assert.ok(allowed[kind].includes(shotAt(shots, sampleAt(pacing, time).sourceSeconds).shot.id));
@@ -35,10 +35,10 @@ test('all retained authored lines get the approved English-reading hold without 
     for (const part of actual) assert.ok(part.end - part.start >= readingSeconds(part.dialogue.text) - 1e-9);
   }
 });
-test('the final covered frame is reached before completion and invalid scene kinds are rejected', () => {
+test('three/six fade out; 100 ends on its final dialogue; unsupported scenes are rejected', () => {
   for (const { pacing } of scenes) {
     assert.equal(finalCover(pacing, 0), 0);
-    assert.equal(finalCover(pacing, pacing.duration), 1);
+    assert.equal(finalCover(pacing, pacing.duration), pacing.kind === 'checklist' ? 0 : 1);
   }
   assert.throws(() => createPacing('10', []));
   assert.throws(() => createPacing('25', []));
@@ -53,15 +53,17 @@ test('each final-reflection covered cut introduces its new caption immediately w
     const acting = level2Performance(shot.id, sourceTime);
     const frame = { key: `${shot.id}:${acting.view}:${acting.expression === 'uncertain'}`, text: sample.dialogue?.text ?? null };
     if (previous && frame.key !== previous.key && shot.id === 'reflection') {
-      assert.ok(frame.text, 'The new scene must already have a caption.');
-      assert.notEqual(frame.text, previous.text, 'The cover must not reopen on the old sentence.');
+      if (previous.key.startsWith('reflection:')) {
+        assert.ok(frame.text, 'A new reflection portrait must carry its new caption.');
+        assert.notEqual(frame.text, previous.text, 'A portrait cut must not reopen on the old sentence.');
+      } else assert.equal(frame.text, null, 'The conversation begins with its approved one-second lead-in.');
       cuts.push(frame.text);
     }
     previous = frame;
   }
-  assert.deepEqual(cuts, shots.find(shot => shot.id === 'reflection').dialogue.map(line => line.text));
+  assert.deepEqual(cuts, [null, shots.find(shot => shot.id === 'reflection').dialogue[1].text]);
 });
-test('100-metric film starts on the Criterion 66 pen insert, then shows completion and a brief reaction', () => {
+test('100-metric film preserves the original paper, waits one second in the conversation, and ends with its last line', () => {
   const { shots, pacing } = scenes.find(scene => scene.kind === 'checklist');
   const first = shotAt(shots, sampleAt(pacing, 0).sourceSeconds);
   assert.equal(first.shot.id, 'hundred');
@@ -76,7 +78,10 @@ test('100-metric film starts on the Criterion 66 pen insert, then shows completi
     if (sample.dialogue && firstCaption === null) firstCaption = time;
   }
   assert.deepEqual([...views], ['insert', 'world']);
-  assert.ok(firstCaption <= 2.51, 'Active prelude excludes long silent holds.');
-  const reaction = pacing.timeline.find(part => shotAt(shots, part.from).shot.id === 'perfect');
-  assert.ok(reaction.end - reaction.start <= .401);
+  assert.ok(Math.abs(firstCaption - pacing.conversationAt - 1) < .006, 'First subtitle begins one second after conversation entrance.');
+  assert.equal(pacing.timeline.some(part => shotAt(shots, part.from).shot.id === 'perfect'), false);
+  const last = pacing.timeline.at(-1);
+  assert.ok(last.dialogue);
+  assert.equal(last.end, pacing.duration);
+  assert.equal(sampleAt(pacing, pacing.duration).dialogue.text, shots.find(shot => shot.id === 'reflection').dialogue.at(-1).text);
 });

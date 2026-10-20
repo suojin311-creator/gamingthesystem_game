@@ -5,7 +5,7 @@
 [Level2-100metrics-preview.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/animation/opening-integration/play/Level2-100metrics-preview.zip?raw=true)：解压后打开 **START-HERE.html**。
 从同伴原版 Criterion 66 勾选动作开始，保留整张 Coverage map；全程去掉章节标题和角标。
 清单后直接进入对话画面，1 秒后出现第一句；最后一句结束即停，不含优先级尾页。
-本轮只更新该独立预览，游戏包和下面的旧 Level 2 预览保持原样。
+该版本现已确认并同步到完整游戏源码。本次未重打 ZIP；游戏包和下面的旧 Level 2 预览仍对应上次发布。
 详见 [本轮说明](../docs/METRIC100_ANIMATION_PREVIEW.md)。
 
 ## Level 3A 动画已接入

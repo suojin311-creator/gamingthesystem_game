@@ -1,4 +1,4 @@
-import { readingSeconds } from '../level2-animation/pacing.mjs';
+import { readingSeconds } from '../cinematic-reading.mjs';
 
 // Re-edit the pinned original, independently of the current game's Level 2 cut.
 export function createHundredPacing(shots) {

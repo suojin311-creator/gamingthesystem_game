@@ -1,8 +1,10 @@
-// The approved Level 1 English-reading rule, applied only to retained dialogue.
-export const readingSeconds = text => Math.max(2.1, text.trim().split(/\s+/).length * .27 + .4);
+import { readingSeconds } from '../cinematic-reading.mjs';
+import { createHundredPacing } from '../metric100-preview/pacing.mjs';
+export { readingSeconds };
 export const COVER_SECONDS = .48;
 
 export function createPacing(kind, shots) {
+  if (kind === 'checklist') return { kind, ...createHundredPacing(shots) };
   const timeline = [];
   let duration = 0;
   const add = (from, to, hold, dialogue = null) => {
@@ -12,31 +14,17 @@ export function createPacing(kind, shots) {
   const offsets = new Map();
   let source = 0;
   for (const shot of shots) { offsets.set(shot.id, source); source += shot.duration; }
-  const id = kind === 'three' ? 'three-checklist' : kind === 'six' ? 'six-checklist' : kind === 'checklist' ? 'reflection' : null;
+  const id = kind === 'three' ? 'three-checklist' : kind === 'six' ? 'six-checklist' : null;
   const shot = shots.find(item => item.id === id);
   if (!shot?.dialogue?.length) throw new Error('A supported placeholder scene with authored dialogue is required.');
   if (kind === 'three' && shot.dialogue[0].text !== 'I’ve completed all three requirements!') throw new Error('Review the partner three-metric opening before trimming.');
   if (kind === 'six') add(0, shot.dialogue[0].start, .25);
-  if (kind === 'checklist') {
-    const hundred = shots.find(item => item.id === 'hundred');
-    if (!hundred) throw new Error('The final placeholder must include the authored 100-metric prelude.');
-    const start = offsets.get('hundred');
-    // Begin on the requested Criterion 66 pen insert, without the preceding
-    // establishing view. Keep the full paper/completion and brief reaction.
-    add(start + .25, start + 1.49, .85);
-    add(start + 1.5, start + hundred.duration - .01, 1.25);
-    add(offsets.get('perfect') + 1.6, offsets.get('perfect') + 5.25, .4);
-  }
   const offset = offsets.get(id);
   for (let i = 0; i < shot.dialogue.length; i++) {
     const line = shot.dialogue[i];
-    // In the final reflection, the uncertain portrait starts at source 1.65s,
-    // inside the first sentence. Hold its preceding pose for the full reading
-    // interval, then cut to the next sentence/portrait together under the cover.
-    const end = kind === 'checklist' && i === 0 ? Math.min(line.end, 1.64) : line.end;
-    add(offset + line.start, offset + end, readingSeconds(line.text), line);
+    add(offset + line.start, offset + line.end, readingSeconds(line.text), line);
     const next = shot.dialogue[i + 1];
-    if (next && kind !== 'checklist') add(offset + line.end, offset + next.start, .15);
+    if (next) add(offset + line.end, offset + next.start, .15);
   }
   const last = shot.dialogue.at(-1);
   add(offset + last.end, offset + Math.min(shot.duration - .01, last.end + .2), .35);
@@ -51,6 +39,7 @@ export function sampleAt(pacing, elapsed) {
 }
 
 export function finalCover(pacing, elapsed) {
+  if (pacing.kind === 'checklist') return 0;
   const t = Math.max(0, Math.min(1, (elapsed - (pacing.duration - .45)) / .4));
   return t * t * (3 - 2 * t);
 }

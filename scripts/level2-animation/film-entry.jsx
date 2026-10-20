@@ -38,6 +38,7 @@ function keyAt(shots, sample) {
 }
 
 function Film({ config }) {
+  const hundred = config.request.kind === 'checklist';
   const request = useMemo(() => makeRequest(config), [config]);
   const shots = useMemo(() => getLevel2Shots(request), [request]);
   const pacing = useMemo(() => createPacing(config.request.kind, shots), [config.request.kind, shots]);
@@ -46,6 +47,7 @@ function Film({ config }) {
   const [handoff, setHandoff] = useState('idle');
   const [finished, setFinished] = useState(false);
   const clock = useRef(0);
+  const previousTime = useRef(performance.now());
   const phase = useRef('idle');
   const pending = useRef(0);
   const complete = useRef(false);
@@ -56,13 +58,15 @@ function Film({ config }) {
   const speed = useRef(1);
   const move = value => { phase.current = value; setHandoff(value); };
   const commit = () => {
-    clock.current = pending.current;
+    const entering = hundred && clock.current < pacing.conversationAt && pending.current >= pacing.conversationAt;
+    clock.current = entering ? pacing.conversationAt : pending.current;
+    if (entering) previousTime.current = performance.now();
     lastKey.current = keyAt(shots, sampleAt(pacing, clock.current));
     setElapsed(clock.current);
   };
   useEffect(() => () => transition.current?.cancel(), []);
   useEffect(() => {
-    const visibility = () => { visible.current = !document.hidden; };
+    const visibility = () => { visible.current = !document.hidden; previousTime.current = performance.now(); };
     document.addEventListener('visibilitychange', visibility);
     return () => document.removeEventListener('visibilitychange', visibility);
   }, []);
@@ -87,20 +91,20 @@ function Film({ config }) {
   useEffect(() => {
     if (!playing || finished) return;
     let frame = 0;
-    let previous = performance.now();
+    previousTime.current = performance.now();
     let lastProgress = -1;
     const tick = now => {
-      if (visible.current && phase.current === 'idle') {
-        const next = Math.min(pacing.duration, clock.current + Math.min(now - previous, 100) / 1000 * speed.current);
+      if (visible.current && (phase.current === 'idle' || hundred)) {
+        const next = Math.min(pacing.duration, clock.current + (hundred ? Math.max(0, now - previousTime.current) : Math.min(now - previousTime.current, 100)) / 1000 * speed.current);
         const nextKey = keyAt(shots, sampleAt(pacing, next));
-        if (nextKey !== lastKey.current) {
+        if (nextKey !== lastKey.current && phase.current === 'idle') {
           pending.current = next; move('dissolving');
           transition.current = dissolveFrame(surface.current, commit, { duration: COVER_SECONDS * 1000, reducedMotion: config.reducedMotion });
           transition.current.finished.then(() => move('idle'));
         }
-        else { clock.current = next; setElapsed(next); }
+        else { clock.current = next; if (hundred) lastKey.current = nextKey; setElapsed(next); }
       }
-      previous = now;
+      previousTime.current = Math.max(previousTime.current, now);
       if (config.preview && now - lastProgress >= 150) {
         window.parent.postMessage({ channel: CHANNEL, type: 'progress', runId: config.runId, elapsed: clock.current, duration: pacing.duration, playing: true }, '*');
         lastProgress = now;
@@ -131,7 +135,7 @@ function Film({ config }) {
       <p className="l2-speaker" style={{ ...captionStyle, fontStyle: 'normal' }}>{player ? 'You' : 'Alex'}</p>
       <DialogueLayer style={captionStyle}>{line.text}</DialogueLayer>
     </div>}
-    <div className="l2-film-cover" aria-hidden="true" style={{ opacity: finished ? 1 : finalCover(pacing, elapsed) }} />
+    <div className="l2-film-cover" aria-hidden="true" style={{ opacity: hundred ? 0 : finished ? 1 : finalCover(pacing, elapsed) }} />
   </main>;
 }
 

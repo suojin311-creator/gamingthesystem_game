@@ -1,10 +1,12 @@
 # Working on this game
 
-## Current 100-metric re-edit (independent preview)
+## Current approved 100-metric integration
 
 - The user requested a fresh edit from the pinned original Level 2 delivery,
   not another patch to the integrated 100-metric edit. Work is isolated under
-  `scripts/metric100-preview/`; leave the current game and its six ZIPs unchanged.
+  `scripts/metric100-preview/`. That preview is now approved for the game: the
+  default checklist scene directly reuses its `createHundredPacing` timeline.
+  This sync updates source/build only; do not regenerate or send ZIPs unless asked.
 - Start on the original Criterion 66 pen insert. Keep the complete authored paper,
   Coverage map, evidence slips/references, criterion labels and footer.
 - Remove the chapter, stage/title and candidate-credit overlays throughout.
@@ -13,7 +15,7 @@
   End on the final authored dialogue, omitting all priority/extra ending scenes.
 - You is warm gold, Alex is light blue; identity centred directly above the
   transparent caption. Preserve authored lines and the standard reading intervals.
-- Deliver only `play/Level2-100metrics-preview.zip`; original source remains
+- Approved review: `play/Level2-100metrics-preview.zip`; original source remains
   read-only at `c8c1c83456c4e67cf627df399bfb67b3a9792adb`.
   See `docs/METRIC100_ANIMATION_PREVIEW.md` for build and targeted checks.
 
@@ -101,9 +103,11 @@
   `archive/before-level2-animation-integration-20261020` at `762ce7e`.
 - Replace only the existing three-metric, six-metric and final checklist
   placeholders. The final placeholder starts on the Criterion 66 pen insert,
-  then retains the full Coverage map, completion and reaction before reflection.
+  then retains the full Coverage map and completion before entering reflection
+  with a one-second subtitle lead-in. Omit the silent perfect/reaction hold.
   Omit the earlier establishing view and final priority page.
-  Shorten nonverbal holds (the reaction is 0.4 seconds).
+  The approved 100-metric edit ends on its last authored line without an extra
+  reaction hold or final fade covering the subtitle.
   Ignore separate 10/25 clips and checking studies; the game owns growth and Level 3 entry.
 - Visible/Quality/Mixed start at "I’ve completed all three requirements!".
   Films retain dialogue, Alex/You labels and authored checklist item/group text.
