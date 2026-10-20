@@ -1,58 +1,81 @@
-# Level 2 同伴动画：合并前独立预览
+# Level 2 动画接入、裁剪与预览
 
-这是供用户先看动画的独立候选版，尚未接入现有游戏。先审阅动画，再根据用户反馈决定接入调整。
+当前 `animation/opening-integration` 已按用户要求接入 Level 2，且先备份了修改前的完整版本。只替换原有 placeholder；游戏规则、增长过程与第三关选择仍由游戏负责。
 
 ## 最新内容在哪里
 
-- 同伴源码：`Mg614/gaming-the-system` 的 `feature/cinematic-level2-consequences`。
-- 本次固定提交：`c8c1c83456c4e67cf627df399bfb67b3a9792adb`。
-- 同伴最新说明：该提交的 `docs/cinematics/CIN02_CHARACTER_CANDIDATE.md`；`CIN02_INTERIM.md` 是较早状态。
-- 下载：本仓库 `animation/opening-integration` 分支的 `play/Level2-animation-preview.zip`。
-- 来源、文件校验与当前验证：`play/LEVEL2_ANIMATION_PREVIEW.json`。
-- 现有开头＋Level 1 动画＋三关完整版仍使用 `play/Full-game-play.zip` 或 `play/Gaming-the-System-complete.zip`，本次未替换。
+- 同伴交付：`Mg614/gaming-the-system` 的 `feature/cinematic-level2-consequences`，固定提交 `c8c1c83456c4e67cf627df399bfb67b3a9792adb`。原文件保持只读。
+- 当前完整游戏：本仓库动画分支的 `play/Full-game-play.zip`；全部版本总包为 `play/Gaming-the-System-complete.zip`。包含开头、Level 1／2 动画与三关。
+- 动画单独查看：`play/Level2-animation-preview.zip`；与游戏使用同一个影片 HTML，保留片外暂停／重播／进度工具。
+- 当前来源、影片与审阅包校验：`play/LEVEL2_ANIMATION_PREVIEW.json`；整包检查与六个游戏 ZIP 的校验：`docs/PREVIEW_VALIDATION.json`、`play/LATEST.json`。
 
-## 怎么看
+## 合并前备份
 
-解压整个 ZIP，用 Chrome 或 Edge 打开 **START-HERE.html**，先选 **完整串联 / Full chain**。
-它顺序演示三项、六项、10、25、100 项与结尾。原预览提供暂停、重播、进度条和 1×／2×／4×，建议先用 1× 看节奏。
+在任何本轮修改之前，完整源码与六个游戏 ZIP 已推送到
+`archive/before-level2-animation-integration-20261020`，提交 `762ce7edc796a85307bde282e78393e4773e7b10`。
+六个包都已按该提交的 LATEST.json 通过 SHA-256 校验。
+该分支同时保留上一轮未裁剪的同伴动画预览；恢复时使用该分支的源码和包，不能混用新旧构建。
+稳定游戏分支、已确认的独立 Level 1 实验和更早历史存档均保持原样。
 
-入口还包括 Visible／Quality／Mixed 三种三项分支、Six、10、25、100＋结尾、只看结尾以及 Checking 勾选动作。
-完整串联模拟游戏之间的交接，不是已合入的游戏流程。当前交付没有音频素材，因此保持静音；未生成替代音频或图像。
+## 只播放已有场景槽
 
-## 原动画与导出的边界
+| 游戏请求 | 保留片段 | 忽略内容 |
+| --- | --- | --- |
+| level2.three.visible／quality／mixed | 从 Alex 的 “I’ve completed all three requirements!” 起，保留后面的原对白和表演 | 原开场、全景、指标展示、开头勾选动作 |
+| level2.six | 六项观察的原四句对白与所需表演 | expand 横线／点／方框叠加，以及额外扩展提问页 |
+| level2.checklist | 短暂满意反应、最终两句老师反思 | 100 项增长动画、SET PRIORITIES／What matters most 页面与三张优先级占位卡 |
 
-同伴的源码、对白、镜头、动作、时长、图片和 lockfile 都保留原样，不向同伴仓库写入。
-外部 Vite 配置仅在构建内存中把原 `Level2DevPreview` 设为独立入口，并将原 Opening 链接改为返回本地选择页。
-所有运行素材内嵌到单个 `Level2-animation.html`，下载后无需网络和安装工具。
+不插入独立 10／25／100 增长片、Checking 演示或额外操作页。
+现有连续 10 → 25 → 100 仍是游戏流程，最终观察结束后回到原结果页，再由原按钮进入第三关过渡。
+电影不计算分支、权重或结果；读取游戏提供的真实请求。
 
-这个预览独立打包，不执行正常四入口／六 ZIP 的游戏发布流水线，不覆盖已确认游戏、Level 1 独立实验或历史包。
+## 与已确认视觉一致
 
-## 复现导出
+- 片内可见文字只有字幕及说话身份：老师统一 **You**，学生 **Alex**。移除章节角标、候选标识、纸面标题／标签／数字、系统报告、优先级文字和扩展横线。
+- 共用 `src/shared/data/cinematicPalette.js`：You 为 `#ffe2a3`，Alex 为 `#cceeff`，标签与字幕同色。老师字幕保留斜体，身份标签正常字形。
+- 字幕无底板、无暗色渐变遮罩，用与 Level 1 相同的细描边和阴影；字号 2.15cqw、行高 1.5。
+- 英文阅读时间沿用 Level 1 的约 220 词／分钟加停顿，每句至少 2.1 秒。隐藏页面不消耗阅读时间。
+- 固定 1.025 倍镜头，保留原动作、眨眼和表情；不反复推镜、不把两张人像叠化。换景先用 0.28 秒实色遮罩盖严，再切画面并等待两帧，之后揭开。最后盖严后才通知游戏完成。
+- 字体、颜色、动作和样式隔离于 iframe，未改同伴素材字节。当前没有音频素材，保持静音；游戏本身的声音设置与提示继续工作。
 
-使用固定在上述提交的同伴只读目录，位于游戏仓库外。Node.js 24 可运行以下命令：
+## 动画后结果页
+
+三项、六项和最终观察后的老师／Alex 聊天已移除，不新增解释文字。
+原有观察内容占上方整行，下方 Management’s view 与 Students 两卡等宽并列；手机上按原顺序上下排列。
+沿用现有标题、观察文案、状态与按钮。读完观察内容后释放原下一步操作，完成回调仍一次性报告。
+六项的 “Would more metrics help Alex learn?”、6 → ? 图示、Test more metrics，以及原第三关衔接仍在。
+
+## 构建与复现
+
+已有云任务使用现有 checkout；除非用户要求，不新建 worktree。
+Level 1 缓存仍使用其已固定交付，说明见 ANIMATION_INTEGRATION.md。
+Level 2 首次构建使用位于游戏仓库外、固定在上述提交的同伴目录：
 
 ```sh
 cd /absolute/path/to/partner-checkout
 npm ci --ignore-scripts --cache /tmp/gaming-level2-preview-npm-cache
 npm run typecheck
-node --experimental-strip-types --test tests/cinematics/level2.test.ts
 
 cd /workspace/gamingthesystem_game
-LEVEL2_ANIMATION_SOURCE=/absolute/path/to/partner-checkout \
-  node /absolute/path/to/partner-checkout/node_modules/vite/bin/vite.js build \
-  --config scripts/level2-animation-preview.config.mjs \
-  --outDir /tmp/gts-level2-preview --emptyOutDir
-python3 scripts/package_level2_animation_preview.py /tmp/gts-level2-preview /absolute/path/to/partner-checkout
-python3 tests/level2_animation_preview.py
+LEVEL2_ANIMATION_SOURCE=/absolute/path/to/partner-checkout npm run cinematic:prepare
+npm run package:previews
+npm run test:release
 ```
 
-打包脚本校验固定提交和未修改的同伴文件，并记录全部原文件的组合校验值。
-浏览器验证读取真实 ZIP，在断网状态下检查入口、原控制、各片段完成通知和一遍正常速度串联；输出在忽略的 `test-results/`。
-人工画面、阅读节奏与动画品质仍由用户审阅。本次独立预览通过不代表正式游戏接入已完成。
+`node_modules/.cache/level2-cinematic/` 为忽略的校验缓存；源码或配色变化时要求重新 prepare。
+`LevelTwoCinematic` 默认替换 LevelTwo 原场景槽，自定义 renderCinematic 仍可替换整个场景。
+影片完成消息必须匹配 iframe 来源和当前 runId，旧消息／重复完成不推进游戏。
 
-## 后续合并时保留的边界
+仅重建独立动画审阅包时，复用相同影片：
 
-按当前 `ANIMATION_INTEGRATION.md` 和 `LEVEL2_HANDOFF.md` 接收真实三项分支、六项和最终场景请求。
-同伴预览中的 `three`／`six`／`10`／`25`／`100` 是展示分段，不能直接据此改变游戏协议或插入额外操作。
-现有游戏的 10 → 25 → 100 连续增长仍由游戏负责；预览中的优先级页也不能覆盖 Level 3 的真实选择和规则。
-未来接入必须保留玩家姓名、声音设置、Level 2 原始三项选择、真实结束回调与一次性完成约束。
+```sh
+node node_modules/vite/bin/vite.js build --config scripts/level2-animation-preview.config.mjs --outDir /tmp/gts-level2-preview --emptyOutDir
+python3 scripts/package_level2_animation_preview.py /tmp/gts-level2-preview /absolute/path/to/partner-checkout
+python3 tests/level2_animation_preview.py
+python3 tests/level2_animation_results.py
+LEVEL2_ANIMATION_SOURCE=/absolute/path/to/partner-checkout node --experimental-strip-types --test tests/level2_animation_pacing.mjs
+```
+
+浏览器测试读取真实 ZIP，检查五种片段的全程字幕、颜色、片内文字、遮罩、回调、重播、隐藏页面、减少动态效果及正常速度连播。
+发布测试从完整游戏经开头、Level 1、全部 Level 2 阶段到 Level 3；结果页测试另行检查三种结果页的桌面／手机布局。
+工具中的大体积内嵌 HTML 可将动作／导航时限提高到 120 秒；保留原断言和真实结束回调。

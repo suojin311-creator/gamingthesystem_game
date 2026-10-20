@@ -1,5 +1,11 @@
 # Level 2 — More metrics
 
+Current animation-branch presentation uses `cinematics/level2/LevelTwoCinematic`
+only at the existing three/six/final scene slots. Post-film pages show the
+existing observation above two equal perspective cards, without review chat.
+See docs/LEVEL2_ANIMATION_PREVIEW.md for the backup, clip cuts and current build.
+Older dialogue/presentation details below are retained as implementation history.
+
 - `LevelTwo.tsx`: complete 3 → 6 → 10 → 25 → 100 flow, in-memory state and paced presentation.
 - `GrowthSequence.tsx`: stable counter/matrix/paper surface, next-milestone cue and pausable 0.7-second paper transition.
 - `Conversation.tsx`: faster Level 2 dialogue and finding pace; the last message releases the next action immediately.

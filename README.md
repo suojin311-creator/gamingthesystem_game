@@ -1,6 +1,6 @@
 # 动画合并审阅分支
 
-当前分支 **animation/opening-integration**：完整游戏从开场开始，完成三名学生观察后接入 Level 1。`level3-dev` 保留已确认的游戏版本。
+当前分支 **animation/opening-integration**：完整游戏包含开场、Level 1／2 动画和三关。`level3-dev` 保留原已确认的游戏版本。Level 2 合并前备份在 `archive/before-level2-animation-integration-20261020`。
 
 # Gaming the System
 
@@ -28,7 +28,7 @@
 - Level 2 包含六项指标后的实验问题、Test more metrics、连续 10 → 25 → 100 增长，以及追分行为的结果呼应。
 - Level 3 首次权重从 **— / — / —** 开始，由玩家操作生成分配；两次后可比较，第三次可选，不要求平均。
 - 完整版保留关卡衔接、姓名和声音设置，以及 Level 2 选择到 Level 3 的可修改预选。
-- 开场已接入完整版，后续课堂与结尾剧情仍使用 placeholder；预览停在理论揭示，Design Lab 仍预留。刷新或重新打开会开始新游戏。
+- 开场与 Level 1／2 动画已接入完整版；Level 2 动画仅替换原 placeholder，结果页保留三块现有内容并去掉聊天。Level 3 课堂与结尾剧情仍使用 placeholder；预览停在理论揭示，Design Lab 仍预留。刷新或重新打开会开始新游戏。
 
 ## 查找项目内容
 

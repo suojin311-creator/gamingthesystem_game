@@ -1,5 +1,8 @@
 # Gaming the System
 
+> 当前动画整合版位于 `animation/opening-integration`，包含开头、Level 1／2 动画和三关。
+> 最新下载及备份以 [play/README.md](../play/README.md) 为准；下方部分玩法展示和稳定分支下载说明保留较早状态。
+
 For the latest one-ZIP download containing the full game and all three standalone
 levels, use [the download guide](../play/README.md). This page retains the detailed
 gameplay and development explanation from the preceding repository home.

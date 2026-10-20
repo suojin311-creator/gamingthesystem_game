@@ -1,16 +1,20 @@
 # 最新试玩下载 / Latest downloads
 
-## Level 2 同伴动画：合并前独立预览
+## Level 2 调整版动画：已接入游戏 placeholder
 
-[Level2-animation-preview.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/animation/opening-integration/play/Level2-animation-preview.zip?raw=true)：解压后打开 **START-HERE.html**，先选 **完整串联 / Full chain**。也可分别查看三项指标的三种分支、六项、10／25／100 项、结尾及 Alex 勾选动作。
+[Level2-animation-preview.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/animation/opening-integration/play/Level2-animation-preview.zip?raw=true)：解压后打开 **START-HERE.html**。可查看 Visible／Quality／Mixed、Six 和 100 项最终观察，或连续看这三类 placeholder 片段；不再播放多余增长、勾选演示或优先级页。
 
-来源为同伴 `Mg614/gaming-the-system` 的 `feature/cinematic-level2-consequences`，固定在最新候选提交 `c8c1c83`。保留原动画和播放控制，当前无音频素材。此包供先行审阅，**尚未合并进下方完整游戏**。详细说明见 [Level 2 动画预览](../docs/LEVEL2_ANIMATION_PREVIEW.md)，来源与校验见 [LEVEL2_ANIMATION_PREVIEW.json](LEVEL2_ANIMATION_PREVIEW.json)。
+来源为同伴 `Mg614/gaming-the-system` 的 `feature/cinematic-level2-consequences`，固定在 `c8c1c83`；同伴源文件未修改。本包与下方完整版使用同一套裁剪和视觉调整：三项从 Alex 的第一句开始，画面仅保留字幕与 Alex／You，沿用 Level 1 的颜色、节奏及转场。当前无音频素材。详见 [Level 2 动画说明](../docs/LEVEL2_ANIMATION_PREVIEW.md) 与 [校验](LEVEL2_ANIMATION_PREVIEW.json)。
+
+[Level 2 合并前完整备份](https://github.com/suojin311-creator/gamingthesystem_game/blob/archive/before-level2-animation-integration-20261020/play/Gaming-the-System-complete.zip?raw=true)包含修改前的完整游戏和各独立关卡；全部源码保存在同名备份分支，提交为 `762ce7e`。
 
 ## 最新合并版：开头＋三关
 
 [Gaming-the-System-complete.zip](https://github.com/suojin311-creator/gamingthesystem_game/blob/animation/opening-integration/play/Gaming-the-System-complete.zip?raw=true)：解压后打开 **START-HERE.html**，选择 **Play the full game**。也包含三个单独关卡。
 
 已合入确认的 Level 1 操作页、六种结局动画与核算页，并从核算页继续 Level 2。开头和 Level 1 使用相同师生字幕颜色；开头填写的名字自动用于操作对话、动画老师标签和邮件称呼，并继续传到后两关。
+
+Level 2 已接入三项／六项／最终观察动画，片内老师身份按要求显示 You。动画后的页面移除师生聊天，原观察内容置于上方、Management’s view 与 Students 并排放在下方；继续使用原有文字和按钮。10 → 25 → 100 的游戏增长与第三关过渡保持原流程。
 
 开头的 TAKE YOUR SEAT 和 BACK TO OFFICE 已统一为实色陶土红按钮、浅色边框与箭头；姓名页的重复说明句已移除。
 
@@ -69,4 +73,4 @@ Level3/Level3.html                  单独 Level 3
 
 `npm run package:previews` 一次更新全部六个 ZIP；`python3 tests/release.py` 验证实际文件、版本选择入口和三关衔接。校验值在 [LATEST.json](LATEST.json)。
 
-关闭或刷新会开始新游戏；完整版已接入开场；后续课堂与结尾成片仍为 placeholder。
+关闭或刷新会开始新游戏；完整版已接入开场与 Level 1／2 动画；Level 3 课堂与结尾成片仍为 placeholder。

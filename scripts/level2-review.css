@@ -1,0 +1,19 @@
+html, body, #root { margin: 0; min-height: 100%; background: #111710; color: #e9e0ce; font: 14px/1.4 Arial, sans-serif; }
+* { box-sizing: border-box; }
+.level2-review { max-width: 1440px; margin: auto; padding: 18px 24px; }
+.level2-review header { display: flex; gap: 16px; justify-content: space-between; align-items: center; }
+.level2-review h1 { font: 25px Georgia, serif; margin: 0; }
+.level2-review a { color: #e9d0a1; }
+.level2-review nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 18px 0 14px; }
+.level2-review nav a { padding: 7px 12px; text-decoration: none; border: 1px solid #72644e; }
+.level2-review nav a[aria-current] { background: #554532; }
+.review-controls { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+.review-controls button, .review-controls select { color: #fff3dc; background: #3e392c; border: 1px solid #847154; border-radius: 3px; padding: 6px 10px; }
+.review-controls label { display: flex; gap: 7px; align-items: center; }
+.review-scrub { flex: 1; min-width: 180px; }
+.review-scrub input { flex: 1; min-width: 0; width: 100%; accent-color: #d4b17a; }
+.review-controls output { min-width: 90px; font-variant-numeric: tabular-nums; }
+.review-stage { width: min(100%, calc((100svh - 210px) * 16 / 9)); aspect-ratio: 16 / 9; margin: auto; background: #111710; }
+.review-stage iframe { display: block; width: 100%; height: 100%; border: 0; }
+.level2-review footer { font-size: 11px; color: #b0a58c; margin-top: 12px; }
+@media (max-width: 600px) { .level2-review { padding: 16px 10px; } .level2-review h1 { font-size: 20px; } .review-stage { width: 100%; } }

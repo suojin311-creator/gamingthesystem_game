@@ -10,6 +10,14 @@ Level 1 过渡页。Choose a metric 后，用已确认姓名挂载 Gameplay。�
 改为独立阅读窗淡入，按钮出现即可使用；标题与办公室思考衔接到第一关的指标选择。开场样式限于 `.opening-scene`，不覆盖关卡按钮和字体。
 稳定 `level3-dev` 与预览分支保留原游戏版；本分支的包供动画衔接审阅。
 
+Level 2 也已按用户要求接入原有三项、六项和最终清单 placeholder。
+只保留所需片段，不插入同伴额外的增长或优先级页；三项从 Alex 完成要求的
+第一句开始。字幕只保留 Alex／You，颜色、阅读时间及遮罩转场沿用 Level 1。
+结果页移除师生复盘聊天，保留现有观察和两张状态卡，不增加说明文字。
+合并前源码和六个游戏包已校验备份到
+`archive/before-level2-animation-integration-20261020`（`762ce7e`）。
+构建、裁剪与验证说明见 [Level 2 动画](LEVEL2_ANIMATION_PREVIEW.md)。
+
 Level 1 已按用户确认的独立预览合入默认 Gameplay：`LevelOneExperience`
 复用唯一的 LevelOne、正式 iframe 动画及结果核算页。完整游戏核算页进入
 Level 2；单独 Level 1 保留 Try another metric。开场、关卡操作对话、动画
@@ -56,7 +64,7 @@ LEVEL1_ANIMATION_SOURCE=/absolute/path/to/partner-checkout npm run cinematic:pre
 />
 ```
 
-上面是接口的用法示例。默认 Level 1 已通过 `LevelOneCinematic` 接入真实成片，`renderLevelOneCinematic` 仍可用于覆盖；`LevelTwoAnimation` 和 `LevelThreeAnimation` 仍代表后续交付的适配组件。renderer 得到真实 `request` 和当前场景的 `complete`。只在场景实际结束时调用 `complete()`；不要用猜测时长推进，也不要在动画外再播放一份 placeholder。
+上面是接口的用法示例。默认 Level 1／2 已通过 `LevelOneCinematic`／`LevelTwoCinematic` 接入真实成片，相应 renderer 仍可用于覆盖；`LevelThreeAnimation` 仍代表后续交付的适配组件。renderer 得到真实 `request` 和当前场景的 `complete`。只在场景实际结束时调用 `complete()`；不要用猜测时长推进，也不要在动画外再播放一份 placeholder。
 
 ## 场景对照
 

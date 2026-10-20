@@ -32,22 +32,26 @@ source_paths = sorted(path for path in (ROOT / 'src').rglob('*')
                       if path.is_file() and path.suffix in {'.ts', '.tsx', '.js', '.css', '.png'})
 source_paths += [ROOT / name for name in ['index.html', 'vite.config.ts', 'package.json', 'package-lock.json']]
 source_paths += [ROOT / 'scripts/level1-film.mjs']
+source_paths += [ROOT / 'scripts/level2-film.mjs']
 source_paths += sorted(path for path in (ROOT / 'scripts/level1-settlement').glob('*') if path.suffix in {'.mjs', '.jsx'})
+source_paths += sorted(path for path in (ROOT / 'scripts/level2-animation').glob('*') if path.suffix in {'.mjs', '.jsx', '.css'})
 cinematic = json.loads((ROOT / 'node_modules/.cache/level1-cinematic/manifest.json').read_text())
+level2_cinematic = json.loads((ROOT / 'node_modules/.cache/level2-cinematic/manifest.json').read_text())
 source_hash = hashlib.sha256()
 for path in source_paths:
     source_hash.update(str(path.relative_to(ROOT)).encode() + b'\0')
     source_hash.update(path.read_bytes() + b'\0')
 source_hash.update(b'level1-cinematic-html\0' + cinematic['htmlSha256'].encode() + b'\0')
+source_hash.update(b'level2-cinematic-html\0' + level2_cinematic['htmlSha256'].encode() + b'\0')
 
-manifest = {'sourceSha256': source_hash.hexdigest(), 'cinematic': cinematic, 'entries': []}
+manifest = {'sourceSha256': source_hash.hexdigest(), 'cinematic': cinematic, 'level2Cinematic': level2_cinematic, 'entries': []}
 for archive, html, build, description in ENTRIES:
     instruction = (
         f'Gaming the System\n\n{description}\n\n'
         f'Extract this ZIP, then open {html} in Chrome or Edge.\n'
         'No installation or internet connection is needed after download.\n'
         'Closing or reloading starts a fresh game.\n'
-        'The full-game entry includes the opening; standalone levels start directly. Level 1 includes its integrated cinematic; later story scenes remain placeholders.\n'
+        'The full-game entry includes the opening; standalone levels start directly. Levels 1 and 2 include their integrated cinematics; Level 3 story scenes remain placeholders.\n'
     )
     with zipfile.ZipFile(PLAY / archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:
         for name, data in [(html, builds[build]), ('START-HERE.txt', instruction.encode())]:
@@ -112,7 +116,7 @@ complete_instruction = (
     'The full game carries your choices from Level 2 into editable Level 3 priorities.\n'
     'Closing or reloading starts fresh; standalone levels stop at their own endings.\n'
     'The latest Level 2 framing and unassigned first Level 3 weights are included.\n'
-    'The opening and Level 1 cinematic are integrated; Level 2/3 classroom and final cinematics remain placeholders. Design Lab is not included.\n'
+    'The opening and Level 1/2 cinematics are integrated; Level 3 classroom and final cinematics remain placeholders. Design Lab is not included.\n'
 )
 with zipfile.ZipFile(PLAY / complete_archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as bundle:
     for name, data in [*complete_files.items(), ('START-HERE.txt', complete_instruction.encode())]:

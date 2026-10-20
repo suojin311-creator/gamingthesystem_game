@@ -4,7 +4,7 @@
 
 ## 下一步：动画合并
 
-- [Level 2 同伴动画独立预览](LEVEL2_ANIMATION_PREVIEW.md)：最新候选来源、离线 ZIP、播放方式与合并边界；先看预览，尚未接入完整游戏。
+- [Level 2 动画接入与预览](LEVEL2_ANIMATION_PREVIEW.md)：placeholder 裁剪、统一视觉、结果页、合并前备份和最新 ZIP；已接入完整游戏。
 - [Level 3 narration 制作稿](LEVEL3_NARRATION.md)（[Word 下载](LEVEL3_NARRATION.docx)）：给动画组的画面与英文对白，涵盖所有任务档位、重复观察及两种结尾。
 - [动画接入说明](ANIMATION_INTEGRATION.md)：开场、场景 ID、真实结束回调和已有玩法边界。
 - [开发流程](DEVELOPMENT_WORKFLOW.md)：日常预览、相关检查、正式发包分开。

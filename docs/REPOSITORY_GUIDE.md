@@ -1,5 +1,9 @@
 # GitHub 使用说明
 
+> 当前开头＋Level 1／2 动画＋三关整合版在 `animation/opening-integration`，最新入口见 [play/README.md](../play/README.md)。
+> Level 2 接入前完整版本保存在 `archive/before-level2-animation-integration-20261020`（`762ce7e`）。
+> 下方 `level3-dev` 与预览别名说明属于保留的稳定游戏线，不是最新动画整合版。
+
 统一在 **level3-dev** 分支中保留完整项目，以及各关独立试玩和多关连玩
 的最新版。每关有自己的源码文件夹；不同试玩入口复用同一套源码。
 

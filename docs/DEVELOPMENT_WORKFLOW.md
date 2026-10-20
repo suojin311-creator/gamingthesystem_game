@@ -2,10 +2,12 @@
 
 ## 日常只处理正在修改的部分
 
-当前动画分支已将确认的 Level 1 接入开头＋三关。首次运行先按
+当前动画分支已将确认的 Level 1／2 接入开头＋三关。首次运行先按
 [动画接入说明](ANIMATION_INTEGRATION.md#level-1-动画构建)准备只读交付和本地影片缓存。
 `npm run dev`、build 和 package 命令会校验并复用缓存；影片脚本或配色变化后
-用 LEVEL1_ANIMATION_SOURCE 重新 prepare。当前整包发布仅更新动画分支，不同步稳定分支。
+用对应的 LEVEL1_ANIMATION_SOURCE／LEVEL2_ANIMATION_SOURCE 重新 prepare。
+Level 2 的来源、placeholder 裁剪、备份与结果页标准见 [Level 2 动画说明](LEVEL2_ANIMATION_PREVIEW.md)。
+当前整包发布仅更新动画分支，不同步稳定分支。
 
 统一在 **level3-dev** 开发。已经推送的提交可作为合并前基线，不必为每次小改动另建存档标签。
 

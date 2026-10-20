@@ -5,27 +5,27 @@
   "sourceFilesSha256": "3b1cde4b51f41d41a35cdf18ad5bb718c4e1ba088aa0323e7905fc8a463d99c1",
   "unchangedUpstreamFiles": 95,
   "archive": "Level2-animation-preview.zip",
-  "zipSha256": "de31faee28f33871388023a5d2d6e68fefc2ca9bec30bb5a6e21b9b61000a8e5",
+  "zipSha256": "bb11b16cd7fb8aa0ac2e612b8fb09acd17731ee390704f0f07f389c6b9d037f6",
   "html": "Level2-animation.html",
-  "htmlSha256": "83e71a6d200fb14debd626d1c8ede2df0d07561ea5335f0f8aa7dd55413e4727",
+  "htmlSha256": "dc73604d8563c03f2b71c39b937b607c36a24d493f59d01dc9cd4f9133dec9c2",
   "fileSha256": {
-    "START-HERE.html": "748531ecb2ecbea00b9b431ed151034581d81a2999661d919d09e80e32142a27",
-    "Level2-animation.html": "83e71a6d200fb14debd626d1c8ede2df0d07561ea5335f0f8aa7dd55413e4727",
-    "START-HERE.txt": "61a53c581884945b77d1b642dcce0f692a81e99341ac12061bd8ac95837d4aea"
+    "START-HERE.html": "86a02a3c9a53dd454a53764f47a63deb8f6cfd6cbedc2bc80a014bcd73684b3c",
+    "Level2-animation.html": "dc73604d8563c03f2b71c39b937b607c36a24d493f59d01dc9cd4f9133dec9c2",
+    "START-HERE.txt": "6c7cb97523aa5c7a56ff3c03cefd12b153165c1ad6a17b6a69bc71c9ab4b5b06"
   },
-  "scope": "Independent candidate review; original animation, no gameplay integration or upstream writes",
+  "scope": "Review of the exact adapted film integrated into existing Level 2 placeholders; partner source unchanged",
   "build": {
     "config": "scripts/level2-animation-preview.config.mjs",
     "adaptations": [
-      "Standalone authored Level2DevPreview entry",
-      "Opening link returns to the offline launcher"
-    ],
-    "typecheck": "passed",
-    "productionBuild": "passed"
+      "Only three, six and checklist game slots",
+      "Three-metric scenes start at the requested first line",
+      "No extra text, expansion overlay or priority screen",
+      "Level 1 reading holds, colours and opaque scene covers"
+    ]
   },
   "entries": [
     {
-      "label": "完整串联 / Full chain",
+      "label": "连续观看 / All placeholder clips",
       "state": "full"
     },
     {
@@ -45,69 +45,60 @@
       "state": "six"
     },
     {
-      "label": "10 项要求",
-      "state": "10"
-    },
-    {
-      "label": "25 项要求",
-      "state": "25"
-    },
-    {
-      "label": "100 项＋结尾",
+      "label": "100 项最终观察 / Final",
       "state": "100"
-    },
-    {
-      "label": "只看结尾 / Final conflict",
-      "state": "final"
-    },
-    {
-      "label": "勾选动作 / Checking",
-      "state": "checking"
     }
   ],
   "audio": "No source audio assets; silent",
-  "validatedAtUtc": "2026-10-20T01:09:19.513866+00:00",
-  "upstreamTests": {
-    "command": "node --experimental-strip-types --test tests/cinematics/level2.test.ts",
-    "passed": 8,
-    "failed": 0,
-    "skipped": 0
+  "film": {
+    "sourceSha256": "ac39cec7c9de6f4f611b7877cc2ff74c4fc6483a5a34c5b9cd04d615ad279a50",
+    "htmlSha256": "fb4aa5ac0d93f4fabeacb27429e57b75ebfdc50872ea623bc0c477b4b8df83d0",
+    "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb"
+  },
+  "backup": {
+    "branch": "archive/before-level2-animation-integration-20261020",
+    "commit": "762ce7edc796a85307bde282e78393e4773e7b10"
   },
   "verification": {
-    "passed": 15,
-    "checks": [
-      "The actual independent ZIP passes CRC and all recorded file/ZIP SHA-256 checks",
-      "The offline launcher exposes all ten review entries and fits desktop and phone widths",
-      "visible-heavy: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
-      "quality-heavy: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
-      "mixed-broad: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
-      "six: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
-      "10: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
-      "25: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
-      "100: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
-      "final: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
-      "checking: authored art loads, paused frames hold, 4x playback completes once and replay clears the result",
-      "The original time control seeks to completion and back to the starting shot with native keyboard input",
-      "The authored preview controls and 16:9 stage remain available without horizontal overflow on phones",
-      "The launcher opens the full chain offline; 1x playback traverses all five segments and completes each unique request exactly once",
-      "The exact packaged preview produces no browser runtime errors and requests no external assets"
-    ],
-    "runtimeErrors": [],
-    "externalRequests": [],
-    "playback": "Nine independent entries at 4x, pause/replay/keyboard seeking, and one continuous 1x full-chain playback"
-  },
-  "runtimeVersions": {
-    "node": "v24.19.0",
-    "react": "19.3.0",
-    "react-dom": "19.3.0",
-    "remotion": "4.0.534",
-    "@remotion/player": "4.0.534",
-    "framer-motion": "12.43.0",
-    "vite": "7.3.7"
-  },
-  "preservation": {
-    "existingGameSourceAndArchives": "All recorded source files, prior ZIPs, game manifests and dependency files are byte-identical to the pre-review baseline",
-    "sourceBaseCommit": "eb5c3c4570b81830f7604565d7602031aaffdac6",
-    "sourceRepositoryWrites": false
+    "validatedAtUtc": "2026-10-20T02:15:54.090909+00:00",
+    "preview": {
+      "passed": 10,
+      "checks": [
+        "Actual adapted review ZIP passes CRC and all recorded SHA-256 checks",
+        "Launcher contains only the five existing placeholder variants and their short continuous review",
+        "visible-heavy: correct trim, caption-only visuals, You/Alex colours, opaque swaps, completion and fresh replay",
+        "quality-heavy: correct trim, caption-only visuals, You/Alex colours, opaque swaps, completion and fresh replay",
+        "mixed-broad: correct trim, caption-only visuals, You/Alex colours, opaque swaps, completion and fresh replay",
+        "six: correct trim, caption-only visuals, You/Alex colours, opaque swaps, completion and fresh replay",
+        "100: correct trim, caption-only visuals, You/Alex colours, opaque swaps, completion and fresh replay",
+        "Hidden-page reading time holds and reduced-motion scenes resume to a real completion",
+        "All three placeholder scenes play once each at normal speed; no 10/25/100 growth or priority page is inserted",
+        "Adapted offline preview has no browser runtime errors or external asset requests"
+      ],
+      "runtimeErrors": [],
+      "externalRequests": []
+    },
+    "gameResults": {
+      "passed": 5,
+      "checks": [
+        "3-metric result has the existing observation and two equal cards, no chat, safe callbacks and no overflow at 1366/768/390/320px",
+        "6-metric result has the existing observation and two equal cards, no chat, safe callbacks and no overflow at 1366/768/390/320px",
+        "The original game alone performs continuous 10/25/100 growth without inserting any extra movie",
+        "100-metric result has the existing observation and two equal cards, no chat, safe callbacks and no overflow at 1366/768/390/320px",
+        "The actual standalone ZIP retains its ending and produces no browser errors"
+      ],
+      "runtimeErrors": []
+    },
+    "pacing": {
+      "passed": 4,
+      "checks": [
+        "All three-metric branches start exactly on the requested first line at source time 9.2 seconds",
+        "Every sampled frame stays in existing placeholder material, excluding expansion, priority and extra growth clips",
+        "All retained authored dialogue receives the approved Level 1 English reading hold without new narration",
+        "Final cover is opaque before completion; unsupported growth scene kinds are rejected"
+      ],
+      "command": "LEVEL2_ANIMATION_SOURCE=/tmp/gts-level2-source node --experimental-strip-types --test tests/level2_animation_pacing.mjs"
+    },
+    "sourceModified": false
   }
 }

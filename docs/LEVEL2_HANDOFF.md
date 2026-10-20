@@ -1,5 +1,13 @@
 # Level 2 handoff
 
+> Current animation-branch presentation: `LevelTwoCinematic` now replaces only
+> the existing three/six/final placeholders. Post-film results omit the review
+> conversation and arrange the existing observation above two equal perspective
+> cards. The old conversation/replay-text details below are historical; current
+> presentation and backup are in [Level 2 animation integration](LEVEL2_ANIMATION_PREVIEW.md).
+> Request shapes, actual selected trio, explicit Observe actions and game-owned
+> 10 → 25 → 100 growth remain unchanged.
+
 ## Flow and ownership
 
 The game owns choosing exactly three metrics, evaluating, identifying the missing

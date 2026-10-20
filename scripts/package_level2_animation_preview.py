@@ -1,4 +1,4 @@
-"""Package the independent authored Level 2 review; never replace game archives."""
+"""Package a review of the same adapted Level 2 film used in game placeholders."""
 import hashlib
 import html
 import json
@@ -19,16 +19,12 @@ for name in sorted(source_files):
     source_hash.update(name.encode() + b'\0' + (source / name).read_bytes() + b'\0')
 
 entries = [
-    ('完整串联 / Full chain', 'full', '三项 → 六项 → 10 → 25 → 100 → 结尾；默认混合指标示例。'),
+    ('连续观看 / All placeholder clips', 'full', '只连续播放游戏中三项、六项和最终观察的动画片段。'),
     ('可见行为指标 / Visible', 'visible-heavy', 'Preparation、Participation、Focus 三项分支。'),
     ('质量深度指标 / Quality', 'quality-heavy', 'Discussion、Reflection、Peer response 三项分支。'),
     ('混合指标 / Mixed', 'mixed-broad', 'Preparation、Discussion、Peer response 三项分支。'),
-    ('六项指标 / Six', 'six', '六项清单及继续增加指标的过渡。'),
-    ('10 项要求', '10', '完成要求并补上遗漏。'),
-    ('25 项要求', '25', '用证据对应更多评价要求。'),
-    ('100 项＋结尾', '100', '填补剩余空缺、反思与优先级过渡。'),
-    ('只看结尾 / Final conflict', 'final', '完整清单、教师反思及三项优先级画面。'),
-    ('勾选动作 / Checking', 'checking', 'Alex 看清单、落笔勾选和表情动作。'),
+    ('六项指标 / Six', 'six', '六项指标观察片段，不含额外扩展页。'),
+    ('100 项最终观察 / Final', '100', '最终反思片段；没有 SET PRIORITIES 页面。'),
 ]
 links = '\n'.join(
     f'<a href="Level2-animation.html?cinematic=level2&amp;state={state}"><strong>{html.escape(label)}</strong><span>{html.escape(description)}</span></a>'
@@ -45,24 +41,25 @@ a{{display:block;padding:18px;background:#fffaf0;border:1px solid #c5af8f;border
 a:first-child{{background:#934f43;color:#fff7e6}}a:focus-visible{{outline:3px solid #42697b;outline-offset:3px}}
 strong,span{{display:block}}span{{font-size:14px;margin-top:8px}}small{{color:#61574a}}code{{overflow-wrap:anywhere}}
 </style><main><h1>Level 2 动画预览</h1>
-<p>先看“完整串联”，也可单独查看各片段。播放后可暂停、重播、拖动进度，或切换 1×／2×／4× 速度。建议先用 1× 观看。</p>
-<p>这是同伴的最新动画候选版，供合并前审阅。片段之间的游戏衔接为演示；当前未提供音频素材，播放为静音。现有游戏未改动。</p>
+<p>这里播放与游戏 placeholder 相同的调整版动画。可单独查看各片段、暂停、重播和拖动进度；建议先用 1× 观看。</p>
+<p>三项分支从 I’ve completed all three requirements! 开始，画面只保留字幕和说话身份。额外增长及优先级页面已去掉。当前没有音频素材，播放为静音。</p>
 <nav aria-label="Level 2 animation previews">{links}</nav>
 <p>解压整个 ZIP 后，用 Chrome 或 Edge 打开本页；下载后无需联网。电脑横屏更适合观看原 16:9 画面。</p>
 <small>来源：Mg614/gaming-the-system · feature/cinematic-level2-consequences · <code>{PIN[:7]}</code></small>
 </main></html>'''.encode()
 instructions = '''Level 2 动画独立预览 / Independent animation review
 
-解压整个 ZIP，用 Chrome 或 Edge 打开 START-HERE.html，先选“完整串联”。
+解压整个 ZIP，用 Chrome 或 Edge 打开 START-HERE.html。
 Extract the entire ZIP and open START-HERE.html in Chrome or Edge.
-Choose Full chain first; use the original Pause/Replay/Speed/time controls as needed.
+Choose a clip or All placeholder clips; use Pause/Replay/Speed/time as needed.
 All animation and artwork are embedded. No installation or Internet is required.
 No audio assets were supplied; this preview is silent.
 
-This is the partner's visual-acceptance candidate, not an integrated gameplay release.
-Animation timing, dialogue and artwork are unchanged. The standalone entry and
-return-to-launcher link are adapted in memory only for offline review.
-Full chain simulates gameplay handoffs. The existing game is unchanged.
+This review contains the same adapted film used by the game placeholders.
+Only the three-metric, six-metric and final observation scenes are retained.
+Extra count animations and SET PRIORITIES are omitted. Dialogue reading holds,
+speaker colours and opaque scene covers match the approved Level 1 treatment.
+The full playable game is supplied separately in Full-game-play.zip.
 Source: Mg614/gaming-the-system
 Branch: feature/cinematic-level2-consequences
 Commit: c8c1c83456c4e67cf627df399bfb67b3a9792adb
@@ -82,8 +79,8 @@ report = {
     'archive': archive.name, 'zipSha256': hashlib.sha256(archive.read_bytes()).hexdigest(),
     'html': 'Level2-animation.html', 'htmlSha256': hashlib.sha256(files['Level2-animation.html']).hexdigest(),
     'fileSha256': {name: hashlib.sha256(data).hexdigest() for name, data in files.items()},
-    'scope': 'Independent candidate review; original animation, no gameplay integration or upstream writes',
-    'build': {'config': 'scripts/level2-animation-preview.config.mjs', 'adaptations': ['Standalone authored Level2DevPreview entry', 'Opening link returns to the offline launcher']},
+    'scope': 'Review of the exact adapted film integrated into existing Level 2 placeholders; partner source unchanged',
+    'build': {'config': 'scripts/level2-animation-preview.config.mjs', 'adaptations': ['Only three, six and checklist game slots', 'Three-metric scenes start at the requested first line', 'No extra text, expansion overlay or priority screen', 'Level 1 reading holds, colours and opaque scene covers']},
     'entries': [{'label': label, 'state': state} for label, state, _ in entries],
     'audio': 'No source audio assets; silent',
 }

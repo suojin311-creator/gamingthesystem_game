@@ -1,10 +1,12 @@
 # Finished animation integration
 
-This folder contains the imported opening and the integrated Level 1 iframe
-adapter on animation/opening-integration. LevelOneExperience shares the approved
+This folder contains the imported opening and integrated Level 1/2 iframe
+adapters on animation/opening-integration. LevelOneExperience shares the approved
 Level 1 report, film and settlement between full-game and standalone entries.
 The partner source remains read-only; the film is prepared from its pinned
-checkout using scripts/level1-film.mjs. Other scene families remain destinations
+checkout using scripts/level1-film.mjs. Level 2 uses scripts/level2-film.mjs and
+only its existing three/six/final placeholder slots. Its post-film results retain
+the observation and two perspective cards without review chat. Level 3 remains a destination
 for the partner’s actual delivery. Their authored scripts are not rewritten here.
 
 Add the corresponding folders when their actual source is imported:

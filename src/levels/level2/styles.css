@@ -283,3 +283,24 @@ html:has(.l2-growth-sequence), .level-two:has(.l2-growth-sequence) { overflow-an
   .level-two .l2-growth-question { align-items: flex-start; flex-direction: column; gap: 12px; }
   .level-two .l2-growth-proposal { align-self: flex-end; }
 }
+
+/* Post-film results: the existing observation above two equally sized perspectives. */
+.level-two .l2-body.l2-results { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding: 24px 30px; min-height: 0; }
+.level-two .l2-results .l2-decision, .level-two .l2-results .l2-perspectives { display: contents; }
+.level-two .l2-results .section-intro { grid-column: 1 / -1; grid-row: 1; margin-bottom: 0; }
+.level-two .l2-results .l2-observation-slot { grid-column: 1 / -1; grid-row: 2; margin: 0; min-height: 175px; }
+.level-two .l2-results .l2-observation { min-height: 175px; }
+.level-two .l2-results .l2-management { grid-column: 1; grid-row: 3; }
+.level-two .l2-results .l2-students { grid-column: 2; grid-row: 3; }
+.level-two .l2-results .l2-perspective { min-height: 185px; padding: 21px 24px; }
+.level-two .l2-results .action-row { grid-column: 1 / -1; grid-row: 4; margin-top: 0; }
+.level-two .l2-results-handoff { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: #111710; animation: l2-results-uncover .32s ease-in-out forwards; }
+@keyframes l2-results-uncover { from { opacity: 1; } to { opacity: 0; } }
+@media (max-width: 600px) {
+  .level-two .l2-body.l2-results { grid-template-columns: minmax(0, 1fr); padding: 18px 16px; gap: 14px; }
+  .level-two .l2-results .l2-management { grid-column: 1; grid-row: 3; }
+  .level-two .l2-results .l2-students { grid-column: 1; grid-row: 4; }
+  .level-two .l2-results .action-row { grid-row: 5; }
+  .level-two .l2-results .l2-perspective { min-height: 160px; padding: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { .level-two .l2-results-handoff { display: none; } }

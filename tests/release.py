@@ -77,7 +77,9 @@ def opening(page):
     expect(world).to_have_attribute('data-phase','explore',timeout=7000)
     for student in ['sleeping','phone','unprepared']:
         page.locator('.hotspot-'+student).click()
-        if student!='unprepared': expect(world).to_have_attribute('data-phase','explore',timeout=5500)
+        # This checks the actual completion gate; the opening-specific suite
+        # measures its normal pacing. Allow software-rendered full bundles time.
+        if student!='unprepared': expect(world).to_have_attribute('data-phase','explore',timeout=9000)
     page.get_by_role('button', name='BACK TO OFFICE').click(timeout=8000)
     chapter=page.get_by_role('region',name='Level 1 introduction')
     expect(chapter).to_be_visible(timeout=12000)
@@ -87,9 +89,17 @@ def opening(page):
 
 def scene(page, lines=3):
     page.get_by_role('button', name='Observe the class', exact=True).click()
-    for _ in range(lines - 1): page.get_by_role('button', name='Continue scene', exact=True).click()
-    page.get_by_role('button', name='Return to dashboard', exact=True).click()
-    advance(page)
+    frame = page.frame_locator('iframe[title="Level 2 classroom animation"]')
+    expect(frame.locator('.l2-film')).to_be_visible(timeout=30000)
+    # Keep the real film and CSS-cover callbacks running; no synthetic completion.
+    for _ in range(50):
+        if page.locator('.level2-cinematic').count() == 0: break
+        page.clock.run_for(1000)
+        page.wait_for_timeout(60)
+    expect(page.locator('.level2-cinematic')).to_have_count(0, timeout=30000)
+    expect(page.locator('.level-two .conversation')).to_have_count(0)
+    expect(page.locator('.l2-results .l2-perspective')).to_have_count(2)
+    advance(page, 8)
 
 
 def level_one(page):

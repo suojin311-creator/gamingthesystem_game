@@ -18,7 +18,7 @@
     "test:integration": "python3 tests/level3_integration.py",
     "test:release": "python3 tests/release.py",
     "preview": "vite preview --host 0.0.0.0",
-    "cinematic:prepare": "node scripts/level1-film.mjs"
+    "cinematic:prepare": "node scripts/level1-film.mjs && node scripts/level2-film.mjs"
   },
   "dependencies": {
     "framer-motion": "12.43.0",

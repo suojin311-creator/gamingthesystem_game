@@ -1,22 +1,44 @@
 {
-  "validatedAtUtc": "2026-10-20T00:55:24.090671+00:00",
-  "version": "Remove Sounds simple enough. caption from the latest opening + Levels 1–3 integration",
+  "validatedAtUtc": "2026-10-20T02:15:54.090909+00:00",
+  "version": "Integrate trimmed Level 2 films into the existing placeholders and remove post-film result conversations",
   "branch": "animation/opening-integration",
-  "sourceBaseCommit": "63856491e62c52d5a9bdb176ea738abbe6c6c9c7",
+  "sourceBaseCommit": "762ce7edc796a85307bde282e78393e4773e7b10",
   "approvedLevelOneCommit": "411353dd3ef6103b20faa4debe9075b94f46e199",
   "gameBaselineCommit": "00c311682268ab8593d0733a4163b50ee41cd663",
   "backup": {
-    "branch": "archive/opening-before-level1-merge-20261020",
-    "commit": "32a91fe4bfb1cb193040410c846ebc165f8b9d5d",
-    "completeZipSha256": "5a74aa5429b17af8090d9bdc8113cb900dfe5c03d0021d9cd23accf2bf8961ed",
-    "createdAndPushedBeforeMerge": true
+    "branch": "archive/before-level2-animation-integration-20261020",
+    "commit": "762ce7edc796a85307bde282e78393e4773e7b10",
+    "createdAndPushedBeforeChanges": true,
+    "sixGameArchiveSha256VerifiedBeforeChanges": {
+      "Level1-play.zip": "c6899dfec1d1b44f29649809a281a8dc68af11326544d183557f78716a1582c9",
+      "Level2-play.zip": "10c8df28d75adcd24165d2338de7afd370a2ad4df206752c1fe4bd30dd829c39",
+      "Level3-play.zip": "339c29aef9422cc506547d9a236c693bc289dd485be702ee0db2c7e93fef0ede",
+      "Full-game-play.zip": "74ae3c3a78254ab25bbf458f6fecbac967909725519de85ebbb67b72a8e011a2",
+      "Level3-and-Full-game-play.zip": "c440a3aa6354f2e1863e77ee40df1f9dab7669252f8a396bc5a8ef58d0ed454b",
+      "Gaming-the-System-complete.zip": "d5f1125c28fa34752fe904238e0f773e549b16ea8c7c43eb2eb3e0d428abf887"
+    },
+    "includesPreviousUntrimmedLevel2Preview": true
   },
-  "passed": 14,
+  "previousBackups": [
+    {
+      "branch": "archive/opening-before-level1-merge-20261020",
+      "commit": "32a91fe4bfb1cb193040410c846ebc165f8b9d5d",
+      "completeZipSha256": "5a74aa5429b17af8090d9bdc8113cb900dfe5c03d0021d9cd23accf2bf8961ed",
+      "createdAndPushedBeforeMerge": true
+    }
+  ],
+  "previousReleaseValidation": {
+    "version": "Remove Sounds simple enough. caption from the latest opening + Levels 1–3 integration",
+    "passed": 14,
+    "historicalReportCommit": "762ce7edc796a85307bde282e78393e4773e7b10"
+  },
+  "passed": 41,
   "build": {
     "command": "npm run package:previews",
     "exitCode": 0,
     "pipelineTypeCheckExecutions": 1,
-    "productionEntries": 4
+    "productionEntries": 4,
+    "adaptedReviewBuildExitCode": 0
   },
   "suites": {
     "release-results.json": {
@@ -37,83 +59,166 @@
       ],
       "runtimeErrors": []
     },
-    "caption-removal-results.json": {
-      "passed": 2,
+    "level2-animation-preview-results.json": {
+      "passed": 10,
       "checks": [
-        "Actual full-game ZIP at 1366px omits the caption during its original beat and continues into the classroom offline",
-        "Actual full-game ZIP at 390px omits the caption during its original beat and continues into the classroom offline"
+        "Actual adapted review ZIP passes CRC and all recorded SHA-256 checks",
+        "Launcher contains only the five existing placeholder variants and their short continuous review",
+        "visible-heavy: correct trim, caption-only visuals, You/Alex colours, opaque swaps, completion and fresh replay",
+        "quality-heavy: correct trim, caption-only visuals, You/Alex colours, opaque swaps, completion and fresh replay",
+        "mixed-broad: correct trim, caption-only visuals, You/Alex colours, opaque swaps, completion and fresh replay",
+        "six: correct trim, caption-only visuals, You/Alex colours, opaque swaps, completion and fresh replay",
+        "100: correct trim, caption-only visuals, You/Alex colours, opaque swaps, completion and fresh replay",
+        "Hidden-page reading time holds and reduced-motion scenes resume to a real completion",
+        "All three placeholder scenes play once each at normal speed; no 10/25/100 growth or priority page is inserted",
+        "Adapted offline preview has no browser runtime errors or external asset requests"
+      ],
+      "runtimeErrors": [],
+      "externalRequests": []
+    },
+    "level2-animation-results-layout.json": {
+      "passed": 5,
+      "checks": [
+        "3-metric result has the existing observation and two equal cards, no chat, safe callbacks and no overflow at 1366/768/390/320px",
+        "6-metric result has the existing observation and two equal cards, no chat, safe callbacks and no overflow at 1366/768/390/320px",
+        "The original game alone performs continuous 10/25/100 growth without inserting any extra movie",
+        "100-metric result has the existing observation and two equal cards, no chat, safe callbacks and no overflow at 1366/768/390/320px",
+        "The actual standalone ZIP retains its ending and produces no browser errors"
       ],
       "runtimeErrors": []
+    },
+    "level3-integration-results.json": {
+      "passed": 10,
+      "checks": [
+        "Opening-supplied player name reaches Level 3 labels, avatar and the three weighted partner shots",
+        "Level 3 completes once on Watch after two immutable player tests, without intent or verdict data, and preserves a real near-even/uneven comparison",
+        "Comparison leads to theory; even duplicate final callbacks stay in the placeholder and never invoke Design Lab",
+        "Real Gameplay host carries the opening name and sound preference from Level 2 into the new Level 3 chapter",
+        "Level 3 preselects the actual Level 2 trio, permits swapping, and has no player Restart control",
+        "Reloading the connected host starts fresh from its configured entry level",
+        "Hidden-page publication holds its visible-time sequence and resumes without skipping the three weights",
+        "Optional third tests preserve all actual uneven or near-even records, allow compared=null, and emit completion once with no synthetic reference or choice fields",
+        "Real-time publication and evidence arrive one at a time; Web Audio cues play and Sound off silences later updates",
+        "No browser errors in partner, chapter handoff or real-time audio checks"
+      ],
+      "runtimeErrors": []
+    },
+    "level2_animation_pacing.mjs": {
+      "passed": 4,
+      "checks": [
+        "All three-metric branches start exactly on the requested first line at source time 9.2 seconds",
+        "Every sampled frame stays in existing placeholder material, excluding expansion, priority and extra growth clips",
+        "All retained authored dialogue receives the approved Level 1 English reading hold without new narration",
+        "Final cover is opaque before completion; unsupported growth scene kinds are rejected"
+      ],
+      "command": "LEVEL2_ANIMATION_SOURCE=/tmp/gts-level2-source node --experimental-strip-types --test tests/level2_animation_pacing.mjs"
     }
   },
   "artifacts": {
-    "sourceSha256": "d329fc92a1cb16fc6a700ae004b7e3cf51e0c9c5087a865ec32bf9e9e7a6c107",
+    "sourceSha256": "bae270ac7d1fa3877d9c9671dccd50d62c2a631a5f3738d95976eaa739551316",
     "cinematic": {
       "sourceSha256": "c7cac2c0dbf10fb696863c02d95752972cb2dd23a3243417d1209dda1a39c74a",
       "htmlSha256": "5a9a8f9536894aff12a953b69bdd19cb4518a64d7c9e331d81a8e2dcb05a42c1",
       "partnerSourceCommit": "1bdd0c442c4b345b3bd37d6f541742d4e55c732f"
+    },
+    "level2Cinematic": {
+      "sourceSha256": "ac39cec7c9de6f4f611b7877cc2ff74c4fc6483a5a34c5b9cd04d615ad279a50",
+      "htmlSha256": "fb4aa5ac0d93f4fabeacb27429e57b75ebfdc50872ea623bc0c477b4b8df83d0",
+      "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb"
     },
     "entries": [
       {
         "archive": "Level1-play.zip",
         "html": "Level1.html",
         "build": "dist-level1/index.html",
-        "htmlSha256": "47d78477bbd2b094aa7311d1659ef2c6c454d222a61b426a13bcd04d1a465463",
-        "zipSha256": "c6899dfec1d1b44f29649809a281a8dc68af11326544d183557f78716a1582c9"
+        "htmlSha256": "617427c63413479104017708bf234b007cf53b7193590535c90f4f1c16c37512",
+        "zipSha256": "eec5a06c31ed28bc7dc5f60da819998585f521f9412ff6828291b80ecc1c4af4"
       },
       {
         "archive": "Level2-play.zip",
         "html": "Level2.html",
         "build": "dist-level2/index.html",
-        "htmlSha256": "5aba22252338335bb9eb09145d886e76afa4e909cd1a547889ad57a6b3231b4e",
-        "zipSha256": "10c8df28d75adcd24165d2338de7afd370a2ad4df206752c1fe4bd30dd829c39"
+        "htmlSha256": "e5fb4c46f192cad899dc56104780eebf0b95228ea5cbc6a53524f0c8a49a0050",
+        "zipSha256": "bc5e414a62b147a6b0754dc218faf1bab9f4938053dc065667abbe4e800b796d"
       },
       {
         "archive": "Level3-play.zip",
         "html": "Level3.html",
         "build": "dist-level3/index.html",
-        "htmlSha256": "61f3e814abd92e60f76a6537cd1c2e781356b340e25a6448811bc595481d800a",
-        "zipSha256": "339c29aef9422cc506547d9a236c693bc289dd485be702ee0db2c7e93fef0ede"
+        "htmlSha256": "586b19ce6cee7d01ada75efbe1e385efabc6ced18375924cf6cb4b0c2a7a2e77",
+        "zipSha256": "f52a037beb9d2d48cf4f7a66654aee2fc3a80d5d5d7f9b4d27b2aeebbfd08ac7"
       },
       {
         "archive": "Full-game-play.zip",
         "html": "Gaming-the-System.html",
         "build": "dist/index.html",
-        "htmlSha256": "8b63d2f2d011286d9796abb311447f5eff2f04331d1117ecafcdba82a0865536",
-        "zipSha256": "74ae3c3a78254ab25bbf458f6fecbac967909725519de85ebbb67b72a8e011a2"
+        "htmlSha256": "514a9ea1137217af1e0e49aa4bebb1bb7165933d661dd9c40ba231ab59cb268a",
+        "zipSha256": "72e91df98398be469886bf66bd062c0d22053d9583749e1252cfc6e18bf41c2b"
       }
     ],
     "reviewBundle": {
       "archive": "Level3-and-Full-game-play.zip",
-      "zipSha256": "c440a3aa6354f2e1863e77ee40df1f9dab7669252f8a396bc5a8ef58d0ed454b",
+      "zipSha256": "2c9b625215746bee100de6d9e75b6bef39d6dfb278612c8f906b8106f86517af",
       "htmlSha256": {
-        "Level3/Level3.html": "61f3e814abd92e60f76a6537cd1c2e781356b340e25a6448811bc595481d800a",
-        "Full-game/Gaming-the-System.html": "8b63d2f2d011286d9796abb311447f5eff2f04331d1117ecafcdba82a0865536"
+        "Level3/Level3.html": "586b19ce6cee7d01ada75efbe1e385efabc6ced18375924cf6cb4b0c2a7a2e77",
+        "Full-game/Gaming-the-System.html": "514a9ea1137217af1e0e49aa4bebb1bb7165933d661dd9c40ba231ab59cb268a"
       }
     },
     "completeBundle": {
       "archive": "Gaming-the-System-complete.zip",
-      "zipSha256": "d5f1125c28fa34752fe904238e0f773e549b16ea8c7c43eb2eb3e0d428abf887",
+      "zipSha256": "5819061192e905fe72eab361fb41661c4069036ae4447dd86b07ddf7fa6fd6b2",
       "htmlSha256": {
         "START-HERE.html": "8696f4f200fa9b456aafa3242c1a0bf3adc235c974e6e2fec9b0b92a66d63506",
-        "Full-game/Gaming-the-System.html": "8b63d2f2d011286d9796abb311447f5eff2f04331d1117ecafcdba82a0865536",
-        "Level1/Level1.html": "47d78477bbd2b094aa7311d1659ef2c6c454d222a61b426a13bcd04d1a465463",
-        "Level2/Level2.html": "5aba22252338335bb9eb09145d886e76afa4e909cd1a547889ad57a6b3231b4e",
-        "Level3/Level3.html": "61f3e814abd92e60f76a6537cd1c2e781356b340e25a6448811bc595481d800a"
+        "Full-game/Gaming-the-System.html": "514a9ea1137217af1e0e49aa4bebb1bb7165933d661dd9c40ba231ab59cb268a",
+        "Level1/Level1.html": "617427c63413479104017708bf234b007cf53b7193590535c90f4f1c16c37512",
+        "Level2/Level2.html": "e5fb4c46f192cad899dc56104780eebf0b95228ea5cbc6a53524f0c8a49a0050",
+        "Level3/Level3.html": "586b19ce6cee7d01ada75efbe1e385efabc6ced18375924cf6cb4b0c2a7a2e77"
       }
     }
   },
+  "adaptedLevelTwoPreview": {
+    "archive": "Level2-animation-preview.zip",
+    "zipSha256": "bb11b16cd7fb8aa0ac2e612b8fb09acd17731ee390704f0f07f389c6b9d037f6",
+    "html": "Level2-animation.html",
+    "htmlSha256": "dc73604d8563c03f2b71c39b937b607c36a24d493f59d01dc9cd4f9133dec9c2",
+    "fileSha256": {
+      "START-HERE.html": "86a02a3c9a53dd454a53764f47a63deb8f6cfd6cbedc2bc80a014bcd73684b3c",
+      "Level2-animation.html": "dc73604d8563c03f2b71c39b937b607c36a24d493f59d01dc9cd4f9133dec9c2",
+      "START-HERE.txt": "6c7cb97523aa5c7a56ff3c03cefd12b153165c1ad6a17b6a69bc71c9ab4b5b06"
+    },
+    "film": {
+      "sourceSha256": "ac39cec7c9de6f4f611b7877cc2ff74c4fc6483a5a34c5b9cd04d615ad279a50",
+      "htmlSha256": "fb4aa5ac0d93f4fabeacb27429e57b75ebfdc50872ea623bc0c477b4b8df83d0",
+      "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb"
+    }
+  },
   "partnerDelivery": {
-    "commit": "1bdd0c442c4b345b3bd37d6f541742d4e55c732f",
-    "byteIdenticalOriginalFiles": 94,
-    "sourceModified": false
+    "levelOne": {
+      "commit": "1bdd0c442c4b345b3bd37d6f541742d4e55c732f",
+      "byteIdenticalOriginalFiles": 94,
+      "sourceModified": false
+    },
+    "levelTwo": {
+      "sourceRepository": "https://github.com/Mg614/gaming-the-system",
+      "sourceBranch": "feature/cinematic-level2-consequences",
+      "sourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb",
+      "sourceFilesSha256": "3b1cde4b51f41d41a35cdf18ad5bb718c4e1ba088aa0323e7905fc8a463d99c1",
+      "unchangedUpstreamFiles": 95,
+      "sourceModified": false
+    }
+  },
+  "runtime": {
+    "node": "v24.19.0",
+    "python": "3.12.14",
+    "chromium": "154.0.8037.57"
   },
   "notes": [
-    "The only application-source change removes the opening email thought-caption element. Its sentence is absent from every packaged entry.",
-    "Both desktop (1366px) and phone (390px) checks exercised the original thought beat and continued into the classroom using the actual full-game ZIP offline.",
-    "The existing release suite ran unchanged against the actual six archives and covered the integrated opening, approved Level 1 film and settlement, and playable Levels 2–3.",
-    "The large inline HTML exceeded the default 30-second navigation deadline in an initial parallel attempt. Checks were rerun sequentially with browser action/navigation timeouts of 120 seconds using a temporary runner; existing explicit assertion deadlines were unchanged.",
-    "The Level 1 film was recovered from the prior approved Level1-play.zip, verified against the existing SHA-256 manifest, and reused through the supported LEVEL1_CINEMATIC_HTML input. Cinematic bytes and all three standalone ZIP hashes remain identical to the baseline.",
-    "Stable branches, independent previews, partner source and historical archives are unchanged. Only animation/opening-integration receives this review update."
+    "Only existing three-metric, six-metric and final-checklist placeholders receive films. Original 10/25/100 game growth and Level 3 entry remain game-owned.",
+    "All five adapted film variants and the normal-speed continuous review use the same cached film as the actual game ZIPs. Movie text is limited to authored dialogue and You/Alex labels.",
+    "Three-metric films begin at the requested first line. The expansion overlay and final priority screen are omitted. Level 1 reading holds, shared speaker colours, transparent outlined captions and opaque scene covers are applied.",
+    "All three Level 2 result pages remove teacher/Alex chat and retain existing copy, with observation above two equal perspective cards; 1366/768/390/320px widths pass without overflow.",
+    "Opening, Level 1 and Level 3 application source and package-lock.json are unchanged; the Level 1 film HTML hash remains identical to the previous release.",
+    "The release suite uses a temporary runner with 120-second navigation/action deadlines for large self-contained HTML. An initial parallel run exceeded the unchanged opening return animation assertion at 5.5 seconds; the functional wait allows 9 seconds and the release was rerun sequentially. No opening code was changed.",
+    "Source and all six prior game ZIPs were verified and backed up before editing. Only animation/opening-integration is updated; stable branches, approved independent Level 1 preview, partner source and historical archives are preserved."
   ]
 }

@@ -1,14 +1,21 @@
 # Working on this game
 
-## Level 2 animation review before integration
+## Current Level 2 animation integration
 
-- The user wants to review the partner's Level 2 animation before merging it.
-  See `docs/LEVEL2_ANIMATION_PREVIEW.md` and `play/README.md` for the latest source
-  pin and download. The independent ZIP is `play/Level2-animation-preview.zip`;
-  its verification belongs in `play/LEVEL2_ANIMATION_PREVIEW.json`.
-- Preserve partner source and the existing game archives. This review uses its
-  independent export scripts, not the regular six-ZIP game release pipeline.
-  Gameplay integration remains a subsequent user-directed task.
+- The user requested direct integration after trimming/review. Before changes,
+  source and all six game ZIPs were backed up and verified on
+  `archive/before-level2-animation-integration-20261020` at `762ce7e`.
+- Replace only the existing three-metric, six-metric and final checklist
+  placeholders. Ignore extra 10/25/100 growth, checking studies and priority
+  screens; the game continues to own growth and Level 3 entry.
+- Visible/Quality/Mixed start at "I’ve completed all three requirements!".
+  Films show only dialogue and Alex/You labels. Reuse the Level 1 palette,
+  reading holds, transparent captions, fixed framing and opaque scene covers.
+- Level 2 post-film pages have no teacher/Alex chat: existing observation above
+  two equal perspective cards, with existing copy/actions and no added text.
+- See `docs/LEVEL2_ANIMATION_PREVIEW.md` for pins, build and boundaries. The
+  review ZIP shows the exact adapted film; normal game delivery uses the full
+  six-ZIP pipeline. Keep partner source read-only and push only this branch.
 
 ## Current opening + Level 1 integration
 
