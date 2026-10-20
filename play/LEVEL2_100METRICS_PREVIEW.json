@@ -1,0 +1,13 @@
+{
+  "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb",
+  "sourceSha256": "8e6b5d71e973ed0ef679b1dd345c12a8933562a766131e1985644680f402b9c9",
+  "htmlSha256": "1731522fc21e57593004a4a5c55f9221a881d5f9675226b88a9f47b9d9d95971",
+  "archive": "Level2-100metrics-preview.zip",
+  "zipSha256": "275d671c9b29e7df0aba818ee51e7518102feb6f0a1a10ce9ec241b7a154a09d",
+  "fileSha256": {
+    "START-HERE.html": "1cb6c3bfe98b09d25fc17a4e59e375a9c78dbdbb58d14ede54658feb8468d412",
+    "Level2-100metrics.html": "1731522fc21e57593004a4a5c55f9221a881d5f9675226b88a9f47b9d9d95971",
+    "START-HERE.txt": "04d74f69d315f857a2476e93a435e26b6a9a97450da4a8c96b1c5347e9a0907c"
+  },
+  "scope": "Independent 100 metric review; current game/Level2 preview archives unchanged."
+}

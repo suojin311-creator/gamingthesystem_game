@@ -1,0 +1,15 @@
+import {createHash} from 'node:crypto';
+import {readFileSync,readdirSync,writeFileSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {spawnSync} from 'node:child_process';
+const root=fileURLToPath(new URL('../../',import.meta.url)),source=process.env.LEVEL2_ANIMATION_SOURCE;
+const PIN='c8c1c83456c4e67cf627df399bfb67b3a9792adb',build=resolve(root,'node_modules/.cache/metric100-preview');
+const run=(command,args,options={})=>{const result=spawnSync(command,args,{cwd:root,encoding:'utf8',...options});if(result.error)throw result.error;if(result.status!==0)throw new Error(result.stderr||command+' failed');return result.stdout;};
+if(!source||run('git',['-C',source,'rev-parse','HEAD']).trim()!==PIN)throw new Error('Use the pinned original LEVEL2_ANIMATION_SOURCE.');
+run('git',['-C',source,'diff','--quiet','HEAD']);
+run(process.execPath,[resolve(root,'node_modules/vite/bin/vite.js'),'build','--config',resolve(root,'scripts/metric100-preview/config.mjs'),'--outDir',build,'--emptyOutDir'],{stdio:'inherit'});
+const paths=[...readdirSync(resolve(root,'scripts/metric100-preview')).sort().map(name=>'scripts/metric100-preview/'+name),'scripts/cinematic-dissolve.mjs','scripts/level2-animation/pacing.mjs','src/shared/data/cinematicPalette.js'];
+const sha=b=>createHash('sha256').update(b).digest('hex');
+writeFileSync(resolve(build,'source-manifest.json'),JSON.stringify({partnerSourceCommit:PIN,sourceSha256:sha(Buffer.concat(paths.map(path=>Buffer.concat([Buffer.from(path+'\0'),readFileSync(resolve(root,path))])))),htmlSha256:sha(readFileSync(resolve(build,'index.html')))},null,2)+'\n');
+run('python3',[resolve(root,'scripts/metric100-preview/package.py'),build],{stdio:'inherit'});

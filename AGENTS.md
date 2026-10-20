@@ -1,5 +1,22 @@
 # Working on this game
 
+## Current 100-metric re-edit (independent preview)
+
+- The user requested a fresh edit from the pinned original Level 2 delivery,
+  not another patch to the integrated 100-metric edit. Work is isolated under
+  `scripts/metric100-preview/`; leave the current game and its six ZIPs unchanged.
+- Start on the original Criterion 66 pen insert. Keep the complete authored paper,
+  Coverage map, evidence slips/references, criterion labels and footer.
+- Remove the chapter, stage/title and candidate-credit overlays throughout.
+- After the paper finishes, enter the conversation immediately; its first caption
+  starts one second after that scene enters, with no additional transition pause.
+  End on the final authored dialogue, omitting all priority/extra ending scenes.
+- You is warm gold, Alex is light blue; identity centred directly above the
+  transparent caption. Preserve authored lines and the standard reading intervals.
+- Deliver only `play/Level2-100metrics-preview.zip`; original source remains
+  read-only at `c8c1c83456c4e67cf627df399bfb67b3a9792adb`.
+  See `docs/METRIC100_ANIMATION_PREVIEW.md` for build and targeted checks.
+
 ## Current ending preview
 
 - The user approved an office reflection opening, three short memories and a
