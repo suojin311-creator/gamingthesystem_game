@@ -5,12 +5,12 @@
   "sourceFilesSha256": "3b1cde4b51f41d41a35cdf18ad5bb718c4e1ba088aa0323e7905fc8a463d99c1",
   "unchangedUpstreamFiles": 95,
   "archive": "Level2-animation-preview.zip",
-  "zipSha256": "bb11b16cd7fb8aa0ac2e612b8fb09acd17731ee390704f0f07f389c6b9d037f6",
+  "zipSha256": "0b048eaaa5dbfd1009f99b425434136fbaa1400a947f801347e589dbcbd38fd9",
   "html": "Level2-animation.html",
-  "htmlSha256": "dc73604d8563c03f2b71c39b937b607c36a24d493f59d01dc9cd4f9133dec9c2",
+  "htmlSha256": "66c199d3938b6761f9376ee2b319ea7288b8149099aa53492bf866916cbca3e7",
   "fileSha256": {
-    "START-HERE.html": "86a02a3c9a53dd454a53764f47a63deb8f6cfd6cbedc2bc80a014bcd73684b3c",
-    "Level2-animation.html": "dc73604d8563c03f2b71c39b937b607c36a24d493f59d01dc9cd4f9133dec9c2",
+    "START-HERE.html": "e60e98edb64fe3af0bccbeec03ddcc92a17cb67bc7cf97c0f12399b9be7401c5",
+    "Level2-animation.html": "66c199d3938b6761f9376ee2b319ea7288b8149099aa53492bf866916cbca3e7",
     "START-HERE.txt": "6c7cb97523aa5c7a56ff3c03cefd12b153165c1ad6a17b6a69bc71c9ab4b5b06"
   },
   "scope": "Review of the exact adapted film integrated into existing Level 2 placeholders; partner source unchanged",
@@ -19,7 +19,7 @@
     "adaptations": [
       "Only three, six and checklist game slots",
       "Three-metric scenes start at the requested first line",
-      "No extra text, expansion overlay or priority screen",
+      "Retain authored checklist item/group text; no extra overlay text, expansion overlay or priority screen",
       "Level 1 reading holds, colours and opaque scene covers"
     ]
   },
@@ -51,26 +51,37 @@
   ],
   "audio": "No source audio assets; silent",
   "film": {
-    "sourceSha256": "ac39cec7c9de6f4f611b7877cc2ff74c4fc6483a5a34c5b9cd04d615ad279a50",
-    "htmlSha256": "fb4aa5ac0d93f4fabeacb27429e57b75ebfdc50872ea623bc0c477b4b8df83d0",
+    "sourceSha256": "240dd476574659e556121ae363f6528de24890c341dbdf390cb5564354d9349b",
+    "htmlSha256": "4c7b761d86c85d8314cae1a7499aba6c49c4562b2d58e6b454a9b0de75da850b",
     "partnerSourceCommit": "c8c1c83456c4e67cf627df399bfb67b3a9792adb"
   },
   "backup": {
     "branch": "archive/before-level2-animation-integration-20261020",
-    "commit": "762ce7edc796a85307bde282e78393e4773e7b10"
+    "commit": "762ce7edc796a85307bde282e78393e4773e7b10",
+    "createdAndPushedBeforeChanges": true,
+    "sixGameArchiveSha256VerifiedBeforeChanges": {
+      "Level1-play.zip": "c6899dfec1d1b44f29649809a281a8dc68af11326544d183557f78716a1582c9",
+      "Level2-play.zip": "10c8df28d75adcd24165d2338de7afd370a2ad4df206752c1fe4bd30dd829c39",
+      "Level3-play.zip": "339c29aef9422cc506547d9a236c693bc289dd485be702ee0db2c7e93fef0ede",
+      "Full-game-play.zip": "74ae3c3a78254ab25bbf458f6fecbac967909725519de85ebbb67b72a8e011a2",
+      "Level3-and-Full-game-play.zip": "c440a3aa6354f2e1863e77ee40df1f9dab7669252f8a396bc5a8ef58d0ed454b",
+      "Gaming-the-System-complete.zip": "d5f1125c28fa34752fe904238e0f773e549b16ea8c7c43eb2eb3e0d428abf887"
+    },
+    "includesPreviousUntrimmedLevel2Preview": true,
+    "correctionBaseCommit": "0b3d9177a2d537a78406cf17c74ba8d2fc56c76d"
   },
   "verification": {
-    "validatedAtUtc": "2026-10-20T02:15:54.090909+00:00",
+    "validatedAtUtc": "2026-10-20T02:52:33.843895+00:00",
     "preview": {
       "passed": 10,
       "checks": [
         "Actual adapted review ZIP passes CRC and all recorded SHA-256 checks",
         "Launcher contains only the five existing placeholder variants and their short continuous review",
-        "visible-heavy: correct trim, caption-only visuals, You/Alex colours, opaque swaps, completion and fresh replay",
-        "quality-heavy: correct trim, caption-only visuals, You/Alex colours, opaque swaps, completion and fresh replay",
-        "mixed-broad: correct trim, caption-only visuals, You/Alex colours, opaque swaps, completion and fresh replay",
-        "six: correct trim, caption-only visuals, You/Alex colours, opaque swaps, completion and fresh replay",
-        "100: correct trim, caption-only visuals, You/Alex colours, opaque swaps, completion and fresh replay",
+        "visible-heavy: authored checklist text restored, correct trim, You/Alex colours, opaque swaps, completion and fresh replay",
+        "quality-heavy: authored checklist text restored, correct trim, You/Alex colours, opaque swaps, completion and fresh replay",
+        "mixed-broad: authored checklist text restored, correct trim, You/Alex colours, opaque swaps, completion and fresh replay",
+        "six: authored checklist text restored, correct trim, You/Alex colours, opaque swaps, completion and fresh replay",
+        "100: authored checklist text restored, correct trim, You/Alex colours, opaque swaps, completion and fresh replay",
         "Hidden-page reading time holds and reduced-motion scenes resume to a real completion",
         "All three placeholder scenes play once each at normal speed; no 10/25/100 growth or priority page is inserted",
         "Adapted offline preview has no browser runtime errors or external asset requests"
@@ -78,26 +89,16 @@
       "runtimeErrors": [],
       "externalRequests": []
     },
-    "gameResults": {
-      "passed": 5,
-      "checks": [
-        "3-metric result has the existing observation and two equal cards, no chat, safe callbacks and no overflow at 1366/768/390/320px",
-        "6-metric result has the existing observation and two equal cards, no chat, safe callbacks and no overflow at 1366/768/390/320px",
-        "The original game alone performs continuous 10/25/100 growth without inserting any extra movie",
-        "100-metric result has the existing observation and two equal cards, no chat, safe callbacks and no overflow at 1366/768/390/320px",
-        "The actual standalone ZIP retains its ending and produces no browser errors"
-      ],
-      "runtimeErrors": []
-    },
     "pacing": {
-      "passed": 4,
+      "passed": 5,
+      "command": "LEVEL2_ANIMATION_SOURCE=/tmp/gts-level2-source node --experimental-strip-types --test tests/level2_animation_pacing.mjs",
       "checks": [
-        "All three-metric branches start exactly on the requested first line at source time 9.2 seconds",
-        "Every sampled frame stays in existing placeholder material, excluding expansion, priority and extra growth clips",
-        "All retained authored dialogue receives the approved Level 1 English reading hold without new narration",
-        "Final cover is opaque before completion; unsupported growth scene kinds are rejected"
-      ],
-      "command": "LEVEL2_ANIMATION_SOURCE=/tmp/gts-level2-source node --experimental-strip-types --test tests/level2_animation_pacing.mjs"
+        "Requested three-metric first line and exact source trim are preserved",
+        "All sampled frames remain within existing placeholders and exclude extra growth/priority clips",
+        "All retained authored lines keep their full approved reading holds",
+        "Final cover is opaque before completion and unsupported scene kinds are rejected",
+        "Every final-reflection covered cut introduces a different, nonempty caption with its new portrait"
+      ]
     },
     "sourceModified": false
   }

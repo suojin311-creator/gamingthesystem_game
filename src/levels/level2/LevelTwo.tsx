@@ -14,7 +14,7 @@ import { resolvePlayerName } from '../../shared/utils/playerName';
 import Perspectives from './Perspectives';
 import { FINAL_EVIDENCE, SIX_EVIDENCE, THREE_OUTCOMES, classifyTrio, nextCount, sceneRequest, type LevelTwoCinematicRequest, type LevelTwoResult, type RoundCount } from './data';
 
-type Phase = 'intro' | 'choose' | 'evaluate' | 'scene' | 'observe' | 'gaps' | 'complete';
+type Phase = 'intro' | 'choose' | 'evaluate' | 'scene' | 'observe' | 'complete';
 export type LevelTwoProps = {
   playerName?: string;
   previousMetricId?: MetricId;
@@ -60,7 +60,7 @@ export default function LevelTwo({ playerName: suppliedName, previousMetricId, p
   const evaluationFinished = growth ? counterDone : !pendingId;
   const evidence = phase === 'complete' ? FINAL_EVIDENCE : count === 3 && branch ? THREE_OUTCOMES[branch].evidence : SIX_EVIDENCE;
   const followingCount = nextCount(count);
-  const stage = phase === 'complete' && roundReady ? 3 : phase === 'gaps' ? 1 : count === 3 ? 0 : count === 6 ? 1 : 2;
+  const stage = phase === 'complete' && roundReady ? 3 : count === 3 ? 0 : count === 6 ? 1 : 2;
   const beatKey = `${runId}:${phase}:${count}`;
 
   function bringIntoView(selector: string) {
@@ -88,6 +88,13 @@ export default function LevelTwo({ playerName: suppliedName, previousMetricId, p
     if (next === 10) requestAnimationFrame(() => bringIntoView('.l2-growth-sequence'));
   }
   function finishScene() { movePhase(count === 100 ? 'complete' : 'observe'); }
+  function toggleGapMetric(id: MetricId) {
+    if (phase !== 'evaluate' || count !== 6 || selected.includes(id)) return;
+    const next = checked.includes(id) ? checked.filter(value => value !== id) : ALL_IDS.filter(value => value === id || checked.includes(value));
+    const ready = next.length === ALL_IDS.length;
+    setChecked(next); setEvaluationReady(ready); setReportedCount(ready ? 6 : 3);
+    feedback.play(ready ? 'report' : 'tick');
+  }
   function settleRound() {
     setRoundReady(true);
     if (phase === 'complete' && branch && !completionReported.current) {
@@ -102,7 +109,7 @@ export default function LevelTwo({ playerName: suppliedName, previousMetricId, p
     setRunId(value => value + 1); feedback.reset(); movePhase('intro');
   }
 
-  useVisibleDelay(`${beatKey}:${checked.length}`, '.l2-evaluation', 480, phase === 'evaluate' && !growth && !!pendingId && !paused, () => {
+  useVisibleDelay(`${beatKey}:${checked.length}`, '.l2-evaluation', 480, phase === 'evaluate' && count === 3 && !!pendingId && !paused, () => {
     if (pendingId) setChecked(value => [...value, pendingId]);
     feedback.play('tick');
   });
@@ -168,15 +175,18 @@ export default function LevelTwo({ playerName: suppliedName, previousMetricId, p
         : <div className={`l2-body ${phase === 'choose' ? 'l2-choosing' : ''} ${resultPage ? 'l2-results' : ''}`}>
           {resultPage && <div className="l2-results-handoff" aria-hidden="true" />}
           <section className="l2-decision">
-          <div className={`section-intro ${phase === 'observe' && count === 6 ? 'l2-growth-question' : ''}`}><h2 ref={title} tabIndex={-1}>{growth && phase !== 'complete' ? 'Testing more metrics.' : phase === 'choose' ? 'Which three will you track?' : phase === 'gaps' ? 'What am I still missing?' : phase === 'evaluate' ? evaluationReady ? count === 3 && branch ? THREE_OUTCOMES[branch].report : count === 6 ? 'Six metrics. Six green ticks.' : 'More of the picture?' : growth ? 'Expanding the system…' : 'Watch the metrics.' : phase === 'complete' ? 'More metrics. Still chasing marks.' : growth ? `${count} metrics. What counts now?` : count === 6 ? 'Would more metrics help Alex learn?' : 'Look a little closer.'}</h2>{phase === 'observe' && count === 6 && <div className="l2-growth-proposal" aria-hidden="true"><span><Icon name="reflect" /><b>6</b></span><Icon name="arrow" /><span><Icon name="reflect" /><b>?</b></span></div>}{phase === 'choose' && <>{previousMetricId && <p className="l2-previous">Previously tracked: {metricDefinition(previousMetricId).shortName}</p>}</>}</div>
+          <div className={`section-intro ${phase === 'observe' && count === 6 ? 'l2-growth-question' : ''}`}><h2 ref={title} tabIndex={-1}>{growth && phase !== 'complete' ? 'Testing more metrics.' : phase === 'choose' ? 'Which three will you track?' : phase === 'evaluate' ? evaluationReady ? count === 3 && branch ? THREE_OUTCOMES[branch].report : count === 6 ? 'Six metrics. Six green ticks.' : 'More of the picture?' : growth ? 'Expanding the system…' : count === 6 ? 'Cover the gaps' : 'Watch the metrics.' : phase === 'complete' ? 'More metrics. Still chasing marks.' : growth ? `${count} metrics. What counts now?` : count === 6 ? 'Would more metrics help Alex learn?' : 'Look a little closer.'}</h2>{phase === 'observe' && count === 6 && <div className="l2-growth-proposal" aria-hidden="true"><span><Icon name="reflect" /><b>6</b></span><Icon name="arrow" /><span><Icon name="reflect" /><b>?</b></span></div>}{phase === 'choose' && <>{previousMetricId && <p className="l2-previous">Previously tracked: {metricDefinition(previousMetricId).shortName}</p>}</>}</div>
           {phase === 'choose' && <>
             <MetricSelection level={2} capacity={3} selected={selected} onToggle={chooseMetric} hint={hint} />
             <div className="action-row only-action"><button className="button primary-button" disabled={selected.length !== 3} onClick={() => beginRound(3)}>Run evaluation<Icon name="arrow" /></button></div>
           </>}
-          {phase === 'evaluate' && !growth && <><section className="l2-evaluation" aria-label="Metric evaluation">{growth ? counter : <ul className="l2-evaluation-list">{currentIds.map(id => <li key={id} data-checked={checked.includes(id)}><span className="l2-eval-name"><Icon name={id} />{metricDefinition(id).shortName}</span><span className="l2-eval-result">{checked.includes(id) ? <><Icon name="check" />Improved</> : <><i className="l2-checking" />Checking</>}</span></li>)}</ul>}<p className="l2-data-note">{growth ? 'Requirements tracked, not a learning score.' : 'Illustrative outcomes'}</p></section><div className="action-row only-action">{!growth && <button className="button primary-button" disabled={!evaluationReady} onClick={() => movePhase('scene')}><Icon name="play" />Observe the class</button>}</div></>}
-          {phase === 'gaps' && <><div className="l2-gap-grid">{[true, false].map(tracked => <section className={tracked ? 'l2-covered' : 'l2-missing'} key={String(tracked)}><>{tracked ? <span className="eyebrow">TRACKED</span> : <h3 className="l2-gap-warning"><Icon name="warning" /><span>3 areas untracked</span></h3>}</><ul>{METRIC_CATALOG.filter(metric => selected.includes(metric.id) === tracked).map(metric => <li key={metric.id}><Icon name={tracked ? 'check' : metric.id} />{metric.shortName}</li>)}</ul></section>)}</div><p className="l2-gap-note">Three are improving. Three are still outside the frame.</p><div className="action-row only-action"><button className="button primary-button" onClick={() => beginRound(6)}>Add remaining metrics<Icon name="arrow" /></button></div></>}
+          {phase === 'evaluate' && !growth && <><section className="l2-evaluation" aria-label="Metric evaluation"><ul className="l2-evaluation-list">{currentIds.map(id => {
+            const done = checked.includes(id);
+            const content = <><span className="l2-eval-name"><Icon name={id} />{metricDefinition(id).shortName}</span><span className="l2-eval-result">{done ? <><Icon name="check" />Improved</> : count === 6 ? <span className="l2-empty-check" aria-hidden="true" /> : <><i className="l2-checking" />Checking</>}</span></>;
+            return <li key={id} data-checked={done} className={count === 6 ? 'l2-manual-metric' : undefined}>{count === 6 ? <button type="button" role="checkbox" className="l2-gap-metric" aria-label={metricDefinition(id).shortName} aria-checked={done} disabled={selected.includes(id)} data-testid={`level2-gap-metric-${id}`} onClick={() => toggleGapMetric(id)}>{content}</button> : content}</li>;
+          })}</ul></section><div className="action-row only-action"><button className="button primary-button" disabled={!evaluationReady} onClick={() => movePhase('scene')}><Icon name="play" />Observe the class</button></div></>}
           {growth && (phase === 'evaluate' || phase === 'observe') && <GrowthSequence count={growthCount} beat={checklistRows} shown={evidenceVisible} leaving={growthLeaving} counter={counter} ready={roundReady} onObserve={() => movePhase('scene')} />}
-          {resultPage && <><div className="l2-observation-slot">{evidenceVisible ? <article className="l2-observation classroom-observation" key={beatKey}><ObservationContent evidence={evidence} metricIds={currentIds} /></article> : <div className="l2-waiting" role="status"><Icon name="eye" /><span>Looking closer…</span></div>}</div><div className="action-row"><button className="text-button" onClick={() => movePhase('scene')}>Replay scene</button>{roundReady ? phase === 'complete' ? <button className="button primary-button" disabled={!onContinue} onClick={() => { settleRound(); if (branch) onContinue?.({ selectedMetricIds: [...selected], branch, metricsTracked: 100 }); }}>Continue to Level 3<Icon name="arrow" /></button> : count === 3 ? <button className="button primary-button" onClick={() => movePhase('gaps')}>Cover the gaps<Icon name="arrow" /></button> : <button className="button primary-button" onClick={() => beginRound(10)}>Test more metrics<Icon name="arrow" /></button> : <span className="l2-next-space" aria-hidden="true" />}</div></>}
+          {resultPage && <><div className="l2-observation-slot">{evidenceVisible ? <article className="l2-observation classroom-observation" key={beatKey}><ObservationContent evidence={evidence} metricIds={currentIds} /></article> : <div className="l2-waiting" role="status"><Icon name="eye" /><span>Looking closer…</span></div>}</div><div className="action-row"><button className="text-button" onClick={() => movePhase('scene')}>Replay scene</button>{roundReady ? phase === 'complete' ? <button className="button primary-button" disabled={!onContinue} onClick={() => { settleRound(); if (branch) onContinue?.({ selectedMetricIds: [...selected], branch, metricsTracked: 100 }); }}>Continue to Level 3<Icon name="arrow" /></button> : count === 3 ? <button className="button primary-button" onClick={() => beginRound(6)}>Cover the gaps<Icon name="arrow" /></button> : <button className="button primary-button" onClick={() => beginRound(10)}>Test more metrics<Icon name="arrow" /></button> : <span className="l2-next-space" aria-hidden="true" />}</div></>}
 
         </section>{phase !== 'choose' && <Perspectives count={count} reportedCount={reportedCount} observedCount={observedCount} evaluating={phase === 'evaluate'} />}</div>}
     </main>

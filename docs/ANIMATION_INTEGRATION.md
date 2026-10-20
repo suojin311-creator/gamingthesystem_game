@@ -12,7 +12,7 @@ Level 1 过渡页。Choose a metric 后，用已确认姓名挂载 Gameplay。�
 
 Level 2 也已按用户要求接入原有三项、六项和最终清单 placeholder。
 只保留所需片段，不插入同伴额外的增长或优先级页；三项从 Alex 完成要求的
-第一句开始。字幕只保留 Alex／You，颜色、阅读时间及遮罩转场沿用 Level 1。
+第一句开始。字幕身份统一为 Alex／You，并保留 checklist 原有条目文字；颜色、阅读时间及遮罩转场沿用 Level 1。
 结果页移除师生复盘聊天，保留现有观察和两张状态卡，不增加说明文字。
 合并前源码和六个游戏包已校验备份到
 `archive/before-level2-animation-integration-20261020`（`762ce7e`）。

@@ -121,7 +121,11 @@ with sync_playwright() as p:
         expect(page.locator('.l2-cinematic,.l2-peer-practice')).to_have_count(0)
         page.get_by_role('button',name='Finish partner scene',exact=True).click();advance(page,14)
     scene_two();page.get_by_role('button',name='Cover the gaps',exact=True).click()
-    page.get_by_role('button',name='Add remaining metrics',exact=True).click();advance(page,6);scene_two()
+    expect(page.locator('.l2-gap-metric[aria-checked=true]:disabled')).to_have_count(3)
+    expect(page.get_by_role('button',name='Observe the class',exact=True)).to_be_disabled()
+    pending=[box.get_attribute('data-testid') for box in page.locator('.l2-gap-metric[aria-checked=false]').all()]
+    for test_id in pending:page.get_by_test_id(test_id).click()
+    scene_two()
     page.get_by_role('button',name='Test more metrics',exact=True).click();advance(page,30)
     scene_two()
     page.get_by_role('button',name='Continue to Level 3',exact=True).click();advance(page,8)

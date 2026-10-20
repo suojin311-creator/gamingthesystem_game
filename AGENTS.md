@@ -9,10 +9,21 @@
   placeholders. Ignore extra 10/25/100 growth, checking studies and priority
   screens; the game continues to own growth and Level 3 entry.
 - Visible/Quality/Mixed start at "I’ve completed all three requirements!".
-  Films show only dialogue and Alex/You labels. Reuse the Level 1 palette,
+  Films retain dialogue, Alex/You labels and authored checklist item/group text.
+  Checklist text is an explicit exception to the overlay-text removal rule.
+  Reuse the Level 1 palette,
   reading holds, transparent captions, fixed framing and opaque scene covers.
+- Final 100-metric reflection cuts must commit the new caption and portrait
+  together under the cover; never reopen on the preceding sentence.
 - Level 2 post-film pages have no teacher/Alex chat: existing observation above
   two equal perspective cards, with existing copy/actions and no added text.
+  Students uses the Level 1 red outline: three 0.75-second pulses on observation,
+  with a static outline for reduced motion.
+- Cover the gaps goes directly to the six-card evaluation. The original three
+  stay checked/locked; the player checks the remaining three. Observe enables
+  only when all six are checked. No automatic six-metric ticks or separate
+  gaps/Add remaining metrics page. Remove Illustrative outcomes from Level 2;
+  do not add this label to other levels.
 - See `docs/LEVEL2_ANIMATION_PREVIEW.md` for pins, build and boundaries. The
   review ZIP shows the exact adapted film; normal game delivery uses the full
   six-ZIP pipeline. Keep partner source read-only and push only this branch.

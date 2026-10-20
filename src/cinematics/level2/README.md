@@ -12,7 +12,8 @@ ignored node_modules/.cache/level2-cinematic and embedded in offline game HTML.
 
 Only three/six/final scene requests are supported. Three begins on Alex's first
 completed-requirements line. Extra growth and priority pages are never played.
-Only dialogue and Alex/You labels remain; palette, reading time, fixed camera
+Dialogue, Alex/You labels and authored checklist item/group text remain;
+checklist text is an explicit exception to overlay removal. Palette, reading time, fixed camera
 and opaque covers follow the approved Level 1 presentation.
 
 Source-window/run-token checks accept the real film's final covered completion

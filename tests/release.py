@@ -144,11 +144,26 @@ def level_one(page):
     assert audit['emails'] == [f'Great work, {expected_name}!'] and not audit['errors'], audit
 
 
+def cover_gaps(page):
+    page.get_by_role('button', name='Cover the gaps', exact=True).click()
+    expect(page.locator('.level-two')).to_have_attribute('data-phase','evaluate')
+    expect(page.locator('.level-two')).to_have_attribute('data-round','6')
+    boxes=page.get_by_role('checkbox')
+    expect(boxes).to_have_count(6)
+    expect(page.locator('.l2-gap-metric[aria-checked=true]:disabled')).to_have_count(3)
+    observe=page.get_by_role('button', name='Observe the class', exact=True)
+    expect(observe).to_be_disabled()
+    pending=[box.get_attribute('data-testid') for box in page.locator('.l2-gap-metric[aria-checked=false]').all()]
+    for test_id in pending:
+        expect(observe).to_be_disabled()
+        page.get_by_test_id(test_id).click()
+    expect(observe).to_be_enabled()
+    expect(page.locator('body')).not_to_contain_text('Illustrative outcomes')
+
+
 def finish_two(page):
     scene(page)
-    page.get_by_role('button', name='Cover the gaps', exact=True).click()
-    page.get_by_role('button', name='Add remaining metrics', exact=True).click()
-    advance(page, 6)
+    cover_gaps(page)
     scene(page)
     expect(page.get_by_role('heading', name='Would more metrics help Alex learn?', exact=True)).to_be_visible()
     page.get_by_role('button', name='Test more metrics', exact=True).click()
@@ -238,9 +253,7 @@ with sync_playwright() as playwright:
     page.get_by_role('button', name='Run evaluation', exact=True).click()
     advance(page, 6)
     scene(page)
-    page.get_by_role('button', name='Cover the gaps', exact=True).click()
-    page.get_by_role('button', name='Add remaining metrics', exact=True).click()
-    advance(page, 6)
+    cover_gaps(page)
     scene(page)
     expect(page.get_by_role('heading', name='Would more metrics help Alex learn?', exact=True)).to_be_visible()
     page.get_by_role('button', name='Test more metrics', exact=True).click()

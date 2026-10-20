@@ -7,6 +7,11 @@
 > presentation and backup are in [Level 2 animation integration](LEVEL2_ANIMATION_PREVIEW.md).
 > Request shapes, actual selected trio, explicit Observe actions and game-owned
 > 10 → 25 → 100 growth remain unchanged.
+> Cover the gaps now opens the six-card evaluation directly: the initial trio
+> stays checked/locked and the player checks the remaining three before Observe
+> enables. The old gaps/Add remaining metrics screen below is historical.
+> Level 2 omits Illustrative outcomes; Students pulses the Level 1 red outline
+> three times when its observation is visible.
 
 ## Flow and ownership
 

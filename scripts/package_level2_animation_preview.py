@@ -42,7 +42,7 @@ a:first-child{{background:#934f43;color:#fff7e6}}a:focus-visible{{outline:3px so
 strong,span{{display:block}}span{{font-size:14px;margin-top:8px}}small{{color:#61574a}}code{{overflow-wrap:anywhere}}
 </style><main><h1>Level 2 动画预览</h1>
 <p>这里播放与游戏 placeholder 相同的调整版动画。可单独查看各片段、暂停、重播和拖动进度；建议先用 1× 观看。</p>
-<p>三项分支从 I’ve completed all three requirements! 开始，画面只保留字幕和说话身份。额外增长及优先级页面已去掉。当前没有音频素材，播放为静音。</p>
+<p>三项分支从 I’ve completed all three requirements! 开始，保留字幕、说话身份和 checklist 原有条目文字。额外增长及优先级页面已去掉。当前没有音频素材，播放为静音。</p>
 <nav aria-label="Level 2 animation previews">{links}</nav>
 <p>解压整个 ZIP 后，用 Chrome 或 Edge 打开本页；下载后无需联网。电脑横屏更适合观看原 16:9 画面。</p>
 <small>来源：Mg614/gaming-the-system · feature/cinematic-level2-consequences · <code>{PIN[:7]}</code></small>
@@ -80,7 +80,7 @@ report = {
     'html': 'Level2-animation.html', 'htmlSha256': hashlib.sha256(files['Level2-animation.html']).hexdigest(),
     'fileSha256': {name: hashlib.sha256(data).hexdigest() for name, data in files.items()},
     'scope': 'Review of the exact adapted film integrated into existing Level 2 placeholders; partner source unchanged',
-    'build': {'config': 'scripts/level2-animation-preview.config.mjs', 'adaptations': ['Only three, six and checklist game slots', 'Three-metric scenes start at the requested first line', 'No extra text, expansion overlay or priority screen', 'Level 1 reading holds, colours and opaque scene covers']},
+    'build': {'config': 'scripts/level2-animation-preview.config.mjs', 'adaptations': ['Only three, six and checklist game slots', 'Three-metric scenes start at the requested first line', 'Retain authored checklist item/group text; no extra overlay text, expansion overlay or priority screen', 'Level 1 reading holds, colours and opaque scene covers']},
     'entries': [{'label': label, 'state': state} for label, state, _ in entries],
     'audio': 'No source audio assets; silent',
 }

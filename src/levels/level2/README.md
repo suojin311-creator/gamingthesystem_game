@@ -5,6 +5,10 @@ only at the existing three/six/final scene slots. Post-film pages show the
 existing observation above two equal perspective cards, without review chat.
 See docs/LEVEL2_ANIMATION_PREVIEW.md for the backup, clip cuts and current build.
 Older dialogue/presentation details below are retained as implementation history.
+Cover the gaps now goes directly to six cards: preserve/lock the original trio,
+require the player to check the remaining three, and enable Observe only when
+all are checked. No separate gaps page or Illustrative outcomes label remains.
+Observed Students cards use the Level 1 red outline for three visible pulses.
 
 - `LevelTwo.tsx`: complete 3 → 6 → 10 → 25 → 100 flow, in-memory state and paced presentation.
 - `GrowthSequence.tsx`: stable counter/matrix/paper surface, next-milestone cue and pausable 0.7-second paper transition.

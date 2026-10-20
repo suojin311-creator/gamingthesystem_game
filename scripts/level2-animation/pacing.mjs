@@ -21,9 +21,13 @@ export function createPacing(kind, shots) {
   const offset = offsets.get(id);
   for (let i = 0; i < shot.dialogue.length; i++) {
     const line = shot.dialogue[i];
-    add(offset + line.start, offset + line.end, readingSeconds(line.text), line);
+    // In the final reflection, the uncertain portrait starts at source 1.65s,
+    // inside the first sentence. Hold its preceding pose for the full reading
+    // interval, then cut to the next sentence/portrait together under the cover.
+    const end = kind === 'checklist' && i === 0 ? Math.min(line.end, 1.64) : line.end;
+    add(offset + line.start, offset + end, readingSeconds(line.text), line);
     const next = shot.dialogue[i + 1];
-    if (next) add(offset + line.end, offset + next.start, .15);
+    if (next && kind !== 'checklist') add(offset + line.end, offset + next.start, .15);
   }
   const last = shot.dialogue.at(-1);
   add(offset + last.end, offset + Math.min(shot.duration - .01, last.end + .2), .35);

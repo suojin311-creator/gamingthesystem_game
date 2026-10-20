@@ -6,6 +6,7 @@ import { createPacing, sampleAt, readingSeconds, finalCover } from '../scripts/l
 
 if (!process.env.LEVEL2_ANIMATION_SOURCE) throw new Error('Set LEVEL2_ANIMATION_SOURCE to the pinned read-only partner checkout.');
 const { getLevel2Shots, shotAt } = await import(pathToFileURL(resolve(process.env.LEVEL2_ANIMATION_SOURCE, 'src/cinematics/level2/level2Timeline.ts')));
+const { level2Performance } = await import(pathToFileURL(resolve(process.env.LEVEL2_ANIMATION_SOURCE, 'src/cinematics/level2/level2Performance.ts')));
 const scenes = ['three', 'six', 'checklist'].map(kind => {
   const shots = getLevel2Shots({ input: { phase: kind === 'checklist' ? 'final' : kind, resultCategory: 'mixed-broad' } });
   return { kind, shots, pacing: createPacing(kind, shots) };
@@ -41,4 +42,22 @@ test('the final covered frame is reached before completion and invalid scene kin
   }
   assert.throws(() => createPacing('10', []));
   assert.throws(() => createPacing('25', []));
+});
+test('each final-reflection covered cut introduces its new caption immediately with the new portrait', () => {
+  const { shots, pacing } = scenes.find(scene => scene.kind === 'checklist');
+  let previous = null;
+  const cuts = [];
+  for (let time = 0; time < pacing.duration; time += .005) {
+    const sample = sampleAt(pacing, time);
+    const { shot, time: sourceTime } = shotAt(shots, sample.sourceSeconds);
+    const acting = level2Performance(shot.id, sourceTime);
+    const frame = { key: `${shot.id}:${acting.view}:${acting.expression === 'uncertain'}`, text: sample.dialogue?.text ?? null };
+    if (previous && frame.key !== previous.key) {
+      assert.ok(frame.text, 'The new scene must already have a caption.');
+      assert.notEqual(frame.text, previous.text, 'The cover must not reopen on the old sentence.');
+      cuts.push(frame.text);
+    }
+    previous = frame;
+  }
+  assert.deepEqual(cuts, shots.find(shot => shot.id === 'reflection').dialogue.map(line => line.text));
 });
