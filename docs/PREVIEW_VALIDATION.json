@@ -1,28 +1,41 @@
 {
-  "validatedAtUtc": "2026-10-24T09:33:23.890476+00:00",
+  "validatedAtUtc": "2026-10-24T14:06:33.652578+00:00",
   "branch": "animation/opening-integration",
-  "scope": "Approved five Level 2 observation paragraphs promoted to formal game. Text only; production renderer, CSS, effects and layout unchanged.",
-  "gameSourceSha256": "507dcfec2e7dc4c4cdf6b529241d6d2db9f99d1e0eb9b23da1780d46fb689d27",
-  "classroomZipSha256": "f050f25da32abee3fa6bcda58d8eb9393f7c0786107f6175e0cf7c5c167f186a",
-  "classroomEmbeddedGameHtmlSha256": "f0d579234ca985a952b7e22af60eadf3997823fd859123d5ac2f2684b609ba8b",
+  "scope": "Approved Level 1 unified student headline and teacher-only dialogue strip below the action row. Preserve original prediction details and opening player-name propagation. Previous approved Level 2 copy and Padlet retained.",
+  "gameSourceSha256": "522ddfdaf5d4f58c89562f26929f9a393fa552b890049cd680502685570c9e3f",
+  "classroomZipSha256": "2c7d4583adcefab8a5928d619a0b77ce5bd6a7c68e0469f56431d4f5230d6f9e",
+  "classroomEmbeddedGameHtmlSha256": "b06e3164dae29e887607898ce051df89ca7c209f314523dc62f4c02915bb6171",
   "checks": {
-    "sixArchiveIntegrity": {
-      "passed": 3,
+    "release": {
+      "passed": 12,
       "checks": [
         "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
         "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
-        "The complete ZIP shares one verified game build across its four offline entry points without duplicating movie assets"
+        "The complete ZIP shares one verified game build across its four offline entry points without duplicating movie assets",
+        "The actual complete-ZIP launcher fits desktop/phone, starts the full game at the opening and opens each standalone level directly offline",
+        "Packaged Level2.html completes 3 \u2192 6 \u2192 10 \u2192 25 \u2192 100 offline with normal motion",
+        "Packaged standalone Level3.html compares after two tests and can add an optional third, keeping all actual results offline",
+        "Packaged Level1.html uses the approved report, normal-speed cinematic, matching name/colours and settlement; Try another resets it without entering Level 2",
+        "Standalone Level 1 reload starts a fresh Level 1 run",
+        "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
+        "Packaged combined game carries the opening name, including ampersand and Chinese, through Level 1 UI, teacher/Alex captions, email and playable Levels 2\u20133",
+        "Combined preview reload starts at the opening rather than restoring a level or player identity",
+        "Packaged entries have no browser runtime errors"
       ],
-      "sourceSha256": "507dcfec2e7dc4c4cdf6b529241d6d2db9f99d1e0eb9b23da1780d46fb689d27"
+      "runtimeErrors": []
     },
-    "approvedCopyInBuilds": "All five approved paragraphs found in both full-game and standalone Level 2 production HTML.",
+    "level1TeacherStrip": [
+      "Headline and exact question verified in actual archive gameplay.",
+      "Teacher label matches opening input Riley Chen & \u674e in full game, Maya in standalone Level 1.",
+      "Your prediction expands to original submitted content and collapses.",
+      "Dialogue strip has existing shaded background and is below action button."
+    ],
     "windowsBinaryChecks": [
       "PE x64 header verified",
       "All built web assets and illustration embedded byte-for-byte",
       "CGO disabled; no Python/Node.js runtime or paid service required"
     ],
-    "typecheck": "Passed during npm run package:previews.",
-    "visuals": "Production observation renderer and CSS unchanged from approved preview."
+    "typecheck": "Passed during npm run package:previews."
   },
   "priorPadletValidation": {
     "validatedAtUtc": "2026-10-24T08:29:18.159581+00:00",

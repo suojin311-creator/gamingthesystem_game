@@ -1,4 +1,4 @@
-# Pending Level 1 result-copy preview
+# Approved Level 1 result copy and teacher strip
 
 - User requested a preview image only: all Level 1 settlement student headlines
   read "Alex focused on only one metric." A teacher-only bubble below reads
@@ -10,7 +10,9 @@
   preview must use a nonempty prediction so this control is visible.
 - Preview: play/Level1-result-copy-preview.png; reproduction under
   scripts/level1-result-copy-review/. TypeScript and actual rendered text checked.
-- Wait for approval before regenerating formal game/classroom packages.
+- User approved the corrected preview for the formal game. Refresh regular game
+  archives and the game-server package; preserve opening player-name propagation.
+  No ZIP delivery requested.
 
 # Approved Level 2 observation copy
 

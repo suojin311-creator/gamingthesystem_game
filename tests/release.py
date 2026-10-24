@@ -145,10 +145,21 @@ def level_one(page):
       };
       new MutationObserver(sample).observe(root, {subtree:true,childList:true,attributes:true}); sample();
     }''')
-    expect(page.locator('.l1-settlement .student-behaviour')).to_have_text('Skimming just to finish.', timeout=35000)
-    expect(page.locator('.student .student-behaviour')).to_have_text('Skimming just to finish.')
-    expect(page.locator('.dialogue-strip, .alex-bubble')).to_have_count(0)
+    expect(page.locator('.l1-settlement .student-behaviour')).to_have_text('Alex focused on only one metric.', timeout=35000)
+    expect(page.locator('.student .student-behaviour')).to_have_text('Alex focused on only one metric.')
+    expect(page.locator('.l1-settlement .dialogue-strip')).to_have_count(1)
+    expect(page.locator('.l1-settlement .alex-bubble')).to_have_count(0)
+    expect(page.locator('.l1-settlement-teacher p')).to_have_text('What if I measured more than one metric?')
+    expect(page.locator('.l1-settlement-prediction summary')).to_have_text('Your prediction')
+    page.locator('.l1-settlement-prediction summary').click()
+    expect(page.locator('.l1-settlement-prediction blockquote')).to_have_text('Students will explain the reading.')
+    page.locator('.l1-settlement-prediction summary').click()
+    bubble=page.locator('.l1-settlement-teacher').bounding_box()
+    button=page.locator('.l1-settlement-actions button').bounding_box()
+    assert bubble['y'] >= button['y']+button['height']
+    assert page.locator('.l1-settlement-teacher').evaluate('e=>getComputedStyle(e).backgroundColor')=='rgb(240, 235, 223)'
     expected_name = 'Riley Chen & 李' if page.locator('.l1-settlement button').inner_text().startswith('Continue') else 'Maya'
+    expect(page.locator('.l1-settlement-teacher .speaker-name')).to_have_text(expected_name)
     audit = page.evaluate('window.releaseIdentityAudit')
     assert audit['teachers'] == [expected_name] and audit['students'] == ['Alex'], audit
     assert audit['emails'] == [f'Great work, {expected_name}!'] and not audit['errors'], audit
