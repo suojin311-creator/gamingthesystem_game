@@ -16,9 +16,11 @@
   percentages or numeric improvement report. Preview first; no formal merge yet.
 - scripts/level1-icon-review/ reuses actual PerspectivePanel/ManagementSatisfaction
   and Level 2 card styles/icons. Example: Participation, Checking → Target met.
-- Management then updates, its actual fill completes, the existing classroom
-  question fades in (large coral But…), then Observe the class enables. Replaces
-  Look behind the number because this proposal no longer shows student numbers.
+- Current animation starts with all six metrics in a 3×2 grid. The already
+  selected card moves smoothly into the center and enlarges; the other five fade
+  without receiving ticks. Then Target met, actual management fill, enabled
+  Observe the class. Remove the But question entirely. Replaces Look behind the
+  number because this proposal no longer shows student numbers.
 - No bottom teacher dialogue. Formal audio remains effects-only; video is silent.
 - Review: play/Level1-icon-results-preview.mp4 and PNG; timing/layout checks in
   play/LEVEL1_ICON_RESULTS_REVIEW.json. Preserve the earlier numeric proposal as

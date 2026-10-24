@@ -1,18 +1,19 @@
 {
   "scope": "Independent visual preview only; formal source and game packages unchanged.",
   "video": "Level1-icon-results-preview.mp4",
-  "videoSha256": "7a15843a8c8dc20fb0b50695f1cdcdd6fdffa8831d6ae545e1431b269a8478d6",
+  "videoSha256": "4def7cdd6a6f20ce44ce5e863d2b46b7005f7af38f0c59808d6d90666d229387",
   "image": "Level1-icon-results-preview.png",
   "timingsMs": {
-    "targetMet": 1250.6000000238419,
-    "managementUpdate": 1901.1000000238419,
-    "managementComplete": 2944.800000011921,
-    "questionReveal": 3845.300000011921,
-    "buttonEnabled": 4345.600000023842
+    "focusStart": 1100.5999999642372,
+    "focusComplete": 1899.300000011921,
+    "targetMet": 2079.699999988079,
+    "managementUpdate": 2730,
+    "managementComplete": 3800,
+    "buttonEnabled": 4150.399999976158
   },
   "checks": [
-    "One metric icon changes from Checking to Target met; no student scores, percentages or progress bar.",
-    "Actual management fill completes before the classroom question and enabled Observe the class button.",
+    "All six metrics appear; the chosen Participation card moves from its grid slot into the center and enlarges, then shows Target met.",
+    "Actual management fill completes before Observe the class enables; no But sentence, student percentages or extra progress bar.",
     "390px layout fits; reduced-motion static state retains one management progress indicator."
   ],
   "runtimeErrors": [],

@@ -17,21 +17,28 @@ with sync_playwright() as p:
  page.goto(f'http://127.0.0.1:{server.server_port}/?motion=1',wait_until='domcontentloaded')
  root=page.locator('.icon-review');button=page.get_by_role('button',name='Observe the class',exact=True)
  expect(button).to_be_disabled()
+ expect(page.locator('.metric-option')).to_have_count(6)
+ before=page.locator('.selected-metric-card').bounding_box()
+ page.screenshot(path=str(ROOT/'play/Level1-icon-results-overview.png'),full_page=True)
  expect(root).to_have_attribute('data-checked','true',timeout=4000)
  expect(page.locator('.l2-eval-result')).to_have_text('Target met')
  expect(root).to_have_attribute('data-reported','true',timeout=2000)
  expect(page.locator('.management-satisfaction-state')).to_have_text('Satisfied')
  expect(page.locator('.management-satisfaction')).to_have_attribute('data-replay-state','complete',timeout=3000)
- expect(root).to_have_attribute('data-question','true',timeout=2000)
  expect(button).to_be_enabled(timeout=1500)
  expect(page.get_by_role('progressbar')).to_have_count(1)
  expect(page.locator('.score-track,.score-numbers,.dialogue-strip')).to_have_count(0)
  assert '%' not in page.locator('.icon-assessment-main').inner_text()
- expect(page.locator('.icon-review-question p')).to_have_text('But… what changed in the classroom?')
- times=page.evaluate('window.iconReviewTimings');order=['targetMet','managementUpdate','managementComplete','questionReveal','buttonEnabled']
+ expect(page.locator('.icon-review-question')).to_have_count(0)
+ assert 'But' not in page.locator('.icon-assessment-main').inner_text()
+ card=page.locator('.selected-metric-card').bounding_box();stage=page.locator('.metric-stage').bounding_box()
+ assert abs(card['x']+card['width']/2-stage['x']-stage['width']/2)<2
+ assert abs(card['y']+card['height']/2-stage['y']-stage['height']/2)<2
+ assert card['width']>before['width']
+ times=page.evaluate('window.iconReviewTimings');order=['focusStart','focusComplete','targetMet','managementUpdate','managementComplete','buttonEnabled']
  assert all(times[a]<times[b] for a,b in zip(order,order[1:])),times
- checks.append('One metric icon changes from Checking to Target met; no student scores, percentages or progress bar.')
- checks.append('Actual management fill completes before the classroom question and enabled Observe the class button.')
+ checks.append('All six metrics appear; the chosen Participation card moves from its grid slot into the center and enlarges, then shows Target met.')
+ checks.append('Actual management fill completes before Observe the class enables; no But sentence, student percentages or extra progress bar.')
  page.wait_for_timeout(3500)
  image=ROOT/'play/Level1-icon-results-preview.png';page.screenshot(path=str(image),full_page=True)
  c.close();source=video.path()

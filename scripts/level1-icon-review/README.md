@@ -4,11 +4,12 @@ Independent preview only; formal game source, cinematic caches and archives stay
 unchanged. This supersedes the numeric assessment review as the current proposal.
 
 Reuses the actual Level 1 PerspectivePanel and ManagementSatisfaction, plus Level 2
-metric-evaluation classes, styles, icons and card structure. One Participation card
-is shown as an example, with Target met rather than a learning-improvement claim.
+metric-evaluation classes, styles, icons and card structure. All six metrics appear in a 3×2 grid. Participation is already selected in this
+example and moves into the center while enlarging. Others fade without ticks.
+The selected card shows Target met rather than a learning-improvement claim.
 No student percentages or progress bar remain; management is the only progressbar.
-After Checking changes to Target met, management updates. Its actual fill transition
-completes before the classroom question fades in and Observe the class enables.
+After the card reaches the center, Target met appears and management updates.
+Its actual fill completes before Observe the class enables. No But question.
 The preview action demonstrates availability, not cinematic navigation. No music.
 
 Build: `node node_modules/vite/bin/vite.js build --config scripts/level1-icon-review/vite.config.mjs`
