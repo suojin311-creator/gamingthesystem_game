@@ -1,0 +1,58 @@
+{
+  "scope": "Five text substitutions only in src/levels/level2/data.ts; production observation renderer/CSS and game ZIPs unchanged.",
+  "image": "Level2-observation-copy-preview.png",
+  "sha256": "6b968c14f8ac9cb1ea00b6e838dee3e97e465d44ccfbc4815e9d8be9de015f4b",
+  "rows": [
+    {
+      "copy": "Students look prepared, active and focused.\nBut they chase ticks and neglect deeper learning.",
+      "styles": {
+        "body": "18px",
+        "bodyColor": "rgb(128, 116, 89)",
+        "emphasis": "24px",
+        "emphasisColor": "rgb(131, 84, 47)",
+        "background": "rgb(242, 233, 214)"
+      }
+    },
+    {
+      "copy": "Students produce stronger discussions and written work.\nBut they repeat rewarded patterns without deeper thinking.",
+      "styles": {
+        "body": "18px",
+        "bodyColor": "rgb(128, 116, 89)",
+        "emphasis": "24px",
+        "emphasisColor": "rgb(131, 84, 47)",
+        "background": "rgb(242, 233, 214)"
+      }
+    },
+    {
+      "copy": "Students improve in the three tracked areas.\nBut they neglect learning outside those areas.",
+      "styles": {
+        "body": "18px",
+        "bodyColor": "rgb(128, 116, 89)",
+        "emphasis": "24px",
+        "emphasisColor": "rgb(131, 84, 47)",
+        "background": "rgb(242, 233, 214)"
+      }
+    },
+    {
+      "copy": "Students meet the criteria across all six areas.\nBut they turn learning into a box-ticking task.",
+      "styles": {
+        "body": "18px",
+        "bodyColor": "rgb(128, 116, 89)",
+        "emphasis": "24px",
+        "emphasisColor": "rgb(131, 84, 47)",
+        "background": "rgb(242, 233, 214)"
+      }
+    },
+    {
+      "copy": "Students tick off all 100 requirements.\nBut they do the minimum needed to meet them.",
+      "styles": {
+        "body": "18px",
+        "bodyColor": "rgb(128, 116, 89)",
+        "emphasis": "24px",
+        "emphasisColor": "rgb(131, 84, 47)",
+        "background": "rgb(242, 233, 214)"
+      }
+    }
+  ],
+  "runtimeErrors": []
+}
