@@ -1,11 +1,11 @@
 {
   "scope": "Isolated preview only; production sources and formal game packages unchanged.",
   "image": "Level1-assessment-preview.png",
-  "sha256": "b01b84109ba32103c8a5b65c0b18f0e3981a23056d95741500291b84d2edc840",
+  "sha256": "81d7088adc57cb06d149dfb8e709119898b23def291b7800096417c463a8e7f1",
   "checks": [
     "Actual production chart uses 29% to 85% unchanged.",
     "Metric name and duplicate heading removed.",
-    "Bridge integrated inside the chart card footer, centered above the original button.",
+    "Bridge integrated inside the chart card footer, centered above Look behind the number.",
     "Desktop render and 390px layout fit."
   ],
   "runtimeErrors": []

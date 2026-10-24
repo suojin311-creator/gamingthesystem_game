@@ -1,4 +1,4 @@
-.assessment-review { max-width:1160px; margin:0 auto; padding:30px 30px 8px; background:var(--paper); }
+.assessment-review { max-width:1440px; margin:32px auto; padding:0; background:var(--paper); }
 .assessment-review .section-intro { margin-bottom:22px; }
 .assessment-review .section-intro h2 { font-size:36px; line-height:1.25; letter-spacing:-.025em; }
 .assessment-review .assessment-card { border:1px solid #ddd7c5; background:#fffdf7; }
@@ -15,3 +15,17 @@
 .assessment-review .primary-button { font-size:14px; }
 .assessment-review .action-row { justify-content:flex-end; border-top:0; padding-top:18px; }
 @media(max-width:650px){.assessment-review{padding:24px 20px 8px}.assessment-review .section-intro h2{font-size:26px}.assessment-review .assessment-bridge p{font-size:24px}.assessment-review .assessment-bridge strong{font-size:36px}.assessment-review .score-numbers > span{font-size:56px}}
+
+.assessment-context { display:flex; align-items:center; gap:18px; padding:22px 30px; border-bottom:1px solid var(--line); }
+.assessment-context h1 { font:31px/1.15 var(--serif); letter-spacing:-.035em; }
+.assessment-layout { display:grid; grid-template-columns:minmax(0,1fr) 260px; }
+.assessment-main { min-width:0; padding:25px 30px 0; }
+.assessment-review .perspectives { padding:25px 20px; }
+.assessment-review .assessment-bridge p { text-wrap:balance; }
+.assessment-review .bridge-statement,.assessment-review .assessment-bridge strong { opacity:1; transition:opacity .55s ease,transform .55s ease; }
+.assessment-review .bridge-statement { display:inline; }
+.assessment-review [data-visible=false] { opacity:0; }
+.assessment-review .dialogue-strip { margin:0; }
+@media(max-width:900px){.assessment-layout{grid-template-columns:minmax(0,1fr)}.assessment-review .perspectives{border-left:0;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.assessment-review{padding:0}.assessment-main{padding:24px 20px 0}.assessment-review .perspectives{grid-template-columns:1fr}.assessment-context{padding:20px}.assessment-review .dialogue-strip{padding-inline:20px}}
+@media(prefers-reduced-motion:reduce){.assessment-review .bridge-statement,.assessment-review .assessment-bridge strong{transition:none}}

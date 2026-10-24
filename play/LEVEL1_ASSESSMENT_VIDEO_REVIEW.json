@@ -1,0 +1,18 @@
+{
+  "scope": "Independent browser preview; formal game unchanged.",
+  "video": "Level1-assessment-preview.mp4",
+  "timingsMs": {
+    "numberStart": 650.5,
+    "numberComplete": 2658.099999964237,
+    "managementUpdate": 3558.599999964237,
+    "bridgeReveal": 4858.899999976158,
+    "butAndButton": 5659.299999952316
+  },
+  "checks": [
+    "Animated actual ResultChart data, then updated actual ManagementSatisfaction status.",
+    "Bridge reveal follows management update; But and enabled Look behind the number follow bridge.",
+    "Original teacher dialogue retained in separate shaded bottom strip."
+  ],
+  "runtimeErrors": [],
+  "audio": false
+}
