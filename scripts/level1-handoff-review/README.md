@@ -1,13 +1,13 @@
 # Level 1 chapter-to-workbench handoff review
 
-Independent preview only; formal source and game packages unchanged.
+Approved visual reference; production FullGame now uses this dissolve and guide timing.
 Uses actual ChapterTransition, Gameplay and first-use WorkbenchGuide. Existing
 chapter reading hold is unchanged. On entry, both chapter and workbench overlap
 for a 0.7-second dissolve, with no extra click or black screen. The original first
 use guide is delayed until 1.05 seconds after workbench mount, then fades in.
 Its automatic-focus behavior and Skip guide action remain intact.
 
-The guide delay is injected only by this review's Vite transform. Film payloads
+The guide delay now uses the production Gameplay initialGuideDelay prop. Film payloads
 are excluded because this scope ends at the actual six-metric selection screen.
 No new production game entry or divergent rules are introduced.
 

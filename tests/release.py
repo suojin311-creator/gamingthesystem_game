@@ -93,6 +93,8 @@ def opening(page):
     expect(chapter).to_be_visible(timeout=12000)
     expect(chapter).to_have_attribute('data-beat','ready',timeout=5000)
     expect(page.locator('.level-one')).to_be_visible(timeout=8000)
+    expect(page.locator('.first-handoff-outgoing')).to_have_count(0,timeout=3000)
+    expect(page.locator('.gts-audio-controls')).to_have_count(0)
 
 
 def scene(page, lines=3):

@@ -1,10 +1,10 @@
 {
-  "validatedAtUtc": "2026-10-24T17:25:41.695526+00:00",
+  "validatedAtUtc": "2026-10-24T19:00:58.195783+00:00",
   "branch": "animation/opening-integration",
-  "scope": "Approved Level 1 six-card selection-to-target animation, opening subtitle and extended ending copy integrated. Actual selected metric and player name preserved; existing Padlet handoff retained; background music remains removed.",
-  "gameSourceSha256": "4b707ea0eab38a920c54f64f9ec8a15105d60fa9dbb875c6afd00ec2882987c5",
-  "classroomZipSha256": "85c3597ce3dc2385d053e6f71541f5843a95ec28bae9959821068621b12e191a",
-  "classroomEmbeddedGameHtmlSha256": "60426507e667b28a61d6a9a1dd68cb663a75badbfc3ab94ac4160f4d5f89a98c",
+  "scope": "Approved Which metric wording; real Level 1 chapter/workbench overlap dissolve and delayed guide; floating Sound controls removed on all game pages. Header mute and effects retained.",
+  "gameSourceSha256": "a8c274566bf20d5d0d34cdb21dca7d679d9edcbaf3a39516943d69c369d34a94",
+  "classroomZipSha256": "acd1405da8a5c9b8ce24e65669a8833085f4cc6980b845c8c52f184b47fd7551",
+  "classroomEmbeddedGameHtmlSha256": "a5abef30f84f4b1af0047d391f3a2c203cf40122b83c265ac6171aaf5286d0ca",
   "checks": {
     "release": {
       "passed": 12,
@@ -24,33 +24,33 @@
       ],
       "runtimeErrors": []
     },
-    "allSixLevel1Choices": {
+    "firstHandoff": {
       "checks": [
-        "prep: selected Preparation card and matching pre-class-preparation cinematic verified",
-        "part: selected Participation card and matching in-class-participation cinematic verified",
-        "focus: selected Focus card and matching on-task-focus cinematic verified",
-        "discuss: selected Discussion card and matching in-class-discussion-quality cinematic verified",
-        "reflect: selected Reflection card and matching learning-reflection-quality cinematic verified",
-        "peer: selected Peer response card and matching online-peer-response-quality cinematic verified"
+        "Real opening carries player name through new metric chapter question and workbench.",
+        "Chapter/workbench overlap lasts about 0.7 seconds; automatic guide appears after the dissolve.",
+        "Guide skips normally without reopening; six real options remain; floating Sound absent."
       ],
+      "timingsMs": {
+        "question": "Which metric would tell me the most?",
+        "start": 44071.89999997616,
+        "finished": 44800.80000001192,
+        "guide": 45171.69999998808
+      },
       "runtimeErrors": []
     },
-    "padletHandoff": {
+    "floatingSoundRemovedFromAllBuilds": {
       "checks": [
-        "static-html: real ending opens full-screen Padlet without a local Lab API, with an external-tab fallback",
-        "lan: real ending opens full-screen Padlet without a local Lab API, with an external-tab fallback"
-      ],
-      "runtimeErrors": [],
-      "boardReadOnlyObservation": [],
-      "postedOrVoted": false,
-      "boardLoadVerified": false,
-      "verificationLimit": "Environment outbound proxy rejects Padlet CONNECT with 403; board permissions and anonymous posting are unverified. Direct file navigation is blocked; standalone HTML tested via static HTTP."
+        "dist: floating Sound control markup/styles not bundled",
+        "dist-level1: floating Sound control markup/styles not bundled",
+        "dist-level2: floating Sound control markup/styles not bundled",
+        "dist-level3: floating Sound control markup/styles not bundled"
+      ]
     },
     "effectsOnly": {
       "checks": [
         "Old saved music=1 cannot restore BGM; no music decoding, output or music UI after unlock.",
         "Selection effect produces audible output, then returns to silence without background music.",
-        "Effects volume, exact zero, mute and unmute still control actual audio output.",
+        "Floating Sound control absent from diagnostic and game; existing header mute/unmute still controls actual interaction effects.",
         "All five former music assets excluded from actual production HTML."
       ],
       "runtimeErrors": []
@@ -61,6 +61,28 @@
       "CGO disabled; no Python/Node.js runtime or paid service required"
     ],
     "typecheck": "Passed during npm run package:previews."
+  },
+  "priorVerifiedUnchangedPadletHandoff": {
+    "checks": [
+      "static-html: real ending opens full-screen Padlet without a local Lab API, with an external-tab fallback",
+      "lan: real ending opens full-screen Padlet without a local Lab API, with an external-tab fallback"
+    ],
+    "runtimeErrors": [],
+    "boardReadOnlyObservation": [],
+    "postedOrVoted": false,
+    "boardLoadVerified": false,
+    "verificationLimit": "Environment outbound proxy rejects Padlet CONNECT with 403; board permissions and anonymous posting are unverified. Direct file navigation is blocked; standalone HTML tested via static HTTP."
+  },
+  "priorVerifiedUnchangedMetricChoices": {
+    "checks": [
+      "prep: selected Preparation card and matching pre-class-preparation cinematic verified",
+      "part: selected Participation card and matching in-class-participation cinematic verified",
+      "focus: selected Focus card and matching on-task-focus cinematic verified",
+      "discuss: selected Discussion card and matching in-class-discussion-quality cinematic verified",
+      "reflect: selected Reflection card and matching learning-reflection-quality cinematic verified",
+      "peer: selected Peer response card and matching online-peer-response-quality cinematic verified"
+    ],
+    "runtimeErrors": []
   },
   "openingEndingCopyReviewMerged": true,
   "level1IconReviewMerged": true,

@@ -1,12 +1,3 @@
-import { useState, useSyncExternalStore } from 'react';
-import { audioDirector } from './director';
-import './audio.css';
-export default function AudioControls() {
-  const [open,setOpen]=useState(false);
-  const prefs=useSyncExternalStore(audioDirector.subscribe,audioDirector.snapshot);
-  if(!audioDirector.available)return null;
-  return <aside className="gts-audio-controls" aria-label="Sound settings">
-    <button className="gts-audio-toggle" type="button" aria-expanded={open} aria-controls="gts-audio-settings" onClick={()=>{audioDirector.unlock();setOpen(!open);}}><span aria-hidden="true">{prefs.muted?'♫̸':'♫'}</span><span>Sound</span></button>
-    {open&&<div id="gts-audio-settings" className="gts-audio-settings"><button type="button" onClick={audioDirector.toggle}>{prefs.muted?'Turn sound on':'Mute all sound'}</button><label>Sound effects<input aria-label="Sound effects volume" type="range" min="0" max="1" step=".01" value={prefs.effects} onChange={e=>audioDirector.setPreferences({effects:Number(e.target.value)})}/></label></div>}
-  </aside>;
-}
+/** Floating audio controls were removed at the user's request on every page.
+ * Existing header sound toggles and interaction effects remain available. */
+export default function AudioControls() { return null; }

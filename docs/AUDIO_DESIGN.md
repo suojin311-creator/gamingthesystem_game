@@ -4,7 +4,8 @@ User requested removal of all existing game music. The shared director no longer
 imports, bundles, decodes or plays the five background cues. Saved music settings
 are ignored and cannot restore playback. Scene adapters retain a no-op setScene
 interface so gameplay and film timing stay unchanged. Music UI/audition controls
-are removed. Existing effects, effect volume, mute and visibility handling remain.
+are removed. Existing effects, saved effect volume, header mute and visibility handling remain.
+The floating Sound/AudioControls panel is removed on every game page.
 
 Actual built-game Web Audio output and prior saved music=1 are checked in
 `tests/audio_effects_only.py`; actual six-archive integrity is checked separately.

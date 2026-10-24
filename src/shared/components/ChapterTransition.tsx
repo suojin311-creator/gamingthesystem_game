@@ -35,7 +35,7 @@ export default function ChapterTransition({ level, backdrop, playerName, previou
   const ready = beat === 'ready';
   const chapterVisible = beat === 'chapter' || ready;
   const titleText = first ? 'One metric.' : weights ? 'The weighting trap.' : 'More metrics.';
-  const question = first ? 'Which sign would tell me the most?' : weights ? 'I’ll change how much each one counts.' : 'What if I checked three areas?';
+  const question = first ? 'Which metric would tell me the most?' : weights ? 'I’ll change how much each one counts.' : 'What if I checked three areas?';
 
   useVisibleDelay(`chapter:${level}:${beat}`, '.chapter-transition', beat === 'hold' ? 900 : beat === 'turn' ? 1000 : 1100, !ready, () => {
     if (beat === 'hold') { setBeat('turn'); play('paper'); }

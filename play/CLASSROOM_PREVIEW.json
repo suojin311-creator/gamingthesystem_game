@@ -1,7 +1,7 @@
 {
   "branch": "animation/opening-integration",
   "archive": "Gaming-the-System-classroom.zip",
-  "zipSha256": "85c3597ce3dc2385d053e6f71541f5843a95ec28bae9959821068621b12e191a",
+  "zipSha256": "acd1405da8a5c9b8ce24e65669a8833085f4cc6980b845c8c52f184b47fd7551",
   "sourceSha256": "1ba186140f48104f1156cd3c3ac8e08dcce4bc4a6f4b69932e11c4456554f782",
   "toolchain": "go version go1.27.3 linux/amd64",
   "target": "windows/amd64",
@@ -9,16 +9,16 @@
   "embeddedWebSha256": {
     "assets/index-Cm_fJ1UI.js": "4230e05789ddefc5e002c2015b4a484327c12cffff01dc4a467dce147b5e481b",
     "assets/index-D_EsfkK3.css": "4373b7dc5f17aa5d2d4dcddfffecdae2fca2b70482bd455f40c1baa95566282d",
-    "game.html.gz": "8d428ac223ad64ee4bd98249d142b3e6d13e458050065a0004f39562efa54dd9",
+    "game.html.gz": "40a98696d21fb165fb856cbae0ef837681c5df2c97a12bbdf19107d1f9316349",
     "goodhart.png": "ea248ed8ba4c7ad5ab3435baff908fc72eef8d23191c0831fc42f6ebc586079a",
     "index.html": "ad40ecc4155f5ec127dd6fbe16ba80495a05ae292b31ad792c3bea13630e99c0"
   },
   "files": {
-    "Start-Gaming-the-System.exe": "f8a0c6cc74d3841cc71711e066bc78ba3ae1fccc604266dac684e55b17a66b60",
+    "Start-Gaming-the-System.exe": "aaf7e897dc8f1a1d9b43bb2fc131ef1eecd8072b6d14476b12f3958f2b49e406",
     "START-HERE.html": "27ce4733e90bd58802d9c0121a18814b9ada78af1c3b0494707b14764a327cec",
     "README.txt": "c528c986f6da8cacfff6ee2a7029febd1a7e1982291c96474b9f3a208f0dce7e",
     "THIRD-PARTY-NOTICES.txt": "677dc1f3e6a3d6d925dd865ad48c306fcc265fca5ebd80d83a62ffb3f0c1fa5a",
-    "SHA256SUMS.txt": "e3fddddce5e4d7850126ca88d8b16d201101dbfcd836273e4f7c6664a7dde9d9"
+    "SHA256SUMS.txt": "7a7a621d489f713c821adc39e0cf7091a53a772eadea19ccbf59fbef5faaab18"
   },
   "windowsBinaryChecks": [
     "PE x64 header verified",

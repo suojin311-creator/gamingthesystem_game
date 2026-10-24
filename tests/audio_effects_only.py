@@ -24,7 +24,8 @@ with sync_playwright() as p:
  b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox']);c=b.new_context(viewport={'width':1366,'height':900});c.add_init_script(AUDIT)
  c.add_init_script("localStorage.setItem('gts-sound',JSON.stringify({muted:false,music:1,effects:.65}))")
  page=c.new_page();page.on('pageerror',lambda e:errors.append(str(e)));page.goto(f'http://127.0.0.1:{server.server_port}/?soundcheck=1',wait_until='networkidle')
- page.get_by_role('button',name='Sound',exact=True).click();page.wait_for_timeout(1200)
+ page.get_by_role('button',name='Select / tick',exact=True).click();page.wait_for_timeout(1200)
+ expect(page.locator('.gts-audio-controls')).to_have_count(0)
  expect(page.get_by_label('Music volume',exact=True)).to_have_count(0)
  expect(page.get_by_role('button',name='Opening · Office',exact=True)).to_have_count(0)
  assert peak(page)<.00005
@@ -34,10 +35,14 @@ with sync_playwright() as p:
  assert peak(page)>.0001,peak(page)
  page.wait_for_timeout(1000);assert peak(page)<.00005
  checks.append('Selection effect produces audible output, then returns to silence without background music.')
- volume(page,0);page.evaluate('audioAudit.peaks=[]');page.get_by_role('button',name='Select / tick',exact=True).click();page.wait_for_timeout(120);assert peak(page)<.00005
- volume(page,.65);page.get_by_role('button',name='Mute all sound',exact=True).click();page.get_by_role('button',name='Select / tick',exact=True).click();page.wait_for_timeout(120);assert peak(page)<.00005
- page.get_by_role('button',name='Turn sound on',exact=True).click();page.wait_for_timeout(300);page.evaluate('audioAudit.peaks=[]');page.get_by_role('button',name='Select / tick',exact=True).click();page.wait_for_timeout(120);assert peak(page)>.0001
- checks.append('Effects volume, exact zero, mute and unmute still control actual audio output.')
+ page.goto(f'http://127.0.0.1:{server.server_port}/?level=1',wait_until='networkidle')
+ page.get_by_role('button',name='Skip guide').click(timeout=10000)
+ page.get_by_role('button',name='Sound on',exact=True).click()
+ page.evaluate('audioAudit.peaks=[]');page.get_by_test_id('metric-prep').click();page.wait_for_timeout(120);assert peak(page)<.00005
+ page.get_by_role('button',name='Sound off',exact=True).click();page.wait_for_timeout(300)
+ page.evaluate('audioAudit.peaks=[]');page.get_by_test_id('metric-part').click();page.wait_for_timeout(120);assert peak(page)>.0001
+ expect(page.locator('.gts-audio-controls')).to_have_count(0)
+ checks.append('Floating Sound control absent from diagnostic and game; existing header mute/unmute still controls actual interaction effects.')
  assert page.evaluate('audioAudit.decodes')==0
  assert not errors,errors
  b.close()

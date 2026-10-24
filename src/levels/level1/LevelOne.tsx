@@ -31,6 +31,7 @@ export type LevelOneProps = {
   onComplete?: (result: LevelOneResult) => void;
   onContinue?: () => void;
   showIntro?: boolean;
+  initialGuideDelay?: number;
   /** Run the cinematic before a dialogue-free assessment settlement. */
   renderSettlement?: (context: LevelOneSettlement) => ReactNode;
 };
@@ -73,11 +74,12 @@ export function PerspectivePanel({ metric, evaluated, observed, highlight, manag
   </aside>;
 }
 
-export default function LevelOne({ playerName: suppliedName, renderCinematic, onComplete, onContinue, showIntro = true, renderSettlement }: LevelOneProps) {
+export default function LevelOne({ playerName: suppliedName, renderCinematic, onComplete, onContinue, showIntro = true, initialGuideDelay = 0, renderSettlement }: LevelOneProps) {
   const assessmentReport = Boolean(renderSettlement);
   const playerName = resolvePlayerName(suppliedName);
   const [session, setSession] = useState(() => ({ ...INITIAL_SESSION }));
-  const [guideOpen, setGuideOpen] = useState(showIntro);
+  const [guideOpen, setGuideOpen] = useState(showIntro && initialGuideDelay === 0);
+  const [initialGuidePending,setInitialGuidePending] = useState(showIntro && initialGuideDelay > 0);
   const [runId, setRunId] = useState(0);
   const [resultReady, setResultReady] = useState(false);
   const [animatedScore, setAnimatedScore] = useState(0);
@@ -86,7 +88,7 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
   const [reviewTalkReady, setReviewTalkReady] = useState(false);
   const title = useRef<HTMLHeadingElement>(null);
   const guideButton = useRef<HTMLButtonElement>(null);
-  const guideWasAutomatic = useRef(guideOpen);
+  const guideWasAutomatic = useRef(showIntro);
   const predictionField = useRef<HTMLTextAreaElement>(null);
   const completionReported = useRef(false);
   const feedback = useFeedback();
@@ -100,6 +102,10 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
   const dialogueEnabled = phase === 'result' ? resultReported : phase === 'review' ? reviewTalkReady : true;
   const currentStep = phase === 'review' && (dialogueSettled || renderSettlement) ? steps.length : phaseStep[phase];
 
+  useVisibleDelay(`initial-guide:${runId}`, '.level-one .workbench', initialGuideDelay,
+    initialGuidePending && phase === 'choose', () => {
+      setInitialGuidePending(false);guideWasAutomatic.current=true;setGuideOpen(true);
+    });
   useVisibleDelay(`report:${runId}:${phase}:${metricId}:${resultReported}`, '.score-paper', 900,
     !assessmentReport && phase === 'result' && resultReady && !resultReported && !paused, showReport);
   useVisibleDelay(`report-emphasis:${runId}:${phase}:${metricId}:${resultReported}`, '.perspective.university', 1600,
@@ -200,10 +206,12 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
     setRunId(value => value + 1);
 
     guideWasAutomatic.current = showIntro;
-    setGuideOpen(showIntro);
+    setInitialGuidePending(showIntro && initialGuideDelay > 0);
+    setGuideOpen(showIntro && initialGuideDelay === 0);
   }
-  function openGuide() { feedback.stop(); guideWasAutomatic.current = false; setGuideOpen(true); }
+  function openGuide() { setInitialGuidePending(false);feedback.stop(); guideWasAutomatic.current = false; setGuideOpen(true); }
   function closeGuide() {
+    setInitialGuidePending(false);
     setGuideOpen(false);
     window.requestAnimationFrame(() => {
       if (guideWasAutomatic.current) {
