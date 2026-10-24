@@ -1,12 +1,52 @@
 {
-  "validatedAtUtc": "2026-10-24T16:34:53.286597+00:00",
+  "validatedAtUtc": "2026-10-24T17:25:41.695526+00:00",
   "branch": "animation/opening-integration",
-  "scope": "Removed all current game background music; retained interaction effects. Music controls removed, former tracks excluded from game HTML, legacy saved music preferences ignored.",
-  "gameSourceSha256": "15f9ee6e54652758b8ea08e6b725d127b03f0ee54ea780408b32a63850790f04",
-  "classroomZipSha256": "9578d0840982671a65464d03e2516618955d6b9a13cb3a2eca021fe25b9ca312",
-  "classroomEmbeddedGameHtmlSha256": "df1e3c7185692f0bfbca1781a48a75648b813b247ac30f965ee57f35edf89604",
+  "scope": "Approved Level 1 six-card selection-to-target animation, opening subtitle and extended ending copy integrated. Actual selected metric and player name preserved; existing Padlet handoff retained; background music remains removed.",
+  "gameSourceSha256": "4b707ea0eab38a920c54f64f9ec8a15105d60fa9dbb875c6afd00ec2882987c5",
+  "classroomZipSha256": "85c3597ce3dc2385d053e6f71541f5843a95ec28bae9959821068621b12e191a",
+  "classroomEmbeddedGameHtmlSha256": "60426507e667b28a61d6a9a1dd68cb663a75badbfc3ab94ac4160f4d5f89a98c",
   "checks": {
-    "audioEffectsOnly": {
+    "release": {
+      "passed": 12,
+      "checks": [
+        "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
+        "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
+        "The complete ZIP shares one verified game build across its four offline entry points without duplicating movie assets",
+        "The actual complete-ZIP launcher fits desktop/phone, starts the full game at the opening and opens each standalone level directly offline",
+        "Packaged Level2.html completes 3 \u2192 6 \u2192 10 \u2192 25 \u2192 100 offline with normal motion",
+        "Packaged standalone Level3.html compares after two tests and can add an optional third, keeping all actual results offline",
+        "Packaged Level1.html uses the approved report, normal-speed cinematic, matching name/colours and settlement; Try another resets it without entering Level 2",
+        "Standalone Level 1 reload starts a fresh Level 1 run",
+        "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
+        "Packaged combined game carries the opening name, including ampersand and Chinese, through Level 1 UI, teacher/Alex captions, email and playable Levels 2\u20133",
+        "Combined preview reload starts at the opening rather than restoring a level or player identity",
+        "Packaged entries have no browser runtime errors"
+      ],
+      "runtimeErrors": []
+    },
+    "allSixLevel1Choices": {
+      "checks": [
+        "prep: selected Preparation card and matching pre-class-preparation cinematic verified",
+        "part: selected Participation card and matching in-class-participation cinematic verified",
+        "focus: selected Focus card and matching on-task-focus cinematic verified",
+        "discuss: selected Discussion card and matching in-class-discussion-quality cinematic verified",
+        "reflect: selected Reflection card and matching learning-reflection-quality cinematic verified",
+        "peer: selected Peer response card and matching online-peer-response-quality cinematic verified"
+      ],
+      "runtimeErrors": []
+    },
+    "padletHandoff": {
+      "checks": [
+        "static-html: real ending opens full-screen Padlet without a local Lab API, with an external-tab fallback",
+        "lan: real ending opens full-screen Padlet without a local Lab API, with an external-tab fallback"
+      ],
+      "runtimeErrors": [],
+      "boardReadOnlyObservation": [],
+      "postedOrVoted": false,
+      "boardLoadVerified": false,
+      "verificationLimit": "Environment outbound proxy rejects Padlet CONNECT with 403; board permissions and anonymous posting are unverified. Direct file navigation is blocked; standalone HTML tested via static HTTP."
+    },
+    "effectsOnly": {
       "checks": [
         "Old saved music=1 cannot restore BGM; no music decoding, output or music UI after unlock.",
         "Selection effect produces audible output, then returns to silence without background music.",
@@ -15,15 +55,6 @@
       ],
       "runtimeErrors": []
     },
-    "sixArchiveIntegrity": {
-      "passed": 3,
-      "checks": [
-        "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
-        "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
-        "The complete ZIP shares one verified game build across its four offline entry points without duplicating movie assets"
-      ],
-      "sourceSha256": "15f9ee6e54652758b8ea08e6b725d127b03f0ee54ea780408b32a63850790f04"
-    },
     "windowsBinaryChecks": [
       "PE x64 header verified",
       "All built web assets and illustration embedded byte-for-byte",
@@ -31,46 +62,8 @@
     ],
     "typecheck": "Passed during npm run package:previews."
   },
-  "priorPadletValidation": {
-    "validatedAtUtc": "2026-10-24T08:29:18.159581+00:00",
-    "branch": "animation/opening-integration",
-    "padletUrl": "https://padlet.com/embed/s024sqd75q7kuy5xciyy",
-    "gameSourceSha256": "525ddd5974d862214592716e26616d7992337fe65fc6fce994c13c4030e79066",
-    "classroomZipSha256": "ab42775226165321d89e6a4a7162d46476b3ae6a79a232e0a164d1544b47627d",
-    "classroomEmbeddedGameHtmlSha256": "d9c9633502bfc611ce27de125e5a5ffbaa7d42994a01d7ae2132a88abfbbc791",
-    "checks": {
-      "padletHandoff": {
-        "checks": [
-          "static-html: real ending opens full-screen Padlet without a local Lab API, with an external-tab fallback",
-          "lan: real ending opens full-screen Padlet without a local Lab API, with an external-tab fallback"
-        ],
-        "runtimeErrors": [],
-        "boardReadOnlyObservation": [],
-        "postedOrVoted": false,
-        "boardLoadVerified": false,
-        "verificationLimit": "Outbound proxy rejects Padlet with 403; actual content, anonymous access and posting permissions unverified. No external content was posted. Direct file navigation blocked by environment; identical standalone HTML tested via static HTTP."
-      },
-      "sixArchiveIntegrity": {
-        "passed": 3,
-        "checks": [
-          "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
-          "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
-          "The complete ZIP shares one verified game build across its four offline entry points without duplicating movie assets"
-        ],
-        "sourceSha256": "525ddd5974d862214592716e26616d7992337fe65fc6fce994c13c4030e79066"
-      },
-      "windowsBinaryChecks": [
-        "PE x64 header verified",
-        "All built web assets and illustration embedded byte-for-byte",
-        "CGO disabled; no Python/Node.js runtime or paid service required"
-      ]
-    },
-    "pendingCopyReviewMerged": false,
-    "legacyStandaloneLabPreserved": true,
-    "nativeWindowsExecutionTested": false
-  },
-  "pendingAssessmentVisualReviewMerged": false,
-  "pendingOpeningEndingCopyReviewMerged": false,
+  "openingEndingCopyReviewMerged": true,
+  "level1IconReviewMerged": true,
   "legacyStandaloneLabPreserved": true,
   "nativeWindowsExecutionTested": false
 }

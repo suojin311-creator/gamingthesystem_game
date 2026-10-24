@@ -43,7 +43,7 @@ function Preview() {
     parent.postMessage({channel:CHANNEL,type:'ready'},'*');
     return()=>removeEventListener('message',receive);
   },[ready]);
-  const keyAt=t=>{const section=sectionAt(t);return ['question','threshold'].includes(section.id)?'office':section.id;};
+  const keyAt=t=>{const section=sectionAt(t);return ['question','threshold','principle','assessment'].includes(section.id)?'office':section.id;};
   const seek=(next,resume=false)=>{
     transition.current?.cancel();changing.current=false;
     const t=Math.max(0,Math.min(DURATION,next));clock.current=t;currentKey.current=keyAt(t);setTime(t);setPlaying(resume);

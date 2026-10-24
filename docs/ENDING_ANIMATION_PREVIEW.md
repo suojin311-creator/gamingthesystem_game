@@ -1,3 +1,12 @@
+## Current approved update
+
+The approved copy review has been promoted: opening subtitle asks When you set the
+metrics, what are you measuring? Ending runs 37.2 seconds and adds the two reviewed
+principle/assessment paragraphs after the learning/numbers question. Becomes is
+coral, ceases gold at the shared emphasis scale; the assessment lines are equal
+size, gold then coral. Final invitation still opens the supplied Padlet, without a
+local Lab API. No background music. Historical review notes follow below.
+
 # Ending 独立动画预览
 
 下载 `play/Ending-animation-preview.zip`，完整解压后打开 `START-HERE.html`。

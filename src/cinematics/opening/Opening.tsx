@@ -129,7 +129,7 @@ export default function Opening({ onComplete }: { onComplete: (playerName: strin
           {beat === 'title' && (
             <motion.div key="title" className="title-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.7, delay: 0.1 }}>
               <h1>GAMING<br /><span>THE SYSTEM</span></h1>
-              <motion.p className="subtitle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35, duration: 0.5 }}>Do better numbers mean better learning?</motion.p>
+              <motion.p className="subtitle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35, duration: 0.5 }}>When you set the metrics, what are you measuring?</motion.p>
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7, duration: 0.4 }}><button className="cinematic-button" disabled={!loaded} onClick={() => { audio.startOffice(); audio.play('interaction'); setBeat('reveal'); }}>START GAME</button></motion.div>
             </motion.div>
           )}

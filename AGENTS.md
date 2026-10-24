@@ -1,3 +1,14 @@
+# Current combined release
+
+- User approved the latest Level 1 icon result animation plus earlier opening and
+  ending copy previews for formal integration. Preserve actual chosen metric and
+  opening player name. Deliver a full-game playable ZIP, with the existing Padlet
+  handoff and external-tab fallback. Keep effects only, with no background music.
+- Opening subtitle: When you set the metrics, what are you measuring?
+- Ending adds the two approved sentences, ceases tense, coral becomes/gold ceases,
+  equal-size gold/coral assessment lines, and 37.2-second timeline before Padlet.
+- Earlier pending-copy restrictions are superseded by this explicit approval.
+
 # Current audio: effects only
 
 - User requested removal of all current game music. No replacement music is
@@ -9,11 +20,12 @@
   pending visual/copy reviews and historical standalone Lab packages. Padlet stays
   untouched. Do not reintroduce music to satisfy superseded audio tests.
 
-# Pending Level 1 icon-based result preview
+# Approved Level 1 icon-based results
 
 - Latest user request replaces the student percentage chart with one Level 2-style
   metric icon/card. Keep only the Management’s view progressbar. No student
-  percentages or numeric improvement report. Preview first; no formal merge yet.
+  percentages or numeric improvement report. User approved integration into the
+  formal game; selected card/icon and cinematic must follow the actual player choice.
 - scripts/level1-icon-review/ reuses actual PerspectivePanel/ManagementSatisfaction.
   Six cards now use the shared metric-selection CSS/markup: original icon backing,
   card radius/shadow, bold name and top-right selection check. Remove the custom
@@ -105,7 +117,7 @@
   Level 1/2 film adapters also normalize direct teacher address; their verified
   caches are refreshed from the pinned source for the next full build.
 
-# Pending opening/ending copy review
+# Approved opening/ending copy integration
 
 - User requested independent previews before approval. Use `scripts/copy-review/`;
   read its README for exact copy. Preserve all production source, film caches and

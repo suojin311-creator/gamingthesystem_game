@@ -1,7 +1,9 @@
-# Pending opening and ending copy review
+# Approved opening and ending copy review
 
-This is an isolated review, pending user approval. Production source, cinematic
-caches, six game ZIPs and the classroom ZIP remain unchanged.
+User approved these reviewed changes for the formal game. The corresponding
+composition, typography and timing are now promoted into scripts/ending-animation/
+and the opening subtitle into production Opening.tsx. Preserve these review files
+as the reproducible visual reference.
 
 - Opening: When you set the metrics, what are you measuring?
 - After the current learning/numbers question, the new paragraphs read:

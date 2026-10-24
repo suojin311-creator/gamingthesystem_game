@@ -1,4 +1,5 @@
 import './styles.css';
+import MetricResult from './MetricResult';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { getMetric, type Metric, type MetricId } from './metrics';
 import { INITIAL_SESSION, type Phase } from './state';
@@ -100,7 +101,7 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
   const currentStep = phase === 'review' && (dialogueSettled || renderSettlement) ? steps.length : phaseStep[phase];
 
   useVisibleDelay(`report:${runId}:${phase}:${metricId}:${resultReported}`, '.score-paper', 900,
-    phase === 'result' && resultReady && !resultReported && !paused, showReport);
+    !assessmentReport && phase === 'result' && resultReady && !resultReported && !paused, showReport);
   useVisibleDelay(`report-emphasis:${runId}:${phase}:${metricId}:${resultReported}`, '.perspective.university', 1600,
     phase === 'result' && highlight === 'university' && !paused, () => setHighlight(null));
   useVisibleDelay(`evidence:${runId}:${phase}:${metricId}:${reviewStep}`, '.prediction-recap', 1000,
@@ -127,7 +128,7 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
     return () => window.removeEventListener('pageshow', onReturn);
   }, [showIntro, feedback.reset]);
   useEffect(() => {
-    if (phase !== 'result' || !metric) { setResultReady(false); return; }
+    if (assessmentReport || phase !== 'result' || !metric) { setResultReady(false); return; }
     if (resultReported) { setAnimatedScore(metric.after); setResultReady(true); return; }
     setResultReady(false);
     setAnimatedScore(metric.before);
@@ -223,7 +224,7 @@ export default function LevelOne({ playerName: suppliedName, renderCinematic, on
       <div className="workbench-heading"><div className="chapter-heading"><span className="chapter-number">01</span><h1>One metric.</h1></div><span className="office-location"><span /> THE OFFICE</span></div>
       <nav className="stepper" aria-label="Level 1 progress"><ol>{steps.map((step, index) => <li key={step} className={`${currentStep === index ? 'current' : ''} ${currentStep > index ? 'done' : ''}`} aria-current={currentStep === index ? 'step' : undefined}><span className="step-number">{currentStep > index ? <Icon name="check" /> : `0${index + 1}`}</span><span>{step}</span></li>)}</ol></nav>
 
-      {request ? (renderCinematic ? renderCinematic(request, () => go('review')) : <CinematicPlaceholder request={request} onComplete={() => go('review')} />) : phase === 'review' && metric && renderSettlement ? renderSettlement({ result: { metricId: metric.id, prediction: prediction.trim(), reportedScore: { before: metric.before, after: metric.after, target: TARGET } }, onReplay: () => go('cinematic'), onContinue }) : <>
+      {request ? (renderCinematic ? renderCinematic(request, () => go('review')) : <CinematicPlaceholder request={request} onComplete={() => go('review')} />) : phase === 'result' && metric && assessmentReport ? <MetricResult key={`${runId}:${metric.id}`} metric={metric} paused={paused} onReport={showReport} onObserve={() => go('cinematic')} play={feedback.play} renderPerspectives={(reported,complete) => <PerspectivePanel metric={metric} evaluated={reported} observed={false} highlight={null} assessmentReport managementReplay={{from:MANAGEMENT_PROGRESS.awaiting,enabled:reported,onComplete:complete}} />} />: phase === 'review' && metric && renderSettlement ? renderSettlement({ result: { metricId: metric.id, prediction: prediction.trim(), reportedScore: { before: metric.before, after: metric.after, target: TARGET } }, onReplay: () => go('cinematic'), onContinue }) : <>
         <div className={`workbench-body phase-${phase}`}>
           <section className="decision-area" aria-label="Current decision">
             {phase === 'choose' && <>

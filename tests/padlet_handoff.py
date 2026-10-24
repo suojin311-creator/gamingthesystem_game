@@ -22,7 +22,7 @@ try:
    page.goto(base+'?level=3',wait_until='domcontentloaded',timeout=90000);page.clock.install()
    ns['choose_three'](page);ns['weights_three'](page,[60,30,10]);page.get_by_role('button',name='Try another split',exact=True).click();ns['weights_three'](page,[10,60,30]);page.get_by_role('button',name='Compare the results',exact=True).click();page.get_by_role('button',name='Step back and reflect',exact=True).click()
    film=page.frame_locator('iframe[title="Ending animation"]');expect(film.locator('.ending-viewport')).to_be_visible();expect(film.locator('.ending-loading')).to_have_count(0)
-   ns['advance'](page,32);expect(film.get_by_role('button',name='ENTER DESIGN LAB')).to_be_visible()
+   ns['advance'](page,46);expect(film.get_by_role('button',name='ENTER DESIGN LAB')).to_be_visible()
    film.get_by_role('button',name='ENTER DESIGN LAB').click(force=True,no_wait_after=True);page.clock.run_for(1200)
    expect(page.locator('[data-padlet-lab]')).to_be_visible();expect(page.get_by_title('Design Lab · Padlet')).to_have_attribute('src',URL)
    expect(page.get_by_role('link',name='Open in a new tab')).to_have_attribute('href',URL)
