@@ -95,13 +95,11 @@ def client(base, mobile):
             assert len(set(tokens))==7, completions
             film.get_by_role('button', name='ENTER DESIGN LAB').click(force=True, no_wait_after=True)
             page.wait_for_timeout(500); page.clock.run_for(1000)
-            page.wait_for_url(base+'/',timeout=30000)
-            expect(page.locator('.intro')).to_be_visible()
-            page.wait_for_function("!!sessionStorage.getItem('design-lab-participant')")
-            participant = page.evaluate("sessionStorage.getItem('design-lab-participant')")
+            expect(page.locator('[data-padlet-lab]')).to_be_visible()
+            expect(page.get_by_title('Design Lab · Padlet')).to_have_attribute('src','https://padlet.com/embed/s024sqd75q7kuy5xciyy')
             assert not errors, errors
-            record('Ending completes, enters the same Lab and receives its own participant identity; no runtime errors')
-            return {'client':name,'capabilities':capability,'checks':checks,'runtimeErrors':errors,'completionTokens':tokens,'participantId':participant}
+            record('Ending completes and opens the supplied Padlet frame; no game runtime errors')
+            return {'client':name,'capabilities':capability,'checks':checks,'runtimeErrors':errors,'completionTokens':tokens}
         except Exception:
             page.screenshot(path=str(OUT/f'lan-{name}-failure.png'))
             (OUT/f'lan-{name}-failure.json').write_text(json.dumps({'checks':checks,'errors':errors},indent=2))
@@ -116,8 +114,7 @@ if __name__=='__main__':
     with ThreadPoolExecutor(max_workers=2) as pool:
         futures=[pool.submit(client,base,mobile) for mobile in [False,True]]
         results=[f.result() for f in futures]
-    assert results[0]['participantId']!=results[1]['participantId']
     assert not set(results[0]['completionTokens'])&set(results[1]['completionTokens'])
-    report={'passed':sum(len(r['checks']) for r in results)+1,'baseUrl':base,'clients':results,'isolation':'Independent browser processes, game choices, completion tokens and Lab participants','physicalPhoneTested':False,'nativeWindowsExecutionTested':False}
+    report={'passed':sum(len(r['checks']) for r in results)+1,'baseUrl':base,'clients':results,'isolation':'Independent browser processes, game choices and completion tokens; Padlet participation is external','physicalPhoneTested':False,'nativeWindowsExecutionTested':False}
     (OUT/'classroom-lan-results.json').write_text(json.dumps(report,indent=2)+'\n')
-    print('PASS Both concurrent LAN clients keep independent game and Lab identities',flush=True)
+    print('PASS Both concurrent LAN clients keep independent game choices and film tokens',flush=True)

@@ -1,3 +1,18 @@
+# 当前 Design Lab 已改用 Padlet
+
+优先使用 [Full-game-play.zip](Full-game-play.zip?raw=true)：解压后打开 Gaming-the-System.html。
+游戏结尾点 ENTER DESIGN LAB，在游戏内全屏显示 Padlet，可在新标签页打开。
+所有设备使用 Padlet 时需要互联网；发布、评论、点赞和登录要求由看板权限设置决定。
+无需启动旧本地 Design Lab，也不再由本地程序计时、投票或排名。
+
+如需由老师电脑通过局域网提供游戏，可用 Gaming-the-System-classroom.zip。
+程序现在直接打开 /game，并在窗口输出 /game 玩家链接；不需要旧主持控制台。
+旧 Design-Lab-local.zip 保留为历史本地版，不是当前 Padlet 版本。
+前面的开头与 ending 文案预览尚未确认，未随此次接入合并。
+
+---
+以下为此前本地版本的交付说明，供历史参考。
+
 # 三份最新预览包
 
 | 顺序 | 文件 | 解压后启动 | 用途 |

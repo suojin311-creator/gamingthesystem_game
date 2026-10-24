@@ -1,135 +1,30 @@
 {
-  "validatedAtUtc": "2026-10-24T08:15:31.444288+00:00",
+  "validatedAtUtc": "2026-10-24T08:29:18.159581+00:00",
   "branch": "animation/opening-integration",
-  "approvedChange": "All three chapter intros automatically enter two visible seconds after their final entry animation; teacher dialogue omits direct student-name address.",
-  "gameSourceSha256": "355381e38a4e84b0499b5153dd7452437d9b4050d0eb8aa71a7e412f62d6b290",
-  "classroomZipSha256": "d10f56ac847c0faba8602e149a56dae47a773527b991b0b09029e8c33d040756",
-  "classroomEmbeddedGameHtmlSha256": "3113faab7bf33f83cf7d477330f0690c8dfe4182f4aad5db8268ed57d78bbc77",
-  "classroomArchive": "Gaming-the-System-classroom.zip",
+  "padletUrl": "https://padlet.com/embed/s024sqd75q7kuy5xciyy",
+  "gameSourceSha256": "525ddd5974d862214592716e26616d7992337fe65fc6fce994c13c4030e79066",
+  "classroomZipSha256": "ab42775226165321d89e6a4a7162d46476b3ae6a79a232e0a164d1544b47627d",
+  "classroomEmbeddedGameHtmlSha256": "d9c9633502bfc611ce27de125e5a5ffbaa7d42994a01d7ae2132a88abfbbc791",
   "checks": {
-    "actualArchiveFunctionalPaths": {
-      "passed": 12,
+    "padletHandoff": {
+      "checks": [
+        "static-html: real ending opens full-screen Padlet without a local Lab API, with an external-tab fallback",
+        "lan: real ending opens full-screen Padlet without a local Lab API, with an external-tab fallback"
+      ],
+      "runtimeErrors": [],
+      "boardReadOnlyObservation": [],
+      "postedOrVoted": false,
+      "boardLoadVerified": false,
+      "verificationLimit": "Outbound proxy rejects Padlet with 403; actual content, anonymous access and posting permissions unverified. No external content was posted. Direct file navigation blocked by environment; identical standalone HTML tested via static HTTP."
+    },
+    "sixArchiveIntegrity": {
+      "passed": 3,
       "checks": [
         "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
         "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
-        "The complete ZIP shares one verified game build across its four offline entry points without duplicating movie assets",
-        "The actual complete-ZIP launcher fits desktop/phone, starts the full game at the opening and opens each standalone level directly offline",
-        "Packaged Level2.html completes 3 \u2192 6 \u2192 10 \u2192 25 \u2192 100 offline with normal motion",
-        "Packaged standalone Level3.html compares after two tests and can add an optional third, keeping all actual results offline",
-        "Packaged Level1.html uses the approved report, normal-speed cinematic, matching name/colours and settlement; Try another resets it without entering Level 2",
-        "Standalone Level 1 reload starts a fresh Level 1 run",
-        "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
-        "Packaged combined game carries the opening name, including ampersand and Chinese, through Level 1 UI, teacher/Alex captions, email and playable Levels 2\u20133",
-        "Combined preview reload starts at the opening rather than restoring a level or player identity",
-        "Packaged entries have no browser runtime errors"
+        "The complete ZIP shares one verified game build across its four offline entry points without duplicating movie assets"
       ],
-      "runtimeErrors": []
-    },
-    "simultaneousLanClients": {
-      "passed": 11,
-      "baseUrl": "http://172.26.91.252:3017",
-      "clients": [
-        {
-          "client": "desktop-chromium",
-          "capabilities": {
-            "secure": false,
-            "randomUUID": "undefined",
-            "getRandomValues": "function"
-          },
-          "checks": [
-            "Actual LAN HTTP is an insecure context without crypto.randomUUID",
-            "Opening, chosen Level 1 film and its results complete without a blank interface",
-            "Level 2 films at 3, 6 and 100 metrics finish and reach their result interfaces",
-            "Two Level 3 films and comparison retain this player\u2019s distinct weight choices",
-            "Ending completes, enters the same Lab and receives its own participant identity; no runtime errors"
-          ],
-          "runtimeErrors": [],
-          "completionTokens": [
-            "34dc97c85af8786da9d818f8a290f726",
-            "3608fd6922525f2d37705c0c74f31a39",
-            "eb41a326580e300326beb8105249a651",
-            "df09633ae867782d1687b88e47643b64",
-            "5547dc646847d956379e018d84103784",
-            "9c3d9adf607d0a2bc9424ff7380b3eaf",
-            "846a4c55d539de4a192523c82a352ee0"
-          ],
-          "participantId": "6976bda6ab4ec202b3a4cd7d42b88a2f"
-        },
-        {
-          "client": "phone-chromium",
-          "capabilities": {
-            "secure": false,
-            "randomUUID": "undefined",
-            "getRandomValues": "function"
-          },
-          "checks": [
-            "Actual LAN HTTP is an insecure context without crypto.randomUUID",
-            "Opening, chosen Level 1 film and its results complete without a blank interface",
-            "Level 2 films at 3, 6 and 100 metrics finish and reach their result interfaces",
-            "Two Level 3 films and comparison retain this player\u2019s distinct weight choices",
-            "Ending completes, enters the same Lab and receives its own participant identity; no runtime errors"
-          ],
-          "runtimeErrors": [],
-          "completionTokens": [
-            "92052a7337b1ad6bb52f8350ef57229d",
-            "3aad3838f535491bfa9ed24faa365647",
-            "1f636314e2f3c64537b7a82865015502",
-            "e54a597094b2a0be5a4fe192bb830f5b",
-            "4e44907b95630ac29d4cb123b2e30adb",
-            "6d3069ed10a2d8d54d5cf09007b68daf",
-            "67921b3261741b4a853e3e7d70889b32"
-          ],
-          "participantId": "8dcd2401d85cec03de6a6c9e54f5f990"
-        }
-      ],
-      "isolation": "Independent browser processes, game choices, completion tokens and Lab participants",
-      "physicalPhoneTested": false,
-      "nativeWindowsExecutionTested": false
-    },
-    "focusedChapterPacing": {
-      "checks": [
-        "Level 1: automatic entry two seconds after the final entrance animation, no button or direct name address (no-preference)",
-        "Level 2: automatic entry two seconds after the final entrance animation, no button or direct name address (no-preference)",
-        "Level 3: automatic entry two seconds after the final entrance animation, no button or direct name address (no-preference)",
-        "Level 3&carried=1: automatic entry two seconds after the final entrance animation, no button or direct name address (no-preference)",
-        "Level 2: automatic entry two seconds after the final entrance animation, no button or direct name address (reduce)",
-        "Background tabs pause the two-second hold, then automatically enter when visible again",
-        "All six Level 1 review questions and all Level 2 teacher conversation branches omit the direct name; student speaker identities remain intact",
-        "Recorded one complete Level 2 entrance and the real six-metric selection interface, without clicking an entry button"
-      ],
-      "timings": [
-        {
-          "level": 1,
-          "carried": false,
-          "reducedMotion": false,
-          "settledToEntryMs": 2049.199999988079
-        },
-        {
-          "level": 2,
-          "carried": false,
-          "reducedMotion": false,
-          "settledToEntryMs": 2020.0
-        },
-        {
-          "level": 3,
-          "carried": false,
-          "reducedMotion": false,
-          "settledToEntryMs": 2019.6000000238419
-        },
-        {
-          "level": 3,
-          "carried": true,
-          "reducedMotion": false,
-          "settledToEntryMs": 2020.2000000476837
-        },
-        {
-          "level": 2,
-          "carried": false,
-          "reducedMotion": true,
-          "settledToEntryMs": 2006.300000011921
-        }
-      ],
-      "runtimeErrors": []
+      "sourceSha256": "525ddd5974d862214592716e26616d7992337fe65fc6fce994c13c4030e79066"
     },
     "windowsBinaryChecks": [
       "PE x64 header verified",
@@ -138,8 +33,6 @@
     ]
   },
   "pendingCopyReviewMerged": false,
-  "standaloneLabChanged": false,
-  "nativeWindowsExecutionTested": false,
-  "physicalPhoneTested": false,
-  "scope": "Actual current game ZIPs, shared identity and level continuation, and two independent browsers through non-loopback HTTP to the same Lab. Focused chapter hold/pause checks are retained from the approved unchanged implementation. Audio and Lab voting rules are unchanged; no native Windows, physical phone or Safari execution claimed."
+  "legacyStandaloneLabPreserved": true,
+  "nativeWindowsExecutionTested": false
 }

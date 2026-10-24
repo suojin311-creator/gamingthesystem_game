@@ -1,3 +1,20 @@
+# Current Padlet Design Lab
+
+- User replaced the local Design Lab with Padlet and supplied the live embed:
+  https://padlet.com/embed/s024sqd75q7kuy5xciyy . The actual ending button now
+  opens a full-viewport board inside the game, without a local API dependency.
+- Keep the external-tab fallback, preserve the iframe source/run-token validation,
+  and permit the Padlet frame in the local game server CSP. Do not post test data,
+  vote, comment or change external board permissions without explicit instruction.
+- New full-game HTML requires Internet for Padlet. The optional classroom launcher
+  opens /game and prints /game links; its old host controls are not the new flow.
+  Standalone Design-Lab-local.zip stays historical; do not delete it or rebuild it.
+- Pending opening/ending text previews remain unapproved. Refresh regular game
+  archives and the optional game-server archive when releasing this integration.
+  Target actual ending handoff with tests/padlet_handoff.py; it only reads the board.
+  Direct file:// browser navigation is blocked by this execution environment,
+  so validate the standalone HTML via a static server and state that limitation.
+
 # Current chapter entrance review
 
 - User requested the shared entrance change for all three levels: finish the

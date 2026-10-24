@@ -1,3 +1,12 @@
+# Current Design Lab: Padlet
+
+The complete game now opens the supplied Padlet board from ENTER DESIGN LAB,
+inside a full-viewport frame with an external-tab fallback. Internet is required;
+board access and participation permissions are controlled by its owner in Padlet.
+Use Full-game-play.zip without the old local Lab service. The optional classroom
+launcher directly opens /game. Design-Lab-local.zip is a preserved legacy version.
+Pending opening/ending copy reviews remain separate.
+
 # Approved chapter update
 
 The six game archives and the combined classroom package now include automatic

@@ -1,0 +1,38 @@
+{
+  "validatedAtUtc": "2026-10-24T08:29:18.159581+00:00",
+  "branch": "animation/opening-integration",
+  "padletUrl": "https://padlet.com/embed/s024sqd75q7kuy5xciyy",
+  "gameSourceSha256": "525ddd5974d862214592716e26616d7992337fe65fc6fce994c13c4030e79066",
+  "classroomZipSha256": "ab42775226165321d89e6a4a7162d46476b3ae6a79a232e0a164d1544b47627d",
+  "classroomEmbeddedGameHtmlSha256": "d9c9633502bfc611ce27de125e5a5ffbaa7d42994a01d7ae2132a88abfbbc791",
+  "checks": {
+    "padletHandoff": {
+      "checks": [
+        "static-html: real ending opens full-screen Padlet without a local Lab API, with an external-tab fallback",
+        "lan: real ending opens full-screen Padlet without a local Lab API, with an external-tab fallback"
+      ],
+      "runtimeErrors": [],
+      "boardReadOnlyObservation": [],
+      "postedOrVoted": false,
+      "boardLoadVerified": false,
+      "verificationLimit": "Outbound proxy rejects Padlet with 403; actual content, anonymous access and posting permissions unverified. No external content was posted. Direct file navigation blocked by environment; identical standalone HTML tested via static HTTP."
+    },
+    "sixArchiveIntegrity": {
+      "passed": 3,
+      "checks": [
+        "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
+        "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
+        "The complete ZIP shares one verified game build across its four offline entry points without duplicating movie assets"
+      ],
+      "sourceSha256": "525ddd5974d862214592716e26616d7992337fe65fc6fce994c13c4030e79066"
+    },
+    "windowsBinaryChecks": [
+      "PE x64 header verified",
+      "All built web assets and illustration embedded byte-for-byte",
+      "CGO disabled; no Python/Node.js runtime or paid service required"
+    ]
+  },
+  "pendingCopyReviewMerged": false,
+  "legacyStandaloneLabPreserved": true,
+  "nativeWindowsExecutionTested": false
+}

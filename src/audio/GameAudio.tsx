@@ -14,7 +14,7 @@ export default function GameAudio(){
    const page=document.querySelector<HTMLElement>('.game-page');
    const opening=document.querySelector<HTMLElement>('.opening-scene .stage');
    let scene:Scene='office',intensity=.6;
-   if(ending){
+   if(document.querySelector('[data-padlet-lab]')){scene='silent';intensity=0;}else if(ending){
     const time=film?.time??0;
     scene=time>=10.1&&time<16.5?'reflection':time>=16.5?'lab':'reflection';
     intensity=time>=10.1&&time<16.5?.26:time>=16.5?.6:.65;
@@ -35,7 +35,7 @@ export default function GameAudio(){
   const receive=(event:MessageEvent)=>{
    const d=event.data;
    if(d?.channel!=='gts-audio'||typeof d.playing!=='boolean')return;
-   const owned=Array.from(document.querySelectorAll('iframe')).some(el=>el.contentWindow===event.source);
+   const owned=Array.from(document.querySelectorAll('iframe')).some(el=>!el.closest('[data-padlet-lab]')&&el.contentWindow===event.source);
    if(!owned)return;
    films.set(event.source as Window,{playing:d.playing,time:d.time,section:d.section});queue();
   };

@@ -1,3 +1,15 @@
+# 当前：Design Lab 改为 Padlet
+
+用户提供的正式嵌入为 https://padlet.com/embed/s024sqd75q7kuy5xciyy。
+Ending 按钮通过原有 iframe 来源/run token 校验后，在游戏内部打开全屏 Padlet，
+不再请求 /api/display 或跳转到旧本地 Lab。保留新标签页链接，需要互联网。
+原独立 Design-Lab-local.zip 保留为历史版本。可选 classroom 启动器改为直接打开
+/game，打印 /game 玩家链接，不再引导用户使用旧本地写作控制台。
+开发环境直连 Padlet 被出站代理拒绝（403），实际看板加载/匿名发布权限未验证；
+不得声称已能免登录参与。tests/padlet_handoff.py 验证真实 ending 到 iframe 的
+本地衔接，未发布/点赞任何内容。file:// 导航也被环境禁止，改用静态服务器验证相同 HTML。
+前面的开头/ending 文案预览仍待确认，未合并。
+
 # 已确认：三关自动进入并同步正式包
 
 用户已批准本次关卡介绍和老师称呼调整进入正式游戏。六个常规游戏 ZIP 与

@@ -58,7 +58,7 @@ func (a *application) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Referrer-Policy", "same-origin")
 	w.Header().Set("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' data:; media-src 'self' data:; font-src 'self'; frame-ancestors 'none'")
 	if r.URL.Path == "/game" || r.URL.Path == "/game.html" {
-		w.Header().Set("Content-Security-Policy", "default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'self' data:; font-src 'self' data:; frame-src 'self' blob:; frame-ancestors 'none'")
+		w.Header().Set("Content-Security-Policy", "default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'self' data:; font-src 'self' data:; frame-src 'self' blob: https://padlet.com; frame-ancestors 'none'")
 		data, err := embeddedWeb.ReadFile("web/game.html.gz")
 		if err != nil {
 			http.Error(w, "The game is not included in this build.", 404)
@@ -299,15 +299,17 @@ func run() error {
 		}
 	}()
 	hostURL := fmt.Sprintf("http://localhost:%d/host", actualPort)
+	_, gameErr := embeddedWeb.ReadFile("web/game.html.gz")
+	if gameErr == nil { hostURL = fmt.Sprintf("http://localhost:%d/game", actualPort) }
 	if _, err := embeddedWeb.ReadFile("web/game.html.gz"); err == nil {
 		fmt.Println("GAMING THE SYSTEM - GAME + DESIGN LAB")
 	} else {
 		fmt.Println("GAMING THE SYSTEM - DESIGN LAB")
 	}
-	fmt.Println("Host:", hostURL)
+	fmt.Println("Open:", hostURL)
 	fmt.Println("Participant on this computer:", fmt.Sprintf("http://localhost:%d", actualPort))
 	for _, url := range a.urls {
-		fmt.Println("Share with the class:", url)
+		if gameErr == nil { url += "/game" }; fmt.Println("Share with the class:", url)
 	}
 	fmt.Println("Keep this window open. Close the classroom from the host page when finished.")
 	if !*noBrowser {
