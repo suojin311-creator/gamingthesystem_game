@@ -1,11 +1,12 @@
-# Pending Level 2 observation-copy review
+# Approved Level 2 observation copy
 
 - User approved five Students/But they paragraphs and requested a still preview.
   Only the five evidence strings in src/levels/level2/data.ts change; preserve
-  renderer, CSS, effects, layout and existing downloadable game archives.
+  renderer, CSS, effects and layout.
 - Review sheet: play/Level2-observation-copy-preview.png, generated with the real
   ObservationContent and original CSS via scripts/observation-copy-review/.
-  Wait for visual approval before updating full game/classroom ZIPs for this copy.
+  User approved the preview for the formal game. Refresh game/classroom builds
+  with these five strings; no ZIP download needs to be sent to the user.
 
 # Current Padlet Design Lab
 
