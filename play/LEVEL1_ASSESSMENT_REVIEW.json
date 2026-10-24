@@ -1,0 +1,12 @@
+{
+  "scope": "Isolated preview only; production sources and formal game packages unchanged.",
+  "image": "Level1-assessment-preview.png",
+  "sha256": "a0e969dcb689f5a47cfda4b560ee7fa697b5c0b12bd41f8650758192c9a375cf",
+  "checks": [
+    "Actual production chart uses 29% to 85% unchanged.",
+    "Metric name and duplicate heading removed.",
+    "Bridge above original Look behind the result button.",
+    "Desktop render and 390px layout fit."
+  ],
+  "runtimeErrors": []
+}

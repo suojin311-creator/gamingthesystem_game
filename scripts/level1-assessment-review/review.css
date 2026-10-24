@@ -1,0 +1,10 @@
+.assessment-review { max-width:1160px; margin:0 auto; padding:30px 30px 8px; background:var(--paper); }
+.assessment-review .section-intro { margin-bottom:22px; }
+.assessment-review .section-intro h2 { font-size:32px; line-height:1.25; letter-spacing:-.025em; }
+.assessment-review .score-paper { margin-bottom:0; }
+.assessment-review .score-numbers { margin:32px 0 30px; }
+.assessment-review .assessment-bridge { padding:25px 0 23px; }
+.assessment-review .assessment-bridge p { font:24px/1.5 var(--serif); color:#635a46; }
+.assessment-review .assessment-bridge strong { color:var(--coral); font-weight:400; }
+.assessment-review .action-row { justify-content:flex-end; }
+@media(max-width:650px){.assessment-review{padding:24px 20px 8px}.assessment-review .section-intro h2{font-size:26px}.assessment-review .assessment-bridge p{font-size:21px}}

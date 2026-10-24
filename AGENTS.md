@@ -1,3 +1,15 @@
+# Pending Level 1 assessment visual preview
+
+- Isolated preview under scripts/level1-assessment-review/. Production source and
+  formal packages unchanged. Screenshot: play/Level1-assessment-preview.png.
+- Replace Assessment results heading with Percentage of students meeting the
+  criteria. Remove metric name (Participation and equivalents) and duplicate label.
+- Bridge between chart and unchanged Look behind the result button:
+  Learning performance looks better. Management is satisfied. But…
+  But… is brick red. No repeated teacher bubble in this isolated proposal.
+- The actual ResultChart is adapted at review build time only; preserve its data.
+  Wait for approval before promoting this assessment redesign to production.
+
 # Approved Level 1 result copy and teacher strip
 
 - User requested a preview image only: all Level 1 settlement student headlines
