@@ -1,3 +1,13 @@
+# Pending Level 1 chapter dialogue wording preview
+
+- User requested sign → metric in the Level 1 chapter teacher bubble only:
+  Which metric would tell me the most? Keep original position, type and colors.
+- Preview under scripts/level1-dialogue-review/ uses actual ChapterTransition with
+  a build-time string substitution. Sample teacher name fei; formal name still
+  follows opening input. Screenshot play/Level1-metric-dialogue-preview.png.
+- No formal source or game ZIP changed for this still review. The preceding
+  smooth chapter/workbench handoff is approved; ZIP delivery is still deferred.
+
 # Pending Sound button removal and Level 1 handoff review
 
 - User requested removal of the floating bottom-right Sound button on every page.
@@ -11,8 +21,9 @@
   real metric selection, player name and guide skipping. Film payloads excluded
   only because this review ends at selection. Not for production packaging.
 - Review: play/Level1-handoff-preview.mp4, PNG and LEVEL1_HANDOFF_REVIEW.json.
-  Wait for approval before merging this transition; floating Sound cleanup still
-  needs formal integration/package refresh when delivery resumes.
+  User approved this transition. Formal integration/package refresh remains
+  deferred while the next one-word dialogue preview is reviewed; floating Sound
+  cleanup is still required when delivery resumes.
 
 # Current combined release
 
