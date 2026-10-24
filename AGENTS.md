@@ -5,6 +5,9 @@
   "What if I measured more than one metric?" Retain existing card visuals.
 - Source uses an optional PerspectivePanel behaviour override for the settlement;
   do not alter metric-specific cinematic scripts or other observation content.
+- Corrected preview: teacher bubble belongs in the bottom action row, left of
+  the Continue button. Preserve Your prediction and its original collapsed details;
+  preview must use a nonempty prediction so this control is visible.
 - Preview: play/Level1-result-copy-preview.png; reproduction under
   scripts/level1-result-copy-review/. TypeScript and actual rendered text checked.
 - Wait for approval before regenerating formal game/classroom packages.

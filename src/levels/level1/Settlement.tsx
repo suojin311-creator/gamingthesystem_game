@@ -65,6 +65,7 @@ export default function Settlement({ result, playerName = 'You', onTryAnother, o
       <blockquote>{prediction}</blockquote>
     </details>}
 
+    <footer className="action-row l1-settlement-actions">
     <section className="conversation l1-settlement-teacher" aria-label="Teacher reflection">
       <div className="dialogue-character maya-character">
         <span className="avatar maya-avatar" aria-hidden="true"><CharacterPortrait role="teacher" /></span>
@@ -72,7 +73,6 @@ export default function Settlement({ result, playerName = 'You', onTryAnother, o
       </div>
     </section>
 
-    <footer className="action-row only-action l1-settlement-actions">
       <button className="button primary-button" type="button" onClick={onContinue || onTryAnother} disabled={!onContinue && !onTryAnother}>{onContinue ? 'Continue to Level 2' : 'Try another metric'}<Icon name="arrow" /></button>
     </footer>
   </section>;
