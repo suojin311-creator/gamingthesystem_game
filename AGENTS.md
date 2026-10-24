@@ -1,3 +1,19 @@
+# Pending Sound button removal and Level 1 handoff review
+
+- User requested removal of the floating bottom-right Sound button on every page.
+  This refers to the floating AudioControls, not the existing header sound toggle.
+- User then deferred ZIP delivery and prioritized a video preview of the Level 1
+  chapter → workbench handoff. No formal build or ZIP changed for this review.
+- scripts/level1-handoff-review/ uses actual ChapterTransition and Gameplay, keeps
+  the two-visible-second chapter hold, overlaps both pages for 0.7 seconds, then
+  opens the first-use guide at 1.05 seconds after entry with a soft guide fade.
+- Guide delay is a review-only Vite transform. It preserves automatic-guide focus,
+  real metric selection, player name and guide skipping. Film payloads excluded
+  only because this review ends at selection. Not for production packaging.
+- Review: play/Level1-handoff-preview.mp4, PNG and LEVEL1_HANDOFF_REVIEW.json.
+  Wait for approval before merging this transition; floating Sound cleanup still
+  needs formal integration/package refresh when delivery resumes.
+
 # Current combined release
 
 - User approved the latest Level 1 icon result animation plus earlier opening and

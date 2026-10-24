@@ -1,0 +1,17 @@
+{
+  "scope": "Independent transition preview only; formal source and packages unchanged.",
+  "video": "Level1-handoff-preview.mp4",
+  "sha256": "4950686f01f57f74485e3c76b5dd6d02ec55388f9c5fbf593cc81acba79cb3b7",
+  "timingsMs": {
+    "start": 5763.5,
+    "finished": 6530,
+    "guide": 6827.800000011921
+  },
+  "checks": [
+    "Actual chapter and Gameplay share a 0.7-second overlap dissolve; no abrupt DOM replacement.",
+    "Automatic guide opens only after the incoming workbench finishes fading in.",
+    "Guide still works; six real metric options and player name retained."
+  ],
+  "runtimeErrors": [],
+  "audio": false
+}
