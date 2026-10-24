@@ -1,0 +1,30 @@
+.icon-review.game-page { padding:0 40px 20px; }
+.icon-review .masthead,.icon-review .workbench { max-width:1400px; }
+.icon-review .masthead { min-height:84px; }
+.icon-review .review-sound { display:flex; align-items:center; gap:8px; color:#77796b; font-size:12px; }
+.icon-review .review-sound .icon { width:19px; height:19px; }
+.icon-review .workbench-body { grid-template-columns:minmax(0,1fr) 285px; min-height:580px; }
+.icon-review .decision-area { padding-top:28px; }
+.icon-review .section-intro h2 { font-size:32px; line-height:1.2; min-height:39px; }
+.icon-review .single-metric-report { margin:4px 0 0; }
+.icon-review .single-metric-report .l2-evaluation { padding:32px 25px; margin-bottom:0; }
+.icon-review .single-metric-report .l2-evaluation-list { grid-template-columns:minmax(0,1fr); max-width:400px; margin:0 auto; }
+.icon-review .single-metric-report .l2-evaluation-list li { min-height:225px; gap:23px; transition:background .5s ease,border-color .5s ease; }
+.icon-review .single-metric-report .l2-eval-name { font-size:27px; gap:20px; }
+.icon-review .single-metric-report .l2-eval-name>.icon { width:49px; height:49px; }
+.icon-review .single-metric-report .l2-eval-result { font-size:18px; min-height:26px; }
+.icon-review .single-metric-report .l2-eval-result>.icon { width:23px; height:23px; }
+.icon-review [data-checked=true] .l2-eval-result>.icon path { stroke-dasharray:24; stroke-dashoffset:0; animation:review-draw-check .4s ease both; }
+@keyframes review-draw-check { from{stroke-dashoffset:24}to{stroke-dashoffset:0} }
+.icon-review .icon-review-question { text-align:center; padding:25px 0 20px; }
+.icon-review .icon-review-question p { font:600 25px/1.4 var(--serif); color:var(--ink); opacity:1; transition:opacity .6s ease; text-wrap:balance; }
+.icon-review .icon-review-question strong { font-size:40px; color:var(--coral); margin-right:.12em; }
+.icon-review .icon-review-question [data-visible=false] { opacity:0; }
+.icon-review .action-row { justify-content:flex-end; margin-top:auto; padding-top:18px; }
+.icon-review .perspectives { padding:28px 20px; }
+.icon-review .perspective { padding:21px 18px; }
+.icon-review .perspective-heading { margin-bottom:22px; }
+.icon-review .page-footer { max-width:1400px; margin:auto; }
+@media(max-width:900px){.icon-review .workbench-body{grid-template-columns:minmax(0,1fr)}.icon-review .perspectives{border-left:0;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.icon-review.game-page{padding:0 14px 15px}.icon-review .decision-area{padding:24px 20px 0}.icon-review .stepper{padding-inline:15px}.icon-review .section-intro h2{font-size:27px}.icon-review .single-metric-report .l2-evaluation{padding:22px 16px}.icon-review .icon-review-question p{font-size:22px}.icon-review .icon-review-question strong{font-size:34px}.icon-review .perspectives{grid-template-columns:1fr}.icon-review .office-location{display:none}}
+@media(prefers-reduced-motion:reduce){.icon-review .single-metric-report li,.icon-review .icon-review-question p{transition:none}.icon-review [data-checked=true] .l2-eval-result>.icon path{animation:none}}

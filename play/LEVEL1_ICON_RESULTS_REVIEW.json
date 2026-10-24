@@ -1,0 +1,20 @@
+{
+  "scope": "Independent visual preview only; formal source and game packages unchanged.",
+  "video": "Level1-icon-results-preview.mp4",
+  "videoSha256": "7a15843a8c8dc20fb0b50695f1cdcdd6fdffa8831d6ae545e1431b269a8478d6",
+  "image": "Level1-icon-results-preview.png",
+  "timingsMs": {
+    "targetMet": 1250.6000000238419,
+    "managementUpdate": 1901.1000000238419,
+    "managementComplete": 2944.800000011921,
+    "questionReveal": 3845.300000011921,
+    "buttonEnabled": 4345.600000023842
+  },
+  "checks": [
+    "One metric icon changes from Checking to Target met; no student scores, percentages or progress bar.",
+    "Actual management fill completes before the classroom question and enabled Observe the class button.",
+    "390px layout fits; reduced-motion static state retains one management progress indicator."
+  ],
+  "runtimeErrors": [],
+  "audio": false
+}

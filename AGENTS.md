@@ -9,7 +9,22 @@
   pending visual/copy reviews and historical standalone Lab packages. Padlet stays
   untouched. Do not reintroduce music to satisfy superseded audio tests.
 
-# Pending Level 1 assessment visual preview
+# Pending Level 1 icon-based result preview
+
+- Latest user request replaces the student percentage chart with one Level 2-style
+  metric icon/card. Keep only the Management’s view progressbar. No student
+  percentages or numeric improvement report. Preview first; no formal merge yet.
+- scripts/level1-icon-review/ reuses actual PerspectivePanel/ManagementSatisfaction
+  and Level 2 card styles/icons. Example: Participation, Checking → Target met.
+- Management then updates, its actual fill completes, the existing classroom
+  question fades in (large coral But…), then Observe the class enables. Replaces
+  Look behind the number because this proposal no longer shows student numbers.
+- No bottom teacher dialogue. Formal audio remains effects-only; video is silent.
+- Review: play/Level1-icon-results-preview.mp4 and PNG; timing/layout checks in
+  play/LEVEL1_ICON_RESULTS_REVIEW.json. Preserve the earlier numeric proposal as
+  historical; do not promote it instead of this current visual review.
+
+# Historical numeric Level 1 assessment preview (superseded proposal)
 
 - Isolated preview under scripts/level1-assessment-review/. Production source and
   formal packages unchanged. Video play/Level1-assessment-preview.mp4; still PNG
