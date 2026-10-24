@@ -4,7 +4,9 @@
   formal packages unchanged. Screenshot: play/Level1-assessment-preview.png.
 - Replace Assessment results heading with Percentage of students meeting the
   criteria. Remove metric name (Participation and equivalents) and duplicate label.
-- Bridge between chart and unchanged Look behind the result button:
+- Revised bridge: centered in a lightly shaded footer INSIDE the result card,
+  above the unchanged Look behind the result button. User rejected the detached
+  large two-line copy at lower left. Current bridge:
   Learning performance looks better. Management is satisfied. But…
   But… is brick red. No repeated teacher bubble in this isolated proposal.
 - The actual ResultChart is adapted at review build time only; preserve its data.

@@ -19,6 +19,7 @@ with sync_playwright() as p:
  expect(page.locator('.before-score')).to_contain_text('29%')
  expect(page.locator('.after-score')).to_contain_text('85%')
  expect(page.get_by_role('button')).to_have_text('Look behind the result')
+ expect(page.locator('.assessment-card > .assessment-bridge')).to_have_count(1)
  assert page.locator('.assessment-bridge').bounding_box()['y']<page.get_by_role('button').bounding_box()['y']
  output=ROOT/'play/Level1-assessment-preview.png';page.locator('.assessment-review').screenshot(path=str(output))
  page.set_viewport_size({'width':390,'height':850})
@@ -26,5 +27,5 @@ with sync_playwright() as p:
  assert not errors,errors
  browser.close()
 server.shutdown()
-(ROOT/'play/LEVEL1_ASSESSMENT_REVIEW.json').write_text(json.dumps({'scope':'Isolated preview only; production sources and formal game packages unchanged.','image':output.name,'sha256':hashlib.sha256(output.read_bytes()).hexdigest(),'checks':['Actual production chart uses 29% to 85% unchanged.','Metric name and duplicate heading removed.','Bridge above original Look behind the result button.','Desktop render and 390px layout fit.'],'runtimeErrors':errors},indent=2)+'\n')
+(ROOT/'play/LEVEL1_ASSESSMENT_REVIEW.json').write_text(json.dumps({'scope':'Isolated preview only; production sources and formal game packages unchanged.','image':output.name,'sha256':hashlib.sha256(output.read_bytes()).hexdigest(),'checks':['Actual production chart uses 29% to 85% unchanged.','Metric name and duplicate heading removed.','Bridge integrated inside the chart card footer, centered above the original button.','Desktop render and 390px layout fit.'],'runtimeErrors':errors},indent=2)+'\n')
 print('Assessment preview captured; desktop and mobile layout checks passed.')
