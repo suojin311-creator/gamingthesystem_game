@@ -1,21 +1,19 @@
 # Pending Level 1 assessment visual preview
 
 - Isolated preview under scripts/level1-assessment-review/. Production source and
-  formal packages unchanged. Screenshot: play/Level1-assessment-preview.png.
-- Replace Assessment results heading with Percentage of students meeting the
-  criteria. Remove metric name (Participation and equivalents) and duplicate label.
-- Revised bridge: centered in a lightly shaded footer INSIDE the result card,
-  above the Look behind the number button. User rejected the detached
-  large two-line copy at lower left. Current bridge:
-  Learning performance looks better. Management is satisfied. But…
-  Whole bridge is now 28px semibold dark ink; But… is 44px bold brick red.
-  Increase chart/title/button readability too. No repeated teacher bubble.
-- Video review: play/Level1-assessment-preview.mp4. Actual chart counts up,
-  then Management’s view updates, then bridge fades in, then But… and enabled
-  Look behind the number. Preserve the existing teacher dialogue in the separate
-  bottom shaded strip. This video uses fei as an example name only.
-- The actual ResultChart is adapted at review build time only; preserve its data.
-  Wait for approval before promoting this assessment redesign to production.
+  formal packages unchanged. Video play/Level1-assessment-preview.mp4; still PNG
+  and validation reports share this basename.
+- Remove the Percentage of students meeting the criteria heading and all metric
+  name overlays in this result chart. Retain actual before/after numeric data.
+- User chose the longer caption: More students met the target for this metric.
+  Avoid claims that learning or performance improved. Caption follows number
+  growth; management then updates; Management is satisfied. fades in beside its
+  panel after the fill completes; But… what changed in the classroom? follows;
+  Look behind the number enables 0.5 seconds later. Text areas reserve space.
+- Whole main copy uses 28px semibold dark ink; But… is 44px bold brick red.
+  Remove the bottom teacher dialogue for this result-page review only.
+- Uses actual ResultChart, PerspectivePanel and ManagementSatisfaction via a
+  review-only Vite transform. Wait for approval before formal integration.
 
 # Approved Level 1 result copy and teacher strip
 

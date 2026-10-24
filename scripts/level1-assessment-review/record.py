@@ -19,17 +19,23 @@ with sync_playwright() as p:
  expect(page.locator('.management-satisfaction-state')).to_have_text('Awaiting results')
  expect(root).to_have_attribute('data-ready','true',timeout=5000)
  expect(page.locator('.after-score')).to_contain_text('85%')
+ expect(root).to_have_attribute('data-target','true',timeout=2000)
+ expect(page.locator('.assessment-target')).to_have_text('More students met the target for this metric.')
  expect(root).to_have_attribute('data-reported','true',timeout=2500)
  expect(page.locator('.management-satisfaction-state')).to_have_text('Satisfied')
- expect(root).to_have_attribute('data-bridge','true',timeout=2500)
+ expect(root).to_have_attribute('data-management-note','true',timeout=2000)
+ expect(page.locator('.assessment-management-copy')).to_have_text('Management is satisfied.')
+ expect(root).to_have_attribute('data-question','true',timeout=2000)
+ expect(page.locator('.assessment-bridge p')).to_have_text('But… what changed in the classroom?')
  expect(button).to_be_disabled()
- expect(button).to_be_enabled(timeout=2000)
- expect(page.locator('.dialogue-strip .speaker-name')).to_have_text('fei')
- expect(page.locator('.dialogue-strip p')).to_have_text('More students met the criteria. What happened in class?')
+ expect(button).to_be_enabled(timeout=1500)
+ expect(page.locator('.dialogue-strip')).to_have_count(0)
+ expect(page.get_by_text('Percentage of students meeting the criteria',exact=True)).to_have_count(0)
  times=page.evaluate('window.assessmentTimings')
- assert times['numberStart']<times['numberComplete']<times['managementUpdate']<times['bridgeReveal']<times['butAndButton'],times
- assert times['managementUpdate']-times['numberComplete']>=850,times
- assert times['bridgeReveal']-times['managementUpdate']>=1250,times
+ order=['numberStart','numberComplete','targetReveal','managementUpdate','managementCaption','questionReveal','buttonEnabled']
+ assert all(times[a]<times[b] for a,b in zip(order,order[1:])),times
+ assert times['managementUpdate']-times['targetReveal']>=1450,times
+ assert times['managementCaption']-times['managementUpdate']>=1050,times
  page.wait_for_timeout(3500)
  page.locator('.assessment-review').screenshot(path=str(ROOT/'play/Level1-assessment-preview.png'))
  assert not errors,errors
@@ -37,5 +43,5 @@ with sync_playwright() as p:
 server.shutdown()
 output=ROOT/'play/Level1-assessment-preview.mp4'
 subprocess.run(['ffmpeg','-y','-i',str(source),'-an','-c:v','libx264','-preset','fast','-crf','20','-pix_fmt','yuv420p','-movflags','+faststart',str(output)],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,check=True)
-(ROOT/'play/LEVEL1_ASSESSMENT_VIDEO_REVIEW.json').write_text(json.dumps({'scope':'Independent browser preview; formal game unchanged.','video':output.name,'timingsMs':times,'checks':['Animated actual ResultChart data, then updated actual ManagementSatisfaction status.','Bridge reveal follows management update; But and enabled Look behind the number follow bridge.','Original teacher dialogue retained in separate shaded bottom strip.'],'runtimeErrors':errors,'audio':False},indent=2)+'\n')
+(ROOT/'play/LEVEL1_ASSESSMENT_VIDEO_REVIEW.json').write_text(json.dumps({'scope':'Independent browser preview; formal game unchanged.','video':output.name,'timingsMs':times,'checks':['Number growth, longer metric-target caption, management status update, management caption, classroom question, enabled button verified in order.','Removed percentage heading and bottom teacher dialogue.','Actual ResultChart and ManagementSatisfaction components used; learning-performance claims removed.'],'runtimeErrors':errors,'audio':False},indent=2)+'\n')
 print(json.dumps(times))

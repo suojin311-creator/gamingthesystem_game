@@ -29,3 +29,12 @@
 @media(max-width:900px){.assessment-layout{grid-template-columns:minmax(0,1fr)}.assessment-review .perspectives{border-left:0;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.assessment-review{padding:0}.assessment-main{padding:24px 20px 0}.assessment-review .perspectives{grid-template-columns:1fr}.assessment-context{padding:20px}.assessment-review .dialogue-strip{padding-inline:20px}}
 @media(prefers-reduced-motion:reduce){.assessment-review .bridge-statement,.assessment-review .assessment-bridge strong{transition:none}}
+
+.assessment-review .assessment-target { font:600 28px/1.4 var(--serif); color:var(--ink); text-align:center; margin:0 0 27px; opacity:0; transition:opacity .55s ease; }
+.assessment-review[data-target=true] .assessment-target { opacity:1; }
+.assessment-review .assessment-management-copy { font:600 21px/1.4 var(--serif); color:#4f6d45; margin-top:18px; transition:opacity .55s ease; }
+.assessment-review .assessment-bridge p { opacity:1; transition:opacity .55s ease; }
+.assessment-review .assessment-bridge p[data-visible=false] { opacity:0; }
+.assessment-review .assessment-bridge strong { margin-left:0; margin-right:.14em; }
+@media(max-width:650px){.assessment-review .assessment-target{font-size:24px}.assessment-review .assessment-management-copy{font-size:20px}}
+@media(prefers-reduced-motion:reduce){.assessment-review .assessment-target,.assessment-review .assessment-management-copy,.assessment-review .assessment-bridge p{transition:none}}

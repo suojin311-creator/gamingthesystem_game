@@ -2,16 +2,18 @@
   "scope": "Independent browser preview; formal game unchanged.",
   "video": "Level1-assessment-preview.mp4",
   "timingsMs": {
-    "numberStart": 650.5,
-    "numberComplete": 2658.099999964237,
-    "managementUpdate": 3558.599999964237,
-    "bridgeReveal": 4858.899999976158,
-    "butAndButton": 5659.299999952316
+    "numberStart": 650.3999999761581,
+    "numberComplete": 2651.899999976158,
+    "targetReveal": 3102.199999988079,
+    "managementUpdate": 4602.699999988079,
+    "managementCaption": 5703,
+    "questionReveal": 6703.299999952316,
+    "buttonEnabled": 7203.699999988079
   },
   "checks": [
-    "Animated actual ResultChart data, then updated actual ManagementSatisfaction status.",
-    "Bridge reveal follows management update; But and enabled Look behind the number follow bridge.",
-    "Original teacher dialogue retained in separate shaded bottom strip."
+    "Number growth, longer metric-target caption, management status update, management caption, classroom question, enabled button verified in order.",
+    "Removed percentage heading and bottom teacher dialogue.",
+    "Actual ResultChart and ManagementSatisfaction components used; learning-performance claims removed."
   ],
   "runtimeErrors": [],
   "audio": false

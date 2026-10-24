@@ -5,6 +5,7 @@ export default {root:fileURLToPath(new URL('.',import.meta.url)),base:'./',plugi
   if(!id.endsWith('/src/levels/level1/LevelOne.tsx'))return;
   return code.replace('function ResultChart(', 'export function ResultChart(')
    .replace('<span className="eyebrow">{metric.shortName}</span>', '<span aria-hidden="true" />')
-   .replace('{assessmentReport && <p className="assessment-report-label">Percentage of students meeting the criteria</p>}', '');
+   .replace('{assessmentReport && <p className="assessment-report-label">Percentage of students meeting the criteria</p>}', '')
+   .replace('    <div className="score-track"', '    <p className="assessment-target">More students met the target for this metric.</p>\n    <div className="score-track"');
  }
 },viteSingleFile()],build:{outDir:'../../node_modules/.cache/level1-assessment-review',emptyOutDir:true}};
