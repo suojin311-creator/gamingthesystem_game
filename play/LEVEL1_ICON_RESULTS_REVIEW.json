@@ -1,15 +1,15 @@
 {
   "scope": "Independent visual preview only; formal source and game packages unchanged.",
   "video": "Level1-icon-results-preview.mp4",
-  "videoSha256": "4def7cdd6a6f20ce44ce5e863d2b46b7005f7af38f0c59808d6d90666d229387",
+  "videoSha256": "deef9c46bcff08e0bbe3ac7fdd08fab768ab776c3a2f92f1e61e750b2b9cdef7",
   "image": "Level1-icon-results-preview.png",
   "timingsMs": {
-    "focusStart": 1100.5999999642372,
-    "focusComplete": 1899.300000011921,
-    "targetMet": 2079.699999988079,
-    "managementUpdate": 2730,
-    "managementComplete": 3800,
-    "buttonEnabled": 4150.399999976158
+    "focusStart": 1101,
+    "focusComplete": 1927.1000000238419,
+    "targetMet": 2107.400000035763,
+    "managementUpdate": 2757.900000035763,
+    "managementComplete": 3826.800000011921,
+    "buttonEnabled": 4177.199999988079
   },
   "checks": [
     "All six metrics appear; the chosen Participation card moves from its grid slot into the center and enlarges, then shows Target met.",

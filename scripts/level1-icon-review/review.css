@@ -6,24 +6,24 @@
 .icon-review .workbench-body { grid-template-columns:minmax(0,1fr) 285px; min-height:580px; }
 .icon-review .decision-area { padding-top:28px; }
 .icon-review .section-intro h2 { font-size:32px; line-height:1.2; min-height:39px; }
-.icon-review .single-metric-report { margin:4px 0 28px; }
+.icon-review.game-page .single-metric-report.metric-choice { display:block; margin:4px 0 28px; }
 .icon-review .metric-stage { height:390px; position:relative; border:1px solid #ded7c5; background:#fffdf7; padding:26px; }
-.icon-review .metric-overview { grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
-.icon-review .metric-overview .metric-option { min-height:155px; transition:opacity .5s ease; }
+.icon-review .metric-overview { list-style:none; padding:0; }
+.icon-review .metric-choice .metric-overview .metric-option { min-height:155px; transition:opacity .5s ease; }
 .icon-review .metric-overview .selected-slot { visibility:hidden; }
 .icon-review[data-focused=true] .metric-overview .metric-option { opacity:0; }
-.icon-review .single-metric-report .l2-eval-name { font-size:18px; gap:14px; }
-.icon-review .single-metric-report .l2-eval-name>.icon { width:32px; height:32px; }
-.icon-review .selected-metric-card { position:absolute; z-index:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; border:1px solid #bb977a; border-radius:5px; background:#faf4e9; box-shadow:0 0 0 2px #ad584014; transition:left .8s cubic-bezier(.22,.7,.2,1),top .8s cubic-bezier(.22,.7,.2,1),width .8s cubic-bezier(.22,.7,.2,1),height .8s cubic-bezier(.22,.7,.2,1),background .4s ease,border-color .4s ease,box-shadow .8s ease; }
-.icon-review .selected-metric-card .l2-eval-name { transition:font-size .8s ease; }
-.icon-review .selected-metric-card .l2-eval-name>.icon { transition:width .8s ease,height .8s ease; }
-.icon-review[data-focused=true] .selected-metric-card .l2-eval-name { font-size:27px; gap:20px; }
-.icon-review[data-focused=true] .selected-metric-card .l2-eval-name>.icon { width:49px; height:49px; }
-.icon-review .selected-metric-card .l2-eval-result { font-size:16px; min-height:26px; }
-.icon-review .selected-metric-card .selection-label { color:var(--coral); font-size:12px; }
-.icon-review .selected-metric-card[data-checked=true] { background:#eff3e6; border-color:#bdcba9; box-shadow:0 6px 18px #52664f0b; }
-.icon-review .selected-metric-card[data-checked=true] .l2-eval-result { font-size:18px; }
-.icon-review .selected-metric-card .l2-eval-result>.icon { width:23px; height:23px; }
+.icon-review .metric-choice .selected-metric-card { position:absolute; z-index:1; pointer-events:none; transition:left .8s cubic-bezier(.22,.7,.2,1),top .8s cubic-bezier(.22,.7,.2,1),width .8s cubic-bezier(.22,.7,.2,1),height .8s cubic-bezier(.22,.7,.2,1),background .4s ease,border-color .4s ease,box-shadow .8s ease; }
+.icon-review .selected-metric-card h3 { transition:font-size .8s ease; }
+.icon-review[data-focused=true] .metric-choice .selected-metric-card h3 { font-size:20px; }
+.icon-review .selected-metric-card .choice-card-art { transition:width .8s ease,height .8s ease,background .4s ease,color .4s ease; }
+.icon-review .selected-metric-card .choice-card-art>.icon { transition:width .8s ease,height .8s ease; }
+.icon-review[data-focused=true] .selected-metric-card .choice-card-art { width:64px;height:59px; }
+.icon-review[data-focused=true] .selected-metric-card .choice-card-art>.icon { width:43px;height:43px; }
+.icon-review .selected-metric-card .l2-eval-result { position:absolute; bottom:15px; font-size:16px; min-height:22px; }
+.icon-review.game-page .metric-choice .selected-metric-card[data-checked=true] { background:#eff3e6; border-color:#bdcba9; box-shadow:0 3px 0 #d3ddc3; }
+.icon-review .selected-metric-card[data-checked=true] .choice-card-art { background:#e3ead7; color:#657b53; }
+.icon-review .selected-metric-card[data-checked=true] .choice-card-mark { background:#587448; border-color:#587448; }
+.icon-review .selected-metric-card .l2-eval-result>.icon { width:20px; height:20px; }
 .icon-review [data-checked=true] .l2-eval-result>.icon path { stroke-dasharray:24; stroke-dashoffset:0; animation:review-draw-check .4s ease both; }
 @keyframes review-draw-check { from{stroke-dashoffset:24}to{stroke-dashoffset:0} }
 .icon-review .action-row { justify-content:flex-end; margin-top:auto; padding-top:18px; }
@@ -32,5 +32,5 @@
 .icon-review .perspective-heading { margin-bottom:22px; }
 .icon-review .page-footer { max-width:1400px; margin:auto; }
 @media(max-width:900px){.icon-review .workbench-body{grid-template-columns:minmax(0,1fr)}.icon-review .perspectives{border-left:0;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.icon-review.game-page{padding:0 14px 15px}.icon-review .decision-area{padding:24px 20px 0}.icon-review .stepper{padding-inline:15px}.icon-review .section-intro h2{font-size:27px}.icon-review .metric-stage{padding:14px;height:380px}.icon-review .metric-overview{gap:10px}.icon-review .metric-overview .metric-option{min-height:150px;padding-inline:5px}.icon-review .single-metric-report .l2-eval-name{font-size:12px;overflow-wrap:anywhere}.icon-review .single-metric-report .l2-eval-name>.icon{width:27px;height:27px}.icon-review[data-focused=true] .selected-metric-card .l2-eval-name{font-size:25px}.icon-review .perspectives{grid-template-columns:1fr}.icon-review .office-location{display:none}}
-@media(prefers-reduced-motion:reduce){.icon-review .metric-option,.icon-review .selected-metric-card,.icon-review .selected-metric-card .l2-eval-name,.icon-review .selected-metric-card .l2-eval-name>.icon{transition:none}.icon-review [data-checked=true] .l2-eval-result>.icon path{animation:none}}
+@media(max-width:600px){.icon-review.game-page{padding:0 14px 15px}.icon-review .decision-area{padding:24px 20px 0}.icon-review .stepper{padding-inline:15px}.icon-review .section-intro h2{font-size:27px}.icon-review .metric-stage{padding:14px;height:445px}.icon-review.game-page .metric-choice .choice-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.icon-review .metric-choice .metric-overview .metric-option{min-height:125px}.icon-review .perspectives{grid-template-columns:1fr}.icon-review .office-location{display:none}}
+@media(prefers-reduced-motion:reduce){.icon-review .metric-option,.icon-review .selected-metric-card,.icon-review .selected-metric-card h3,.icon-review .selected-metric-card .choice-card-art,.icon-review .selected-metric-card .choice-card-art>.icon{transition:none!important}.icon-review [data-checked=true] .l2-eval-result>.icon path{animation:none}}

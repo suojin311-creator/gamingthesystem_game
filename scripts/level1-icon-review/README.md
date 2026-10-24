@@ -3,8 +3,10 @@
 Independent preview only; formal game source, cinematic caches and archives stay
 unchanged. This supersedes the numeric assessment review as the current proposal.
 
-Reuses the actual Level 1 PerspectivePanel and ManagementSatisfaction, plus Level 2
-metric-evaluation classes, styles, icons and card structure. All six metrics appear in a 3×2 grid. Participation is already selected in this
+Reuses the actual Level 1 PerspectivePanel and ManagementSatisfaction, plus shared
+metric-selection classes/styles and original card structure. Icon backings, title
+fonts, corners, shadows and selection marks match the selection page. Only the
+completion palette and Target met status use Level 2 evaluation styles. All six metrics appear in a 3×2 grid. Participation is already selected in this
 example and moves into the center while enlarging. Others fade without ticks.
 The selected card shows Target met rather than a learning-improvement claim.
 No student percentages or progress bar remain; management is the only progressbar.

@@ -6,6 +6,7 @@ import {METRIC_CATALOG} from '../../src/shared/data/metrics';
 import Icon from '../../src/shared/components/Icon';
 import '../../src/shared/styles/base.css';
 import '../../src/levels/level2/styles.css';
+import '../../src/shared/styles/metric-selection.css';
 import './review.css';
 const metric=getMetric('part')!;
 function Review(){
@@ -20,7 +21,7 @@ function Review(){
  useLayoutEffect(()=>{
   const measure=()=>{if(!stage.current||!slot.current)return;
    const a=stage.current.getBoundingClientRect(),b=slot.current.getBoundingClientRect();
-   const width=Math.min(400,stage.current.clientWidth-48),height=225;
+   const width=Math.min(390,stage.current.clientWidth-48),height=210;
    setGeometry({from:{left:b.left-a.left-stage.current.clientLeft,top:b.top-a.top-stage.current.clientTop,width:b.width,height:b.height},
     to:{left:(stage.current.clientWidth-width)/2,top:(stage.current.clientHeight-height)/2,width,height}});
   };measure();const resize=new ResizeObserver(measure);if(stage.current)resize.observe(stage.current);return()=>resize.disconnect();
@@ -46,13 +47,13 @@ function Review(){
  <nav className="stepper" aria-label="Level steps"><ol>{['Choose','Predict','Evaluate','Observe'].map((s,i)=><li key={s} className={i<2?'done':i===2?'current':''}><span className="step-number">{i<2?<Icon name="check"/>:String(i+1).padStart(2,'0')}</span>{s}</li>)}</ol></nav>
  <div className="workbench-body"><section className="decision-area icon-assessment-main">
  <div className="section-intro"><h2>{checked?'The target is met.':'Checking the metric.'}</h2></div>
- <div className="level-two single-metric-report"><div ref={stage} className="metric-stage" aria-label="Six metrics and your chosen metric">
- <ul className="l2-evaluation-list metric-overview">{METRIC_CATALOG.map(m=><li key={m.id} ref={m.id===metric.id?slot:undefined} className={`metric-option ${m.id===metric.id?'selected-slot':''}`} data-metric={m.id} aria-hidden={m.id===metric.id||focused}>
- <span className="l2-eval-name"><Icon name={m.id}/>{m.shortName}</span>
+ <div className="level-two metric-choice single-metric-report"><div ref={stage} className="metric-stage" aria-label="Six metrics and your chosen metric">
+ <ul className="choice-grid metric-grid metric-overview">{METRIC_CATALOG.map(m=><li key={m.id} ref={m.id===metric.id?slot:undefined} className={`choice-card metric-card metric-option ${m.id===metric.id?'selected-slot selected':''}`} data-metric={m.id} aria-hidden={m.id===metric.id||focused}>
+ <span className="choice-card-mark" aria-hidden="true"/><span className="choice-card-art"><Icon name={m.id}/></span><h3>{m.shortName}</h3>
  </li>)}</ul>
- {geometry&&<div className="selected-metric-card" data-checked={checked} style={focused?geometry.to:geometry.from} onTransitionEnd={e=>{if(e.target===e.currentTarget&&e.propertyName==='width')focusComplete();}}>
- <span className="l2-eval-name"><Icon name={metric.id}/>{metric.shortName}</span>
- <span className="l2-eval-result" aria-live="polite">{checked?<><Icon name="check"/>Target met</>:focused?<><i className="l2-checking"/>Checking</>:<span className="selection-label">Selected</span>}</span>
+ {geometry&&<div className="choice-card metric-card selected selected-metric-card" data-checked={checked} style={focused?geometry.to:geometry.from} onTransitionEnd={e=>{if(e.target===e.currentTarget&&e.propertyName==='width')focusComplete();}}>
+ <span className="choice-card-mark" aria-hidden="true"><Icon name="check"/></span><span className="choice-card-art"><Icon name={metric.id}/></span><h3>{metric.shortName}</h3>
+ <span className="l2-eval-result" aria-live="polite">{checked?<><Icon name="check"/>Target met</>:focused?<><i className="l2-checking"/>Checking</>:<span aria-hidden="true"/>}</span>
  </div>}
  </div></div>
  <div className="action-row"><button type="button" className="button primary-button" disabled={!enabled}><Icon name="play"/>Observe the class</button></div>

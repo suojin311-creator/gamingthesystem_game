@@ -14,8 +14,11 @@
 - Latest user request replaces the student percentage chart with one Level 2-style
   metric icon/card. Keep only the Management’s view progressbar. No student
   percentages or numeric improvement report. Preview first; no formal merge yet.
-- scripts/level1-icon-review/ reuses actual PerspectivePanel/ManagementSatisfaction
-  and Level 2 card styles/icons. Example: Participation, Checking → Target met.
+- scripts/level1-icon-review/ reuses actual PerspectivePanel/ManagementSatisfaction.
+  Six cards now use the shared metric-selection CSS/markup: original icon backing,
+  card radius/shadow, bold name and top-right selection check. Remove the custom
+  Selected text and bare icons. Only a slight enlargement on movement; completion
+  adopts Level 2 green result palette. Example: Participation → Target met.
 - Current animation starts with all six metrics in a 3×2 grid. The already
   selected card moves smoothly into the center and enlarges; the other five fade
   without receiving ticks. Then Target met, actual management fill, enabled
