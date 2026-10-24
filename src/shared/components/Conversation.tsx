@@ -1,3 +1,4 @@
+import { teacherSpeech } from '../utils/teacherSpeech';
 import { useEffect, useRef, useState } from 'react';
 import type { Cue } from '../hooks/useFeedback';
 import { readingTime } from '../utils/readingTime';
@@ -74,7 +75,7 @@ export default function Conversation({ lines, enabled = true, paused = false, pl
         <span className={`avatar ${alex ? 'alex-avatar' : 'maya-avatar'}`} aria-hidden="true"><CharacterPortrait role={alex ? 'student' : 'teacher'} /></span>
         <div className={`speech-bubble ${alex ? 'alex-bubble' : 'maya-bubble'} ${typing ? 'is-typing' : 'message-arrived'}`}>
           <span className={`speaker-name ${continuation ? 'sr-only' : ''}`}>{line.name}</span>
-          {typing ? <span className="typing-indicator" role="status" aria-label={`${line.name} is typing`}><i /><i /><i /></span> : <p aria-live="polite">{line.text}</p>}
+          {typing ? <span className="typing-indicator" role="status" aria-label={`${line.name} is typing`}><i /><i /><i /></span> : <p aria-live="polite">{alex ? line.text : teacherSpeech(line.text)}</p>}
         </div>
       </div>;
     })}

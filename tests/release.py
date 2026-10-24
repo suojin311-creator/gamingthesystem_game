@@ -92,7 +92,7 @@ def opening(page):
     chapter=page.get_by_role('region',name='Level 1 introduction')
     expect(chapter).to_be_visible(timeout=12000)
     expect(chapter).to_have_attribute('data-beat','ready',timeout=5000)
-    page.get_by_role('button', name='Choose a metric', exact=True).click()
+    expect(page.locator('.level-one')).to_be_visible(timeout=8000)
 
 
 def scene(page, lines=3):
@@ -175,7 +175,7 @@ def finish_two(page):
     scene(page)
     cover_gaps(page)
     scene(page)
-    expect(page.get_by_role('heading', name='Would more metrics help Alex learn?', exact=True)).to_be_visible()
+    expect(page.get_by_role('heading', name='Would more metrics help learning?', exact=True)).to_be_visible()
     page.get_by_role('button', name='Test more metrics', exact=True).click()
     advance(page, 30)
     expect(page.locator('.l2-reported-count')).to_have_text('100')
@@ -185,7 +185,7 @@ def finish_two(page):
 
 def choose_three(page):
     advance(page,8)
-    page.get_by_role('button',name=re.compile(r'^(Choose|Review) priorities$')).click()
+    expect(page.locator('.level-three')).to_have_attribute('data-phase','choose',timeout=8000)
     for id in ['prep','part','focus']:
         card=page.get_by_test_id('level3-metric-'+id)
         if card.get_attribute('aria-pressed')!='true':card.click()
@@ -277,7 +277,7 @@ with sync_playwright() as playwright:
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
     advance(page, 8)
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
-    page.get_by_role('button', name='Choose three metrics', exact=True).click()
+    expect(page.locator('.level-two')).to_have_attribute('data-phase','choose',timeout=8000)
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'choose')
     expect(page.get_by_role('button', name='Guide', exact=True)).to_have_count(0)
     for id in ['prep', 'part', 'focus']: page.get_by_test_id('level2-metric-' + id).click()
@@ -286,7 +286,7 @@ with sync_playwright() as playwright:
     scene(page)
     cover_gaps(page)
     scene(page)
-    expect(page.get_by_role('heading', name='Would more metrics help Alex learn?', exact=True)).to_be_visible()
+    expect(page.get_by_role('heading', name='Would more metrics help learning?', exact=True)).to_be_visible()
     page.get_by_role('button', name='Test more metrics', exact=True).click()
     advance(page, 30)
     expect(page.locator('.l2-reported-count')).to_have_text('100')
@@ -359,7 +359,7 @@ with sync_playwright() as playwright:
     page.clock.install()
     expect(page.get_by_role('button', name='Sound off', exact=True)).to_be_visible()
     advance(page, 8)
-    page.get_by_role('button', name='Choose three metrics', exact=True).click()
+    expect(page.locator('.level-two')).to_have_attribute('data-phase','choose',timeout=8000)
     for id in ['prep', 'part', 'focus']: page.get_by_test_id('level2-metric-' + id).click()
     page.get_by_role('button', name='Run evaluation', exact=True).click()
     advance(page, 6)

@@ -1,0 +1,60 @@
+{
+  "generatedAtUtc": "2026-10-24T08:06:05.261352+00:00",
+  "scope": "All three shared chapter entrances and global direct teacher address updates in source. Only Level 2 is recorded. Game/classroom ZIPs and pending opening/ending review remain unchanged.",
+  "archive": null,
+  "video": "Chapter-auto-entry-preview.mp4",
+  "sha256": "68c62467b523b801355ed1df2d22d419b8c01610003eb08ae7e9504b9dbe61df",
+  "durationSeconds": 7.72,
+  "audio": "Silent visual preview",
+  "validation": {
+    "checks": [
+      "Level 1: automatic entry two seconds after the final entrance animation, no button or direct name address (no-preference)",
+      "Level 2: automatic entry two seconds after the final entrance animation, no button or direct name address (no-preference)",
+      "Level 3: automatic entry two seconds after the final entrance animation, no button or direct name address (no-preference)",
+      "Level 3&carried=1: automatic entry two seconds after the final entrance animation, no button or direct name address (no-preference)",
+      "Level 2: automatic entry two seconds after the final entrance animation, no button or direct name address (reduce)",
+      "Background tabs pause the two-second hold, then automatically enter when visible again",
+      "All six Level 1 review questions and all Level 2 teacher conversation branches omit the direct name; student speaker identities remain intact",
+      "Recorded one complete Level 2 entrance and the real six-metric selection interface, without clicking an entry button"
+    ],
+    "timings": [
+      {
+        "level": 1,
+        "carried": false,
+        "reducedMotion": false,
+        "settledToEntryMs": 2049.199999988079
+      },
+      {
+        "level": 2,
+        "carried": false,
+        "reducedMotion": false,
+        "settledToEntryMs": 2020.0
+      },
+      {
+        "level": 3,
+        "carried": false,
+        "reducedMotion": false,
+        "settledToEntryMs": 2019.6000000238419
+      },
+      {
+        "level": 3,
+        "carried": true,
+        "reducedMotion": false,
+        "settledToEntryMs": 2020.2000000476837
+      },
+      {
+        "level": 2,
+        "carried": false,
+        "reducedMotion": true,
+        "settledToEntryMs": 2006.300000011921
+      }
+    ],
+    "runtimeErrors": []
+  },
+  "typeScriptCheck": "Passed npm run check",
+  "filmAdapterBuilds": {
+    "level1": "Built against unchanged pinned 1bdd0c442c4b345b3bd37d6f541742d4e55c732f",
+    "level2": "Built against unchanged pinned c8c1c83456c4e67cf627df399bfb67b3a9792adb"
+  },
+  "limitations": "Focused chapter/metric-selection review; no new full-game release or full film playback verification in this review."
+}

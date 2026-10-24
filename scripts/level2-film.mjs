@@ -10,7 +10,7 @@ const html = resolve(cache, 'index.html');
 const manifest = resolve(cache, 'manifest.json');
 const PIN = 'c8c1c83456c4e67cf627df399bfb67b3a9792adb';
 const files = readdirSync(resolve(root, 'scripts/level2-animation')).filter(name => /\.(mjs|jsx|css)$/.test(name)).sort().map(name => 'scripts/level2-animation/' + name);
-files.push('src/shared/data/cinematicPalette.js');
+files.push('src/shared/data/cinematicPalette.js', 'src/shared/utils/teacherSpeech.js');
 files.push('scripts/cinematic-dissolve.mjs', 'scripts/cinematic-reading.mjs', 'scripts/metric100-preview/pacing.mjs');
 const sha = data => createHash('sha256').update(data).digest('hex');
 const fingerprint = () => sha(Buffer.concat(files.map(path => Buffer.concat([Buffer.from(path + '\0'), readFileSync(resolve(root, path)), Buffer.from('\0')]))));

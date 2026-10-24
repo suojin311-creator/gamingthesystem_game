@@ -26,18 +26,33 @@ export default function ChapterTransition({ level, backdrop, playerName, previou
   const [pageVisible, setPageVisible] = useState(!document.hidden);
   const root = useRef<HTMLElement>(null);
   const title = useRef<HTMLHeadingElement>(null);
+  const entry = useRef<HTMLDivElement>(null);
+  const [entrySettled, setEntrySettled] = useState(false);
+  const started = useRef(false);
   const weights = level === 3;
   const first = level === 1;
   const carried = weights && initialMetricIds?.length === 3 ? initialMetricIds : [];
   const ready = beat === 'ready';
   const chapterVisible = beat === 'chapter' || ready;
   const titleText = first ? 'One metric.' : weights ? 'The weighting trap.' : 'More metrics.';
-  const question = first ? 'Which sign would tell me the most?' : weights ? 'Alex, I’ll change how much each one counts.' : 'Alex, what if I checked three areas?';
+  const question = first ? 'Which sign would tell me the most?' : weights ? 'I’ll change how much each one counts.' : 'What if I checked three areas?';
 
   useVisibleDelay(`chapter:${level}:${beat}`, '.chapter-transition', beat === 'hold' ? 900 : beat === 'turn' ? 1000 : 1100, !ready, () => {
     if (beat === 'hold') { setBeat('turn'); play('paper'); }
     else if (beat === 'turn') { setBeat('chapter'); play('chapter'); }
     else setBeat('ready');
+  });
+
+  // Wait for the final dialogue entrance, then hold two visible seconds.
+  useEffect(() => {
+    if (!ready || !entry.current) return;
+    const style = getComputedStyle(entry.current);
+    if (style.animationName === 'none' || style.animationDuration.split(',').every(t => parseFloat(t) === 0)) setEntrySettled(true);
+  }, [ready]);
+  useVisibleDelay(`chapter:${level}:enter`, '.chapter-transition', 2000, ready && entrySettled, () => {
+    if (started.current) return;
+    started.current = true;
+    onStart();
   });
 
   useEffect(() => {
@@ -76,10 +91,9 @@ export default function ChapterTransition({ level, backdrop, playerName, previou
         })}
       </div>
     </div>
-    <div className="chapter-entry">
+    <div ref={entry} className="chapter-entry" onAnimationEnd={event => { if (event.target === event.currentTarget && ready) setEntrySettled(true); }}>
       {ready && <>
         <div className="conversation chapter-bridge" aria-label="Character dialogue"><div className="dialogue-character maya-character"><span className="avatar maya-avatar" aria-hidden="true"><CharacterPortrait role="teacher" /></span><div className="speech-bubble maya-bubble"><span className="speaker-name">{playerName}</span><p>{question}</p></div></div></div>
-        <div className="chapter-actions"><button className="button primary-button" onClick={onStart}>{first ? 'Choose a metric' : weights ? carried.length === 3 ? 'Review priorities' : 'Choose priorities' : 'Choose three metrics'}<Icon name="arrow" /></button></div>
       </>}
     </div>
   </section>;

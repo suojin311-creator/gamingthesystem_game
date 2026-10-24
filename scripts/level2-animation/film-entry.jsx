@@ -1,3 +1,4 @@
+import { teacherSpeech } from '../../src/shared/utils/teacherSpeech.js';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Level2ConsequencesSequence } from '@partner/cinematics/level2/Level2ConsequencesSequence';
@@ -134,7 +135,7 @@ function Film({ config }) {
     <Level2ConsequencesSequence request={request} elapsed={sample.sourceSeconds} active={playing && !finished && visible.current} reducedMotion={config.reducedMotion} onComplete={IGNORE} />
     {line && <div className="l2-spoken" data-speaker={player ? 'player' : 'alex'} style={captionStyle}>
       <p className="l2-speaker" style={{ ...captionStyle, fontStyle: 'normal' }}>{player ? 'You' : 'Alex'}</p>
-      <DialogueLayer style={captionStyle}>{line.text}</DialogueLayer>
+      <DialogueLayer style={captionStyle}>{player ? teacherSpeech(line.text) : line.text}</DialogueLayer>
     </div>}
     <div className="l2-film-cover" aria-hidden="true" style={{ opacity: hundred ? 0 : finished ? 1 : finalCover(pacing, elapsed) }} />
   </main>;

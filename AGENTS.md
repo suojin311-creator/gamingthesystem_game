@@ -1,3 +1,19 @@
+# Current chapter entrance review
+
+- User requested the shared entrance change for all three levels: finish the
+  entry animation, hold two visible seconds, then enter the operation interface
+  automatically, without the chapter action button. Teacher dialogue must not
+  directly address Alex by name; student identity labels and report narration stay.
+- These shared source and caption-adapter changes are authorized. The pending
+  opening/ending copy review below remains isolated and unapproved.
+- Deliver only `play/Chapter-auto-entry-preview.mp4` (Level 2). Do not rebuild or
+  replace game/classroom ZIPs merely for this single-video review. Validate all
+  three levels with `scripts/chapter-review/capture.py` and run the root TS check.
+- The focused preview uses the actual shared chapter and workbench components;
+  film payloads are excluded because this review ends at metric selection.
+  Level 1/2 film adapters also normalize direct teacher address; their verified
+  caches are refreshed from the pinned source for the next full build.
+
 # Pending opening/ending copy review
 
 - User requested independent previews before approval. Use `scripts/copy-review/`;

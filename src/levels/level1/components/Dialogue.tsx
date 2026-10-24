@@ -11,7 +11,7 @@ export default function Dialogue({ phase, playerName, studentReplies, reviewQues
   const single: Record<Phase, string> = {
     choose: 'Where should I start?', predict: 'What do I expect students to do?',
     result: assessmentReport ? 'More students met the criteria. What happened in class?' : 'Looking good. I’ll check the classroom.', cinematic: '',
-    review: reviewQuestion || 'Alex, tell me how you approached that task.',
+    review: reviewQuestion || 'Tell me how you approached that task.',
   };
   const lines: ConversationLine[] = [{ speaker: 'Maya', name: playerName, text: single[phase] }];
   if (phase === 'review') lines.push(...(studentReplies || ['I finished the tasks.']).map(text => ({ speaker: 'Alex' as const, name: 'Alex', text })));

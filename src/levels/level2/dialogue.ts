@@ -7,12 +7,12 @@ const names = (ids: readonly MetricId[]) => new Intl.ListFormat('en', { style: '
 export function observationDialogue(complete: boolean, count: number, selected: MetricId[], playerName: string): ConversationLine[] {
   const teacher = (text: string): ConversationLine => ({ speaker: 'Maya', name: playerName, text });
   const alex = (text: string): ConversationLine => ({ speaker: 'Alex', name: 'Alex', text });
-  if (complete) return [teacher('Alex, would changing what counts most change what you spend time on?'), alex('Depends… what’s the big reward? 🪙'), alex('Show me that, and I’ll make a plan.')];
+  if (complete) return [teacher('Would changing what counts most change what you spend time on?'), alex('Depends… what’s the big reward? 🪙'), alex('Show me that, and I’ll make a plan.')];
   if (count !== 3) return [teacher('Now all six count. Are you learning more, or just keeping up?'), alex('Keeping up! There’s a box for everything now. 😅'), alex('I’m getting quick at ticking them off.')];
   const tracked = names(selected);
   const missing = names(METRIC_CATALOG.filter(metric => !selected.includes(metric.id)).map(metric => metric.id));
   switch (classifyTrio(selected)) {
-    case 'visible': return [teacher(`Alex, ${missing} still matter. Where did they fit in?`), alex('Looking busy was the mission, right? 🧐'), alex(`I left ${missing} for later.`)];
+    case 'visible': return [teacher(`${missing} still matter. Where did they fit in?`), alex('Looking busy was the mission, right? 🧐'), alex(`I left ${missing} for later.`)];
     case 'quality': return [teacher(`Your work on ${tracked} looks polished. What did you leave out?`), alex('I made those three look just right. 🪄'), alex('The other three? They weren’t on my list.')];
     case 'mixed': return [teacher(`You covered ${tracked}. What happened to the rest?`), alex('I kept checking the three on my score sheet. 🧷'), alex('If it wasn’t on the list, I moved on.')];
   }

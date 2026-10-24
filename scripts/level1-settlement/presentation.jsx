@@ -1,3 +1,4 @@
+import { teacherSpeech } from '../../src/shared/utils/teacherSpeech.js';
 import React, { useEffect, useRef, useState } from 'react';
 import { finalCoverOpacity, SCENE_COVER_SECONDS, SOURCE_TRANSITION_START } from '@preview-transitions';
 import { AbsoluteFill, Img } from 'remotion';
@@ -21,7 +22,7 @@ function SpokenLine({ text, player = false, playerName }) {
   const color = SPEAKER_COLORS[player ? 'player' : 'alex'];
   return <div className="l1-spoken" data-speaker={player ? 'player' : 'alex'}>
     <p className="l1-speaker" style={{ color, textShadow: CAPTION_SHADOW }}>{player ? playerName?.trim() || 'You' : 'Alex'}</p>
-    <DialogueLayer style={{ bottom: '7%', left: '10%', right: '10%', fontSize: '2.15cqw', lineHeight: 1.5, fontStyle: player ? 'italic' : 'normal', color, WebkitTextStroke: '.035em #172019', paintOrder: 'stroke fill', textShadow: CAPTION_SHADOW }}>{text}</DialogueLayer>
+    <DialogueLayer style={{ bottom: '7%', left: '10%', right: '10%', fontSize: '2.15cqw', lineHeight: 1.5, fontStyle: player ? 'italic' : 'normal', color, WebkitTextStroke: '.035em #172019', paintOrder: 'stroke fill', textShadow: CAPTION_SHADOW }}>{player ? teacherSpeech(text) : text}</DialogueLayer>
   </div>;
 }
 

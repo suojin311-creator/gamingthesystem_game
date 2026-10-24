@@ -65,7 +65,7 @@ def client(base, mobile):
             record('Opening, chosen Level 1 film and its results complete without a blank interface')
             page.get_by_role('button', name='Continue to Level 2', exact=True).click()
             advance(page, 8)
-            page.get_by_role('button', name='Choose three metrics', exact=True).click()
+            expect(page.locator('.level-two')).to_have_attribute('data-phase','choose',timeout=8000)
             for metric in ['prep','part','focus']: page.get_by_test_id('level2-metric-'+metric).click()
             page.get_by_role('button', name='Run evaluation', exact=True).click()
             advance(page, 8)

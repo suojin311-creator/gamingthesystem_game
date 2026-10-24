@@ -12,7 +12,7 @@ const sourceFiles = [
   'scripts/level1-settlement/cinematic.config.mjs', 'scripts/level1-settlement/cinematic-entry.jsx',
   'scripts/level1-settlement/presentation.jsx', 'scripts/level1-settlement/content.mjs',
   'scripts/level1-settlement/pacing.mjs', 'scripts/level1-settlement/transitions.mjs',
-  'src/shared/data/cinematicPalette.js',
+  'src/shared/data/cinematicPalette.js', 'src/shared/utils/teacherSpeech.js',
   'scripts/cinematic-dissolve.mjs',
 ];
 const sha = data => createHash('sha256').update(data).digest('hex');
