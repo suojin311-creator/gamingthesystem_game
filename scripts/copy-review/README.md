@@ -11,7 +11,7 @@ caches, six game ZIPs and the classroom ZIP remain unchanged.
 - Opening only replaces the subtitle at build time. It imports the current
   Opening component without changing it.
 - Ending uses local review copies of the current composition/timeline, extends
-  the film to 39.2 seconds and keeps the existing actual-history memories.
+  the film to 37.2 seconds and keeps the existing actual-history memories.
   The new pages share the office background and gentle fades. The final
   invitation/title/button remain together after the two new sentences.
 - No speaker labels, formal Goodhart title or decorative rule on the new pages.
@@ -30,3 +30,5 @@ real autoplay from the built review, using the existing system FFmpeg for MP4.
 Deliver play/Opening-title-copy-preview.png and play/Ending-copy-preview.mp4.
 The ending recording is a visual review without a soundtrack. Existing game
 music is not changed. Original interactive independent ending ZIP is preserved.
+
+Latest typography review: all three reflection pages share Georgia 400, 3.6cqw body size and 1.65 line height. The question and principle highlights use a common 1.16 emphasis scale. Only becomes is coral and ceases gold on the principle page; number returns to body white. The assessment page uses two equal-size lines, gold then coral. Principle lasts 5.1 seconds instead of 7.1; subsequent sections shift two seconds earlier. Use capture.py --ending-only to preserve the unchanged opening screenshot.
