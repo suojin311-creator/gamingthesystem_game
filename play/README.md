@@ -1,3 +1,10 @@
+# Approved chapter update
+
+The six game archives and the combined classroom package now include automatic
+entry two seconds after each of the three chapter entrance animations, plus the
+approved removal of direct student-name address from teacher dialogue. The
+standalone Lab is unchanged. Pending opening/ending copy previews remain separate.
+
 # Latest integrated sound / classroom preview
 
 The three current deliverables, launch instructions and classroom handoff are in

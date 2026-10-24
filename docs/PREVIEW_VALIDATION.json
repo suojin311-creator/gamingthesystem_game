@@ -1,16 +1,33 @@
 {
-  "validatedAtUtc": "2026-10-20T22:00:38.518962+00:00",
+  "validatedAtUtc": "2026-10-24T08:15:31.444288+00:00",
   "branch": "animation/opening-integration",
-  "gameSourceSha256": "059cc0b6180b3136dc3ee60bdc7bc31c7cb4062c30b9ab6be84f5af094d09e62",
-  "classroomZipSha256": "13f2d8d115203ca3ad1fef346c7c2ef7e12117c3f32f843c35c22ae7301733c7",
-  "classroomEmbeddedGameHtmlSha256": "e7f2f94174b78a5027c621c7be7b73956ecb94e4a1706b383b4a2fff36bf3e73",
+  "approvedChange": "All three chapter intros automatically enter two visible seconds after their final entry animation; teacher dialogue omits direct student-name address.",
+  "gameSourceSha256": "355381e38a4e84b0499b5153dd7452437d9b4050d0eb8aa71a7e412f62d6b290",
+  "classroomZipSha256": "d10f56ac847c0faba8602e149a56dae47a773527b991b0b09029e8c33d040756",
+  "classroomEmbeddedGameHtmlSha256": "3113faab7bf33f83cf7d477330f0690c8dfe4182f4aad5db8268ed57d78bbc77",
   "classroomArchive": "Gaming-the-System-classroom.zip",
-  "nativeWindowsExecutionTested": false,
-  "physicalPhoneTested": false,
   "checks": {
-    "classroomLan": {
+    "actualArchiveFunctionalPaths": {
+      "passed": 12,
+      "checks": [
+        "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
+        "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
+        "The complete ZIP shares one verified game build across its four offline entry points without duplicating movie assets",
+        "The actual complete-ZIP launcher fits desktop/phone, starts the full game at the opening and opens each standalone level directly offline",
+        "Packaged Level2.html completes 3 \u2192 6 \u2192 10 \u2192 25 \u2192 100 offline with normal motion",
+        "Packaged standalone Level3.html compares after two tests and can add an optional third, keeping all actual results offline",
+        "Packaged Level1.html uses the approved report, normal-speed cinematic, matching name/colours and settlement; Try another resets it without entering Level 2",
+        "Standalone Level 1 reload starts a fresh Level 1 run",
+        "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
+        "Packaged combined game carries the opening name, including ampersand and Chinese, through Level 1 UI, teacher/Alex captions, email and playable Levels 2\u20133",
+        "Combined preview reload starts at the opening rather than restoring a level or player identity",
+        "Packaged entries have no browser runtime errors"
+      ],
+      "runtimeErrors": []
+    },
+    "simultaneousLanClients": {
       "passed": 11,
-      "baseUrl": "http://172.26.91.252:3016",
+      "baseUrl": "http://172.26.91.252:3017",
       "clients": [
         {
           "client": "desktop-chromium",
@@ -28,15 +45,15 @@
           ],
           "runtimeErrors": [],
           "completionTokens": [
-            "ebcfebaa13c135b23a4523144b4ea833",
-            "8bae5f40ae41adaefa9f2345f235e0f4",
-            "f995431fc8800c1b8401696f4bf9af10",
-            "d1cf503fe87aad7bdfbd44aade6d459c",
-            "3edc71a982de181797a4fe235b23aa9f",
-            "db80142e5f9dc1136d13f8ca9d60ea16",
-            "c84c352504657b6e9283ee15a9864d83"
+            "34dc97c85af8786da9d818f8a290f726",
+            "3608fd6922525f2d37705c0c74f31a39",
+            "eb41a326580e300326beb8105249a651",
+            "df09633ae867782d1687b88e47643b64",
+            "5547dc646847d956379e018d84103784",
+            "9c3d9adf607d0a2bc9424ff7380b3eaf",
+            "846a4c55d539de4a192523c82a352ee0"
           ],
-          "participantId": "e0a9b1a5007403e3e03e1f0a93cd6121"
+          "participantId": "6976bda6ab4ec202b3a4cd7d42b88a2f"
         },
         {
           "client": "phone-chromium",
@@ -54,29 +71,65 @@
           ],
           "runtimeErrors": [],
           "completionTokens": [
-            "de2cc28a06dd3670d8de9362f4c4b1c3",
-            "65db4aa3e0f0510db90a6a1eface0019",
-            "5feea05f9d9fba21f3b7edb2a812bddf",
-            "e09d296ddda39818de1059fc66d9bedb",
-            "2946ba48170142bc92af0f1f74cf6435",
-            "951d2f2361d646af3d543f063c7cc3ed",
-            "723fa6a04aa94f37fdd5084b5cbf1e4c"
+            "92052a7337b1ad6bb52f8350ef57229d",
+            "3aad3838f535491bfa9ed24faa365647",
+            "1f636314e2f3c64537b7a82865015502",
+            "e54a597094b2a0be5a4fe192bb830f5b",
+            "4e44907b95630ac29d4cb123b2e30adb",
+            "6d3069ed10a2d8d54d5cf09007b68daf",
+            "67921b3261741b4a853e3e7d70889b32"
           ],
-          "participantId": "584f1012a38fdfd6b586e2450bfdf817"
+          "participantId": "8dcd2401d85cec03de6a6c9e54f5f990"
         }
       ],
       "isolation": "Independent browser processes, game choices, completion tokens and Lab participants",
       "physicalPhoneTested": false,
       "nativeWindowsExecutionTested": false
     },
-    "finalSixArchiveIntegrity": {
-      "passed": 3,
+    "focusedChapterPacing": {
       "checks": [
-        "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
-        "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
-        "The complete ZIP shares one verified game build across its four offline entry points without duplicating movie assets"
+        "Level 1: automatic entry two seconds after the final entrance animation, no button or direct name address (no-preference)",
+        "Level 2: automatic entry two seconds after the final entrance animation, no button or direct name address (no-preference)",
+        "Level 3: automatic entry two seconds after the final entrance animation, no button or direct name address (no-preference)",
+        "Level 3&carried=1: automatic entry two seconds after the final entrance animation, no button or direct name address (no-preference)",
+        "Level 2: automatic entry two seconds after the final entrance animation, no button or direct name address (reduce)",
+        "Background tabs pause the two-second hold, then automatically enter when visible again",
+        "All six Level 1 review questions and all Level 2 teacher conversation branches omit the direct name; student speaker identities remain intact",
+        "Recorded one complete Level 2 entrance and the real six-metric selection interface, without clicking an entry button"
       ],
-      "sourceSha256": "059cc0b6180b3136dc3ee60bdc7bc31c7cb4062c30b9ab6be84f5af094d09e62"
+      "timings": [
+        {
+          "level": 1,
+          "carried": false,
+          "reducedMotion": false,
+          "settledToEntryMs": 2049.199999988079
+        },
+        {
+          "level": 2,
+          "carried": false,
+          "reducedMotion": false,
+          "settledToEntryMs": 2020.0
+        },
+        {
+          "level": 3,
+          "carried": false,
+          "reducedMotion": false,
+          "settledToEntryMs": 2019.6000000238419
+        },
+        {
+          "level": 3,
+          "carried": true,
+          "reducedMotion": false,
+          "settledToEntryMs": 2020.2000000476837
+        },
+        {
+          "level": 2,
+          "carried": false,
+          "reducedMotion": true,
+          "settledToEntryMs": 2006.300000011921
+        }
+      ],
+      "runtimeErrors": []
     },
     "windowsBinaryChecks": [
       "PE x64 header verified",
@@ -84,10 +137,9 @@
       "CGO disabled; no Python/Node.js runtime or paid service required"
     ]
   },
-  "priorValidation": {
-    "commit": "954fb2f574d5b066fb6708536dc5845de7b7abbe",
-    "path": "docs/PREVIEW_VALIDATION.json",
-    "scope": "Existing audio output and 21-person Lab review behavior are unchanged. Those previous checks were not rerun; current checks target actual LAN HTTP, two simultaneous full game paths and rebuilt archive integrity."
-  },
-  "validationScope": "Real embedded Linux classroom service on non-loopback HTTP; independent Chromium processes with desktop and mobile/touch viewports complete the opening, Levels 1\u20133, ending and same-session Lab join. Seven real film completion tokens per player are distinct. Windows PE x64 and all embedded assets verified; no native Windows, physical phone or Safari execution claimed."
+  "pendingCopyReviewMerged": false,
+  "standaloneLabChanged": false,
+  "nativeWindowsExecutionTested": false,
+  "physicalPhoneTested": false,
+  "scope": "Actual current game ZIPs, shared identity and level continuation, and two independent browsers through non-loopback HTTP to the same Lab. Focused chapter hold/pause checks are retained from the approved unchanged implementation. Audio and Lab voting rules are unchanged; no native Windows, physical phone or Safari execution claimed."
 }

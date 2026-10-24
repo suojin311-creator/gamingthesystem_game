@@ -255,9 +255,9 @@ with sync_playwright() as playwright:
         page.locator(f'a[href="{name}"]').click(timeout=90000)
         expect(page).to_have_url(COMPLETE_BASE+complete.get('sharedGameLaunchers',{}).get(name,name))
         if name.startswith('Level2/'):
-            expect(page.locator('.level-two')).to_have_attribute('data-phase','intro')
+            expect(page.locator('.level-two')).to_be_visible()
         elif name.startswith('Level3/'):
-            expect(page.locator('.level-three')).to_have_attribute('data-phase','intro')
+            expect(page.locator('.level-three')).to_be_visible()
         elif name.startswith('Full-game/'):
             expect(page.locator('.opening-scene .stage')).to_have_attribute('data-beat','title')
         else:
@@ -276,7 +276,6 @@ with sync_playwright() as playwright:
     expect(page).to_have_title('Gaming the System')
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
     advance(page, 8)
-    expect(page.locator('.level-two')).to_have_attribute('data-phase', 'intro')
     expect(page.locator('.level-two')).to_have_attribute('data-phase','choose',timeout=8000)
     expect(page.locator('.level-two')).to_have_attribute('data-phase', 'choose')
     expect(page.get_by_role('button', name='Guide', exact=True)).to_have_count(0)
@@ -367,7 +366,7 @@ with sync_playwright() as playwright:
     checks.append('Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference')
     finish_two(page)
     page.get_by_role('button',name='Continue to Level 3',exact=True).click()
-    expect(page.locator('.level-three')).to_have_attribute('data-phase','intro')
+    expect(page.locator('.level-three')).to_be_visible()
     expect(page.get_by_role('button',name='Sound off',exact=True)).to_be_visible()
     choose_three(page);weights_three(page,[70,20,10])
     expect(page.get_by_role('button',name='Try another split',exact=True)).to_be_visible()

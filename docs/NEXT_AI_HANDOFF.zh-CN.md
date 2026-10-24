@@ -1,3 +1,12 @@
+# 已确认：三关自动进入并同步正式包
+
+用户已批准本次关卡介绍和老师称呼调整进入正式游戏。六个常规游戏 ZIP 与
+Gaming-the-System-classroom.zip 随本次发布更新；独立 Design Lab 未改动。
+三关介绍页动画结束后停留两个可见秒并自动进入，老师台词不再直接称呼 Alex。
+前面的开头副标题和 ending 两句文案仍是独立未确认预览，不随此发布合并。
+正式包检查包含真实 ZIP 的关卡衔接及两个独立客户端通过非回环 HTTP 完整运行。
+详情与当前校验值见 play/LATEST.json、play/CLASSROOM_PREVIEW.json 和 docs/PREVIEW_VALIDATION.json。
+
 # 当前：三关介绍页自动进入预览
 
 三关共享 ChapterTransition 现在在最后一段对话入场动画结束后，停留两个可见秒，

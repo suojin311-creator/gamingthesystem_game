@@ -6,7 +6,9 @@
 | 2 | [Design-Lab-local.zip](Design-Lab-local.zip?raw=true) | `Start-Design-Lab.exe` | 独立 Design Lab，直接分享 Lab 参与链接 |
 | 3 | [Gaming-the-System-classroom.zip](Gaming-the-System-classroom.zip?raw=true) | `Start-Gaming-the-System.exe` | 同一个本地服务提供完整游戏和 Design Lab，ending 按钮直接进入本次课堂 |
 
-第 1 和第 3 份已更新局域网 HTTP 动画切换修复，替代先前 `d5d26fb` 的文件。
+第 1 和第 3 份包含局域网 HTTP 修复，以及已确认的三关自动进入和老师称呼调整。
+三关入场动画结束后停留 2 秒，自动进入操作界面，不再需要点击进入按钮。
+独立开头副标题与 ending 新文案仍在审阅，不包含在这次正式更新中。
 更新时先关闭旧启动程序，再完整解压新版并运行，从新主持页重新复制玩家链接。
 第 2 份使用同一套最新 Lab 流程、文案和音效，另外构建主持页入口；不包含游戏素材。
 

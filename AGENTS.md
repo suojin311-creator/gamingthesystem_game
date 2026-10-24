@@ -6,9 +6,9 @@
   directly address Alex by name; student identity labels and report narration stay.
 - These shared source and caption-adapter changes are authorized. The pending
   opening/ending copy review below remains isolated and unapproved.
-- Deliver only `play/Chapter-auto-entry-preview.mp4` (Level 2). Do not rebuild or
-  replace game/classroom ZIPs merely for this single-video review. Validate all
-  three levels with `scripts/chapter-review/capture.py` and run the root TS check.
+- User approved this change for the formal game. Refresh all six regular game
+  archives plus the combined classroom package; run actual archive/continuation
+  and non-loopback LAN checks. Preserve the standalone Lab and stable aliases.
 - The focused preview uses the actual shared chapter and workbench components;
   film payloads are excluded because this review ends at metric selection.
   Level 1/2 film adapters also normalize direct teacher address; their verified
