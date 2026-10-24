@@ -1,0 +1,3 @@
+import{fileURLToPath}from'node:url';import{viteSingleFile}from'vite-plugin-singlefile';
+const here=fileURLToPath(new URL('.',import.meta.url));
+export default{root:here,base:'./',plugins:[{name:'opening-copy-review-only',enforce:'pre',transform(code,id){if(!id.endsWith('/src/cinematics/opening/Opening.tsx'))return;const old='Do better numbers mean better learning?';if(!code.includes(old))throw Error('Opening subtitle changed; review the preview patch.');return code.replace(old,'When you set the metrics, what are you measuring?');}},viteSingleFile()],build:{rollupOptions:{input:here+'opening.html'}}};

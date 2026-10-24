@@ -1,0 +1,1 @@
+import React from 'react';import{createRoot}from'react-dom/client';import Opening from '../../src/cinematics/opening/Opening';createRoot(document.getElementById('root')!).render(<Opening onComplete={()=>{}}/>);

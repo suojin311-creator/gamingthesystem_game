@@ -1,3 +1,9 @@
+# Pending opening/ending copy review
+
+- User requested independent previews before approval. Use `scripts/copy-review/`;
+  read its README for exact copy. Preserve all production source, film caches and
+  game/classroom ZIPs. Deliver the opening PNG and ending MP4 for this review.
+
 # Current integrated audio and classroom review
 
 - Classroom LAN compatibility: HTTP addresses other than localhost do not expose

@@ -1,0 +1,34 @@
+{
+  "scope": "Independent review only; production game/source/cinematic caches and all game ZIPs unchanged. Await user approval before integration.",
+  "baseline": "000f8250fe2c2d9ad9f8479768ae87e8f1cad4e4",
+  "openingCopy": "When you set the metrics, what are you measuring?",
+  "endingAddedCopy": [
+    "When a number becomes a measure, it ceases to be a good measure.",
+    "Your assessment doesn’t just measure learning, it shapes how students learn."
+  ],
+  "files": {
+    "Opening-title-copy-preview.png": {
+      "sha256": "73c14fe467124cdf83aedceed2dc0085b2185fe572e27dbf28e22b96f8676330",
+      "bytes": 530516
+    },
+    "Ending-copy-preview.mp4": {
+      "sha256": "b581d0e401afd5bb0a511d23af73c041d7a41942c2adc31f34684c77475062c1",
+      "bytes": 10059362
+    }
+  },
+  "validation": {
+    "checks": [
+      "Opening screenshot uses the corrected measuring copy and existing title design",
+      "Question and two new sentences appear in order before the invitation; exact measure/ceases wording, no speaker labels or premature action",
+      "Both new text pages fade smoothly through their boundary with the same office background",
+      "Real complete ending autoplay captured to a standalone MP4 with a final invitation hold"
+    ],
+    "runtimeErrors": []
+  },
+  "video": {
+    "width": 1600,
+    "height": 900,
+    "durationSeconds": 44.48,
+    "audio": "Silent visual review"
+  }
+}
