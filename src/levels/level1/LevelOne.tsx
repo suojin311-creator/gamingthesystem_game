@@ -53,10 +53,10 @@ function ResultChart({ metric, ready, score, assessmentReport = false }: { metri
   </div>;
 }
 
-export function PerspectivePanel({ metric, evaluated, observed, highlight, managementReplay, studentIllustration, assessmentReport = false }: {
+export function PerspectivePanel({ metric, evaluated, observed, highlight, managementReplay, studentIllustration, assessmentReport = false, studentBehaviour }: {
   metric?: Metric; evaluated: boolean; observed: boolean; highlight: 'university' | null;
   managementReplay?: ManagementReplay; studentIllustration?: ReactNode;
-  assessmentReport?: boolean;
+  assessmentReport?: boolean; studentBehaviour?: string;
 }) {
   return <aside className="perspectives" aria-label="Two perspectives">
     <section className={`perspective university ${evaluated ? 'has-result' : ''} ${highlight === 'university' ? 'just-updated' : ''}`} aria-labelledby="university-title" data-management-panel data-updated={highlight === 'university'} tabIndex={-1}>
@@ -67,7 +67,7 @@ export function PerspectivePanel({ metric, evaluated, observed, highlight, manag
     </section>
     <section className={`perspective student ${observed ? 'has-evidence' : ''}`} aria-labelledby="student-title" tabIndex={-1}>
       <div className="perspective-heading"><Icon name="student" /><h3 id="student-title">Students</h3></div>
-      {observed && metric ? <><LearningRisk behaviour={metric.studentBehaviour} />{studentIllustration}</> : <><span className="perspective-label">Classroom response</span><div className="student-signal waiting-signal"><Icon name="eye" /></div><p className="pending-title">Not observed yet</p></>}
+      {observed && metric ? <><LearningRisk behaviour={studentBehaviour ?? metric.studentBehaviour} />{studentIllustration}</> : <><span className="perspective-label">Classroom response</span><div className="student-signal waiting-signal"><Icon name="eye" /></div><p className="pending-title">Not observed yet</p></>}
     </section>
   </aside>;
 }

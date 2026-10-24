@@ -8,5 +8,5 @@ export default function LevelOneExperience(props: LevelOneProps) {
   const [run, setRun] = useState(0);
   return <LevelOne {...props} key={run} showIntro={run === 0 && (props.showIntro ?? true)}
     renderCinematic={props.renderCinematic ?? ((request, complete) => <LevelOneCinematic request={request} onComplete={complete} />)}
-    renderSettlement={props.renderSettlement ?? (({ result, onContinue }) => <Settlement result={result} onContinue={onContinue} onTryAnother={onContinue ? undefined : () => setRun(value => value + 1)} />)} />;
+    renderSettlement={props.renderSettlement ?? (({ result, onContinue }) => <Settlement playerName={props.playerName} result={result} onContinue={onContinue} onTryAnother={onContinue ? undefined : () => setRun(value => value + 1)} />)} />;
 }

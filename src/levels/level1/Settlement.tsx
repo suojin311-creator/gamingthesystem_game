@@ -5,15 +5,17 @@ import { getMetric } from './metrics';
 import Icon from '../../shared/components/Icon';
 import CharacterPortrait from '../../shared/components/CharacterPortrait';
 import { useVisibleDelay } from '../../shared/hooks/useVisibleDelay';
+import '../../shared/styles/conversation.css';
 import './settlement.css';
 
 export type SettlementProps = {
   result: LevelOneResult;
+  playerName?: string;
   onTryAnother?: () => void;
   onContinue?: () => void;
 };
 
-export default function Settlement({ result, onTryAnother, onContinue }: SettlementProps) {
+export default function Settlement({ result, playerName = 'You', onTryAnother, onContinue }: SettlementProps) {
   const metric = getMetric(result.metricId)!;
   const recap = useRef<HTMLElement>(null);
   const prediction = result.prediction.trim();
@@ -49,7 +51,7 @@ export default function Settlement({ result, onTryAnother, onContinue }: Settlem
       </div>
     </div>
 
-    <PerspectivePanel metric={metric} evaluated observed={observed} highlight={null} assessmentReport
+    <PerspectivePanel metric={metric} evaluated observed={observed} highlight={null} assessmentReport studentBehaviour="Alex focused on only one metric."
       studentIllustration={<div className="settlement-student-visual" data-metric={metric.id} aria-hidden="true">
         <span className="settlement-student-portrait"><CharacterPortrait role="student" /></span>
         <div className="settlement-student-notebook"><i className="settlement-notebook-binding" />
@@ -62,6 +64,13 @@ export default function Settlement({ result, onTryAnother, onContinue }: Settlem
       <summary>Your prediction</summary>
       <blockquote>{prediction}</blockquote>
     </details>}
+
+    <section className="conversation l1-settlement-teacher" aria-label="Teacher reflection">
+      <div className="dialogue-character maya-character">
+        <span className="avatar maya-avatar" aria-hidden="true"><CharacterPortrait role="teacher" /></span>
+        <div className="speech-bubble maya-bubble"><span className="speaker-name">{playerName}</span><p>What if I measured more than one metric?</p></div>
+      </div>
+    </section>
 
     <footer className="action-row only-action l1-settlement-actions">
       <button className="button primary-button" type="button" onClick={onContinue || onTryAnother} disabled={!onContinue && !onTryAnother}>{onContinue ? 'Continue to Level 2' : 'Try another metric'}<Icon name="arrow" /></button>

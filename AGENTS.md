@@ -1,3 +1,14 @@
+# Pending Level 1 result-copy preview
+
+- User requested a preview image only: all Level 1 settlement student headlines
+  read "Alex focused on only one metric." A teacher-only bubble below reads
+  "What if I measured more than one metric?" Retain existing card visuals.
+- Source uses an optional PerspectivePanel behaviour override for the settlement;
+  do not alter metric-specific cinematic scripts or other observation content.
+- Preview: play/Level1-result-copy-preview.png; reproduction under
+  scripts/level1-result-copy-review/. TypeScript and actual rendered text checked.
+- Wait for approval before regenerating formal game/classroom packages.
+
 # Approved Level 2 observation copy
 
 - User approved five Students/But they paragraphs and requested a still preview.

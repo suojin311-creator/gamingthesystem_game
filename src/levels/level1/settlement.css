@@ -178,3 +178,5 @@
   .l1-settlement .has-evidence > .learning-risk,
   .l1-settlement .settlement-student-visual { animation: none; }
 }
+
+.l1-settlement .l1-settlement-teacher { margin-top: 22px; }
