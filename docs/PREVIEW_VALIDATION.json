@@ -1,35 +1,29 @@
 {
-  "validatedAtUtc": "2026-10-24T14:06:33.652578+00:00",
+  "validatedAtUtc": "2026-10-24T16:34:53.286597+00:00",
   "branch": "animation/opening-integration",
-  "scope": "Approved Level 1 unified student headline and teacher-only dialogue strip below the action row. Preserve original prediction details and opening player-name propagation. Previous approved Level 2 copy and Padlet retained.",
-  "gameSourceSha256": "522ddfdaf5d4f58c89562f26929f9a393fa552b890049cd680502685570c9e3f",
-  "classroomZipSha256": "2c7d4583adcefab8a5928d619a0b77ce5bd6a7c68e0469f56431d4f5230d6f9e",
-  "classroomEmbeddedGameHtmlSha256": "b06e3164dae29e887607898ce051df89ca7c209f314523dc62f4c02915bb6171",
+  "scope": "Removed all current game background music; retained interaction effects. Music controls removed, former tracks excluded from game HTML, legacy saved music preferences ignored.",
+  "gameSourceSha256": "15f9ee6e54652758b8ea08e6b725d127b03f0ee54ea780408b32a63850790f04",
+  "classroomZipSha256": "9578d0840982671a65464d03e2516618955d6b9a13cb3a2eca021fe25b9ca312",
+  "classroomEmbeddedGameHtmlSha256": "df1e3c7185692f0bfbca1781a48a75648b813b247ac30f965ee57f35edf89604",
   "checks": {
-    "release": {
-      "passed": 12,
+    "audioEffectsOnly": {
       "checks": [
-        "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
-        "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
-        "The complete ZIP shares one verified game build across its four offline entry points without duplicating movie assets",
-        "The actual complete-ZIP launcher fits desktop/phone, starts the full game at the opening and opens each standalone level directly offline",
-        "Packaged Level2.html completes 3 \u2192 6 \u2192 10 \u2192 25 \u2192 100 offline with normal motion",
-        "Packaged standalone Level3.html compares after two tests and can add an optional third, keeping all actual results offline",
-        "Packaged Level1.html uses the approved report, normal-speed cinematic, matching name/colours and settlement; Try another resets it without entering Level 2",
-        "Standalone Level 1 reload starts a fresh Level 1 run",
-        "Packaged combined game continues from the current Level 1 into playable Level 2 and keeps sound preference",
-        "Packaged combined game carries the opening name, including ampersand and Chinese, through Level 1 UI, teacher/Alex captions, email and playable Levels 2\u20133",
-        "Combined preview reload starts at the opening rather than restoring a level or player identity",
-        "Packaged entries have no browser runtime errors"
+        "Old saved music=1 cannot restore BGM; no music decoding, output or music UI after unlock.",
+        "Selection effect produces audible output, then returns to silence without background music.",
+        "Effects volume, exact zero, mute and unmute still control actual audio output.",
+        "All five former music assets excluded from actual production HTML."
       ],
       "runtimeErrors": []
     },
-    "level1TeacherStrip": [
-      "Headline and exact question verified in actual archive gameplay.",
-      "Teacher label matches opening input Riley Chen & \u674e in full game, Maya in standalone Level 1.",
-      "Your prediction expands to original submitted content and collapses.",
-      "Dialogue strip has existing shaded background and is below action button."
-    ],
+    "sixArchiveIntegrity": {
+      "passed": 3,
+      "checks": [
+        "All four latest ZIPs are intact, self-contained and byte-identical to their production builds and manifest",
+        "The review ZIP contains separate Level 3 and connected Levels 1\u20133 HTMLs, identical to their tested latest packages",
+        "The complete ZIP shares one verified game build across its four offline entry points without duplicating movie assets"
+      ],
+      "sourceSha256": "15f9ee6e54652758b8ea08e6b725d127b03f0ee54ea780408b32a63850790f04"
+    },
     "windowsBinaryChecks": [
       "PE x64 header verified",
       "All built web assets and illustration embedded byte-for-byte",
@@ -75,6 +69,7 @@
     "legacyStandaloneLabPreserved": true,
     "nativeWindowsExecutionTested": false
   },
+  "pendingAssessmentVisualReviewMerged": false,
   "pendingOpeningEndingCopyReviewMerged": false,
   "legacyStandaloneLabPreserved": true,
   "nativeWindowsExecutionTested": false

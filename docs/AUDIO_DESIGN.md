@@ -1,4 +1,17 @@
-# Integrated sound preview
+# Current audio: sound effects only
+
+User requested removal of all existing game music. The shared director no longer
+imports, bundles, decodes or plays the five background cues. Saved music settings
+are ignored and cannot restore playback. Scene adapters retain a no-op setScene
+interface so gameplay and film timing stay unchanged. Music UI/audition controls
+are removed. Existing effects, effect volume, mute and visibility handling remain.
+
+Actual built-game Web Audio output and prior saved music=1 are checked in
+`tests/audio_effects_only.py`; actual six-archive integrity is checked separately.
+Formal game packages and embedded game-server HTML are refreshed together.
+Pending visual previews, Padlet and the historical independent Lab stay untouched.
+
+# Historical integrated sound preview (superseded music plan)
 
 The original complete-game baseline is saved on GitHub at
 `archive/full-game-before-audio-20261020` (`33a10e9`). The approved two-line ending

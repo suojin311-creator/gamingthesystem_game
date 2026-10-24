@@ -1,17 +1,10 @@
-import office from './assets/office.ogg?inline';
-import metrics from './assets/metrics.ogg?inline';
-import reflection from './assets/reflection.ogg?inline';
-import lab from './assets/lab.ogg?inline';
-import reveal from './assets/reveal.ogg?inline';
-
 export type Scene = 'office' | 'metrics' | 'reflection' | 'lab' | 'reveal' | 'silent';
 export type Cue = 'tick' | 'report' | 'evidence' | 'message' | 'paper' | 'chapter' | 'notification' | 'warning' | 'submit' | 'vote' | 'transition';
 type Preferences = { muted: boolean; music: number; effects: number };
-const urls = { office, metrics, reflection, lab, reveal };
-const defaults: Preferences = { muted: false, music: .58, effects: .65 };
+const defaults: Preferences = { muted: false, music: 0, effects: .65 };
 const clamp = (n: number) => Math.max(0, Math.min(1, n));
 function saved(): Preferences {
-  try { const p=JSON.parse(localStorage.getItem('gts-sound')||'{}'); return { muted:p.muted===true,music:Number.isFinite(p.music)?clamp(p.music):defaults.music,effects:Number.isFinite(p.effects)?clamp(p.effects):defaults.effects }; } catch { return defaults; }
+  try { const p=JSON.parse(localStorage.getItem('gts-sound')||'{}'); return { muted:p.muted===true,music:0,effects:Number.isFinite(p.effects)?clamp(p.effects):defaults.effects }; } catch { return defaults; }
 }
 
 /** One output owner per document. Films report state; they never create competing music. */
@@ -20,46 +13,36 @@ class Director {
   private subscribers = new Set<() => void>();
   private context: AudioContext | null = null;
   private master: GainNode | null = null;
-  private musicBus: GainNode | null = null;
   private effectsBus: GainNode | null = null;
-  private buffers = new Map<string, Promise<AudioBuffer>>();
-  private active: { source: AudioBufferSourceNode; gain: GainNode; start: number; offset: number; scene: Scene } | null = null;
   private voices = new Set<AudioScheduledSourceNode>();
-  private scene: Scene = 'silent';
-  private intensity = .8;
-  private offset = 0;
-  private paused = false;
   private hidden = document.hidden;
-  private revision = 0;
   private lastCue = new Map<string,number>();
-  private revealed = false;
   readonly subscribe = (fn: () => void) => { this.subscribers.add(fn); return () => { this.subscribers.delete(fn); }; };
   readonly snapshot = () => this.preferences;
   get available() { return typeof window.AudioContext === 'function'; }
   get running() { return this.context?.state === 'running'; }
-  get state() { return { scene:this.scene, playing:!!this.active && this.running && !this.hidden && !this.paused && !this.preferences.muted, unlocked:!!this.context, voices:this.voices.size, offset:this.offset }; }
+  get state() { return { scene:'silent' as Scene, playing:false, unlocked:!!this.context, voices:this.voices.size, offset:0 }; }
   constructor() {
-    document.addEventListener('visibilitychange',()=>{this.hidden=document.hidden;this.applyGains();this.sync();if(this.hidden)this.stopEffects();});
+    document.addEventListener('visibilitychange',()=>{this.hidden=document.hidden;this.applyGains();if(this.hidden)this.stopEffects();});
   }
   readonly unlock = () => {
     if (!this.available) return;
     if (!this.context) {
       try {
         this.context=new AudioContext();this.master=this.context.createGain();this.master.connect(this.context.destination);
-        this.musicBus=this.context.createGain();this.musicBus.connect(this.master);
         this.effectsBus=this.context.createGain();this.effectsBus.connect(this.master);
         this.applyGains();
       } catch { return; }
     }
     const resume=this.context.state==='suspended'?this.context.resume():Promise.resolve();
-    void resume.then(()=>this.sync()).catch(()=>{});
+    void resume.catch(()=>{});
   };
   setPreferences(change: Partial<Preferences>) {
-    this.preferences={...this.preferences,...change};
+    this.preferences={...this.preferences,...change,music:0};
     try { localStorage.setItem('gts-sound',JSON.stringify(this.preferences)); } catch { /* Private mode. */ }
     this.applyGains();
     if(this.preferences.muted)this.stopEffects();
-    this.sync();this.subscribers.forEach(fn=>fn());
+    this.subscribers.forEach(fn=>fn());
   }
   readonly toggle = () => { this.setPreferences({muted:!this.preferences.muted});if(!this.preferences.muted)this.unlock(); };
   private applyGains() {
@@ -74,48 +57,11 @@ class Director {
       else node.gain.setTargetAtTime(value,t,seconds);
     };
     set(this.master,this.preferences.muted||this.hidden?0:1,.035);
-    set(this.musicBus,this.preferences.music*.58,.08);
     set(this.effectsBus,this.preferences.effects*.34,.03);
   }
-  setScene(scene: Scene, intensity=.8, paused=false) {
-    const changed=this.scene!==scene;
-    if(changed){this.stopMusic(.9);this.scene=scene;this.offset=0;if(scene!=='reveal')this.revealed=false;}
-    const wasPaused=this.paused;
-    this.paused=paused;
-    this.intensity=intensity;
-    if(changed || wasPaused!==paused)this.sync();
-    else if(this.active && this.context)this.active.gain.gain.setTargetAtTime(intensity,this.context.currentTime,.5);
-  }
-  private stopMusic(fade=.5) {
-    const a=this.active,ctx=this.context;
-    this.active=null;
-    if(!a||!ctx)return;
-    this.offset=a.offset+Math.max(0,ctx.currentTime-a.start);
-    a.gain.gain.cancelScheduledValues(ctx.currentTime);a.gain.gain.setValueAtTime(a.gain.gain.value,ctx.currentTime);a.gain.gain.linearRampToValueAtTime(0,ctx.currentTime+fade);
-    try{a.source.stop(ctx.currentTime+fade+.01);}catch{/* Ended. */}
-  }
-  private sync() {
-    const token=++this.revision,ctx=this.context;
-    if(!ctx)return;
-    if(this.paused||this.hidden||this.preferences.muted||this.scene==='silent'||ctx.state!=='running') { this.stopMusic(.12);return; }
-    if(this.active?.scene===this.scene)return;
-    const wanted=this.scene;
-    this.stopMusic(.9);
-    // New scenes start at the beginning; pause/resume keeps the previous offset.
-    const resumeOffset=this.offset;
-    if(wanted==='reveal'&&this.revealed&&resumeOffset>=11.9)return;
-    let promise=this.buffers.get(wanted);
-    if(!promise){promise=fetch(urls[wanted]).then(r=>{if(!r.ok)throw new Error('audio');return r.arrayBuffer();}).then(b=>ctx.decodeAudioData(b));this.buffers.set(wanted,promise);}
-    void promise.then(buffer=>{
-      if(token!==this.revision||this.hidden||this.paused||this.preferences.muted)return;
-      const source=ctx.createBufferSource(),gain=ctx.createGain();source.buffer=buffer;source.loop=wanted!=='reveal';
-      source.connect(gain);gain.connect(this.musicBus!);gain.gain.setValueAtTime(0,ctx.currentTime);gain.gain.linearRampToValueAtTime(this.intensity,ctx.currentTime+(wanted==='reveal'?1.4:.9));
-      const offset=wanted==='reveal'?Math.min(resumeOffset,buffer.duration-.01):resumeOffset%buffer.duration;
-      this.active={source,gain,start:ctx.currentTime,offset,scene:wanted};
-      source.onended=()=>{if(this.active?.source===source){this.active=null;this.offset=buffer.duration;if(wanted==='reveal')this.revealed=true;}source.disconnect();gain.disconnect();};
-      source.start(0,offset);
-    }).catch(()=>{this.buffers.delete(wanted);});
-  }
+  // Compatibility with scene adapters: music has been removed, including decoding
+  // and bundled tracks. Saved music preferences cannot restore playback.
+  setScene(_scene: Scene, _intensity=.8, _paused=false) {}
   readonly stopEffects = () => {this.voices.forEach(s=>{try{s.stop();}catch{/* Ended. */}});this.voices.clear();};
   readonly cue = (cue: Cue) => {
     const c=this.context,bus=this.effectsBus;

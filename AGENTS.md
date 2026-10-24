@@ -1,3 +1,14 @@
+# Current audio: effects only
+
+- User requested removal of all current game music. No replacement music is
+  selected or authorized. Director no longer imports, bundles or decodes tracks;
+  scene calls are compatibility no-ops and saved music settings cannot restore it.
+- Keep existing interaction sound effects and their mute/volume controls.
+  Remove the nonfunctional music slider and music audition controls.
+- Refresh formal game archives and embedded game-server package. Preserve all
+  pending visual/copy reviews and historical standalone Lab packages. Padlet stays
+  untouched. Do not reintroduce music to satisfy superseded audio tests.
+
 # Pending Level 1 assessment visual preview
 
 - Isolated preview under scripts/level1-assessment-review/. Production source and
