@@ -1,11 +1,17 @@
 .assessment-review { max-width:1160px; margin:0 auto; padding:30px 30px 8px; background:var(--paper); }
 .assessment-review .section-intro { margin-bottom:22px; }
-.assessment-review .section-intro h2 { font-size:32px; line-height:1.25; letter-spacing:-.025em; }
+.assessment-review .section-intro h2 { font-size:36px; line-height:1.25; letter-spacing:-.025em; }
 .assessment-review .assessment-card { border:1px solid #ddd7c5; background:#fffdf7; }
 .assessment-review .score-paper { margin-bottom:0; border:0; }
 .assessment-review .score-numbers { margin:32px 0 30px; }
-.assessment-review .assessment-bridge { padding:20px 26px; text-align:center; border-top:1px solid #e7e0d1; background:#f5f0e5; }
-.assessment-review .assessment-bridge p { font:20px/1.5 var(--serif); color:#635a46; }
-.assessment-review .assessment-bridge strong { color:var(--coral); font-weight:400; margin-left:.25em; }
+.assessment-review .assessment-bridge { padding:24px 26px; text-align:center; border-top:1px solid #e7e0d1; background:#f5f0e5; }
+.assessment-review .assessment-bridge p { font:600 28px/1.5 var(--serif); color:#34382e; }
+.assessment-review .assessment-bridge strong { color:#ad5840; font-size:44px; line-height:1.1; font-weight:700; margin-left:.25em; white-space:nowrap; }
+.assessment-review .score-numbers > span { font-size:80px; }
+.assessment-review .score-numbers small { font-size:11px; }
+.assessment-review .score-state { font-size:12px; }
+.assessment-review .score-track-labels { font-size:11px; }
+.assessment-review .data-note { font-size:10px; }
+.assessment-review .primary-button { font-size:14px; }
 .assessment-review .action-row { justify-content:flex-end; border-top:0; padding-top:18px; }
-@media(max-width:650px){.assessment-review{padding:24px 20px 8px}.assessment-review .section-intro h2{font-size:26px}.assessment-review .assessment-bridge p{font-size:18px}}
+@media(max-width:650px){.assessment-review{padding:24px 20px 8px}.assessment-review .section-intro h2{font-size:26px}.assessment-review .assessment-bridge p{font-size:24px}.assessment-review .assessment-bridge strong{font-size:36px}.assessment-review .score-numbers > span{font-size:56px}}

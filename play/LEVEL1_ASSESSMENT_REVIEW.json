@@ -1,7 +1,7 @@
 {
   "scope": "Isolated preview only; production sources and formal game packages unchanged.",
   "image": "Level1-assessment-preview.png",
-  "sha256": "a9a5fee72cf848ab4449f61c3ee3bb9bff7d796a25149af44caa4b68f943d082",
+  "sha256": "b01b84109ba32103c8a5b65c0b18f0e3981a23056d95741500291b84d2edc840",
   "checks": [
     "Actual production chart uses 29% to 85% unchanged.",
     "Metric name and duplicate heading removed.",

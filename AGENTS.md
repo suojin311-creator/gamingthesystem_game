@@ -8,7 +8,8 @@
   above the unchanged Look behind the result button. User rejected the detached
   large two-line copy at lower left. Current bridge:
   Learning performance looks better. Management is satisfied. But…
-  But… is brick red. No repeated teacher bubble in this isolated proposal.
+  Whole bridge is now 28px semibold dark ink; But… is 44px bold brick red.
+  Increase chart/title/button readability too. No repeated teacher bubble.
 - The actual ResultChart is adapted at review build time only; preserve its data.
   Wait for approval before promoting this assessment redesign to production.
 
