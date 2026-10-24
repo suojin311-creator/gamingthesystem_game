@@ -179,10 +179,8 @@
   .l1-settlement .settlement-student-visual { animation: none; }
 }
 
-.l1-settlement .l1-settlement-teacher { min-height: 0; margin: 0; }
-.l1-settlement .l1-settlement-teacher .dialogue-character { max-width: 100%; }
-.l1-settlement .l1-settlement-actions { align-items: center; }
+.l1-settlement .l1-settlement-actions { justify-content: flex-end; }
+.l1-settlement .l1-settlement-teacher { margin: 0 -30px; }
 @media (max-width: 650px) {
-  .l1-settlement .l1-settlement-actions { flex-wrap: wrap; }
-  .l1-settlement .l1-settlement-actions > .primary-button { margin-left: auto; }
+  .l1-settlement .l1-settlement-teacher { margin-inline: -20px; padding-inline: 20px; }
 }

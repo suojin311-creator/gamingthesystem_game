@@ -21,7 +21,8 @@ with sync_playwright() as p:
  page.wait_for_timeout(2800)
  bubble=page.locator('.l1-settlement-teacher').bounding_box()
  button=page.locator('.l1-settlement-actions > button').bounding_box()
- assert abs((bubble['y']+bubble['height']/2)-(button['y']+button['height']/2))<2
+ assert bubble['y'] >= button['y']+button['height']
+ assert page.locator('.l1-settlement-teacher').evaluate('e=>getComputedStyle(e).backgroundColor')=='rgb(240, 235, 223)'
  page.locator('.l1-settlement-prediction summary').click()
  expect(page.locator('.l1-settlement-prediction blockquote')).to_be_visible()
  page.locator('.l1-settlement-prediction summary').click()

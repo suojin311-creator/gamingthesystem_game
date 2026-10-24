@@ -65,15 +65,14 @@ export default function Settlement({ result, playerName = 'You', onTryAnother, o
       <blockquote>{prediction}</blockquote>
     </details>}
 
-    <footer className="action-row l1-settlement-actions">
-    <section className="conversation l1-settlement-teacher" aria-label="Teacher reflection">
+    <footer className="action-row only-action l1-settlement-actions">
+      <button className="button primary-button" type="button" onClick={onContinue || onTryAnother} disabled={!onContinue && !onTryAnother}>{onContinue ? 'Continue to Level 2' : 'Try another metric'}<Icon name="arrow" /></button>
+    </footer>
+    <section className="conversation dialogue-strip l1-settlement-teacher" aria-label="Teacher reflection">
       <div className="dialogue-character maya-character">
         <span className="avatar maya-avatar" aria-hidden="true"><CharacterPortrait role="teacher" /></span>
         <div className="speech-bubble maya-bubble"><span className="speaker-name">{playerName}</span><p>What if I measured more than one metric?</p></div>
       </div>
     </section>
-
-      <button className="button primary-button" type="button" onClick={onContinue || onTryAnother} disabled={!onContinue && !onTryAnother}>{onContinue ? 'Continue to Level 2' : 'Try another metric'}<Icon name="arrow" /></button>
-    </footer>
   </section>;
 }
